@@ -16,6 +16,8 @@
 #include "strings.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
+#include "menu_helpers.h"
+#include "decompress.h"
 
 enum
 {
@@ -97,7 +99,6 @@ static const struct BgTemplate sOptionMenuBgTemplates[] =
        .screenSize = 0,
        .paletteMode = 0,
        .priority = 1,
-       .baseTile = 0
     },
     {
        .bg = 1,
@@ -106,7 +107,22 @@ static const struct BgTemplate sOptionMenuBgTemplates[] =
        .screenSize = 0,
        .paletteMode = 0,
        .priority = 0,
-       .baseTile = 0
+    },
+    {
+       .bg = 2,
+       .charBaseIndex = 0,
+       .mapBaseIndex = 29,
+       .screenSize = 0,
+       .paletteMode = 0,
+       .priority = 1,
+    },
+    {
+       .bg = 3,
+       .charBaseIndex = 3,
+       .mapBaseIndex = 27,
+       .screenSize = 0,
+       .paletteMode = 0,
+       .priority = 2,
     },
 };
 
@@ -118,6 +134,7 @@ struct OptionMenu
     int menuCursor[MENU_COUNT];
     int visibleCursor[MENU_COUNT];
     u8 arrowTaskId;
+    u8 gfxLoadState;
 };
 
 #define Y_DIFF 16 // Difference in pixels between items.
@@ -169,11 +186,22 @@ static void DrawBgWindowFrames(void);
 
 // EWRAM vars
 EWRAM_DATA static struct OptionMenu *sOptions = NULL;
+static EWRAM_DATA u8 *sBg2TilemapBuffer = NULL;
+static EWRAM_DATA u8 *sBg3TilemapBuffer = NULL;
 
 // const data
 static const u8 sEqualSignGfx[] = INCBIN_U8("graphics/interface/option_menu_equals_sign.4bpp"); // note: this is only used in the Japanese release
 static const u16 sOptionMenuBg_Pal[] = {RGB(17, 18, 31)};
 static const u16 sOptionMenuText_Pal[] = INCBIN_U16("graphics/interface/option_menu_text_custom.gbapal");
+
+static const u32 sOptionsPlusTiles[] = INCBIN_U32("graphics/ui_options_plus/options_plus_tiles.4bpp.lz");
+static const u16 sOptionsPlusPalette[] = INCBIN_U16("graphics/ui_options_plus/options_plus_tiles.gbapal");
+static const u32 sOptionsPlusTilemap[] = INCBIN_U32("graphics/ui_options_plus/options_plus_tiles.bin.lz");
+
+// Scrolling Background
+static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_options_plus/scroll_tiles.4bpp.lz");
+static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_options_plus/scroll_tiles.bin.lz");
+static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_options_plus/scroll_tiles.gbapal");
 
 #define TEXT_COLOR_OPTIONS_WHITE                1
 #define TEXT_COLOR_OPTIONS_GRAY_FG              2
@@ -405,6 +433,7 @@ static void MainCB2(void)
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
+    DoScheduledBgTilemapCopiesToVram();
     UpdatePaletteFade();
 }
 
@@ -413,6 +442,7 @@ static void VBlankCB(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+    ChangeBgY(3, 96, BG_COORD_ADD);
 }
 
 static const u8 sText_TopBar_Main[]         = _("GENERAL");
@@ -421,9 +451,9 @@ static const u8 sText_TopBar_Custom[]       = _("CUSTOM");
 static const u8 sText_TopBar_Custom_Left[]  = _("{L_BUTTON}GENERAL");
 static void DrawTopBarText(void)
 {
-    const u8 color[3] = { TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_OPTIONS_GRAY_FG };
+    const u8 color[3] = { 0, TEXT_COLOR_WHITE, TEXT_COLOR_OPTIONS_GRAY_FG };
 
-    FillWindowPixelBuffer(WIN_TOPBAR, PIXEL_FILL(15));
+    FillWindowPixelBuffer(WIN_TOPBAR, PIXEL_FILL(0));
     switch (sOptions->submenu)
     {
         case MENU_MAIN:
@@ -443,7 +473,7 @@ static void DrawOptionMenuTexts(void) //left side text
 {
     u8 i;
 
-    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(0));
     for (i = 0; i < MenuItemCount(); i++)
         DrawLeftSideOptionText(i, (i * Y_DIFF) + 1);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -467,10 +497,10 @@ static void DrawLeftSideOptionText(int selection, int y)
     u8 color_gray[3];
 
     color_yellow[0] = TEXT_COLOR_TRANSPARENT;
-    color_yellow[1] = TEXT_COLOR_OPTIONS_ORANGE_FG;
-    color_yellow[2] = TEXT_COLOR_OPTIONS_ORANGE_SHADOW;
+    color_yellow[1] = TEXT_COLOR_WHITE;
+    color_yellow[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
     color_gray[0] = TEXT_COLOR_TRANSPARENT;
-    color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_LIGHT_FG;
+    color_gray[1] = TEXT_COLOR_WHITE;
     color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
 
     if (CheckConditions(selection))
@@ -487,20 +517,20 @@ static void DrawRightSideChoiceText(const u8 *text, int x, int y, bool8 choosen,
     if (active)
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
-        color_red[1] = TEXT_COLOR_OPTIONS_RED_FG;
-        color_red[2] = TEXT_COLOR_OPTIONS_RED_SHADOW;
+        color_red[1] = TEXT_COLOR_OPTIONS_ORANGE_FG;
+        color_red[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
         color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_FG;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+        color_gray[1] = TEXT_COLOR_OPTIONS_WHITE;
+        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
     }
     else
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
-        color_red[1] = TEXT_COLOR_OPTIONS_RED_DARK_FG;
-        color_red[2] = TEXT_COLOR_OPTIONS_RED_DARK_SHADOW;
+        color_red[1] = TEXT_COLOR_OPTIONS_WHITE;
+        color_red[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
         color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_GRAY_LIGHT_FG;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+        color_gray[1] = TEXT_COLOR_OPTIONS_WHITE;
+        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
     }
 
 
@@ -529,8 +559,48 @@ static void HighlightOptionMenuItem(void)
 {
     int cursor = sOptions->visibleCursor[sOptions->submenu];
 
-    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(Y_DIFF, 224));
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(8, 232));
     SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(cursor * Y_DIFF + 24, cursor * Y_DIFF + 40));
+}
+
+static bool8 OptionsMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spritesheets, and palettes
+{
+    switch (sOptions->gfxLoadState)
+    {
+    case 0:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(2, sOptionsPlusTiles, 0, 0, 0);
+        sOptions->gfxLoadState++;
+        break;
+    case 1:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            LZDecompressWram(sOptionsPlusTilemap, sBg2TilemapBuffer);
+            sOptions->gfxLoadState++;
+        }
+        break;
+    case 2:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(3, sScrollBgTiles, 0, 0, 0);
+        sOptions->gfxLoadState++;
+        break;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            LZDecompressWram(sScrollBgTilemap, sBg3TilemapBuffer);
+            sOptions->gfxLoadState++;
+        }
+        break;
+    case 4:
+        LoadPalette(sOptionsPlusPalette, 64, 32);
+        LoadPalette(sScrollBgPalette, 32, 32);
+        sOptions->gfxLoadState++;
+        break;
+    default:
+        sOptions->gfxLoadState = 0;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 void CB2_InitOptionPlusMenu(void)
@@ -540,7 +610,10 @@ void CB2_InitOptionPlusMenu(void)
     {
     default:
     case 0:
-        SetVBlankCallback(NULL);
+        SetVBlankHBlankCallbacksToNull();
+        ClearScheduledBgCopiesToVram();
+        ResetVramOamAndBgCntRegs();
+        sOptions = AllocZeroed(sizeof(*sOptions));
         gMain.state++;
         break;
     case 1:
@@ -549,32 +622,54 @@ void CB2_InitOptionPlusMenu(void)
         DmaClear16(3, PLTT, PLTT_SIZE);
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sOptionMenuBgTemplates, ARRAY_COUNT(sOptionMenuBgTemplates));
         ResetBgPositions();
-        InitWindows(sOptionMenuWinTemplates);
+        
         DeactivateAllTextPrinters();
         SetGpuReg(REG_OFFSET_WIN0H, 0);
         SetGpuReg(REG_OFFSET_WIN0V, 0);
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN1_BG0 | WININ_WIN0_OBJ);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2);
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 4);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        
+        ResetAllBgsCoordinates();
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sOptionMenuBgTemplates, NELEMS(sOptionMenuBgTemplates));
+        InitWindows(sOptionMenuWinTemplates);
+
+        sBg2TilemapBuffer = Alloc(0x800);
+        memset(sBg2TilemapBuffer, 0, 0x800);
+        SetBgTilemapBuffer(2, sBg2TilemapBuffer);
+        ScheduleBgCopyTilemapToVram(2);
+
+        sBg3TilemapBuffer = Alloc(0x800);
+        memset(sBg3TilemapBuffer, 0, 0x800);
+        SetBgTilemapBuffer(3, sBg3TilemapBuffer);
+        ScheduleBgCopyTilemapToVram(3);
+        
         ShowBg(0);
         ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
         gMain.state++;
         break;
     case 2:
         ResetPaletteFade();
         ScanlineEffect_Stop();
+        FreeAllSpritePalettes();
         ResetTasks();
         ResetSpriteData();
         gMain.state++;
+        sOptions->gfxLoadState = 0;
         break;
     case 3:
-        LoadBgTiles(1, GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->tiles, 0x120, 0x1A2);
-        gMain.state++;
+        if (OptionsMenu_LoadGraphics() == TRUE)
+        {
+            gMain.state++;
+            LoadBgTiles(1, GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->tiles, 0x120, 0x1A2);
+        }
         break;
     case 4:
         LoadPalette(sOptionMenuBg_Pal, 0, sizeof(sOptionMenuBg_Pal));
@@ -586,7 +681,6 @@ void CB2_InitOptionPlusMenu(void)
         gMain.state++;
         break;
     case 6:
-        sOptions = AllocZeroed(sizeof(*sOptions));
         sOptions->sel[MENUITEM_MAIN_TEXTSPEED]   = gSaveBlock2Ptr->optionsTextSpeed;
         sOptions->sel[MENUITEM_MAIN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel[MENUITEM_MAIN_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
@@ -793,6 +887,12 @@ static void Task_OptionMenuSave(u8 taskId)
     gTasks[taskId].func = Task_OptionMenuFadeOut;
 }
 
+#define try_free(ptr) ({        \
+    void ** ptr__ = (void **)&(ptr);   \
+    if (*ptr__ != NULL)                \
+        Free(*ptr__);                  \
+})
+
 static void Task_OptionMenuFadeOut(u8 taskId)
 {
     if (!gPaletteFade.active)
@@ -800,6 +900,8 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         DestroyTask(taskId);
         FreeAllWindowBuffers();
         FREE_AND_SET_NULL(sOptions);
+        try_free(sBg2TilemapBuffer);
+        try_free(sBg3TilemapBuffer);
         SetMainCallback2(gMain.savedCallback);
     }
 }
@@ -817,7 +919,7 @@ static void ScrollMenu(int direction)
     // Hide one
     ScrollWindow(WIN_OPTIONS, direction, Y_DIFF, PIXEL_FILL(0));
     // Show one
-    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 0, Y_DIFF * pos, 26 * 8, Y_DIFF);
+    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(0), 0, Y_DIFF * pos, 26 * 8, Y_DIFF);
     // Print
     DrawChoices(menuItem, pos * Y_DIFF);
     DrawLeftSideOptionText(menuItem, (pos * Y_DIFF) + 1);
@@ -847,7 +949,7 @@ static void ScrollAll(int direction) // to bottom or top
         y = 0;
     }
 
-    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 0, y, 26 * 8, Y_DIFF * scrollCount);
+    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(0), 0, y, 26 * 8, Y_DIFF * scrollCount);
     // Print new texts
     for (i = 0; i < scrollCount; i++)
     {
@@ -1001,7 +1103,7 @@ static void ReDrawAll(void)
 
     }
 
-    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+    FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(0));
     for (i = 0; i < optionsToDraw; i++)
     {
         DrawChoices(menuItem+i, i * Y_DIFF);
@@ -1156,21 +1258,21 @@ static void DrawBgWindowFrames(void)
 {
     //                     bg, tile,              x, y, width, height, palNum
     // Option Texts window
-    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_L,  1,  2,  1,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_TOP_EDGE,      2,  2, 26,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_TOP_CORNER_R, 28,  2,  1,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1,  3,  1, 16,  7);
-    FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28,  3,  1, 16,  7);
-    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_L,  1, 13,  1,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_BOT_EDGE,      2, 13, 26,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 13,  1,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_TOP_CORNER_L,  1,  2,  1,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_TOP_EDGE,      2,  2, 26,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_TOP_CORNER_R, 28,  2,  1,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1,  3,  1, 16,  7);
+    //FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28,  3,  1, 16,  7);
+    //FillBgTilemapBufferRect(1, TILE_BOT_CORNER_L,  1, 13,  1,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_BOT_EDGE,      2, 13, 26,  1,  7);
+    //FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 13,  1,  1,  7);
 
     // Description window
     FillBgTilemapBufferRect(1, TILE_TOP_CORNER_L,  1, 14,  1,  1,  7);
     FillBgTilemapBufferRect(1, TILE_TOP_EDGE,      2, 14, 27,  1,  7);
     FillBgTilemapBufferRect(1, TILE_TOP_CORNER_R, 28, 14,  1,  1,  7);
-    FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1, 15,  1,  2,  7);
-    FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28, 15,  1,  2,  7);
+    FillBgTilemapBufferRect(1, TILE_LEFT_EDGE,     1, 15,  1,  4,  7);
+    FillBgTilemapBufferRect(1, TILE_RIGHT_EDGE,   28, 15,  1,  4,  7);
     FillBgTilemapBufferRect(1, TILE_BOT_CORNER_L,  1, 19,  1,  1,  7);
     FillBgTilemapBufferRect(1, TILE_BOT_EDGE,      2, 19, 27,  1,  7);
     FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 19,  1,  1,  7);
