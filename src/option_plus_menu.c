@@ -614,13 +614,15 @@ void CB2_InitOptionPlusMenu(void)
         ClearScheduledBgCopiesToVram();
         ResetVramOamAndBgCntRegs();
         sOptions = AllocZeroed(sizeof(*sOptions));
+        FreeAllSpritePalettes();
+        ResetTasks();
+        ResetSpriteData();
         gMain.state++;
         break;
     case 1:
         DmaClearLarge16(3, (void *)(VRAM), VRAM_SIZE, 0x1000);
         DmaClear32(3, OAM, OAM_SIZE);
         DmaClear16(3, PLTT, PLTT_SIZE);
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
         ResetBgsAndClearDma3BusyFlags(0);
         ResetBgPositions();
         
@@ -632,7 +634,7 @@ void CB2_InitOptionPlusMenu(void)
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2);
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 4);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON);
         
         ResetAllBgsCoordinates();
         ResetBgsAndClearDma3BusyFlags(0);
@@ -648,19 +650,11 @@ void CB2_InitOptionPlusMenu(void)
         memset(sBg3TilemapBuffer, 0, 0x800);
         SetBgTilemapBuffer(3, sBg3TilemapBuffer);
         ScheduleBgCopyTilemapToVram(3);
-        
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        ShowBg(3);
         gMain.state++;
         break;
     case 2:
         ResetPaletteFade();
         ScanlineEffect_Stop();
-        FreeAllSpritePalettes();
-        ResetTasks();
-        ResetSpriteData();
         gMain.state++;
         sOptions->gfxLoadState = 0;
         break;
@@ -731,6 +725,10 @@ void CB2_InitOptionPlusMenu(void)
         gMain.state++;
         break;
     case 12:
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
         SetVBlankCallback(VBlankCB);
         SetMainCallback2(MainCB2);
@@ -741,7 +739,23 @@ void CB2_InitOptionPlusMenu(void)
 static void Task_OptionMenuFadeIn(u8 taskId)
 {
     if (!gPaletteFade.active)
+    {
         gTasks[taskId].func = Task_OptionMenuProcessInput;
+        SetGpuReg(REG_OFFSET_WIN0H, 0); // Idk man Im just trying to stop this stupid graphical bug from happening dont judge me
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 4);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
+        HighlightOptionMenuItem();
+        return;
+    }
 }
 
 static void Task_OptionMenuProcessInput(u8 taskId)
@@ -902,6 +916,16 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         FREE_AND_SET_NULL(sOptions);
         try_free(sBg2TilemapBuffer);
         try_free(sBg3TilemapBuffer);
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 4);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        HideBg(2);
+        HideBg(3);
         SetMainCallback2(gMain.savedCallback);
     }
 }
