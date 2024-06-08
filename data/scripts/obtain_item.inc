@@ -17,11 +17,12 @@ EventScript_ObtainItemMessage::
 
 EventScript_BufferPocketNameAndTryFanfare::
 	switch VAR_RESULT
-	case POCKET_ITEMS,      EventScript_BufferItemsPocket
-	case POCKET_KEY_ITEMS,  EventScript_BufferKeyItemsPocket
-	case POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
-	case POCKET_TM_HM,      EventScript_BufferTMHMsPocket
-	case POCKET_BERRIES,    EventScript_BufferBerriesPocket
+	case POCKET_ITEMS,       EventScript_BufferItemsPocket
+	case POCKET_KEY_ITEMS,   EventScript_BufferKeyItemsPocket
+	case POCKET_TERA_SHARDS, EventScript_BufferTeraShardsPocket
+	case POCKET_POKE_BALLS,  EventScript_BufferPokeballsPocket
+	case POCKET_TM_HM,       EventScript_BufferTMHMsPocket
+	case POCKET_BERRIES,     EventScript_BufferBerriesPocket
 	end
 
 EventScript_BufferItemsPocket::
@@ -31,6 +32,11 @@ EventScript_BufferItemsPocket::
 
 EventScript_BufferKeyItemsPocket::
 	bufferstdstring STR_VAR_3, STDSTRING_KEYITEMS
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferTeraShardsPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_TERASHARDS
 	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 

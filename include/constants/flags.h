@@ -1344,47 +1344,47 @@
 #define SYSTEM_FLAGS                                   (TRAINER_FLAGS_END + 1) // 0x860
 
 #define FLAG_SYS_POKEMON_GET                         (SYSTEM_FLAGS + 0x0) // FLAG_0x860
-#define FLAG_SYS_POKEDEX_GET                         (SYSTEM_FLAGS + 0x1)
-#define FLAG_SYS_POKENAV_GET                         (SYSTEM_FLAGS + 0x2)
+#define FLAG_SYS_POKEDEX_GET                         (SYSTEM_FLAGS + 0x1) // FLAG_0x861
+#define FLAG_SYS_POKENAV_GET                         (SYSTEM_FLAGS + 0x2) // FLAG_0x862
 #define FLAG_UNUSED_0x863                            (SYSTEM_FLAGS + 0x3) // Unused Flag
-#define FLAG_SYS_GAME_CLEAR                          (SYSTEM_FLAGS + 0x4)
-#define FLAG_SYS_CHAT_USED                           (SYSTEM_FLAGS + 0x5)
-#define FLAG_UNLOCKED_TRENDY_SAYINGS                 (SYSTEM_FLAGS + 0x6)
+#define FLAG_SYS_GAME_CLEAR                          (SYSTEM_FLAGS + 0x4) // FLAG_0x864
+#define FLAG_SYS_CHAT_USED                           (SYSTEM_FLAGS + 0x5) // FLAG_0x865
+#define FLAG_UNLOCKED_TRENDY_SAYINGS                 (SYSTEM_FLAGS + 0x6) // FLAG_0x866
 
 // Badges
-#define FLAG_BADGE01_GET                             (SYSTEM_FLAGS + 0x7)
-#define FLAG_BADGE02_GET                             (SYSTEM_FLAGS + 0x8)
-#define FLAG_BADGE03_GET                             (SYSTEM_FLAGS + 0x9)
-#define FLAG_BADGE04_GET                             (SYSTEM_FLAGS + 0xA)
-#define FLAG_BADGE05_GET                             (SYSTEM_FLAGS + 0xB)
-#define FLAG_BADGE06_GET                             (SYSTEM_FLAGS + 0xC)
-#define FLAG_BADGE07_GET                             (SYSTEM_FLAGS + 0xD)
-#define FLAG_BADGE08_GET                             (SYSTEM_FLAGS + 0xE)
+#define FLAG_BADGE01_GET                             (SYSTEM_FLAGS + 0x7) // FLAG_0x867
+#define FLAG_BADGE02_GET                             (SYSTEM_FLAGS + 0x8) // FLAG_0x868
+#define FLAG_BADGE03_GET                             (SYSTEM_FLAGS + 0x9) // FLAG_0x869
+#define FLAG_BADGE04_GET                             (SYSTEM_FLAGS + 0xA) // FLAG_0x86A
+#define FLAG_BADGE05_GET                             (SYSTEM_FLAGS + 0xB) // FLAG_0x86B
+#define FLAG_BADGE06_GET                             (SYSTEM_FLAGS + 0xC) // FLAG_0x86C
+#define FLAG_BADGE07_GET                             (SYSTEM_FLAGS + 0xD) // FLAG_0x86D
+#define FLAG_BADGE08_GET                             (SYSTEM_FLAGS + 0xE) // FLAG_0x86E
 #define NUM_BADGES                                   (1 + FLAG_BADGE08_GET - FLAG_BADGE01_GET)
 
 // Towns and Cities
-#define FLAG_VISITED_LITTLEROOT_TOWN                (SYSTEM_FLAGS + 0xF)
-#define FLAG_VISITED_OLDALE_TOWN                    (SYSTEM_FLAGS + 0x10)
-#define FLAG_VISITED_DEWFORD_TOWN                   (SYSTEM_FLAGS + 0x11)
-#define FLAG_VISITED_LAVARIDGE_TOWN                 (SYSTEM_FLAGS + 0x12)
-#define FLAG_VISITED_FALLARBOR_TOWN                 (SYSTEM_FLAGS + 0x13)
-#define FLAG_VISITED_VERDANTURF_TOWN                (SYSTEM_FLAGS + 0x14)
-#define FLAG_VISITED_PACIFIDLOG_TOWN                (SYSTEM_FLAGS + 0x15)
-#define FLAG_VISITED_PETALBURG_CITY                 (SYSTEM_FLAGS + 0x16)
-#define FLAG_VISITED_SLATEPORT_CITY                 (SYSTEM_FLAGS + 0x17)
-#define FLAG_VISITED_MAUVILLE_CITY                  (SYSTEM_FLAGS + 0x18)
-#define FLAG_VISITED_RUSTBORO_CITY                  (SYSTEM_FLAGS + 0x19)
-#define FLAG_VISITED_FORTREE_CITY                   (SYSTEM_FLAGS + 0x1A)
-#define FLAG_VISITED_LILYCOVE_CITY                  (SYSTEM_FLAGS + 0x1B)
-#define FLAG_VISITED_MOSSDEEP_CITY                  (SYSTEM_FLAGS + 0x1C)
-#define FLAG_VISITED_SOOTOPOLIS_CITY                (SYSTEM_FLAGS + 0x1D)
-#define FLAG_VISITED_EVER_GRANDE_CITY               (SYSTEM_FLAGS + 0x1E)
+#define FLAG_VISITED_LITTLEROOT_TOWN                (SYSTEM_FLAGS + 0xF) // FLAG_0x86F
+#define FLAG_VISITED_OLDALE_TOWN                    (SYSTEM_FLAGS + 0x10) // FLAG_0x870
+#define FLAG_VISITED_DEWFORD_TOWN                   (SYSTEM_FLAGS + 0x11) // FLAG_0x871
+#define FLAG_VISITED_LAVARIDGE_TOWN                 (SYSTEM_FLAGS + 0x12) // FLAG_0x872
+#define FLAG_VISITED_FALLARBOR_TOWN                 (SYSTEM_FLAGS + 0x13) // FLAG_0x873
+#define FLAG_VISITED_VERDANTURF_TOWN                (SYSTEM_FLAGS + 0x14) // FLAG_0x874
+#define FLAG_VISITED_PACIFIDLOG_TOWN                (SYSTEM_FLAGS + 0x15) // FLAG_0x875
+#define FLAG_VISITED_PETALBURG_CITY                 (SYSTEM_FLAGS + 0x16) // FLAG_0x876
+#define FLAG_VISITED_SLATEPORT_CITY                 (SYSTEM_FLAGS + 0x17) // FLAG_0x877
+#define FLAG_VISITED_MAUVILLE_CITY                  (SYSTEM_FLAGS + 0x18) // FLAG_0x878
+#define FLAG_VISITED_RUSTBORO_CITY                  (SYSTEM_FLAGS + 0x19) // FLAG_0x879
+#define FLAG_VISITED_FORTREE_CITY                   (SYSTEM_FLAGS + 0x1A) // FLAG_0x87A
+#define FLAG_VISITED_LILYCOVE_CITY                  (SYSTEM_FLAGS + 0x1B) // FLAG_0x87B
+#define FLAG_VISITED_MOSSDEEP_CITY                  (SYSTEM_FLAGS + 0x1C) // FLAG_0x87C
+#define FLAG_VISITED_SOOTOPOLIS_CITY                (SYSTEM_FLAGS + 0x1D) // FLAG_0x87D
+#define FLAG_VISITED_EVER_GRANDE_CITY               (SYSTEM_FLAGS + 0x1E) // FLAG_0x87E
 
 #define FLAG_IS_CHAMPION                            (SYSTEM_FLAGS + 0x1F) // Seems to be related to linking.
-#define FLAG_NURSE_UNION_ROOM_REMINDER              (SYSTEM_FLAGS + 0x20)
+#define FLAG_NURSE_UNION_ROOM_REMINDER              (SYSTEM_FLAGS + 0x20) // FLAG_0x880
 
-#define FLAG_UNUSED_0x881                           (SYSTEM_FLAGS + 0x21) // Unused Flag
-#define FLAG_UNUSED_0x882                           (SYSTEM_FLAGS + 0x22) // Unused Flag
+#define FLAG_SYS_TERA_ORB_CHARGED                   (SYSTEM_FLAGS + 0x21) // FLAG_0x881
+#define FLAG_SYS_TERA_IS_UNLOCKED                   (SYSTEM_FLAGS + 0x22) // FLAG_0x882
 #define FLAG_UNUSED_0x883                           (SYSTEM_FLAGS + 0x23) // Unused Flag
 #define FLAG_UNUSED_0x884                           (SYSTEM_FLAGS + 0x24) // Unused Flag
 #define FLAG_UNUSED_0x885                           (SYSTEM_FLAGS + 0x25) // Unused Flag

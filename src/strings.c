@@ -287,6 +287,7 @@ const u8 gText_PokeBallsPocket[] = _("POKé BALLS");
 const u8 gText_TMHMPocket[] = _("TMs & HMs");
 const u8 gText_BerriesPocket[] = _("BERRIES");
 const u8 gText_KeyItemsPocket[] = _("KEY ITEMS");
+const u8 gText_TeraShardsPocket[] = _("TERA SHARDS");
 
 const u8 *const gPocketNamesStringsTable[] =
 {
@@ -294,7 +295,8 @@ const u8 *const gPocketNamesStringsTable[] =
     [BALLS_POCKET] = gText_PokeBallsPocket,
     [TMHM_POCKET]  = gText_TMHMPocket,
     [BERRIES_POCKET] = gText_BerriesPocket,
-    [KEYITEMS_POCKET] = gText_KeyItemsPocket
+    [KEYITEMS_POCKET] = gText_KeyItemsPocket,
+    [TERASHARDS_POCKET] = gText_TeraShardsPocket
 };
 
 const u8 gText_NumberItem_TMBerry[] = _("{NO}{STR_VAR_1}{CLEAR 0x07}{STR_VAR_2}");
@@ -713,6 +715,7 @@ const u8 gText_Smart2[] = _("SMART");
 const u8 gText_Tough2[] = _("TOUGH");
 const u8 gText_Items[] = _("ITEMS");
 const u8 gText_Key_Items[] = _("KEY ITEMS");
+const u8 gText_Tera_Shards[] = _("TERA SHARDS");
 const u8 gText_Poke_Balls[] = _("POKé BALLS");
 const u8 gText_TMs_Hms[] = _("TMs & HMs");
 const u8 gText_Berries2[] = _("BERRIES");
@@ -1849,3 +1852,11 @@ const u8 gText_ExpShareOff[] = _("The Exp. Share has been turned off.{PAUSE_UNTI
 const u8 gText_BasePointsResetToZero[] = _("{STR_VAR_1}'s base points\nwere all reset to zero!{PAUSE_UNTIL_PRESS}");
 const u8 gText_Fertilize[] = _("FERTILIZE");
 const u8 gText_PlantBerry[] = _("PLANT BERRY");
+
+// FRLG TM Case
+const u8 gText_Crystarium[] = _("CRYSTARIUM");
+const u8 gText_Close[] = _("CLOSE");
+const u8 gText_CrystariumWillBePutAway[] = _("The CRYSTARIUM will be\nput away.");
+const u8 gText_FontSmall[] = _("{FONT_SMALL}");
+const u8 gText_FontShort[] = _("{FONT_SHORT}");
+

@@ -24,6 +24,7 @@ struct LoadedSaveData
 {
  /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
  /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+            struct ItemSlot teraShards[BAG_TERASHARDS_COUNT];
  /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
  /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
  /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
@@ -264,6 +265,10 @@ void LoadPlayerBag(void)
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
         gLoadedSaveData.keyItems[i] = gSaveBlock1Ptr->bagPocket_KeyItems[i];
 
+    // load player tera shards.
+    for (i = 0; i < BAG_TERASHARDS_COUNT; i++)
+        gLoadedSaveData.teraShards[i] = gSaveBlock1Ptr->bagPocket_TeraShards[i];
+
     // load player pokeballs.
     for (i = 0; i < BAG_POKEBALLS_COUNT; i++)
         gLoadedSaveData.pokeBalls[i] = gSaveBlock1Ptr->bagPocket_PokeBalls[i];
@@ -295,6 +300,10 @@ void SavePlayerBag(void)
     // save player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
         gSaveBlock1Ptr->bagPocket_KeyItems[i] = gLoadedSaveData.keyItems[i];
+
+    // save player tera shards.
+    for (i = 0; i < BAG_TERASHARDS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_TeraShards[i] = gLoadedSaveData.teraShards[i];
 
     // save player pokeballs.
     for (i = 0; i < BAG_POKEBALLS_COUNT; i++)
