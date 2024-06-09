@@ -52,8 +52,8 @@ struct BagPosition
     u8 location;
     u8 pocket;
     u16 pocketSwitchArrowPos;
-    u16 cursorPosition[POCKETS_COUNT];
-    u16 scrollPosition[POCKETS_COUNT];
+    u16 cursorPosition[POCKETS_COUNT - 1];
+    u16 scrollPosition[POCKETS_COUNT - 1];
 };
 
 extern struct BagPosition gBagPosition;

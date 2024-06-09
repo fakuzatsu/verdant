@@ -568,13 +568,13 @@ void ResetBagScrollPositions(void)
 
 void CB2_BagMenuFromStartMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_FIELD, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_ReturnToFieldWithOpenMenu);
+    GoToBagMenu(ITEMMENULOCATION_FIELD, POCKETS_COUNT - 1, CB2_ReturnToFieldWithOpenMenu);
 }
 
 void CB2_BagMenuFromBattle(void)
 {
     if (!InBattlePyramid())
-        GoToBagMenu(ITEMMENULOCATION_BATTLE, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_SetUpReshowBattleScreenAfterMenu2);
+        GoToBagMenu(ITEMMENULOCATION_BATTLE, POCKETS_COUNT - 1, CB2_SetUpReshowBattleScreenAfterMenu2);
     else
         GoToBattlePyramidBagMenu(PYRAMIDBAG_LOC_BATTLE, CB2_SetUpReshowBattleScreenAfterMenu2);
 }
@@ -599,30 +599,30 @@ void ChooseBerryForMachine(void (*exitCallback)(void))
 
 void CB2_GoToSellMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_SHOP, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_ExitSellMenu);
+    GoToBagMenu(ITEMMENULOCATION_SHOP, POCKETS_COUNT - 1, CB2_ExitSellMenu);
 }
 
 void CB2_GoToItemDepositMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_ITEMPC, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_PlayerPCExitBagMenu);
+    GoToBagMenu(ITEMMENULOCATION_ITEMPC, POCKETS_COUNT - 1, CB2_PlayerPCExitBagMenu);
 }
 
 void ApprenticeOpenBagMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_APPRENTICE, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_ApprenticeExitBagMenu);
+    GoToBagMenu(ITEMMENULOCATION_APPRENTICE, POCKETS_COUNT - 1, CB2_ApprenticeExitBagMenu);
     gSpecialVar_0x8005 = ITEM_NONE;
     gSpecialVar_Result = FALSE;
 }
 
 void FavorLadyOpenBagMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_FAVOR_LADY, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_FavorLadyExitBagMenu);
+    GoToBagMenu(ITEMMENULOCATION_FAVOR_LADY, POCKETS_COUNT - 1, CB2_FavorLadyExitBagMenu);
     gSpecialVar_Result = FALSE;
 }
 
 void QuizLadyOpenBagMenu(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_QUIZ_LADY, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, CB2_QuizLadyExitBagMenu);
+    GoToBagMenu(ITEMMENULOCATION_QUIZ_LADY, POCKETS_COUNT - 1, CB2_QuizLadyExitBagMenu);
     gSpecialVar_Result = FALSE;
 }
 
@@ -640,7 +640,7 @@ void GoToBagMenu(u8 location, u8 pocket, void ( *exitCallback)())
             gBagPosition.location = location;
         if (exitCallback)
             gBagPosition.exitCallback = exitCallback;
-        if (pocket < (FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1))
+        if (pocket < POCKETS_COUNT - 1)
             gBagPosition.pocket = pocket;
         if (gBagPosition.location == ITEMMENULOCATION_BERRY_TREE ||
             gBagPosition.location == ITEMMENULOCATION_BERRY_BLENDER_CRUSH ||
@@ -1179,7 +1179,7 @@ static void InitPocketListPositions(void)
 static void InitPocketScrollPositions(void)
 {
     u8 i;
-    for (i = 0; i < POCKETS_COUNT; i++)
+    for (i = 0; i < POCKETS_COUNT - 1; i++)
         SetCursorScrollWithinListBounds(&gBagPosition.scrollPosition[i], &gBagPosition.cursorPosition[i], gBagMenu->numShownItems[i], gBagMenu->numItemStacks[i], MAX_ITEMS_SHOWN);
 }
 
@@ -1329,12 +1329,12 @@ static u8 GetSwitchBagPocketDirection(void)
 
 static void ChangeBagPocketId(u8 *bagPocketId, s8 deltaBagPocketId)
 {
-    if ((deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == BALLS_POCKET) || (deltaBagPocketId == MENU_CURSOR_DELTA_LEFT && *bagPocketId == BERRIES_POCKET))
+    if (((deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == BALLS_POCKET) || (deltaBagPocketId == MENU_CURSOR_DELTA_LEFT && *bagPocketId == BERRIES_POCKET)) && !FlagGet(FLAG_SYS_TERA_IS_UNLOCKED))
         *bagPocketId += deltaBagPocketId*2;
-    else if (deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == POCKETS_COUNT - 1)
+    else if (deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == POCKETS_COUNT - 2)
         *bagPocketId = 0;
     else if (deltaBagPocketId == MENU_CURSOR_DELTA_LEFT && *bagPocketId == 0)
-        *bagPocketId = POCKETS_COUNT - 1;
+        *bagPocketId = POCKETS_COUNT - 2;
     else
         *bagPocketId += deltaBagPocketId;
 }
@@ -2038,7 +2038,7 @@ static void ItemMenu_UseInBattle(u8 taskId)
 
 void CB2_ReturnToBagMenuPocket(void)
 {
-    GoToBagMenu(ITEMMENULOCATION_LAST, FlagGet(FLAG_SYS_TERA_IS_UNLOCKED) ? POCKETS_COUNT : POCKETS_COUNT - 1, NULL);
+    GoToBagMenu(ITEMMENULOCATION_LAST, POCKETS_COUNT - 1, NULL);
 }
 
 static void Task_ItemContext_GiveToParty(u8 taskId)

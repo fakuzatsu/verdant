@@ -94,7 +94,6 @@ static void Task_TMCaseMain(u8 taskId);
 static void Task_SelectTMAction_FromFieldBag(u8 taskId);
 static void Task_TMContextMenu_HandleInput(u8 taskId);
 static void TMHMContextMenuAction_Use(u8 taskId);
-static void TMHMContextMenuAction_Give(u8 taskId);
 static void PrintError_ThereIsNoPokemon(u8 taskId);
 static void PrintError_ItemCantBeHeld(u8 taskId);
 static void Task_WaitButtonAfterErrorPrint(u8 taskId);
@@ -104,7 +103,6 @@ static void Task_SelectTMAction_Type1(u8 taskId);
 static void Task_SelectTMAction_Type3(u8 taskId);
 static void InitWindowTemplatesAndPals(void);
 static void AddTextPrinterParameterized_ColorByIndex(u8 windowId, u8 fontId, const u8 * str, u8 x, u8 y, u8 letterSpacing, u8 lineSpacing, u8 speed, u8 colorIdx);
-static void TMCase_SetWindowBorder1(u8 windowId);
 static void TMCase_SetWindowBorder2(u8 windowId);
 static void TMCase_SetWindowBorder3(u8 windowId);
 static void TMCase_PrintMessageWithFollowupTask(u8 taskId, u8 windowId, const u8 * str, TaskFunc func);
@@ -112,20 +110,10 @@ static void PrintStringTMCaseOnWindow3(void);
 static void DrawMoveInfoUIMarkers(void);
 static void TMCase_MoveCursor_UpdatePrintedTMInfo(u16 itemId);
 static void PlaceHMTileInWindow(u8 windowId, u8 x, u8 y);
-static void HandlePrintMoneyOnHand(void);
-static void HandleCreateYesNoMenu(u8 taskId, const struct YesNoFuncTable * ptrs);
 static u8 AddTMContextMenu(u8 * a0, u8 a1);
 static void RemoveTMContextMenu(u8 * a0);
-static u8 CreateTMSprite(u16 itemId);
-static void SetTMSpriteAnim(struct Sprite * sprite, u8 var);
-static void TintTMSpriteByType(u8 type);
-static void UpdateTMSpritePosition(struct Sprite * sprite, u8 var);
-static void InitSelectedTMSpriteData(u8 a0, u16 itemId);
-static void SpriteCB_MoveTMSpriteInCase(struct Sprite * sprite);
-static void LoadTMTypePalettes(void);
 static void DrawPartyMonIcons(void);
-static void TintPartyMonIcons(u8 tm);
-static void DestroyPartyMonIcons(void);
+static void TintPartyMonIcons(u16 tm);
 
 static const struct BgTemplate sBGTemplates[] = {
     {
@@ -163,8 +151,8 @@ static void (*const sSelectTMActionTasks[])(u8 taskId) = {
 };
 
 static const struct MenuAction sMenuActions_UseGiveExit[] = {
-    {gMenuText_Use,  TMHMContextMenuAction_Use },
-    {gText_Cancel, TMHMContextMenuAction_Exit},
+    {gMenuText_Use,  {TMHMContextMenuAction_Use}},
+    {gText_Cancel, {TMHMContextMenuAction_Exit}},
 };
 
 static const u8 sMenuActionIndices_Field[] = {0, 1};
@@ -260,7 +248,8 @@ static const u16 sTMSpritePaletteOffsetByType[] = {
     [TYPE_PSYCHIC]  = 0x0d0,
     [TYPE_STEEL]    = 0x0e0,
     [TYPE_DARK]     = 0x0f0,
-    [TYPE_DRAGON]   = 0x100
+    [TYPE_DRAGON]   = 0x100,
+    [TYPE_FAIRY]    = 0X110,
 };
 
 void InitTMCase(u8 type, void (* callback)(void), u8 a2)
@@ -387,7 +376,6 @@ static bool8 DoSetUpTMCaseUI(void)
         gMain.state++;
         break;
     case 16:
-        // sTMCaseDynamicResources->tmSpriteId = CreateTMSprite(BagGetItemIdByPocketPosition(POCKET_TM_HM, sTMCaseStaticResources.scrollOffset + sTMCaseStaticResources.selectedRow));
         gMain.state++;
         break;
     case 17:
@@ -467,7 +455,6 @@ static bool8 HandleLoadTMCaseGraphicsAndPalettes(void)
         sTMCaseDynamicResources->seqId++;
         break;
     default:
-        //LoadTMTypePalettes();
         sTMCaseDynamicResources->seqId = 0;
         return TRUE;
     }
@@ -533,7 +520,7 @@ static void GetTMNumberAndMoveString(u8 * dest, u16 itemId)
     }
     StringAppend(gStringVar4, sText_SingleSpace);
     StringAppend(gStringVar4, gText_FontShort);
-    StringAppend(gStringVar4, gMoveNames[ItemIdToBattleMoveId(itemId)]);
+    StringAppend(gStringVar4, gMovesInfo[ItemIdToBattleMoveId(itemId)].name);
     StringCopy(dest, gStringVar4);
 }
 
@@ -549,7 +536,6 @@ static void TMCase_MoveCursorFunc(s32 itemIndex, bool8 onInit, struct ListMenu *
     if (onInit != TRUE)
     {
         PlaySE(SE_SELECT);
-        // InitSelectedTMSpriteData(sTMCaseDynamicResources->tmSpriteId, itemId);
     }
     TMCase_MoveCursor_UpdatePrintedDescription(itemIndex);
     TMCase_MoveCursor_UpdatePrintedTMInfo(itemId);
@@ -559,13 +545,7 @@ static void TMCase_ItemPrintFunc(u8 windowId, u32 itemId, u8 y)
 {
     if (itemId != -2)
     {
-        if (!ItemId_GetImportance(BagGetItemIdByPocketPosition(POCKET_TM_HM, itemId)))
-        {
-            // ConvertIntToDecimalStringN(gStringVar1, BagGetQuantityByPocketPosition(POCKET_TM_HM, itemId), STR_CONV_MODE_RIGHT_ALIGN, 3);
-            // StringExpandPlaceholders(gStringVar4, gText_xVar1);
-            // AddTextPrinterParameterized_ColorByIndex(windowId, 0, gStringVar4, 0x7E, y, 0, 0, 0xFF, 1);
-        }
-        else
+        if ((BagGetItemIdByPocketPosition(POCKET_TM_HM, itemId)) >= ITEM_HM01)
         {
             PlaceHMTileInWindow(windowId, 8, y);
         }
@@ -588,7 +568,7 @@ static void TMCase_MoveCursor_UpdatePrintedDescription(s32 itemIndex)
     AddTextPrinterParameterized_ColorByIndex(1, 2, str, 2, 3, 1, 0, 0, 0);
 
     // update icons
-    TintPartyMonIcons(itemId - ITEM_TM01);
+    TintPartyMonIcons(itemId);
 }
 
 static void FillBG2RowWithPalette_2timesNplus1(s32 a0)
@@ -618,12 +598,6 @@ static void PrintListMenuCursorAt_WithColorIdx(u8 a0, u8 a1)
 static void CreateTMCaseScrollIndicatorArrowPair_Main(void)
 {
     sTMCaseDynamicResources->scrollIndicatorArrowPairId = AddScrollIndicatorArrowPairParameterized(2, 0xA0, 0x08, 0x58, sTMCaseDynamicResources->numTMs - sTMCaseDynamicResources->maxTMsShown, 0x6E, 0x6E, &sTMCaseStaticResources.scrollOffset);
-}
-
-static void CreateTMCaseScrollIndicatorArrowPair_SellQuantitySelect(void)
-{
-    sTMCaseDynamicResources->currItem = 1;
-    sTMCaseDynamicResources->scrollIndicatorArrowPairId = AddScrollIndicatorArrowPairParameterized(2, 0x98, 0x48, 0x68, 2, 0x6E, 0x6E, &sTMCaseDynamicResources->currItem);
 }
 
 static void RemoveTMCaseScrollIndicatorArrowPair(void)
@@ -807,7 +781,7 @@ static void Task_SelectTMAction_FromFieldBag(u8 taskId)
     Free(strbuf);
 
     //show HM icon
-    if (ItemId_GetImportance(gSpecialVar_ItemId))
+    if (gSpecialVar_ItemId >= ITEM_HM01)
     {
         PlaceHMTileInWindow(2, 0, 2);
         CopyWindowToVram(2, 2);
@@ -918,8 +892,6 @@ static void TMHMContextMenuAction_Exit(u8 taskId)
 
 static void Task_SelectTMAction_Type1(u8 taskId)
 {
-    s16 * data = gTasks[taskId].data;
-
     PrintError_ItemCantBeHeld(taskId);
 }
 
@@ -966,11 +938,6 @@ static void AddTextPrinterParameterized_ColorByIndex(u8 windowId, u8 fontId, con
     AddTextPrinterParameterized4(windowId, fontId, x, y, letterSpacing, lineSpacing, sTMCaseTextColors[colorIdx], speed, str);
 }
 
-static void TMCase_SetWindowBorder1(u8 windowId)
-{
-    DrawStdFrameWithCustomTileAndPalette(windowId, FALSE, 0x5B, 0x0E);
-}
-
 static void TMCase_SetWindowBorder2(u8 windowId)
 {
     DrawStdFrameWithCustomTileAndPalette(windowId, FALSE, 0x78, 0x0D);
@@ -995,17 +962,10 @@ static void PrintStringTMCaseOnWindow3(void)
 
 static void DrawMoveInfoUIMarkers(void)
 {
-    #ifndef POKEMON_EXPANSION
-        BlitMenuInfoIcon(4, 19, 0, 0); // "Type" sprite
-        BlitMenuInfoIcon(4, 20, 0, 12); // "Power" sprite
-        BlitMenuInfoIcon(4, 21, 0, 24); // "Accuracy" sprite
-        BlitMenuInfoIcon(4, 22, 0, 36); // "PP" sprite
-    #else
-        BlitMenuInfoIcon(4, 20, 0, 0); // "Type" sprite
-        BlitMenuInfoIcon(4, 21, 0, 12); // "Power" sprite
-        BlitMenuInfoIcon(4, 22, 0, 24); // "Accuracy" sprite
-        BlitMenuInfoIcon(4, 23, 0, 36); // "PP" sprite
-    #endif
+    BlitMenuInfoIcon(4, MENU_INFO_ICON_TYPE, 0, 0); // "Type" sprite
+    BlitMenuInfoIcon(4, MENU_INFO_ICON_POWER, 0, 12); // "Power" sprite
+    BlitMenuInfoIcon(4, MENU_INFO_ICON_ACCURACY, 0, 24); // "Accuracy" sprite
+    BlitMenuInfoIcon(4, MENU_INFO_ICON_PP, 0, 36); // "PP" sprite
     CopyWindowToVram(4, 2);
 }
 
@@ -1027,24 +987,24 @@ static void TMCase_MoveCursor_UpdatePrintedTMInfo(u16 itemId)
     else
     {
         move = ItemIdToBattleMoveId(itemId);
-        BlitMenuInfoIcon(5, gBattleMoves[move].type + 1, 0, 0);
-        if (gBattleMoves[move].power < 2)
+        BlitMenuInfoIcon(5, gMovesInfo[move].type + 1, 0, 0);
+        if (gMovesInfo[move].power < 2)
             str = gText_ThreeDashes;
         else
         {
-            ConvertIntToDecimalStringN(gStringVar1, gBattleMoves[move].power, STR_CONV_MODE_RIGHT_ALIGN, 3);
+            ConvertIntToDecimalStringN(gStringVar1, gMovesInfo[move].power, STR_CONV_MODE_RIGHT_ALIGN, 3);
             str = gStringVar1;
         }
         AddTextPrinterParameterized_ColorByIndex(5, 3, str, 7, 12, 0, 0, 0xFF, 3);
-        if (gBattleMoves[move].accuracy == 0)
+        if (gMovesInfo[move].accuracy == 0)
             str = gText_ThreeDashes;
         else
         {
-            ConvertIntToDecimalStringN(gStringVar1, gBattleMoves[move].accuracy, STR_CONV_MODE_RIGHT_ALIGN, 3);
+            ConvertIntToDecimalStringN(gStringVar1, gMovesInfo[move].accuracy, STR_CONV_MODE_RIGHT_ALIGN, 3);
             str = gStringVar1;
         }
         AddTextPrinterParameterized_ColorByIndex(5, 3, str, 7, 24, 0, 0, 0xFF, 3);
-        ConvertIntToDecimalStringN(gStringVar1, gBattleMoves[move].pp, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar1, gMovesInfo[move].pp, STR_CONV_MODE_RIGHT_ALIGN, 3);
         AddTextPrinterParameterized_ColorByIndex(5, 3, gStringVar1, 7, 36, 0, 0, 0xFF, 3);
         CopyWindowToVram(5, 2);
     }
@@ -1053,16 +1013,6 @@ static void TMCase_MoveCursor_UpdatePrintedTMInfo(u16 itemId)
 static void PlaceHMTileInWindow(u8 windowId, u8 x, u8 y)
 {
     BlitBitmapToWindow(windowId, gUnknown_8E99118, x, y, 16, 12);
-}
-
-static void HandlePrintMoneyOnHand(void)
-{
-    PrintMoneyAmountInMoneyBoxWithBorder(8, 0x78, 0xD, GetMoney(&gSaveBlock1Ptr->money));
-}
-
-static void HandleCreateYesNoMenu(u8 taskId, const struct YesNoFuncTable *ptrs)
-{
-    CreateYesNoMenuWithCallbacks(taskId, &sYesNoWindowTemplate, 2, 0, 2, 0x5B, 0x0E, ptrs);
 }
 
 static u8 AddTMContextMenu(u8 * a0, u8 a1)
@@ -1146,14 +1096,10 @@ static void DrawPartyMonIcons(void)
             icon_y = i < 3 ? MON_ICON_START_Y : MON_ICON_START_Y + MON_ICON_PADDING;
         }
         //get species
-        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
 
         //create icon sprite
-        #ifndef POKEMON_EXPANSION
-            spriteIdData[i] = CreateMonIcon(species, SpriteCb_MonIcon, icon_x, icon_y, 1, GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY), TRUE);
-        #else
-            spriteIdData[i] = CreateMonIcon(species, SpriteCb_MonIcon, icon_x, icon_y, 1, GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY));
-        #endif
+        spriteIdData[i] = CreateMonIcon(species, SpriteCb_MonIcon, icon_x, icon_y, 1, GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY));
 
         //Set priority, stop movement and save original palette position
         gSprites[spriteIdData[i]].oam.priority = 0;
@@ -1162,15 +1108,15 @@ static void DrawPartyMonIcons(void)
     }
 }
 
-static void TintPartyMonIcons(u8 tm)
+static void TintPartyMonIcons(u16 tm)
 {
     u8 i;
     u16 species;
 
     for (i = 0; i < gPlayerPartyCount; i++)
     {
-        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
-        if (!CanSpeciesLearnTMHM(species, tm))
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (!CanLearnTeachableMove(species, ItemIdToBattleMoveId(tm)))
         {
             gSprites[spriteIdData[i]].oam.paletteNum = 7 + spriteIdPalette[i];
         }
@@ -1180,14 +1126,4 @@ static void TintPartyMonIcons(u8 tm)
         }
     }
     
-}
-
-static void DestroyPartyMonIcons(void)
-{
-    u8 i;
-    for (i = 0; i < gPlayerPartyCount; i++)
-    {
-        FreeAndDestroyMonIconSprite(&gSprites[spriteIdData[i]]);
-        FreeMonIconPalettes();
-    }
 }
