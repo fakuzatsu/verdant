@@ -32,7 +32,8 @@ u32 GetCurrentLevelCap(void)
     }
     else if (B_LEVEL_CAP_TYPE == LEVEL_CAP_VARIABLE)
     {
-        return VarGet(B_LEVEL_CAP_VARIABLE);
+        i = VarGet(B_LEVEL_CAP_VARIABLE);
+        return (i != 0) ? i : MAX_LEVEL;
     }
 
     return MAX_LEVEL;
