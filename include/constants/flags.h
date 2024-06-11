@@ -1385,20 +1385,20 @@
 
 #define FLAG_SYS_TERA_ORB_CHARGED                   (SYSTEM_FLAGS + 0x21) // FLAG_0x881
 #define FLAG_SYS_TERA_IS_UNLOCKED                   (SYSTEM_FLAGS + 0x22) // FLAG_0x882
-#define FLAG_UNUSED_0x883                           (SYSTEM_FLAGS + 0x23) // Unused Flag
-#define FLAG_UNUSED_0x884                           (SYSTEM_FLAGS + 0x24) // Unused Flag
-#define FLAG_UNUSED_0x885                           (SYSTEM_FLAGS + 0x25) // Unused Flag
-#define FLAG_UNUSED_0x886                           (SYSTEM_FLAGS + 0x26) // Unused Flag
-#define FLAG_UNUSED_0x887                           (SYSTEM_FLAGS + 0x27) // Unused Flag
+#define FLAG_SYS_NO_BAG_USE                         (SYSTEM_FLAGS + 0x23) // FLAG_0x883
+#define FLAG_SYS_NO_CATCHING                        (SYSTEM_FLAGS + 0x24) // FLAG_0x884
+#define FLAG_SYS_NO_ENCOUNTER                       (SYSTEM_FLAGS + 0x25) // FLAG_0x885
+#define FLAG_SYS_NO_TRAINER_SEE                     (SYSTEM_FLAGS + 0x26) // FLAG_0x886
+#define FLAG_SYS_NO_COLLISION                       (SYSTEM_FLAGS + 0x27) // FLAG_0x887
 
-#define FLAG_SYS_USE_FLASH                          (SYSTEM_FLAGS + 0x28)
-#define FLAG_SYS_USE_STRENGTH                       (SYSTEM_FLAGS + 0x29)
-#define FLAG_SYS_WEATHER_CTRL                       (SYSTEM_FLAGS + 0x2A)
-#define FLAG_SYS_CYCLING_ROAD                       (SYSTEM_FLAGS + 0x2B)
-#define FLAG_SYS_SAFARI_MODE                        (SYSTEM_FLAGS + 0x2C)
-#define FLAG_SYS_CRUISE_MODE                        (SYSTEM_FLAGS + 0x2D)
+#define FLAG_SYS_USE_FLASH                          (SYSTEM_FLAGS + 0x28) // FLAG_0x888
+#define FLAG_SYS_USE_STRENGTH                       (SYSTEM_FLAGS + 0x29) // FLAG_0x889
+#define FLAG_SYS_WEATHER_CTRL                       (SYSTEM_FLAGS + 0x2A) // FLAG_0x890
+#define FLAG_SYS_CYCLING_ROAD                       (SYSTEM_FLAGS + 0x2B) // FLAG_0x891
+#define FLAG_SYS_SAFARI_MODE                        (SYSTEM_FLAGS + 0x2C) // FLAG_0x892
+#define FLAG_SYS_CRUISE_MODE                        (SYSTEM_FLAGS + 0x2D) // FLAG_0x893
 
-#define FLAG_UNUSED_0x88E                           (SYSTEM_FLAGS + 0x2E) // Unused Flag
+#define FLAG_SYS_EXP_SHARE                          (SYSTEM_FLAGS + 0x2E) // FLAG_0x894
 #define FLAG_UNUSED_0x88F                           (SYSTEM_FLAGS + 0x2F) // Unused Flag
 
 #define FLAG_SYS_TV_HOME                            (SYSTEM_FLAGS + 0x30)

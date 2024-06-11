@@ -26,19 +26,19 @@
 // Exp. Share config
 // To use this feature, replace the 0 with the flag ID you're assigning it to.
 // Eg: Replace with FLAG_UNUSED_0x264 so you can use that flag to toggle the feature.
-#define I_EXP_SHARE_FLAG        0           // If this flag is set, every Pokémon in the party will gain experience, regardless if they participated in the battle or not.
-#define I_EXP_SHARE_ITEM        GEN_5       // In Gen6+, the Exp. Share was changed from a held item to a Key item that toggles the effect described above.
+#define I_EXP_SHARE_FLAG        FLAG_SYS_EXP_SHARE // If this flag is set, every Pokémon in the party will gain experience, regardless if they participated in the battle or not.
+#define I_EXP_SHARE_ITEM        GEN_6       // In Gen6+, the Exp. Share was changed from a held item to a Key item that toggles the effect described above.
 
 // Repel/Lure config
 // These two settings are both independent and complementary.
-#define VAR_LAST_REPEL_LURE_USED    0       // If this var has been assigned, last Repel/Lure used will be saved and the player will get prompted with the vanilla repel YES/NO option, unless I_REPEL_LURE_MENU is set to TRUE.
+#define VAR_LAST_REPEL_LURE_USED    VAR_LAST_REPEL // If this var has been assigned, last Repel/Lure used will be saved and the player will get prompted with the vanilla repel YES/NO option, unless I_REPEL_LURE_MENU is set to TRUE.
 #define I_REPEL_LURE_MENU           TRUE    // If TRUE, the player is able to choose which Repel/Lure to use once the previous one runs out. Cursor position is saved by VAR_LAST_REPEL_LURE_USED if not 0.
 
 // Vs. Seeker
 #define I_VS_SEEKER_CHARGING        0     // If this flag is assigned, the Vs Seeker functionality will be enabled. When the player has the Vs. Seeker, Match Call rematch functions will stop working.
 
 //Fishing
-#define I_FISHING_CHAIN             FALSE // Introduced in XY, hooking the same Pokémon repeatedly will increase the odds of that mon being shiny. NOTE: This implementation is an approximation of the actual feature, as XY have not been throughoutly documented or datamined.
+#define I_FISHING_CHAIN             TRUE // Introduced in XY, hooking the same Pokémon repeatedly will increase the odds of that mon being shiny. NOTE: This implementation is an approximation of the actual feature, as XY have not been throughoutly documented or datamined.
 #define I_FISHING_MINIGAME          GEN_3 // Each generation uses a variation of reeling in Pokémon once they have been hooked.
 #define I_FISHING_PROXIMITY         FALSE // Introduced in XY, fishing away from other people in enclosed areas will increase the chances of a Pokémon being hooked. NOTE: This implementation is an approximation of the actual feature, as XY have not been throughoutly documented or datamined.
 
