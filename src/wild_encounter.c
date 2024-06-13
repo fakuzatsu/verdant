@@ -22,6 +22,7 @@
 #include "constants/item.h"
 #include "constants/items.h"
 #include "constants/layouts.h"
+#include "constants/map_types.h"
 #include "constants/weather.h"
 
 extern const u8 EventScript_SprayWoreOff[];
@@ -518,14 +519,14 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 ar
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
-    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
+    CreateWildMon(PokemonRandomiser(wildMonInfo->wildPokemon[wildMonIndex].species), level);
     return TRUE;
 }
 
 static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
-    u16 wildMonSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;
+    u16 wildMonSpecies = PokemonRandomiser(wildMonInfo->wildPokemon[wildMonIndex].species);
     u8 level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING);
 
     UpdateChainFishingSpeciesAndStreak(wildMonSpecies);
@@ -540,7 +541,7 @@ static bool8 SetUpMassOutbreakEncounter(u8 flags)
     if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(gSaveBlock1Ptr->outbreakPokemonLevel))
         return FALSE;
 
-    CreateWildMon(gSaveBlock1Ptr->outbreakPokemonSpecies, gSaveBlock1Ptr->outbreakPokemonLevel);
+    CreateWildMon(PokemonRandomiser(gSaveBlock1Ptr->outbreakPokemonSpecies), gSaveBlock1Ptr->outbreakPokemonLevel);
     for (i = 0; i < MAX_MON_MOVES; i++)
         SetMonMoveSlot(&gEnemyParty[0], gSaveBlock1Ptr->outbreakPokemonMoves[i], i);
 
@@ -960,7 +961,7 @@ void FishingWildEncounter(u8 rod)
         u8 level = ChooseWildMonLevel(&sWildFeebas, 0, WILD_AREA_FISHING);
 
         species = sWildFeebas.species;
-        CreateWildMon(species, level);
+        CreateWildMon(PokemonRandomiser(species), level);
     }
     else
     {
@@ -1203,4 +1204,40 @@ bool8 StandardWildEncounter_Debug(void)
 
     DoStandardWildBattle_Debug();
     return TRUE;
+}
+
+u16 PokemonRandomiser(u16 species)
+{
+    u32 i, rerolls;
+    u16 result, randomisationKey;
+    bool32 isSpeciesWaterType, isResultWaterType;
+
+    if (!gSaveBlock2Ptr->optionsWildRandomiser)
+        return species;
+
+    randomisationKey = VarGet(VAR_RANDOMISER_SEED);
+    result = ((species ^ randomisationKey) + ((species & randomisationKey) << 5) + ((species >> 3) ^ (randomisationKey << 2))) % FORMS_START;
+    isSpeciesWaterType = (gSpeciesInfo[species].types[0] == TYPE_WATER || gSpeciesInfo[species].types[1] == TYPE_WATER);
+
+    rerolls = (gMapHeader.mapType == MAP_TYPE_OCEAN_ROUTE 
+            || gMapHeader.mapType == MAP_TYPE_UNDERGROUND
+            || gMapHeader.mapType == MAP_TYPE_UNDERWATER) ? 4 : 2;
+
+    for (i = 0; i <= rerolls; ++i)
+    {
+        isResultWaterType = (gSpeciesInfo[result].types[0] == TYPE_WATER || gSpeciesInfo[result].types[1] == TYPE_WATER);
+
+        if (isSpeciesWaterType && !isResultWaterType)
+            result = (result + (randomisationKey << i)) % FORMS_START;
+        else if (!isSpeciesWaterType && isResultWaterType)
+            result = (result + (randomisationKey << i)) % FORMS_START;
+        else
+            break;
+    }
+
+    if ((gSpeciesInfo[result].isLegendary || gSpeciesInfo[result].isMythical || gSpeciesInfo[result].isUltraBeast)
+    && ((randomisationKey & 0b11) != (gMapHeader.mapLayoutId & 0b11)))
+        result = ((result + randomisationKey) << 3) % FORMS_START;
+
+    return result;
 }

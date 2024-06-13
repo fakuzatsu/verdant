@@ -42,10 +42,13 @@ enum
 
 enum
 {
-    MENUITEM_CUSTOM_HP_BAR,
-    MENUITEM_CUSTOM_EXP_BAR,
+    MENUITEM_CUSTOM_RANDWILD,
+    MENUITEM_CUSTOM_RANDTRAIN,
+    MENUITEM_CUSTOM_RANDABIL,
     MENUITEM_CUSTOM_FONT,
     MENUITEM_CUSTOM_MATCHCALL,
+    MENUITEM_CUSTOM_HP_BAR,
+    MENUITEM_CUSTOM_EXP_BAR,
     MENUITEM_CUSTOM_CANCEL,
     MENUITEM_CUSTOM_COUNT,
 };
@@ -181,6 +184,9 @@ static void DrawChoices_UnitSystem(int selection, int y);
 static void DrawChoices_Font(int selection, int y);
 static void DrawChoices_FrameType(int selection, int y);
 static void DrawChoices_MatchCall(int selection, int y);
+static void DrawChoices_RandWild(int selection, int y);
+static void DrawChoices_RandTrain(int selection, int y);
+static void DrawChoices_RandAbil(int selection, int y);
 static void DrawBgWindowFrames(void);
 
 // EWRAM vars
@@ -244,6 +250,9 @@ struct // MENU_CUSTOM
     [MENUITEM_CUSTOM_EXP_BAR]      = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
     [MENUITEM_CUSTOM_FONT]         = {DrawChoices_Font,        ProcessInput_Options_Two}, 
     [MENUITEM_CUSTOM_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
+    [MENUITEM_CUSTOM_RANDWILD]     = {DrawChoices_RandWild,    ProcessInput_Options_Two},
+    [MENUITEM_CUSTOM_RANDTRAIN]    = {DrawChoices_RandTrain,   ProcessInput_Options_Two},
+    [MENUITEM_CUSTOM_RANDABIL]     = {DrawChoices_RandAbil,    ProcessInput_Options_Two},
     [MENUITEM_CUSTOM_CANCEL]       = {NULL, NULL},
 };
 
@@ -251,6 +260,9 @@ struct // MENU_CUSTOM
 static const u8 sText_HpBar[]       = _("HP BAR");
 static const u8 sText_ExpBar[]      = _("EXP BAR");
 static const u8 sText_UnitSystem[]  = _("UNIT SYSTEM");
+static const u8 sText_RandWild[]    = _("ENCOUNTERS");
+static const u8 sText_RandTrain[]    = _("TRAINERS");
+static const u8 sText_RandAbil[]    = _("ABILITIES");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
@@ -269,6 +281,9 @@ static const u8 *const sOptionMenuItemsNamesCustom[MENUITEM_CUSTOM_COUNT] =
     [MENUITEM_CUSTOM_EXP_BAR]     = sText_ExpBar,
     [MENUITEM_CUSTOM_FONT]        = gText_Font,
     [MENUITEM_CUSTOM_MATCHCALL]   = gText_OptionMatchCalls,
+    [MENUITEM_CUSTOM_RANDWILD]    = sText_RandWild,
+    [MENUITEM_CUSTOM_RANDTRAIN]   = sText_RandTrain,
+    [MENUITEM_CUSTOM_RANDABIL]    = sText_RandAbil,
     [MENUITEM_CUSTOM_CANCEL]      = gText_OptionMenuSave,
 };
 
@@ -312,6 +327,9 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_CUSTOM_EXP_BAR:         return TRUE;
         case MENUITEM_CUSTOM_FONT:            return TRUE;
         case MENUITEM_CUSTOM_MATCHCALL:       return TRUE;
+        case MENUITEM_CUSTOM_RANDWILD:        return TRUE;
+        case MENUITEM_CUSTOM_RANDTRAIN:       return TRUE;
+        case MENUITEM_CUSTOM_RANDABIL:        return TRUE;
         case MENUITEM_CUSTOM_CANCEL:          return TRUE;
         case MENUITEM_CUSTOM_COUNT:           return TRUE;
         }
@@ -356,12 +374,21 @@ static const u8 sText_Desc_BikeOn[]             = _("Enables the BIKE theme when
 static const u8 sText_Desc_FontType[]           = _("Choose the font design.");
 static const u8 sText_Desc_OverworldCallsOn[]   = _("TRAINERs will be able to call you,\noffering rematches and info.");
 static const u8 sText_Desc_OverworldCallsOff[]  = _("You will not receive calls.\nSpecial events will still occur.");
+static const u8 sText_Desc_RandWildNorm[]       = _("Wild Pokémon encounters will\nbe normal.");
+static const u8 sText_Desc_RandWildRand[]       = _("Wild Pokémon encounters will\nbe randomised.");
+static const u8 sText_Desc_RandTrainNorm[]      = _("Trainer Pokémon will be\nnormal.");
+static const u8 sText_Desc_RandTrainRand[]      = _("Trainer Pokémon will be\nrandomised.");
+static const u8 sText_Desc_RandAbilNorm[]       = _("Pokémon Abilities will be\nnormal.");
+static const u8 sText_Desc_RandAbilRand[]       = _("Pokémon Abilities will be\nrandomised.");
 static const u8 *const sOptionMenuItemDescriptionsCustom[MENUITEM_CUSTOM_COUNT][2] =
 {
     [MENUITEM_CUSTOM_HP_BAR]      = {sText_Desc_BattleHPBar,        sText_Empty},
     [MENUITEM_CUSTOM_EXP_BAR]     = {sText_Desc_BattleExpBar,       sText_Empty},
     [MENUITEM_CUSTOM_FONT]        = {sText_Desc_FontType,           sText_Desc_FontType},
     [MENUITEM_CUSTOM_MATCHCALL]   = {sText_Desc_OverworldCallsOn,   sText_Desc_OverworldCallsOff},
+    [MENUITEM_CUSTOM_RANDWILD]    = {sText_Desc_RandWildNorm,       sText_Desc_RandWildRand},
+    [MENUITEM_CUSTOM_RANDTRAIN]   = {sText_Desc_RandTrainNorm,      sText_Desc_RandTrainRand},
+    [MENUITEM_CUSTOM_RANDABIL]    = {sText_Desc_RandAbilNorm,       sText_Desc_RandAbilRand},
     [MENUITEM_CUSTOM_CANCEL]      = {sText_Desc_Save,               sText_Empty},
 };
 
@@ -387,6 +414,9 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledCustom[MENUITEM_CUSTOM
     [MENUITEM_CUSTOM_EXP_BAR]     = sText_Empty,
     [MENUITEM_CUSTOM_FONT]        = sText_Empty,
     [MENUITEM_CUSTOM_MATCHCALL]   = sText_Empty,
+    [MENUITEM_CUSTOM_RANDWILD]    = sText_Empty,
+    [MENUITEM_CUSTOM_RANDTRAIN]   = sText_Empty,
+    [MENUITEM_CUSTOM_RANDABIL]    = sText_Empty,
     [MENUITEM_CUSTOM_CANCEL]      = sText_Empty,
 };
 
@@ -695,6 +725,9 @@ void CB2_InitOptionPlusMenu(void)
         sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR]     = gSaveBlock2Ptr->optionsExpBarSpeed;
         sOptions->sel_custom[MENUITEM_CUSTOM_FONT]        = gSaveBlock2Ptr->optionsCurrentFont;
         sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL]   = gSaveBlock2Ptr->optionsDisableMatchCall;
+        sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD]    = gSaveBlock2Ptr->optionsWildRandomiser;
+        sOptions->sel_custom[MENUITEM_CUSTOM_RANDTRAIN]   = gSaveBlock2Ptr->optionsTrainerRandomiser;
+        sOptions->sel_custom[MENUITEM_CUSTOM_RANDABIL]    = gSaveBlock2Ptr->optionsAbilityRandomiser;
 
         sOptions->submenu = MENU_MAIN;
 
@@ -902,6 +935,9 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsExpBarSpeed      = sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR];
     gSaveBlock2Ptr->optionsCurrentFont      = sOptions->sel_custom[MENUITEM_CUSTOM_FONT];
     gSaveBlock2Ptr->optionsDisableMatchCall = sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL];
+    gSaveBlock2Ptr->optionsWildRandomiser   = sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD];
+    gSaveBlock2Ptr->optionsTrainerRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDTRAIN];
+    gSaveBlock2Ptr->optionsAbilityRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDABIL];
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -1183,6 +1219,8 @@ static void DrawChoices_ButtonMode(int selection, int y)
 }
 
 static const u8 sText_Normal[] = _("NORMAL");
+static const u8 sText_RandomiserNormal[] = _("NORMAL");
+static const u8 sText_RandomiserRandom[] = _("RANDOM");
 static void DrawChoices_BarSpeed(int selection, int y) //HP and EXP
 {
     bool8 active = CheckConditions(MENUITEM_CUSTOM_EXP_BAR);
@@ -1261,6 +1299,35 @@ static void DrawChoices_MatchCall(int selection, int y)
     DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(1, gText_BattleSceneOff, 198), y, styles[1], active);
 }
 
+static void DrawChoices_RandWild(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDWILD);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_RandomiserNormal, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_RandomiserRandom, GetStringRightAlignXOffset(1, sText_RandomiserRandom, 198), y, styles[1], active);
+}
+
+static void DrawChoices_RandTrain(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDTRAIN);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_RandomiserNormal, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_RandomiserRandom, GetStringRightAlignXOffset(1, sText_RandomiserRandom, 198), y, styles[1], active);
+}
+
+static void DrawChoices_RandAbil(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDABIL);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_RandomiserNormal, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_RandomiserRandom, GetStringRightAlignXOffset(1, sText_RandomiserRandom, 198), y, styles[1], active);
+}
 
 // Background tilemap
 #define TILE_TOP_CORNER_L 0x1A2 // 418

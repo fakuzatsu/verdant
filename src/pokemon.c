@@ -3428,12 +3428,28 @@ u8 GetMonsStateToDoubles_2(void)
     return (aliveCount > 1) ? PLAYER_HAS_TWO_USABLE_MONS : PLAYER_HAS_ONE_USABLE_MON;
 }
 
+u16 AbilityRandomiser(u16 ability, u16 pokemonType)
+{
+    u16 result;
+    u16 randomisationKey = VarGet(VAR_RANDOMISER_SEED);
+
+    if (!gSaveBlock2Ptr->optionsAbilityRandomiser)
+        return ability;
+
+    result = (((ability * (pokemonType + 1)) ^ randomisationKey) + ((ability & randomisationKey) << 5)) % ABILITIES_COUNT;
+
+    if (result == 0)
+        result += 1;
+
+    return result;
+}
+
 u16 GetAbilityBySpecies(u16 species, u8 abilityNum)
 {
     int i;
 
     if (abilityNum < NUM_ABILITY_SLOTS)
-        gLastUsedAbility = gSpeciesInfo[species].abilities[abilityNum];
+        gLastUsedAbility = AbilityRandomiser(gSpeciesInfo[species].abilities[abilityNum], gSpeciesInfo[species].types[0]);
     else
         gLastUsedAbility = ABILITY_NONE;
 
@@ -3441,13 +3457,13 @@ u16 GetAbilityBySpecies(u16 species, u8 abilityNum)
     {
         for (i = NUM_NORMAL_ABILITY_SLOTS; i < NUM_ABILITY_SLOTS && gLastUsedAbility == ABILITY_NONE; i++)
         {
-            gLastUsedAbility = gSpeciesInfo[species].abilities[i];
+            gLastUsedAbility = AbilityRandomiser(gSpeciesInfo[species].abilities[i], gSpeciesInfo[species].types[0]);
         }
     }
 
     for (i = 0; i < NUM_ABILITY_SLOTS && gLastUsedAbility == ABILITY_NONE; i++) // look for any non-empty ability
     {
-        gLastUsedAbility = gSpeciesInfo[species].abilities[i];
+        gLastUsedAbility = AbilityRandomiser(gSpeciesInfo[species].abilities[i], gSpeciesInfo[species].types[0]);
     }
 
     return gLastUsedAbility;

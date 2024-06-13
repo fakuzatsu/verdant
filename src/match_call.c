@@ -1772,14 +1772,14 @@ static void PopulateSpeciesFromTrainerLocation(int matchCallId, u8 *destStr)
             if (gWildMonHeaders[i].landMonsInfo)
             {
                 slot = GetLandEncounterSlot();
-                species[numSpecies] = gWildMonHeaders[i].landMonsInfo->wildPokemon[slot].species;
+                species[numSpecies] = PokemonRandomiser(gWildMonHeaders[i].landMonsInfo->wildPokemon[slot].species);
                 numSpecies++;
             }
 
             if (gWildMonHeaders[i].waterMonsInfo)
             {
                 slot = GetWaterEncounterSlot();
-                species[numSpecies] = gWildMonHeaders[i].waterMonsInfo->wildPokemon[slot].species;
+                species[numSpecies] = PokemonRandomiser(gWildMonHeaders[i].waterMonsInfo->wildPokemon[slot].species);
                 numSpecies++;
             }
 
@@ -1798,14 +1798,16 @@ static void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
 {
     u16 trainerId;
     const struct TrainerMon *party;
-    u8 monId;
+    u8 monId, trainerClass;
     const u8 *speciesName;
 
     trainerId = GetLastBeatenRematchTrainerId(sMatchCallTrainers[matchCallId].trainerId);
     party = GetTrainerPartyFromId(trainerId);
+    trainerClass = GetTrainerClassFromId(trainerId);
     monId = Random() % GetTrainerPartySizeFromId(trainerId);
+
     if (party != NULL)
-        speciesName = GetSpeciesName(party[monId].species);
+        speciesName = GetSpeciesName(trainerPokemonRandomiser(party[monId].species, trainerClass));
     else
         speciesName = GetSpeciesName(SPECIES_NONE);
 

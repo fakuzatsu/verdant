@@ -101,6 +101,9 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsExpBarSpeed = 0; //tx_optionsPlus
     gSaveBlock2Ptr->optionsDisableMatchCall = 0;    //tx_optionsPlus
     gSaveBlock2Ptr->optionsCurrentFont = 0;         //tx_optionsPlus
+    gSaveBlock2Ptr->optionsWildRandomiser = 0;      //custom tx_optionsPlus
+    gSaveBlock2Ptr->optionsTrainerRandomiser = 0;   //custom tx_optionsPlus
+    gSaveBlock2Ptr->optionsAbilityRandomiser = 0;   //custom tx_optionsPlus
 }
 
 static void ClearPokedexFlags(void)
@@ -149,6 +152,11 @@ void ResetMenuAndMonGlobals(void)
     ZeroEnemyPartyMons();
     ResetBagScrollPositions();
     ResetPokeblockScrollPositions();
+}
+
+void SetRandomiserSeed(void)
+{
+    VarSet(VAR_RANDOMISER_SEED, Random());
 }
 
 void NewGameInitData(void)
@@ -210,6 +218,7 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    SetRandomiserSeed();
 }
 
 static void ResetMiniGamesRecords(void)

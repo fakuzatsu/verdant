@@ -45,5 +45,6 @@ bool8 StandardWildEncounter_Debug(void);
 void ResetChainFishingDexNavStreak(void);
 bool32 IsCurrentEncounterFishing(void);
 u32 CalculateChainFishingShinyRolls(void);
+u16 PokemonRandomiser(u16 species);
 
 #endif // GUARD_WILD_ENCOUNTER_H
