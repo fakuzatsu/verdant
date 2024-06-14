@@ -27,6 +27,11 @@
       "map": "MAP_LILYCOVE_CITY",
       "offset": -10,
       "direction": "right"
+    },
+    {
+      "map": "MAP_SAFARI_ZONE_SOUTHEAST",
+      "offset": 34,
+      "direction": "up"
     }
   ],
   "object_events": [

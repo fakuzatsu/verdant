@@ -248,7 +248,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 4,
+      "x": 10,
       "y": 96,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -794,7 +794,7 @@
     },
     {
       "type": "secret_base",
-      "x": 4,
+      "x": 6,
       "y": 89,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_SHRUB1_2"
