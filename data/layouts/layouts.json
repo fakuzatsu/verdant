@@ -615,7 +615,7 @@
       "id": "LAYOUT_POKEMON_CENTER_2F",
       "name": "PokemonCenter_2F_Layout",
       "width": 14,
-      "height": 10,
+      "height": 9,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_PokemonCenter",
       "border_filepath": "data/layouts/PokemonCenter_2F/border.bin",
@@ -4410,6 +4410,16 @@
       "secondary_tileset": "gTileset_MysteryEventsHouse",
       "border_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin",
       "blockdata_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin"
+    },
+    {
+      "id": "LAYOUT_POKEMON_CENTER_B1F",
+      "name": "PokemonCenter_B1F_Layout",
+      "width": 14,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/PokemonCenter_B1F/border.bin",
+      "blockdata_filepath": "data/layouts/PokemonCenter_B1F/map.bin"
     }
   ]
 }
