@@ -3360,7 +3360,7 @@ extern const u8 gMailTilemap_Retro[];
 extern const u8 gMonMarkingsMenu_Gfx[];
 extern const u16 gMonMarkingsMenu_Pal[];
 
-// frlg_tm_case_port
+// FRLG TM Case
 extern const u32 gUnknown_8E845D8[];
 extern const u32 gUnknown_8E84A24[];
 extern const u32 gUnknown_8E84B70[];
@@ -3371,5 +3371,10 @@ extern const u32 gUnknown_8E84F20[];
 extern const u32 gUnknown_8E85068[];
 extern const u8 gUnknown_8E99118[];
 extern const u16 gTMCaseMainWindowPalette[];
+
+// Scrolling BL/WH Background
+extern const u32 sScrollBgTiles[];
+extern const u32 sScrollBgTilemap[];
+extern const u16 sScrollBgPalette[];
 
 #endif //GUARD_GRAPHICS_H
