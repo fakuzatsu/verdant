@@ -4043,7 +4043,7 @@ static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
     static const u8 sTextDownArrow[] = _(" {DOWN_ARROW}");
     u8 *txtPtr;
 
-    if (statIndex == 0 || !SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    if (statIndex == 0 || !BW_SUMMARY_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
         txtPtr = StringCopy(dst, sTextNatureNeutral);
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
         txtPtr = StringCopy(dst, sTextNatureUp);
@@ -4056,9 +4056,11 @@ static void BufferStat(u8 *dst, u8 statIndex, u32 stat, u32 strId, u32 n)
 
     if (BW_SUMMARY_NATURE_ARROWS)
     {
-        if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
+        if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp
+        && gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp != gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
             StringAppend(txtPtr, sTextUpArrow);
-        else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+        else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown
+        && gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp != gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
             StringAppend(txtPtr, sTextDownArrow);
     }
 
