@@ -2312,3 +2312,42 @@
 	.macro setwilddoubleflag
 	callnative ScriptSetDoubleBattleFlag
 	.endm
+
+	@ Gets the \memoryNo for the Pokémon at \slot
+	.macro getmemory memoryNo:req, slot:req
+	callnative GetMemory
+	.byte \memoryNo
+	.2byte \slot
+	.endm
+
+@ Sets the \memoryIndc \memory for the Pokémon at \slot
+.macro setmemory memoryIndc:req, memory:req, slot:req, overwrite
+	.ifnb \overwrite
+		callnative SetMemory
+		.byte \memoryIndc
+		.byte \memory
+		.2byte \slot
+		.byte \overwrite
+	.else
+		callnative SetMemory
+		.byte \memoryIndc
+		.byte \memory
+		.2byte \slot
+		.byte 0
+	.endif
+.endm
+
+@ Sets the \memoryIndc \memory for all Pokémon
+.macro setmemoryall memoryIndc:req, memory:req, overwrite
+	.ifnb \overwrite
+		callnative SetMemoryAll
+		.byte \memoryIndc
+		.byte \memory
+		.byte \overwrite
+	.else
+		callnative SetMemoryAll
+		.byte \memoryIndc
+		.byte \memory
+		.byte 0
+	.endif
+.endm

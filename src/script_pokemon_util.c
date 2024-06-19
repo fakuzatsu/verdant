@@ -313,6 +313,96 @@ void SetTeraType(struct ScriptContext *ctx)
         SetMonData(&gPlayerParty[partyIndex], MON_DATA_TERA_TYPE, &type);
 }
 
+void GetMemory(struct ScriptContext *ctx)
+{
+    u32 memoryNo = ScriptReadByte(ctx);
+    u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
+    u8 combinedMemory = 0;
+
+    gSpecialVar_Result = FALSE;
+
+    if (partyIndex < PARTY_SIZE)
+    {
+        if (memoryNo == 1)
+        {
+            combinedMemory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY1);
+            gSpecialVar_Result = TRUE;
+        }
+        else if (memoryNo == 2)
+        {
+            combinedMemory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY2);
+            gSpecialVar_Result = TRUE;
+        }
+
+        if (gSpecialVar_Result) {
+            u8 memoryIndc, memory;
+            SplitMemoryIntoParts(combinedMemory, &memoryIndc, &memory);
+            gSpecialVar_0x800A = memoryIndc;
+            gSpecialVar_0x800B = memory;
+        }
+    }
+}
+
+void SetMemory(struct ScriptContext *ctx)
+{
+    u8 memoryIndc = ScriptReadByte(ctx);
+    u8 memory = ScriptReadByte(ctx);
+    u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
+    u8 overwrite = ScriptReadByte(ctx);
+    u8 combinedMemory = 0;
+
+    gSpecialVar_Result = FALSE;
+
+    if (partyIndex < PARTY_SIZE)
+    {
+        switch (overwrite)
+        {
+        case 1:
+        case 2:
+            combinedMemory = GetMemoryFromParts(memoryIndc, memory);
+            SetMonData(&gPlayerParty[partyIndex], (overwrite == 1) ? MON_DATA_MEMORY1 : MON_DATA_MEMORY2, &combinedMemory);
+            gSpecialVar_Result = TRUE;
+            break;
+        default:
+            SetMemoryWithRules(&gPlayerParty[partyIndex], memoryIndc, memory);
+            gSpecialVar_Result = TRUE;
+            break;
+        }
+    }
+}
+
+void SetMemoryAll(struct ScriptContext *ctx)
+{
+    u8 memoryIndc = ScriptReadByte(ctx);
+    u8 memory = ScriptReadByte(ctx);
+    u8 overwrite = ScriptReadByte(ctx);
+    u8 combinedMemory = 0;
+    u8 i = 0;
+
+    gSpecialVar_Result = FALSE;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+        || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
+        {
+        switch (overwrite)
+            {
+            case 1:
+            case 2:
+                combinedMemory = GetMemoryFromParts(memoryIndc, memory);
+                SetMonData(&gPlayerParty[i], (overwrite == 1) ? MON_DATA_MEMORY1 : MON_DATA_MEMORY2, &combinedMemory);
+                gSpecialVar_Result = TRUE;
+                break;
+            default:
+                SetMemoryWithRules(&gPlayerParty[i], memoryIndc, memory);
+                gSpecialVar_Result = TRUE;
+                break;
+            }
+        }
+    }
+}
+
 /* Creates a Pokemon via script
  * if side/slot are assigned, it will create the mon at the assigned party location
  * if slot == PARTY_SIZE, it will give the mon to first available party or storage slot
