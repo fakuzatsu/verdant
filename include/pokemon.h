@@ -115,8 +115,8 @@ enum {
     MON_DATA_GIGANTAMAX_FACTOR,
     MON_DATA_TERA_TYPE,
     MON_DATA_EVOLUTION_TRACKER,
-    MON_DATA_MEMORY1,
-    MON_DATA_MEMORY2,
+    MON_DATA_MEMORY_OLD,
+    MON_DATA_MEMORY_NEW,
 };
 
 struct PokemonSubstruct0
@@ -247,16 +247,16 @@ struct BoxPokemon
     u8 isBadEgg:1;
     u8 hasSpecies:1;
     u8 isEgg:1;
-    u8 memoryIndc:2; // Reused Pokémon Box Ruby & Sapphire flag.
-    u8 memory:3;
+    u8 memoryCat:2; // Reused Pokémon Box Ruby & Sapphire flag.
+    u8 memoryNo:3;
     u8 otName[PLAYER_NAME_LENGTH];
     u8 markings:4;
     u8 compressedStatus:4;
     u16 checksum;
     u16 hpLost:10; // 1023 HP.
     u16 shinyModifier:1;
-    u16 memoryIndc2:2;
-    u16 memory2:3;
+    u16 memoryCat2:2;
+    u16 memoryNo2:3;
 
     union
     {
@@ -798,8 +798,8 @@ u8 GetItemEffectParamOffset(u32 battler, u16 itemId, u8 effectByte, u8 effectBit
 u8 *UseStatIncreaseItem(u16 itemId);
 u8 GetNature(struct Pokemon *mon);
 u8 GetNatureFromPersonality(u32 personality);
-u8 GetMemoryFromParts(u8 memoryIndc, u8 memory);
-void SplitMemoryIntoParts(u8 combinedMemory, u8 *memoryIndc, u8 *memory);
+u8 GetMemoryFromParts(u8 memoryCat, u8 memoryNo);
+void SplitMemoryIntoParts(u8 combinedMemory, u8 *memoryCat, u8 *memoryNo);
 u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem, struct Pokemon *tradePartner);
 bool8 IsMonPastEvolutionLevel(struct Pokemon *mon);
 u16 NationalPokedexNumToSpecies(u16 nationalNum);

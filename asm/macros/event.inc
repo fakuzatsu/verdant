@@ -2313,41 +2313,41 @@
 	callnative ScriptSetDoubleBattleFlag
 	.endm
 
-	@ Gets the \memoryNo for the Pokémon at \slot
-	.macro getmemory memoryNo:req, slot:req
+	@ Gets the \memorySlot for the Pokémon at \slot
+	.macro getmemory memorySlot:req, slot:req
 	callnative GetMemory
-	.byte \memoryNo
+	.byte \memorySlot
 	.2byte \slot
 	.endm
 
-@ Sets the \memoryIndc \memory for the Pokémon at \slot
-.macro setmemory memoryIndc:req, memory:req, slot:req, overwrite
-	.ifnb \overwrite
-		callnative SetMemory
-		.byte \memoryIndc
-		.byte \memory
-		.2byte \slot
-		.byte \overwrite
-	.else
-		callnative SetMemory
-		.byte \memoryIndc
-		.byte \memory
-		.2byte \slot
-		.byte 0
-	.endif
-.endm
+	@ Sets the \memoryNo in catagory \memoryCat for the Pokémon at \slot
+	.macro setmemory memoryNo:req, memoryCat:req, slot:req, overwrite
+		.ifnb \overwrite
+			callnative SetMemory
+			.byte \memoryNo
+			.byte \memoryCat
+			.2byte \slot
+			.byte \overwrite
+		.else
+			callnative SetMemory
+			.byte \memoryNo
+			.byte \memoryCat
+			.2byte \slot
+			.byte 0
+		.endif
+	.endm
 
-@ Sets the \memoryIndc \memory for all Pokémon
-.macro setmemoryall memoryIndc:req, memory:req, overwrite
-	.ifnb \overwrite
-		callnative SetMemoryAll
-		.byte \memoryIndc
-		.byte \memory
-		.byte \overwrite
-	.else
-		callnative SetMemoryAll
-		.byte \memoryIndc
-		.byte \memory
-		.byte 0
-	.endif
-.endm
+	@ Sets the \memoryNo in catagory \memoryCat for all Pokémon
+	.macro setmemoryall memoryNo:req, memoryCat:req, overwrite
+		.ifnb \overwrite
+			callnative SetMemoryAll
+			.byte \memoryNo
+			.byte \memoryCat
+			.byte \overwrite
+		.else
+			callnative SetMemoryAll
+			.byte \memoryNo
+			.byte \memoryCat
+			.byte 0
+		.endif
+	.endm

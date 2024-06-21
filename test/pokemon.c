@@ -341,6 +341,24 @@ TEST("checkteratype/setteratype work")
     EXPECT(VarGet(VAR_RESULT) == TYPE_FIRE);
 }
 
+TEST("getmemory/setmemory work")
+{
+    CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        getmemory MON_MEMORY_NEW, 0;
+    );
+    EXPECT(VarGet(VAR_0x800A) == 0);
+    EXPECT(VarGet(VAR_0x800B) == 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        setmemory 7, MEMORY_CAT_POKEBLOCK, 0;
+        getmemory MON_MEMORY_NEW, 0;
+    );
+    EXPECT(VarGet(VAR_0x800A) == 7);
+    EXPECT(VarGet(VAR_0x800B) == MEMORY_CAT_POKEBLOCK);
+}
+
 TEST("createmon [simple]")
 {
     ZeroPlayerPartyMons();

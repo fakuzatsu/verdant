@@ -2856,14 +2856,14 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
             retVal = nature ^ boxMon->hiddenNatureModifier;
             break;
         }
-        case MON_DATA_MEMORY1:
+        case MON_DATA_MEMORY_OLD:
         {
-            retVal = GetMemoryFromParts(boxMon->memoryIndc, boxMon->memory);
+            retVal = GetMemoryFromParts(boxMon->memoryCat, boxMon->memoryNo);
             break;
         }
-        case MON_DATA_MEMORY2:
+        case MON_DATA_MEMORY_NEW:
         {
-            retVal = GetMemoryFromParts(boxMon->memoryIndc2, boxMon->memory2);
+            retVal = GetMemoryFromParts(boxMon->memoryCat2, boxMon->memoryNo2);
             break;
         }
         default:
@@ -3300,22 +3300,22 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             boxMon->hiddenNatureModifier = nature ^ hiddenNature;
             break;
         }
-        case MON_DATA_MEMORY1:
+        case MON_DATA_MEMORY_OLD:
         {
             u8 combinedMemory = *data;
-            u8 memoryIndc, memory;
-            SplitMemoryIntoParts(combinedMemory, &memoryIndc, &memory);
-            boxMon->memoryIndc = memoryIndc;
-            boxMon->memory = memory;
+            u8 memoryCat, memoryNo;
+            SplitMemoryIntoParts(combinedMemory, &memoryCat, &memoryNo);
+            boxMon->memoryCat = memoryCat;
+            boxMon->memoryNo = memoryNo;
             break;
         }
-        case MON_DATA_MEMORY2:
+        case MON_DATA_MEMORY_NEW:
         {
             u8 combinedMemory = *data;
-            u8 memoryIndc, memory;
-            SplitMemoryIntoParts(combinedMemory, &memoryIndc, &memory);
-            boxMon->memoryIndc2 = memoryIndc;
-            boxMon->memory2 = memory;
+            u8 memoryCat, memoryNo;
+            SplitMemoryIntoParts(combinedMemory, &memoryCat, &memoryNo);
+            boxMon->memoryCat2 = memoryCat;
+            boxMon->memoryNo2 = memoryNo;
             break;
         }
         }
@@ -4423,13 +4423,13 @@ u8 GetNatureFromPersonality(u32 personality)
     return personality % NUM_NATURES;
 }
 
-u8 GetMemoryFromParts(u8 memoryIndc, u8 memory) {
-    return (memoryIndc << 3) | (memory & 0x07);
+u8 GetMemoryFromParts(u8 memoryCat, u8 memoryNo) {
+    return (memoryCat << 3) | (memoryNo & 0x07);
 }
 
-void SplitMemoryIntoParts(u8 combinedMemory, u8 *memoryIndc, u8 *memory) {
-    *memoryIndc = (combinedMemory >> 3) & 0x03;
-    *memory = combinedMemory & 0x07;
+void SplitMemoryIntoParts(u8 combinedMemory, u8 *memoryCat, u8 *memoryNo) {
+    *memoryCat = (combinedMemory >> 3) & 0x03;
+    *memoryNo = combinedMemory & 0x07;
 }
 
 static u32 GetGMaxTargetSpecies(u32 species)
