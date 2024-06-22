@@ -2320,34 +2320,30 @@
 	.2byte \slot
 	.endm
 
-	@ Sets the \memoryNo in catagory \memoryCat for the Pokémon at \slot
-	.macro setmemory memoryNo:req, memoryCat:req, slot:req, overwrite
+	@ Sets the \memory for the Pokémon at \slot
+	.macro setmemory memory:req, slot:req, overwrite
 		.ifnb \overwrite
 			callnative SetMemory
-			.byte \memoryNo
-			.byte \memoryCat
+			.byte \memory
 			.2byte \slot
 			.byte \overwrite
 		.else
 			callnative SetMemory
-			.byte \memoryNo
-			.byte \memoryCat
+			.byte \memory
 			.2byte \slot
 			.byte 0
 		.endif
 	.endm
 
-	@ Sets the \memoryNo in catagory \memoryCat for all Pokémon
-	.macro setmemoryall memoryNo:req, memoryCat:req, overwrite
+	@ Sets the \memory for all Pokémon
+	.macro setmemoryall memory:req, overwrite
 		.ifnb \overwrite
 			callnative SetMemoryAll
-			.byte \memoryNo
-			.byte \memoryCat
+			.byte \memory
 			.byte \overwrite
 		.else
 			callnative SetMemoryAll
-			.byte \memoryNo
-			.byte \memoryCat
+			.byte \memory
 			.byte 0
 		.endif
 	.endm

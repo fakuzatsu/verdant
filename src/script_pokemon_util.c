@@ -313,16 +313,11 @@ void SetTeraType(struct ScriptContext *ctx)
         SetMonData(&gPlayerParty[partyIndex], MON_DATA_TERA_TYPE, &type);
 }
 
-// I can only apologise to any poor soul who reads these functions.
-// There ended up being no need to split memories into two seperate values.
-// Doing so only resulted in the least readable functions known to man.
-#define SPECIAL_MEMORY 3
-
 void GetMemory(struct ScriptContext *ctx)
 {
     u32 memorySlot = ScriptReadByte(ctx);
     u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
-    u8 combinedMemory = 0;
+    u8 memory = 0;
 
     gSpecialVar_Result = FALSE;
 
@@ -330,57 +325,53 @@ void GetMemory(struct ScriptContext *ctx)
     {
         if (memorySlot == MON_MEMORY_OLD)
         {
-            combinedMemory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_OLD);
-            gSpecialVar_Result = TRUE;
+            memory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_OLD);
+            gSpecialVar_Result = memory;
         }
         else if (memorySlot == MON_MEMORY_NEW)
         {
-            combinedMemory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_NEW);
-            gSpecialVar_Result = TRUE;
-        }
-
-        if (gSpecialVar_Result) {
-            u8 memoryNo = combinedMemory & 0x07;
-            u8 memoryCat = (combinedMemory >> 3) & 0x03;
-            gSpecialVar_0x800A = memoryNo;
-            gSpecialVar_0x800B = memoryCat;
+            memory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_NEW);
+            gSpecialVar_Result = memory;
         }
     }
 }
 
-void SetMemoryWithRules(struct Pokemon *slot, u8 memoryCat, u8 memoryNo) 
+static bool8 IsMemorySpecial(u8 memory)
+{
+    if (memory >= SPECIAL_MEMORY_START)
+        return TRUE;
+    return FALSE;
+}
+
+void SetMemoryWithRules(struct Pokemon *slot, u8 memory)
 {
     u8 oldestMem = GetMonData(slot, MON_DATA_MEMORY_OLD);
     u8 newestMem = GetMonData(slot, MON_DATA_MEMORY_NEW);
 
-    u8 oldestMemCat = (oldestMem >> 3) & 0x07;
-    u8 newestMemCat = (newestMem >> 3) & 0x07;
-
-    u8 combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
-
-    if (memoryCat == SPECIAL_MEMORY) 
+    if (memory != newestMem)
     {
-        if (oldestMemCat != SPECIAL_MEMORY || memoryNo > oldestMem)
-            SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
-        if (newestMemCat != SPECIAL_MEMORY || memoryNo > newestMem)
-            SetMonData(slot, MON_DATA_MEMORY_NEW, &combinedMemory);
-    } 
-    else 
-    {
-        if (oldestMemCat != SPECIAL_MEMORY)
-            SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
-        if (newestMemCat != SPECIAL_MEMORY || oldestMemCat != SPECIAL_MEMORY)
-            SetMonData(slot, MON_DATA_MEMORY_NEW, &combinedMemory);
+        if (IsMemorySpecial(memory))
+        {
+            if (!IsMemorySpecial(oldestMem) || memory > oldestMem)
+                SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
+            if (!IsMemorySpecial(newestMem) || memory > newestMem)
+                SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+        } 
+        else 
+        {
+            if (!IsMemorySpecial(oldestMem))
+                SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
+            if (!IsMemorySpecial(newestMem) || !IsMemorySpecial(oldestMem))
+                SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+        }
     }
 }
 
 void SetMemory(struct ScriptContext *ctx)
 {
-    u8 memoryNo = ScriptReadByte(ctx);
-    u8 memoryCat = ScriptReadByte(ctx);
+    u8 memory = ScriptReadByte(ctx);
     u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
     u32 overwrite = ScriptReadByte(ctx);
-    u8 combinedMemory = 0;
 
     gSpecialVar_Result = FALSE;
 
@@ -390,12 +381,11 @@ void SetMemory(struct ScriptContext *ctx)
         {
         case MON_MEMORY_OLD:
         case MON_MEMORY_NEW:
-            combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
-            SetMonData(&gPlayerParty[partyIndex], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &combinedMemory);
+            SetMonData(&gPlayerParty[partyIndex], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &memory);
             gSpecialVar_Result = TRUE;
             break;
         default:
-            SetMemoryWithRules(&gPlayerParty[partyIndex], memoryCat, memoryNo);
+            SetMemoryWithRules(&gPlayerParty[partyIndex], memory);
             gSpecialVar_Result = TRUE;
             break;
         }
@@ -404,10 +394,8 @@ void SetMemory(struct ScriptContext *ctx)
 
 void SetMemoryAll(struct ScriptContext *ctx)
 {
-    u8 memoryNo = ScriptReadByte(ctx);
-    u8 memoryCat = ScriptReadByte(ctx);
+    u8 memory = ScriptReadByte(ctx);
     u32 overwrite = ScriptReadByte(ctx);
-    u8 combinedMemory = 0;
     u32 i = 0;
 
     gSpecialVar_Result = FALSE;
@@ -421,20 +409,17 @@ void SetMemoryAll(struct ScriptContext *ctx)
             {
             case MON_MEMORY_OLD:
             case MON_MEMORY_NEW:
-                combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
-                SetMonData(&gPlayerParty[i], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &combinedMemory);
+                SetMonData(&gPlayerParty[i], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &memory);
                 gSpecialVar_Result = TRUE;
                 break;
             default:
-                SetMemoryWithRules(&gPlayerParty[i], memoryCat, memoryNo);
+                SetMemoryWithRules(&gPlayerParty[i], memory);
                 gSpecialVar_Result = TRUE;
                 break;
             }
         }
     }
 }
-
-#undef SPECIAL_MEMORY
 
 /* Creates a Pokemon via script
  * if side/slot are assigned, it will create the mon at the assigned party location
