@@ -137,11 +137,7 @@ Debug_EventScript_Text_OffensiveIVs:
 Debug_EventScript_Text_DefensiveIVs:
 	.string "HP IVs: {STR_VAR_1}, DEF IVs: {STR_VAR_2}, SPDEF IVs: {STR_VAR_3}$"
 
-Debug_EventScript_Script_1::
-	release
-	end
-
-Debug_EventScript_Script_2::
+Debug_EventScript_ToggleDayNight::
 	release
 	end
 
@@ -438,5 +434,32 @@ Debug_EventScript_InflictStatus1_Text_Freeze:
 
 Debug_EventScript_InflictStatus1_Text_Frostbite:
 	.string "Frostbite$"
+
+Debug_EventScript_CheckMemory::
+	lockall
+	getpartysize
+	goto_if_eq VAR_RESULT, 0, Debug_NoPokemon
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, Debug_EventScript_CheckMemory_End
+	getmemory MON_MEMORY_OLD, VAR_0x8004
+	buffernumberstring STR_VAR_1, VAR_0x800A
+	buffernumberstring STR_VAR_2, VAR_0x800B
+	msgbox Debug_EventScript_Text_OldestMemory, MSGBOX_DEFAULT
+	getmemory MON_MEMORY_NEW, VAR_0x8004
+	buffernumberstring STR_VAR_1, VAR_0x800A
+	buffernumberstring STR_VAR_2, VAR_0x800B
+	msgbox Debug_EventScript_Text_NewestMemory, MSGBOX_DEFAULT
+Debug_EventScript_CheckMemory_End:
+	releaseall
+	end
+
+Debug_EventScript_Text_OldestMemory:
+	.string "Oldest Memory: {STR_VAR_1}.\n"
+	.string "Catagory: {STR_VAR_2}.$"
+
+Debug_EventScript_Text_NewestMemory:
+	.string "Newest Memory: {STR_VAR_1}.\n"
+	.string "Catagory: {STR_VAR_2}.$"
 
 .endif
