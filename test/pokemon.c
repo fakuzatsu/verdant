@@ -348,6 +348,7 @@ TEST("getmemory/setmemory work")
     RUN_OVERWORLD_SCRIPT(
         getmemory MON_MEMORY_NEW, 0;
     );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
     EXPECT(VarGet(VAR_0x800A) == 0);
     EXPECT(VarGet(VAR_0x800B) == 0);
 
@@ -355,6 +356,55 @@ TEST("getmemory/setmemory work")
         setmemory 7, MEMORY_CAT_POKEBLOCK, 0;
         getmemory MON_MEMORY_NEW, 0;
     );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
+    EXPECT(VarGet(VAR_0x800A) == 7);
+    EXPECT(VarGet(VAR_0x800B) == MEMORY_CAT_POKEBLOCK);
+}
+
+TEST("setmemoryall works")
+{
+    CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+    CreateMon(&gPlayerParty[1], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        getmemory MON_MEMORY_NEW, 0;
+    );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
+    EXPECT(VarGet(VAR_0x800A) == 0);
+    EXPECT(VarGet(VAR_0x800B) == 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        setmemoryall 7, MEMORY_CAT_POKEBLOCK;
+        getmemory MON_MEMORY_NEW, 0;
+    );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
+    EXPECT(VarGet(VAR_0x800A) == 7);
+    EXPECT(VarGet(VAR_0x800B) == MEMORY_CAT_POKEBLOCK);
+
+    RUN_OVERWORLD_SCRIPT(
+        getmemory MON_MEMORY_NEW, 1;
+    );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
+    EXPECT(VarGet(VAR_0x800A) == 7);
+    EXPECT(VarGet(VAR_0x800B) == MEMORY_CAT_POKEBLOCK);
+}
+
+TEST("setmemory overwrite works")
+{
+    CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        getmemory MON_MEMORY_OLD, 0;
+    );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
+    EXPECT(VarGet(VAR_0x800A) == 0);
+    EXPECT(VarGet(VAR_0x800B) == 0);
+
+    RUN_OVERWORLD_SCRIPT(
+        setmemory 7, MEMORY_CAT_POKEBLOCK, 0, MON_MEMORY_OLD;
+        getmemory MON_MEMORY_OLD, 0;
+    );
+    EXPECT(VarGet(VAR_RESULT) == TRUE);
     EXPECT(VarGet(VAR_0x800A) == 7);
     EXPECT(VarGet(VAR_0x800B) == MEMORY_CAT_POKEBLOCK);
 }
