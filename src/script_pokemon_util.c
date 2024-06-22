@@ -340,8 +340,8 @@ void GetMemory(struct ScriptContext *ctx)
         }
 
         if (gSpecialVar_Result) {
-            u8 memoryCat, memoryNo;
-            SplitMemoryIntoParts(combinedMemory, &memoryCat, &memoryNo);
+            u8 memoryNo = combinedMemory & 0x07;
+            u8 memoryCat = (combinedMemory >> 3) & 0x03;
             gSpecialVar_0x800A = memoryNo;
             gSpecialVar_0x800B = memoryCat;
         }
@@ -353,16 +353,16 @@ void SetMemoryWithRules(struct Pokemon *slot, u8 memoryCat, u8 memoryNo)
     u8 oldestMem = GetMonData(slot, MON_DATA_MEMORY_OLD);
     u8 newestMem = GetMonData(slot, MON_DATA_MEMORY_NEW);
 
-    u8 oldestMemCat = (oldestMem >> 3) & 0x03;
-    u8 newestMemCat = (newestMem >> 3) & 0x03;
+    u8 oldestMemCat = (oldestMem >> 3) & 0x07;
+    u8 newestMemCat = (newestMem >> 3) & 0x07;
 
-    u8 combinedMemory = GetMemoryFromParts(memoryCat, memoryNo);
+    u8 combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
 
     if (memoryCat == SPECIAL_MEMORY) 
     {
-        if (oldestMemCat != SPECIAL_MEMORY || memoryNo > (oldestMem & 0x07))
+        if (oldestMemCat != SPECIAL_MEMORY || memoryNo > oldestMem)
             SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
-        if (newestMemCat != SPECIAL_MEMORY || memoryNo > (newestMem & 0x07))
+        if (newestMemCat != SPECIAL_MEMORY || memoryNo > newestMem)
             SetMonData(slot, MON_DATA_MEMORY_NEW, &combinedMemory);
     } 
     else 
@@ -390,7 +390,7 @@ void SetMemory(struct ScriptContext *ctx)
         {
         case MON_MEMORY_OLD:
         case MON_MEMORY_NEW:
-            combinedMemory = GetMemoryFromParts(memoryCat, memoryNo);
+            combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
             SetMonData(&gPlayerParty[partyIndex], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &combinedMemory);
             gSpecialVar_Result = TRUE;
             break;
@@ -415,13 +415,13 @@ void SetMemoryAll(struct ScriptContext *ctx)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
-        || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
+        && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
         {
         switch (overwrite)
             {
             case MON_MEMORY_OLD:
             case MON_MEMORY_NEW:
-                combinedMemory = GetMemoryFromParts(memoryCat, memoryNo);
+                combinedMemory = (memoryCat << 3) | (memoryNo & 0x07);
                 SetMonData(&gPlayerParty[i], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &combinedMemory);
                 gSpecialVar_Result = TRUE;
                 break;
