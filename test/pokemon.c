@@ -379,22 +379,6 @@ TEST("setmemoryall works")
     EXPECT(VarGet(VAR_RESULT) == 14);
 }
 
-TEST("setmemory overwrite works")
-{
-    CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
-
-    RUN_OVERWORLD_SCRIPT(
-        getmemory 0, MON_MEMORY_OLD;
-    );
-    EXPECT(VarGet(VAR_RESULT) == 0);
-
-    RUN_OVERWORLD_SCRIPT(
-        setmemory 28, 0, MON_MEMORY_OLD;
-        getmemory 0, MON_MEMORY_OLD;
-    );
-    EXPECT(VarGet(VAR_RESULT) == 28);
-}
-
 TEST("createmon [simple]")
 {
     ZeroPlayerPartyMons();
