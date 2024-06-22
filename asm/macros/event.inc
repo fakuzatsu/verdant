@@ -2314,7 +2314,7 @@
 	.endm
 
 	@ Gets the \memorySlot for the Pokémon at \slot
-	@ If \slot is not provided, gets the newest memory
+	@ If \memorySlot is not provided, gets the newest memory
 	.macro getmemory slot:req, memorySlot=0
 	callnative GetMemory
 	.2byte \slot

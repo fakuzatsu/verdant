@@ -443,23 +443,19 @@ Debug_EventScript_CheckMemory::
 	waitstate
 	goto_if_ge VAR_0x8004, PARTY_SIZE, Debug_EventScript_CheckMemory_End
 	getmemory VAR_0x8004, MON_MEMORY_OLD
-	buffernumberstring STR_VAR_1, VAR_0x800A
-	buffernumberstring STR_VAR_2, VAR_0x800B
+	buffernumberstring STR_VAR_1, VAR_RESULT
 	msgbox Debug_EventScript_Text_OldestMemory, MSGBOX_DEFAULT
 	getmemory VAR_0x8004, MON_MEMORY_NEW
-	buffernumberstring STR_VAR_1, VAR_0x800A
-	buffernumberstring STR_VAR_2, VAR_0x800B
+	buffernumberstring STR_VAR_1, VAR_RESULT
 	msgbox Debug_EventScript_Text_NewestMemory, MSGBOX_DEFAULT
 Debug_EventScript_CheckMemory_End:
 	releaseall
 	end
 
 Debug_EventScript_Text_OldestMemory:
-	.string "Oldest Memory: {STR_VAR_1}.\n"
-	.string "Catagory: {STR_VAR_2}.$"
+	.string "Oldest Memory: {STR_VAR_1}.$"
 
 Debug_EventScript_Text_NewestMemory:
-	.string "Newest Memory: {STR_VAR_1}.\n"
-	.string "Catagory: {STR_VAR_2}.$"
+	.string "Newest Memory: {STR_VAR_1}.$"
 
 .endif
