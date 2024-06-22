@@ -2314,6 +2314,7 @@
 	.endm
 
 	@ Gets the \memorySlot for the Pokémon at \slot
+	@ If \slot is not provided, gets the newest memory
 	.macro getmemory slot:req, memorySlot=0
 	callnative GetMemory
 	.2byte \slot
@@ -2321,16 +2322,14 @@
 	.endm
 
 	@ Sets the \memory for the Pokémon at \slot
-	.macro setmemory memory:req, slot:req, overwrite=0
+	.macro setmemory memory:req, slot:req
 	callnative SetMemory
 	.byte \memory
 	.2byte \slot
-	.byte \overwrite
 	.endm
 
 	@ Sets the \memory for all Pokémon
-	.macro setmemoryall memory:req, overwrite=0
+	.macro setmemoryall memory:req
 	callnative SetMemoryAll
 	.byte \memory
-	.byte \overwrite
 	.endm

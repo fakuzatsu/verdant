@@ -317,15 +317,11 @@ void GetMemory(struct ScriptContext *ctx)
 {
     u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
     u32 memorySlot = ScriptReadByte(ctx);
-    u8 memory = 0;
 
     gSpecialVar_Result = FALSE;
 
     if (partyIndex < PARTY_SIZE)
-    {
-        memory = GetMonData(&gPlayerParty[partyIndex], (memorySlot == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW);
-        gSpecialVar_Result = memory;
-    }
+        gSpecialVar_Result = GetMonData(&gPlayerParty[partyIndex], (memorySlot == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW);
 }
 
 static bool8 IsMemorySpecial(u8 memory)
@@ -363,53 +359,21 @@ void SetMemory(struct ScriptContext *ctx)
 {
     u8 memory = ScriptReadByte(ctx);
     u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
-    u32 overwrite = ScriptReadByte(ctx);
-
-    gSpecialVar_Result = FALSE;
 
     if (partyIndex < PARTY_SIZE)
-    {
-        switch (overwrite)
-        {
-        case MON_MEMORY_OLD:
-        case MON_MEMORY_NEW:
-            SetMonData(&gPlayerParty[partyIndex], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &memory);
-            gSpecialVar_Result = TRUE;
-            break;
-        default:
-            SetMemoryWithRules(&gPlayerParty[partyIndex], memory);
-            gSpecialVar_Result = TRUE;
-            break;
-        }
-    }
+        SetMemoryWithRules(&gPlayerParty[partyIndex], memory);
 }
 
 void SetMemoryAll(struct ScriptContext *ctx)
 {
     u8 memory = ScriptReadByte(ctx);
-    u32 overwrite = ScriptReadByte(ctx);
     u32 i = 0;
-
-    gSpecialVar_Result = FALSE;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
-        {
-        switch (overwrite)
-            {
-            case MON_MEMORY_OLD:
-            case MON_MEMORY_NEW:
-                SetMonData(&gPlayerParty[i], (overwrite == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW, &memory);
-                gSpecialVar_Result = TRUE;
-                break;
-            default:
-                SetMemoryWithRules(&gPlayerParty[i], memory);
-                gSpecialVar_Result = TRUE;
-                break;
-            }
-        }
+            SetMemoryWithRules(&gPlayerParty[i], memory);
     }
 }
 
