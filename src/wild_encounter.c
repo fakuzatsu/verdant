@@ -1208,14 +1208,14 @@ bool8 StandardWildEncounter_Debug(void)
 
 u16 PokemonRandomiser(u16 species)
 {
-    u32 i, rerolls;
-    u16 result, randomisationKey;
+    u32 i, rerolls, randomisationKey;
+    u16 result;
     bool32 isSpeciesWaterType, isResultWaterType;
 
     if (!gSaveBlock2Ptr->optionsWildRandomiser)
         return species;
 
-    randomisationKey = VarGet(VAR_RANDOMISER_SEED);
+    randomisationKey = gSaveBlock2Ptr->randomiserSeed;
     result = ((species ^ randomisationKey) + ((species & randomisationKey) << 5) + ((species >> 3) ^ (randomisationKey << 2))) % FORMS_START;
     isSpeciesWaterType = (gSpeciesInfo[species].types[0] == TYPE_WATER || gSpeciesInfo[species].types[1] == TYPE_WATER);
 

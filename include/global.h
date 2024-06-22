@@ -515,6 +515,7 @@ struct SaveBlock2
              u16 optionsWildRandomiser:1; // custom addition to tx_optionsPlus
              u16 optionsTrainerRandomiser:1; // custom addition to tx_optionsPlus
              u16 optionsAbilityRandomiser:1; // custom addition to tx_optionsPlus
+             u32 randomiserSeed;
              //u16 padding1:4;
              //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;

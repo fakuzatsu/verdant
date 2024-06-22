@@ -156,7 +156,7 @@ void ResetMenuAndMonGlobals(void)
 
 void SetRandomiserSeed(void)
 {
-    VarSet(VAR_RANDOMISER_SEED, Random());
+    gSaveBlock2Ptr->randomiserSeed = Random32();
 }
 
 void NewGameInitData(void)

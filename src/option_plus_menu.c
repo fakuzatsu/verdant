@@ -1,7 +1,13 @@
 #include "global.h"
+#include "event_data.h"
+#include "field_effect.h"
+#include "field_weather.h"
+#include "field_screen_effect.h"
 #include "option_plus_menu.h"
+#include "overworld.h"
 #include "main.h"
 #include "menu.h"
+#include "naming_screen.h"
 #include "scanline_effect.h"
 #include "palette.h"
 #include "sprite.h"
@@ -14,7 +20,10 @@
 #include "text.h"
 #include "text_window.h"
 #include "international_string_util.h"
+#include "item_menu.h"
+#include "script.h"
 #include "strings.h"
+#include "string_util.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
 #include "menu_helpers.h"
@@ -46,6 +55,7 @@ enum
     MENUITEM_CUSTOM_RANDWILD,
     MENUITEM_CUSTOM_RANDTRAIN,
     MENUITEM_CUSTOM_RANDABIL,
+    MENUITEM_CUSTOM_RNGSEED,
     MENUITEM_CUSTOM_FONT,
     MENUITEM_CUSTOM_MATCHCALL,
     MENUITEM_CUSTOM_HP_BAR,
@@ -189,6 +199,10 @@ static void DrawChoices_RandWild(int selection, int y);
 static void DrawChoices_RandTrain(int selection, int y);
 static void DrawChoices_RandAbil(int selection, int y);
 static void DrawBgWindowFrames(void);
+static void DoRngSeedScreen(void);
+static void CB2_HandleGivenSeed(void);
+static void MapPostLoadHook_ReturnToSeedChange(void);
+static void Task_ReturnToSeedChange(u8 taskId);
 
 // EWRAM vars
 EWRAM_DATA static struct OptionMenu *sOptions = NULL;
@@ -249,6 +263,7 @@ struct // MENU_CUSTOM
     [MENUITEM_CUSTOM_RANDWILD]     = {DrawChoices_RandWild,    ProcessInput_Options_Two},
     [MENUITEM_CUSTOM_RANDTRAIN]    = {DrawChoices_RandTrain,   ProcessInput_Options_Two},
     [MENUITEM_CUSTOM_RANDABIL]     = {DrawChoices_RandAbil,    ProcessInput_Options_Two},
+    [MENUITEM_CUSTOM_RNGSEED]      = {NULL, NULL},
     [MENUITEM_CUSTOM_CANCEL]       = {NULL, NULL},
 };
 
@@ -257,8 +272,9 @@ static const u8 sText_HpBar[]       = _("HP BAR");
 static const u8 sText_ExpBar[]      = _("EXP BAR");
 static const u8 sText_UnitSystem[]  = _("UNIT SYSTEM");
 static const u8 sText_RandWild[]    = _("ENCOUNTERS");
-static const u8 sText_RandTrain[]    = _("TRAINERS");
+static const u8 sText_RandTrain[]   = _("TRAINERS");
 static const u8 sText_RandAbil[]    = _("ABILITIES");
+static const u8 sText_RngSeed[]     = _("RNG SEED");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
@@ -280,6 +296,7 @@ static const u8 *const sOptionMenuItemsNamesCustom[MENUITEM_CUSTOM_COUNT] =
     [MENUITEM_CUSTOM_RANDWILD]    = sText_RandWild,
     [MENUITEM_CUSTOM_RANDTRAIN]   = sText_RandTrain,
     [MENUITEM_CUSTOM_RANDABIL]    = sText_RandAbil,
+    [MENUITEM_CUSTOM_RNGSEED]     = sText_RngSeed,
     [MENUITEM_CUSTOM_CANCEL]      = gText_OptionMenuSave,
 };
 
@@ -326,6 +343,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_CUSTOM_RANDWILD:        return TRUE;
         case MENUITEM_CUSTOM_RANDTRAIN:       return TRUE;
         case MENUITEM_CUSTOM_RANDABIL:        return TRUE;
+        case MENUITEM_CUSTOM_RNGSEED:         return TRUE;
         case MENUITEM_CUSTOM_CANCEL:          return TRUE;
         case MENUITEM_CUSTOM_COUNT:           return TRUE;
         }
@@ -376,6 +394,7 @@ static const u8 sText_Desc_RandTrainNorm[]      = _("Trainer Pokémon will be\nn
 static const u8 sText_Desc_RandTrainRand[]      = _("Trainer Pokémon will be\nrandomised.");
 static const u8 sText_Desc_RandAbilNorm[]       = _("Pokémon Abilities will be\nnormal.");
 static const u8 sText_Desc_RandAbilRand[]       = _("Pokémon Abilities will be\nrandomised.");
+static const u8 sText_Desc_RngSeed[]            = _("Change the RNG Seed.\nInvalidates challenge runs.");
 static const u8 *const sOptionMenuItemDescriptionsCustom[MENUITEM_CUSTOM_COUNT][2] =
 {
     [MENUITEM_CUSTOM_HP_BAR]      = {sText_Desc_BattleHPBar,        sText_Empty},
@@ -385,6 +404,7 @@ static const u8 *const sOptionMenuItemDescriptionsCustom[MENUITEM_CUSTOM_COUNT][
     [MENUITEM_CUSTOM_RANDWILD]    = {sText_Desc_RandWildNorm,       sText_Desc_RandWildRand},
     [MENUITEM_CUSTOM_RANDTRAIN]   = {sText_Desc_RandTrainNorm,      sText_Desc_RandTrainRand},
     [MENUITEM_CUSTOM_RANDABIL]    = {sText_Desc_RandAbilNorm,       sText_Desc_RandAbilRand},
+    [MENUITEM_CUSTOM_RNGSEED]     = {sText_Desc_RngSeed,            sText_Empty},
     [MENUITEM_CUSTOM_CANCEL]      = {sText_Desc_Save,               sText_Empty},
 };
 
@@ -413,6 +433,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledCustom[MENUITEM_CUSTOM
     [MENUITEM_CUSTOM_RANDWILD]    = sText_Empty,
     [MENUITEM_CUSTOM_RANDTRAIN]   = sText_Empty,
     [MENUITEM_CUSTOM_RANDABIL]    = sText_Empty,
+    [MENUITEM_CUSTOM_RNGSEED]     = sText_Empty,
     [MENUITEM_CUSTOM_CANCEL]      = sText_Empty,
 };
 
@@ -801,6 +822,8 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     {
         if (sOptions->menuCursor[sOptions->submenu] == MenuItemCancel())
             gTasks[taskId].func = Task_OptionMenuSave;
+        if (sOptions->menuCursor[sOptions->submenu] == MENUITEM_CUSTOM_RNGSEED)
+            DoRngSeedScreen();
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -917,24 +940,28 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     }
 }
 
-static void Task_OptionMenuSave(u8 taskId)
+static void SaveOptionsForExit(void)
 {
-    gSaveBlock2Ptr->optionsTextSpeed        = sOptions->sel[MENUITEM_MAIN_TEXTSPEED];
-    gSaveBlock2Ptr->optionsBattleSceneOff   = sOptions->sel[MENUITEM_MAIN_BATTLESCENE];
-    gSaveBlock2Ptr->optionsBattleStyle      = sOptions->sel[MENUITEM_MAIN_BATTLESTYLE];
-    gSaveBlock2Ptr->optionsSound            = sOptions->sel[MENUITEM_MAIN_SOUND];
-    gSaveBlock2Ptr->optionsButtonMode       = sOptions->sel[MENUITEM_MAIN_BUTTONMODE];
-    gSaveBlock2Ptr->optionsUnitSystem       = sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM];
-    gSaveBlock2Ptr->optionsWindowFrameType  = sOptions->sel[MENUITEM_MAIN_FRAMETYPE];
+    gSaveBlock2Ptr->optionsTextSpeed         = sOptions->sel[MENUITEM_MAIN_TEXTSPEED];
+    gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel[MENUITEM_MAIN_BATTLESCENE];
+    gSaveBlock2Ptr->optionsBattleStyle       = sOptions->sel[MENUITEM_MAIN_BATTLESTYLE];
+    gSaveBlock2Ptr->optionsSound             = sOptions->sel[MENUITEM_MAIN_SOUND];
+    gSaveBlock2Ptr->optionsButtonMode        = sOptions->sel[MENUITEM_MAIN_BUTTONMODE];
+    gSaveBlock2Ptr->optionsUnitSystem        = sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM];
+    gSaveBlock2Ptr->optionsWindowFrameType   = sOptions->sel[MENUITEM_MAIN_FRAMETYPE];
 
-    gSaveBlock2Ptr->optionsHpBarSpeed       = sOptions->sel_custom[MENUITEM_CUSTOM_HP_BAR];
-    gSaveBlock2Ptr->optionsExpBarSpeed      = sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR];
-    gSaveBlock2Ptr->optionsCurrentFont      = sOptions->sel_custom[MENUITEM_CUSTOM_FONT];
-    gSaveBlock2Ptr->optionsDisableMatchCall = sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL];
-    gSaveBlock2Ptr->optionsWildRandomiser   = sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD];
+    gSaveBlock2Ptr->optionsHpBarSpeed        = sOptions->sel_custom[MENUITEM_CUSTOM_HP_BAR];
+    gSaveBlock2Ptr->optionsExpBarSpeed       = sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR];
+    gSaveBlock2Ptr->optionsCurrentFont       = sOptions->sel_custom[MENUITEM_CUSTOM_FONT];
+    gSaveBlock2Ptr->optionsDisableMatchCall  = sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL];
+    gSaveBlock2Ptr->optionsWildRandomiser    = sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD];
     gSaveBlock2Ptr->optionsTrainerRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDTRAIN];
     gSaveBlock2Ptr->optionsAbilityRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDABIL];
+}
 
+static void Task_OptionMenuSave(u8 taskId)
+{
+    SaveOptionsForExit();
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
 }
@@ -964,6 +991,7 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         HideBg(2);
         HideBg(3);
+        ScriptContext_Enable();
         SetMainCallback2(gMain.savedCallback);
     }
 }
@@ -1359,4 +1387,41 @@ static void DrawBgWindowFrames(void)
     FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 19,  1,  1,  7);
 
     CopyBgTilemapBufferToVram(1);
+}
+
+static const u8 sText_ChangedSeed[] = _("Changed randomiser seed.{PAUSE_UNTIL_PRESS}");
+static const u8 sText_InvalidSeed[] = _("Invalid seed.{PAUSE_UNTIL_PRESS}");
+
+static void DoRngSeedScreen(void)
+{
+    ConvertUIntToDecimalStringN(gStringVar2, gSaveBlock2Ptr->randomiserSeed, STR_CONV_MODE_LEFT_ALIGN, 10);
+    DoNamingScreen(NAMING_SCREEN_RNG_SEED, gStringVar2, 0, 0, 0, CB2_HandleGivenSeed);
+}
+
+static void CB2_HandleGivenSeed(void)
+{
+    gFieldCallback = MapPostLoadHook_ReturnToSeedChange;
+    SetMainCallback2(CB2_ReturnToField);
+}
+
+static void MapPostLoadHook_ReturnToSeedChange(void)
+{
+    FadeInFromBlack();
+    CreateTask(Task_ReturnToSeedChange, 8);
+}
+
+static void Task_ReturnToSeedChange(u8 taskId)
+{
+    u32 seed;
+
+    if (IsWeatherNotFadingIn() == TRUE)
+    {
+        if (ParseWholeUnsigned(gStringVar2, &seed)) {
+            gSaveBlock2Ptr->randomiserSeed = seed;
+            FlagSet(FLAG_SYS_INVALID_CHALLENGE);
+            DisplayItemMessageOnField(taskId, sText_ChangedSeed, Task_OptionMenuSave);
+        } else {
+            DisplayItemMessageOnField(taskId, sText_InvalidSeed, Task_OptionMenuSave);
+        }
+    }
 }

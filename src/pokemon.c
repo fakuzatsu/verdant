@@ -3451,7 +3451,7 @@ u8 GetMonsStateToDoubles_2(void)
 u16 AbilityRandomiser(u16 ability, u16 pokemonType)
 {
     u16 result;
-    u16 randomisationKey = VarGet(VAR_RANDOMISER_SEED);
+    u32 randomisationKey = gSaveBlock2Ptr->randomiserSeed;
 
     if (!gSaveBlock2Ptr->optionsAbilityRandomiser)
         return ability;

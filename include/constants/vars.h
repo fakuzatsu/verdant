@@ -270,7 +270,7 @@
 #define VAR_UNUSED_0x40FA                                0x40FA // Unused Var
 #define VAR_UNUSED_0x40FB                                0x40FB // Unused Var
 #define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
-#define VAR_RANDOMISER_SEED                              0x40FD // Unused Var
+#define VAR_UNUSED_0x40FD                                0x40FD // Unused Var
 #define VAR_LAST_REPEL                                   0x40FE // Custom Var
 #define VAR_LEVEL_CAP                                    0x40FF // Custom Var
 

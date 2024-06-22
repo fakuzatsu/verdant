@@ -2061,12 +2061,12 @@ void CreateTrainerPartyForPlayer(void)
 u16 trainerPokemonRandomiser(u16 species, u16 random)
 {
     u16 result;
-    u16 randomisationKey;
+    u32 randomisationKey;
 
     if (!gSaveBlock2Ptr->optionsTrainerRandomiser)
         return species;
 
-    randomisationKey = VarGet(VAR_RANDOMISER_SEED);
+    randomisationKey = gSaveBlock2Ptr->randomiserSeed;
     result = ((species ^ randomisationKey) + ((random & randomisationKey) << 5) + ((species >> 3) ^ (randomisationKey << 2))) % FORMS_START;
 
 
