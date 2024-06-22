@@ -2314,36 +2314,23 @@
 	.endm
 
 	@ Gets the \memorySlot for the Pokémon at \slot
-	.macro getmemory memorySlot:req, slot:req
+	.macro getmemory slot:req, memorySlot=0
 	callnative GetMemory
-	.byte \memorySlot
 	.2byte \slot
+	.byte \memorySlot
 	.endm
 
 	@ Sets the \memory for the Pokémon at \slot
-	.macro setmemory memory:req, slot:req, overwrite
-		.ifnb \overwrite
-			callnative SetMemory
-			.byte \memory
-			.2byte \slot
-			.byte \overwrite
-		.else
-			callnative SetMemory
-			.byte \memory
-			.2byte \slot
-			.byte 0
-		.endif
+	.macro setmemory memory:req, slot:req, overwrite=0
+	callnative SetMemory
+	.byte \memory
+	.2byte \slot
+	.byte \overwrite
 	.endm
 
 	@ Sets the \memory for all Pokémon
-	.macro setmemoryall memory:req, overwrite
-		.ifnb \overwrite
-			callnative SetMemoryAll
-			.byte \memory
-			.byte \overwrite
-		.else
-			callnative SetMemoryAll
-			.byte \memory
-			.byte 0
-		.endif
+	.macro setmemoryall memory:req, overwrite=0
+	callnative SetMemoryAll
+	.byte \memory
+	.byte \overwrite
 	.endm

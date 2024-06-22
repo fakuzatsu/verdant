@@ -442,11 +442,11 @@ Debug_EventScript_CheckMemory::
 	special ChoosePartyMon
 	waitstate
 	goto_if_ge VAR_0x8004, PARTY_SIZE, Debug_EventScript_CheckMemory_End
-	getmemory MON_MEMORY_OLD, VAR_0x8004
+	getmemory VAR_0x8004, MON_MEMORY_OLD
 	buffernumberstring STR_VAR_1, VAR_0x800A
 	buffernumberstring STR_VAR_2, VAR_0x800B
 	msgbox Debug_EventScript_Text_OldestMemory, MSGBOX_DEFAULT
-	getmemory MON_MEMORY_NEW, VAR_0x8004
+	getmemory VAR_0x8004, MON_MEMORY_NEW
 	buffernumberstring STR_VAR_1, VAR_0x800A
 	buffernumberstring STR_VAR_2, VAR_0x800B
 	msgbox Debug_EventScript_Text_NewestMemory, MSGBOX_DEFAULT

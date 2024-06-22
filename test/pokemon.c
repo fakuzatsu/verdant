@@ -346,13 +346,13 @@ TEST("getmemory/setmemory work")
     CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
 
     RUN_OVERWORLD_SCRIPT(
-        getmemory MON_MEMORY_NEW, 0;
+        getmemory 0;
     );
     EXPECT(VarGet(VAR_RESULT) == 0);
 
     RUN_OVERWORLD_SCRIPT(
         setmemory 7, 0;
-        getmemory MON_MEMORY_NEW, 0;
+        getmemory 0;
     );
     EXPECT(VarGet(VAR_RESULT) == 7);
 }
@@ -363,20 +363,20 @@ TEST("setmemoryall works")
     CreateMon(&gPlayerParty[1], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
 
     RUN_OVERWORLD_SCRIPT(
-        getmemory MON_MEMORY_NEW, 0;
+        getmemory 0;
     );
     EXPECT(VarGet(VAR_RESULT) == 0);
 
     RUN_OVERWORLD_SCRIPT(
         setmemoryall 14;
-        getmemory MON_MEMORY_NEW, 0;
+        getmemory 0;
     );
-    EXPECT(VarGet(VAR_RESULT) == 7);
+    EXPECT(VarGet(VAR_RESULT) == 14);
 
     RUN_OVERWORLD_SCRIPT(
-        getmemory MON_MEMORY_NEW, 1;
+        getmemory 1;
     );
-    EXPECT(VarGet(VAR_RESULT) == 7);
+    EXPECT(VarGet(VAR_RESULT) == 14);
 }
 
 TEST("setmemory overwrite works")
@@ -384,15 +384,15 @@ TEST("setmemory overwrite works")
     CreateMon(&gPlayerParty[0], SPECIES_WOBBUFFET, 100, 0, FALSE, 0, OT_ID_PRESET, 0);
 
     RUN_OVERWORLD_SCRIPT(
-        getmemory MON_MEMORY_OLD, 0;
+        getmemory 0, MON_MEMORY_OLD;
     );
     EXPECT(VarGet(VAR_RESULT) == 0);
 
     RUN_OVERWORLD_SCRIPT(
         setmemory 28, 0, MON_MEMORY_OLD;
-        getmemory MON_MEMORY_OLD, 0;
+        getmemory 0, MON_MEMORY_OLD;
     );
-    EXPECT(VarGet(VAR_RESULT) == 7);
+    EXPECT(VarGet(VAR_RESULT) == 28);
 }
 
 TEST("createmon [simple]")

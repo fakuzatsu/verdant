@@ -315,24 +315,16 @@ void SetTeraType(struct ScriptContext *ctx)
 
 void GetMemory(struct ScriptContext *ctx)
 {
-    u32 memorySlot = ScriptReadByte(ctx);
     u32 partyIndex = VarGet(ScriptReadHalfword(ctx));
+    u32 memorySlot = ScriptReadByte(ctx);
     u8 memory = 0;
 
     gSpecialVar_Result = FALSE;
 
     if (partyIndex < PARTY_SIZE)
     {
-        if (memorySlot == MON_MEMORY_OLD)
-        {
-            memory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_OLD);
-            gSpecialVar_Result = memory;
-        }
-        else if (memorySlot == MON_MEMORY_NEW)
-        {
-            memory = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MEMORY_NEW);
-            gSpecialVar_Result = memory;
-        }
+        memory = GetMonData(&gPlayerParty[partyIndex], (memorySlot == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW);
+        gSpecialVar_Result = memory;
     }
 }
 
