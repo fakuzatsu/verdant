@@ -232,6 +232,9 @@
 #define B_LAST_USED_BALL_BUTTON     L_BUTTON   // If last used ball is implemented, this button (or button combo) will trigger throwing the last used ball.
 #define B_LAST_USED_BALL_CYCLE      TRUE       // If TRUE, then holding B_LAST_USED_BALL_BUTTON while pressing the D-Pad cycles through the balls
 
+// Menu settings
+#define B_MOVE_DESCRIPTION_BUTTON   L_BUTTON   // If this button is defined and does not conflict with B_LAST_USED_BALL_BUTTON, click to see move descriptions.
+
 // Other settings
 #define B_DOUBLE_WILD_CHANCE            0          // % chance of encountering two Pokémon in a Wild Encounter.
 #define B_DOUBLE_WILD_REQUIRE_2_MONS    FALSE      // If set to TRUE, Wild Double Battles will default to Single Battles when the player only has 1 usable Pokémon, ignoring B_DOUBLE_WILD_CHANCE and B_FLAG_FORCE_DOUBLE_WILD.
