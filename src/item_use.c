@@ -244,7 +244,7 @@ void ItemUseOutOfBattle_SootSack(u8 taskId)
 	StringExpandPlaceholders(gStringVar4, gText_AshQty);
 	if (!gTasks[taskId].tUsingRegisteredKeyItem)
 	{
-		DisplayItemMessage(taskId, 1, gStringVar4, BagMenu_InitListsMenu);
+		DisplayItemMessage(taskId, 1, gStringVar4, CloseItemMessage);
 	}
 	else
 	{
