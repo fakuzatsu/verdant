@@ -238,7 +238,7 @@ static u16 GetAshCount(void)
 	return *ashGatherCount;
 }
 
-void ItemUseOutOfBattle_SootSack(u8 taskId);
+void ItemUseOutOfBattle_SootSack(u8 taskId)
 {
 	ConvertIntToDecimalStringN(gStringVar1, GetAshCount(), STR_CONV_MODE_LEFT_ALIGN, 4);
 	StringExpandPlaceholders(gStringVar4, gText_AshQty);
