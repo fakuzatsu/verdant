@@ -6241,14 +6241,20 @@ bool32 TryPrimalReversion(u32 battler)
     {
         if (gBattlerAttacker == battler)
         {
-            BattleScriptExecute(BattleScript_PrimalReversion);
+            if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+                BattleScriptExecute(BattleScript_PrimalReversionQ);
+            else
+                BattleScriptExecute(BattleScript_PrimalReversion);
         }
         else
         {
             // edge case for scenarios like a switch-in after activated eject button
             gBattleScripting.savedBattler = gBattlerAttacker;
             gBattlerAttacker = battler;
-            BattleScriptExecute(BattleScript_PrimalReversionRestoreAttacker);
+            if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+                BattleScriptExecute(BattleScript_PrimalReversionRestoreAttacker);
+            else
+                BattleScriptExecute(BattleScript_PrimalReversionRestoreAttacker);
         }
         return TRUE;
     }

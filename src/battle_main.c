@@ -5130,10 +5130,17 @@ static bool32 TryDoGimmicksBeforeMoves(void)
                 gBattlerAttacker = order[i];
                 gBattleStruct->mega.toEvolve &= ~(gBitTable[gBattlerAttacker]);
                 gLastUsedItem = gBattleMons[gBattlerAttacker].item;
-                if (GetBattleFormChangeTargetSpecies(gBattlerAttacker, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE) != SPECIES_NONE)
-                    BattleScriptExecute(BattleScript_WishMegaEvolution);
-                else
-                    BattleScriptExecute(BattleScript_MegaEvolution);
+                if (GetBattleFormChangeTargetSpecies(gBattlerAttacker, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE) != SPECIES_NONE) {
+					if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+						BattleScriptExecute(BattleScript_WishMegaEvolutionQ);
+					else 
+						BattleScriptExecute(BattleScript_WishMegaEvolution);
+				} else {
+					if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+						BattleScriptExecute(BattleScript_MegaEvolutionQ);
+					else 
+						BattleScriptExecute(BattleScript_MegaEvolution);
+				}
                 return TRUE;
             }
             // Ultra Burst Check
@@ -5143,7 +5150,10 @@ static bool32 TryDoGimmicksBeforeMoves(void)
                 battler = gBattlerAttacker = order[i];
                 gBattleStruct->burst.toBurst &= ~(gBitTable[battler]);
                 gLastUsedItem = gBattleMons[battler].item;
-                BattleScriptExecute(BattleScript_UltraBurst);
+                if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+                    BattleScriptExecute(BattleScript_UltraBurstQ);
+                else
+                    BattleScriptExecute(BattleScript_UltraBurst);
                 return TRUE;
             }
         }
