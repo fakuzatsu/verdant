@@ -1,10 +1,12 @@
 #include "global.h"
 #include "crt0.h"
+#include "main_menu.h"
 #include "malloc.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "librfu.h"
 #include "m4a.h"
+#include "new_game.h"
 #include "bg.h"
 #include "rtc.h"
 #include "scanline_effect.h"
@@ -16,6 +18,7 @@
 #include "load_save.h"
 #include "gpu_regs.h"
 #include "agb_flash.h"
+#include "save.h"
 #include "sound.h"
 #include "battle.h"
 #include "battle_controllers.h"
@@ -73,6 +76,7 @@ s8 gPcmDmaCounter;
 void *gAgbMainLoop_sp;
 
 static EWRAM_DATA u16 sTrainerId = 0;
+EWRAM_DATA u8 gSoftResetFlag;
 
 //EWRAM_DATA void (**gFlashTimerIntrFunc)(void) = NULL;
 
@@ -86,6 +90,7 @@ static void ReadKeys(void);
 void InitIntrHandlers(void);
 static void WaitForVBlank(void);
 void EnableVCountIntrAtLine150(void);
+static void CB2_PostSoftResetInit(void);
 
 #define B_START_SELECT (B_BUTTON | START_BUTTON | SELECT_BUTTON)
 
@@ -183,7 +188,11 @@ static void InitMainCallbacks(void)
     gTrainerHillVBlankCounter = NULL;
     gMain.vblankCounter2 = 0;
     gMain.callback1 = NULL;
-    SetMainCallback2(gInitialMainCB2);
+    if(gSoftResetFlag){
+        SetMainCallback2(CB2_PostSoftResetInit);
+    }else{
+        SetMainCallback2(CB2_InitCopyrightScreenAfterBootup);
+    }
     gSaveBlock2Ptr = &gSaveblock2.block;
     gPokemonStoragePtr = &gPokemonStorage.block;
 }
@@ -487,4 +496,15 @@ void DoSoftReset(void)
 void ClearPokemonCrySongs(void)
 {
     CpuFill16(0, gPokemonCrySongs, MAX_POKEMON_CRIES * sizeof(struct PokemonCrySong));
+}
+
+static void CB2_PostSoftResetInit(void){
+    SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
+    ResetMenuAndMonGlobals();
+    Save_ResetSaveCounters();
+    LoadGameSave(SAVE_NORMAL);
+    if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+        Sav2_ClearSetDefault();
+    SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
+    SetMainCallback2(CB2_InitMainMenu);
 }
