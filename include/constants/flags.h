@@ -464,16 +464,16 @@
 #define FLAG_SHOWN_EON_TICKET                0x1AE
 #define FLAG_SHOWN_AURORA_TICKET             0x1AF
 #define FLAG_SHOWN_OLD_SEA_MAP               0x1B0
-#define FLAG_MOVE_TUTOR_TAUGHT_SWAGGER       0x1B1
-#define FLAG_MOVE_TUTOR_TAUGHT_ROLLOUT       0x1B2
-#define FLAG_MOVE_TUTOR_TAUGHT_FURY_CUTTER   0x1B3
-#define FLAG_MOVE_TUTOR_TAUGHT_MIMIC         0x1B4
-#define FLAG_MOVE_TUTOR_TAUGHT_METRONOME     0x1B5
-#define FLAG_MOVE_TUTOR_TAUGHT_SLEEP_TALK    0x1B6
-#define FLAG_MOVE_TUTOR_TAUGHT_SUBSTITUTE    0x1B7
-#define FLAG_MOVE_TUTOR_TAUGHT_DYNAMICPUNCH  0x1B8
-#define FLAG_MOVE_TUTOR_TAUGHT_DOUBLE_EDGE   0x1B9
-#define FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION     0x1BA
+#define FLAG_UNUSED_0x1B1                    0x1B1
+#define FLAG_UNUSED_0x1B2                    0x1B2
+#define FLAG_UNUSED_0x1B3                    0x1B3
+#define FLAG_UNUSED_0x1B4                    0x1B4
+#define FLAG_UNUSED_0x1B5                    0x1B5
+#define FLAG_UNUSED_0x1B6                    0x1B6
+#define FLAG_UNUSED_0x1B7                    0x1B7
+#define FLAG_UNUSED_0x1B8                    0x1B8
+#define FLAG_UNUSED_0x1B9                    0x1B9
+#define FLAG_UNUSED_0x1BA                    0x1BA
 #define FLAG_DEFEATED_REGIROCK               0x1BB
 #define FLAG_DEFEATED_REGICE                 0x1BC
 #define FLAG_DEFEATED_REGISTEEL              0x1BD
@@ -1621,17 +1621,17 @@
 #define FLAG_UNUSED_0x953                           (DAILY_FLAGS_START + 0x33) // Unused Flag
 #define FLAG_UNUSED_0x954                           (DAILY_FLAGS_START + 0x34) // Unused Flag
 #define FLAG_UNUSED_0x955                           (DAILY_FLAGS_START + 0x35) // Unused Flag
-#define FLAG_UNUSED_0x956                           (DAILY_FLAGS_START + 0x36) // Unused Flag
-#define FLAG_UNUSED_0x957                           (DAILY_FLAGS_START + 0x37) // Unused Flag
-#define FLAG_UNUSED_0x958                           (DAILY_FLAGS_START + 0x38) // Unused Flag
-#define FLAG_UNUSED_0x959                           (DAILY_FLAGS_START + 0x39) // Unused Flag
-#define FLAG_UNUSED_0x95A                           (DAILY_FLAGS_START + 0x3A) // Unused Flag
-#define FLAG_UNUSED_0x95B                           (DAILY_FLAGS_START + 0x3B) // Unused Flag
-#define FLAG_UNUSED_0x95C                           (DAILY_FLAGS_START + 0x3C) // Unused Flag
-#define FLAG_UNUSED_0x95D                           (DAILY_FLAGS_START + 0x3D) // Unused Flag
-#define FLAG_UNUSED_0x95E                           (DAILY_FLAGS_START + 0x3E) // Unused Flag
-#define FLAG_UNUSED_0x95F                           (DAILY_FLAGS_START + 0x3F) // Unused Flag
-#define DAILY_FLAGS_END                             (FLAG_UNUSED_0x95F + (7 - FLAG_UNUSED_0x95F % 8))
+#define FLAG_MOVE_TUTOR_TAUGHT_SWAGGER              (DAILY_FLAGS_START + 0x36) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_ROLLOUT              (DAILY_FLAGS_START + 0x37) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_FURY_CUTTER          (DAILY_FLAGS_START + 0x38) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_MIMIC                (DAILY_FLAGS_START + 0x39) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_METRONOME            (DAILY_FLAGS_START + 0x3A) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_SLEEP_TALK           (DAILY_FLAGS_START + 0x3B) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_SUBSTITUTE           (DAILY_FLAGS_START + 0x3C) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_DYNAMICPUNCH         (DAILY_FLAGS_START + 0x3D) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_DOUBLE_EDGE          (DAILY_FLAGS_START + 0x3E) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION            (DAILY_FLAGS_START + 0x3F) // Tutor Flag
+#define DAILY_FLAGS_END                             (FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION + (7 - FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION % 8))
 #define NUM_DAILY_FLAGS                             (DAILY_FLAGS_END - DAILY_FLAGS_START + 1)
 
 #define FLAGS_COUNT (DAILY_FLAGS_END + 1)
