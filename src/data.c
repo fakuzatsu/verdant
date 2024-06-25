@@ -232,4 +232,9 @@ const struct Trainer gTrainers[] =
 #include "data/trainers.h"
 };
 
+const struct Trainer gHardTrainers[] =
+{
+#include "data/hard_trainers.h"
+};
+
 #include "data/text/follower_messages.h"

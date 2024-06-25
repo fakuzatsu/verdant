@@ -508,6 +508,8 @@ struct SaveBlock2
              u16 optionsBattleSceneOff:1; // whether battle animations are disabled
              u16 regionMapZoom:1; // whether the map is zoomed in
              u16 optionsUnitSystem:1; //tx_optionsPlus
+             u16 optionsDifficulty:1; // custom addition to tx_optionsPlus
+             //u16 padding:2;
              u16 optionsHpBarSpeed:4; //tx_optionsPlus
              u16 optionsExpBarSpeed:4; //tx_optionsPlus
              u16 optionsDisableMatchCall:1; //tx_optionsPlus
@@ -515,9 +517,8 @@ struct SaveBlock2
              u16 optionsWildRandomiser:1; // custom addition to tx_optionsPlus
              u16 optionsTrainerRandomiser:1; // custom addition to tx_optionsPlus
              u16 optionsAbilityRandomiser:1; // custom addition to tx_optionsPlus
+             //u16 padding:3;
              u32 randomiserSeed;
-             //u16 padding1:4;
-             //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;
     /*0x90*/ u8 filler_90[0x8];
     /*0x98*/ struct Time localTimeOffset;
