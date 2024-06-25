@@ -92,6 +92,8 @@ static void WaitForVBlank(void);
 void EnableVCountIntrAtLine150(void);
 static void CB2_PostSoftResetInit(void);
 
+extern void CB2_FlashNotDetectedScreen(void);
+
 #define B_START_SELECT (B_BUTTON | START_BUTTON | SELECT_BUTTON)
 
 void AgbMain()
@@ -119,7 +121,7 @@ void AgbMain()
     gSoftResetDisabled = FALSE;
 
     if (gFlashMemoryPresent != TRUE)
-        SetMainCallback2(NULL);
+        SetMainCallback2(CB2_FlashNotDetectedScreen);
 
     gLinkTransferringData = FALSE;
 
