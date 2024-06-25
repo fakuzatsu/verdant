@@ -5590,6 +5590,7 @@ u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
     u8 numMoves = 0;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, 0);
+    u8 preEvLvl = (level > MAX_LEVEL_DIFF_PRE_EV) ? (level - MAX_LEVEL_DIFF_PRE_EV) : 1;
     const struct LevelUpMove *learnset = GetSpeciesLevelUpLearnset(species);
     int i, j, k;
 
@@ -5601,6 +5602,13 @@ u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
         u16 moveLevel;
 
         if (learnset[i].move == LEVEL_UP_MOVE_END)
+        {
+            i = 0;
+            level = preEvLvl;
+            species = GetSpeciesPreEvolution(species);
+        }
+
+        if (species == SPECIES_NONE)
             break;
 
         moveLevel = learnset[i].level;
@@ -5643,6 +5651,7 @@ u8 GetNumberOfRelearnableMoves(struct Pokemon *mon)
     u8 numMoves = 0;
     u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, 0);
+    u8 preEvLvl = (level > MAX_LEVEL_DIFF_PRE_EV) ? (level - MAX_LEVEL_DIFF_PRE_EV) : 1;
     const struct LevelUpMove *learnset = GetSpeciesLevelUpLearnset(species);
     int i, j, k;
 
@@ -5657,6 +5666,13 @@ u8 GetNumberOfRelearnableMoves(struct Pokemon *mon)
         u16 moveLevel;
 
         if (learnset[i].move == LEVEL_UP_MOVE_END)
+        {
+            i = 0;
+            level = preEvLvl;
+            species = GetSpeciesPreEvolution(species);
+        }
+
+        if (species == SPECIES_NONE)
             break;
 
         moveLevel = learnset[i].level;
