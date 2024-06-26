@@ -29,10 +29,12 @@
 #include "menu_helpers.h"
 #include "decompress.h"
 
+// Menus
 enum
 {
     MENU_MAIN,
-    MENU_CUSTOM,
+    MENU_DIFFICULTY,
+    MENU_RANDOM,
     MENU_COUNT,
 };
 
@@ -40,11 +42,13 @@ enum
 enum
 {
     MENUITEM_MAIN_TEXTSPEED,
-    MENUITEM_MAIN_BATTLESCENE,
-    MENUITEM_MAIN_BATTLESTYLE,
-    MENUITEM_MAIN_SOUND,
+    MENUITEM_MAIN_FONT,
+    MENUITEM_MAIN_HP_BAR,
+    MENUITEM_MAIN_EXP_BAR,
+    MENUITEM_MAIN_MATCHCALL,
     MENUITEM_MAIN_BUTTONMODE,
     MENUITEM_MAIN_UNIT_SYSTEM,
+    MENUITEM_MAIN_SOUND,
     MENUITEM_MAIN_FRAMETYPE,
     MENUITEM_MAIN_CANCEL,
     MENUITEM_MAIN_COUNT,
@@ -52,16 +56,21 @@ enum
 
 enum
 {
-    MENUITEM_CUSTOM_RANDWILD,
-    MENUITEM_CUSTOM_RANDTRAIN,
-    MENUITEM_CUSTOM_RANDABIL,
-    MENUITEM_CUSTOM_RNGSEED,
-    MENUITEM_CUSTOM_FONT,
-    MENUITEM_CUSTOM_MATCHCALL,
-    MENUITEM_CUSTOM_HP_BAR,
-    MENUITEM_CUSTOM_EXP_BAR,
-    MENUITEM_CUSTOM_CANCEL,
-    MENUITEM_CUSTOM_COUNT,
+    MENUITEM_DIFFICULTY_MODE,
+    MENUITEM_DIFFICULTY_BATTLESCENE,
+    MENUITEM_DIFFICULTY_BATTLESTYLE,
+    MENUITEM_DIFFICULTY_CANCEL,
+    MENUITEM_DIFFICULTY_COUNT,
+};
+
+enum
+{
+    MENUITEM_RANDOM_WILD,
+    MENUITEM_RANDOM_TRAIN,
+    MENUITEM_RANDOM_RANDABIL,
+    MENUITEM_RANDOM_RNGSEED,
+    MENUITEM_RANDOM_CANCEL,
+    MENUITEM_RANDOM_COUNT,
 };
 
 // Window Ids
@@ -144,7 +153,8 @@ struct OptionMenu
 {
     u8 submenu;
     u8 sel[MENUITEM_MAIN_COUNT];
-    u8 sel_custom[MENUITEM_CUSTOM_COUNT];
+    u8 sel_difficulty[MENUITEM_DIFFICULTY_COUNT];
+    u8 sel_random[MENUITEM_RANDOM_COUNT];
     int menuCursor[MENU_COUNT];
     int visibleCursor[MENU_COUNT];
     u8 arrowTaskId;
@@ -186,6 +196,7 @@ static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style, bool8 act
 static void DrawChoices_Options_Four(const u8 *const *const strings, int selection, int y, bool8 active);
 static void ReDrawAll(void);
 static void DrawChoices_TextSpeed(int selection, int y);
+static void DrawChoices_Difficulty(int selection, int y);
 static void DrawChoices_BattleScene(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_Sound(int selection, int y);
@@ -241,30 +252,40 @@ struct // MENU_MAIN
 } static const sItemFunctionsMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]    = {DrawChoices_TextSpeed,   ProcessInput_Options_Four},
-    [MENUITEM_MAIN_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
-    [MENUITEM_MAIN_BATTLESTYLE]  = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
-    [MENUITEM_MAIN_SOUND]        = {DrawChoices_Sound,       ProcessInput_Options_Two},
+    [MENUITEM_MAIN_FONT]         = {DrawChoices_Font,        ProcessInput_Options_Two}, 
+    [MENUITEM_MAIN_HP_BAR]       = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
+    [MENUITEM_MAIN_EXP_BAR]      = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
+    [MENUITEM_MAIN_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
     [MENUITEM_MAIN_BUTTONMODE]   = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
     [MENUITEM_MAIN_UNIT_SYSTEM]  = {DrawChoices_UnitSystem,  ProcessInput_Options_Two},
+    [MENUITEM_MAIN_SOUND]        = {DrawChoices_Sound,       ProcessInput_Options_Two},
     [MENUITEM_MAIN_FRAMETYPE]    = {DrawChoices_FrameType,   ProcessInput_FrameType},
     [MENUITEM_MAIN_CANCEL]       = {NULL, NULL},
 };
 
-struct // MENU_CUSTOM
+struct // MENU_DIFFICULTY
 {
     void (*drawChoices)(int selection, int y);
     int (*processInput)(int selection);
-} static const sItemFunctionsCustom[MENUITEM_CUSTOM_COUNT] =
+} static const sItemFunctionsDifficulty[MENUITEM_DIFFICULTY_COUNT] =
 {
-    [MENUITEM_CUSTOM_HP_BAR]       = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
-    [MENUITEM_CUSTOM_EXP_BAR]      = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
-    [MENUITEM_CUSTOM_FONT]         = {DrawChoices_Font,        ProcessInput_Options_Two}, 
-    [MENUITEM_CUSTOM_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
-    [MENUITEM_CUSTOM_RANDWILD]     = {DrawChoices_RandWild,    ProcessInput_Options_Two},
-    [MENUITEM_CUSTOM_RANDTRAIN]    = {DrawChoices_RandTrain,   ProcessInput_Options_Two},
-    [MENUITEM_CUSTOM_RANDABIL]     = {DrawChoices_RandAbil,    ProcessInput_Options_Two},
-    [MENUITEM_CUSTOM_RNGSEED]      = {NULL, NULL},
-    [MENUITEM_CUSTOM_CANCEL]       = {NULL, NULL},
+    [MENUITEM_DIFFICULTY_MODE]         = {DrawChoices_Difficulty, ProcessInput_Options_Two},
+    [MENUITEM_DIFFICULTY_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
+    [MENUITEM_DIFFICULTY_BATTLESTYLE]  = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
+    [MENUITEM_DIFFICULTY_CANCEL]       = {NULL, NULL},
+};
+
+struct // MENU_RANDOM
+{
+    void (*drawChoices)(int selection, int y);
+    int (*processInput)(int selection);
+} static const sItemFunctionsRandom[MENUITEM_RANDOM_COUNT] =
+{
+    [MENUITEM_RANDOM_WILD]       = {DrawChoices_RandWild,    ProcessInput_Options_Two},
+    [MENUITEM_RANDOM_TRAIN]      = {DrawChoices_RandTrain,   ProcessInput_Options_Two},
+    [MENUITEM_RANDOM_RANDABIL]   = {DrawChoices_RandAbil,    ProcessInput_Options_Two},
+    [MENUITEM_RANDOM_RNGSEED]    = {NULL, NULL},
+    [MENUITEM_RANDOM_CANCEL]     = {NULL, NULL},
 };
 
 // Menu left side option names text
@@ -275,29 +296,36 @@ static const u8 sText_RandWild[]    = _("ENCOUNTERS");
 static const u8 sText_RandTrain[]   = _("TRAINERS");
 static const u8 sText_RandAbil[]    = _("ABILITIES");
 static const u8 sText_RngSeed[]     = _("RNG SEED");
+static const u8 sText_Difficulty[]  = _("MODE");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
-    [MENUITEM_MAIN_BATTLESCENE] = gText_BattleScene,
-    [MENUITEM_MAIN_BATTLESTYLE] = gText_BattleStyle,
-    [MENUITEM_MAIN_SOUND]       = gText_Sound,
+    [MENUITEM_MAIN_FONT]        = gText_Font,
+    [MENUITEM_MAIN_HP_BAR]      = sText_HpBar,
+    [MENUITEM_MAIN_EXP_BAR]     = sText_ExpBar,
+    [MENUITEM_MAIN_MATCHCALL]   = gText_OptionMatchCalls,
     [MENUITEM_MAIN_BUTTONMODE]  = gText_ButtonMode,
     [MENUITEM_MAIN_UNIT_SYSTEM] = sText_UnitSystem,
+    [MENUITEM_MAIN_SOUND]       = gText_Sound,
     [MENUITEM_MAIN_FRAMETYPE]   = gText_Frame,
     [MENUITEM_MAIN_CANCEL]      = gText_OptionMenuSave,
 };
 
-static const u8 *const sOptionMenuItemsNamesCustom[MENUITEM_CUSTOM_COUNT] =
+static const u8 *const OptionMenuItemsNamesDifficulty[MENUITEM_DIFFICULTY_COUNT] =
 {
-    [MENUITEM_CUSTOM_HP_BAR]      = sText_HpBar,
-    [MENUITEM_CUSTOM_EXP_BAR]     = sText_ExpBar,
-    [MENUITEM_CUSTOM_FONT]        = gText_Font,
-    [MENUITEM_CUSTOM_MATCHCALL]   = gText_OptionMatchCalls,
-    [MENUITEM_CUSTOM_RANDWILD]    = sText_RandWild,
-    [MENUITEM_CUSTOM_RANDTRAIN]   = sText_RandTrain,
-    [MENUITEM_CUSTOM_RANDABIL]    = sText_RandAbil,
-    [MENUITEM_CUSTOM_RNGSEED]     = sText_RngSeed,
-    [MENUITEM_CUSTOM_CANCEL]      = gText_OptionMenuSave,
+    [MENUITEM_DIFFICULTY_MODE]        = sText_Difficulty,
+    [MENUITEM_DIFFICULTY_BATTLESCENE] = gText_BattleScene,
+    [MENUITEM_DIFFICULTY_BATTLESTYLE] = gText_BattleStyle,
+    [MENUITEM_DIFFICULTY_CANCEL]      = gText_OptionMenuSave,
+};
+
+static const u8 *const sOptionMenuItemsNamesCustom[MENUITEM_RANDOM_COUNT] =
+{
+    [MENUITEM_RANDOM_WILD]      = sText_RandWild,
+    [MENUITEM_RANDOM_TRAIN]     = sText_RandTrain,
+    [MENUITEM_RANDOM_RANDABIL]  = sText_RandAbil,
+    [MENUITEM_RANDOM_RNGSEED]   = sText_RngSeed,
+    [MENUITEM_RANDOM_CANCEL]    = gText_OptionMenuSave,
 };
 
 static const u8 *const OptionTextRight(u8 menuItem)
@@ -307,7 +335,9 @@ static const u8 *const OptionTextRight(u8 menuItem)
         default:
         case MENU_MAIN:
             return sOptionMenuItemsNamesMain[menuItem];
-        case MENU_CUSTOM:
+        case MENU_DIFFICULTY:
+            return OptionMenuItemsNamesDifficulty[menuItem];
+        case MENU_RANDOM:
             return sOptionMenuItemsNamesCustom[menuItem];
     }
 }
@@ -323,29 +353,36 @@ static bool8 CheckConditions(int selection)
         {
         default:
         case MENUITEM_MAIN_TEXTSPEED:       return TRUE;
-        case MENUITEM_MAIN_BATTLESCENE:     return TRUE;
-        case MENUITEM_MAIN_BATTLESTYLE:     return TRUE;
-        case MENUITEM_MAIN_SOUND:           return TRUE;
+        case MENUITEM_MAIN_FONT:            return TRUE;
+        case MENUITEM_MAIN_HP_BAR:          return TRUE;
+        case MENUITEM_MAIN_EXP_BAR:         return TRUE;
+        case MENUITEM_MAIN_MATCHCALL:       return TRUE;
         case MENUITEM_MAIN_BUTTONMODE:      return TRUE;
         case MENUITEM_MAIN_UNIT_SYSTEM:     return TRUE;
+        case MENUITEM_MAIN_SOUND:           return TRUE;
         case MENUITEM_MAIN_FRAMETYPE:       return TRUE;
         case MENUITEM_MAIN_CANCEL:          return TRUE;
         case MENUITEM_MAIN_COUNT:           return TRUE;
         }
-    case MENU_CUSTOM:
+    case MENU_DIFFICULTY:
+        switch(selection)
+        {
+        case MENUITEM_DIFFICULTY_MODE:      return TRUE;
+        case MENUITEM_DIFFICULTY_BATTLESCENE: return TRUE;
+        case MENUITEM_DIFFICULTY_BATTLESTYLE: return TRUE;
+        case MENUITEM_DIFFICULTY_CANCEL:    return TRUE;
+        case MENUITEM_DIFFICULTY_COUNT:     return TRUE;
+        }
+    case MENU_RANDOM:
         switch(selection)
         {
         default:
-        case MENUITEM_CUSTOM_HP_BAR:          return TRUE;
-        case MENUITEM_CUSTOM_EXP_BAR:         return TRUE;
-        case MENUITEM_CUSTOM_FONT:            return TRUE;
-        case MENUITEM_CUSTOM_MATCHCALL:       return TRUE;
-        case MENUITEM_CUSTOM_RANDWILD:        return TRUE;
-        case MENUITEM_CUSTOM_RANDTRAIN:       return TRUE;
-        case MENUITEM_CUSTOM_RANDABIL:        return TRUE;
-        case MENUITEM_CUSTOM_RNGSEED:         return TRUE;
-        case MENUITEM_CUSTOM_CANCEL:          return TRUE;
-        case MENUITEM_CUSTOM_COUNT:           return TRUE;
+        case MENUITEM_RANDOM_WILD:          return TRUE;
+        case MENUITEM_RANDOM_TRAIN:         return TRUE;
+        case MENUITEM_RANDOM_RANDABIL:      return TRUE;
+        case MENUITEM_RANDOM_RNGSEED:       return TRUE;
+        case MENUITEM_RANDOM_CANCEL:        return TRUE;
+        case MENUITEM_RANDOM_COUNT:         return TRUE;
         }
     }
 }
@@ -366,19 +403,6 @@ static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as anothe
 static const u8 sText_Desc_UnitSystemImperial[] = _("Display BERRY and POKéMON weight\nand size in pounds and inches.");
 static const u8 sText_Desc_UnitSystemMetric[]   = _("Display BERRY and POKéMON weight\nand size in kilograms and meters.");
 static const u8 sText_Desc_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
-static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
-{
-    [MENUITEM_MAIN_TEXTSPEED]   = {sText_Desc_TextSpeed,            sText_Empty,                sText_Empty},
-    [MENUITEM_MAIN_BATTLESCENE] = {sText_Desc_BattleScene_On,       sText_Desc_BattleScene_Off, sText_Empty},
-    [MENUITEM_MAIN_BATTLESTYLE] = {sText_Desc_BattleStyle_Shift,    sText_Desc_BattleStyle_Set, sText_Empty},
-    [MENUITEM_MAIN_SOUND]       = {sText_Desc_SoundMono,            sText_Desc_SoundStereo,     sText_Empty},
-    [MENUITEM_MAIN_BUTTONMODE]  = {sText_Desc_ButtonMode,           sText_Desc_ButtonMode_LR,   sText_Desc_ButtonMode_LA},
-    [MENUITEM_MAIN_UNIT_SYSTEM] = {sText_Desc_UnitSystemImperial,   sText_Desc_UnitSystemMetric,sText_Empty},
-    [MENUITEM_MAIN_FRAMETYPE]   = {sText_Desc_FrameType,            sText_Empty,                sText_Empty},
-    [MENUITEM_MAIN_CANCEL]      = {sText_Desc_Save,                 sText_Empty,                sText_Empty},
-};
-
-// Custom
 static const u8 sText_Desc_BattleHPBar[]        = _("Choose how fast the HP BAR will get\ndrained in battles.");
 static const u8 sText_Desc_BattleExpBar[]       = _("Choose how fast the EXP BAR will get\nfilled in battles.");
 static const u8 sText_Desc_SurfOff[]            = _("Disables the SURF theme when\nusing SURF.");
@@ -395,46 +419,72 @@ static const u8 sText_Desc_RandTrainRand[]      = _("Trainer Pokémon will be\nr
 static const u8 sText_Desc_RandAbilNorm[]       = _("Pokémon Abilities will be\nnormal.");
 static const u8 sText_Desc_RandAbilRand[]       = _("Pokémon Abilities will be\nrandomised.");
 static const u8 sText_Desc_RngSeed[]            = _("Change the RNG Seed.\nInvalidates challenge runs.");
-static const u8 *const sOptionMenuItemDescriptionsCustom[MENUITEM_CUSTOM_COUNT][2] =
+static const u8 sText_Desc_DifficultyEasy[]     = _("Trainer's have their standard teams.\nThe intended difficulty.");
+static const u8 sText_Desc_DifficultyHard[]     = _("Trainer's have more difficult teams.\nIntended for challenge runs.");
+
+static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
 {
-    [MENUITEM_CUSTOM_HP_BAR]      = {sText_Desc_BattleHPBar,        sText_Empty},
-    [MENUITEM_CUSTOM_EXP_BAR]     = {sText_Desc_BattleExpBar,       sText_Empty},
-    [MENUITEM_CUSTOM_FONT]        = {sText_Desc_FontType,           sText_Desc_FontType},
-    [MENUITEM_CUSTOM_MATCHCALL]   = {sText_Desc_OverworldCallsOn,   sText_Desc_OverworldCallsOff},
-    [MENUITEM_CUSTOM_RANDWILD]    = {sText_Desc_RandWildNorm,       sText_Desc_RandWildRand},
-    [MENUITEM_CUSTOM_RANDTRAIN]   = {sText_Desc_RandTrainNorm,      sText_Desc_RandTrainRand},
-    [MENUITEM_CUSTOM_RANDABIL]    = {sText_Desc_RandAbilNorm,       sText_Desc_RandAbilRand},
-    [MENUITEM_CUSTOM_RNGSEED]     = {sText_Desc_RngSeed,            sText_Empty},
-    [MENUITEM_CUSTOM_CANCEL]      = {sText_Desc_Save,               sText_Empty},
+    [MENUITEM_MAIN_TEXTSPEED]   = {sText_Desc_TextSpeed,           sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_FONT]        = {sText_Desc_FontType,            sText_Desc_FontType,          sText_Empty},
+    [MENUITEM_MAIN_HP_BAR]      = {sText_Desc_BattleHPBar,         sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_EXP_BAR]     = {sText_Desc_BattleExpBar,        sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_MATCHCALL]   = {sText_Desc_OverworldCallsOn,    sText_Desc_OverworldCallsOff, sText_Empty},
+    [MENUITEM_MAIN_BUTTONMODE]  = {sText_Desc_ButtonMode,          sText_Desc_ButtonMode_LR,     sText_Desc_ButtonMode_LA},
+    [MENUITEM_MAIN_UNIT_SYSTEM] = {sText_Desc_UnitSystemImperial,  sText_Desc_UnitSystemMetric,  sText_Empty},
+    [MENUITEM_MAIN_SOUND]       = {sText_Desc_SoundMono,           sText_Desc_SoundStereo,       sText_Empty},
+    [MENUITEM_MAIN_FRAMETYPE]   = {sText_Desc_FrameType,           sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_CANCEL]      = {sText_Desc_Save,                sText_Empty,                  sText_Empty},
+};
+
+static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIFFICULTY_COUNT][2] =
+{
+    [MENUITEM_DIFFICULTY_MODE]        = {sText_Desc_DifficultyEasy,      sText_Desc_DifficultyHard},
+    [MENUITEM_DIFFICULTY_BATTLESCENE] = {sText_Desc_BattleScene_On,      sText_Desc_BattleScene_Off},
+    [MENUITEM_DIFFICULTY_BATTLESTYLE] = {sText_Desc_BattleStyle_Shift,   sText_Desc_BattleStyle_Set},
+    [MENUITEM_DIFFICULTY_CANCEL]      = {sText_Desc_Save,               sText_Empty},
+};
+
+static const u8 *const sOptionMenuItemDescriptionsRandom[MENUITEM_RANDOM_COUNT][2] =
+{
+    [MENUITEM_RANDOM_WILD]      = {sText_Desc_RandWildNorm,       sText_Desc_RandWildRand},
+    [MENUITEM_RANDOM_TRAIN]     = {sText_Desc_RandTrainNorm,      sText_Desc_RandTrainRand},
+    [MENUITEM_RANDOM_RANDABIL]  = {sText_Desc_RandAbilNorm,       sText_Desc_RandAbilRand},
+    [MENUITEM_RANDOM_RNGSEED]   = {sText_Desc_RngSeed,            sText_Empty},
+    [MENUITEM_RANDOM_CANCEL]    = {sText_Desc_Save,               sText_Empty},
 };
 
 // Disabled Descriptions
-static const u8 sText_Desc_Disabled_Textspeed[]     = _("Only active if xyz.");
 static const u8 *const sOptionMenuItemDescriptionsDisabledMain[MENUITEM_MAIN_COUNT] =
 {
-    [MENUITEM_MAIN_TEXTSPEED]   = sText_Desc_Disabled_Textspeed,
-    [MENUITEM_MAIN_BATTLESCENE] = sText_Empty,
-    [MENUITEM_MAIN_BATTLESTYLE] = sText_Empty,
-    [MENUITEM_MAIN_SOUND]       = sText_Empty,
-    [MENUITEM_MAIN_BUTTONMODE]  = sText_Empty,
-    [MENUITEM_MAIN_UNIT_SYSTEM] = sText_Empty,
-    [MENUITEM_MAIN_FRAMETYPE]   = sText_Empty,
-    [MENUITEM_MAIN_CANCEL]      = sText_Empty,
+    [MENUITEM_MAIN_TEXTSPEED]         = sText_Empty,
+    [MENUITEM_MAIN_FONT]              = sText_Empty,
+    [MENUITEM_MAIN_HP_BAR]            = sText_Empty,
+    [MENUITEM_MAIN_EXP_BAR]           = sText_Empty,
+    [MENUITEM_MAIN_MATCHCALL]         = sText_Empty,
+    [MENUITEM_MAIN_BUTTONMODE]        = sText_Empty,
+    [MENUITEM_MAIN_UNIT_SYSTEM]       = sText_Empty,
+    [MENUITEM_MAIN_SOUND]             = sText_Empty,
+    [MENUITEM_MAIN_FRAMETYPE]         = sText_Empty,
+    [MENUITEM_MAIN_CANCEL]            = sText_Empty,
 };
 
-// Disabled Custom
-static const u8 sText_Desc_Disabled_BattleHPBar[]   = _("Only active if xyz.");
-static const u8 *const sOptionMenuItemDescriptionsDisabledCustom[MENUITEM_CUSTOM_COUNT] =
+// Disabled Difficulty
+static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DIFFICULTY_COUNT] =
 {
-    [MENUITEM_CUSTOM_HP_BAR]      = sText_Desc_Disabled_BattleHPBar,
-    [MENUITEM_CUSTOM_EXP_BAR]     = sText_Empty,
-    [MENUITEM_CUSTOM_FONT]        = sText_Empty,
-    [MENUITEM_CUSTOM_MATCHCALL]   = sText_Empty,
-    [MENUITEM_CUSTOM_RANDWILD]    = sText_Empty,
-    [MENUITEM_CUSTOM_RANDTRAIN]   = sText_Empty,
-    [MENUITEM_CUSTOM_RANDABIL]    = sText_Empty,
-    [MENUITEM_CUSTOM_RNGSEED]     = sText_Empty,
-    [MENUITEM_CUSTOM_CANCEL]      = sText_Empty,
+    [MENUITEM_DIFFICULTY_MODE]        = sText_Empty,
+    [MENUITEM_DIFFICULTY_BATTLESCENE] = sText_Empty,
+    [MENUITEM_DIFFICULTY_BATTLESTYLE] = sText_Empty,
+    [MENUITEM_DIFFICULTY_CANCEL]      = sText_Empty,
+};
+
+// Disabled Random
+static const u8 *const sOptionMenuItemDescriptionsDisabledRandom[MENUITEM_RANDOM_COUNT] =
+{
+    [MENUITEM_RANDOM_WILD]     = sText_Empty,
+    [MENUITEM_RANDOM_TRAIN]    = sText_Empty,
+    [MENUITEM_RANDOM_RANDABIL] = sText_Empty,
+    [MENUITEM_RANDOM_RNGSEED]  = sText_Empty,
+    [MENUITEM_RANDOM_CANCEL]   = sText_Empty,
 };
 
 static const u8 *const OptionTextDescription(void)
@@ -452,13 +502,20 @@ static const u8 *const OptionTextDescription(void)
         if (menuItem == MENUITEM_MAIN_TEXTSPEED || menuItem == MENUITEM_MAIN_FRAMETYPE)
             selection = 0;
         return sOptionMenuItemDescriptionsMain[menuItem][selection];
-    case MENU_CUSTOM:
+    case MENU_DIFFICULTY:
         if (!CheckConditions(menuItem))
-            return sOptionMenuItemDescriptionsDisabledMain[menuItem];
-        selection = sOptions->sel_custom[menuItem];
-        if (menuItem == MENUITEM_CUSTOM_HP_BAR || menuItem == MENUITEM_CUSTOM_EXP_BAR)
+            return sOptionMenuItemDescriptionsDisabledDifficulty[menuItem];
+        selection = sOptions->sel_difficulty[menuItem];
+        if (menuItem == MENUITEM_DIFFICULTY_MODE || menuItem == MENUITEM_DIFFICULTY_BATTLESTYLE)
             selection = 0;
-        return sOptionMenuItemDescriptionsCustom[menuItem][selection];
+        return sOptionMenuItemDescriptionsDifficulty[menuItem][selection];
+    case MENU_RANDOM:
+        if (!CheckConditions(menuItem))
+            return sOptionMenuItemDescriptionsDisabledRandom[menuItem];
+        selection = sOptions->sel_random[menuItem];
+        if (menuItem == MENUITEM_RANDOM_WILD || menuItem == MENUITEM_RANDOM_RNGSEED)
+            selection = 0;
+        return sOptionMenuItemDescriptionsRandom[menuItem][selection];
     }
 }
 
@@ -467,8 +524,9 @@ static u8 MenuItemCount(void)
     switch (sOptions->submenu)
     {
     default:
-    case MENU_MAIN:     return MENUITEM_MAIN_COUNT;
-    case MENU_CUSTOM:   return MENUITEM_CUSTOM_COUNT;
+    case MENU_MAIN:       return MENUITEM_MAIN_COUNT;
+    case MENU_DIFFICULTY: return MENUITEM_DIFFICULTY_COUNT;
+    case MENU_RANDOM:     return MENUITEM_RANDOM_COUNT;
     }
 }
 
@@ -477,8 +535,9 @@ static u8 MenuItemCancel(void)
     switch (sOptions->submenu)
     {
     default:
-    case MENU_MAIN:     return MENUITEM_MAIN_CANCEL;
-    case MENU_CUSTOM:   return MENUITEM_CUSTOM_CANCEL;
+    case MENU_MAIN:       return MENUITEM_MAIN_CANCEL;
+    case MENU_DIFFICULTY: return MENUITEM_DIFFICULTY_CANCEL;
+    case MENU_RANDOM:     return MENUITEM_RANDOM_CANCEL;
     }
 }
 
@@ -500,10 +559,16 @@ static void VBlankCB(void)
     ChangeBgY(3, 96, BG_COORD_ADD);
 }
 
-static const u8 sText_TopBar_Main[]         = _("GENERAL");
-static const u8 sText_TopBar_Main_Right[]   = _("{R_BUTTON}CUSTOM");
-static const u8 sText_TopBar_Custom[]       = _("CUSTOM");
-static const u8 sText_TopBar_Custom_Left[]  = _("{L_BUTTON}GENERAL");
+static const u8 sText_TopBar_Main[]                = _("GENERAL");
+static const u8 sText_TopBar_Main_To_Left[]        = _("{L_BUTTON}GENERAL");
+static const u8 sText_TopBar_Main_To_Right[]       = _("{R_BUTTON}GENERAL");
+static const u8 sText_TopBar_Random[]              = _("RANDOM");
+static const u8 sText_TopBar_Random_To_Left[]      = _("{L_BUTTON}RANDOM");
+static const u8 sText_TopBar_Random_To_Right[]     = _("{R_BUTTON}RANDOM");
+static const u8 sText_TopBar_Difficulty[]          = _("DIFFICULTY");
+static const u8 sText_TopBar_Difficulty_To_Left[]  = _("{L_BUTTON}DIFFICULTY");
+static const u8 sText_TopBar_Difficulty_To_Right[] = _("{R_BUTTON}DIFFICULTY");
+
 static void DrawTopBarText(void)
 {
     const u8 color[3] = { 0, TEXT_COLOR_WHITE, TEXT_COLOR_OPTIONS_GRAY_FG };
@@ -513,11 +578,18 @@ static void DrawTopBarText(void)
     {
         case MENU_MAIN:
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Main);
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 190, 1, color, 0, sText_TopBar_Main_Right);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Random_To_Left);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 178, 1, color, 0, sText_TopBar_Difficulty_To_Right);
             break;
-        case MENU_CUSTOM:
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Custom);
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Custom_Left);
+        case MENU_DIFFICULTY:
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Difficulty);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Main_To_Left);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 190, 1, color, 0, sText_TopBar_Random_To_Right);
+            break;
+        case MENU_RANDOM:
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Random);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Difficulty_To_Left);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 190, 1, color, 0, sText_TopBar_Main_To_Right);
             break;
     }
     PutWindowTilemap(WIN_TOPBAR);
@@ -603,9 +675,13 @@ static void DrawChoices(u32 id, int y) //right side draw function
             if (sItemFunctionsMain[id].drawChoices != NULL)
                 sItemFunctionsMain[id].drawChoices(sOptions->sel[id], y);
             break;
-        case MENU_CUSTOM:
-            if (sItemFunctionsCustom[id].drawChoices != NULL)
-                sItemFunctionsCustom[id].drawChoices(sOptions->sel_custom[id], y);
+        case MENU_DIFFICULTY:
+            if (sItemFunctionsDifficulty[id].drawChoices != NULL)
+                sItemFunctionsDifficulty[id].drawChoices(sOptions->sel_difficulty[id], y);
+            break;
+        case MENU_RANDOM:
+            if (sItemFunctionsRandom[id].drawChoices != NULL)
+                sItemFunctionsRandom[id].drawChoices(sOptions->sel_random[id], y);
             break;
     }
 }
@@ -731,20 +807,22 @@ void CB2_InitOptionPlusMenu(void)
         break;
     case 6:
         sOptions->sel[MENUITEM_MAIN_TEXTSPEED]   = gSaveBlock2Ptr->optionsTextSpeed;
-        sOptions->sel[MENUITEM_MAIN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
-        sOptions->sel[MENUITEM_MAIN_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
-        sOptions->sel[MENUITEM_MAIN_SOUND]       = gSaveBlock2Ptr->optionsSound;
+        sOptions->sel[MENUITEM_MAIN_FONT]        = gSaveBlock2Ptr->optionsCurrentFont;
+        sOptions->sel[MENUITEM_MAIN_HP_BAR]      = gSaveBlock2Ptr->optionsHpBarSpeed;
+        sOptions->sel[MENUITEM_MAIN_EXP_BAR]     = gSaveBlock2Ptr->optionsExpBarSpeed;
+        sOptions->sel[MENUITEM_MAIN_MATCHCALL]   = gSaveBlock2Ptr->optionsDisableMatchCall;
         sOptions->sel[MENUITEM_MAIN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
         sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM] = gSaveBlock2Ptr->optionsUnitSystem;
+        sOptions->sel[MENUITEM_MAIN_SOUND]       = gSaveBlock2Ptr->optionsSound;
         sOptions->sel[MENUITEM_MAIN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
-        
-        sOptions->sel_custom[MENUITEM_CUSTOM_HP_BAR]      = gSaveBlock2Ptr->optionsHpBarSpeed;
-        sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR]     = gSaveBlock2Ptr->optionsExpBarSpeed;
-        sOptions->sel_custom[MENUITEM_CUSTOM_FONT]        = gSaveBlock2Ptr->optionsCurrentFont;
-        sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL]   = gSaveBlock2Ptr->optionsDisableMatchCall;
-        sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD]    = gSaveBlock2Ptr->optionsWildRandomiser;
-        sOptions->sel_custom[MENUITEM_CUSTOM_RANDTRAIN]   = gSaveBlock2Ptr->optionsTrainerRandomiser;
-        sOptions->sel_custom[MENUITEM_CUSTOM_RANDABIL]    = gSaveBlock2Ptr->optionsAbilityRandomiser;
+
+        sOptions->sel_difficulty[MENUITEM_DIFFICULTY_MODE]        = gSaveBlock2Ptr->optionsDifficulty;
+        sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
+        sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
+
+        sOptions->sel_random[MENUITEM_RANDOM_WILD]     = gSaveBlock2Ptr->optionsWildRandomiser;
+        sOptions->sel_random[MENUITEM_RANDOM_TRAIN]    = gSaveBlock2Ptr->optionsTrainerRandomiser;
+        sOptions->sel_random[MENUITEM_RANDOM_RANDABIL] = gSaveBlock2Ptr->optionsAbilityRandomiser;
 
         sOptions->submenu = MENU_MAIN;
 
@@ -822,7 +900,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     {
         if (sOptions->menuCursor[sOptions->submenu] == MenuItemCancel())
             gTasks[taskId].func = Task_OptionMenuSave;
-        if (sOptions->menuCursor[sOptions->submenu] == MENUITEM_CUSTOM_RNGSEED)
+        if (sOptions->menuCursor[sOptions->submenu] == MENUITEM_RANDOM_RNGSEED)
             DoRngSeedScreen();
     }
     else if (JOY_NEW(B_BUTTON))
@@ -900,27 +978,46 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                     DrawChoices(cursor, sOptions->visibleCursor[sOptions->submenu] * Y_DIFF);
             }
         }
-        else if (sOptions->submenu == MENU_CUSTOM)
+        else if (sOptions->submenu == MENU_DIFFICULTY)
         {
             int cursor = sOptions->menuCursor[sOptions->submenu];
-            u8 previousOption = sOptions->sel_custom[cursor];
+            u8 previousOption = sOptions->sel_difficulty[cursor];
             if (CheckConditions(cursor))
             {
-                if (sItemFunctionsCustom[cursor].processInput != NULL)
+                if (sItemFunctionsDifficulty[cursor].processInput != NULL)
                 {
-                    sOptions->sel_custom[cursor] = sItemFunctionsCustom[cursor].processInput(previousOption);
+                    sOptions->sel_difficulty[cursor] = sItemFunctionsDifficulty[cursor].processInput(previousOption);
                     ReDrawAll();
                     DrawDescriptionText();
                 }
 
-                if (previousOption != sOptions->sel_custom[cursor])
+                if (previousOption != sOptions->sel_difficulty[cursor])
+                    DrawChoices(cursor, sOptions->visibleCursor[sOptions->submenu] * Y_DIFF);
+            }
+        }
+        else if (sOptions->submenu == MENU_RANDOM)
+        {
+            int cursor = sOptions->menuCursor[sOptions->submenu];
+            u8 previousOption = sOptions->sel_random[cursor];
+            if (CheckConditions(cursor))
+            {
+                if (sItemFunctionsRandom[cursor].processInput != NULL)
+                {
+                    sOptions->sel_random[cursor] = sItemFunctionsRandom[cursor].processInput(previousOption);
+                    ReDrawAll();
+                    DrawDescriptionText();
+                }
+
+                if (previousOption != sOptions->sel_random[cursor])
                     DrawChoices(cursor, sOptions->visibleCursor[sOptions->submenu] * Y_DIFF);
             }
         }
     }
     else if (JOY_NEW(R_BUTTON))
     {
-        if (sOptions->submenu != MENU_CUSTOM)
+        if (sOptions->submenu == MENU_RANDOM)
+            sOptions->submenu = MENU_MAIN;
+        else
             sOptions->submenu++;
 
         DrawTopBarText();
@@ -930,7 +1027,9 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     }
     else if (JOY_NEW(L_BUTTON))
     {
-        if (sOptions->submenu != 0)
+        if (sOptions->submenu == MENU_MAIN)
+            sOptions->submenu = MENU_RANDOM;
+        else
             sOptions->submenu--;
         
         DrawTopBarText();
@@ -943,20 +1042,22 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 static void SaveOptionsForExit(void)
 {
     gSaveBlock2Ptr->optionsTextSpeed         = sOptions->sel[MENUITEM_MAIN_TEXTSPEED];
-    gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel[MENUITEM_MAIN_BATTLESCENE];
-    gSaveBlock2Ptr->optionsBattleStyle       = sOptions->sel[MENUITEM_MAIN_BATTLESTYLE];
-    gSaveBlock2Ptr->optionsSound             = sOptions->sel[MENUITEM_MAIN_SOUND];
+    gSaveBlock2Ptr->optionsCurrentFont       = sOptions->sel[MENUITEM_MAIN_FONT];
+    gSaveBlock2Ptr->optionsHpBarSpeed        = sOptions->sel[MENUITEM_MAIN_HP_BAR];
+    gSaveBlock2Ptr->optionsExpBarSpeed       = sOptions->sel[MENUITEM_MAIN_EXP_BAR];
+    gSaveBlock2Ptr->optionsDisableMatchCall  = sOptions->sel[MENUITEM_MAIN_MATCHCALL];
     gSaveBlock2Ptr->optionsButtonMode        = sOptions->sel[MENUITEM_MAIN_BUTTONMODE];
     gSaveBlock2Ptr->optionsUnitSystem        = sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM];
+    gSaveBlock2Ptr->optionsSound             = sOptions->sel[MENUITEM_MAIN_SOUND];
     gSaveBlock2Ptr->optionsWindowFrameType   = sOptions->sel[MENUITEM_MAIN_FRAMETYPE];
 
-    gSaveBlock2Ptr->optionsHpBarSpeed        = sOptions->sel_custom[MENUITEM_CUSTOM_HP_BAR];
-    gSaveBlock2Ptr->optionsExpBarSpeed       = sOptions->sel_custom[MENUITEM_CUSTOM_EXP_BAR];
-    gSaveBlock2Ptr->optionsCurrentFont       = sOptions->sel_custom[MENUITEM_CUSTOM_FONT];
-    gSaveBlock2Ptr->optionsDisableMatchCall  = sOptions->sel_custom[MENUITEM_CUSTOM_MATCHCALL];
-    gSaveBlock2Ptr->optionsWildRandomiser    = sOptions->sel_custom[MENUITEM_CUSTOM_RANDWILD];
-    gSaveBlock2Ptr->optionsTrainerRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDTRAIN];
-    gSaveBlock2Ptr->optionsAbilityRandomiser = sOptions->sel_custom[MENUITEM_CUSTOM_RANDABIL];
+    gSaveBlock2Ptr->optionsDifficulty        = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_MODE];
+    gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE];
+    gSaveBlock2Ptr->optionsBattleStyle       = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE];
+
+    gSaveBlock2Ptr->optionsWildRandomiser    = sOptions->sel_random[MENUITEM_RANDOM_WILD];
+    gSaveBlock2Ptr->optionsTrainerRandomiser = sOptions->sel_random[MENUITEM_RANDOM_TRAIN];
+    gSaveBlock2Ptr->optionsAbilityRandomiser = sOptions->sel_random[MENUITEM_RANDOM_RANDABIL];
 }
 
 static void Task_OptionMenuSave(u8 taskId)
@@ -1202,7 +1303,7 @@ static void DrawChoices_TextSpeed(int selection, int y)
 
 static void DrawChoices_BattleScene(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_MAIN_BATTLESCENE);
+    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_BATTLESCENE);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1210,9 +1311,21 @@ static void DrawChoices_BattleScene(int selection, int y)
     DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), y, styles[1], active);
 }
 
+static const u8 gText_DifficultyEasy[] = _("NORMAL");
+static const u8 gText_DifficultyHard[] = _("HARD");
+static void DrawChoices_Difficulty(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_MODE);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_DifficultyEasy, 104, y, styles[0], active);
+    DrawOptionMenuChoice(gText_DifficultyHard, GetStringRightAlignXOffset(FONT_NORMAL, gText_DifficultyHard, 198), y, styles[1], active);
+}
+
 static void DrawChoices_BattleStyle(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_MAIN_BATTLESTYLE);
+    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_BATTLESTYLE);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1247,7 +1360,7 @@ static const u8 sText_RandomiserNormal[] = _("NORMAL");
 static const u8 sText_RandomiserRandom[] = _("RANDOM");
 static void DrawChoices_BarSpeed(int selection, int y) //HP and EXP
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_EXP_BAR);
+    bool8 active = CheckConditions(MENUITEM_MAIN_EXP_BAR);
 
     if (selection == 0)
          DrawOptionMenuChoice(sText_Normal, 104, y, 1, active);
@@ -1305,7 +1418,7 @@ static void DrawChoices_FrameType(int selection, int y)
 
 static void DrawChoices_Font(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_FONT);
+    bool8 active = CheckConditions(MENUITEM_MAIN_FONT);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1315,7 +1428,7 @@ static void DrawChoices_Font(int selection, int y)
 
 static void DrawChoices_MatchCall(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_MATCHCALL);
+    bool8 active = CheckConditions(MENUITEM_MAIN_MATCHCALL);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1325,7 +1438,7 @@ static void DrawChoices_MatchCall(int selection, int y)
 
 static void DrawChoices_RandWild(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDWILD);
+    bool8 active = CheckConditions(MENUITEM_RANDOM_WILD);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1335,7 +1448,7 @@ static void DrawChoices_RandWild(int selection, int y)
 
 static void DrawChoices_RandTrain(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDTRAIN);
+    bool8 active = CheckConditions(MENUITEM_RANDOM_TRAIN);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1345,7 +1458,7 @@ static void DrawChoices_RandTrain(int selection, int y)
 
 static void DrawChoices_RandAbil(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_CUSTOM_RANDABIL);
+    bool8 active = CheckConditions(MENUITEM_RANDOM_RANDABIL);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
