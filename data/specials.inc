@@ -554,5 +554,6 @@ gSpecials::
 	def_special Script_GetChosenMonDefensiveEVs
 	def_special Script_GetChosenMonOffensiveIVs
 	def_special Script_GetChosenMonDefensiveIVs
-	def_special GetLevelCapByFlag
+	def_special SetLevelCapByFlag
+	def_special SetLevelCapForFrontier
 	def_special BufferUnitSystemText

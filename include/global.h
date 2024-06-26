@@ -509,7 +509,7 @@ struct SaveBlock2
              u16 regionMapZoom:1; // whether the map is zoomed in
              u16 optionsUnitSystem:1; //tx_optionsPlus
              u16 optionsDifficulty:1; // custom addition to tx_optionsPlus
-             //u16 padding:2;
+             u16 optionsLevelCap:2; // custom addition to tx_optionsPlus
              u16 optionsHpBarSpeed:4; //tx_optionsPlus
              u16 optionsExpBarSpeed:4; //tx_optionsPlus
              u16 optionsDisableMatchCall:1; //tx_optionsPlus

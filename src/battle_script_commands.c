@@ -4387,7 +4387,8 @@ static void Cmd_getexp(void)
 
                     ApplyExperienceMultipliers(&gBattleMoveDamage, *expMonId, gBattlerFainted);
 
-                    if (B_EXP_CAP_TYPE == EXP_CAP_HARD && gBattleMoveDamage != 0)
+                    if (gSaveBlock2Ptr->optionsLevelCap == OPTIONS_LEVEL_CAPS_HARD 
+                    && gBattleMoveDamage != 0)
                     {
                         u32 growthRate = gSpeciesInfo[GetMonData(&gPlayerParty[*expMonId], MON_DATA_SPECIES)].growthRate;
                         u32 currentExp = GetMonData(&gPlayerParty[*expMonId], MON_DATA_EXP);

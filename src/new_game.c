@@ -94,6 +94,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
+    gSaveBlock2Ptr->optionsLevelCap = OPTIONS_LEVEL_CAPS_OFF; //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->optionsUnitSystem = 0;  //tx_optionsPlus
@@ -101,6 +102,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsExpBarSpeed = 0; //tx_optionsPlus
     gSaveBlock2Ptr->optionsDisableMatchCall = 0;    //tx_optionsPlus
     gSaveBlock2Ptr->optionsCurrentFont = 0;         //tx_optionsPlus
+    gSaveBlock2Ptr->optionsDifficulty = 0;          //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsWildRandomiser = 0;      //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsTrainerRandomiser = 0;   //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsAbilityRandomiser = 0;   //custom tx_optionsPlus

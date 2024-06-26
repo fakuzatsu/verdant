@@ -21,15 +21,7 @@ u32 GetCurrentLevelCap(void)
 {
     u32 i;
 
-    if (B_LEVEL_CAP_TYPE == LEVEL_CAP_FLAG_LIST)
-    {
-        for (i = 0; i < ARRAY_COUNT(sLevelCapFlagMap); i++)
-        {
-            if (!FlagGet(sLevelCapFlagMap[i][0]))
-                return sLevelCapFlagMap[i][1];
-        }
-    }
-    else if (B_LEVEL_CAP_TYPE == LEVEL_CAP_VARIABLE)
+    if (gSaveBlock2Ptr->optionsLevelCap)
     {
         i = VarGet(B_LEVEL_CAP_VARIABLE);
         return (i != 0) ? i : MAX_LEVEL;
@@ -46,7 +38,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     u32 levelDifference;
     u32 currentLevelCap = GetCurrentLevelCap();
 
-    if (B_EXP_CAP_TYPE == EXP_CAP_NONE)
+    if (!gSaveBlock2Ptr->optionsLevelCap)
         return expValue;
 
     if (level < currentLevelCap)
@@ -64,11 +56,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
             return expValue;
         }
     }
-    else if (B_EXP_CAP_TYPE == EXP_CAP_HARD)
-    {
-        return 0;
-    }
-    else if (B_EXP_CAP_TYPE == EXP_CAP_SOFT)
+    else if (gSaveBlock2Ptr->optionsLevelCap == OPTIONS_LEVEL_CAPS_SOFT)
     {
         levelDifference = level - currentLevelCap;
         if (levelDifference > ARRAY_COUNT(sExpScalingDown))
@@ -76,21 +64,35 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
         else
             return expValue / sExpScalingDown[levelDifference];
     }
+    else if (gSaveBlock2Ptr->optionsLevelCap == OPTIONS_LEVEL_CAPS_HARD)
+    {
+        return 0;
+    }
     else
     {
        return expValue;
     }
 }
 
-u16 GetLevelCapByFlag(void)
+u16 SetLevelCapByFlag(void)
 {
     u32 i;
 
     for (i = 0; i < ARRAY_COUNT(sLevelCapFlagMap); i++)
     {
         if (!FlagGet(sLevelCapFlagMap[i][0]))
+        {
+            VarSet(B_LEVEL_CAP_VARIABLE, sLevelCapFlagMap[i][1]);
             return sLevelCapFlagMap[i][1];
+        }
     }
 
+    VarSet(B_LEVEL_CAP_VARIABLE, MAX_LEVEL);
     return MAX_LEVEL;
+}
+
+u16 SetLevelCapForFrontier(void)
+{
+    VarSet(B_LEVEL_CAP_VARIABLE, 50);
+    return TRUE;
 }
