@@ -173,8 +173,6 @@ static EWRAM_DATA bool8 sStartedPokeBallTask = 0;
 static EWRAM_DATA u16 sCurrItemAndOptionMenuCheck = 0;
 
 static u8 sBirchSpeechMainTaskId;
-
-extern u8 gSoftResetFlag;
 // Static ROM declarations
 
 static u32 InitMainMenu(bool8);
@@ -715,7 +713,7 @@ static void Task_MainMenuCheckBattery(u8 taskId)
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 7);
 
-        if (gSoftResetFlag || !(RtcGetErrorStatus() & RTC_ERR_FLAG_MASK))
+        if (!(RtcGetErrorStatus() & RTC_ERR_FLAG_MASK))
         {
             gTasks[taskId].func = Task_DisplayMainMenu;
         }
