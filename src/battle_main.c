@@ -5087,7 +5087,7 @@ static bool32 TryDoGimmicksBeforeMoves(void)
                 gBattleStruct->gimmick.toActivate &= ~(gBitTable[battler]);
                 if (gGimmicksInfo[gBattleStruct->gimmick.usableGimmick[battler]].ActivateGimmick != NULL)
                 {
-                    gGimmicksInfo[gBattleStruct->gimmick.usableGimmick[battler]].ActivateQuickGimmick(battler);
+                    gGimmicksInfo[gBattleStruct->gimmick.usableGimmick[battler]].ActivateGimmick(battler);
                     return TRUE;
                 }
             }

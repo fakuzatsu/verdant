@@ -6249,7 +6249,7 @@ bool32 TryPrimalReversion(u32 battler)
             gBattleScripting.savedBattler = gBattlerAttacker;
             gBattlerAttacker = battler;
             if (gHitMarker & HITMARKER_NO_ANIMATIONS)
-                BattleScriptExecute(BattleScript_PrimalReversionRestoreAttacker);
+                BattleScriptExecute(BattleScript_PrimalReversionRestoreAttackerQ);
             else
                 BattleScriptExecute(BattleScript_PrimalReversionRestoreAttacker);
         }
@@ -10575,17 +10575,27 @@ void ActivateMegaEvolution(u32 battler)
 {
     gLastUsedItem = gBattleMons[battler].item;
     SetActiveGimmick(battler, GIMMICK_MEGA);
-    if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE) != SPECIES_NONE)
-        BattleScriptExecute(BattleScript_WishMegaEvolution);
+    if (GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_MEGA_EVOLUTION_MOVE) != SPECIES_NONE) {
+        if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+            BattleScriptExecute(BattleScript_WishMegaEvolutionQ);
+        else
+            BattleScriptExecute(BattleScript_WishMegaEvolution);
+    }
     else
-        BattleScriptExecute(BattleScript_MegaEvolution);
+        if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+            BattleScriptExecute(BattleScript_MegaEvolutionQ);
+        else
+            BattleScriptExecute(BattleScript_MegaEvolution);
 }
 
 void ActivateUltraBurst(u32 battler)
 {
     gLastUsedItem = gBattleMons[battler].item;
     SetActiveGimmick(battler, GIMMICK_ULTRA_BURST);
-    BattleScriptExecute(BattleScript_UltraBurst);
+    if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+        BattleScriptExecute(BattleScript_UltraBurstQ);
+    else
+        BattleScriptExecute(BattleScript_UltraBurst);
 }
 
 bool32 IsBattlerMegaEvolved(u32 battler)

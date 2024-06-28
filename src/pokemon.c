@@ -2506,6 +2506,9 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_EXP:
             retVal = substruct0->experience;
             break;
+        case MON_DATA_DAYS_SINCE_FORM_CHANGE:
+            retVal = substruct0->daysSinceFormChange;
+            break;
         case MON_DATA_PP_BONUSES:
             retVal = substruct0->ppBonuses;
             break;
@@ -3007,6 +3010,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             break;
         case MON_DATA_EXP:
             SET32(substruct0->experience);
+            break;
+        case MON_DATA_DAYS_SINCE_FORM_CHANGE:
+            SET8(substruct0->daysSinceFormChange);
             break;
         case MON_DATA_PP_BONUSES:
             SET8(substruct0->ppBonuses);

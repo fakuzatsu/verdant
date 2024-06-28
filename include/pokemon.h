@@ -41,6 +41,7 @@ enum {
     MON_DATA_PP2,
     MON_DATA_PP3,
     MON_DATA_PP4,
+    MON_DATA_DAYS_SINCE_FORM_CHANGE,
     MON_DATA_PP_BONUSES,
     MON_DATA_COOL,
     MON_DATA_BEAUTY,
@@ -127,7 +128,7 @@ struct PokemonSubstruct0
     u16 unused_02:6;
     u32 experience:21;
     u32 nickname11:8; // 11th character of nickname.
-    u32 unused_04:3;
+    u32 daysSinceFormChange:3;
     u8 ppBonuses;
     u8 friendship;
     u16 pokeball:6; // 63 balls.
