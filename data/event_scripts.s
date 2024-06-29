@@ -1075,6 +1075,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/text/frontier_brain.inc"
 	.include "data/text/save.inc"
 	.include "data/text/birch_speech.inc"
+	.include "data/scripts/memory_reader.inc"
 
 	.include "data/maps/OldaleTown_PokemonCenter_B1F/scripts.inc"
 	.include "data/maps/DewfordTown_PokemonCenter_B1F/scripts.inc"
