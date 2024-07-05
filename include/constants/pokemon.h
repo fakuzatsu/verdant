@@ -336,6 +336,7 @@
 #define LEGENDARY_PERFECT_IV_COUNT 3
 
 // Memories
+#define MON_MEMORY_ORIGIN 0
 #define MON_MEMORY_OLD 1
 #define MON_MEMORY_NEW 2
 
