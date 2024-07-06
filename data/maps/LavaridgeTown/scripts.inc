@@ -22,12 +22,12 @@ LavaridgeTown_EventScript_ClearLavaridgeWhiteOut::
 
 LavaridgeTown_EventScript_CheckSetRivalPos::
 	getplayerxy VAR_0x8004, VAR_0x8005
-	goto_if_eq VAR_0x8004, 9, LavaridgeTown_EventScript_SetRivalPos
+	goto_if_eq VAR_0x8004, 13, LavaridgeTown_EventScript_SetRivalPos
 	return
 
 LavaridgeTown_EventScript_SetRivalPos::
-	setobjectxyperm LOCALID_RIVAL, 11, 9
-	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 9, 8
+	setobjectxyperm LOCALID_RIVAL, 15, 9
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 13, 8
 	setobjectmovementtype LOCALID_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_UP
 	clearflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
 	return
@@ -47,14 +47,14 @@ LavaridgeTown_OnFrame:
 LavaridgeTown_EventScript_RivalGiveGoGoggles::
 	lockall
 	getplayerxy VAR_0x8008, VAR_0x8009
-	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalNoticePlayer
-	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExitHerbShop
+	call_if_eq VAR_0x8008, 13, LavaridgeTown_EventScript_RivalNoticePlayer
+	call_if_ne VAR_0x8008, 13, LavaridgeTown_EventScript_RivalExitHerbShop
 	delay 20
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_PlayBrendanMusic
-	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalApproachPlayer1
-	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalApproachPlayer2
+	call_if_eq VAR_0x8008, 13, LavaridgeTown_EventScript_RivalApproachPlayer1
+	call_if_ne VAR_0x8008, 13, LavaridgeTown_EventScript_RivalApproachPlayer2
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_MayGiveGoGoggles
 	goto_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_BrendanGiveGoGoggles
@@ -81,8 +81,8 @@ LavaridgeTown_EventScript_RivalExit::
 	removeobject LOCALID_RIVAL
 	addobject LOCALID_RIVAL_ON_BIKE
 	delay 30
-	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExit1
-	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExit2
+	call_if_eq VAR_0x8008, 13, LavaridgeTown_EventScript_RivalExit1
+	call_if_ne VAR_0x8008, 13, LavaridgeTown_EventScript_RivalExit2
 	removeobject LOCALID_RIVAL_ON_BIKE
 	setvar VAR_LAVARIDGE_TOWN_STATE, 2
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
@@ -110,12 +110,12 @@ LavaridgeTown_EventScript_RivalNoticePlayer::
 	return
 
 LavaridgeTown_EventScript_RivalExitHerbShop::
-	opendoor 12, 15
+	opendoor 16, 15
 	waitdooranim
 	addobject LOCALID_RIVAL
 	applymovement LOCALID_RIVAL, LavaridgeTown_Movement_RivalExitHerbShop
 	waitmovement 0
-	closedoor 12, 15
+	closedoor 16, 15
 	waitdooranim
 	applymovement LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
@@ -256,6 +256,43 @@ LavaridgeTown_EventScript_ReceivedEgg::
 
 LavaridgeTown_EventScript_NoRoomForEgg::
 	msgbox LavaridgeTown_Text_NoRoomForThisEgg, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_EventScript_MassageLady::
+	lock
+	goto_if_unset FLAG_DAILY_MASSAGE_SERVICE, LavaridgeTown_EventScript_MassageMon
+	msgbox LavaridgeTown_Text_IncreasedFriendship, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_EventScript_MassageMon::
+	msgbox LavaridgeTown_Text_LikeMeToGroomMon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LavaridgeTown_EventScript_DeclineGrooming
+	msgbox LavaridgeTown_Text_GroomWhichOne
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, LavaridgeTown_EventScript_DeclineGrooming
+	specialvar VAR_RESULT, ScriptGetPartyMonSpecies
+	goto_if_eq VAR_RESULT, SPECIES_EGG, LavaridgeTown_EventScript_CantGroomEgg
+	msgbox LavaridgeTown_Text_LookingNiceInNoTime
+	closemessage
+	fadescreen FADE_TO_BLACK
+	playfanfare MUS_HEAL
+	waitfanfare
+	special DailyMassageService
+	fadescreen FADE_FROM_BLACK
+	msgbox LavaridgeTown_Text_ThereYouGoAllDone
+	release
+	end
+
+LavaridgeTown_EventScript_CantGroomEgg::
+	msgbox LavaridgeTown_Text_CantGroomAnEgg
+	release
+	end
+
+LavaridgeTown_EventScript_DeclineGrooming::
+	msgbox LavaridgeTown_Text_DontNeedAnyGrooming
 	release
 	end
 
@@ -407,3 +444,31 @@ LavaridgeTown_Text_HerbShopSign:
 	.string "POKéMON HERB SHOP\n"
 	.string "“Bitter taste--better cure!”$"
 
+LavaridgeTown_Text_LikeMeToGroomMon::
+    .string "Lavaridge is the perfect place to\n"
+	.string "relax and unwind.\p"
+	.string "Would you like me to help your Pokémon\n"
+	.string "relax with a massage treatment?$"
+
+LavaridgeTown_Text_DontNeedAnyGrooming::
+    .string "You don't need to relax and unwind?\n"
+    .string "Okay, come back another time.$"
+
+LavaridgeTown_Text_GroomWhichOne::
+    .string "Which Pokémon should I treat?$"
+
+LavaridgeTown_Text_LookingNiceInNoTime::
+    .string "Okay, I'll get started on that\n"
+	.string "massage!$"
+
+LavaridgeTown_Text_ThereYouGoAllDone::
+    .string "There you go! All done.\n"
+    .string "See? Doesn't it look relaxed?$"
+
+LavaridgeTown_Text_CantGroomAnEgg::
+    .string "Oh, sorry. I honestly can't\n"
+    .string "massage an EGG.$"
+
+LavaridgeTown_Text_IncreasedFriendship::
+	.string "Relaxing together is a great way\n"
+	.string "to form bonds with your Pokémon!$"

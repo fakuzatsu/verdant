@@ -557,3 +557,4 @@ gSpecials::
 	def_special SetLevelCapByFlag
 	def_special SetLevelCapForFrontier
 	def_special BufferUnitSystemText
+	def_special DailyMassageService
