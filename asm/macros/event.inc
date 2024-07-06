@@ -2330,7 +2330,7 @@
 	.endm
 
 	@ Buffers the message for the memory in \memorySlot for the Pokémon at \slot
-	@ Message is buffered into gStringVar4 for limitation reasons
+	@ Message is buffered into gStringVar4 due to limitations with other strings
 	.macro buffermemorymessage slot:req, memorySlot=0
 	callnative BufferMemoryMessage
 	.2byte \slot
