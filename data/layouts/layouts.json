@@ -3834,10 +3834,10 @@
     {
       "id": "LAYOUT_BATTLE_TENT_LOBBY",
       "name": "BattleTentLobby_Layout",
-      "width": 13,
+      "width": 18,
       "height": 10,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_BattleTent",
+      "secondary_tileset": "gTileset_Contest",
       "border_filepath": "data/layouts/BattleTentLobby/border.bin",
       "blockdata_filepath": "data/layouts/BattleTentLobby/map.bin"
     },
@@ -4420,6 +4420,16 @@
       "secondary_tileset": "gTileset_PokemonCenter",
       "border_filepath": "data/layouts/PokemonCenter_B1F/border.bin",
       "blockdata_filepath": "data/layouts/PokemonCenter_B1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_VERDANTURF_TOWN_CONTEST_HALL",
+      "name": "VerdanturfTown_ContestHall_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Contest",
+      "border_filepath": "data/layouts/VerdanturfTown_ContestHall/border.bin",
+      "blockdata_filepath": "data/layouts/VerdanturfTown_ContestHall/map.bin"
     }
   ]
 }

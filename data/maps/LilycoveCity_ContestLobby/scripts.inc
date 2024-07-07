@@ -12,9 +12,14 @@ LilycoveCity_ContestLobby_MapScripts::
 @ Some scripts for this room are split into data/scripts/contest_hall and data/scripts/berry_blender
 
 LilycoveCity_ContestLobby_OnTransition:
+	call LilycoveCity_ContestLobby_EventScript_SetContestAsLilycove
 	call LilycoveCity_ContestLobby_EventScript_TryShowContestReporter
 	call LilycoveCity_ContestLobby_EventScript_TryShowBlendMaster
 	end
+
+LilycoveCity_ContestLobby_EventScript_SetContestAsLilycove::
+	clearflag FLAG_CONTEST_IS_VERDANTURF
+	return
 
 LilycoveCity_ContestLobby_EventScript_TryShowBlendMaster::
 	getpokenewsactive POKENEWS_BLENDMASTER
@@ -408,14 +413,14 @@ LilycoveCity_ContestLobby_EventScript_LeadToContestHall::
 	applymovement LOCALID_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 12, 2, METATILE_Contest_WallShadow, TRUE
-	setmetatile 12, 3, METATILE_Contest_FloorShadow, TRUE
+	call_if_unset FLAG_CONTEST_IS_VERDANTURF, LilycoveCity_ContestLobby_EventScript_DoShadows
+	call_if_set FLAG_CONTEST_IS_VERDANTURF, VerdanturfTown_ContestLobby_EventScript_DoShadows
 	special DrawWholeMapView
 	applymovement LOCALID_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 12, 2, METATILE_Contest_CounterFlap_Top, TRUE
-	setmetatile 12, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
+	call_if_unset FLAG_CONTEST_IS_VERDANTURF, LilycoveCity_ContestLobby_EventScript_DoCounter
+	call_if_set FLAG_CONTEST_IS_VERDANTURF, VerdanturfTown_ContestLobby_EventScript_DoCounter
 	special DrawWholeMapView
 	delay 20
 	applymovement LOCALID_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistFacePlayer
@@ -428,6 +433,26 @@ LilycoveCity_ContestLobby_EventScript_LeadToContestHall::
 	applymovement OBJ_EVENT_ID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall
 	waitmovement 0
 	releaseall
+	return
+
+LilycoveCity_ContestLobby_EventScript_DoShadows::
+	setmetatile 10, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 10, 3, METATILE_Contest_FloorShadow, TRUE
+	return
+
+VerdanturfTown_ContestLobby_EventScript_DoShadows::
+	setmetatile 5, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 5, 3, METATILE_Contest_FloorShadow, TRUE
+	return
+
+LilycoveCity_ContestLobby_EventScript_DoCounter::
+	setmetatile 10, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 10, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
+	return
+
+VerdanturfTown_ContestLobby_EventScript_DoCounter::
+	setmetatile 5, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 5, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
 	return
 
 LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall:
@@ -899,14 +924,14 @@ LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall::
 	applymovement LOCALID_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 17, 2, METATILE_Contest_WallShadow, TRUE
-	setmetatile 17, 3, METATILE_Contest_FloorShadow, TRUE
+	call_if_unset FLAG_CONTEST_IS_VERDANTURF, LilycoveCity_ContestLobby_EventScript_DoLinkShadows
+	call_if_set FLAG_CONTEST_IS_VERDANTURF, VerdanturfTown_ContestLobby_EventScript_DoLinkShadows
 	special DrawWholeMapView
 	applymovement LOCALID_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 17, 2, METATILE_Contest_CounterFlap_Top, TRUE
-	setmetatile 17, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
+	call_if_unset FLAG_CONTEST_IS_VERDANTURF, LilycoveCity_ContestLobby_EventScript_DoLinkCounter
+	call_if_set FLAG_CONTEST_IS_VERDANTURF, VerdanturfTown_ContestLobby_EventScript_DoLinkCounter
 	special DrawWholeMapView
 	delay 20
 	applymovement LOCALID_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer
@@ -922,6 +947,26 @@ LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall::
 	applymovement OBJ_EVENT_ID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall
 	waitmovement 0
 	release
+	return
+
+LilycoveCity_ContestLobby_EventScript_DoLinkShadows::
+	setmetatile 15, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 15, 3, METATILE_Contest_FloorShadow, TRUE
+	return
+
+VerdanturfTown_ContestLobby_EventScript_DoLinkShadows::
+	setmetatile 10, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 10, 3, METATILE_Contest_FloorShadow, TRUE
+	return
+
+LilycoveCity_ContestLobby_EventScript_DoLinkCounter::
+	setmetatile 15, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 15, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
+	return
+
+VerdanturfTown_ContestLobby_EventScript_DoLinkCounter::
+	setmetatile 10, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 10, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
 	return
 
 LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall:
@@ -990,13 +1035,13 @@ LilycoveCity_ContestLobby_Text_LadyGaveMePokeblockCase:
 LilycoveCity_ContestLobby_Text_MakePokeblocksDifferentBerries:
 	.string "Make {POKEBLOCK}S and put them in there.\p"
 	.string "When you make a {POKEBLOCK}, everyone\n"
-	.string "has to put in a different BERRY.$"
+	.string "has to put in a different Berry.$"
 
 LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint:
 	.string "Congratulations!\p"
-	.string "I did a painting of your POKéMON to\n"
+	.string "I did a painting of your Pokémon to\n"
 	.string "commemorate its victory…\p"
-	.string "Well, your POKéMON's appeals were\n"
+	.string "Well, your Pokémon's appeals were\n"
 	.string "so fantastic, it spurred me into\l"
 	.string "painting better than I usually do.\l"
 	.string "Look, see?$"
@@ -1022,13 +1067,13 @@ LilycoveCity_ContestLobby_Text_IllTakePaintingToMuseum:
 LilycoveCity_ContestLobby_Text_TakeMementoOfPainting:
 	.string "Oh, that's right!\p"
 	.string "As a memento of me painting your\n"
-	.string "POKéMON, please take this.$"
+	.string "Pokémon, please take this.$"
 
 LilycoveCity_ContestLobby_Text_ReceivedARibbon:
-	.string "{PLAYER} received a RIBBON.$"
+	.string "{PLAYER} received a Ribbon.$"
 
 LilycoveCity_ContestLobby_Text_PutTheRibbonOnMon:
-	.string "{PLAYER} put the RIBBON on\n"
+	.string "{PLAYER} put the Ribbon on\n"
 	.string "{STR_VAR_1}.$"
 
 LilycoveCity_ContestLobby_Text_OkaySeeYou:
@@ -1050,31 +1095,31 @@ LilycoveCity_ContestLobby_Text_MasterRankHereICome:
 	.string "Hoo, boy… Master Rank CONTESTS,\n"
 	.string "here I come.\p"
 	.string "The world will know that my dearest\n"
-	.string "POKéMON is the cutest being in all\l"
+	.string "Pokémon is the cutest being in all\l"
 	.string "existence. The time has come!\l"
 	.string "Uheheheh.$"
 
 LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere:
 	.string "You can see a whole variety of\n"
-	.string "POKéMON here.\p"
+	.string "Pokémon here.\p"
 	.string "That's why I make this place a regular\n"
 	.string "part of my daily stroll.$"
 
 LilycoveCity_ContestLobby_Text_ContestFeastForEyes:
-	.string "Wow, coming out to a CONTEST is\n"
+	.string "Wow, coming out to a Contest is\n"
 	.string "a feast for these eyes!\p"
-	.string "Would you look at all the POKéMON\n"
+	.string "Would you look at all the Pokémon\n"
 	.string "that just scream to be painted?$"
 
 LilycoveCity_ContestLobby_Text_ToughContestIsExtreme:
-	.string "The TOUGHNESS CONTEST is like\n"
+	.string "The TOUGHNESS Contest is like\n"
 	.string "extreme, man!\p"
 	.string "Those muscular appeals…\n"
 	.string "Cascading sweat… I swoon!$"
 
 LilycoveCity_ContestLobby_Text_LavishedCareOnMon:
 	.string "Day in and day out, I lavished my care\n"
-	.string "on this POKéMON.\p"
+	.string "on this Pokémon.\p"
 	.string "Its condition is peaking.\n"
 	.string "Today, victory is mine!$"
 
@@ -1083,4 +1128,3 @@ LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily:
 	.string "Big Sister. They turned out great!\p"
 	.string "I bet you can make smoother, better\n"
 	.string "{POKEBLOCK}S if you have more people.$"
-

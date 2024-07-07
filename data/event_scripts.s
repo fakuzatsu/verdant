@@ -1095,3 +1095,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/EverGrandeCity_PokemonCenter_B1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_B1F/scripts.inc"
 	.include "data/maps/BattleFrontier_PokemonCenter_B1F/scripts.inc"
+
+	.include "data/maps/VerdanturfTown_ContestHall/scripts.inc"
