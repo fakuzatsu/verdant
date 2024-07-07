@@ -56,7 +56,7 @@ extern const u8 MemoryStrings_EarnedGoldFrontier[];
 
 static const u8 MemoryStrings_FullStop[] = _(".");
 static const u8 MemoryStrings_ByX[] = _(" by {STR_VAR_2}.");
-static const u8 MemoryStrings_WithX[] = _(" alongside {STR_VAR_2}.");
+static const u8 MemoryStrings_WithX[] = _(" with {STR_VAR_2}.");
 static const u8 MemoryStrings_GivenByX[] = _(" given by {STR_VAR_2}.");
 
 static const u8 *const sMemoryStrings[TOTAL_MEMORIES][2] = {

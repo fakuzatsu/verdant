@@ -16,15 +16,15 @@ MemoryGirl_Text_ThatIsJustAnEgg::
 	.string "It's just an EGG!$"
 
 MemoryGirl_Text_LetsSeeWhatElse::
-	.string "Let's see what else…$"
+	.string "In it's memory I see…$"
 
 MemoryGirl_Text_AndAlso::
-	.string "And…$"
+	.string "I also see…$"
 
 MemoryGirl_Text_NoMemoriesToRead::
-	.string "Hmmm… it looks like {STR_VAR_1}\n"
-	.string "hasn't done much.\p"
-	.string "How sad!$"
+	.string "That's all…\p"
+	.string "It looks like {STR_VAR_1}\n"
+	.string "hasn't done much.$"
 
 MemoryGirl_Text_YouveHadGreatTimes::
 	.string "{STR_VAR_1} has shared some great\n"
@@ -69,55 +69,55 @@ MemoryStrings_TransferedOverLinkTrade::
 
 MemoryStrings_WonACoolContest::
 	.string "{STR_VAR_1} showed an incredible display\n"
-	.string "of coolness{STR_VAR_3}$"
+	.string "of coolness in a contest{STR_VAR_3}$"
 
 MemoryStrings_WonABeautyContest::
  	.string "{STR_VAR_1} showed an incredible display\n"
-	.string "of beauty{STR_VAR_3}$"
+	.string "of beauty in a contest{STR_VAR_3}$"
 
 MemoryStrings_WonACuteContest::
 	.string "{STR_VAR_1} showed an incredible display\n"
-	.string "of cuteness{STR_VAR_3}$"
+	.string "of cuteness in a contest{STR_VAR_3}$"
 
 MemoryStrings_WonACleverContest::
 	.string "{STR_VAR_1} showed an incredible display\n"
-	.string "of cleverness{STR_VAR_3}$"
+	.string "of smarts in a contest{STR_VAR_3}$"
 
 MemoryStrings_WonAToughContest::
 	.string "{STR_VAR_1} showed an incredible display\n"
-	.string "of toughness{STR_VAR_3}$"
+	.string "of strength in a contest{STR_VAR_3}$"
 
 MemoryStrings_AteACoolPokeblock::
 	.string "{STR_VAR_1} felt cool after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteABeautyPokeblock::
 	.string "{STR_VAR_1} felt beautiful after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteACutePokeblock::
 	.string "{STR_VAR_1} felt cute after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteACleverPokeblock::
 	.string "{STR_VAR_1} felt clever after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteAToughPokeblock::
 	.string "{STR_VAR_1} felt tough after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteADislikedPokeblock::
 	.string "{STR_VAR_1} felt disgusted after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_AteALovedPokeblock::
 	.string "{STR_VAR_1} felt incredible after eating\n"
-	.string "a berry{STR_VAR_3}$"
+	.string "a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_MaxedOutSheen::
 	.string "{STR_VAR_1} reached peak form after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "eating a Pokéblock{STR_VAR_3}$"
 
 MemoryStrings_FoughtRoxanneGym::
 	.string "{STR_VAR_1} fought and defeated Gym\n"
@@ -168,11 +168,11 @@ MemoryStrings_CaughtALegendary::
 	.string "Legendary Pokémon{STR_VAR_3}$"
 
 MemoryStrings_DefendedChampionTitle::
-	.string "{STR_VAR_1} defended the championship\n"
-	.string "title{STR_VAR_3}$"
+	.string "{STR_VAR_1} defended the Championship\n"
+	.string "Title{STR_VAR_3}$"
 
 MemoryStrings_WonAMasterContest::
-	.string "{STR_VAR_1} put on a perfect contest\n"
+	.string "{STR_VAR_1} put on a masterful contest\n"
 	.string "performance{STR_VAR_3}$"
 
 MemoryStrings_SavedTheWorld::
