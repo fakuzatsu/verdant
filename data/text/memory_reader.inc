@@ -34,6 +34,28 @@ MemoryGirl_Text_WellTravelledMon::
 	.string "{STR_VAR_1} has shared some great\n"
 	.string "memories with plenty of trainers!$"
 
+MemoryGirl_Text_PleaseGiveItThisHistoricRibbon::
+	.string "As its reward, please give it this\n"
+	.string "HISTORIC RIBBON.$"
+
+MemoryGirl_Text_PleaseGiveItThisTravellerRibbon::
+	.string "As its reward, please give it this\n"
+	.string "TRAVELLER RIBBON.$"
+
+MemoryGirl_Text_ReceivedHistoricRibbon::
+	.string "{PLAYER} received the HISTORIC RIBBON.$"
+
+MemoryGirl_Text_ReceivedTravellerRibbon::
+	.string "{PLAYER} received the TRAVELLER RIBBON.$"
+
+MemoryGirl_Text_PutHistoricRibbonOnMon::
+	.string "{PLAYER} put the HISTORIC RIBBON\n"
+	.string "on {STR_VAR_1}.$"
+
+MemoryGirl_Text_PutTravellerRibbonOnMon::
+	.string "{PLAYER} put the TRAVELLER RIBBON\n"
+	.string "on {STR_VAR_1}.$"
+
 MemoryStrings_NoMemory::
 	.string ".$"
 
@@ -46,126 +68,117 @@ MemoryStrings_TransferedOverLinkTrade::
 	.string "link trade.$"
 
 MemoryStrings_WonACoolContest::
-	.string "{STR_VAR_1} showed an incredible\n"
-	.string "display of coolness{STR_VAR_3}$"
+	.string "{STR_VAR_1} showed an incredible display\n"
+	.string "of coolness{STR_VAR_3}$"
 
 MemoryStrings_WonABeautyContest::
- 	.string "{STR_VAR_1} showed an incredible\n"
-	.string "display of beauty{STR_VAR_3}$"
+ 	.string "{STR_VAR_1} showed an incredible display\n"
+	.string "of beauty{STR_VAR_3}$"
 
 MemoryStrings_WonACuteContest::
-	.string "{STR_VAR_1} showed an incredible\n"
-	.string "display of cuteness{STR_VAR_3}$"
+	.string "{STR_VAR_1} showed an incredible display\n"
+	.string "of cuteness{STR_VAR_3}$"
 
 MemoryStrings_WonACleverContest::
-	.string "{STR_VAR_1} showed an incredible\n"
-	.string "display of cleverness{STR_VAR_3}$"
+	.string "{STR_VAR_1} showed an incredible display\n"
+	.string "of cleverness{STR_VAR_3}$"
 
 MemoryStrings_WonAToughContest::
-	.string "{STR_VAR_1} showed an incredible\n"
-	.string "display of toughness{STR_VAR_3}$"
+	.string "{STR_VAR_1} showed an incredible display\n"
+	.string "of toughness{STR_VAR_3}$"
 
 MemoryStrings_AteACoolPokeblock::
-	.string "{STR_VAR_1} felt cool after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt cool after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteABeautyPokeblock::
-	.string "{STR_VAR_1} felt beautiful after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt beautiful after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteACutePokeblock::
-	.string "{STR_VAR_1} felt cute after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt cute after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteACleverPokeblock::
-	.string "{STR_VAR_1} felt clever after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt clever after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteAToughPokeblock::
-	.string "{STR_VAR_1} felt tough after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt tough after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteADislikedPokeblock::
-	.string "{STR_VAR_1} felt disgusted after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt disgusted after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_AteALovedPokeblock::
-	.string "{STR_VAR_1} felt incredible after\n"
-	.string "eating a berry{STR_VAR_3}$"
+	.string "{STR_VAR_1} felt incredible after eating\n"
+	.string "a berry{STR_VAR_3}$"
 
 MemoryStrings_MaxedOutSheen::
-	.string "{STR_VAR_1} reached peak physical form\n"
+	.string "{STR_VAR_1} reached peak form after\n"
 	.string "eating a berry{STR_VAR_3}$"
 
 MemoryStrings_FoughtRoxanneGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Roxanne{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Roxanne{STR_VAR_3}$"
 
 MemoryStrings_FoughtBrawlyGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Brawly{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Brawly{STR_VAR_3}$"
 
 MemoryStrings_FoughtWattsonGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Wattson{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Wattson{STR_VAR_3}$"
 
 MemoryStrings_FoughtFlanneryGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Flannery{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Flannery{STR_VAR_3}$"
 
 MemoryStrings_FoughtNormanGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Norman{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Norman{STR_VAR_3}$"
 
 MemoryStrings_FoughtWinonaGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Winona{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Winona{STR_VAR_3}$"
 
 MemoryStrings_FoughtTateAndLizaGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Tate and Liza{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Tate and Liza{STR_VAR_3}$"
 
 MemoryStrings_FoughtWallaceGym::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "Gym Leader Wallace{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated Gym\n"
+	.string "Leader Wallace{STR_VAR_3}$"
 
 MemoryStrings_FoughtTheEliteFour::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "The Elite Four{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated The\n"
+	.string "Elite Four{STR_VAR_3}$"
 
 MemoryStrings_FoughtASignificant::
-	.string "{STR_VAR_1} fought and defeated\n"
-	.string "a mysterious trainer{STR_VAR_3}$"
+	.string "{STR_VAR_1} fought and defeated a\n"
+	.string "mysterious trainer{STR_VAR_3}$"
 
 MemoryStrings_EarnedSilverFrontier::
-	.string "{STR_VAR_1} battled and earned\n"
-	.string "a Silver Frontier medal{STR_VAR_3}$"
+	.string "{STR_VAR_1} battled and earned a\n"
+	.string "Silver Frontier medal{STR_VAR_3}$"
 
 MemoryStrings_CaughtALegendary::
-	.string "{STR_VAR_1} helped to capture\n"
-	.string "a Legendary Pokémon{STR_VAR_3}$"
+	.string "{STR_VAR_1} helped to capture a\n"
+	.string "Legendary Pokémon{STR_VAR_3}$"
 
 MemoryStrings_DefendedChampionTitle::
-	.string "{STR_VAR_1} defended the\n"
-	.string "championship title{STR_VAR_3}$"
+	.string "{STR_VAR_1} defended the championship\n"
+	.string "title{STR_VAR_3}$"
 
 MemoryStrings_WonAMasterContest::
-	.string "{STR_VAR_1} put on a perfect\n"
-	.string "contest performance{STR_VAR_3}$"
+	.string "{STR_VAR_1} put on a perfect contest\n"
+	.string "performance{STR_VAR_3}$"
 
 MemoryStrings_SavedTheWorld::
-	.string "{STR_VAR_1} awoke a legendary\n"
-	.string "Pokémon and saved the world{STR_VAR_3}$"
+	.string "{STR_VAR_1} awoke a legendary Pokémon\n"
+	.string "and saved the world{STR_VAR_3}$"
 
 MemoryStrings_EarnedGoldFrontier::
-	.string "{STR_VAR_1} battled and earned\n"
-	.string "a Gold Frontier medal{STR_VAR_3}$"
-
-MemoryStrings_ByX::
-	.string "by {STR_VAR_2}."
-
-MemoryStrings_WithX::
-	.string "\lalongside {STR_VAR_2}."
-
-MemoryStrings_GivenByX::
-	.string "\lgiven by {STR_VAR_2}."
+	.string "{STR_VAR_1} battled and earned a\n"
+	.string "Gold Frontier medal{STR_VAR_3}$"

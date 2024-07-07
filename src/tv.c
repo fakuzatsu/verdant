@@ -609,6 +609,8 @@ static const u8 *const sTVCutiesTextGroup[] = {
     [SPOTCUTIES_STATE_RIBBON_VICTORY]  = TVSpotTheCuties_Text_RibbonVictory,
     [SPOTCUTIES_STATE_RIBBON_ARTIST]   = TVSpotTheCuties_Text_RibbonArtist,
     [SPOTCUTIES_STATE_RIBBON_EFFORT]   = TVSpotTheCuties_Text_RibbonEffort,
+    [SPOTCUTIES_STATE_RIBBON_TRAVELLER] = TVSpotTheCuties_Text_RibbonTraveller,
+    [SPOTCUTIES_STATE_RIBBON_HISTORIC] = TVSpotTheCuties_Text_RibbonHistoric,
     [SPOTCUTIES_STATE_OUTRO]           = TVSpotTheCuties_Text_Outro
 };
 
@@ -2258,8 +2260,8 @@ u8 GetRibbonCount(struct Pokemon *pokemon)
     nRibbons += GetMonData(pokemon, MON_DATA_ARTIST_RIBBON);
     nRibbons += GetMonData(pokemon, MON_DATA_EFFORT_RIBBON);
     nRibbons += GetMonData(pokemon, MON_DATA_MARINE_RIBBON);
-    nRibbons += GetMonData(pokemon, MON_DATA_LAND_RIBBON);
-    nRibbons += GetMonData(pokemon, MON_DATA_SKY_RIBBON);
+    nRibbons += GetMonData(pokemon, MON_DATA_TRAVELLER_RIBBON);
+    nRibbons += GetMonData(pokemon, MON_DATA_HISTORIC_RIBBON);
     nRibbons += GetMonData(pokemon, MON_DATA_COUNTRY_RIBBON);
     nRibbons += GetMonData(pokemon, MON_DATA_NATIONAL_RIBBON);
     nRibbons += GetMonData(pokemon, MON_DATA_EARTH_RIBBON);
@@ -2280,8 +2282,8 @@ static u8 MonDataIdxToRibbon(u8 monDataIdx)
     if (monDataIdx == MON_DATA_ARTIST_RIBBON)   return ARTIST_RIBBON;
     if (monDataIdx == MON_DATA_EFFORT_RIBBON)   return EFFORT_RIBBON;
     if (monDataIdx == MON_DATA_MARINE_RIBBON)   return MARINE_RIBBON;
-    if (monDataIdx == MON_DATA_LAND_RIBBON)     return LAND_RIBBON;
-    if (monDataIdx == MON_DATA_SKY_RIBBON)      return SKY_RIBBON;
+    if (monDataIdx == MON_DATA_TRAVELLER_RIBBON) return TRAVELLER_RIBBON;
+    if (monDataIdx == MON_DATA_HISTORIC_RIBBON) return HISTORIC_RIBBON;
     if (monDataIdx == MON_DATA_COUNTRY_RIBBON)  return COUNTRY_RIBBON;
     if (monDataIdx == MON_DATA_NATIONAL_RIBBON) return NATIONAL_RIBBON;
     if (monDataIdx == MON_DATA_EARTH_RIBBON)    return EARTH_RIBBON;
@@ -6278,6 +6280,12 @@ static void DoTVShowSpotTheCuties(void)
         case EFFORT_RIBBON:
             sTVShowState = SPOTCUTIES_STATE_RIBBON_EFFORT;
             break;
+        case TRAVELLER_RIBBON:
+            sTVShowState = SPOTCUTIES_STATE_RIBBON_TRAVELLER;
+            break;
+        case HISTORIC_RIBBON:
+            sTVShowState = SPOTCUTIES_STATE_RIBBON_HISTORIC;
+            break;
         // No comment is made for any of the gift ribbons.
         // If the show is created for a gift ribbon
         // then this state will repeat indefinitely
@@ -6293,6 +6301,8 @@ static void DoTVShowSpotTheCuties(void)
     case SPOTCUTIES_STATE_RIBBON_VICTORY:
     case SPOTCUTIES_STATE_RIBBON_ARTIST:
     case SPOTCUTIES_STATE_RIBBON_EFFORT:
+    case SPOTCUTIES_STATE_RIBBON_TRAVELLER:
+    case SPOTCUTIES_STATE_RIBBON_HISTORIC:
         TVShowConvertInternationalString(gStringVar2, show->cuties.nickname, show->cuties.pokemonNameLanguage);
         sTVShowState = SPOTCUTIES_STATE_OUTRO;
         break;

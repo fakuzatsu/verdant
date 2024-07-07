@@ -558,3 +558,5 @@ gSpecials::
 	def_special SetLevelCapForFrontier
 	def_special BufferUnitSystemText
 	def_special DailyMassageService
+	def_special GiveMonTravellerRibbon
+	def_special GiveMonHistoricRibbon

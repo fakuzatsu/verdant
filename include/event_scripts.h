@@ -238,6 +238,8 @@ extern const u8 TVSpotTheCuties_Text_RibbonWinning[];
 extern const u8 TVSpotTheCuties_Text_RibbonVictory[];
 extern const u8 TVSpotTheCuties_Text_RibbonArtist[];
 extern const u8 TVSpotTheCuties_Text_RibbonEffort[];
+extern const u8 TVSpotTheCuties_Text_RibbonTraveller[];
+extern const u8 TVSpotTheCuties_Text_RibbonHistoric[];
 extern const u8 TVSpotTheCuties_Text_Outro[];
 extern const u8 gTVPokemonNewsBattleFrontierText00[];
 extern const u8 gTVPokemonNewsBattleFrontierText01[];

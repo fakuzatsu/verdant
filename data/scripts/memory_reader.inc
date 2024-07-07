@@ -42,8 +42,10 @@ MemoryGirl_EventScript_SkipToNewestMemory:
 	goto_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_WellTravelledMon
 	specialvar VAR_RESULT, MonOTNameNotPlayer
 	goto_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_WellTravelledMon
+	specialvar VAR_RESULT, GiveMonHistoricRibbon
 	special BufferMonNickname
 	msgbox MemoryGirl_Text_YouveHadGreatTimes, MSGBOX_DEFAULT
+	call_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_GiveHistoricRibbon
 	release
 	end
 
@@ -66,7 +68,25 @@ MemoryGirl_EventScript_CantReadEgg::
 	end
 
 MemoryGirl_EventScript_WellTravelledMon::
+	specialvar VAR_RESULT, GiveMonTravellerRibbon
 	special BufferMonNickname
 	msgbox MemoryGirl_Text_WellTravelledMon, MSGBOX_DEFAULT
+	call_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_GiveTravellerRibbon
 	release
 	end
+
+MemoryGirl_EventScript_GiveHistoricRibbon::
+	msgbox MemoryGirl_Text_PleaseGiveItThisHistoricRibbon, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	message MemoryGirl_Text_ReceivedHistoricRibbon
+	waitfanfare
+	msgbox MemoryGirl_Text_PutHistoricRibbonOnMon, MSGBOX_DEFAULT
+	return
+
+MemoryGirl_EventScript_GiveTravellerRibbon::
+	msgbox MemoryGirl_Text_PleaseGiveItThisTravellerRibbon, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	message MemoryGirl_Text_ReceivedTravellerRibbon
+	waitfanfare
+	msgbox MemoryGirl_Text_PutTravellerRibbonOnMon, MSGBOX_DEFAULT
+	return

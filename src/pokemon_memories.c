@@ -5,6 +5,7 @@
 #include "region_map.h"
 #include "script.h"
 #include "string_util.h"
+#include "tv.h"
 
 static const u8 sText_MetAtYZ[] = _("{STR_VAR_1} was caught by {STR_VAR_3} at\n{STR_VAR_2}.");
 static const u8 sText_HatchedAtYZ[] = _("{STR_VAR_1} was hatched by {STR_VAR_3} at\n{STR_VAR_2}.");
@@ -18,7 +19,7 @@ static const u8 sText_RomansPlusle[] = _("PLUSES was caught by CHESTER at\n{LV_2
 static const u8 sText_SkylarsHorsea[] = _("SEASOR was hatched by SKYLAR at\n{LV_2}{STR_VAR_2}, PACIFIDLOG TOWN");
 static const u8 sText_IsissMeowth[] = _("MEOWOW was caught by ISIS at\n{LV_2}{STR_VAR_2}, ROUTE 38");
 
-static const u8 sText_AtLevelLocation[] = _("{LV_2}{STR_VAR_2}, {STR_VAR_3}");
+static const u8 sText_AtLevelLocation[] = _("{LV_2}{STR_VAR_2}, at {STR_VAR_3}");
 
 extern const u8 MemoryStrings_NoMemory[];
 extern const u8 MemoryStrings_TransferedOverWonderTrade[];
@@ -52,11 +53,11 @@ extern const u8 MemoryStrings_DefendedChampionTitle[];
 extern const u8 MemoryStrings_WonAMasterContest[];
 extern const u8 MemoryStrings_SavedTheWorld[];
 extern const u8 MemoryStrings_EarnedGoldFrontier[];
-extern const u8 MemoryStrings_WithX[];
-extern const u8 MemoryStrings_GivenByX[];
-extern const u8 MemoryStrings_ByX[];
 
 static const u8 MemoryStrings_FullStop[] = _(".");
+static const u8 MemoryStrings_ByX[] = _(" by {STR_VAR_2}.");
+static const u8 MemoryStrings_WithX[] = _(" alongside {STR_VAR_2}.");
+static const u8 MemoryStrings_GivenByX[] = _(" given by {STR_VAR_2}.");
 
 static const u8 *const sMemoryStrings[TOTAL_MEMORIES][2] = {
     {MemoryStrings_NoMemory, MemoryStrings_NoMemory},
@@ -275,5 +276,46 @@ void SetMemoryAll(struct ScriptContext *ctx)
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
             SetMemoryWithRules(&gPlayerParty[i], memory);
+    }
+}
+
+bool8 GiveMonTravellerRibbon(void)
+{
+    u8 hasTravellerRibbon;
+
+    hasTravellerRibbon = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_TRAVELLER_RIBBON);
+    if (!hasTravellerRibbon)
+    {
+        hasTravellerRibbon = 1;
+        SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_TRAVELLER_RIBBON, &hasTravellerRibbon);
+        if (GetRibbonCount(&gPlayerParty[gSpecialVar_0x8004]) > NUM_CUTIES_RIBBONS)
+            TryPutSpotTheCutiesOnAir(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_TRAVELLER_RIBBON);
+
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+bool8 GiveMonHistoricRibbon(void)
+{
+    u8 hasHistoricRibbon;
+
+    hasHistoricRibbon = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HISTORIC_RIBBON);
+    if (!hasHistoricRibbon && IsMemorySpecial(GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MEMORY_OLD))
+    && IsMemorySpecial(GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MEMORY_NEW)))
+    {
+        hasHistoricRibbon = 1;
+        SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HISTORIC_RIBBON, &hasHistoricRibbon);
+        if (GetRibbonCount(&gPlayerParty[gSpecialVar_0x8004]) > NUM_CUTIES_RIBBONS)
+            TryPutSpotTheCutiesOnAir(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HISTORIC_RIBBON);
+
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
     }
 }

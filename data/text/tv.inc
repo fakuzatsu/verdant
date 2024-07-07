@@ -1872,6 +1872,26 @@ TVSpotTheCuties_Text_RibbonEffort::
 	.string "{STR_VAR_2} and the Hard Worker RIBBON!\n"
 	.string "The combination is super effective!$"
 
+TVSpotTheCuties_Text_RibbonTraveller::
+	.string "The Traveller RIBBON is\n"
+	.string "especially fetching.\p"
+	.string "{STR_VAR_2} received it for having an\n"
+	.string "extensive history of adventure.\p"
+	.string "It verily draws out the experiences\n"
+	.string "of {STR_VAR_2}.\p"
+	.string "{STR_VAR_2} and the Traveller RIBBON!\n"
+	.string "The combination is super effective!$"
+
+TVSpotTheCuties_Text_RibbonHistoric::
+	.string "The Historic RIBBON is\n"
+	.string "especially fetching.\p"
+	.string "{STR_VAR_2} received it for having an\n"
+	.string "exceptional history of adventure.\p"
+	.string "It verily draws out the experiences\n"
+	.string "of {STR_VAR_2}.\p"
+	.string "{STR_VAR_2} and the Historic RIBBON!\n"
+	.string "The combination is super effective!$"
+
 TVSpotTheCuties_Text_Outro::
 	.string "…Sigh…\p"
 	.string "RIBBONS and POKéMON…\n"
