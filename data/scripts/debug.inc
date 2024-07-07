@@ -142,22 +142,18 @@ Debug_EventScript_ToggleDayNight::
 	end
 
 Debug_EventScript_Script_3::
-	setmemory 6, 0
 	release
 	end
 
 Debug_EventScript_Script_4::
-	setmemory 13, 0
 	release
 	end
 
 Debug_EventScript_Script_5::
-	setmemory 29, 0
 	release
 	end
 
 Debug_EventScript_Script_6::
-	setmemory 31, 0
 	release
 	end
 
