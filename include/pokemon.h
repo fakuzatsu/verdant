@@ -91,7 +91,7 @@ enum {
     MON_DATA_VICTORY_RIBBON,
     MON_DATA_ARTIST_RIBBON,
     MON_DATA_EFFORT_RIBBON,
-    MON_DATA_MARINE_RIBBON,
+    MON_DATA_TENT_RIBBON,
     MON_DATA_TRAVELLER_RIBBON,
     MON_DATA_HISTORIC_RIBBON,
     MON_DATA_COUNTRY_RIBBON,
@@ -200,9 +200,9 @@ struct PokemonSubstruct3
     u32 victoryRibbon:1;  // Given at the Battle Tower's Level 100 challenge by winning a set of seven battles that extends the current streak to 56 or more.
     u32 artistRibbon:1;   // Given at the Contest Hall by winning a Master Rank contest with at least 800 points, and agreeing to have the Pokémon's portrait placed in the museum after being offered.
     u32 effortRibbon:1;   // Given at Slateport's market to Pokémon with maximum EVs.
-    u32 marineRibbon:1;   // Never distributed.
+    u32 tentRibbon:1;      // Custom Ribbon. Overwrites the Marine Ribbon. Currently undistributed.
     u32 travellerRibbon:1; // Custom Ribbon. Overwrites the Land Ribbon. Given at the Memory Reader for having a traded Pokémon with two memories.
-    u32 historicRibbon:1;      // Never distributed.
+    u32 historicRibbon:1;  // Custom Ribbon. Overwrites the Sky Ribbon. Given at the Memory Reader for having a Pokémon with two significant memories.
     u32 countryRibbon:1;  // Distributed during Pokémon Festa '04 and '05 to tournament winners.
     u32 nationalRibbon:1; // Given to purified Shadow Pokémon in Colosseum/XD.
     u32 earthRibbon:1;    // Given to teams that have beaten Mt. Battle's 100-battle challenge in Colosseum/XD.

@@ -2656,8 +2656,8 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_EFFORT_RIBBON:
             retVal = substruct3->effortRibbon;
             break;
-        case MON_DATA_MARINE_RIBBON:
-            retVal = substruct3->marineRibbon;
+        case MON_DATA_TENT_RIBBON:
+            retVal = substruct3->tentRibbon;
             break;
         case MON_DATA_TRAVELLER_RIBBON:
             retVal = substruct3->travellerRibbon;
@@ -2725,7 +2725,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
                 retVal += substruct3->victoryRibbon;
                 retVal += substruct3->artistRibbon;
                 retVal += substruct3->effortRibbon;
-                retVal += substruct3->marineRibbon;
+                retVal += substruct3->tentRibbon;
                 retVal += substruct3->travellerRibbon;
                 retVal += substruct3->historicRibbon;
                 retVal += substruct3->countryRibbon;
@@ -2748,7 +2748,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
                     | (substruct3->victoryRibbon << 17)
                     | (substruct3->artistRibbon << 18)
                     | (substruct3->effortRibbon << 19)
-                    | (substruct3->marineRibbon << 20)
+                    | (substruct3->tentRibbon << 20)
                     | (substruct3->travellerRibbon << 21)
                     | (substruct3->historicRibbon << 22)
                     | (substruct3->countryRibbon << 23)
@@ -3171,8 +3171,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_EFFORT_RIBBON:
             SET8(substruct3->effortRibbon);
             break;
-        case MON_DATA_MARINE_RIBBON:
-            SET8(substruct3->marineRibbon);
+        case MON_DATA_TENT_RIBBON:
+            SET8(substruct3->tentRibbon);
             break;
         case MON_DATA_TRAVELLER_RIBBON:
             SET8(substruct3->travellerRibbon);

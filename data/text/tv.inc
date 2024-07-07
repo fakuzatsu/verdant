@@ -1872,6 +1872,16 @@ TVSpotTheCuties_Text_RibbonEffort::
 	.string "{STR_VAR_2} and the Hard Worker RIBBON!\n"
 	.string "The combination is super effective!$"
 
+TVSpotTheCuties_Text_RibbonTent::
+	.string "The Battle Tent RIBBON is\n"
+	.string "especially fetching.\p"
+	.string "{STR_VAR_2} received it for its feats\n"
+	.string "at the BATTLE TENT.\p"
+	.string "It verily draws out the incredible\n"
+	.string "adaptability of {STR_VAR_2}.\p"
+	.string "{STR_VAR_2} and the Battle Tent RIBBON!\n"
+	.string "The combination is super effective!$"
+
 TVSpotTheCuties_Text_RibbonTraveller::
 	.string "The Traveller RIBBON is\n"
 	.string "especially fetching.\p"
