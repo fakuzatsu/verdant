@@ -290,6 +290,7 @@ bool8 GiveMonTravellerRibbon(void)
         SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_TRAVELLER_RIBBON, &hasTravellerRibbon);
         if (GetRibbonCount(&gPlayerParty[gSpecialVar_0x8004]) > NUM_CUTIES_RIBBONS)
             TryPutSpotTheCutiesOnAir(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_TRAVELLER_RIBBON);
+        FlagSet(FLAG_SYS_RIBBON_GET);
 
         return TRUE;
     }
@@ -311,6 +312,7 @@ bool8 GiveMonHistoricRibbon(void)
         SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HISTORIC_RIBBON, &hasHistoricRibbon);
         if (GetRibbonCount(&gPlayerParty[gSpecialVar_0x8004]) > NUM_CUTIES_RIBBONS)
             TryPutSpotTheCutiesOnAir(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_HISTORIC_RIBBON);
+        FlagSet(FLAG_SYS_RIBBON_GET);
 
         return TRUE;
     }

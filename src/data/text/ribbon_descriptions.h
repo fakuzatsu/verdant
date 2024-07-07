@@ -17,6 +17,12 @@ const u8 gRibbonDescriptionPart1_Artist[] = _("RIBBON for being chosen");
 const u8 gRibbonDescriptionPart2_Artist[] = _("as a super sketch model.");
 const u8 gRibbonDescriptionPart1_Effort[] = _("RIBBON awarded for");
 const u8 gRibbonDescriptionPart2_Effort[] = _("being a hard worker.");
+const u8 gRibbonDescriptionPart1_Tent[] = _("For clearing all");
+const u8 gRibbonDescriptionPart2_Tent[] = _("BATTLE TENT fights.");
+const u8 gRibbonDescriptionPart1_Traveller[] = _("RIBBON for a well");
+const u8 gRibbonDescriptionPart2_Traveller[] = _("travelled Pokémon.");
+const u8 gRibbonDescriptionPart1_Historic[] = _("RIBBON for a well");
+const u8 gRibbonDescriptionPart2_Historic[] = _("versed Pokémon.");
 
 const u8 *const gRibbonDescriptionPointers[][2] =
 {
@@ -45,4 +51,7 @@ const u8 *const gRibbonDescriptionPointers[][2] =
     [VICTORY_RIBBON]       = {gRibbonDescriptionPart1_Victory,       gRibbonDescriptionPart2_Victory},
     [ARTIST_RIBBON]        = {gRibbonDescriptionPart1_Artist,        gRibbonDescriptionPart2_Artist},
     [EFFORT_RIBBON]        = {gRibbonDescriptionPart1_Effort,        gRibbonDescriptionPart2_Effort},
+    [TENT_RIBBON]          = {gRibbonDescriptionPart1_Tent,          gRibbonDescriptionPart2_Tent},
+    [TRAVELLER_RIBBON]     = {gRibbonDescriptionPart1_Traveller,     gRibbonDescriptionPart2_Traveller},
+    [HISTORIC_RIBBON]      = {gRibbonDescriptionPart1_Historic,      gRibbonDescriptionPart2_Historic},
 };
