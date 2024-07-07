@@ -997,6 +997,7 @@ static const struct InGameTrade sIngameTrades[] =
         .mailNum = -1,
         .otName = _("KOBE"),
         .otGender = MALE,
+        .memory = 8,
         .sheen = 10,
         .requestedSpecies = SPECIES_RALTS
     },
@@ -1013,6 +1014,7 @@ static const struct InGameTrade sIngameTrades[] =
         .mailNum = 0,
         .otName = _("ROMAN"),
         .otGender = MALE,
+        .memory = 2,
         .sheen = 10,
         .requestedSpecies = SPECIES_VOLBEAT
     },
@@ -1029,6 +1031,7 @@ static const struct InGameTrade sIngameTrades[] =
         .mailNum = 1,
         .otName = _("SKYLAR"),
         .otGender = MALE,
+        .memory = 14,
         .sheen = 10,
         .requestedSpecies = SPECIES_BAGON
     },
@@ -1045,6 +1048,7 @@ static const struct InGameTrade sIngameTrades[] =
         .mailNum = 2,
         .otName = _("ISIS"),
         .otGender = FEMALE,
+        .memory = 25,
         .sheen = 10,
         .requestedSpecies = SPECIES_SKITTY
     }

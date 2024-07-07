@@ -1,5 +1,4 @@
 #include "global.h"
-#include "dynamic_placeholder_text_util.h"
 #include "event_data.h"
 #include "malloc.h"
 #include "pokemon.h"
@@ -7,12 +6,19 @@
 #include "script.h"
 #include "string_util.h"
 
-static const u8 sText_MetAtYZ[] = _("{STR_VAR_1} was met at {LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1},\n{DYNAMIC 0}{DYNAMIC 4}{DYNAMIC 1}.");
-static const u8 sText_HatchedAtYZ[] = _("{STR_VAR_1} hatched at {LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1},\n{DYNAMIC 0}{DYNAMIC 4}{DYNAMIC 1}.");
-static const u8 sText_ObtainedInTrade[] = _("{STR_VAR_1} was obtained in a trade.");
-static const u8 sText_FatefulEncounter[] = _("{STR_VAR_1} was obtained in a fateful\nencounter at {LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}.");
-static const u8 sText_MetSomewhereAt[] = _("{STR_VAR_1} was met somewhere at {LV_2}\n{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}.");
-static const u8 sText_HatchedSomewhereAt[] = _("{STR_VAR_1} hatched somewhere at\n{LV_2}{DYNAMIC 0}{DYNAMIC 3}{DYNAMIC 1}.");
+static const u8 sText_MetAtYZ[] = _("{STR_VAR_1} was caught by {STR_VAR_3} at\n{STR_VAR_2}.");
+static const u8 sText_HatchedAtYZ[] = _("{STR_VAR_1} was hatched by {STR_VAR_3} at\n{STR_VAR_2}.");
+static const u8 sText_ObtainedInTrade[] = _("{STR_VAR_1} was obtained in a trade\nfrom {STR_VAR_3}.");
+static const u8 sText_FatefulEncounter[] = _("{STR_VAR_1} was obtained in a fateful encounter\nat {LV_2}{STR_VAR_2}.");
+static const u8 sText_MetSomewhereAt[] = _("{STR_VAR_1} was caught somewhere at {LV_2}{STR_VAR_2}.");
+static const u8 sText_HatchedSomewhereAt[] = _("{STR_VAR_1} hatched from an egg somewhere,\nat {LV_2}{STR_VAR_2}.");
+static const u8 gText_ProbablyMetAt[] = _("{STR_VAR_1} seems to have met {STR_VAR_3}\nat {STR_VAR_2}");
+static const u8 sText_KobesSeedot[] = _("DOTS was caught by KOBE at\n{LV_2}{STR_VAR_2}, ROUTE 102");
+static const u8 sText_RomansPlusle[] = _("PLUSES was caught by CHESTER at\n{LV_2}{STR_VAR_2}, ROUTE 110");
+static const u8 sText_SkylarsHorsea[] = _("SEASOR was hatched by SKYLAR at\n{LV_2}{STR_VAR_2}, PACIFIDLOG TOWN");
+static const u8 sText_IsissMeowth[] = _("MEOWOW was caught by ISIS at\n{LV_2}{STR_VAR_2}, ROUTE 38");
+
+static const u8 sText_AtLevelLocation[] = _("{LV_2}{STR_VAR_2}, {STR_VAR_3}");
 
 extern const u8 MemoryStrings_NoMemory[];
 extern const u8 MemoryStrings_TransferedOverWonderTrade[];
@@ -108,7 +114,7 @@ void BufferMemoryMessage(struct ScriptContext *ctx)
 
     if (partyIndex < PARTY_SIZE)
     {
-        if (memorySlot == MON_DATA_MEMORY_OLD || memorySlot == MON_DATA_MEMORY_NEW) {
+        if (memorySlot == MON_MEMORY_OLD || memorySlot == MON_MEMORY_NEW) {
             u8 memory = GetMonData(&gPlayerParty[partyIndex], (memorySlot == MON_MEMORY_OLD) ? MON_DATA_MEMORY_OLD : MON_DATA_MEMORY_NEW);
 
             if (memorySlot == MON_MEMORY_OLD && IsOtherTrainer(otId, otName))
@@ -126,21 +132,23 @@ void BufferMemoryMessage(struct ScriptContext *ctx)
         else 
         {
             const u8 *text;
-            u8 *metLevelString = Alloc(32);
-            u8 *metLocationString = Alloc(32);
-            u8 metLoc = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LOCATION, NULL);
-            u8 metLevel = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LEVEL, NULL);
+            u8 metLoc = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LOCATION);
+            u8 metLevel = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LEVEL);
+            u8 metGame = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_GAME);
 
             if (metLevel == 0)
-                metLevel = (P_EGG_HATCH_LEVEL >= GEN_4) ? 1 : 5;
-            ConvertIntToDecimalStringN(metLevelString, metLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
-            DynamicPlaceholderTextUtil_SetPlaceholderPtr(3, metLevelString);
+                ConvertIntToDecimalStringN(gStringVar2, (P_EGG_HATCH_LEVEL >= GEN_4) ? 1 : 5, STR_CONV_MODE_LEFT_ALIGN, 3);
+            else
+                ConvertIntToDecimalStringN(gStringVar2, metLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
 
-            if (metLoc < MAPSEC_NONE)
+            if (metLoc < MAPSEC_NONE && metLoc != METLOC_FATEFUL_ENCOUNTER)
             {
-                GetMapNameHandleAquaHideout(metLocationString, metLoc);
-                DynamicPlaceholderTextUtil_SetPlaceholderPtr(4, metLocationString);
+                GetMapNameHandleAquaHideout(gStringVar3, metLoc);
+                StringExpandPlaceholders(gStringVar4, sText_AtLevelLocation);
+                StringCopy(gStringVar2, gStringVar4);
             }
+
+            StringCopy(gStringVar3, otName);
 
             if (!IsOtherTrainer(otId, otName))
             {
@@ -153,15 +161,32 @@ void BufferMemoryMessage(struct ScriptContext *ctx)
             {
                 text = sText_FatefulEncounter;
             }
+            else if (metLoc != METLOC_IN_GAME_TRADE && metGame > 0 && metGame <= VERSION_LEAF_GREEN)
+            {
+                text = (metLoc >= MAPSEC_NONE) ? sText_ObtainedInTrade : gText_ProbablyMetAt;
+            }
+            else if (otId == 38726)
+            {
+                text = sText_KobesSeedot;
+            }
+            else if (otId == 73996)
+            {
+                text = sText_RomansPlusle;
+            }
+            else if (otId == 46285)
+            {
+                text = sText_SkylarsHorsea;
+            }
+            else if (otId == 91481)
+            {
+                text = sText_IsissMeowth;
+            }
             else
             {
                 text = sText_ObtainedInTrade;
             }
 
-        DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, text);
-
-        Free(metLevelString);
-        Free(metLocationString);
+        StringExpandPlaceholders(gStringVar4, text);
         }
     }
 }
@@ -178,21 +203,55 @@ void SetMemoryWithRules(struct Pokemon *slot, u8 memory)
     u8 oldestMem = GetMonData(slot, MON_DATA_MEMORY_OLD);
     u8 newestMem = GetMonData(slot, MON_DATA_MEMORY_NEW);
 
+    bool8 isOtherTrainer;
+    u8 otName[PLAYER_NAME_LENGTH + 1];
+    u32 otId = GetMonData(slot, MON_DATA_OT_ID);
+    GetMonData(slot, MON_DATA_OT_NAME, otName);
+
+    isOtherTrainer = IsOtherTrainer(otId, otName);
+
     if (memory != newestMem)
     {
         if (IsMemorySpecial(memory))
         {
-            if (!IsMemorySpecial(oldestMem) || memory > oldestMem)
-                SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
-            if (!IsMemorySpecial(newestMem) || memory > newestMem)
-                SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+            if (!isOtherTrainer)
+            {
+                if (!IsMemorySpecial(oldestMem) || (newestMem > oldestMem && memory > newestMem) || memory == oldestMem)
+                {
+                    SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
+                    SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+                }
+                else if (memory > newestMem || !IsMemorySpecial(newestMem))
+                {
+                    SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+                }
+            }
+            else
+            {
+                if (memory > newestMem || !IsMemorySpecial(newestMem))
+                {
+                    SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+                }
+            }
         } 
         else 
         {
-            if (!IsMemorySpecial(oldestMem))
-                SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
-            if (!IsMemorySpecial(newestMem) || !IsMemorySpecial(oldestMem))
+            if (!isOtherTrainer)
+            {
+                if (!IsMemorySpecial(oldestMem) || memory == oldestMem)
+                {
+                    SetMonData(slot, MON_DATA_MEMORY_OLD, &newestMem);
+                    SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+                }
+                else if (!IsMemorySpecial(newestMem))
+                {
+                    SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+                }
+            }
+            else if (!IsMemorySpecial(newestMem))
+            {
                 SetMonData(slot, MON_DATA_MEMORY_NEW, &memory);
+            }
         }
     }
 }

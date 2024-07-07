@@ -25,26 +25,48 @@ MemoryGirl_EventScript_ReadMonMemory::
 	special BufferMonNickname
 	buffermemorymessage VAR_0x8004, MON_MEMORY_ORIGIN
 	msgbox gStringVar4, MSGBOX_DEFAULT
-	msgbox MemoryGirl_Text_LetsSeeWhatElse, MSGBOX_DEFAULT
+	call MemoryGirl_EventScript_LetsSeeWhatElse
 	getmemory VAR_0x8004, MON_MEMORY_OLD
-	goto_if_le VAR_RESULT, 0, MemoryGirl_EventScript_ReadNewestMemory
+	copyvar VAR_TEMP_8, VAR_RESULT
+	goto_if_eq VAR_RESULT, 0, MemoryGirl_EventScript_SkipToNewestMemory
 	buffermemorymessage VAR_0x8004, MON_MEMORY_OLD
 	msgbox gStringVar4, MSGBOX_DEFAULT
-	msgbox MemoryGirl_Text_LetsSeeWhatElse, MSGBOX_DEFAULT
-MemoryGirl_EventScript_ReadNewestMemory:
+MemoryGirl_EventScript_SkipToNewestMemory:
 	getmemory VAR_0x8004, MON_MEMORY_NEW
-	goto_if_le VAR_RESULT, 0, MemoryGirl_EventScript_NoMemoriesToRead
+	goto_if_eq VAR_RESULT, 0, MemoryGirl_EventScript_NoMemoryToRead
+	goto_if_eq VAR_RESULT, VAR_TEMP_8, MemoryGirl_EventScript_NoMemoryToRead
+	call_if_ne VAR_TEMP_8, 0, MemoryGirl_EventScript_AndAlso
 	buffermemorymessage VAR_0x8004, MON_MEMORY_NEW
 	msgbox gStringVar4, MSGBOX_DEFAULT
+	special IsMonOTIDNotPlayers
+	goto_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_WellTravelledMon
+	specialvar VAR_RESULT, MonOTNameNotPlayer
+	goto_if_eq VAR_RESULT, TRUE, MemoryGirl_EventScript_WellTravelledMon
+	special BufferMonNickname
+	msgbox MemoryGirl_Text_YouveHadGreatTimes, MSGBOX_DEFAULT
 	release
 	end
 
-MemoryGirl_EventScript_NoMemoriesToRead::
+MemoryGirl_EventScript_LetsSeeWhatElse::
+	msgbox MemoryGirl_Text_LetsSeeWhatElse, MSGBOX_DEFAULT
+	return
+
+MemoryGirl_EventScript_AndAlso::
+	msgbox MemoryGirl_Text_AndAlso, MSGBOX_DEFAULT
+	return
+
+MemoryGirl_EventScript_NoMemoryToRead::
 	msgbox MemoryGirl_Text_NoMemoriesToRead, MSGBOX_DEFAULT
 	release
 	end
 
 MemoryGirl_EventScript_CantReadEgg::
 	msgbox MemoryGirl_Text_ThatIsJustAnEgg, MSGBOX_DEFAULT
+	release
+	end
+
+MemoryGirl_EventScript_WellTravelledMon::
+	special BufferMonNickname
+	msgbox MemoryGirl_Text_WellTravelledMon, MSGBOX_DEFAULT
 	release
 	end
