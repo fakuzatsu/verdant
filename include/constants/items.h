@@ -1074,7 +1074,6 @@
 #define EXP_3000  3
 #define EXP_10000 4
 #define EXP_30000 5
-#define EXP_INFINITE 6
 
 // Item type IDs (used to determine the exit callback)
 #define ITEM_USE_MAIL             0

@@ -14749,7 +14749,6 @@ const struct Item gItemsInfo[] =
     {
         .name = HANDLE_EXPANDED_ITEM_NAME("Inf. Candy", "Infinite Candy"),
         .price = 0,
-        .holdEffectParam = EXP_INFINITE,
         .description = COMPOUND_STRING(
             "A special rare candy\n"
             "that never seems to\n"
