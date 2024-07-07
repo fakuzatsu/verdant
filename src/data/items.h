@@ -14744,4 +14744,21 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+
+    [ITEM_INFINITE_CANDY] =
+    {
+        .name = HANDLE_EXPANDED_ITEM_NAME("Inf. Candy", "Infinite Candy"),
+        .price = 0,
+        .holdEffectParam = EXP_INFINITE,
+        .description = COMPOUND_STRING(
+            "A special rare candy\n"
+            "that never seems to\n"
+            "run out."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .effect = gItemEffect_RareCandy,
+        .iconPic = gItemIcon_InfiniteCandy,
+        .iconPalette = gItemIconPalette_InfiniteCandy,
+    },
 };

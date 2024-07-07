@@ -1010,10 +1010,16 @@
 #define ITEM_TWICE_SPICED_RADISH 838
 #define ITEM_POKESHI_DOLL 839
 
+#define ITEMS_EXPANSION_COUNT (ITEM_POKESHI_DOLL + 1)
+
+#define ITEM_INFINITE_CANDY ITEMS_EXPANSION_COUNT
+
+#define ITEMS_CUSTOM_COUNT (ITEM_INFINITE_CANDY + 1)
+
 // HOPO BERRY
 // LEGEND PLATE
 
-#define ITEMS_COUNT 840
+#define ITEMS_COUNT ITEMS_CUSTOM_COUNT
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations
@@ -1068,6 +1074,7 @@
 #define EXP_3000  3
 #define EXP_10000 4
 #define EXP_30000 5
+#define EXP_INFINITE 6
 
 // Item type IDs (used to determine the exit callback)
 #define ITEM_USE_MAIL             0
