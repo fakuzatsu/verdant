@@ -1,6 +1,11 @@
+#include "fieldmap.h"
+
+#define SWAP_PAL(x) ((x) < NUM_PALS_IN_PRIMARY ? 1 << (x) : 1 << ((x) - NUM_PALS_IN_PRIMARY))
+
 const struct Tileset gTileset_General =
 {
     .isCompressed = TRUE,
+    .swapPalettes = SWAP_PAL(4),
     .isSecondary = FALSE,
     .tiles = gTilesetTiles_General,
     .palettes = gTilesetPalettes_General,

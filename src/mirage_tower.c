@@ -20,6 +20,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
+#include "field_effect.h"
 
 struct MirageTowerPulseBlend
 {
@@ -151,6 +152,8 @@ static const union AnimCmd *const sAnims_FallingFossil[] =
 {
     sAnim_FallingFossil,
 };
+
+#define OBJ_EVENT_PAL_TAG_NPC_1 0x1103
 
 static const struct SpriteTemplate sSpriteTemplate_FallingFossil =
 {

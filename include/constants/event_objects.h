@@ -5,7 +5,7 @@
 #define OBJ_EVENT_GFX_BRENDAN_MACH_BIKE            1
 #define OBJ_EVENT_GFX_BRENDAN_SURFING              2
 #define OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE           3
-#define OBJ_EVENT_GFX_QUINTY_PLUMP                 4
+#define OBJ_EVENT_GFX_LIGHT_SPRITE                 4
 #define OBJ_EVENT_GFX_NINJA_BOY                    5
 #define OBJ_EVENT_GFX_TWIN                         6
 #define OBJ_EVENT_GFX_BOY_1                        7
@@ -372,7 +372,10 @@
 #define OBJ_EVENT_PAL_TAG_LUGIA                   0x1121
 #define OBJ_EVENT_PAL_TAG_RS_BRENDAN              0x1122
 #define OBJ_EVENT_PAL_TAG_RS_MAY                  0x1123
-#define OBJ_EVENT_PAL_TAG_DYNAMIC                 0x1124
+#define OBJ_EVENT_PAL_TAG_LIGHT                   0x1124
+#define OBJ_EVENT_PAL_TAG_LIGHT_2                 0x1125
+#define OBJ_EVENT_PAL_TAG_NEON_LIGHT              0x1126
+#define OBJ_EVENT_PAL_TAG_DYNAMIC                 0x1127
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla

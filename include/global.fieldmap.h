@@ -37,8 +37,11 @@ typedef void (*TilesetCB)(void);
 
 struct Tileset
 {
-    /*0x00*/ bool8 isCompressed;
+    /*0x00*/ u8 isCompressed:1;
+    /*0x00*/ u8 swapPalettes:7;
     /*0x01*/ bool8 isSecondary;
+    /*0x02*/ u8 lightPalettes;
+    /*0x03*/ u8 customLightColor;
     /*0x04*/ const u32 *tiles;
     /*0x08*/ const u16 (*palettes)[16];
     /*0x0C*/ const u16 *metatiles;
@@ -188,7 +191,7 @@ struct ObjectEvent
              u32 inShallowFlowingWater:1;
              u32 inSandPile:1;
              u32 inHotSprings:1;
-             u32 hasShadow:1;
+             u32 noShadow:1;
              u32 spriteAnimPausedBackup:1;
     /*0x03*/ u32 spriteAffineAnimPausedBackup:1;
              u32 disableJumpLandingGroundEffect:1;
@@ -228,7 +231,8 @@ struct ObjectEventGraphicsInfo
 {
     /*0x00*/ u16 tileTag;
     /*0x02*/ u16 paletteTag;
-    /*0x04*/ u16 reflectionPaletteTag;
+    /*0x04*/ u16 reflectionPaletteTag:15;
+             u16 disableReflectionPaletteLoad:1;
     /*0x06*/ u16 size;
     /*0x08*/ s16 width;
     /*0x0A*/ s16 height;

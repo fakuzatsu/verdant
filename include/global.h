@@ -541,6 +541,7 @@ struct SaveBlock2
 }; // sizeof=0xF2C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
+extern u8 UpdateSpritePaletteWithTime(u8);
 
 struct SecretBaseParty
 {
