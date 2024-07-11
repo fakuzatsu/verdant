@@ -836,7 +836,7 @@ static void LoadBattleBg(u8 battleBgType, u8 battleTerrain)
         LZDecompressVram(sBattleTerrainTable[battleTerrain].tilemap, (void*)(BG_SCREEN_ADDR(26)));
         if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && battleTerrain == BATTLE_TERRAIN_POND)
                 LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-            else if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+            else if (gTimeOfDay == DNS_TIME_NIGHT)
                 LoadCompressedPalette(sBattleTerrainTable[battleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
             else
                 LoadCompressedPalette(sBattleTerrainTable[battleTerrain].palette, 0x20, 0x60);

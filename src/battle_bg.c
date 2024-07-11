@@ -804,9 +804,9 @@ void DrawMainBattleBackground(void)
             LZDecompressVram(gBattleTerrainTiles_Rayquaza, (void*)(BG_CHAR_ADDR(2)));
             LZDecompressVram(gBattleTerrainTilemap_Rayquaza, (void*)(BG_SCREEN_ADDR(26)));
             UpdateTimeOfDay();
-            if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+            if (gTimeOfDay == DNS_TIME_NIGHT)
                 LoadCompressedPalette(gBattleTerrainPalette_Rayquaza_Night, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-            else if (gTimeOfDay == TIME_OF_DAY_DAY)
+            else if (gTimeOfDay == DNS_TIME_DAY)
                 LoadCompressedPalette(gBattleTerrainPalette_Rayquaza, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
             break;
         default:
@@ -846,7 +846,7 @@ void DrawMainBattleBackground(void)
             LZDecompressVram(sBattleTerrainTable[gBattleTerrain].tilemap, (void *)(BG_SCREEN_ADDR(26)));
             if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && gBattleTerrain == BATTLE_TERRAIN_POND)
                 LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-            else if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+            else if (gTimeOfDay == DNS_TIME_NIGHT)
                 LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
             else
                 LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
@@ -1436,7 +1436,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
                 UpdateTimeOfDay();
                 if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && gBattleTerrain == BATTLE_TERRAIN_POND)
                     LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-                else if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+                else if (gTimeOfDay == DNS_TIME_NIGHT)
                     LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
                 else
                     LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);

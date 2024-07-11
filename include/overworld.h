@@ -27,10 +27,10 @@
 #define SKIP_OBJECT_EVENT_LOAD  1
 
 enum {
-    TIME_OF_DAY_NIGHT,
-    TIME_OF_DAY_TWILIGHT,
-    TIME_OF_DAY_DAY,
-    TIME_OF_DAY_COUNT,
+    DNS_TIME_NIGHT,
+    DNS_TIME_TWILIGHT,
+    DNS_TIME_DAY,
+    DNS_TIME_COUNT,
 };
 
 struct InitialPlayerAvatarState

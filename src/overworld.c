@@ -1513,11 +1513,11 @@ void CB1_Overworld(void)
 #define TINT_NIGHT Q_8_8(0.456) | Q_8_8(0.456) << 8 | Q_8_8(0.615) << 16
 #define TINT_TWILIGHT 0xA8B0E0
 
-const struct BlendSettings gTimeOfDayBlend[TIME_OF_DAY_COUNT] =
+const struct BlendSettings gTimeOfDayBlend[DNS_TIME_COUNT] =
 {
-    [TIME_OF_DAY_NIGHT] = {.coeff = 10, .blendColor = TINT_NIGHT, .isTint = TRUE},
-    [TIME_OF_DAY_TWILIGHT] = {.coeff = 4, .blendColor = TINT_TWILIGHT, .isTint = TRUE},
-    [TIME_OF_DAY_DAY] = {.coeff = 0, .blendColor = 0},
+    [DNS_TIME_NIGHT] = {.coeff = 10, .blendColor = TINT_NIGHT, .isTint = TRUE},
+    [DNS_TIME_TWILIGHT] = {.coeff = 4, .blendColor = TINT_TWILIGHT, .isTint = TRUE},
+    [DNS_TIME_DAY] = {.coeff = 0, .blendColor = 0},
 };
 
 u8 UpdateTimeOfDay(void)
@@ -1531,50 +1531,50 @@ u8 UpdateTimeOfDay(void)
     { // night
         currentTimeBlend.weight = 256;
         currentTimeBlend.altWeight = 0;
-        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = TIME_OF_DAY_NIGHT;
+        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = DNS_TIME_NIGHT;
     }
     else if (hours < 6)
     { // night->twilight
-        currentTimeBlend.time0 = TIME_OF_DAY_NIGHT;
-        currentTimeBlend.time1 = TIME_OF_DAY_TWILIGHT;
+        currentTimeBlend.time0 = DNS_TIME_NIGHT;
+        currentTimeBlend.time1 = DNS_TIME_TWILIGHT;
         currentTimeBlend.weight = 256 - 256 * ((hours - 5) * 60 + minutes) / ((6 - 5) * 60);
         currentTimeBlend.altWeight = (256 - currentTimeBlend.weight) / 2;
-        gTimeOfDay = TIME_OF_DAY_NIGHT;
+        gTimeOfDay = DNS_TIME_NIGHT;
     }
     else if (hours < 7)
     { // twilight->day
-        currentTimeBlend.time0 = TIME_OF_DAY_TWILIGHT;
-        currentTimeBlend.time1 = TIME_OF_DAY_DAY;
+        currentTimeBlend.time0 = DNS_TIME_TWILIGHT;
+        currentTimeBlend.time1 = DNS_TIME_DAY;
         currentTimeBlend.weight = 256 - 256 * ((hours - 6) * 60 + minutes) / ((7 - 6) * 60);
         currentTimeBlend.altWeight = (256 - currentTimeBlend.weight) / 2 + 128;
-        gTimeOfDay = TIME_OF_DAY_DAY;
+        gTimeOfDay = DNS_TIME_DAY;
     }
     else if (hours < 17)
     { // day
         currentTimeBlend.weight = currentTimeBlend.altWeight = 256;
-        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = TIME_OF_DAY_DAY;
+        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = DNS_TIME_DAY;
     }
     else if (hours < 18)
     { // day->twilight
-        currentTimeBlend.time0 = TIME_OF_DAY_DAY;
-        currentTimeBlend.time1 = TIME_OF_DAY_TWILIGHT;
+        currentTimeBlend.time0 = DNS_TIME_DAY;
+        currentTimeBlend.time1 = DNS_TIME_TWILIGHT;
         currentTimeBlend.weight = 256 - 256 * ((hours - 17) * 60 + minutes) / ((18 - 17) * 60);
         currentTimeBlend.altWeight = currentTimeBlend.weight / 2 + 128;
-        gTimeOfDay = TIME_OF_DAY_DAY;
+        gTimeOfDay = DNS_TIME_DAY;
     }
     else if (hours < 19)
     { // twilight->night
-        currentTimeBlend.time0 = TIME_OF_DAY_TWILIGHT;
-        currentTimeBlend.time1 = TIME_OF_DAY_NIGHT;
+        currentTimeBlend.time0 = DNS_TIME_TWILIGHT;
+        currentTimeBlend.time1 = DNS_TIME_NIGHT;
         currentTimeBlend.weight = 256 - 256 * ((hours - 18) * 60 + minutes) / ((19 - 18) * 60);
         currentTimeBlend.altWeight = currentTimeBlend.weight / 2;
-        gTimeOfDay = TIME_OF_DAY_NIGHT;
+        gTimeOfDay = DNS_TIME_NIGHT;
     }
     else
     { // 19-24, night
         currentTimeBlend.weight = 256;
         currentTimeBlend.altWeight = 0;
-        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = TIME_OF_DAY_NIGHT;
+        gTimeOfDay = currentTimeBlend.time0 = currentTimeBlend.time1 = DNS_TIME_NIGHT;
     }
     return gTimeOfDay;
 }

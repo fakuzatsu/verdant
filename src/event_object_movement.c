@@ -1707,13 +1707,13 @@ void UpdateLightSprite(struct Sprite *sprite)
         return;
     }
 
-    if (gTimeOfDay != TIME_OF_DAY_NIGHT)
+    if (gTimeOfDay != DNS_TIME_NIGHT)
     {
         sprite->invisible = TRUE;
         return;
     }
 
-    if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+    if (gTimeOfDay == DNS_TIME_NIGHT)
     {
         hours = gLocalTime.hours;
         minutes = gLocalTime.minutes;
