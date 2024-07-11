@@ -194,7 +194,7 @@ u8 gFieldLinkPlayerCount;
 
 u8 gTimeOfDay;
 struct TimeBlendSettings currentTimeBlend;
-u8 gTimeUpdateCounter;
+u16 gTimeUpdateCounter;
 
 EWRAM_DATA static u8 sObjectEventLoadFlag = 0;
 EWRAM_DATA struct WarpData gLastUsedWarp = {0};
@@ -1653,20 +1653,20 @@ static void OverworldBasic(void)
     UpdatePaletteFade();
     UpdateTilesetAnimations();
     DoScheduledBgTilemapCopiesToVram();
-    if (++gTimeUpdateCounter > 60)
-    {
-        struct TimeBlendSettings cachedBlend = {
-            .time0 = currentTimeBlend.time0,
-            .time1 = currentTimeBlend.time1,
-            .weight = currentTimeBlend.weight,
-        };
-        gTimeUpdateCounter = 0;
-        UpdateTimeOfDay();
-        if (cachedBlend.time0 != currentTimeBlend.time0 || cachedBlend.time1 != currentTimeBlend.time1 || cachedBlend.weight != currentTimeBlend.weight)
-        {
-            UpdateAltBgPalettes(PALETTES_BG);
-            UpdatePalettesWithTime(PALETTES_ALL);
-        }
+    if (!gPaletteFade.active && ++gTimeUpdateCounter >= 3600) {
+      struct TimeBlendSettings cachedBlend = {
+        .time0 = currentTimeBlend.time0,
+        .time1 = currentTimeBlend.time1,
+        .weight = currentTimeBlend.weight,
+      };
+      gTimeUpdateCounter = 0;
+      UpdateTimeOfDay();
+      if (cachedBlend.time0 != currentTimeBlend.time0
+       || cachedBlend.time1 != currentTimeBlend.time1
+       || cachedBlend.weight != currentTimeBlend.weight) {
+           UpdateAltBgPalettes(PALETTES_BG);
+           UpdatePalettesWithTime(PALETTES_ALL);
+       }
     }
 }
 

@@ -1685,64 +1685,56 @@ u8 CreateVirtualObject(u16 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevati
     return spriteId;
 }
 
+#define sLightType      data[5]
+#define sLightX         data[6]
+#define sLightY         data[7]
+
+// Sprite callback for light sprites
 void UpdateLightSprite(struct Sprite *sprite)
 {
-    s32 hours, minutes;
     s16 left = gSaveBlock1Ptr->pos.x - 2;
     s16 right = gSaveBlock1Ptr->pos.x + 17;
     s16 top = gSaveBlock1Ptr->pos.y;
     s16 bottom = gSaveBlock1Ptr->pos.y + 15;
-    s16 x = sprite->data[6];
-    s16 y = sprite->data[7];
-    u16 sheetTileStart;
-    u32 paletteNum;
+    s16 x = sprite->sLightX;
+    s16 y = sprite->sLightY;
+
+    // Ripped from RemoveObjectEventIfOutsideView
     if (!(x >= left && x <= right && y >= top && y <= bottom))
     {
-        sheetTileStart = sprite->sheetTileStart;
-        paletteNum = sprite->oam.paletteNum;
+        u16 sheetTileStart = sprite->sheetTileStart;
+        u32 paletteNum = sprite->oam.paletteNum;
         DestroySprite(sprite);
         FieldEffectFreeTilesIfUnused(sheetTileStart);
         FieldEffectFreePaletteIfUnused(paletteNum);
-        Weather_SetBlendCoeffs(12, 12);
-        return;
+        Weather_SetBlendCoeffs(7, 12); // TODO: Restore original blend coeffs at dawn
     }
-
-    if (gTimeOfDay != DNS_TIME_NIGHT)
+    else
     {
-        sprite->invisible = TRUE;
-        return;
-    }
-
-    if (gTimeOfDay == DNS_TIME_NIGHT)
-    {
-        hours = gLocalTime.hours;
-        minutes = gLocalTime.minutes;
-        if ((hours == 5 && minutes >= 30) || (hours > 5 && hours < 18) || (hours == 18 && minutes < 30))
-        {
-            Weather_SetBlendCoeffs(7, 12);
-            sprite->invisible = TRUE;
-        }
-        else
+        if (gTimeOfDay == DNS_TIME_NIGHT)
         {
             Weather_SetBlendCoeffs(12, 12);
             sprite->invisible = FALSE;
         }
+        else
+        {
+            sprite->invisible = TRUE;
+        }
     }
 }
 
-static void SpawnLightSprite(s16 x, s16 y, s16 camX, s16 camY, u32 lightType)
+// Spawn a light at a map coordinate
+static void SpawnLightSprite(s16 x, s16 y, s16 camX, s16 camY, u32 lightType) 
 {
     struct Sprite *sprite;
     const struct SpriteTemplate *template;
     u8 i;
-
-    for (i = 0; i < MAX_SPRITES; i++)
-    {
+    for (i = 0; i < MAX_SPRITES; i++) {
         sprite = &gSprites[i];
-        if (sprite->inUse && sprite->callback == UpdateLightSprite && sprite->data[6] == x && sprite->data[7] == y)
+        if (sprite->inUse && sprite->callback == UpdateLightSprite && sprite->sLightX == x && sprite->sLightY == y)
             return;
     }
-    lightType = min(lightType, ARRAY_COUNT(gFieldEffectObjectTemplate_Light) - 1);
+    lightType = min(lightType, ARRAY_COUNT(gFieldEffectObjectTemplate_Light) - 1); // bounds checking
     template = gFieldEffectObjectTemplate_Light[lightType];
     LoadSpriteSheetByTemplate(template, 0, 0);
     sprite = &gSprites[CreateSprite(template, 0, 0, 0)];
@@ -1751,19 +1743,19 @@ static void SpawnLightSprite(s16 x, s16 y, s16 camX, s16 camY, u32 lightType)
     else
         UpdateSpritePaletteByTemplate(template, sprite);
     GetMapCoordsFromSpritePos(x + camX, y + camY, &sprite->x, &sprite->y);
-    sprite->data[5] = lightType;
-    sprite->data[6] = x;
-    sprite->data[7] = y;
+    sprite->sLightType = lightType;
+    sprite->sLightX = x;
+    sprite->sLightY = y;
     sprite->affineAnims = gDummySpriteAffineAnimTable;
     sprite->affineAnimBeginning = TRUE;
     sprite->coordOffsetEnabled = TRUE;
-    switch (lightType)
+    switch (lightType) 
     {
     case 0: // Rustboro lanterns
         sprite->centerToCornerVecX = -(32 >> 1);
         sprite->centerToCornerVecY = -(32 >> 1);
         sprite->oam.priority = 1;
-        sprite->oam.objMode = 1;
+        sprite->oam.objMode = 1; // BLEND
         sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
         sprite->x += 8;
         sprite->y += 22 + sprite->centerToCornerVecY;
@@ -1773,12 +1765,12 @@ static void SpawnLightSprite(s16 x, s16 y, s16 camX, s16 camY, u32 lightType)
         sprite->centerToCornerVecY = -(16 >> 1);
         sprite->oam.priority = 2;
         sprite->subpriority = 0xFF;
-        sprite->oam.objMode = 1;
+        sprite->oam.objMode = 1; // BLEND
         break;
     }
 }
 
-void TrySpawnLightSprites(s16 camX, s16 camY)
+void TrySpawnLightSprites(s16 camX, s16 camY) 
 {
     u8 i;
     u8 objectCount;
@@ -1803,10 +1795,14 @@ void TrySpawnLightSprites(s16 camX, s16 camY)
         s16 npcX = template->x + MAP_OFFSET;
         s16 npcY = template->y + MAP_OFFSET;
         if (top <= npcY && bottom >= npcY && left <= npcX && right >= npcX && !FlagGet(template->flagId))
-            if (template->graphicsId == OBJ_EVENT_GFX_LIGHT_SPRITE)
+            if (template->graphicsId == OBJ_EVENT_GFX_LIGHT_SPRITE)  // event is light sprite instead
                 SpawnLightSprite(npcX, npcY, camX, camY, template->trainerRange_berryTreeId);
     }
 }
+
+#undef sLightType
+#undef sLightX
+#undef sLightY
 
 // Return address of first conscious party mon or NULL
 struct Pokemon *GetFirstLiveMon(void)

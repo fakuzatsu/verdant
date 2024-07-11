@@ -68,7 +68,8 @@ extern bool8 (*gFieldCallback2)(void);
 extern u8 gLocalLinkPlayerId;
 extern u8 gFieldLinkPlayerCount;
 extern u8 gTimeOfDay;
-extern u8 gTimeUpdateCounter;
+extern u16 gTimeUpdateCounter;
+
 extern struct TimeBlendSettings currentTimeBlend;
 
 extern const struct UCoords32 gDirectionToVectors[];
