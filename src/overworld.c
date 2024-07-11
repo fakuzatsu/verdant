@@ -1511,11 +1511,12 @@ void CB1_Overworld(void)
 }
 
 #define TINT_NIGHT Q_8_8(0.456) | Q_8_8(0.456) << 8 | Q_8_8(0.615) << 16
+#define TINT_TWILIGHT 0xA8B0E0
 
-const struct BlendSettings gTimeOfDayBlend[] =
+const struct BlendSettings gTimeOfDayBlend[TIME_OF_DAY_COUNT] =
 {
     [TIME_OF_DAY_NIGHT] = {.coeff = 10, .blendColor = TINT_NIGHT, .isTint = TRUE},
-    [TIME_OF_DAY_TWILIGHT] = {.coeff = 4, .blendColor = 0xA8B0E0, .isTint = TRUE},
+    [TIME_OF_DAY_TWILIGHT] = {.coeff = 4, .blendColor = TINT_TWILIGHT, .isTint = TRUE},
     [TIME_OF_DAY_DAY] = {.coeff = 0, .blendColor = 0},
 };
 

@@ -40,6 +40,7 @@
 
 #include "constants/items.h"
 #include "constants/event_objects.h"
+#include "constants/map_types.h"
 
 #if DEBUG_POKEMON_SPRITE_VISUALIZER == TRUE
 extern const struct BattleBackground sBattleTerrainTable[];
@@ -830,9 +831,15 @@ static void LoadBattleBg(u8 battleBgType, u8 battleTerrain)
     {
     default:
     case MAP_BATTLE_SCENE_NORMAL:
+        UpdateTimeOfDay();
         LZDecompressVram(sBattleTerrainTable[battleTerrain].tileset, (void*)(BG_CHAR_ADDR(2)));
         LZDecompressVram(sBattleTerrainTable[battleTerrain].tilemap, (void*)(BG_SCREEN_ADDR(26)));
-        LoadCompressedPalette(sBattleTerrainTable[battleTerrain].palette, 0x20, 0x60);
+        if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && battleTerrain == BATTLE_TERRAIN_POND)
+                LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+            else if (gTimeOfDay == TIME_OF_DAY_NIGHT)
+                LoadCompressedPalette(sBattleTerrainTable[battleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+            else
+                LoadCompressedPalette(sBattleTerrainTable[battleTerrain].palette, 0x20, 0x60);
         break;
     case MAP_BATTLE_SCENE_GYM:
         LZDecompressVram(gBattleTerrainTiles_Building, (void*)(BG_CHAR_ADDR(2)));

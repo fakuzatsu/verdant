@@ -31,7 +31,6 @@
     .tileTag = TAG_NONE,                                                                    \
     .paletteTag = OBJ_EVENT_PAL_TAG_DYNAMIC,                                                \
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,                                         \
-    .disableReflectionPaletteLoad = FALSE,                                                  \
     .size = (_size == SIZE_32x32 ? 512 : 2048),                                             \
     .width = (_size == SIZE_32x32 ? 32 : 64),                                               \
     .height = (_size == SIZE_32x32 ? 32 : 64),                                              \
@@ -101,7 +100,7 @@ const struct SpeciesInfo gSpeciesInfo[] =
         .iconPalIndex = 0,
         FOOTPRINT(QuestionMark)
     #if OW_POKEMON_OBJECT_EVENTS
-        .overworldData = {TAG_NONE, OBJ_EVENT_PAL_TAG_SUBSTITUTE, OBJ_EVENT_PAL_TAG_NONE, FALSE, 512, 32, 32, 2, SHADOW_SIZE_M, FALSE, COMP, TRACKS_FOOT, &gObjectEventBaseOam_32x32, sOamTables_32x32, sAnimTable_Following, sPicTable_Substitute, gDummySpriteAffineAnimTable},
+        .overworldData = {TAG_NONE, OBJ_EVENT_PAL_TAG_SUBSTITUTE, OBJ_EVENT_PAL_TAG_NONE, 512, 32, 32, 2, SHADOW_SIZE_M, FALSE, COMP, TRACKS_FOOT, &gObjectEventBaseOam_32x32, sOamTables_32x32, sAnimTable_Following, sPicTable_Substitute, gDummySpriteAffineAnimTable},
     #endif
         .levelUpLearnset = sNoneLevelUpLearnset,
         .teachableLearnset = sNoneTeachableLearnset,
