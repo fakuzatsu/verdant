@@ -203,6 +203,7 @@ TEST("Item names fit on Pokemon Storage System")
     case ITEM_AUX_POWERGUARD:
     case ITEM_CHOICE_DUMPLING:
     case ITEM_TWICE_SPICED_RADISH:
+    case ITEM_INFINITE_CANDY:
     // Items with hold effects:
     case ITEM_ELECTRIC_MEMORY:
     case ITEM_FIGHTING_MEMORY:
