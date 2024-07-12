@@ -722,7 +722,10 @@ void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 
 void SetWarpDestinationToEscapeWarp(void)
 {
-    sWarpDestination = gSaveBlock1Ptr->escapeWarp;
+    if (IsPlayerInAGrotto())
+        sWarpDestination = gSaveBlock1Ptr->dynamicWarp;
+    else
+        sWarpDestination = gSaveBlock1Ptr->escapeWarp;
 }
 
 void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -842,8 +845,6 @@ if (I_VS_SEEKER_CHARGING != 0)
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
     RunOnTransitionMapScript();
-    GetGrottoWarp();
-    GetGrottoReturnWarp();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
     LoadSecondaryTilesetPalette(gMapHeader.mapLayout, TRUE);

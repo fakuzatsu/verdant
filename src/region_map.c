@@ -9,6 +9,7 @@
 #include "trig.h"
 #include "overworld.h"
 #include "event_data.h"
+#include "hidden_grottos.h"
 #include "secret_base.h"
 #include "string_util.h"
 #include "international_string_util.h"
@@ -1025,6 +1026,7 @@ static void InitMapBasedOnPlayerLocation(void)
         }
         break;
     case MAP_TYPE_SECRET_BASE:
+    case MAP_TYPE_HIDDEN_GROTTO:
         mapHeader = Overworld_GetMapHeaderByGroupAndId((u16)gSaveBlock1Ptr->dynamicWarp.mapGroup, (u16)gSaveBlock1Ptr->dynamicWarp.mapNum);
         sRegionMap->mapSecId = mapHeader->regionMapSectionId;
         sRegionMap->playerIsInCave = TRUE;
@@ -1574,6 +1576,10 @@ u8 *GetMapName(u8 *dest, u16 regionMapId, u16 padLength)
     {
         str = GetSecretBaseMapName(dest);
     }
+    else if (regionMapId == MAPSEC_HIDDEN_GROTTO)
+    {
+        str = StringCopy(dest, gText_HiddenGrotto);
+    }
     else if (regionMapId < MAPSEC_NONE)
     {
         str = StringCopy(dest, gRegionMapEntries[regionMapId].name);
@@ -1606,6 +1612,8 @@ u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId)
         return StringCopy(dest, gText_Ferry);
     case MAPSEC_SECRET_BASE:
         return StringCopy(dest, gText_SecretBase);
+    case MAPSEC_HIDDEN_GROTTO:
+        return StringCopy(dest, gText_HiddenGrotto);
     default:
         return GetMapName(dest, mapSecId, 0);
     }

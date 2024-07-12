@@ -9,8 +9,8 @@
 
 static const struct Grotto sHiddenGrottos[] =
 {
-    //{MAP_NUM(GROTTO01), MAP_GROUP(GROTTO01)},
-    //{MAP_NUM(GROTTO02), MAP_GROUP(GROTTO02)},
+    {MAP_NUM(GROTTO01), MAP_GROUP(GROTTO01)},
+    {MAP_NUM(GROTTO02), MAP_GROUP(GROTTO02)},
     //{MAP_NUM(GROTTO03), MAP_GROUP(GROTTO03)},
     //{MAP_NUM(GROTTO04), MAP_GROUP(GROTTO04)},
     //{MAP_NUM(GROTTO05), MAP_GROUP(GROTTO05)},
@@ -56,7 +56,6 @@ static const struct GrottoEntrance sHiddenGrottoEntrances[] = {
 
 static u8 FindExistingGrottoWarp(void)
 {
-    /*
     for (u32 i = 0; i < ARRAY_COUNT(sHiddenGrottoEntrances); i++)
     {
         if (gSaveBlock1Ptr->location.mapGroup == sHiddenGrottoEntrances[i].mapGroup 
@@ -66,35 +65,29 @@ static u8 FindExistingGrottoWarp(void)
             return VarGet(sHiddenGrottoEntrances[i].grottoVariable);
         }
     }
-    */
     return 0;
 }
 
 void GetGrottoWarp(void)
 {
-    /*
-    u32 warpId = FindExistingGrottoWarp();
+    u8 warpId = FindExistingGrottoWarp();
 
     if (warpId != 0)
         SetDynamicWarp(0, sHiddenGrottos[warpId -1].mapGroup, sHiddenGrottos[warpId -1].mapNum, 0);
-    */
 }
 
 void GetGrottoReturnWarp(void)
 {
-    /*
-    if ((gSaveBlock1Ptr->location.mapGroup >= MAP_GROUP(GROTTO01) && gSaveBlock1Ptr->location.mapGroup <= MAP_GROUP(GROTTO30))
-        && (gSaveBlock1Ptr->location.mapNum >= MAP_NUM(GROTTO01) && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(GROTTO30)))
+    if ((gSaveBlock1Ptr->location.mapGroup >= MAP_GROUP(GROTTO01) && gSaveBlock1Ptr->location.mapGroup <= MAP_GROUP(GROTTO02))
+        && (gSaveBlock1Ptr->location.mapNum >= MAP_NUM(GROTTO01) && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(GROTTO02)))
     {
         u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
         SetDynamicWarp(0, sHiddenGrottoEntrances[var].mapGroup, sHiddenGrottoEntrances[var].mapNum, sHiddenGrottoEntrances[var].warpId);
     }
-    */
 }
 
 void SetGrottoWarp(void)
 {
-    /*
     u32 warpId = FindExistingGrottoWarp();
     if (warpId == 0)
     {
@@ -137,15 +130,25 @@ void SetGrottoWarp(void)
         DoWarp();
         ResetInitialPlayerAvatarState();
     }
-    */
 }
 
 void ClearGrottoVars(void)
 {
-    /*
     for (u32 i = GROTTO_VARS_START; i <= GROTTO_VARS_END; ++i)
     {
         VarSet(i, 0);
     }
-    */
+}
+
+bool32 IsPlayerInAGrotto(void)
+{
+    if (gMapHeader.regionMapSectionId == MAPSEC_HIDDEN_GROTTO)
+        return TRUE;
+    return FALSE;
+}
+
+u8 GetCurrentGrottoEscapeWarp(void)
+{
+    u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
+    return sHiddenGrottoEntrances[var].warpId;
 }

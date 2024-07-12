@@ -4430,6 +4430,26 @@
       "secondary_tileset": "gTileset_Contest",
       "border_filepath": "data/layouts/VerdanturfTown_ContestHall/border.bin",
       "blockdata_filepath": "data/layouts/VerdanturfTown_ContestHall/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO01",
+      "name": "Grotto01_Layout",
+      "width": 13,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto01/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto01/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO02",
+      "name": "Grotto02_Layout",
+      "width": 13,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto02/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto02/map.bin"
     }
   ]
 }

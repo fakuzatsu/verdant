@@ -509,7 +509,9 @@
     "BattlePyramidSquare14",
     "BattlePyramidSquare15",
     "BattlePyramidSquare16",
-    "UnionRoom"
+    "UnionRoom",
+    "Grotto01",
+    "Grotto02"
   ],
   "gMapGroup_SpecialArea": [
     "SafariZone_Northwest",

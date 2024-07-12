@@ -202,6 +202,7 @@ gStdScripts_End::
 	.include "data/maps/VerdanturfTown_WandasHouse/scripts.inc"
 	.include "data/maps/VerdanturfTown_FriendshipRatersHouse/scripts.inc"
 	.include "data/maps/VerdanturfTown_House/scripts.inc"
+	.include "data/maps/VerdanturfTown_ContestHall/scripts.inc"
 	.include "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/PacifidlogTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/PacifidlogTown_House1/scripts.inc"
@@ -1096,4 +1097,6 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/EverGrandeCity_PokemonLeague_B1F/scripts.inc"
 	.include "data/maps/BattleFrontier_PokemonCenter_B1F/scripts.inc"
 
-	.include "data/maps/VerdanturfTown_ContestHall/scripts.inc"
+	.include "data/scripts/hidden_grottos.inc"
+	.include "data/maps/Grotto01/scripts.inc"
+	.include "data/maps/Grotto02/scripts.inc"

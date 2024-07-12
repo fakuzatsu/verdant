@@ -5,6 +5,7 @@
 #include "fldeff.h"
 #include "fldeff_misc.h"
 #include "frontier_util.h"
+#include "hidden_grottos.h"
 #include "menu.h"
 #include "mirage_tower.h"
 #include "overworld.h"
@@ -71,6 +72,9 @@ void InitMap(void)
     InitMapLayoutData(&gMapHeader);
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     RunOnLoadMapScript();
+    GetGrottoWarp();
+    if (IsPlayerInAGrotto())
+        GetGrottoReturnWarp();
 }
 
 void InitMapFromSavedGame(void)
@@ -80,6 +84,9 @@ void InitMapFromSavedGame(void)
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     LoadSavedMapView();
     RunOnLoadMapScript();
+    GetGrottoWarp();
+    if (IsPlayerInAGrotto())
+        GetGrottoReturnWarp();
     UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
 }
 
