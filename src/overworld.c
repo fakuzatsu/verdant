@@ -23,6 +23,7 @@
 #include "fldeff.h"
 #include "gpu_regs.h"
 #include "heal_location.h"
+#include "hidden_grottos.h"
 #include "io_reg.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -841,6 +842,8 @@ if (I_VS_SEEKER_CHARGING != 0)
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
     RunOnTransitionMapScript();
+    GetGrottoWarp();
+    GetGrottoReturnWarp();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
     LoadSecondaryTilesetPalette(gMapHeader.mapLayout, TRUE);

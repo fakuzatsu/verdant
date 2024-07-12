@@ -560,3 +560,4 @@ gSpecials::
 	def_special DailyMassageService
 	def_special GiveMonTravellerRibbon
 	def_special GiveMonHistoricRibbon
+	def_special SetGrottoWarp

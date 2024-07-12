@@ -3,6 +3,7 @@
 #include "rtc.h"
 #include "time_events.h"
 #include "field_specials.h"
+#include "hidden_grottos.h"
 #include "lottery_corner.h"
 #include "dewford_trend.h"
 #include "tv.h"
@@ -44,6 +45,7 @@ static void UpdatePerDay(struct Time *localTime)
     {
         daysSince = localTime->days - *days;
         ClearDailyFlags();
+        ClearGrottoVars();
         UpdateDewfordTrendPerDay(daysSince);
         UpdateTVShowsPerDay(daysSince);
         UpdateWeatherPerDay(daysSince);
