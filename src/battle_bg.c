@@ -8,6 +8,7 @@
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
+#include "hidden_grottos.h"
 #include "gpu_regs.h"
 #include "graphics.h"
 #include "link.h"
@@ -846,7 +847,7 @@ void DrawMainBattleBackground(void)
             LZDecompressVram(sBattleTerrainTable[gBattleTerrain].tilemap, (void *)(BG_SCREEN_ADDR(26)));
             if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && gBattleTerrain == BATTLE_TERRAIN_POND)
                 LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-            else if (gTimeOfDay == DNS_TIME_NIGHT)
+            else if (gTimeOfDay == DNS_TIME_NIGHT || IsPlayerInAGrotto())
                 LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
             else
                 LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
@@ -1436,7 +1437,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
                 UpdateTimeOfDay();
                 if (gMapHeader.mapType == MAP_TYPE_UNDERGROUND && gBattleTerrain == BATTLE_TERRAIN_POND)
                     LoadCompressedPalette(gBattleTerrainPalette_PondWater_Cave, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
-                else if (gTimeOfDay == DNS_TIME_NIGHT)
+                else if (gTimeOfDay == DNS_TIME_NIGHT || IsPlayerInAGrotto())
                     LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].nightPalette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
                 else
                     LoadCompressedPalette(sBattleTerrainTable[gBattleTerrain].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);

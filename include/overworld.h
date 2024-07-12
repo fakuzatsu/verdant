@@ -176,6 +176,7 @@ bool32 IsSendingKeysOverCable(void);
 void ClearLinkPlayerObjectEvents(void);
 u8 UpdateTimeOfDay(void);
 bool8 MapHasNaturalLight(u8 mapType);
+bool8 MapIsInPerpetualDarkness(u8 mapType);
 void UpdateAltBgPalettes(u16 palettes);
 void UpdatePalettesWithTime(u32);
 

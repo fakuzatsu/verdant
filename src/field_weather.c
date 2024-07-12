@@ -478,7 +478,8 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
         colorMapIndex--;
         palOffset = PLTT_ID(startPalIndex);
         UpdateAltBgPalettes(palettes & PALETTES_BG);
-        if (!(colorMapIndex > 3) && MapHasNaturalLight(gMapHeader.mapType))
+        if (!(colorMapIndex > 3) && (MapHasNaturalLight(gMapHeader.mapType) || 
+            MapIsInPerpetualDarkness(gMapHeader.mapType)))
             UpdatePalettesWithTime(palettes);
         else
             CpuFastCopy(gPlttBufferUnfaded + palOffset, gPlttBufferFaded + palOffset, PLTT_SIZE_4BPP * numPalettes);
@@ -546,7 +547,7 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
     }
     else
     {
-        if (MapHasNaturalLight(gMapHeader.mapType))
+        if (MapHasNaturalLight(gMapHeader.mapType) || MapIsInPerpetualDarkness(gMapHeader.mapType))
         {
             u32 palettes = ((1 << numPalettes) - 1) << startPalIndex;
             UpdateAltBgPalettes(palettes & PALETTES_BG);
@@ -791,6 +792,10 @@ void FadeScreen(u8 mode, s8 delay)
             {
                 UpdateAltBgPalettes(PALETTES_BG);
                 BeginTimeOfDayPaletteFade(PALETTES_ALL, delay, 16, 0, (struct BlendSettings *)&gTimeOfDayBlend[currentTimeBlend.time0], (struct BlendSettings *)&gTimeOfDayBlend[currentTimeBlend.time1], currentTimeBlend.weight, fadeColor);
+            }
+            else if (MapIsInPerpetualDarkness(gMapHeader.mapType))
+            {
+                BeginTimeOfDayPaletteFade(PALETTES_ALL, delay, 16, 0, (struct BlendSettings *)&gTimeOfDayBlend[DNS_TIME_NIGHT], (struct BlendSettings *)&gTimeOfDayBlend[DNS_TIME_NIGHT], 128, fadeColor);
             }
             else
                 BeginNormalPaletteFade(PALETTES_ALL, delay, 16, 0, fadeColor);
