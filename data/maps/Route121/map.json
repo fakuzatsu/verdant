@@ -537,5 +537,6 @@
       "item": "ITEM_MAX_REVIVE",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_121_MAX_REVIVE"
     }
-  ]
+  ],
+  "has_night_table": true
 }

@@ -298,5 +298,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route112_EventScript_RouteSignLavaridge"
     }
-  ]
+  ],
+  "has_night_table": true
 }

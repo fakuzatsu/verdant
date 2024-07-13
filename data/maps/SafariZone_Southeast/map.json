@@ -119,5 +119,6 @@
       "item": "ITEM_FULL_RESTORE",
       "flag": "FLAG_HIDDEN_ITEM_SAFARI_ZONE_SOUTH_EAST_FULL_RESTORE"
     }
-  ]
+  ],
+  "has_night_table": false
 }
