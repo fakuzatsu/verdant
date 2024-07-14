@@ -5,6 +5,7 @@
 #include "fieldmap.h"
 #include "random.h"
 #include "field_player_avatar.h"
+#include "field_weather.h"
 #include "event_data.h"
 #include "safari_zone.h"
 #include "overworld.h"
@@ -385,6 +386,18 @@ static u16 GetCurrentMapWildMonHeaderId(void)
                     alteringCaveId = 0;
 
                 i += alteringCaveId;
+            }
+            else if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119) &&
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119)) ||
+                    (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE120) &&
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE120)))
+            {
+                u8 isRaining = 0;
+                if (gWeatherPtr->currWeather == WEATHER_RAIN_THUNDERSTORM ||
+                    gWeatherPtr->currWeather == WEATHER_RAIN)
+                    isRaining = 1;
+
+                i += isRaining;
             }
             else if (gMapHeader.nightEncounterTable)
             {
