@@ -337,5 +337,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Grotto_EventScript_GrottoInteract"
     }
-  ]
+  ],
+  "has_night_table": true
 }
