@@ -345,6 +345,7 @@ PetalburgCity_Gym_EventScript_GiveFacade2::
 
 PetalburgCity_Gym_EventScript_NormanRematch::
 	trainerbattle_rematch_double TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanPreRematch, PetalburgCity_Gym_Text_NormanRematchDefeat, PetalburgCity_Gym_Text_NormanRematchNeedTwoMons
+	setmemoryall MEMORY_NORMAN_GYM
 	msgbox PetalburgCity_Gym_Text_NormanPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -386,6 +387,7 @@ PetalburgCity_Gym_EventScript_NormanBattle::
 	setflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
 	clearflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
 	setvar VAR_0x8008, 5
+	setmemoryall MEMORY_NORMAN_GYM
 	call Common_EventScript_SetGymTrainers
 	clearflag FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN
 	call PetalburgCity_Gym_EventScript_UnlockAllDoors

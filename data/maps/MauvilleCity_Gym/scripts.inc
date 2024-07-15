@@ -95,6 +95,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated::
 	addvar VAR_PETALBURG_GYM_STATE, 1
 	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 3
+	setmemoryall MEMORY_WATTSON_GYM
 	call Common_EventScript_SetGymTrainers
 	special MauvilleGymDeactivatePuzzle
 	special DrawWholeMapView
@@ -133,6 +134,7 @@ MauvilleCity_Gym_EventScript_CompletedNewMauville::
 
 MauvilleCity_Gym_EventScript_WattsonRematch::
 	trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
+	setmemoryall MEMORY_WATTSON_GYM
 	msgbox MauvilleCity_Gym_Text_WattsonPostRematch, MSGBOX_AUTOCLOSE
 	end
 
