@@ -28,6 +28,7 @@
 #include "pokeball.h"
 #include "pokedex.h"
 #include "pokemon_icon.h"
+#include "pokemon_memories.h"
 #include "pokemon_summary_screen.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
@@ -3081,6 +3082,17 @@ static void UpdatePokedexForReceivedMon(u8 partyIdx)
     }
 }
 
+static bool8 isTrainerOT(struct Pokemon *mon, u32 trainerId, u8 *trainerName)
+{
+    u8 otName[PLAYER_NAME_LENGTH + 1];
+    u32 otId = GetMonData(mon, MON_DATA_OT_ID);
+    GetMonData(mon, MON_DATA_OT_NAME, otName);
+
+    if (otId == trainerId && otName == trainerName)
+        return TRUE;
+    return FALSE;
+}
+
 // Functionally nop after commented code
 static void TryEnableNationalDexFromLinkPartner(void)
 {
@@ -3116,6 +3128,9 @@ static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
         GiveMailToMon(playerMon, &gTradeMail[partnerMail]);
 
     UpdatePokedexForReceivedMon(playerPartyIdx);
+
+    if (isTrainerOT(playerMon, gLinkPlayers[1].trainerId, gLinkPlayers[1].name))
+        ResolveMemoriesAfterTrade(playerPartyIdx);
     if (gReceivedRemoteLinkPlayers)
         TryEnableNationalDexFromLinkPartner();
 }
