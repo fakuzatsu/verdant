@@ -278,6 +278,21 @@ void SetMemoryAll(struct ScriptContext *ctx)
     }
 }
 
+void ResolveMemoriesAfterTrade(u8 partyIdx)
+{
+    struct Pokemon *mon = &gPlayerParty[partyIdx];
+    u8 oldestMem = GetMonData(mon, MON_DATA_MEMORY_OLD);
+    u8 newestMem = GetMonData(mon, MON_DATA_MEMORY_NEW);
+    u8 clearMem = 0;
+
+    if (!GetMonData(mon, MON_DATA_IS_EGG))
+    {
+        if (newestMem > oldestMem)
+            SetMonData(mon, MON_DATA_MEMORY_OLD, &newestMem);
+        SetMonData(mon, MON_DATA_MEMORY_NEW, &clearMem);
+    }
+}
+
 bool8 GiveMonTravellerRibbon(void)
 {
     u8 hasTravellerRibbon;
