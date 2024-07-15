@@ -15,6 +15,7 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "fldeff_misc.h"
+#include "heat_start_menu.h"
 #include "item_menu.h"
 #include "link.h"
 #include "match_call.h"
@@ -241,7 +242,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedStartButton)
     {
         PlaySE(SE_WIN_OPEN);
-        ShowStartMenu();
+        HeatStartMenu_Init();
         return TRUE;
     }
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)

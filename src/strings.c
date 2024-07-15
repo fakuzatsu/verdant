@@ -1384,6 +1384,8 @@ const u8 gText_BattlePikeDesc[] = _("Select one of three paths to battle!\nYour 
 const u8 gText_BattlePyramidDesc[] = _("Aim for the top with exploration!\nYour bravery will be tested.");
 const u8 gText_ContinueMenuPlayer[] = _("PLAYER");
 const u8 gText_ContinueMenuTime[] = _("TIME");
+const u8 gText_AM[] = _("AM");
+const u8 gText_PM[] = _("PM");
 const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
 const u8 gText_ContinueMenuBadges[] = _("BADGES");
 const u8 gText_Powder[] = _("POWDER");
@@ -1875,6 +1877,3 @@ const u8 gText_FontShort[] =            _("{FONT_SHORT}");
 const u8 gText_TMCase_Blue[] =          _("{COLOR_HIGHLIGHT_SHADOW BLUE TRANSPARENT LIGHT_BLUE}{STR_VAR_2}");
 
 const u8 gText_AshQty[] = _("ASH QTY:\n{STR_VAR_1}{PAUSE_UNTIL_PRESS}");
-
-const u8 gText_AM[] = _("AM");
-const u8 gText_PM[] = _("PM");

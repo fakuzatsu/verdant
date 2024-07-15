@@ -1104,7 +1104,6 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         HideBg(2);
         HideBg(3);
-        ScriptContext_Enable();
         SetMainCallback2(gMain.savedCallback);
     }
 }

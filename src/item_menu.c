@@ -1556,9 +1556,7 @@ static u8 GetSwitchBagPocketDirection(void)
 
 static void ChangeBagPocketId(u8 *bagPocketId, s8 deltaBagPocketId)
 {
-    if (((deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == BALLS_POCKET) || (deltaBagPocketId == MENU_CURSOR_DELTA_LEFT && *bagPocketId == BERRIES_POCKET)) && !FlagGet(FLAG_SYS_TERA_IS_UNLOCKED))
-        *bagPocketId += deltaBagPocketId*2;
-    else if (deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == POCKETS_COUNT - 2)
+    if (deltaBagPocketId == MENU_CURSOR_DELTA_RIGHT && *bagPocketId == POCKETS_COUNT - 2)
         *bagPocketId = 0;
     else if (deltaBagPocketId == MENU_CURSOR_DELTA_LEFT && *bagPocketId == 0)
         *bagPocketId = POCKETS_COUNT - 2;
