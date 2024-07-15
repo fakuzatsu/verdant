@@ -1055,7 +1055,7 @@
 	.endm
 
 	@ creates a mon for a given party and slot
-	@ otherwise 
+	@ otherwise
 	.macro createmon side:req, slot:req, species:req, level:req, item, ball, nature, abilityNum, gender, hpEv, atkEv, defEv, speedEv, spAtkEv, spDefEv, hpIv, atkIv, defIv, speedIv, spAtkIv, spDefIv, move1, move2, move3, move4, isShiny, ggMaxFactor, teraType
 	callnative ScrCmd_createmon
 	.byte \side	 @ 0 - player, 1 - opponent
@@ -2102,7 +2102,7 @@
 	setvar VAR_0x8006, \item
 	special CreateEnemyEventMon
 	.endm
-    
+
 	.macro setdynamicaifunc func:req
 	callnative ScriptSetDynamicAiFunc
 	.4byte \func
@@ -2319,7 +2319,7 @@
 	setvar VAR_0x8001, \stringvarnumber
 	special BufferUnitSystemText
 	.endm
-    
+
 	@ set the wild double battle flag
 	@ can be used in conjunection with createmon to set up a wild battle with 2 player mons vs. 1 enemy mon
 	.macro setwilddoubleflag

@@ -18,7 +18,6 @@ static const u8 sText_KobesSeedot[] = _("DOTS was caught by KOBE at\n{LV_2}{STR_
 static const u8 sText_RomansPlusle[] = _("PLUSES was caught by CHESTER at\n{LV_2}{STR_VAR_2}, ROUTE 110");
 static const u8 sText_SkylarsHorsea[] = _("SEASOR was hatched by SKYLAR at\n{LV_2}{STR_VAR_2}, PACIFIDLOG TOWN");
 static const u8 sText_IsissMeowth[] = _("MEOWOW was caught by ISIS at\n{LV_2}{STR_VAR_2}, ROUTE 38");
-
 static const u8 sText_AtLevelLocation[] = _("{LV_2}{STR_VAR_2}, at {STR_VAR_3}");
 
 extern const u8 MemoryStrings_NoMemory[];
@@ -59,39 +58,39 @@ static const u8 MemoryStrings_ByX[] = _(" by {STR_VAR_2}.");
 static const u8 MemoryStrings_WithX[] = _(" with {STR_VAR_2}.");
 static const u8 MemoryStrings_GivenByX[] = _(" given by {STR_VAR_2}.");
 
-static const u8 *const sMemoryStrings[TOTAL_MEMORIES][2] = {
-    {MemoryStrings_NoMemory, MemoryStrings_NoMemory},
-    {MemoryStrings_TransferedOverWonderTrade, MemoryStrings_ByX},
-    {MemoryStrings_TransferedOverLinkTrade, MemoryStrings_ByX},
-    {MemoryStrings_WonACoolContest, MemoryStrings_WithX},
-    {MemoryStrings_WonABeautyContest, MemoryStrings_WithX},
-    {MemoryStrings_WonACuteContest, MemoryStrings_WithX},
-    {MemoryStrings_WonACleverContest, MemoryStrings_WithX},
-    {MemoryStrings_WonAToughContest, MemoryStrings_WithX},
-    {MemoryStrings_AteACoolPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteABeautyPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteACutePokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteACleverPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteAToughPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteADislikedPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_AteALovedPokeblock, MemoryStrings_GivenByX},
-    {MemoryStrings_MaxedOutSheen, MemoryStrings_GivenByX},
-    {MemoryStrings_FoughtRoxanneGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtBrawlyGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtWattsonGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtFlanneryGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtNormanGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtWinonaGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtTateAndLizaGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtWallaceGym, MemoryStrings_WithX},
-    {MemoryStrings_FoughtTheEliteFour, MemoryStrings_WithX},
-    {MemoryStrings_FoughtASignificant, MemoryStrings_WithX},
-    {MemoryStrings_EarnedSilverFrontier, MemoryStrings_WithX},
-    {MemoryStrings_CaughtALegendary, MemoryStrings_WithX},
-    {MemoryStrings_DefendedChampionTitle, MemoryStrings_WithX},
-    {MemoryStrings_WonAMasterContest, MemoryStrings_WithX},
-    {MemoryStrings_SavedTheWorld, MemoryStrings_WithX},
-    {MemoryStrings_EarnedGoldFrontier, MemoryStrings_WithX},
+static const u8 *const sMemoryStrings[MEMORY_COUNT][2] = {
+    [MEMORY_NONE]               = {MemoryStrings_NoMemory,                  MemoryStrings_NoMemory},
+    [MEMORY_WONDER_TRADE]       = {MemoryStrings_TransferedOverWonderTrade, MemoryStrings_ByX},
+    [MEMORY_LINK_TRADE]         = {MemoryStrings_TransferedOverLinkTrade,   MemoryStrings_ByX},
+    [MEMORY_COOL_CONTEST]       = {MemoryStrings_WonACoolContest,           MemoryStrings_WithX},
+    [MEMORY_BEAUTY_CONTEST]     = {MemoryStrings_WonABeautyContest,         MemoryStrings_WithX},
+    [MEMORY_CUTE_CONTEST]       = {MemoryStrings_WonACuteContest,           MemoryStrings_WithX},
+    [MEMORY_CLEVER_CONTEST]     = {MemoryStrings_WonACleverContest,         MemoryStrings_WithX},
+    [MEMORY_TOUGH_CONTEST]      = {MemoryStrings_WonAToughContest,          MemoryStrings_WithX},
+    [MEMORY_COOL_POKEBLOCK]     = {MemoryStrings_AteACoolPokeblock,         MemoryStrings_GivenByX},
+    [MEMORY_BEAUTY_POKEBLOCK]   = {MemoryStrings_AteABeautyPokeblock,       MemoryStrings_GivenByX},
+    [MEMORY_CUTE_POKEBLOCK]     = {MemoryStrings_AteACutePokeblock,         MemoryStrings_GivenByX},
+    [MEMORY_CLEVER_POKEBLOCK]   = {MemoryStrings_AteACleverPokeblock,       MemoryStrings_GivenByX},
+    [MEMORY_TOUGH_POKEBLOCK]    = {MemoryStrings_AteAToughPokeblock,        MemoryStrings_GivenByX},
+    [MEMORY_DISLIKED_POKEBLOCK] = {MemoryStrings_AteADislikedPokeblock,     MemoryStrings_GivenByX},
+    [MEMORY_LOVED_POKEBLOCK]    = {MemoryStrings_AteALovedPokeblock,        MemoryStrings_GivenByX},
+    [MEMORY_MAXED_OUT_SHEEN]    = {MemoryStrings_MaxedOutSheen,             MemoryStrings_GivenByX},
+    [MEMORY_ROXANNE_GYM]        = {MemoryStrings_FoughtRoxanneGym,          MemoryStrings_WithX},
+    [MEMORY_BRAWLY_GYM]         = {MemoryStrings_FoughtBrawlyGym,           MemoryStrings_WithX},
+    [MEMORY_WATTSON_GYM]        = {MemoryStrings_FoughtWattsonGym,          MemoryStrings_WithX},
+    [MEMORY_FLANNERY_GYM]       = {MemoryStrings_FoughtFlanneryGym,         MemoryStrings_WithX},
+    [MEMORY_NORMAN_GYM]         = {MemoryStrings_FoughtNormanGym,           MemoryStrings_WithX},
+    [MEMORY_WINONA_GYM]         = {MemoryStrings_FoughtWinonaGym,           MemoryStrings_WithX},
+    [MEMORY_TATE_LIZA_GYM]      = {MemoryStrings_FoughtTateAndLizaGym,      MemoryStrings_WithX},
+    [MEMORY_JUAN_GYM]           = {MemoryStrings_FoughtWallaceGym,          MemoryStrings_WithX},
+    [MEMORY_ELITE_FOUR]         = {MemoryStrings_FoughtTheEliteFour,        MemoryStrings_WithX},
+    [MEMORY_SIG_TRAINER]        = {MemoryStrings_FoughtASignificant,        MemoryStrings_WithX},
+    [MEMORY_SILVER_FRONTIER]    = {MemoryStrings_EarnedSilverFrontier,      MemoryStrings_WithX},
+    [MEMORY_LEGENDARY_CATCH]    = {MemoryStrings_CaughtALegendary,          MemoryStrings_WithX},
+    [MEMORY_CHAMPION_TITLE_DEF] = {MemoryStrings_DefendedChampionTitle,     MemoryStrings_WithX},
+    [MEMORY_MASTER_CONTEST]     = {MemoryStrings_WonAMasterContest,         MemoryStrings_WithX},
+    [MEMORY_SAVED_THE_WORLD]    = {MemoryStrings_SavedTheWorld,             MemoryStrings_WithX},
+    [MEMORY_GOLD_FRONTIER]      = {MemoryStrings_EarnedGoldFrontier,        MemoryStrings_WithX},
 };
 
 void GetMemory(struct ScriptContext *ctx)
@@ -276,6 +275,21 @@ void SetMemoryAll(struct ScriptContext *ctx)
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
             SetMemoryWithRules(&gPlayerParty[i], memory);
+    }
+}
+
+void ResolveMemoriesAfterTrade(u8 partyIdx)
+{
+    struct Pokemon *mon = &gPlayerParty[partyIdx];
+    u8 oldestMem = GetMonData(mon, MON_DATA_MEMORY_OLD);
+    u8 newestMem = GetMonData(mon, MON_DATA_MEMORY_NEW);
+    u8 clearMem = 0;
+
+    if (!GetMonData(mon, MON_DATA_IS_EGG))
+    {
+        if (newestMem > oldestMem)
+            SetMonData(mon, MON_DATA_MEMORY_OLD, &newestMem);
+        SetMonData(mon, MON_DATA_MEMORY_NEW, &clearMem);
     }
 }
 
