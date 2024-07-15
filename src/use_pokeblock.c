@@ -22,6 +22,7 @@
 #include "menu.h"
 #include "gpu_regs.h"
 #include "graphics.h"
+#include "pokemon_memories.h"
 #include "pokemon_summary_screen.h"
 #include "item_menu.h"
 
@@ -194,6 +195,15 @@ static const u8 sConditionToFlavor[CONDITION_COUNT] =
     [CONDITION_SMART]  = FLAVOR_BITTER,
     [CONDITION_CUTE]   = FLAVOR_SWEET,
     [CONDITION_BEAUTY] = FLAVOR_DRY
+};
+
+static const u8 sConditionToMemory[CONDITION_COUNT] =
+{
+    [CONDITION_COOL]   = MEMORY_COOL_POKEBLOCK,
+    [CONDITION_TOUGH]  = MEMORY_BEAUTY_POKEBLOCK,
+    [CONDITION_SMART]  = MEMORY_CUTE_POKEBLOCK,
+    [CONDITION_CUTE]   = MEMORY_CLEVER_POKEBLOCK,
+    [CONDITION_BEAUTY] = MEMORY_TOUGH_POKEBLOCK,
 };
 
 static const u8 sNatureTextColors[] =
@@ -1062,6 +1072,14 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
             boost++;
 
         flavor = GetMonFlavorRelation(mon, sConditionToFlavor[i]);
+
+        if (flavor == 1)
+            SetMemoryWithRules(mon, MEMORY_LOVED_POKEBLOCK);
+        else if (flavor == -1)
+            SetMemoryWithRules(mon, MEMORY_DISLIKED_POKEBLOCK);
+        else
+            SetMemoryWithRules(mon, sConditionToMemory[i]);
+
         if (flavor == direction)
             sInfo->pokeblockStatBoosts[i] += boost * flavor;
     }
