@@ -1541,7 +1541,7 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
             sHeatStartMenu->loadState = 1;
         }
     } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
+    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0 && !gPaletteFade.active) 
     {
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();  
