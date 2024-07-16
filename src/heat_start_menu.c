@@ -1,6 +1,6 @@
+#include "global.h"
 #include "option_menu.h"
 #include "heat_start_menu.h"
-#include "global.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
@@ -676,7 +676,7 @@ static void ShowSafariBallsWindow(void)
     CopyWindowToVram(sHeatStartMenu->sSafariBallsWindowId, COPYWIN_GFX);
 }
 
-void HeatStartMenu_Init(void) 
+bool8 InitHeatMenuStep(void)
 {
     if (!IsOverworldLinkActive()) 
     {
@@ -690,18 +690,28 @@ void HeatStartMenu_Init(void)
     if (sHeatStartMenu == NULL) 
     {
         sHeatStartMenu = AllocZeroed(sizeof(struct HeatStartMenu));
+        sHeatStartMenu->savedCallback = CB2_ReturnToFieldWithOpenMenu;
+        sHeatStartMenu->loadState = 0;
+        sHeatStartMenu->sStartClockWindowId = 0;
+        sHeatStartMenu->flag = 0;
     }
 
-    if (sHeatStartMenu == NULL) 
+    return TRUE;
+}
+
+void Task_HeatStartMenu_Init(u8 taskId)
+{
+    if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-        return;
+        HeatStartMenu_Init();
+        DestroyTask(taskId);
     }
+}
 
-    sHeatStartMenu->savedCallback = CB2_ReturnToFieldWithOpenMenu;
-    sHeatStartMenu->loadState = 0;
-    sHeatStartMenu->sStartClockWindowId = 0;
-    sHeatStartMenu->flag = 0;
+void HeatStartMenu_Init(void) 
+{
+    if (sHeatStartMenu == NULL)
+        InitHeatMenuStep();
 
     if (GetSafariZoneFlag() == FALSE) 
     { 
@@ -1014,12 +1024,12 @@ static void DoCleanUpAndChangeCallback(MainCallback callback)
 {
     if (!gPaletteFade.active) 
     {
-    DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-    PlayRainStoppingSoundEffect();
-    HeatStartMenu_ExitAndClearTilemap();
-    CleanupOverworldWindowsAndTilemaps();
-    SetMainCallback2(callback);
-    gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+        PlayRainStoppingSoundEffect();
+        HeatStartMenu_ExitAndClearTilemap();
+        CleanupOverworldWindowsAndTilemaps();
+        SetMainCallback2(callback);
+        gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
     }
 }
 
