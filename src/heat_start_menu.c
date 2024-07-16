@@ -66,11 +66,13 @@ static void SpriteCB_IconOptions(struct Sprite* sprite);
 static void SpriteCB_IconFlag(struct Sprite* sprite);
 
 /* TASKs */
+static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId);
 static void Task_HeatStartMenu_HandleMainInput(u8 taskId);
 static void Task_HeatStartMenu_SafariZone_HandleMainInput(u8 taskId);
 static void Task_HandleSave(u8 taskId);
 
 /* OTHER FUNCTIONS */
+static void SetupHeatMenuCommonComponents(void);
 static void HeatStartMenu_LoadSprites(void);
 static void HeatStartMenu_CreateSprites(void);
 static void HeatStartMenu_SafariZone_CreateSprites(void);
@@ -721,28 +723,38 @@ void HeatStartMenu_Init(void)
             menuSelected = MENU_POKEDEX;
         if (menuSelected == 255)
             SetSelectedMenu();
-
-        HeatStartMenu_LoadSprites();
-        HeatStartMenu_CreateSprites();
-        HeatStartMenu_LoadBgGfx();
-        HeatStartMenu_ShowTimeWindow();
-        sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
-        HeatStartMenu_UpdateMenuName();
+        SetupHeatMenuCommonComponents();
         CreateTask(Task_HeatStartMenu_HandleMainInput, 0);
     } 
     else 
     {
         if (menuSelected == 255 || menuSelected == MENU_POKETCH || menuSelected == MENU_SAVE) 
             menuSelected = MENU_FLAG;
-
-        HeatStartMenu_LoadSprites();
-        HeatStartMenu_SafariZone_CreateSprites();
-        HeatStartMenu_LoadBgGfx();
+        SetupHeatMenuCommonComponents();
         ShowSafariBallsWindow();
-        HeatStartMenu_ShowTimeWindow();
-        sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
-        HeatStartMenu_UpdateMenuName();
         CreateTask(Task_HeatStartMenu_SafariZone_HandleMainInput, 0);
+    }
+}
+
+static void SetupHeatMenuCommonComponents(void)
+{
+    CreateTask(Task_HeatStartMenu_LoadAndCreateSprites, 1);
+    HeatStartMenu_LoadBgGfx();
+    HeatStartMenu_ShowTimeWindow();
+    sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
+    HeatStartMenu_UpdateMenuName();
+}
+
+static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        HeatStartMenu_LoadSprites();
+        if (GetSafariZoneFlag() == FALSE)
+            HeatStartMenu_CreateSprites();
+        else
+            HeatStartMenu_SafariZone_CreateSprites();
+        DestroyTask(taskId);
     }
 }
 
