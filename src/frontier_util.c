@@ -20,6 +20,7 @@
 #include "tv.h"
 #include "apprentice.h"
 #include "pokedex.h"
+#include "pokemon_memories.h"
 #include "recorded_battle.h"
 #include "data.h"
 #include "record_mixing.h"
@@ -1870,9 +1871,15 @@ static void GiveFacilitySymbol(void)
 {
     s32 facility = VarGet(VAR_FRONTIER_FACILITY);
     if (GetPlayerSymbolCountForFacility(facility) == 0)
+    {
         FlagSet(FLAG_SYS_TOWER_SILVER + facility * 2);
+        SetMemoryAllWithRules(MEMORY_SILVER_FRONTIER);
+    }
     else
+    {
         FlagSet(FLAG_SYS_TOWER_GOLD + facility * 2);
+        SetMemoryAllWithRules(MEMORY_GOLD_FRONTIER);
+    }
 }
 
 static void CheckBattleTypeFlag(void)
