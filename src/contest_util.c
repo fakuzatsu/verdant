@@ -401,7 +401,7 @@ static const struct SpriteSheet sSpriteSheet_WirelessIndicatorWindow =
 
 static const u8 sContestLinkTextColors[4] = {TEXT_COLOR_WHITE, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
 
-static u8 sCatagoryToMemory[CONTEST_CATEGORIES_COUNT] =
+static const u8 sCatagoryToMemory[CONTEST_CATEGORIES_COUNT] =
 {
     [CONTEST_CATEGORY_COOL]     = MEMORY_COOL_CONTEST,
     [CONTEST_CATEGORY_BEAUTY]   = MEMORY_BEAUTY_CONTEST,
