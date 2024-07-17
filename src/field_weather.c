@@ -798,7 +798,9 @@ void FadeScreen(u8 mode, s8 delay)
                 BeginTimeOfDayPaletteFade(PALETTES_ALL, delay, 16, 0, (struct BlendSettings *)&gTimeOfDayBlend[DNS_TIME_NIGHT], (struct BlendSettings *)&gTimeOfDayBlend[DNS_TIME_NIGHT], 128, fadeColor);
             }
             else
+            {
                 BeginNormalPaletteFade(PALETTES_ALL, delay, 16, 0, fadeColor);
+            }
         }
 
         gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_IN;

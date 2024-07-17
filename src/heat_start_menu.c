@@ -1,6 +1,6 @@
+#include "global.h"
 #include "option_menu.h"
 #include "heat_start_menu.h"
-#include "global.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
@@ -66,11 +66,13 @@ static void SpriteCB_IconOptions(struct Sprite* sprite);
 static void SpriteCB_IconFlag(struct Sprite* sprite);
 
 /* TASKs */
+static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId);
 static void Task_HeatStartMenu_HandleMainInput(u8 taskId);
 static void Task_HeatStartMenu_SafariZone_HandleMainInput(u8 taskId);
 static void Task_HandleSave(u8 taskId);
 
 /* OTHER FUNCTIONS */
+static void SetupHeatMenuCommonComponents(void);
 static void HeatStartMenu_LoadSprites(void);
 static void HeatStartMenu_CreateSprites(void);
 static void HeatStartMenu_SafariZone_CreateSprites(void);
@@ -676,7 +678,7 @@ static void ShowSafariBallsWindow(void)
     CopyWindowToVram(sHeatStartMenu->sSafariBallsWindowId, COPYWIN_GFX);
 }
 
-void HeatStartMenu_Init(void) 
+bool8 InitHeatMenuStep(void)
 {
     if (!IsOverworldLinkActive()) 
     {
@@ -690,18 +692,28 @@ void HeatStartMenu_Init(void)
     if (sHeatStartMenu == NULL) 
     {
         sHeatStartMenu = AllocZeroed(sizeof(struct HeatStartMenu));
+        sHeatStartMenu->savedCallback = CB2_ReturnToFieldWithOpenMenu;
+        sHeatStartMenu->loadState = 0;
+        sHeatStartMenu->sStartClockWindowId = 0;
+        sHeatStartMenu->flag = 0;
     }
 
-    if (sHeatStartMenu == NULL) 
+    return TRUE;
+}
+
+void Task_HeatStartMenu_Init(u8 taskId)
+{
+    if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-        return;
+        HeatStartMenu_Init();
+        DestroyTask(taskId);
     }
+}
 
-    sHeatStartMenu->savedCallback = CB2_ReturnToFieldWithOpenMenu;
-    sHeatStartMenu->loadState = 0;
-    sHeatStartMenu->sStartClockWindowId = 0;
-    sHeatStartMenu->flag = 0;
+void HeatStartMenu_Init(void) 
+{
+    if (sHeatStartMenu == NULL)
+        InitHeatMenuStep();
 
     if (GetSafariZoneFlag() == FALSE) 
     { 
@@ -711,28 +723,38 @@ void HeatStartMenu_Init(void)
             menuSelected = MENU_POKEDEX;
         if (menuSelected == 255)
             SetSelectedMenu();
-
-        HeatStartMenu_LoadSprites();
-        HeatStartMenu_CreateSprites();
-        HeatStartMenu_LoadBgGfx();
-        HeatStartMenu_ShowTimeWindow();
-        sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
-        HeatStartMenu_UpdateMenuName();
+        SetupHeatMenuCommonComponents();
         CreateTask(Task_HeatStartMenu_HandleMainInput, 0);
     } 
     else 
     {
         if (menuSelected == 255 || menuSelected == MENU_POKETCH || menuSelected == MENU_SAVE) 
             menuSelected = MENU_FLAG;
-
-        HeatStartMenu_LoadSprites();
-        HeatStartMenu_SafariZone_CreateSprites();
-        HeatStartMenu_LoadBgGfx();
+        SetupHeatMenuCommonComponents();
         ShowSafariBallsWindow();
-        HeatStartMenu_ShowTimeWindow();
-        sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
-        HeatStartMenu_UpdateMenuName();
         CreateTask(Task_HeatStartMenu_SafariZone_HandleMainInput, 0);
+    }
+}
+
+static void SetupHeatMenuCommonComponents(void)
+{
+    CreateTask(Task_HeatStartMenu_LoadAndCreateSprites, 1);
+    HeatStartMenu_LoadBgGfx();
+    HeatStartMenu_ShowTimeWindow();
+    sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
+    HeatStartMenu_UpdateMenuName();
+}
+
+static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        HeatStartMenu_LoadSprites();
+        if (GetSafariZoneFlag() == FALSE)
+            HeatStartMenu_CreateSprites();
+        else
+            HeatStartMenu_SafariZone_CreateSprites();
+        DestroyTask(taskId);
     }
 }
 
@@ -1014,12 +1036,12 @@ static void DoCleanUpAndChangeCallback(MainCallback callback)
 {
     if (!gPaletteFade.active) 
     {
-    DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-    PlayRainStoppingSoundEffect();
-    HeatStartMenu_ExitAndClearTilemap();
-    CleanupOverworldWindowsAndTilemaps();
-    SetMainCallback2(callback);
-    gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+        PlayRainStoppingSoundEffect();
+        HeatStartMenu_ExitAndClearTilemap();
+        CleanupOverworldWindowsAndTilemaps();
+        SetMainCallback2(callback);
+        gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
     }
 }
 
@@ -1519,7 +1541,7 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
             sHeatStartMenu->loadState = 1;
         }
     } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
+    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0 && !gPaletteFade.active) 
     {
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();  
