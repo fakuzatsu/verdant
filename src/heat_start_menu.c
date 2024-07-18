@@ -66,7 +66,6 @@ static void SpriteCB_IconOptions(struct Sprite* sprite);
 static void SpriteCB_IconFlag(struct Sprite* sprite);
 
 /* TASKs */
-static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId);
 static void Task_HeatStartMenu_HandleMainInput(u8 taskId);
 static void Task_HeatStartMenu_SafariZone_HandleMainInput(u8 taskId);
 static void Task_HandleSave(u8 taskId);
@@ -130,7 +129,7 @@ struct HeatStartMenu
     u32 sStartClockWindowId;
     u32 sMenuNameWindowId;
     u32 sSafariBallsWindowId;
-    u32 flag; // some u32 holding values for controlling the sprite anims an lifetime
+    u32 flag; // some u32 holding values for controlling the sprite anims and lifetime
     
     u32 spriteIdPoketch;
     u32 spriteIdPokedex;
@@ -723,6 +722,8 @@ void HeatStartMenu_Init(void)
             menuSelected = MENU_POKEDEX;
         if (menuSelected == 255)
             SetSelectedMenu();
+        HeatStartMenu_LoadSprites();
+        HeatStartMenu_CreateSprites();
         SetupHeatMenuCommonComponents();
         CreateTask(Task_HeatStartMenu_HandleMainInput, 0);
     } 
@@ -730,6 +731,8 @@ void HeatStartMenu_Init(void)
     {
         if (menuSelected == 255 || menuSelected == MENU_POKETCH || menuSelected == MENU_SAVE) 
             menuSelected = MENU_FLAG;
+        HeatStartMenu_LoadSprites();
+        HeatStartMenu_SafariZone_CreateSprites();
         SetupHeatMenuCommonComponents();
         ShowSafariBallsWindow();
         CreateTask(Task_HeatStartMenu_SafariZone_HandleMainInput, 0);
@@ -738,24 +741,10 @@ void HeatStartMenu_Init(void)
 
 static void SetupHeatMenuCommonComponents(void)
 {
-    CreateTask(Task_HeatStartMenu_LoadAndCreateSprites, 1);
     HeatStartMenu_LoadBgGfx();
     HeatStartMenu_ShowTimeWindow();
     sHeatStartMenu->sMenuNameWindowId = AddWindow(&sWindowTemplate_MenuName);
     HeatStartMenu_UpdateMenuName();
-}
-
-static void Task_HeatStartMenu_LoadAndCreateSprites(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
-        HeatStartMenu_LoadSprites();
-        if (GetSafariZoneFlag() == FALSE)
-            HeatStartMenu_CreateSprites();
-        else
-            HeatStartMenu_SafariZone_CreateSprites();
-        DestroyTask(taskId);
-    }
 }
 
 static void HeatStartMenu_LoadSprites(void) 
@@ -837,7 +826,8 @@ static void HeatStartMenu_SafariZone_CreateSprites(void)
 
 static void HeatStartMenu_LoadBgGfx(void) 
 {
-    u8* buf = GetBgTilemapBuffer(0); 
+    u8* buf = GetBgTilemapBuffer(0);
+    LoadBgTilemap(0, 0, 0, 0);
     DecompressAndCopyTileDataToVram(0, sStartMenuTiles, 0, 0, 0);
     if (GetSafariZoneFlag() == FALSE)
         LZDecompressWram(sStartMenuTilemap, buf);
@@ -1381,9 +1371,10 @@ static void Task_HandleSave(u8 taskId)
         break;
     case SAVE_SUCCESS:
     case SAVE_CANCELED: // Back to start menu
-        ClearDialogWindowAndFrameToTransparent(0, FALSE);
+        ClearDialogWindowAndFrameToTransparent(0, TRUE);
+        ScriptUnfreezeObjectEvents();  
+        UnlockPlayerFieldControls();
         DestroyTask(taskId);
-        HeatStartMenu_Init();
         break;
     case SAVE_ERROR:    // Close start menu
         ClearDialogWindowAndFrameToTransparent(0, TRUE);
@@ -1523,7 +1514,7 @@ static void HeatStartMenu_HandleInput_DPADUP(void)
 static void Task_HeatStartMenu_HandleMainInput(u8 taskId) 
 {
     u32 index;
-    if (sHeatStartMenu->loadState == 0) 
+    if (sHeatStartMenu->loadState == 0 && !gPaletteFade.active) 
     {
         index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
         LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
@@ -1541,7 +1532,7 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
             sHeatStartMenu->loadState = 1;
         }
     } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0 && !gPaletteFade.active) 
+    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
     {
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();  
@@ -1634,7 +1625,7 @@ static void HeatStartMenu_SafariZone_HandleInput_DPADUP(void)
 static void Task_HeatStartMenu_SafariZone_HandleMainInput(u8 taskId) 
 {
     u32 index;
-    if (sHeatStartMenu->loadState == 0) 
+    if (sHeatStartMenu->loadState == 0 && !gPaletteFade.active)
     {
         index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
         LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
