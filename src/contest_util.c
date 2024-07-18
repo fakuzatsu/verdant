@@ -25,6 +25,7 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_icon.h"
+#include "pokemon_memories.h"
 #include "random.h"
 #include "save.h"
 #include "scanline_effect.h"
@@ -400,6 +401,14 @@ static const struct SpriteSheet sSpriteSheet_WirelessIndicatorWindow =
 
 static const u8 sContestLinkTextColors[4] = {TEXT_COLOR_WHITE, TEXT_DYNAMIC_COLOR_6, TEXT_DYNAMIC_COLOR_5};
 
+static const u8 sCatagoryToMemory[CONTEST_CATEGORIES_COUNT] =
+{
+    [CONTEST_CATEGORY_COOL]     = MEMORY_COOL_CONTEST,
+    [CONTEST_CATEGORY_BEAUTY]   = MEMORY_BEAUTY_CONTEST,
+    [CONTEST_CATEGORY_CUTE]     = MEMORY_CUTE_CONTEST,
+    [CONTEST_CATEGORY_SMART]    = MEMORY_CLEVER_CONTEST,
+    [CONTEST_CATEGORY_TOUGH]    = MEMORY_TOUGH_CONTEST,
+};
 
 static void InitContestResultsDisplay(void)
 {
@@ -1989,7 +1998,7 @@ u16 HasMonWonThisContestBefore(void)
 
 void GiveMonContestRibbon(void)
 {
-    u8 ribbonData;
+    u8 ribbonData = 0;
 
     if (gContestFinalStandings[gContestPlayerMonIndex] != 0)
         return;
@@ -2046,6 +2055,13 @@ void GiveMonContestRibbon(void)
                 TryPutSpotTheCutiesOnAir(&gPlayerParty[gContestMonPartyIndex], MON_DATA_TOUGH_RIBBON);
         }
         break;
+    }
+    if (ribbonData)
+    {
+        if (ribbonData == CONTEST_RANK_MASTER)
+            SetMemoryWithRules(&gPlayerParty[gContestMonPartyIndex], MEMORY_MASTER_CONTEST);
+        else
+            SetMemoryWithRules(&gPlayerParty[gContestMonPartyIndex], sCatagoryToMemory[gSpecialVar_ContestCategory]);
     }
 }
 
