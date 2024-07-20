@@ -967,7 +967,7 @@ void ItemUseOutOfBattle_TmCase(u8 taskId)
 
 static void CB2_OpenDexNavOnField(void)
 {
-    DexNavInit_ReturnToField();
+    DexNavInit_ReturnToBag();
 }
 
 static void Task_InitDexNavFromField(u8 taskId)
