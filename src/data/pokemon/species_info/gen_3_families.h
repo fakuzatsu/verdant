@@ -3252,7 +3252,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .baseSpAttack  = 30,
         .baseSpDefense = 30,
         .types = MON_TYPES(TYPE_BUG, TYPE_GHOST),
-        .forceTeraType = TYPE_BUG,
+        .forceTeraType = TYPE_STELLAR,
         .catchRate = 45,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 83 : 95,
         .evYield_HP = 2,

@@ -83,6 +83,7 @@ struct DexNavSearch
     u16 moves[MAX_MON_MOVES];
     u16 heldItem;
     u8 abilityNum;
+    u8 teraType;
     u8 potential;
     u8 searchLevel;
     u8 monLevel;
@@ -139,10 +140,11 @@ static bool8 TryStartHiddenMonFieldEffect(u8 environment, u8 xSize, u8 ySize, bo
 static void DexNavGenerateMoveset(u16 species, u8 searchLevel, u8 encounterLevel, u16* moveDst);
 static u16 DexNavGenerateHeldItem(u16 species, u8 searchLevel);
 static u8 DexNavGetAbilityNum(u16 species, u8 searchLevel);
+static u8 DexNavTrySpecialTeraType(u16 species, u8 searchLevel);
 static u8 DexNavGeneratePotential(u8 searchLevel);
 static u8 DexNavTryGenerateMonLevel(u16 species, u8 environment);
 static u8 GetEncounterLevelFromMapData(u16 species, u8 environment);
-static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, u16 item, u16* moves);
+static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, u8 teraType, u16 item, u16* moves);
 static u8 GetPlayerDistance(s16 x, s16 y);
 static u8 DexNavPickTile(u8 environment, u8 xSize, u8 ySize, bool8 smallScan);
 static void DexNavProximityUpdate(void);
@@ -831,6 +833,7 @@ static void Task_SetUpDexNavSearch(u8 taskId)
     DexNavGenerateMoveset(species, searchLevel, sDexNavSearchDataPtr->monLevel, &sDexNavSearchDataPtr->moves[0]);
     sDexNavSearchDataPtr->heldItem = DexNavGenerateHeldItem(species, searchLevel);
     sDexNavSearchDataPtr->abilityNum = DexNavGetAbilityNum(species, searchLevel);
+    sDexNavSearchDataPtr->teraType = DexNavTrySpecialTeraType(species, searchLevel);
     sDexNavSearchDataPtr->potential = DexNavGeneratePotential(searchLevel);
     DexNavProximityUpdate();
     
@@ -1106,7 +1109,7 @@ static void Task_DexNavSearch(u8 taskId)
     {
         gDexnavBattle = TRUE;
         CreateDexNavWildMon(sDexNavSearchDataPtr->species, sDexNavSearchDataPtr->potential, sDexNavSearchDataPtr->monLevel, 
-          sDexNavSearchDataPtr->abilityNum, sDexNavSearchDataPtr->heldItem, sDexNavSearchDataPtr->moves);
+          sDexNavSearchDataPtr->abilityNum, sDexNavSearchDataPtr->teraType, sDexNavSearchDataPtr->heldItem, sDexNavSearchDataPtr->moves);
         
         FlagClear(FLAG_SYS_DEXNAV_SEARCH);
         ScriptContext_SetupScript(EventScript_StartDexNavBattle);
@@ -1222,7 +1225,7 @@ static void DexNavUpdateSearchWindow(u8 proximity, u8 searchLevel)
 //////////////////////////////
 //// DEXNAV MON GENERATOR ////
 //////////////////////////////
-static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, u16 item, u16* moves)
+static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, u8 teraType, u16 item, u16* moves)
 {
     struct Pokemon* mon = &gEnemyParty[0];
     u8 iv[3] = {NUM_STATS};
@@ -1249,6 +1252,9 @@ static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityN
     //Set ability
     SetMonData(mon, MON_DATA_ABILITY_NUM, &abilityNum);
     
+    //Set Tera Type
+    SetMonData(mon, MON_DATA_TERA_TYPE, &teraType);
+
     // Set Held Item
     if (item)
         SetMonData(mon, MON_DATA_HELD_ITEM, &item);
@@ -1443,6 +1449,64 @@ static u8 DexNavGetAbilityNum(u16 species, u8 searchLevel)
     }
     
     return abilityNum;
+}
+
+static u8 DexNavTrySpecialTeraType(u16 species, u8 searchLevel)
+{
+    bool8 newTera = FALSE;
+    u16 randVal = Random() % 100;
+    u8 teraType = gSpeciesInfo[species].types[0];
+
+    if (searchLevel < 5)
+    {
+        #if (SEARCHLEVEL0_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL0_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+    else if (searchLevel < 10)
+    {
+        #if (SEARCHLEVEL5_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL5_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+    else if (searchLevel < 25)
+    {
+        #if (SEARCHLEVEL10_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL10_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+    else if (searchLevel < 50)
+    {
+        #if (SEARCHLEVEL25_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL25_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+    else if (searchLevel < 100)
+    {
+        #if (SEARCHLEVEL50_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL50_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+    else
+    {
+        #if (SEARCHLEVEL100_TERACHANCE != 0)
+        if (randVal < SEARCHLEVEL100_TERACHANCE)
+            newTera = TRUE;
+        #endif
+    }
+
+    if (newTera && !gSpeciesInfo[species].forceTeraType)
+    {
+        while (teraType == gSpeciesInfo[species].types[0])
+            teraType = Random() % (NUMBER_OF_MON_TYPES - 1); // Disallow Stellar
+    }
+
+    return teraType;
 }
 
 static u8 DexNavGeneratePotential(u8 searchLevel)
