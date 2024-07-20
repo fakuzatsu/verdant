@@ -1253,6 +1253,8 @@ static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityN
     SetMonData(mon, MON_DATA_ABILITY_NUM, &abilityNum);
     
     //Set Tera Type
+    if (sDexNavSearchDataPtr->hiddenSearch)
+        teraType = Random() % (NUMBER_OF_MON_TYPES - 1);
     SetMonData(mon, MON_DATA_TERA_TYPE, &teraType);
 
     // Set Held Item

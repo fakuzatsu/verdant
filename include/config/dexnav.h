@@ -35,12 +35,12 @@
 #define SEARCHLEVEL50_ABILITYCHANCE     20
 #define SEARCHLEVEL100_ABILITYCHANCE    23
 //Chance of different Tera Types at search levels
-#define SEARCHLEVEL0_TERACHANCE         0
+#define SEARCHLEVEL0_TERACHANCE         1
 #define SEARCHLEVEL5_TERACHANCE         7
 #define SEARCHLEVEL10_TERACHANCE        14
-#define SEARCHLEVEL25_TERACHANCE        20
-#define SEARCHLEVEL50_TERACHANCE        26
-#define SEARCHLEVEL100_TERACHANCE       30
+#define SEARCHLEVEL25_TERACHANCE        21
+#define SEARCHLEVEL50_TERACHANCE        28
+#define SEARCHLEVEL100_TERACHANCE       32
 //Chance of encountering held item
 #define SEARCHLEVEL0_ITEM               0
 #define SEARCHLEVEL5_ITEM               0
