@@ -18,6 +18,7 @@
 #include "gpu_regs.h"
 #include "graphics.h"
 #include "item.h"
+#include "item_menu.h"
 #include "international_string_util.h"
 #include "m4a.h"
 #include "map_name_popup.h"
@@ -2349,6 +2350,16 @@ static void DexNavGuiInit(MainCallback callback)
     sDexNavUiDataPtr->state = 0;
     sDexNavUiDataPtr->savedCallback = callback;
     SetMainCallback2(DexNav_RunSetup);
+}
+
+void DexNavInit_ReturnToField(void)
+{
+    DexNavGuiInit(CB2_ReturnToField);
+}
+
+void DexNavInit_ReturnToBag(void)
+{
+    DexNavGuiInit(CB2_BagMenuFromStartMenu);
 }
 
 void Task_OpenDexNavFromStartMenu(u8 taskId)

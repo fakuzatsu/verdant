@@ -223,7 +223,7 @@ void NewGameInitData(void)
     ResetContestLinkResults();
     SetRandomiserSeed();
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    memset(gSaveBlock1Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock1Ptr->dexNavSearchLevels));
+    memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
 }

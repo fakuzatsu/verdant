@@ -73,6 +73,8 @@ void ResetDexNavSearch(void);
 bool8 TryFindHiddenPokemon(void);
 bool8 DexNavTryMakeShinyMon(void);
 void IncrementDexNavChain(void);
+void DexNavInit_ReturnToField(void);
+void DexNavInit_ReturnToBag(void);
 
 //ewram
 extern bool8 gDexnavBattle;

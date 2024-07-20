@@ -14753,11 +14753,28 @@ const struct Item gItemsInfo[] =
             "A special rare candy\n"
             "that never seems to\n"
             "run out."),
+        .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
         .effect = gItemEffect_RareCandy,
         .iconPic = gItemIcon_InfiniteCandy,
         .iconPalette = gItemIconPalette_InfiniteCandy,
+    },
+
+    [ITEM_DEX_NAV] =
+    {
+        .name = _("DexNav"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy device for\n"
+            "keeping track of and\n"
+            "finding Pokémon."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_DexNav,
+        .iconPic = gItemIcon_TMCase,
+        .iconPalette = gItemIconPalette_TMCase,
     },
 };

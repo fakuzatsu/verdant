@@ -9,6 +9,7 @@
 #include "bike.h"
 #include "coins.h"
 #include "data.h"
+#include "dexnav.h"
 #include "event_data.h"
 #include "event_object_lock.h"
 #include "event_object_movement.h"
@@ -961,6 +962,40 @@ void ItemUseOutOfBattle_TmCase(u8 taskId)
         gFieldCallback = FieldCB_ReturnToFieldNoScript; //FieldCB_ReturnToFieldNoScript
         FadeScreen(FADE_TO_BLACK, 0);
         gTasks[taskId].func = Task_InitTMCaseFromField;
+    }
+}
+
+static void CB2_OpenDexNavOnField(void)
+{
+    DexNavInit_ReturnToField();
+}
+
+static void Task_InitDexNavFromField(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        DexNavInit_ReturnToField();
+        DestroyTask(taskId);
+    }
+}
+
+void ItemUseOutOfBattle_DexNav(u8 taskId)
+{
+    if (MenuHelpers_IsLinkActive() == TRUE) // link func
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+    else if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
+    {
+        gBagMenu->newScreenCallback = CB2_OpenDexNavOnField;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else
+    {
+        gFieldCallback = FieldCB_ReturnToFieldNoScript; //FieldCB_ReturnToFieldNoScript
+        FadeScreen(FADE_TO_BLACK, 0);
+        gTasks[taskId].func = Task_InitDexNavFromField;
     }
 }
 
