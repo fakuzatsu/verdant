@@ -462,3 +462,6 @@ const u16 gObjectEventPal_StrangeBall[] = INCBIN_U16("graphics/object_events/pic
 const u16 gObjectEventPal_Light[] = INCBIN_U16("graphics/object_events/palettes/light.gbapal");
 const u16 gObjectEventPal_Light2[] = INCBIN_U16("graphics/object_events/palettes/light2.gbapal");
 const u16 gObjectEventPal_NeonLight[] = INCBIN_U16("graphics/object_events/palettes/neon_light.gbapal");
+
+const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");
+const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");

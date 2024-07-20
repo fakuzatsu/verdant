@@ -154,3 +154,4 @@
 	.include "src/pokedex_plus_hgss.o"
 	.include "src/tm_case.o"
 	.include "src/option_plus_menu.o"
+	.include "src/dexnav.o"

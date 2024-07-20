@@ -1100,3 +1100,6 @@ EventScript_VsSeekerChargingDone::
 	.include "data/scripts/hidden_grottos.inc"
 	.include "data/maps/Grotto01/scripts.inc"
 	.include "data/maps/Grotto02/scripts.inc"
+
+    .include "data/scripts/dexnav.inc"
+    
