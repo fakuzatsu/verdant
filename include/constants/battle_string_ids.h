@@ -713,7 +713,11 @@
 #define STRINGID_FOGLIFTED                            711
 #define STRINGID_PKMNMADESHELLGLEAM                   712
 
-#define BATTLESTRINGS_COUNT                           713
+#define STRINGID_EXPANSION_END                        (STRINGID_PKMNMADESHELLGLEAM + 1)
+
+#define STRINGID_PLAYERWHITEOUT3                      STRINGID_EXPANSION_END
+
+#define BATTLESTRINGS_COUNT                           (STRINGID_PLAYERWHITEOUT3 + 1)
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,
