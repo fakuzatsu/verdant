@@ -1493,7 +1493,7 @@ static void Task_PrepareToGiveExpWithExpBar(u8 taskId)
 
 static void Task_GiveExpWithExpBar(u8 taskId)
 {
-    u32 level, expAfterGain = 0;
+    u32 level, expAfterGain;
     u16 species;
     s32 currExp, expOnNextLvl, newExpPoints;
 
@@ -1517,6 +1517,7 @@ static void Task_GiveExpWithExpBar(u8 taskId)
             species = GetMonData(&gPlayerParty[monId], MON_DATA_SPECIES);
             expOnNextLvl = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1];
 
+            expAfterGain = currExp + gainedExp;
             if (expAfterGain >= expOnNextLvl)
             {
                 bool32 combineLevelUpMessages = (B_LEVEL_UP_NOTIFICATION >= GEN_9);
