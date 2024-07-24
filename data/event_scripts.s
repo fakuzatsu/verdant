@@ -1103,3 +1103,9 @@ EventScript_VsSeekerChargingDone::
 
     .include "data/scripts/dexnav.inc"
     
+
+	.include "data/maps/Grotto03/scripts.inc"
+
+	.include "data/maps/Grotto04/scripts.inc"
+
+	.include "data/maps/Grotto05/scripts.inc"

@@ -4434,7 +4434,7 @@
     {
       "id": "LAYOUT_GROTTO01",
       "name": "Grotto01_Layout",
-      "width": 13,
+      "width": 16,
       "height": 16,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Rustboro",
@@ -4444,12 +4444,42 @@
     {
       "id": "LAYOUT_GROTTO02",
       "name": "Grotto02_Layout",
-      "width": 13,
+      "width": 12,
       "height": 16,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto02/border.bin",
       "blockdata_filepath": "data/layouts/Grotto02/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO03",
+      "name": "Grotto03_Layout",
+      "width": 19,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto03/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto03/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO04",
+      "name": "Grotto04_Layout",
+      "width": 17,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto04/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto04/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO05",
+      "name": "Grotto05_Layout",
+      "width": 16,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto05/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto05/map.bin"
     }
   ]
 }

@@ -11,9 +11,9 @@ static const struct Grotto sHiddenGrottos[] =
 {
     {MAP_NUM(GROTTO01), MAP_GROUP(GROTTO01)},
     {MAP_NUM(GROTTO02), MAP_GROUP(GROTTO02)},
-    //{MAP_NUM(GROTTO03), MAP_GROUP(GROTTO03)},
-    //{MAP_NUM(GROTTO04), MAP_GROUP(GROTTO04)},
-    //{MAP_NUM(GROTTO05), MAP_GROUP(GROTTO05)},
+    {MAP_NUM(GROTTO03), MAP_GROUP(GROTTO03)},
+    {MAP_NUM(GROTTO04), MAP_GROUP(GROTTO04)},
+    {MAP_NUM(GROTTO05), MAP_GROUP(GROTTO05)},
     //{MAP_NUM(GROTTO06), MAP_GROUP(GROTTO06)},
     //{MAP_NUM(GROTTO07), MAP_GROUP(GROTTO07)},
     //{MAP_NUM(GROTTO08), MAP_GROUP(GROTTO08)},
@@ -78,8 +78,8 @@ void GetGrottoWarp(void)
 
 void GetGrottoReturnWarp(void)
 {
-    if ((gSaveBlock1Ptr->location.mapGroup >= MAP_GROUP(GROTTO01) && gSaveBlock1Ptr->location.mapGroup <= MAP_GROUP(GROTTO02))
-        && (gSaveBlock1Ptr->location.mapNum >= MAP_NUM(GROTTO01) && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(GROTTO02)))
+    if ((gSaveBlock1Ptr->location.mapGroup >= MAP_GROUP(GROTTO01) && gSaveBlock1Ptr->location.mapGroup <= MAP_GROUP(GROTTO05))
+        && (gSaveBlock1Ptr->location.mapNum >= MAP_NUM(GROTTO01) && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(GROTTO05)))
     {
         u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
         SetDynamicWarp(0, sHiddenGrottoEntrances[var].mapGroup, sHiddenGrottoEntrances[var].mapNum, sHiddenGrottoEntrances[var].warpId);
