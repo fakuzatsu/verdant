@@ -25,6 +25,7 @@
 #include "overworld.h"
 #include "mail.h"
 #include "battle_records.h"
+#include "hidden_grottos.h"
 #include "item.h"
 #include "pokedex.h"
 #include "apprentice.h"
@@ -222,6 +223,7 @@ void NewGameInitData(void)
     ResetTrainerHillResults();
     ResetContestLinkResults();
     SetRandomiserSeed();
+    SetGrottoSeed();
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
     memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
 #endif

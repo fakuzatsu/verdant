@@ -4906,13 +4906,21 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem, s
 
 bool8 IsMonPastEvolutionLevel(struct Pokemon *mon)
 {
-    int i;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, 0);
+    if (GetSpeciesEvolutionStageAtLevel(species, level, FALSE) != species)
+        return TRUE;
+    return FALSE;
+}
+
+u16 GetSpeciesEvolutionStageAtLevel(u16 species, u8 level, bool8 otherMethods)
+{
+    int i, j = 0;
     const struct Evolution *evolutions = GetSpeciesEvolutions(species);
+    bool8 hasGenderEvo = FALSE;
 
     if (evolutions == NULL)
-        return FALSE;
+        return species;
 
     for (i = 0; evolutions[i].method != EVOLUTIONS_END; i++)
     {
@@ -4923,12 +4931,30 @@ bool8 IsMonPastEvolutionLevel(struct Pokemon *mon)
         {
         case EVO_LEVEL:
             if (evolutions[i].param <= level)
-                return TRUE;
+                return GetSpeciesEvolutionStageAtLevel(evolutions[i].targetSpecies, level, TRUE);
+            break;
+        case EVO_LEVEL_FEMALE:
+        case EVO_LEVEL_MALE:
+        case EVO_RECOIL_DAMAGE_FEMALE:
+        case EVO_RECOIL_DAMAGE_MALE:
+            if (!hasGenderEvo && otherMethods)
+            {
+                hasGenderEvo = TRUE;
+                break;
+            }
+            else if (otherMethods)
+            {
+                hasGenderEvo = FALSE;
+                j = Random() % 2;
+            }
+        default:
+            if (otherMethods && level > 40)
+                return GetSpeciesEvolutionStageAtLevel(evolutions[i - j].targetSpecies, level, FALSE);
             break;
         }
     }
 
-    return FALSE;
+    return species;
 }
 
 u16 NationalPokedexNumToSpecies(u16 nationalNum)

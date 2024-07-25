@@ -27,6 +27,7 @@ struct GrottoEntrance
 void GetGrottoWarp(void);
 void GetGrottoReturnWarp(void);
 void SetGrottoWarp(void);
+void SetGrottoSeed(void);
 void ClearGrottoVars(void);
 bool32 IsPlayerInAGrotto(void);
 u8 GetCurrentGrottoEscapeWarp(void);

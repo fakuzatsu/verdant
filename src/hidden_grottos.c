@@ -5,6 +5,7 @@
 #include "hidden_grottos.h"
 #include "level_caps.h"
 #include "overworld.h"
+#include "pokemon.h"
 #include "random.h"
 #include "wild_encounter.h"
 #include "constants/maps.h"
@@ -260,6 +261,11 @@ void SetGrottoWarp(void)
     }
 }
 
+void SetGrottoSeed(void)
+{
+    gSaveBlock3Ptr->grottoSeed = Random32();
+}
+
 void ClearGrottoVars(void)
 {
     for (u32 i = GROTTO_VARS_START; i <= GROTTO_VARS_END; ++i)
@@ -289,7 +295,7 @@ u8 GetHiddenGrottoEncounterChance(void)
 struct WildPokemon *GetHiddenGrottoLandEncounters(void) 
 {
     static struct WildPokemon wildPokemonArray[LAND_WILD_COUNT];
-    u32 seed = gSaveBlock3Ptr->GrottoSeed;
+    u32 seed = gSaveBlock3Ptr->grottoSeed;
     u32 j = (gMapHeader.mapLayoutId * seed) & 1;
 
     u32 level = GetCurrentLevelCap(TRUE) / 2;
@@ -297,9 +303,9 @@ struct WildPokemon *GetHiddenGrottoLandEncounters(void)
     for (u32 i = 0; i < LAND_WILD_COUNT; i++)
     {
         u32 speciesNum = ((gMapHeader.mapLayoutId << sLandDistribution[i][j]) * seed) % NUM_GROTTO_LAND_SPECIES;
-        wildPokemonArray[i].species = sLandEncounters[speciesNum];
-        wildPokemonArray[i].minLevel = level - 1;
-        wildPokemonArray[i].maxLevel = level + 1;
+        wildPokemonArray[i].species = GetSpeciesEvolutionStageAtLevel(sLandEncounters[speciesNum], level - 1, TRUE);
+        wildPokemonArray[i].minLevel = level;
+        wildPokemonArray[i].maxLevel = level + 2;
     }
 
     return wildPokemonArray;
@@ -308,16 +314,16 @@ struct WildPokemon *GetHiddenGrottoLandEncounters(void)
 struct WildPokemon *GetHiddenGrottoWaterEncounters(void) 
 {
     static struct WildPokemon wildPokemonArray[WATER_WILD_COUNT];
-    u32 seed = gSaveBlock3Ptr->GrottoSeed;
+    u32 seed = gSaveBlock3Ptr->grottoSeed;
 
     u32 level = GetCurrentLevelCap(TRUE) / 2;
 
     for (u32 i = 0; i < WATER_WILD_COUNT; i++)
     {
         u32 speciesNum = ((gMapHeader.mapLayoutId << sWaterDistribution[i]) * seed) % NUM_GROTTO_WATER_SPECIES;
-        wildPokemonArray[i].species = sWaterEncounters[speciesNum];
-        wildPokemonArray[i].minLevel = level - 1;
-        wildPokemonArray[i].maxLevel = level + 1;
+        wildPokemonArray[i].species = GetSpeciesEvolutionStageAtLevel(sWaterEncounters[speciesNum], level - 1, TRUE);
+        wildPokemonArray[i].minLevel = level;
+        wildPokemonArray[i].maxLevel = level + 2;
     }
 
     return wildPokemonArray;

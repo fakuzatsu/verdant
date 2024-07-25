@@ -39,6 +39,7 @@ EventScript_PkmnCenterNurse_TakeAndHealPkmn::
 	waitmovement 0
 	special HealPlayerParty
 	callnative UpdateFollowingPokemon
+	special SetLevelCapByFlag
 	return
 
 EventScript_PkmnCenterNurse_CheckTrainerHillAndUnionRoom::
