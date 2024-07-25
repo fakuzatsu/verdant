@@ -9,7 +9,7 @@ static const u32 sLevelCapFlagMap[][2] =
     {FLAG_BADGE01_GET, 16},
     {FLAG_BADGE02_GET, 24},
     {FLAG_BADGE03_GET, 32},
-    {FLAG_BADGE04_GET, 39},
+    {FLAG_BADGE04_GET, 38},
     {FLAG_BADGE05_GET, 40},
     {FLAG_BADGE06_GET, 46},
     {FLAG_BADGE07_GET, 56},
@@ -17,11 +17,11 @@ static const u32 sLevelCapFlagMap[][2] =
     {FLAG_IS_CHAMPION, 80},
 };
 
-u32 GetCurrentLevelCap(void)
+u32 GetCurrentLevelCap(bool8 skipOptionCheck)
 {
     u32 i;
 
-    if (gSaveBlock2Ptr->optionsLevelCap)
+    if (gSaveBlock2Ptr->optionsLevelCap || skipOptionCheck)
     {
         i = VarGet(B_LEVEL_CAP_VARIABLE);
         return (i != 0) ? i : MAX_LEVEL;
@@ -36,7 +36,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     static const u32 sExpScalingUp[5]   = { 16, 8, 4, 2, 1 };
 
     u32 levelDifference;
-    u32 currentLevelCap = GetCurrentLevelCap();
+    u32 currentLevelCap = GetCurrentLevelCap(FALSE);
 
     if (!gSaveBlock2Ptr->optionsLevelCap)
         return expValue;
@@ -74,7 +74,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     }
 }
 
-u16 SetLevelCapByFlag(void)
+u8 SetLevelCapByFlag(void)
 {
     u32 i;
 
@@ -91,7 +91,7 @@ u16 SetLevelCapByFlag(void)
     return MAX_LEVEL;
 }
 
-u16 SetLevelCapForFrontier(void)
+u8 SetLevelCapForFrontier(void)
 {
     VarSet(B_LEVEL_CAP_VARIABLE, 50);
     return TRUE;

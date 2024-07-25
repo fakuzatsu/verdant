@@ -1,4 +1,5 @@
 #include "global.h"
+#include "malloc.h"
 #include "wild_encounter.h"
 #include "pokemon.h"
 #include "metatile_behavior.h"
@@ -6,6 +7,7 @@
 #include "random.h"
 #include "field_player_avatar.h"
 #include "field_weather.h"
+#include "hidden_grottos.h"
 #include "event_data.h"
 #include "safari_zone.h"
 #include "overworld.h"
@@ -645,6 +647,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
 {
     u16 headerId;
     struct Roamer *roamer;
+    struct WildPokemonInfo wildPokemonInfo;
 
     if (sWildEncountersDisabled == TRUE)
         return FALSE;
@@ -652,6 +655,31 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
     headerId = GetCurrentMapWildMonHeaderId();
     if (headerId == HEADER_NONE)
     {
+        if (IsPlayerInAGrotto()) {
+            if (prevMetatileBehavior != curMetatileBehavior && !AllowWildCheckOnNewMetatile())
+                return FALSE;
+            else if (WildEncounterCheck(GetHiddenGrottoEncounterChance(), FALSE) != TRUE)
+                return FALSE;
+
+            wildPokemonInfo.encounterRate = GetHiddenGrottoEncounterChance();
+
+            if (MetatileBehavior_IsLandWildEncounter(curMetatileBehavior) == TRUE) {
+                wildPokemonInfo.wildPokemon = GetHiddenGrottoLandEncounters();
+                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_LAND, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) {
+                    BattleSetup_StartWildBattle();
+                    return TRUE;
+                }
+            } else if (MetatileBehavior_IsWaterWildEncounter(curMetatileBehavior) == TRUE) {
+                wildPokemonInfo.wildPokemon = GetHiddenGrottoWaterEncounters();
+                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_WATER, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) {
+                    gIsSurfingEncounter = TRUE;
+                    BattleSetup_StartWildBattle();
+                    return TRUE;
+                }
+            }
+
+            return FALSE;
+        }
         if (gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS)
         {
             headerId = GetBattlePikeWildMonHeaderId();

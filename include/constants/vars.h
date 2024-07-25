@@ -266,7 +266,7 @@
 #define GROTTO_VARS_START                                VAR_HIDDEN_GROTTO_ROUTE_103
 
 // grotto vars
-// They area cleared on the turn of the day.
+// They are cleared on the turn of the day.
 #define VAR_HIDDEN_GROTTO_ROUTE_103                      0x40F5
 #define VAR_HIDDEN_GROTTO_ROUTE_104                      0x40F6
 #define VAR_HIDDEN_GROTTO_ROUTE_112                      0x40F7
@@ -277,10 +277,11 @@
 #define VAR_HIDDEN_GROTTO_ROUTE_120                      0x40FC
 #define VAR_HIDDEN_GROTTO_ROUTE_121                      0x40FD
 #define VAR_HIDDEN_GROTTO_ROUTE_123                      0x40FE
-#define VAR_HIDDEN_GROTTO_RETURN_WARP                    0x40FF
 
-#define GROTTO_VARS_END                                  VAR_HIDDEN_GROTTO_RETURN_WARP
+#define GROTTO_VARS_END                                  VAR_HIDDEN_GROTTO_ROUTE_123
 #define GROTTO_VARS_COUNT                                (GROTTO_VARS_END - GROTTO_VARS_START + 1)
+
+#define VAR_HIDDEN_GROTTO_RETURN_WARP                    0x40FF
 
 #define VARS_END                                         0x40FF
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)

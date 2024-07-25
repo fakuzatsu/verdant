@@ -1,9 +1,12 @@
 #include "global.h"
+#include "malloc.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
 #include "hidden_grottos.h"
+#include "level_caps.h"
 #include "overworld.h"
 #include "random.h"
+#include "wild_encounter.h"
 #include "constants/maps.h"
 #include "constants/vars.h"
 
@@ -52,6 +55,131 @@ static const struct GrottoEntrance sHiddenGrottoEntrances[] = {
     {MAP_NUM(ROUTE120), MAP_GROUP(ROUTE120), VAR_HIDDEN_GROTTO_ROUTE_120, 2},
     {MAP_NUM(ROUTE121), MAP_GROUP(ROUTE121), VAR_HIDDEN_GROTTO_ROUTE_121, 1},
     {MAP_NUM(ROUTE123), MAP_GROUP(ROUTE123), VAR_HIDDEN_GROTTO_ROUTE_123, 1},
+};
+
+static const u16 sLandEncounters[NUM_GROTTO_LAND_SPECIES] = {
+    SPECIES_PATRAT,
+    SPECIES_YUNGOOS,
+    SPECIES_NIDORAN_F,
+    SPECIES_NIDORAN_M,
+    SPECIES_SNUBBULL,
+    SPECIES_PUMPKABOO,
+    SPECIES_HONEDGE,
+    SPECIES_PACHIRISU,
+    SPECIES_SKWOVET,
+    SPECIES_SEWADDLE,
+    SPECIES_ELECTRIKE,
+    SPECIES_TAROUNTULA,
+    SPECIES_BLITZLE,
+    SPECIES_KOMALA,
+    SPECIES_BIDOOF,
+    SPECIES_BUNNELBY,
+    SPECIES_VENONAT,
+    SPECIES_LOTAD,
+    SPECIES_INDEEDEE,
+    SPECIES_MORELULL,
+    SPECIES_FOONGUS,
+    SPECIES_PURRLOIN,
+    SPECIES_NYMBLE,
+    SPECIES_MINCCINO,
+    SPECIES_MUNNA,
+    SPECIES_KLEFKI,
+    SPECIES_WOOBAT,
+    SPECIES_DUNSPARCE,
+    SPECIES_NOSEPASS,
+    SPECIES_SHROODLE,
+    SPECIES_ZANGOOSE,
+    SPECIES_SEVIPER,
+    SPECIES_PAWNIARD,
+    SPECIES_CUBCHOO,
+    SPECIES_FLETCHLING,
+    SPECIES_GRIMER,
+    SPECIES_TRUBBISH,
+    SPECIES_BOUNSWEET,
+    SPECIES_BOUFFALANT,
+    SPECIES_MAUSHOLD,
+    SPECIES_FALINKS,
+    SPECIES_TANGELA,
+    SPECIES_SKORUPI,
+    SPECIES_HATENNA,
+    SPECIES_DRIFLOON,
+    SPECIES_GOLETT,
+    SPECIES_GLIMMET,
+    SPECIES_CUTIEFLY,
+    SPECIES_APPLIN,
+    SPECIES_CHATOT,
+    SPECIES_MIENFOO,
+    SPECIES_IMPIDIMP,
+    SPECIES_GLIGAR,
+    SPECIES_MURKROW,
+    SPECIES_SMOLIV,
+    SPECIES_NICKIT,
+    SPECIES_ESPURR,
+    SPECIES_PHANTUMP,
+    SPECIES_CLEFAIRY,
+    SPECIES_PIKIPEK,
+    SPECIES_SNEASEL,
+    SPECIES_VULPIX,
+    SPECIES_WATTREL,
+    SPECIES_BRONZOR,
+    SPECIES_SWABLU,
+    SPECIES_TOXEL,
+    SPECIES_STUNKY,
+    SPECIES_FOMANTIS,
+    SPECIES_GLAMEOW,
+};
+
+static const u16 sWaterEncounters[NUM_GROTTO_WATER_SPECIES] = {
+    SPECIES_POLIWAG,
+    SPECIES_SURSKIT,
+    SPECIES_BASCULIN_RED_STRIPED,
+    SPECIES_BASCULIN_BLUE_STRIPED,
+    SPECIES_BASCULIN_WHITE_STRIPED,
+    SPECIES_DUCKLETT,
+    SPECIES_TADBULB,
+    SPECIES_REMORAID,
+    SPECIES_BUIZEL,
+    SPECIES_TYMPOLE,
+    SPECIES_YANMA,
+    SPECIES_PSYDUCK,
+    SPECIES_ARROKUDA,
+    SPECIES_LOTAD,
+    SPECIES_DEWPIDER,
+    SPECIES_CRAMORANT,
+    SPECIES_CLOBBOPUS,
+    SPECIES_LAPRAS,
+    SPECIES_MARILL,
+    SPECIES_FLAMIGO,
+};
+
+static const u8 sLandDistribution[LAND_WILD_COUNT][2] = {
+    // SPECIES_1 = 30% || SPECIES_1 = 24%
+    // SPECIES_2 = 26% || SPECIES_2 = 20%
+    // SPECIES_3 = 26% || SPECIES_3 = 20%
+    // SPECIES_4 = 18% || SPECIES_4 = 20%
+    // SPECIES_5 = 0%  || SPECIES_5 = 16%
+    {SPECIES_1, SPECIES_1}, // 20%
+    {SPECIES_2, SPECIES_2}, // 20%
+    {SPECIES_1, SPECIES_3}, // 10%
+    {SPECIES_3, SPECIES_3}, // 10%
+    {SPECIES_3, SPECIES_4}, // 10%
+    {SPECIES_4, SPECIES_5}, // 10%
+    {SPECIES_2, SPECIES_4}, // 5%
+    {SPECIES_3, SPECIES_5}, // 5%
+    {SPECIES_4, SPECIES_1}, // 4%
+    {SPECIES_4, SPECIES_4}, // 4%
+    {SPECIES_2, SPECIES_4}, // 1%
+    {SPECIES_3, SPECIES_5}, // 1%
+};
+
+static const u8 sWaterDistribution[WATER_WILD_COUNT] = {
+    // SPECIES_1 = 60
+    // SPECIES_2 = 40
+    SPECIES_1,
+    SPECIES_2,
+    SPECIES_2,
+    SPECIES_2,
+    SPECIES_2,
 };
 
 static u8 FindExistingGrottoWarp(void)
@@ -151,4 +279,46 @@ u8 GetCurrentGrottoEscapeWarp(void)
 {
     u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
     return sHiddenGrottoEntrances[var].warpId;
+}
+
+u8 GetHiddenGrottoEncounterChance(void)
+{
+    return 10; // To be expanded upon
+}
+
+struct WildPokemon *GetHiddenGrottoLandEncounters(void) 
+{
+    static struct WildPokemon wildPokemonArray[LAND_WILD_COUNT];
+    u32 seed = gSaveBlock3Ptr->GrottoSeed;
+    u32 j = (gMapHeader.mapLayoutId * seed) & 1;
+
+    u32 level = GetCurrentLevelCap(TRUE) / 2;
+
+    for (u32 i = 0; i < LAND_WILD_COUNT; i++)
+    {
+        u32 speciesNum = ((gMapHeader.mapLayoutId << sLandDistribution[i][j]) * seed) % NUM_GROTTO_LAND_SPECIES;
+        wildPokemonArray[i].species = sLandEncounters[speciesNum];
+        wildPokemonArray[i].minLevel = level - 1;
+        wildPokemonArray[i].maxLevel = level + 1;
+    }
+
+    return wildPokemonArray;
+}
+
+struct WildPokemon *GetHiddenGrottoWaterEncounters(void) 
+{
+    static struct WildPokemon wildPokemonArray[WATER_WILD_COUNT];
+    u32 seed = gSaveBlock3Ptr->GrottoSeed;
+
+    u32 level = GetCurrentLevelCap(TRUE) / 2;
+
+    for (u32 i = 0; i < WATER_WILD_COUNT; i++)
+    {
+        u32 speciesNum = ((gMapHeader.mapLayoutId << sWaterDistribution[i]) * seed) % NUM_GROTTO_WATER_SPECIES;
+        wildPokemonArray[i].species = sWaterEncounters[speciesNum];
+        wildPokemonArray[i].minLevel = level - 1;
+        wildPokemonArray[i].maxLevel = level + 1;
+    }
+
+    return wildPokemonArray;
 }
