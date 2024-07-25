@@ -11,8 +11,14 @@ Route103_OnTransition:
 	end
 
 Route103_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_103, 0, Route103_EventScript_CloseGrotto
 	call_if_set FLAG_SYS_GAME_CLEAR, Route103_EventScript_OpenAlteringCave
 	end
+
+Route103_EventScript_CloseGrotto::
+	setmetatile 9, 4, METATILE_General_Grass, FALSE
+	setmetatile 10, 4, METATILE_General_Grass, FALSE
+	return
 
 Route103_EventScript_OpenAlteringCave::
 	setmetatile 45, 5, METATILE_General_CaveEntrance_Top, TRUE
