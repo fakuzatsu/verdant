@@ -8,8 +8,6 @@
 #include "pokemon.h"
 #include "random.h"
 #include "wild_encounter.h"
-#include "constants/maps.h"
-#include "constants/vars.h"
 
 static const struct Grotto sHiddenGrottos[] =
 {
@@ -18,9 +16,9 @@ static const struct Grotto sHiddenGrottos[] =
     {MAP_NUM(GROTTO03), MAP_GROUP(GROTTO03)},
     {MAP_NUM(GROTTO04), MAP_GROUP(GROTTO04)},
     {MAP_NUM(GROTTO05), MAP_GROUP(GROTTO05)},
-    //{MAP_NUM(GROTTO06), MAP_GROUP(GROTTO06)},
-    //{MAP_NUM(GROTTO07), MAP_GROUP(GROTTO07)},
-    //{MAP_NUM(GROTTO08), MAP_GROUP(GROTTO08)},
+    {MAP_NUM(GROTTO06), MAP_GROUP(GROTTO06)},
+    {MAP_NUM(GROTTO07), MAP_GROUP(GROTTO07)},
+    {MAP_NUM(GROTTO08), MAP_GROUP(GROTTO08)},
     //{MAP_NUM(GROTTO09), MAP_GROUP(GROTTO09)},
     //{MAP_NUM(GROTTO10), MAP_GROUP(GROTTO10)},
     //{MAP_NUM(GROTTO11), MAP_GROUP(GROTTO11)},

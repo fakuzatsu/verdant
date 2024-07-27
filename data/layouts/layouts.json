@@ -4500,6 +4500,16 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto07/border.bin",
       "blockdata_filepath": "data/layouts/Grotto07/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO08",
+      "name": "Grotto08_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto08/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto08/map.bin"
     }
   ]
 }
