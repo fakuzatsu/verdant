@@ -4480,6 +4480,26 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto05/border.bin",
       "blockdata_filepath": "data/layouts/Grotto05/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO06",
+      "name": "Grotto06_Layout",
+      "width": 20,
+      "height": 19,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto06/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto06/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO07",
+      "name": "Grotto07_Layout",
+      "width": 29,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto07/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto07/map.bin"
     }
   ]
 }
