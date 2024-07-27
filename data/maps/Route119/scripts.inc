@@ -5,7 +5,16 @@
 Route119_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route119_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route119_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route119_OnLoad
 	.byte 0
+
+Route119_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_119, 0, Route119_EventScript_CloseGrotto
+	end
+
+Route119_EventScript_CloseGrotto::
+	setmetatile 5, 96, METATILE_General_Grass, FALSE
+	return
 
 Route119_OnResume:
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route119_EventScript_TryRemoveKecleon

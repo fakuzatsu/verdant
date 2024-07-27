@@ -3,7 +3,16 @@
 
 Route112_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route112_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route112_OnLoad
 	.byte 0
+
+Route112_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_112, 0, Route112_EventScript_CloseGrotto
+	end
+
+Route112_EventScript_CloseGrotto::
+	setmetatile 35, 5, METATILE_General_Grass, FALSE
+	return
 
 Route112_OnTransition:
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE

@@ -268,10 +268,10 @@
 // grotto vars
 // They are cleared on the turn of the day.
 #define VAR_HIDDEN_GROTTO_ROUTE_103                      0x40F5
-#define VAR_HIDDEN_GROTTO_ROUTE_104                      0x40F6
+#define VAR_HIDDEN_GROTTO_PETALBURG_WOODS                0x40F6
 #define VAR_HIDDEN_GROTTO_ROUTE_112                      0x40F7
-#define VAR_HIDDEN_GROTTO_ROUTE_115                      0x40F8
-#define VAR_HIDDEN_GROTTO_ROUTE_116                      0x40F9
+#define VAR_HIDDEN_GROTTO_ROUTE_115                      0x40F8 // Unused
+#define VAR_HIDDEN_GROTTO_ROUTE_116                      0x40F9 // Unused
 #define VAR_HIDDEN_GROTTO_ROUTE_117                      0x40FA
 #define VAR_HIDDEN_GROTTO_ROUTE_119                      0x40FB
 #define VAR_HIDDEN_GROTTO_ROUTE_120                      0x40FC

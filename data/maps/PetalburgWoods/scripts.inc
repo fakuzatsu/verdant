@@ -2,7 +2,17 @@
 .set LOCALID_DEVON_EMPLOYEE, 4
 
 PetalburgWoods_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, PetalburgWoods_OnLoad
 	.byte 0
+
+PetalburgWoods_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_PETALBURG_WOODS, 0, PetalburgWoods_EventScript_CloseGrotto
+	end
+
+PetalburgWoods_EventScript_CloseGrotto::
+	setmetatile 45, 6, METATILE_General_Grass, FALSE
+	setmetatile 46, 6, METATILE_General_Grass, FALSE
+	return
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall

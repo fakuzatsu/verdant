@@ -1,6 +1,15 @@
 Route123_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route123_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route123_OnLoad
 	.byte 0
+
+Route123_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_123, 0, Route123_EventScript_CloseGrotto
+	end
+
+Route123_EventScript_CloseGrotto::
+	setmetatile 75, 1, METATILE_General_Grass, FALSE
+	return
 
 Route123_OnTransition:
 	special SetRoute123Weather

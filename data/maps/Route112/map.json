@@ -268,6 +268,13 @@
       "elevation": 0,
       "dest_map": "MAP_FIERY_PATH",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 35,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
@@ -297,6 +304,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route112_EventScript_RouteSignLavaridge"
+    },
+    {
+      "type": "sign",
+      "x": 35,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Grotto_EventScript_GrottoInteract"
     }
   ],
   "has_night_table": true

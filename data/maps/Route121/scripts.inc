@@ -3,7 +3,17 @@
 .set LOCALID_GRUNT_3, 14
 
 Route121_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, Route121_OnLoad
 	.byte 0
+
+Route121_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_121, 0, Route121_EventScript_CloseGrotto
+	end
+
+Route121_EventScript_CloseGrotto::
+	setmetatile 49, 4, METATILE_General_Grass, FALSE
+	setmetatile 50, 4, METATILE_General_Grass, FALSE
+	return
 
 Route121_EventScript_Woman::
 	msgbox Route121_Text_AheadLoomsMtPyre, MSGBOX_NPC

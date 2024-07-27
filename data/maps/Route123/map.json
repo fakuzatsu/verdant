@@ -592,6 +592,13 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE123_BERRY_MASTERS_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 75,
+      "y": 1,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
@@ -783,8 +790,8 @@
     },
     {
       "type": "hidden_item",
-      "x": 75,
-      "y": 1,
+      "x": 65,
+      "y": 2,
       "elevation": 3,
       "item": "ITEM_SUPER_REPEL",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_123_SUPER_REPEL"
@@ -835,6 +842,14 @@
       "elevation": 3,
       "item": "ITEM_RARE_CANDY",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_123_RARE_CANDY"
+    },
+    {
+      "type": "sign",
+      "x": 75,
+      "y": 0,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Grotto_EventScript_GrottoInteract"
     }
   ],
   "has_night_table": true

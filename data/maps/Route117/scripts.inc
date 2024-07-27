@@ -4,7 +4,16 @@
 
 Route117_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route117_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route117_OnLoad
 	.byte 0
+
+Route117_OnLoad:
+	goto_if_eq VAR_HIDDEN_GROTTO_ROUTE_117, 0, Route117_EventScript_CloseGrotto
+	end
+
+Route117_EventScript_CloseGrotto::
+	setmetatile 9, 1, METATILE_General_Grass, FALSE
+	return
 
 Route117_OnTransition:
 	call Route117_EventScript_TryMoveDayCareMan
