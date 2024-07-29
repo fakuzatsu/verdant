@@ -643,8 +643,9 @@ struct BattleStruct
     u8 battlerPartyOrders[MAX_BATTLERS_COUNT][PARTY_SIZE / 2];
     u8 runTries;
     u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];
-    u8 safariGoNearCounter;
-    u8 safariPkblThrowCounter;
+    u8 safariGoNearCounter:2;
+    u8 safariPkblThrowCounter:2;
+    u8 safariBallThrowCounter:3;
     u8 safariEscapeFactor;
     u8 safariCatchFactor;
     u8 linkBattleVsSpriteId_V; // The letter "V"

@@ -90,8 +90,13 @@ static const u8 sPkblToEscapeFactor[][3] = {
         [B_MSG_MON_IGNORED]    = 0
     }
 };
-static const u8 sGoNearCounterToCatchFactor[] = {4, 3, 2, 1};
-static const u8 sGoNearCounterToEscapeFactor[] = {4, 4, 4, 4};
+const u8 gSafariFleeRate[] = 
+{
+//  0, 1, 2, 3, 4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+    0, 2, 5, 9, 14, 20, 27, 34, 41, 48, 54, 60, 65, 69, 73, 77, 80, 83, 86, 88, 90
+};
+static const u8 sGoNearCounterToCatchFactor[]  = {4, 3, 3, 2};
+static const u8 sGoNearCounterToEscapeFactor[] = {3, 3, 4, 4};
 
 static u8 CalcBeatUpPower(void)
 {
@@ -597,6 +602,10 @@ void HandleAction_SafariZoneBallThrow(void)
     gBattle_BG0_Y = 0;
     gNumSafariBalls--;
     gLastUsedItem = ITEM_SAFARI_BALL;
+    if (gBattleStruct->safariBallThrowCounter < 4)
+    gBattleStruct->safariBallThrowCounter++;
+    if (gBattleStruct->safariEscapeFactor < 20)
+        gBattleStruct->safariEscapeFactor += gBattleStruct->safariBallThrowCounter;
     gBattlescriptCurrInstr = BattleScript_SafariBallThrow;
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
