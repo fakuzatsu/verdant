@@ -3118,7 +3118,10 @@ static void BattleStartClearSetData(void)
     gBattleStruct->givenExpMons = 0;
     gBattleStruct->palaceFlags = 0;
 
-    gBattleResults.shinyWildMon = IsMonShiny(&gEnemyParty[0]);
+    i = IsMonShiny(&gEnemyParty[0]);
+
+    gBattleStruct->safariEscapeFactor -= i;
+    gBattleResults.shinyWildMon = i;
 
     gBattleStruct->arenaLostPlayerMons = 0;
     gBattleStruct->arenaLostOpponentMons = 0;
