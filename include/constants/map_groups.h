@@ -580,6 +580,7 @@
 #define MAP_NAVEL_ROCK_BOTTOM                               (87 | (26 << 8))
 #define MAP_TRAINER_HILL_ELEVATOR                           (88 | (26 << 8))
 #define MAP_BATTLE_FRONTIER_POKEMON_CENTER_B1F              (89 | (26 << 8))
+#define MAP_SAFARI_ZONE_NORTHEASTER                         (90 | (26 << 8))
 
 // gMapGroup_IndoorRoute104Prototype
 #define MAP_ROUTE104_PROTOTYPE                          (0 | (27 << 8))

@@ -4510,6 +4510,16 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto08/border.bin",
       "blockdata_filepath": "data/layouts/Grotto08/map.bin"
+    },
+    {
+      "id": "LAYOUT_SAFARI_ZONE_NORTHEASTER",
+      "name": "SafariZone_Northeaster_Layout",
+      "width": 21,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lilycove",
+      "border_filepath": "data/layouts/SafariZone_Northeaster/border.bin",
+      "blockdata_filepath": "data/layouts/SafariZone_Northeaster/map.bin"
     }
   ]
 }

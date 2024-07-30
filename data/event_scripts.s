@@ -1115,3 +1115,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Grotto07/scripts.inc"
 
 	.include "data/maps/Grotto08/scripts.inc"
+
+	.include "data/maps/SafariZone_Northeaster/scripts.inc"

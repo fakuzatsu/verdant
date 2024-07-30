@@ -609,7 +609,8 @@
     "NavelRock_Down11",
     "NavelRock_Bottom",
     "TrainerHill_Elevator",
-    "BattleFrontier_PokemonCenter_B1F"
+    "BattleFrontier_PokemonCenter_B1F",
+    "SafariZone_Northeaster"
   ],
   "gMapGroup_IndoorRoute104Prototype": [
     "Route104_Prototype",
