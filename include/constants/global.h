@@ -156,6 +156,10 @@
 #define OPTIONS_LEVEL_CAPS_SOFT 1
 #define OPTIONS_LEVEL_CAPS_HARD 2
 
+#define OPTIONS_DRAFT_BO3_OFF 0
+#define OPTIONS_DRAFT_ON 1
+#define OPTIONS_DRAFT_BO3_ON 2
+
 #define DIR_NONE        0
 #define DIR_SOUTH       1
 #define DIR_NORTH       2

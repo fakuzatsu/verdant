@@ -1,7 +1,9 @@
 RustboroCity_Gym_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, EventScript_OnTransition_ClearBestOfThreeVars
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
+	trybestofthree TRAINER_ROXANNE_1
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
@@ -178,7 +180,7 @@ RustboroCity_Gym_Text_MarcPostBattle:
 	.string "It took smarts and sense for her to\n"
 	.string "pick the ROCK type at her young age.$"
 
-RustboroCity_Gym_Text_RoxanneIntro:
+RustboroCity_Gym_Text_RoxanneIntro::
 	.string "Hello, I am ROXANNE, the RUSTBORO\n"
 	.string "POKéMON GYM LEADER.\p"
 	.string "I became a GYM LEADER so that I might\n"
@@ -187,7 +189,16 @@ RustboroCity_Gym_Text_RoxanneIntro:
 	.string "Would you kindly demonstrate how you\n"
 	.string "battle, and with which POKéMON?$"
 
-RustboroCity_Gym_Text_RoxanneDefeat:
+RustboroCity_Gym_Text_RoxanneMatchDefeat::
+	.string "Great battling!\p"
+	.string "I may have lost, but I got the chance\n"
+	.string "to analyse your team futher.$"
+
+RustboroCity_Gym_Text_RoxanneContinue::
+	.string "Are you ready for our next round?\n"
+	.string "I'll win this one for sure!$"
+
+RustboroCity_Gym_Text_RoxanneDefeat::
 	.string "So…\n"
 	.string "I lost…\p"
 	.string "It seems that I still have much more\n"

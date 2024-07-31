@@ -581,6 +581,7 @@ gStdScripts_End::
 	.include "data/scripts/new_game.inc"
 	.include "data/scripts/hall_of_fame.inc"
 
+	.include "data/scripts/best_of_three.inc"
 	.include "data/scripts/config.inc"
 	.include "data/scripts/debug.inc"
 
