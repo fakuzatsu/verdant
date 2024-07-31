@@ -2058,3 +2058,33 @@ u16 CountBattledRematchTeams(u16 trainerId)
 
     return i;
 }
+
+bool8 IsValidBestOfThreeTrainer(u8 trainer)
+{
+    return TRUE;
+}
+
+void TryBestOfThree(struct ScriptContext *ctx)
+{
+    u16 trainer = ScriptReadHalfword(ctx);
+    const u8 *script;
+
+    if (gSaveBlock2Ptr->optionsVGCDraft != OPTIONS_DRAFT_BO3_ON
+     || !IsValidBestOfThreeTrainer(trainer)
+     || HasTrainerBeenFought(trainer))
+        return;
+
+    switch (trainer)
+    {
+    case TRAINER_ROXANNE_1:
+        script = EventScript_RoxanneBestOfThreeStart;
+        break;
+    default:
+        return;
+    }
+
+    StopScript(ctx);
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    ScriptContext_SetupScript(script);
+}

@@ -2379,3 +2379,9 @@
 	callnative CheckSpeciesInParty
 	.2byte \species
 	.endm
+
+	@ Tries to setup a best of three battle with the specified trainer if bo3 is enabled
+	.macro trybestofthree trainer:req
+	callnative TryBestOfThree
+	.2byte \trainer
+	.endm

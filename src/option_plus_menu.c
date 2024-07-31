@@ -60,6 +60,7 @@ enum
     MENUITEM_DIFFICULTY_LEVELCAPS,
     MENUITEM_DIFFICULTY_BATTLESCENE,
     MENUITEM_DIFFICULTY_BATTLESTYLE,
+    MENUITEM_DIFFICULTY_VGC_DRAFT,
     MENUITEM_DIFFICULTY_CANCEL,
     MENUITEM_DIFFICULTY_COUNT,
 };
@@ -201,6 +202,7 @@ static void DrawChoices_Difficulty(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
 static void DrawChoices_BattleScene(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
+static void DrawChoices_VGCDraft(int selection, int y);
 static void DrawChoices_Sound(int selection, int y);
 static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_BarSpeed(int selection, int y); //HP and EXP
@@ -275,6 +277,7 @@ struct // MENU_DIFFICULTY
     [MENUITEM_DIFFICULTY_LEVELCAPS]    = {DrawChoices_LevelCaps,  ProcessInput_Options_Three},
     [MENUITEM_DIFFICULTY_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_DIFFICULTY_BATTLESTYLE]  = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
+    [MENUITEM_DIFFICULTY_VGC_DRAFT]    = {DrawChoices_VGCDraft, ProcessInput_Options_Three},
     [MENUITEM_DIFFICULTY_CANCEL]       = {NULL, NULL},
 };
 
@@ -301,6 +304,7 @@ static const u8 sText_RandAbil[]    = _("ABILITIES");
 static const u8 sText_RngSeed[]     = _("RNG SEED");
 static const u8 sText_Difficulty[]  = _("MODE");
 static const u8 sText_LevelCaps[]   = _("LEVEL CAPS");
+static const u8 sText_VGCDraft[]    = _("VGC MODE");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
@@ -321,6 +325,7 @@ static const u8 *const OptionMenuItemsNamesDifficulty[MENUITEM_DIFFICULTY_COUNT]
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = sText_LevelCaps,
     [MENUITEM_DIFFICULTY_BATTLESCENE] = gText_BattleScene,
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = gText_BattleStyle,
+    [MENUITEM_DIFFICULTY_VGC_DRAFT]   = sText_VGCDraft,
     [MENUITEM_DIFFICULTY_CANCEL]      = gText_OptionMenuSave,
 };
 
@@ -376,6 +381,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_DIFFICULTY_LEVELCAPS: return TRUE;
         case MENUITEM_DIFFICULTY_BATTLESCENE: return TRUE;
         case MENUITEM_DIFFICULTY_BATTLESTYLE: return TRUE;
+        case MENUITEM_DIFFICULTY_VGC_DRAFT: return TRUE;
         case MENUITEM_DIFFICULTY_CANCEL:    return TRUE;
         case MENUITEM_DIFFICULTY_COUNT:     return TRUE;
         }
@@ -430,6 +436,9 @@ static const u8 sText_Desc_DifficultyHard[]     = _("Trainer's have more difficu
 static const u8 sText_Desc_LevelCaps_Off[]      = _("No level caps applied.\nThe regular Pokémon experience.");
 static const u8 sText_Desc_LevelCaps_Soft[]     = _("Exp is reduced as you exceed\nthe level of the next gym.");
 static const u8 sText_Desc_LevelCaps_Hard[]     = _("Once you reach the level of the\nnext gym, exp is halted.");
+static const u8 sText_Desc_VGCDraft_None[]      = _("");
+static const u8 sText_Desc_VGCDraft_Draft[]     = _("");
+static const u8 sText_Desc_VGCDraft_Both[]      = _("");
 
 static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
 {
@@ -451,6 +460,7 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIFFICULTY
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = {sText_Desc_LevelCaps_Off,      sText_Desc_LevelCaps_Soft,  sText_Desc_LevelCaps_Hard},
     [MENUITEM_DIFFICULTY_BATTLESCENE] = {sText_Desc_BattleScene_On,     sText_Desc_BattleScene_Off, sText_Empty},
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set, sText_Empty},
+    [MENUITEM_DIFFICULTY_VGC_DRAFT]   = {sText_Desc_VGCDraft_None,      sText_Desc_VGCDraft_Draft,  sText_Desc_VGCDraft_Both},
     [MENUITEM_DIFFICULTY_CANCEL]      = {sText_Desc_Save,               sText_Empty,                sText_Empty},
 };
 
@@ -485,6 +495,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = sText_Empty,
     [MENUITEM_DIFFICULTY_BATTLESCENE] = sText_Empty,
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = sText_Empty,
+    [MENUITEM_DIFFICULTY_VGC_DRAFT]   = sText_Empty,
     [MENUITEM_DIFFICULTY_CANCEL]      = sText_Empty,
 };
 
@@ -830,6 +841,7 @@ void CB2_InitOptionPlusMenu(void)
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_LEVELCAPS]   = gSaveBlock2Ptr->optionsLevelCap;
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
+        sOptions->sel_difficulty[MENUITEM_DIFFICULTY_VGC_DRAFT]   = gSaveBlock2Ptr->optionsVGCDraft;
 
         sOptions->sel_random[MENUITEM_RANDOM_WILD]     = gSaveBlock2Ptr->optionsWildRandomiser;
         sOptions->sel_random[MENUITEM_RANDOM_TRAIN]    = gSaveBlock2Ptr->optionsTrainerRandomiser;
@@ -1066,6 +1078,7 @@ static void SaveOptionsForExit(void)
     gSaveBlock2Ptr->optionsLevelCap          = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_LEVELCAPS];
     gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE];
     gSaveBlock2Ptr->optionsBattleStyle       = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE];
+    gSaveBlock2Ptr->optionsVGCDraft          = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_VGC_DRAFT];
 
     gSaveBlock2Ptr->optionsWildRandomiser    = sOptions->sel_random[MENUITEM_RANDOM_WILD];
     gSaveBlock2Ptr->optionsTrainerRandomiser = sOptions->sel_random[MENUITEM_RANDOM_TRAIN];
@@ -1357,6 +1370,21 @@ static void DrawChoices_BattleStyle(int selection, int y)
 
     DrawOptionMenuChoice(gText_BattleStyleShift, 104, y, styles[0], active);
     DrawOptionMenuChoice(gText_BattleStyleSet, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleStyleSet, 198), y, styles[1], active);
+}
+
+static const u8 sText_VGCDraft_None[] = _("OFF");
+static const u8 sText_VGCDraft_Draft[] = _("DRAFT");
+static const u8 sText_VGCDraft_Both[] = _("BEST-OF-3");
+static void DrawChoices_VGCDraft(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_VGC_DRAFT);
+    u8 styles[3] = {0};
+    int xMid = GetMiddleX(sText_VGCDraft_None, sText_VGCDraft_Draft, sText_VGCDraft_Both);
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(sText_VGCDraft_None, 104, y, styles[0], active);
+    DrawOptionMenuChoice(sText_VGCDraft_Draft, xMid, y, styles[1], active);
+    DrawOptionMenuChoice(sText_VGCDraft_Both, GetStringRightAlignXOffset(1, sText_VGCDraft_Both, 198), y, styles[2], active);
 }
 
 static void DrawChoices_Sound(int selection, int y)
