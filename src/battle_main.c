@@ -3111,7 +3111,7 @@ static void BattleStartClearSetData(void)
     gBattleStruct->safariPkblThrowCounter = 0;
     gBattleStruct->safariBallThrowCounter = 0;
     gBattleStruct->safariCatchFactor = i * 100 / 1275;
-    gBattleStruct->safariEscapeFactor = (i < 45) ? 3 : 2;
+    gBattleStruct->safariEscapeFactor = (i <= 45) ? 3 : 2;
     gBattleStruct->wildVictorySong = 0;
     gBattleStruct->moneyMultiplier = 1;
 
