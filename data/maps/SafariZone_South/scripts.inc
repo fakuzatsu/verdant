@@ -1,4 +1,5 @@
 .set LOCALID_ATTENDANT, 1
+.set LOCALID_CAMERAMAN, 6
 
 SafariZone_South_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SafariZone_South_OnTransition
@@ -47,6 +48,10 @@ SafariZone_South_EventScript_Man::
 
 SafariZone_South_EventScript_Youngster::
 	msgbox SafariZone_South_Text_Youngster, MSGBOX_NPC
+	end
+
+SafariZone_South_EventScript_BugCatcher::
+	msgbox SafariZone_South_Text_BugCatcher, MSGBOX_NPC
 	end
 
 SafariZone_South_EventScript_ExitAttendant::
@@ -150,3 +155,98 @@ SafariZone_Northeast_EventScript_Woman::
 SafariZone_Northeast_EventScript_Girl::
 	msgbox SafariZone_Northeast_Text_Girl, MSGBOX_NPC
 	end
+
+SafariZone_NorthEast_EventScript_CameraMan::
+	lock
+	faceplayer
+	special HaveAllSpeciesBeenShown
+	goto_if_eq VAR_RESULT, TRUE, SafariZone_Northeast_EventScript_ShownAllSpecies
+	goto_if_set FLAG_TEMP_9, SafariZone_Northeast_EventScript_LookingForANewPokemon
+	msgbox SafariZone_Northeast_Text_CameraMan, MSGBOX_DEFAULT
+SafariZone_Northeast_EventScript_SkipIntro:
+	call_if_unset FLAG_SHOWN_SCYTHER, SafariZone_NorthEast_EventScript_SetScyther
+	call_if_unset FLAG_SHOWN_PINSIR, SafariZone_NorthEast_EventScript_SetPinsir
+	call_if_unset FLAG_SHOWN_HERACROSS, SafariZone_NorthEast_EventScript_SetHeracross
+	bufferspeciesname STR_VAR_1, VAR_0x8009
+	msgbox SafariZone_Northeast_Text_LookingForAPokemon, MSGBOX_DEFAULT
+	checkspeciesinparty VAR_0x8009
+	goto_if_eq VAR_RESULT, PARTY_SIZE, SafariZone_NorthEast_EventScript_TellMeIfYouFindOne
+	delay 10
+	playse SE_PIN
+	applymovement LOCALID_CAMERAMAN, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox SafariZone_Northeast_Text_OhThatsAPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SafariZone_Northeast_EventScript_OhThatsOk
+	msgbox SafariZone_Northeast_Text_ThatsGreatThankYou, MSGBOX_DEFAULT
+	fadescreenswapbuffers FADE_TO_WHITE
+	setflag FLAG_TEMP_9
+	call SafariZone_Northeast_EventScript_SetSpeciesShown
+	delay 10
+	fadescreenswapbuffers FADE_FROM_WHITE
+	delay 10
+	msgbox SafariZone_Northeast_Text_ThankYouForYourHelp, MSGBOX_DEFAULT
+	special HaveAllSpeciesBeenShown
+	goto_if_eq VAR_RESULT, TRUE, SafariZone_Northeast_EventScript_ShownAllSpecies
+	release
+	end
+
+SafariZone_Northeast_EventScript_LookingForANewPokemon::
+	msgbox SafariZone_Northeast_Text_LookingForANewPokemon, MSGBOX_DEFAULT
+	goto SafariZone_Northeast_EventScript_SkipIntro
+	end
+
+SafariZone_NorthEast_EventScript_SetHeracross::
+	setvar VAR_0x8009, SPECIES_HERACROSS
+	return
+
+SafariZone_NorthEast_EventScript_SetPinsir::
+	setvar VAR_0x8009, SPECIES_PINSIR
+	return
+
+SafariZone_NorthEast_EventScript_SetScyther::
+	setvar VAR_0x8009, SPECIES_SCYTHER
+	return
+
+SafariZone_NorthEast_EventScript_TellMeIfYouFindOne::
+	msgbox SafariZone_Northeast_Text_TellMeIfYouFindOne, MSGBOX_DEFAULT
+	release
+	end
+
+SafariZone_Northeast_EventScript_OhThatsOk::
+	msgbox SafariZone_Northeast_Text_OhThatsOk, MSGBOX_DEFAULT
+	release
+	end
+
+SafariZone_Northeast_EventScript_SetSpeciesShown::
+	switch VAR_0x8009
+	case SPECIES_HERACROSS, SafariZone_Northeast_EventScript_SetHeracrossShown
+	case SPECIES_PINSIR, SafariZone_Northeast_EventScript_SetPinsirShown
+	case SPECIES_SCYTHER, SafariZone_Northeast_EventScript_SetScytherShown
+	return
+
+SafariZone_Northeast_EventScript_SetHeracrossShown::
+	setflag FLAG_SHOWN_HERACROSS
+	return
+
+SafariZone_Northeast_EventScript_SetPinsirShown::
+	setflag FLAG_SHOWN_PINSIR
+	return
+
+SafariZone_Northeast_EventScript_SetScytherShown::
+	setflag FLAG_SHOWN_SCYTHER
+	return
+
+SafariZone_Northeast_EventScript_ShownAllSpecies::
+	msgbox SafariZone_Northeast_Text_ThankYouForThreePictures, MSGBOX_DEFAULT
+	checkitem ITEM_CATCHING_CHARM
+	goto_if_eq VAR_RESULT, FALSE, SafariZone_Northeast_EventScript_GiveCatchingCharm
+	release
+	end
+
+SafariZone_Northeast_EventScript_GiveCatchingCharm::
+	msgbox SafariZone_Northeast_Text_PleaseTakeThisReward, MSGBOX_DEFAULT
+	giveitem ITEM_CATCHING_CHARM
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	release
+	end
+

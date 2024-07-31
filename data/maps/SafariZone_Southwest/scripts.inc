@@ -5,6 +5,10 @@ SafariZone_Southwest_EventScript_Woman::
 	msgbox SafariZone_Southwest_Text_Woman, MSGBOX_NPC
 	end
 
+SafariZone_Southwest_EventScript_Expert::
+	msgbox SafariZone_Southwest_Text_Expert, MSGBOX_NPC
+	end
+
 SafariZone_Southwest_EventScript_RestHouseSign::
 	msgbox SafariZone_Southwest_Text_RestHouseSign, MSGBOX_SIGN
 	end

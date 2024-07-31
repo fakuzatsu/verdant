@@ -4273,3 +4273,13 @@ void DailyMassageService(void)
     AdjustFriendship(&gPlayerParty[gSpecialVar_0x8004], FRIENDSHIP_EVENT_MASSAGE);
     FlagSet(FLAG_DAILY_MASSAGE_SERVICE);
 }
+
+void HaveAllSpeciesBeenShown(void)
+{
+    if (FlagGet(FLAG_SHOWN_HERACROSS) 
+     && FlagGet(FLAG_SHOWN_PINSIR) 
+     && FlagGet(FLAG_SHOWN_SCYTHER))
+        gSpecialVar_Result = TRUE;
+    else
+        gSpecialVar_Result = FALSE;
+}

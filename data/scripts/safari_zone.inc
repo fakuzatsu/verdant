@@ -202,6 +202,11 @@ SafariZone_Southwest_Text_Woman:
 	.string "Do POKéMON have likes and dislikes\n"
 	.string "about what they eat?$"
 
+SafariZone_Southwest_Text_Expert:
+	.string "POKéMON become fustrated if you throw\n"
+	.string "many POKéBALLS at them.\p"
+	.string "It's best to try catch them in one go.$"
+
 SafariZone_Northwest_Text_Man:
 	.string "Gasp… Gasp…\n"
 	.string "I…made it out here…but…\p"
@@ -222,6 +227,10 @@ SafariZone_South_Text_Youngster:
 	.string "But it seems to have disappeared.\p"
 	.string "I guess POKéMON must have eaten it\n"
 	.string "without me noticing.$"
+
+SafariZone_South_Text_BugCatcher:
+	.string "It's easier to catch wild POKéMON if you\n"
+	.string "creep up on them!$"
 
 Route121_SafariZoneEntrance_Text_TrainerTip:
 	.string "SAFARI ZONE TRAINER TIP!\p"
@@ -292,3 +301,45 @@ SafariZone_Northeast_Text_Girl:
 	.string "I can't seem to catch anything!\p"
 	.string "I'll end up wasting the admission\n"
 	.string "price if I don't catch something!$"
+
+SafariZone_Northeast_Text_CameraMan:
+	.string "I'm trying to document rare POKéMON,\n"
+	.string "but I can't seem to find them.$"
+
+SafariZone_Northeast_Text_LookingForAPokemon:
+	.string "Right now I'm looking for a\n"
+	.string "{STR_VAR_1}.$"
+
+SafariZone_Northeast_Text_TellMeIfYouFindOne:
+	.string "Let me know if you find one.$"
+
+SafariZone_Northeast_Text_OhThatsAPokemon:
+	.string "Oh! That's a {STR_VAR_1}!\p"
+	.string "Would you let me take a picture\n"
+	.string "of you and your {STR_VAR_1}?$"
+
+SafariZone_Northeast_Text_ThatsGreatThankYou:
+	.string "That's great! Thank you!\p"
+	.string "Say cheese!$"
+
+SafariZone_Northeast_Text_OhThatsOk:
+	.string "Oh, that's ok.$"
+
+SafariZone_Northeast_Text_ThankYouForYourHelp:
+	.string "Thank you for helping me document a\n"
+	.string "rare POKéMON!$"
+
+SafariZone_Northeast_Text_LookingForANewPokemon:
+	.string "Thank you for your help!\p"
+	.string "I'm looking for another rare POKéMON.$"
+
+SafariZone_Northeast_Text_ThankYouForThreePictures:
+	.string "Thank you, thank you!\p"
+	.string "You've helped me document three rare\n"
+	.string "POKéMON now!\p"
+	.string "You must know a great deal about\n"
+	.string "catching wild POKéMON.$"
+
+SafariZone_Northeast_Text_PleaseTakeThisReward:
+	.string "Please take this as a token of my\n"
+	.string "gratitude!$"

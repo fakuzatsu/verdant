@@ -2371,3 +2371,11 @@
 	callnative SetMemoryAll
 	.byte \memory
 	.endm
+
+	@ Checks if the specified Pokémon species is in the player's party. If it is, VAR_RESULT is set to the
+	@ (zero-indexed) slot number of the first Pokemon of that species. If not, VAR_RESULT is set to PARTY_SIZE.
+	@ VAR_0x8004 is also set to this Pokemon's species.
+	.macro checkspeciesinparty species:req
+	callnative CheckSpeciesInParty
+	.2byte \species
+	.endm

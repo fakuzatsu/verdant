@@ -277,11 +277,11 @@ LavaridgeTown_EventScript_MassageMon::
 	goto_if_eq VAR_RESULT, SPECIES_EGG, LavaridgeTown_EventScript_CantGroomEgg
 	msgbox LavaridgeTown_Text_LookingNiceInNoTime, MSGBOX_DEFAULT
 	closemessage
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 	playfanfare MUS_HEAL
 	waitfanfare
 	special DailyMassageService
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 	msgbox LavaridgeTown_Text_ThereYouGoAllDone, MSGBOX_DEFAULT
 	release
 	end

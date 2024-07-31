@@ -561,3 +561,4 @@ gSpecials::
 	def_special GiveMonTravellerRibbon
 	def_special GiveMonHistoricRibbon
 	def_special SetGrottoWarp
+	def_special HaveAllSpeciesBeenShown
