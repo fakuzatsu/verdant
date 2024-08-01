@@ -242,8 +242,8 @@ void HandleAction_UseMove(void)
                 && GetBattlerTurnOrderNum(battler) < var
                 && gMovesInfo[gCurrentMove].effect != EFFECT_SNIPE_SHOT
                 && gMovesInfo[gCurrentMove].effect != EFFECT_PLEDGE
-                && (GetBattlerAbility(gBattlerAttacker) != ABILITY_PROPELLER_TAIL
-                 || GetBattlerAbility(gBattlerAttacker) != ABILITY_STALWART))
+                && GetBattlerAbility(gBattlerAttacker) != ABILITY_PROPELLER_TAIL
+                && GetBattlerAbility(gBattlerAttacker) != ABILITY_STALWART)
             {
                 var = GetBattlerTurnOrderNum(battler);
             }
@@ -6373,23 +6373,41 @@ bool32 IsNeutralizingGasOnField(void)
     return FALSE;
 }
 
-bool32 IsMoldBreakerTypeAbility(u32 ability)
+bool32 IsMoldBreakerTypeAbility(u32 battler, u32 ability)
 {
+    if (gStatuses3[battler] & STATUS3_GASTRO_ACID)
+        return FALSE;
+
     return (ability == ABILITY_MOLD_BREAKER || ability == ABILITY_TERAVOLT || ability == ABILITY_TURBOBLAZE
         || (ability == ABILITY_MYCELIUM_MIGHT && IS_MOVE_STATUS(gCurrentMove)));
+}
+
+static inline bool32 CanBreakThroughAbility(u32 battlerAtk, u32 battlerDef, u32 ability)
+{
+    return ((IsMoldBreakerTypeAbility(battlerAtk, ability) || gMovesInfo[gCurrentMove].ignoresTargetAbility)
+         && battlerDef != battlerAtk
+         && gAbilitiesInfo[gBattleMons[battlerDef].ability].breakable
+         && gBattlerByTurnOrder[gCurrentTurnActionNumber] == battlerAtk
+         && gActionsByTurnOrder[gCurrentTurnActionNumber] == B_ACTION_USE_MOVE
+         && gCurrentTurnActionNumber < gBattlersCount);
 }
 
 u32 GetBattlerAbility(u32 battler)
 {
     bool32 noAbilityShield = GetBattlerHoldEffectIgnoreAbility(battler, TRUE) != HOLD_EFFECT_ABILITY_SHIELD;
+    bool32 abilityCantBeSuppressed = gAbilitiesInfo[gBattleMons[battler].ability].cantBeSuppressed;
 
-    if (gAbilitiesInfo[gBattleMons[battler].ability].cantBeSuppressed)
+    if (abilityCantBeSuppressed)
     {
         // Edge case: pokemon under the effect of gastro acid transforms into a pokemon with Comatose (Todo: verify how other unsuppressable abilities behave)
         if (gBattleMons[battler].status2 & STATUS2_TRANSFORMED
             && gStatuses3[battler] & STATUS3_GASTRO_ACID
             && gBattleMons[battler].ability == ABILITY_COMATOSE)
                 return ABILITY_NONE;
+
+        if (noAbilityShield && CanBreakThroughAbility(gBattlerAttacker, battler, gBattleMons[gBattlerAttacker].ability))
+            return ABILITY_NONE;
+
         return gBattleMons[battler].ability;
     }
 
@@ -6401,15 +6419,7 @@ u32 GetBattlerAbility(u32 battler)
      && noAbilityShield)
         return ABILITY_NONE;
 
-    if (((IsMoldBreakerTypeAbility(gBattleMons[gBattlerAttacker].ability)
-            && !(gStatuses3[gBattlerAttacker] & STATUS3_GASTRO_ACID))
-            || gMovesInfo[gCurrentMove].ignoresTargetAbility)
-            && battler != gBattlerAttacker
-            && gAbilitiesInfo[gBattleMons[battler].ability].breakable
-            && noAbilityShield
-            && gBattlerByTurnOrder[gCurrentTurnActionNumber] == gBattlerAttacker
-            && gActionsByTurnOrder[gBattlerByTurnOrder[gBattlerAttacker]] == B_ACTION_USE_MOVE
-            && gCurrentTurnActionNumber < gBattlersCount)
+    if (noAbilityShield && CanBreakThroughAbility(gBattlerAttacker, battler, gBattleMons[gBattlerAttacker].ability))
         return ABILITY_NONE;
 
     return gBattleMons[battler].ability;
@@ -7971,6 +7981,7 @@ u8 ItemBattleEffects(u8 caseID, u32 battler, bool32 moveTurn)
             if (IsBattlerAlive(gBattlerAttacker)
                 && !(TestIfSheerForceAffected(gBattlerAttacker, gCurrentMove))
                 && GetBattlerAbility(gBattlerAttacker) != ABILITY_MAGIC_GUARD
+                && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
                 && !gSpecialStatuses[gBattlerAttacker].preventLifeOrbDamage
                 && gSpecialStatuses[gBattlerAttacker].damagedMons)
             {
@@ -8720,12 +8731,12 @@ u32 GetMoveTargetCount(u32 move, u32 battlerAtk, u32 battlerDef)
     switch (GetBattlerMoveTargetType(gBattlerAttacker, move))
     {
     case MOVE_TARGET_BOTH:
-        return IsBattlerAlive(battlerDef)
-             + IsBattlerAlive(BATTLE_PARTNER(battlerDef));
+        return !(gAbsentBattlerFlags & gBitTable[battlerDef])
+             + !(gAbsentBattlerFlags & gBitTable[BATTLE_PARTNER(battlerDef)]);
     case MOVE_TARGET_FOES_AND_ALLY:
-        return IsBattlerAlive(battlerDef)
-             + IsBattlerAlive(BATTLE_PARTNER(battlerDef))
-             + IsBattlerAlive(BATTLE_PARTNER(battlerAtk));
+        return !(gAbsentBattlerFlags & gBitTable[battlerDef])
+             + !(gAbsentBattlerFlags & gBitTable[BATTLE_PARTNER(battlerDef)])
+             + !(gAbsentBattlerFlags & gBitTable[BATTLE_PARTNER(battlerAtk)]);
     case MOVE_TARGET_OPPONENTS_FIELD:
         return 1;
     case MOVE_TARGET_DEPENDS:
@@ -9868,7 +9879,7 @@ static inline s32 CalculateBaseDamage(u32 power, u32 userFinalAttack, u32 level,
 
 static inline uq4_12_t GetTargetDamageModifier(u32 move, u32 battlerAtk, u32 battlerDef)
 {
-    if (GetMoveTargetCount(move, battlerAtk, battlerDef) >= 2)
+    if (IsDoubleBattle() && GetMoveTargetCount(move, battlerAtk, battlerDef) >= 2)
         return B_MULTIPLE_TARGETS_DMG >= GEN_4 ? UQ_4_12(0.75) : UQ_4_12(0.5);
     return UQ_4_12(1.0);
 }
@@ -11088,6 +11099,7 @@ static u32 SwapMoveDamageCategory(u32 move)
 
 u8 GetBattleMoveCategory(u32 moveId)
 {
+    u8 moveType;
     if (gBattleStruct != NULL && gBattleStruct->swapDamageCategory) // Photon Geyser, Shell Side Arm, Light That Burns the Sky, Tera Blast
         return SwapMoveDamageCategory(moveId);
     if (gBattleStruct != NULL && (IsZMove(moveId) || IsMaxMove(moveId))) // TODO: Might be buggy depending on when this is called.
@@ -11097,8 +11109,11 @@ u8 GetBattleMoveCategory(u32 moveId)
 
     if (IS_MOVE_STATUS(moveId))
         return DAMAGE_CATEGORY_STATUS;
+    else if (gMain.inBattle)
+        GET_MOVE_TYPE(moveId, moveType);
     else
-        return gTypesInfo[gMovesInfo[moveId].type].damageCategory;
+        moveType = gMovesInfo[moveId].type;
+    return gTypesInfo[moveType].damageCategory;
 }
 
 static bool32 TryRemoveScreens(u32 battler)

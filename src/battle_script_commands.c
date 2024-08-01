@@ -5717,10 +5717,10 @@ static void Cmd_moveend(void)
                         gBattlescriptCurrInstr = BattleScript_TargetBurnHeal;
                         break;
                     case STATUS1_FREEZE:
-                        gBattlescriptCurrInstr = BattleScript_FrostbiteHealedViaFireMove;
+                        gBattlescriptCurrInstr = BattleScript_DefrostedViaFireMove;
                         break;
                     case STATUS1_FROSTBITE:
-                        gBattlescriptCurrInstr = BattleScript_DefrostedViaFireMove;
+                        gBattlescriptCurrInstr = BattleScript_FrostbiteHealedViaFireMove;
                         break;
                     case STATUS1_POISON:
                     case STATUS1_TOXIC_POISON:
@@ -11797,16 +11797,6 @@ static u32 ChangeStatBuffs(s8 statValue, u32 statId, u32 flags, const u8 *BS_ptr
             }
             return STAT_CHANGE_DIDNT_WORK;
         }
-        else if (battlerAbility == ABILITY_SHIELD_DUST && flags == 0)
-        {
-            RecordAbilityBattle(battler, ABILITY_SHIELD_DUST);
-            return STAT_CHANGE_DIDNT_WORK;
-        }
-        else if (flags == 0 && battlerHoldEffect == HOLD_EFFECT_COVERT_CLOAK)
-        {
-            RecordItemEffectBattle(battler, HOLD_EFFECT_COVERT_CLOAK);
-            return STAT_CHANGE_DIDNT_WORK;
-        }
         else // try to decrease
         {
             statValue = -GET_STAT_BUFF_VALUE(statValue);
@@ -13233,7 +13223,7 @@ static void Cmd_healpartystatus(void)
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_BELL;
 
         if (GetBattlerAbility(gBattlerAttacker) != ABILITY_SOUNDPROOF
-         || B_HEAL_BELL_SOUNDPROOF == GEN_5 || B_HEAL_BELL_SOUNDPROOF >= GEN_9)
+         || B_HEAL_BELL_SOUNDPROOF == GEN_5 || B_HEAL_BELL_SOUNDPROOF >= GEN_8)
         {
             gBattleMons[gBattlerAttacker].status1 = 0;
             gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
@@ -13273,7 +13263,7 @@ static void Cmd_healpartystatus(void)
                 bool32 isAttacker = gBattlerPartyIndexes[gBattlerAttacker] == i;
                 bool32 isDoublesPartner = gBattlerPartyIndexes[partner] == i && IsBattlerAlive(partner);
 
-                if (B_HEAL_BELL_SOUNDPROOF == GEN_5 || (isAttacker && B_HEAL_BELL_SOUNDPROOF >= GEN_9))
+                if (B_HEAL_BELL_SOUNDPROOF == GEN_5 || (isAttacker && B_HEAL_BELL_SOUNDPROOF >= GEN_8))
                     ability = ABILITY_NONE;
                 else if (B_HEAL_BELL_SOUNDPROOF > GEN_5 && !isAttacker && !isDoublesPartner)
                     ability = ABILITY_NONE;
@@ -13457,7 +13447,7 @@ static void Cmd_handlefurycutter(void)
             max = 5;
 
         if (gDisableStructs[gBattlerAttacker].furyCutterCounter < max
-            && gSpecialStatuses[gBattlerAttacker].parentalBondState != PARENTAL_BOND_1ST_HIT) // Don't increment counter on first hit
+            && gSpecialStatuses[gBattlerAttacker].parentalBondState != PARENTAL_BOND_2ND_HIT) // Don't increment counter on second hit
             gDisableStructs[gBattlerAttacker].furyCutterCounter++;
 
         gBattlescriptCurrInstr = cmd->nextInstr;
@@ -16989,7 +16979,7 @@ static void TryUpdateEvolutionTracker(u32 evolutionMethod, u32 upAmount, u16 use
                             val = 0;
                         SetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattlerAttacker]], MON_DATA_EVOLUTION_TRACKER, &val);
                         break;
-                    case EVO_DEFEAT_WITH_ITEM:
+                    case EVO_DEFEAT_THREE_WITH_ITEM:
                         if (GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_SPECIES) == GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattlerAttacker]], MON_DATA_SPECIES)
                          && GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_HELD_ITEM) == evolutions[i].param)
                             SetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattlerAttacker]], MON_DATA_EVOLUTION_TRACKER, &val);
@@ -17022,7 +17012,7 @@ void BS_TryUpdateRecoilTracker(void)
 void BS_TryUpdateLeadersCrestTracker(void)
 {
     NATIVE_ARGS();
-    TryUpdateEvolutionTracker(EVO_DEFEAT_WITH_ITEM, 1, MOVE_NONE);
+    TryUpdateEvolutionTracker(EVO_DEFEAT_THREE_WITH_ITEM, 1, MOVE_NONE);
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 

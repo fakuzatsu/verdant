@@ -452,10 +452,20 @@ Debug_EventScript_CheckMemory_End:
 	releaseall
 	end
 
+Debug_EventScript_EWRAMCounters::
+	callnative CheckEWRAMCounters
+	msgbox Debug_EventScript_EWRAMCounters_Text, MSGBOX_DEFAULT
+	release
+	end
+
 Debug_EventScript_Text_OldestMemory:
 	.string "Oldest Memory: {STR_VAR_1}.$"
 
 Debug_EventScript_Text_NewestMemory:
 	.string "Newest Memory: {STR_VAR_1}.$"
+
+Debug_EventScript_EWRAMCounters_Text::
+	.string "Follower Steps: {STR_VAR_1}.\n"
+	.string "Fishing Chain: {STR_VAR_2}.$"
 
 .endif
