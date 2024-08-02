@@ -45,11 +45,11 @@ enum
     MENUITEM_MAIN_FONT,
     MENUITEM_MAIN_HP_BAR,
     MENUITEM_MAIN_EXP_BAR,
+    MENUITEM_MAIN_BATTLESCENE,
     MENUITEM_MAIN_MATCHCALL,
     MENUITEM_MAIN_BUTTONMODE,
     MENUITEM_MAIN_UNIT_SYSTEM,
     MENUITEM_MAIN_SOUND,
-    MENUITEM_MAIN_FRAMETYPE,
     MENUITEM_MAIN_CANCEL,
     MENUITEM_MAIN_COUNT,
 };
@@ -58,9 +58,8 @@ enum
 {
     MENUITEM_DIFFICULTY_MODE,
     MENUITEM_DIFFICULTY_LEVELCAPS,
-    MENUITEM_DIFFICULTY_BATTLESCENE,
-    MENUITEM_DIFFICULTY_BATTLESTYLE,
     MENUITEM_DIFFICULTY_VGC_DRAFT,
+    MENUITEM_DIFFICULTY_BATTLESTYLE,
     MENUITEM_DIFFICULTY_CANCEL,
     MENUITEM_DIFFICULTY_COUNT,
 };
@@ -188,7 +187,6 @@ static int ProcessInput_Options_Two(int selection);
 static int ProcessInput_Options_Three(int selection);
 static int ProcessInput_Options_Four(int selection);
 static int ProcessInput_Options_Eleven(int selection);
-static int ProcessInput_FrameType(int selection);
 static const u8 *const OptionTextDescription(void);
 static const u8 *const OptionTextRight(u8 menuItem);
 static u8 MenuItemCount(void);
@@ -208,7 +206,6 @@ static void DrawChoices_ButtonMode(int selection, int y);
 static void DrawChoices_BarSpeed(int selection, int y); //HP and EXP
 static void DrawChoices_UnitSystem(int selection, int y);
 static void DrawChoices_Font(int selection, int y);
-static void DrawChoices_FrameType(int selection, int y);
 static void DrawChoices_MatchCall(int selection, int y);
 static void DrawChoices_RandWild(int selection, int y);
 static void DrawChoices_RandTrain(int selection, int y);
@@ -259,11 +256,11 @@ struct // MENU_MAIN
     [MENUITEM_MAIN_FONT]         = {DrawChoices_Font,        ProcessInput_Options_Two}, 
     [MENUITEM_MAIN_HP_BAR]       = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
     [MENUITEM_MAIN_EXP_BAR]      = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
+    [MENUITEM_MAIN_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_MAIN_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
     [MENUITEM_MAIN_BUTTONMODE]   = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
     [MENUITEM_MAIN_UNIT_SYSTEM]  = {DrawChoices_UnitSystem,  ProcessInput_Options_Two},
     [MENUITEM_MAIN_SOUND]        = {DrawChoices_Sound,       ProcessInput_Options_Two},
-    [MENUITEM_MAIN_FRAMETYPE]    = {DrawChoices_FrameType,   ProcessInput_FrameType},
     [MENUITEM_MAIN_CANCEL]       = {NULL, NULL},
 };
 
@@ -275,7 +272,6 @@ struct // MENU_DIFFICULTY
 {
     [MENUITEM_DIFFICULTY_MODE]         = {DrawChoices_Difficulty, ProcessInput_Options_Two},
     [MENUITEM_DIFFICULTY_LEVELCAPS]    = {DrawChoices_LevelCaps,  ProcessInput_Options_Three},
-    [MENUITEM_DIFFICULTY_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_DIFFICULTY_BATTLESTYLE]  = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIFFICULTY_VGC_DRAFT]    = {DrawChoices_VGCDraft, ProcessInput_Options_Three},
     [MENUITEM_DIFFICULTY_CANCEL]       = {NULL, NULL},
@@ -304,18 +300,18 @@ static const u8 sText_RandAbil[]    = _("ABILITIES");
 static const u8 sText_RngSeed[]     = _("RNG SEED");
 static const u8 sText_Difficulty[]  = _("MODE");
 static const u8 sText_LevelCaps[]   = _("LEVEL CAPS");
-static const u8 sText_VGCDraft[]    = _("VGC MODE");
+static const u8 sText_VGCDraft[]    = _("COMPETITIVE");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
     [MENUITEM_MAIN_FONT]        = gText_Font,
     [MENUITEM_MAIN_HP_BAR]      = sText_HpBar,
     [MENUITEM_MAIN_EXP_BAR]     = sText_ExpBar,
+    [MENUITEM_MAIN_BATTLESCENE] = gText_BattleScene,
     [MENUITEM_MAIN_MATCHCALL]   = gText_OptionMatchCalls,
     [MENUITEM_MAIN_BUTTONMODE]  = gText_ButtonMode,
     [MENUITEM_MAIN_UNIT_SYSTEM] = sText_UnitSystem,
     [MENUITEM_MAIN_SOUND]       = gText_Sound,
-    [MENUITEM_MAIN_FRAMETYPE]   = gText_Frame,
     [MENUITEM_MAIN_CANCEL]      = gText_OptionMenuSave,
 };
 
@@ -323,7 +319,6 @@ static const u8 *const OptionMenuItemsNamesDifficulty[MENUITEM_DIFFICULTY_COUNT]
 {
     [MENUITEM_DIFFICULTY_MODE]        = sText_Difficulty,
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = sText_LevelCaps,
-    [MENUITEM_DIFFICULTY_BATTLESCENE] = gText_BattleScene,
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = gText_BattleStyle,
     [MENUITEM_DIFFICULTY_VGC_DRAFT]   = sText_VGCDraft,
     [MENUITEM_DIFFICULTY_CANCEL]      = gText_OptionMenuSave,
@@ -366,11 +361,11 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_MAIN_FONT:            return TRUE;
         case MENUITEM_MAIN_HP_BAR:          return TRUE;
         case MENUITEM_MAIN_EXP_BAR:         return TRUE;
+        case MENUITEM_MAIN_BATTLESCENE:     return TRUE;
         case MENUITEM_MAIN_MATCHCALL:       return TRUE;
         case MENUITEM_MAIN_BUTTONMODE:      return TRUE;
         case MENUITEM_MAIN_UNIT_SYSTEM:     return TRUE;
         case MENUITEM_MAIN_SOUND:           return TRUE;
-        case MENUITEM_MAIN_FRAMETYPE:       return TRUE;
         case MENUITEM_MAIN_CANCEL:          return TRUE;
         case MENUITEM_MAIN_COUNT:           return TRUE;
         }
@@ -379,7 +374,6 @@ static bool8 CheckConditions(int selection)
         {
         case MENUITEM_DIFFICULTY_MODE:      return TRUE;
         case MENUITEM_DIFFICULTY_LEVELCAPS: return TRUE;
-        case MENUITEM_DIFFICULTY_BATTLESCENE: return TRUE;
         case MENUITEM_DIFFICULTY_BATTLESTYLE: return TRUE;
         case MENUITEM_DIFFICULTY_VGC_DRAFT: return TRUE;
         case MENUITEM_DIFFICULTY_CANCEL:    return TRUE;
@@ -414,7 +408,6 @@ static const u8 sText_Desc_ButtonMode_LR[]      = _("On some screens the L and R
 static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as another A\nbutton for one-handed play.");
 static const u8 sText_Desc_UnitSystemImperial[] = _("Display BERRY and POKéMON weight\nand size in pounds and inches.");
 static const u8 sText_Desc_UnitSystemMetric[]   = _("Display BERRY and POKéMON weight\nand size in kilograms and meters.");
-static const u8 sText_Desc_FrameType[]          = _("Choose the frame surrounding the\nwindows.");
 static const u8 sText_Desc_BattleHPBar[]        = _("Choose how fast the HP BAR will get\ndrained in battles.");
 static const u8 sText_Desc_BattleExpBar[]       = _("Choose how fast the EXP BAR will get\nfilled in battles.");
 static const u8 sText_Desc_SurfOff[]            = _("Disables the SURF theme when\nusing SURF.");
@@ -436,9 +429,9 @@ static const u8 sText_Desc_DifficultyHard[]     = _("Trainer's have more difficu
 static const u8 sText_Desc_LevelCaps_Off[]      = _("No level caps applied.\nThe regular Pokémon experience.");
 static const u8 sText_Desc_LevelCaps_Soft[]     = _("Exp is reduced as you exceed\nthe level of the next gym.");
 static const u8 sText_Desc_LevelCaps_Hard[]     = _("Once you reach the level of the\nnext gym, exp is halted.");
-static const u8 sText_Desc_VGCDraft_None[]      = _("");
-static const u8 sText_Desc_VGCDraft_Draft[]     = _("");
-static const u8 sText_Desc_VGCDraft_Both[]      = _("");
+static const u8 sText_Desc_VGCDraft_None[]      = _("Competitive battle format is\ncompletely disabled.");
+static const u8 sText_Desc_VGCDraft_Draft[]     = _("Draft up to four Pokémon for\nsignificant battles.");
+static const u8 sText_Desc_VGCDraft_Both[]      = _("Win two matches out of three\nto beat significant battles.");
 
 static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
 {
@@ -446,11 +439,11 @@ static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
     [MENUITEM_MAIN_FONT]        = {sText_Desc_FontType,            sText_Desc_FontType,          sText_Empty},
     [MENUITEM_MAIN_HP_BAR]      = {sText_Desc_BattleHPBar,         sText_Empty,                  sText_Empty},
     [MENUITEM_MAIN_EXP_BAR]     = {sText_Desc_BattleExpBar,        sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_BATTLESCENE] = {sText_Desc_BattleScene_On,      sText_Desc_BattleScene_Off,   sText_Empty},
     [MENUITEM_MAIN_MATCHCALL]   = {sText_Desc_OverworldCallsOn,    sText_Desc_OverworldCallsOff, sText_Empty},
     [MENUITEM_MAIN_BUTTONMODE]  = {sText_Desc_ButtonMode,          sText_Desc_ButtonMode_LR,     sText_Desc_ButtonMode_LA},
     [MENUITEM_MAIN_UNIT_SYSTEM] = {sText_Desc_UnitSystemImperial,  sText_Desc_UnitSystemMetric,  sText_Empty},
     [MENUITEM_MAIN_SOUND]       = {sText_Desc_SoundMono,           sText_Desc_SoundStereo,       sText_Empty},
-    [MENUITEM_MAIN_FRAMETYPE]   = {sText_Desc_FrameType,           sText_Empty,                  sText_Empty},
     [MENUITEM_MAIN_CANCEL]      = {sText_Desc_Save,                sText_Empty,                  sText_Empty},
 };
 
@@ -458,7 +451,6 @@ static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIFFICULTY
 {
     [MENUITEM_DIFFICULTY_MODE]        = {sText_Desc_DifficultyEasy,     sText_Desc_DifficultyHard,  sText_Empty},
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = {sText_Desc_LevelCaps_Off,      sText_Desc_LevelCaps_Soft,  sText_Desc_LevelCaps_Hard},
-    [MENUITEM_DIFFICULTY_BATTLESCENE] = {sText_Desc_BattleScene_On,     sText_Desc_BattleScene_Off, sText_Empty},
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set, sText_Empty},
     [MENUITEM_DIFFICULTY_VGC_DRAFT]   = {sText_Desc_VGCDraft_None,      sText_Desc_VGCDraft_Draft,  sText_Desc_VGCDraft_Both},
     [MENUITEM_DIFFICULTY_CANCEL]      = {sText_Desc_Save,               sText_Empty,                sText_Empty},
@@ -480,11 +472,11 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledMain[MENUITEM_MAIN_COU
     [MENUITEM_MAIN_FONT]              = sText_Empty,
     [MENUITEM_MAIN_HP_BAR]            = sText_Empty,
     [MENUITEM_MAIN_EXP_BAR]           = sText_Empty,
+    [MENUITEM_MAIN_BATTLESCENE]       = sText_Empty,
     [MENUITEM_MAIN_MATCHCALL]         = sText_Empty,
     [MENUITEM_MAIN_BUTTONMODE]        = sText_Empty,
     [MENUITEM_MAIN_UNIT_SYSTEM]       = sText_Empty,
     [MENUITEM_MAIN_SOUND]             = sText_Empty,
-    [MENUITEM_MAIN_FRAMETYPE]         = sText_Empty,
     [MENUITEM_MAIN_CANCEL]            = sText_Empty,
 };
 
@@ -493,7 +485,6 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledDifficulty[MENUITEM_DI
 {
     [MENUITEM_DIFFICULTY_MODE]        = sText_Empty,
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = sText_Empty,
-    [MENUITEM_DIFFICULTY_BATTLESCENE] = sText_Empty,
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = sText_Empty,
     [MENUITEM_DIFFICULTY_VGC_DRAFT]   = sText_Empty,
     [MENUITEM_DIFFICULTY_CANCEL]      = sText_Empty,
@@ -521,8 +512,8 @@ static const u8 *const OptionTextDescription(void)
         if (!CheckConditions(menuItem))
             return sOptionMenuItemDescriptionsDisabledMain[menuItem];
         selection = sOptions->sel[menuItem];
-        if (menuItem == MENUITEM_MAIN_TEXTSPEED || menuItem == MENUITEM_MAIN_FRAMETYPE
-        || menuItem == MENUITEM_MAIN_HP_BAR || menuItem == MENUITEM_MAIN_EXP_BAR)
+        if (menuItem == MENUITEM_MAIN_TEXTSPEED || menuItem == MENUITEM_MAIN_HP_BAR 
+         || menuItem == MENUITEM_MAIN_EXP_BAR)
             selection = 0;
         return sOptionMenuItemDescriptionsMain[menuItem][selection];
     case MENU_DIFFICULTY:
@@ -831,15 +822,14 @@ void CB2_InitOptionPlusMenu(void)
         sOptions->sel[MENUITEM_MAIN_FONT]        = gSaveBlock2Ptr->optionsCurrentFont;
         sOptions->sel[MENUITEM_MAIN_HP_BAR]      = gSaveBlock2Ptr->optionsHpBarSpeed;
         sOptions->sel[MENUITEM_MAIN_EXP_BAR]     = gSaveBlock2Ptr->optionsExpBarSpeed;
+        sOptions->sel[MENUITEM_MAIN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel[MENUITEM_MAIN_MATCHCALL]   = gSaveBlock2Ptr->optionsDisableMatchCall;
         sOptions->sel[MENUITEM_MAIN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
         sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM] = gSaveBlock2Ptr->optionsUnitSystem;
         sOptions->sel[MENUITEM_MAIN_SOUND]       = gSaveBlock2Ptr->optionsSound;
-        sOptions->sel[MENUITEM_MAIN_FRAMETYPE]   = gSaveBlock2Ptr->optionsWindowFrameType;
 
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_MODE]        = gSaveBlock2Ptr->optionsDifficulty;
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_LEVELCAPS]   = gSaveBlock2Ptr->optionsLevelCap;
-        sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
         sOptions->sel_difficulty[MENUITEM_DIFFICULTY_VGC_DRAFT]   = gSaveBlock2Ptr->optionsVGCDraft;
 
@@ -1068,15 +1058,14 @@ static void SaveOptionsForExit(void)
     gSaveBlock2Ptr->optionsCurrentFont       = sOptions->sel[MENUITEM_MAIN_FONT];
     gSaveBlock2Ptr->optionsHpBarSpeed        = sOptions->sel[MENUITEM_MAIN_HP_BAR];
     gSaveBlock2Ptr->optionsExpBarSpeed       = sOptions->sel[MENUITEM_MAIN_EXP_BAR];
+    gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel[MENUITEM_MAIN_BATTLESCENE];
     gSaveBlock2Ptr->optionsDisableMatchCall  = sOptions->sel[MENUITEM_MAIN_MATCHCALL];
     gSaveBlock2Ptr->optionsButtonMode        = sOptions->sel[MENUITEM_MAIN_BUTTONMODE];
     gSaveBlock2Ptr->optionsUnitSystem        = sOptions->sel[MENUITEM_MAIN_UNIT_SYSTEM];
     gSaveBlock2Ptr->optionsSound             = sOptions->sel[MENUITEM_MAIN_SOUND];
-    gSaveBlock2Ptr->optionsWindowFrameType   = sOptions->sel[MENUITEM_MAIN_FRAMETYPE];
 
     gSaveBlock2Ptr->optionsDifficulty        = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_MODE];
     gSaveBlock2Ptr->optionsLevelCap          = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_LEVELCAPS];
-    gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESCENE];
     gSaveBlock2Ptr->optionsBattleStyle       = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_BATTLESTYLE];
     gSaveBlock2Ptr->optionsVGCDraft          = sOptions->sel_difficulty[MENUITEM_DIFFICULTY_VGC_DRAFT];
 
@@ -1229,31 +1218,6 @@ static int ProcessInput_Options_Eleven(int selection)
     return XOptions_ProcessInput(11, selection);
 }
 
-static int ProcessInput_FrameType(int selection)
-{
-    if (JOY_NEW(DPAD_RIGHT))
-    {
-        if (selection < WINDOW_FRAMES_COUNT - 1)
-            selection++;
-        else
-            selection = 0;
-
-        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
-        LoadPalette(GetWindowFrameTilesPal(selection)->pal, 0x70, 0x20);
-    }
-    if (JOY_NEW(DPAD_LEFT))
-    {
-        if (selection != 0)
-            selection--;
-        else
-            selection = WINDOW_FRAMES_COUNT - 1;
-
-        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
-        LoadPalette(GetWindowFrameTilesPal(selection)->pal, 0x70, 0x20);
-    }
-    return selection;
-}
-
 // Draw Choices functions ****GENERIC****
 static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style, bool8 active)
 {
@@ -1354,7 +1318,7 @@ static void DrawChoices_LevelCaps(int selection, int y)
 
 static void DrawChoices_BattleScene(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_BATTLESCENE);
+    bool8 active = CheckConditions(MENUITEM_MAIN_BATTLESCENE);
     u8 styles[2] = {0};
     styles[selection] = 1;
 
@@ -1374,7 +1338,7 @@ static void DrawChoices_BattleStyle(int selection, int y)
 
 static const u8 sText_VGCDraft_None[] = _("OFF");
 static const u8 sText_VGCDraft_Draft[] = _("DRAFT");
-static const u8 sText_VGCDraft_Both[] = _("BEST-OF-3");
+static const u8 sText_VGCDraft_Both[] = _("BO3");
 static void DrawChoices_VGCDraft(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIFFICULTY_VGC_DRAFT);
@@ -1436,38 +1400,6 @@ static void DrawChoices_UnitSystem(int selection, int y)
 
     DrawOptionMenuChoice(gText_UnitSystemImperial, 104, y, styles[0], active);
     DrawOptionMenuChoice(gText_UnitSystemMetric, GetStringRightAlignXOffset(1, gText_UnitSystemMetric, 198), y, styles[1], active);
-}
-
-static void DrawChoices_FrameType(int selection, int y)
-{
-    bool8 active = CheckConditions(MENUITEM_MAIN_FRAMETYPE);
-    u8 text[16];
-    u8 n = selection + 1;
-    u16 i;
-
-    for (i = 0; gText_FrameTypeNumber[i] != EOS && i <= 5; i++)
-        text[i] = gText_FrameTypeNumber[i];
-
-    // Convert a number to decimal string
-    if (n / 10 != 0)
-    {
-        text[i] = n / 10 + CHAR_0;
-        i++;
-        text[i] = n % 10 + CHAR_0;
-        i++;
-    }
-    else
-    {
-        text[i] = n % 10 + CHAR_0;
-        i++;
-        text[i] = 0x77;
-        i++;
-    }
-
-    text[i] = EOS;
-
-    DrawOptionMenuChoice(gText_FrameType, 104, y, 0, active);
-    DrawOptionMenuChoice(text, 128, y, 1, active);
 }
 
 static void DrawChoices_Font(int selection, int y)
