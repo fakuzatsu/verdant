@@ -2375,7 +2375,7 @@
       "id": "LAYOUT_SAFARI_ZONE_NORTHWEST",
       "name": "SafariZone_Northwest_Layout",
       "width": 40,
-      "height": 40,
+      "height": 41,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/SafariZone_Northwest/border.bin",
@@ -2385,7 +2385,7 @@
       "id": "LAYOUT_SAFARI_ZONE_NORTH",
       "name": "SafariZone_North_Layout",
       "width": 40,
-      "height": 40,
+      "height": 41,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/SafariZone_North/border.bin",
@@ -3935,7 +3935,7 @@
       "id": "LAYOUT_SAFARI_ZONE_NORTHEAST",
       "name": "SafariZone_Northeast_Layout",
       "width": 40,
-      "height": 40,
+      "height": 41,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/SafariZone_Northeast/border.bin",
@@ -4520,6 +4520,16 @@
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/SafariZone_Northeaster/border.bin",
       "blockdata_filepath": "data/layouts/SafariZone_Northeaster/map.bin"
+    },
+    {
+      "id": "LAYOUT_SAFARI_ZONE_NORTH_PASSAGE",
+      "name": "SafariZone_NorthPassage_Layout",
+      "width": 33,
+      "height": 13,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/SafariZone_NorthPassage/border.bin",
+      "blockdata_filepath": "data/layouts/SafariZone_NorthPassage/map.bin"
     }
   ]
 }
