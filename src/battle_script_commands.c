@@ -9,6 +9,7 @@
 #include "bw_summary_screen.h"
 #include "constants/moves.h"
 #include "constants/abilities.h"
+#include "battle_damage_numbers.h"
 #include "item.h"
 #include "util.h"
 #include "pokemon.h"
@@ -2245,6 +2246,9 @@ static void Cmd_healthbarupdate(void)
     if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT) || (gHitMarker & HITMARKER_PASSIVE_DAMAGE))
     {
         u32 battler = GetBattlerForBattleScript(cmd->battler);
+
+        if (!DN_CONFIG_ONLY_ATTACK_DAMAGE && DW_CONFIG_ENABLED)
+			ShowDamageNumbers(battler);
 
         if (DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove) && gDisableStructs[battler].substituteHP && !(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE))
         {
@@ -7708,6 +7712,8 @@ static void Cmd_hitanimation(void)
     }
     else if (!(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE) || !(DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove)) || gDisableStructs[battler].substituteHP == 0)
     {
+        if(DN_CONFIG_ONLY_ATTACK_DAMAGE && DW_CONFIG_ENABLED)
+			ShowDamageNumbers(battler);
         BtlController_EmitHitAnimation(battler, BUFFER_A);
         MarkBattlerForControllerExec(battler);
         gBattlescriptCurrInstr = cmd->nextInstr;
