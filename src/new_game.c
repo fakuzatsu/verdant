@@ -99,6 +99,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsLevelCap = OPTIONS_LEVEL_CAPS_OFF; //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsVGCDraft = OPTIONS_DRAFT_BO3_OFF;  //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
+    gSaveBlock2Ptr->optionsDamageNumsOff = TRUE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->optionsUnitSystem = 0;        //tx_optionsPlus
     gSaveBlock2Ptr->optionsHpBarSpeed = 0;        //tx_optionsPlus

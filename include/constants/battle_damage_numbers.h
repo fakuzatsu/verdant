@@ -1,8 +1,6 @@
 #ifndef GUARD_CONSTANTS_BATTLE_DAMAGE_NUMS_H
 #define GUARD_CONSTANTS_BATTLE_DAMAGE_NUMS_H
 
-#define DW_CONFIG_ENABLED TRUE
-
 #define DAMAGE_NUMBER_TIME 45 // Number of frames each number stays on-screen for
 #define DAMAGE_NUMBER_DELAY 2 // Number of frames in between each number appearing
 

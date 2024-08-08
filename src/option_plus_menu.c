@@ -45,6 +45,7 @@ enum
     MENUITEM_MAIN_FONT,
     MENUITEM_MAIN_HP_BAR,
     MENUITEM_MAIN_EXP_BAR,
+    MENUITEM_MAIN_DAMAGE_NUMS,
     MENUITEM_MAIN_BATTLESCENE,
     MENUITEM_MAIN_MATCHCALL,
     MENUITEM_MAIN_BUTTONMODE,
@@ -198,6 +199,7 @@ static void ReDrawAll(void);
 static void DrawChoices_TextSpeed(int selection, int y);
 static void DrawChoices_Difficulty(int selection, int y);
 static void DrawChoices_LevelCaps(int selection, int y);
+static void DrawChoices_DamageNums(int selection, int y);
 static void DrawChoices_BattleScene(int selection, int y);
 static void DrawChoices_BattleStyle(int selection, int y);
 static void DrawChoices_VGCDraft(int selection, int y);
@@ -256,6 +258,7 @@ struct // MENU_MAIN
     [MENUITEM_MAIN_FONT]         = {DrawChoices_Font,        ProcessInput_Options_Two}, 
     [MENUITEM_MAIN_HP_BAR]       = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
     [MENUITEM_MAIN_EXP_BAR]      = {DrawChoices_BarSpeed,    ProcessInput_Options_Eleven},
+    [MENUITEM_MAIN_DAMAGE_NUMS]  = {DrawChoices_DamageNums,  ProcessInput_Options_Two},
     [MENUITEM_MAIN_BATTLESCENE]  = {DrawChoices_BattleScene, ProcessInput_Options_Two},
     [MENUITEM_MAIN_MATCHCALL]    = {DrawChoices_MatchCall,   ProcessInput_Options_Two},
     [MENUITEM_MAIN_BUTTONMODE]   = {DrawChoices_ButtonMode,  ProcessInput_Options_Three},
@@ -293,6 +296,7 @@ struct // MENU_RANDOM
 // Menu left side option names text
 static const u8 sText_HpBar[]       = _("HP BAR");
 static const u8 sText_ExpBar[]      = _("EXP BAR");
+static const u8 sText_DamageNums[]  = _("DMG NUMBRS");
 static const u8 sText_UnitSystem[]  = _("UNIT SYSTEM");
 static const u8 sText_RandWild[]    = _("ENCOUNTERS");
 static const u8 sText_RandTrain[]   = _("TRAINERS");
@@ -307,6 +311,7 @@ static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
     [MENUITEM_MAIN_FONT]        = gText_Font,
     [MENUITEM_MAIN_HP_BAR]      = sText_HpBar,
     [MENUITEM_MAIN_EXP_BAR]     = sText_ExpBar,
+    [MENUITEM_MAIN_DAMAGE_NUMS] = sText_DamageNums,
     [MENUITEM_MAIN_BATTLESCENE] = gText_BattleScene,
     [MENUITEM_MAIN_MATCHCALL]   = gText_OptionMatchCalls,
     [MENUITEM_MAIN_BUTTONMODE]  = gText_ButtonMode,
@@ -361,6 +366,7 @@ static bool8 CheckConditions(int selection)
         case MENUITEM_MAIN_FONT:            return TRUE;
         case MENUITEM_MAIN_HP_BAR:          return TRUE;
         case MENUITEM_MAIN_EXP_BAR:         return TRUE;
+        case MENUITEM_MAIN_DAMAGE_NUMS:     return TRUE;
         case MENUITEM_MAIN_BATTLESCENE:     return TRUE;
         case MENUITEM_MAIN_MATCHCALL:       return TRUE;
         case MENUITEM_MAIN_BUTTONMODE:      return TRUE;
@@ -410,6 +416,8 @@ static const u8 sText_Desc_UnitSystemImperial[] = _("Display BERRY and POKéMON 
 static const u8 sText_Desc_UnitSystemMetric[]   = _("Display BERRY and POKéMON weight\nand size in kilograms and meters.");
 static const u8 sText_Desc_BattleHPBar[]        = _("Choose how fast the HP BAR will get\ndrained in battles.");
 static const u8 sText_Desc_BattleExpBar[]       = _("Choose how fast the EXP BAR will get\nfilled in battles.");
+static const u8 sText_Desc_DamageNums_On[]      = _("Floating numbers will appear when\nPokémon take damage.");
+static const u8 sText_Desc_DamageNums_Off[]     = _("Floating damage numbers will always\nbe hidden.");
 static const u8 sText_Desc_SurfOff[]            = _("Disables the SURF theme when\nusing SURF.");
 static const u8 sText_Desc_SurfOn[]             = _("Enables the SURF theme\nwhen using SURF.");
 static const u8 sText_Desc_BikeOff[]            = _("Disables the BIKE theme when\nusing the BIKE.");
@@ -439,6 +447,7 @@ static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
     [MENUITEM_MAIN_FONT]        = {sText_Desc_FontType,            sText_Desc_FontType,          sText_Empty},
     [MENUITEM_MAIN_HP_BAR]      = {sText_Desc_BattleHPBar,         sText_Empty,                  sText_Empty},
     [MENUITEM_MAIN_EXP_BAR]     = {sText_Desc_BattleExpBar,        sText_Empty,                  sText_Empty},
+    [MENUITEM_MAIN_DAMAGE_NUMS] = {sText_Desc_DamageNums_On,       sText_Desc_DamageNums_Off,    sText_Empty},
     [MENUITEM_MAIN_BATTLESCENE] = {sText_Desc_BattleScene_On,      sText_Desc_BattleScene_Off,   sText_Empty},
     [MENUITEM_MAIN_MATCHCALL]   = {sText_Desc_OverworldCallsOn,    sText_Desc_OverworldCallsOff, sText_Empty},
     [MENUITEM_MAIN_BUTTONMODE]  = {sText_Desc_ButtonMode,          sText_Desc_ButtonMode_LR,     sText_Desc_ButtonMode_LA},
@@ -472,6 +481,7 @@ static const u8 *const sOptionMenuItemDescriptionsDisabledMain[MENUITEM_MAIN_COU
     [MENUITEM_MAIN_FONT]              = sText_Empty,
     [MENUITEM_MAIN_HP_BAR]            = sText_Empty,
     [MENUITEM_MAIN_EXP_BAR]           = sText_Empty,
+    [MENUITEM_MAIN_DAMAGE_NUMS]       = sText_Empty,
     [MENUITEM_MAIN_BATTLESCENE]       = sText_Empty,
     [MENUITEM_MAIN_MATCHCALL]         = sText_Empty,
     [MENUITEM_MAIN_BUTTONMODE]        = sText_Empty,
@@ -822,6 +832,7 @@ void CB2_InitOptionPlusMenu(void)
         sOptions->sel[MENUITEM_MAIN_FONT]        = gSaveBlock2Ptr->optionsCurrentFont;
         sOptions->sel[MENUITEM_MAIN_HP_BAR]      = gSaveBlock2Ptr->optionsHpBarSpeed;
         sOptions->sel[MENUITEM_MAIN_EXP_BAR]     = gSaveBlock2Ptr->optionsExpBarSpeed;
+        sOptions->sel[MENUITEM_MAIN_DAMAGE_NUMS] = gSaveBlock2Ptr->optionsDamageNumsOff;
         sOptions->sel[MENUITEM_MAIN_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel[MENUITEM_MAIN_MATCHCALL]   = gSaveBlock2Ptr->optionsDisableMatchCall;
         sOptions->sel[MENUITEM_MAIN_BUTTONMODE]  = gSaveBlock2Ptr->optionsButtonMode;
@@ -1058,6 +1069,7 @@ static void SaveOptionsForExit(void)
     gSaveBlock2Ptr->optionsCurrentFont       = sOptions->sel[MENUITEM_MAIN_FONT];
     gSaveBlock2Ptr->optionsHpBarSpeed        = sOptions->sel[MENUITEM_MAIN_HP_BAR];
     gSaveBlock2Ptr->optionsExpBarSpeed       = sOptions->sel[MENUITEM_MAIN_EXP_BAR];
+    gSaveBlock2Ptr->optionsDamageNumsOff     = sOptions->sel[MENUITEM_MAIN_DAMAGE_NUMS];
     gSaveBlock2Ptr->optionsBattleSceneOff    = sOptions->sel[MENUITEM_MAIN_BATTLESCENE];
     gSaveBlock2Ptr->optionsDisableMatchCall  = sOptions->sel[MENUITEM_MAIN_MATCHCALL];
     gSaveBlock2Ptr->optionsButtonMode        = sOptions->sel[MENUITEM_MAIN_BUTTONMODE];
@@ -1314,6 +1326,16 @@ static void DrawChoices_LevelCaps(int selection, int y)
     DrawOptionMenuChoice(sText_LevelCaps_Off, 104, y, styles[0], active);
     DrawOptionMenuChoice(sText_LevelCaps_Soft, xMid, y, styles[1], active);
     DrawOptionMenuChoice(sText_LevelCaps_Hard, GetStringRightAlignXOffset(1, sText_LevelCaps_Hard, 198), y, styles[2], active);
+}
+
+static void DrawChoices_DamageNums(int selection, int y)
+{
+    bool8 active = CheckConditions(MENUITEM_MAIN_DAMAGE_NUMS);
+    u8 styles[2] = {0};
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_BattleSceneOn, 104, y, styles[0], active);
+    DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), y, styles[1], active);
 }
 
 static void DrawChoices_BattleScene(int selection, int y)
