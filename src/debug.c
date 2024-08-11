@@ -11,6 +11,7 @@
 #include "battle.h"
 #include "battle_setup.h"
 #include "berry.h"
+#include "best_of_three.h"
 #include "clock.h"
 #include "coins.h"
 #include "credits.h"
@@ -509,7 +510,7 @@ static const u8 sDebugText_Cancel[] =        _("Cancel");
 // Script menu
 static const u8 sDebugText_Util_DayNight[]      = _("Toggle Day Night");
 static const u8 sDebugText_Util_CheckMemory[]   = _("Check Mon Memory");
-static const u8 sDebugText_Util_Script_3[]      = _("Script 3");
+static const u8 sDebugText_Util_Script_3[]      = _("Show BO3 Menu");
 static const u8 sDebugText_Util_Script_4[]      = _("Script 4");
 static const u8 sDebugText_Util_Script_5[]      = _("Script 5");
 static const u8 sDebugText_Util_Script_6[]      = _("Script 6");
@@ -2381,7 +2382,7 @@ static void DebugAction_Util_CheckMemory(u8 taskId)
 
 static void DebugAction_Util_Script_3(u8 taskId)
 {
-    Debug_DestroyMenu_Full_Script(taskId, Debug_EventScript_Script_3);
+    Task_OpenMenuFromStartMenu(taskId);
 }
 
 static void DebugAction_Util_Script_4(u8 taskId)

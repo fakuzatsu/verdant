@@ -3390,8 +3390,8 @@ extern const u8 gUnknown_8E99118[];
 extern const u16 gTMCaseMainWindowPalette[];
 
 // Scrolling BL/WH Background
-extern const u32 sScrollBgTiles[];
-extern const u32 sScrollBgTilemap[];
-extern const u16 sScrollBgPalette[];
+extern const u32 gScrollBgTiles[];
+extern const u32 gScrollBgTilemap[];
+extern const u16 gScrollBgPalette[];
 
 #endif //GUARD_GRAPHICS_H

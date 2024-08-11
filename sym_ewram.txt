@@ -155,3 +155,4 @@
 	.include "src/tm_case.o"
 	.include "src/option_plus_menu.o"
 	.include "src/dexnav.o"
+	.include "src/best_of_three.o"

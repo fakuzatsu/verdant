@@ -734,19 +734,19 @@ static bool8 OptionsMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, 
         break;
     case 2:
         ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(3, sScrollBgTiles, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(3, gScrollBgTiles, 0, 0, 0);
         sOptions->gfxLoadState++;
         break;
     case 3:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(sScrollBgTilemap, sBg3TilemapBuffer);
+            LZDecompressWram(gScrollBgTilemap, sBg3TilemapBuffer);
             sOptions->gfxLoadState++;
         }
         break;
     case 4:
         LoadPalette(sOptionsPlusPalette, 64, 32);
-        LoadPalette(sScrollBgPalette, 32, 32);
+        LoadPalette(gScrollBgPalette, 32, 32);
         sOptions->gfxLoadState++;
         break;
     default:
