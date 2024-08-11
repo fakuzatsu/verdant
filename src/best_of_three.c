@@ -54,7 +54,6 @@ enum WindowIds
 //==========EWRAM==========//
 static EWRAM_DATA struct MenuResources *sMenuDataPtr = NULL;
 static EWRAM_DATA u8 *sBg2TilemapBuffer = NULL; // BO3InfoCard
-static EWRAM_DATA u8 *sBg3TilemapBuffer = NULL; // ScrollBgTilemap
 
 //==========STATIC=DEFINES==========//
 static void Menu_RunSetup(void);
@@ -93,14 +92,6 @@ static const struct BgTemplate sMenuBgTemplates[] =
         .screenSize = 0,
         .paletteMode = 0,
         .priority = 1,
-    },
-    {
-        .bg = 3,     // sBg3TilemapBuffer
-        .charBaseIndex = 3,
-        .mapBaseIndex = 27,
-        .screenSize = 0,
-        .paletteMode = 0,
-        .priority = 2,
     },
 };
 
@@ -260,7 +251,6 @@ static void Menu_FreeResources(void)
 {
     try_free(sMenuDataPtr);
     try_free(sBg2TilemapBuffer);
-    try_free(sBg3TilemapBuffer);
     FreeAllWindowBuffers();
 }
 
@@ -296,13 +286,6 @@ static bool8 Menu_InitBgs(void)
     SetBgTilemapBuffer(2, sBg2TilemapBuffer);
     ScheduleBgCopyTilemapToVram(2);
 
-    sBg3TilemapBuffer = Alloc(0x800);
-    if (sBg3TilemapBuffer == NULL)
-        return FALSE;
-    memset(sBg3TilemapBuffer, 0, 0x800);
-    SetBgTilemapBuffer(3, sBg3TilemapBuffer);
-    ScheduleBgCopyTilemapToVram(3);
-
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
@@ -327,20 +310,7 @@ static bool8 Menu_LoadGraphics(void)
         }
         break;
     case 2:
-        ResetTempTileDataBuffers();
-        DecompressAndCopyTileDataToVram(3, gScrollBgTiles, 0, 0, 0);
-        sMenuDataPtr->gfxLoadState++;
-        break;
-    case 3:
-        if (FreeTempTileDataBuffersIfPossible() != TRUE)
-        {
-            LZDecompressWram(gScrollBgTilemap, sBg3TilemapBuffer);
-            sMenuDataPtr->gfxLoadState++;
-        }
-        break;
-    case 4:
-        LoadPalette(sBO3InfoCard_Pal, 0, PLTT_SIZE_4BPP);
-        LoadPalette(gScrollBgPalette, 32, 32);
+        LoadPalette(sBO3InfoCard_Pal, 0, PLTT_SIZE_8BPP);
         sMenuDataPtr->gfxLoadState++;
         break;
     default:
