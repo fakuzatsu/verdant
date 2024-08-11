@@ -4530,6 +4530,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/SafariZone_NorthPassage/border.bin",
       "blockdata_filepath": "data/layouts/SafariZone_NorthPassage/map.bin"
+    },
+    {
+      "id": "LAYOUT_GROTTO09",
+      "name": "Grotto09_Layout",
+      "width": 28,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Grotto09/border.bin",
+      "blockdata_filepath": "data/layouts/Grotto09/map.bin"
     }
   ]
 }
