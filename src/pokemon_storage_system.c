@@ -60,6 +60,8 @@
 #define PARTY_MENU_SCROLL_DELTA 2
 #define PARTY_MENU_ADJUSTED_SCROLL_TIMER (20/PARTY_MENU_SCROLL_DELTA)
 
+#define COMPACT_PARTY_SPRITES_DELTA 2
+
 // PC main menu options
 enum {
     OPTION_WITHDRAW,
@@ -4872,9 +4874,9 @@ static void MovePartySpriteToNextSlot(struct Sprite *sprite, u16 partyId)
 
     sprite->sMonX = (u16)(sprite->x) * 8;
     sprite->sMonY = (u16)(sprite->y) * 8;
-    sprite->sSpeedX = ((x * 8) - sprite->sMonX) / 8;
-    sprite->sSpeedY = ((y * 8) - sprite->sMonY) / 8;
-    sprite->data[6] = 8;
+    sprite->sSpeedX = ((x * 8) - sprite->sMonX) / (8 / COMPACT_PARTY_SPRITES_DELTA);
+    sprite->sSpeedY = ((y * 8) - sprite->sMonY) / (8 / COMPACT_PARTY_SPRITES_DELTA);
+    sprite->sMoveSteps = (8 / COMPACT_PARTY_SPRITES_DELTA);
     sprite->callback = SpriteCB_MovePartyMonToNextSlot;
 }
 
