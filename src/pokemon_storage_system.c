@@ -62,6 +62,8 @@
 
 #define COMPACT_PARTY_SPRITES_DELTA 2
 
+#define MON_HAND_DELTA 2
+
 // PC main menu options
 enum {
     OPTION_WITHDRAW,
@@ -5030,8 +5032,8 @@ static bool8 MoveShiftingMons(void)
     if (sStorage->shiftTimer == 16)
         return FALSE;
 
-    sStorage->shiftTimer++;
-    if (sStorage->shiftTimer & 1)
+    sStorage->shiftTimer += MON_HAND_DELTA;
+    if (MON_HAND_DELTA >= 2 || sStorage->shiftTimer & 1)
     {
         (*sStorage->shiftMonSpritePtr)->y--;
         sStorage->movingMonSprite->y++;
@@ -6401,10 +6403,10 @@ static bool8 MonPlaceChange_CursorDown(void)
     switch (sStorage->cursorSprite->y2)
     {
     default:
-        sStorage->cursorSprite->y2++;
+        sStorage->cursorSprite->y2 += MON_HAND_DELTA;
         break;
     case 0:
-        sStorage->cursorSprite->y2++;
+        sStorage->cursorSprite->y2 += MON_HAND_DELTA;
         break;
     case 8: // Cursor has reached bottom
         return FALSE;
@@ -6420,7 +6422,7 @@ static bool8 MonPlaceChange_CursorUp(void)
     case 0: // Cursor has reached top
         return FALSE;
     default:
-        sStorage->cursorSprite->y2--;
+        sStorage->cursorSprite->y2 -= MON_HAND_DELTA;
         break;
     }
 
