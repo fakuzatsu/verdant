@@ -50,6 +50,13 @@
           types of functions are likely located.
 */
 
+#define INSTANT_BOX 0
+
+#define BOX_SCROLL_SPEED_FACTOR 4
+#define BOX_SCROLL_ARROWS_START_X_DELTA 12
+
+#define BOX_SCROLL_SPEED(input) ((input) * 6 * BOX_SCROLL_SPEED_FACTOR)
+
 // PC main menu options
 enum {
     OPTION_WITHDRAW,
@@ -466,7 +473,7 @@ struct PokemonStorageSystemData
     u8 incomingBoxId;
     u8 shiftTimer;
     u8 numPartyToCompact;
-    u16 iconScrollDistance;
+    s16 iconScrollDistance;
     s16 iconScrollPos;
     s16 iconScrollSpeed;
     u16 iconScrollNumIncoming;
@@ -792,9 +799,14 @@ static struct Sprite *CreateChooseBoxArrows(u16, u16, u8, u8, u8);
 // Box title
 static void InitBoxTitle(u8);
 static void CreateIncomingBoxTitle(u8, s8);
+static void CreateInstantIncomingBoxTitle(u8 boxId, s8 direction);
 static void CycleBoxTitleSprites(void);
 static void SpriteCB_IncomingBoxTitle(struct Sprite *);
 static void SpriteCB_OutgoingBoxTitle(struct Sprite *);
+
+static void SpriteCB_InstantIncomingBoxTitle(struct Sprite *);
+static void SpriteCB_InstantOutgoingBoxTitle(struct Sprite *);
+
 static void CycleBoxTitleColor(void);
 static s16 GetBoxTitleBaseX(const u8 *);
 
@@ -4517,7 +4529,7 @@ static void SpriteCB_BoxMonIconScrollIn(struct Sprite *sprite)
     if (sprite->sDistance != 0)
     {
         // Icon moving
-        sprite->sDistance--;
+        sprite->sDistance -= BOX_SCROLL_SPEED_FACTOR;
         sprite->x += sprite->sSpeed;
     }
     else
@@ -4547,6 +4559,17 @@ static void SpriteCB_BoxMonIconScrollOut(struct Sprite *sprite)
     }
 }
 
+static void DestroyAllBoxMonIcons(void)
+{
+    u32 boxPosition;
+    for (boxPosition = 0; boxPosition < IN_BOX_ROWS * IN_BOX_COLUMNS; boxPosition++) {
+        if (sStorage->boxMonsSprites[boxPosition] != NULL) {
+            DestroyBoxMonIcon(sStorage->boxMonsSprites[boxPosition]);
+            sStorage->boxMonsSprites[boxPosition] = NULL;
+        }
+    }
+}
+
 // Sprites for Pokémon icons are destroyed during
 // the box scroll once they've gone offscreen
 static void DestroyBoxMonIconsInColumn(u8 column)
@@ -4571,7 +4594,8 @@ static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
     s32 i;
     u16 y = 44;
     s16 xDest = 8 * (3 * column) + 100;
-    u16 x = xDest - ((distance + 1) * speed);
+    s32 speedSign = (speed >= 0) ? 1 : -1;
+    u16 x = xDest - ((distance + BOX_SCROLL_SPEED_FACTOR ) * speedSign * 6);
     u8 subpriority = 19 - column;
     u8 iconsCreated = 0;
     u8 boxPosition = column;
@@ -4640,7 +4664,7 @@ static void InitBoxMonIconScroll(u8 boxId, s8 direction)
     sStorage->iconScrollToBoxId = boxId;
     sStorage->iconScrollDirection = direction;
     sStorage->iconScrollDistance = 32;
-    sStorage->iconScrollSpeed = -(6 * direction);
+    sStorage->iconScrollSpeed = -BOX_SCROLL_SPEED(direction);
     sStorage->iconScrollNumIncoming = 0;
     GetIncomingBoxMonData(boxId);
     if (direction > 0)
@@ -4652,10 +4676,31 @@ static void InitBoxMonIconScroll(u8 boxId, s8 direction)
     StartBoxMonIconsScrollOut(sStorage->iconScrollSpeed);
 }
 
+static bool32 InstantBoxMonIconScroll(u32 boxId)
+{
+    switch (sStorage->iconScrollState) {
+    case 0:
+        DestroyAllBoxMonIcons();
+        sStorage->iconScrollState++;
+        break;
+    case 1:
+        InitBoxMonSprites(boxId);
+        sStorage->bg2_X += sStorage->scrollSpeed * sStorage->scrollTimer;
+        sStorage->iconScrollState++;
+        break;
+    case 2:
+        sStorage->iconScrollDistance = 0;
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 static bool8 UpdateBoxMonIconScroll(void)
 {
-    if (sStorage->iconScrollDistance != 0)
-        sStorage->iconScrollDistance--;
+    if (sStorage->iconScrollDistance >= 0) {
+        sStorage->iconScrollDistance = max(sStorage->iconScrollDistance - BOX_SCROLL_SPEED_FACTOR, 0);
+    }
 
     switch (sStorage->iconScrollState)
     {
@@ -4667,11 +4712,13 @@ static bool8 UpdateBoxMonIconScroll(void)
             DestroyBoxMonIconsInColumn(sStorage->iconScrollCurColumn);
             sStorage->iconScrollPos += sStorage->iconScrollDirection * 24;
             sStorage->iconScrollState++;
+        } else {
+            break;
         }
-        break;
+        // fallthrough
     case 1:
         // Create the new incoming column of icons
-        sStorage->iconScrollPos += sStorage->iconScrollSpeed;
+        //sStorage->iconScrollPos += sStorage->iconScrollSpeed;
         sStorage->iconScrollNumIncoming += CreateBoxMonIconsInColumn(sStorage->iconScrollCurColumn, sStorage->iconScrollDistance, sStorage->iconScrollSpeed);
 
         if ((sStorage->iconScrollDirection > 0 && sStorage->iconScrollCurColumn == IN_BOX_COLUMNS - 1)
@@ -5241,9 +5288,9 @@ static void SetUpScrollToBox(u8 boxId)
 {
     s8 direction = DetermineBoxScrollDirection(boxId);
 
-    sStorage->scrollSpeed = (direction > 0) ? 6 : -6;
+    sStorage->scrollSpeed = BOX_SCROLL_SPEED((direction > 0) ? 1 : -1);
     sStorage->scrollUnused1 = (direction > 0) ? 1 : 2;
-    sStorage->scrollTimer = 32;
+    sStorage->scrollTimer = 32 / BOX_SCROLL_SPEED_FACTOR;
     sStorage->scrollToBoxIdUnused = boxId;
     sStorage->scrollUnused2 = (direction <= 0) ? 5 : 0;
     sStorage->scrollDirectionUnused = direction;
@@ -5271,20 +5318,35 @@ static bool8 ScrollToBox(void)
             return TRUE;
 
         InitBoxMonIconScroll(sStorage->scrollToBoxId, sStorage->scrollDirection);
-        CreateIncomingBoxTitle(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        if (INSTANT_BOX) {
+            CreateInstantIncomingBoxTitle(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        } else {
+            CreateIncomingBoxTitle(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        }
         StartBoxScrollArrowsSlide(sStorage->scrollDirection);
         break;
     case 2:
-        iconsScrolling = UpdateBoxMonIconScroll();
-        if (sStorage->scrollTimer != 0)
-        {
-            sStorage->bg2_X += sStorage->scrollSpeed;
-            if (--sStorage->scrollTimer != 0)
-                return TRUE;
-            CycleBoxTitleSprites();
-            StopBoxScrollArrowsSlide();
+        if (INSTANT_BOX) {
+            if (!InstantBoxMonIconScroll(sStorage->scrollToBoxId)) {
+                sStorage->scrollTimer = 0;
+                CycleBoxTitleSprites();
+                StopBoxScrollArrowsSlide();
+                return FALSE;
+            }
+            return TRUE;
+        } else {
+            iconsScrolling = UpdateBoxMonIconScroll();
+            if (sStorage->scrollTimer != 0)
+            {
+                sStorage->bg2_X += sStorage->scrollSpeed;
+                if (--sStorage->scrollTimer != 0)
+                    return TRUE;
+                CycleBoxTitleSprites();
+                StopBoxScrollArrowsSlide();
+            }
+            return iconsScrolling;
         }
-        return iconsScrolling;
+        
     }
 
     sStorage->scrollState++;
@@ -5380,7 +5442,7 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         if (sStorage->wallpaperLoadDir != 0)
             LoadPalette(wallpaper->palettes, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
         else
-            CpuCopy16(wallpaper->palettes, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
+            CpuFastCopy(wallpaper->palettes, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
 
         sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
         LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
@@ -5391,18 +5453,18 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         LZ77UnCompWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
         DrawWallpaper(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
 
-        CpuCopy16(wallpaper->palettes, sStorage->wallpaperTilemap, 0x40);
+        CpuFastCopy(wallpaper->palettes, sStorage->wallpaperTilemap, 0x40);
         CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[1], 4);
         CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[17], 4);
 
         if (sStorage->wallpaperLoadDir != 0)
             LoadPalette(sStorage->wallpaperTilemap, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
         else
-            CpuCopy16(sStorage->wallpaperTilemap, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
+            CpuFastCopy(sStorage->wallpaperTilemap, &gPlttBufferUnfaded[BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2)], 2 * PLTT_SIZE_4BPP);
 
         sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
         iconGfx = malloc_and_decompress(sWaldaWallpaperIcons[GetWaldaWallpaperIconId()], &iconSize);
-        CpuCopy32(iconGfx, sStorage->wallpaperTiles + 0x800, iconSize);
+        CpuFastCopy(iconGfx, sStorage->wallpaperTiles + 0x800, iconSize);
         Free(iconGfx);
         LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
     }
@@ -5556,15 +5618,61 @@ static void CreateIncomingBoxTitle(u8 boxId, s8 direction)
         u8 spriteId = CreateSprite(&template, i * 32 + adjustedX, 28, 24);
 
         sStorage->nextBoxTitleSprites[i] = &gSprites[spriteId];
-        sStorage->nextBoxTitleSprites[i]->sSpeed = (-direction) * 6;
+        sStorage->nextBoxTitleSprites[i]->sSpeed = BOX_SCROLL_SPEED(-direction);
         sStorage->nextBoxTitleSprites[i]->sIncomingX = i * 32 + x;
-        sStorage->nextBoxTitleSprites[i]->sIncomingDelay = 0;
+        sStorage->nextBoxTitleSprites[i]->sIncomingDelay = 1;
         sStorage->nextBoxTitleSprites[i]->callback = SpriteCB_IncomingBoxTitle;
         StartSpriteAnim(sStorage->nextBoxTitleSprites[i], i);
 
-        sStorage->curBoxTitleSprites[i]->sSpeed = (-direction) * 6;
+        sStorage->curBoxTitleSprites[i]->sSpeed = BOX_SCROLL_SPEED(-direction);
         sStorage->curBoxTitleSprites[i]->sOutgoingDelay = 1;
         sStorage->curBoxTitleSprites[i]->callback = SpriteCB_OutgoingBoxTitle;
+    }
+}
+
+static void CreateInstantIncomingBoxTitle(u8 boxId, s8 direction)
+{
+    u16 palOffset;
+    s16 x, adjustedX;
+    u16 i;
+    struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
+    struct SpriteTemplate template = sSpriteTemplate_BoxTitle;
+
+    sStorage->boxTitleCycleId = (sStorage->boxTitleCycleId == 0);
+    if (sStorage->boxTitleCycleId == 0)
+    {
+        spriteSheet.tag = GFXTAG_BOX_TITLE;
+        palOffset = sStorage->boxTitlePalOffset;
+    }
+    else
+    {
+        spriteSheet.tag = GFXTAG_BOX_TITLE_ALT;
+        palOffset = sStorage->boxTitlePalOffset;
+        template.tileTag = GFXTAG_BOX_TITLE_ALT;
+        template.paletteTag = PALTAG_BOX_TITLE;
+    }
+
+    StringCopyPadded(sStorage->boxTitleText, GetBoxNamePtr(boxId), 0, BOX_NAME_LENGTH);
+    DrawTextWindowAndBufferTiles(sStorage->boxTitleText, sStorage->boxTitleTiles, 0, 0, 2);
+    LoadSpriteSheet(&spriteSheet);
+    LoadPalette(sBoxTitleColors[GetBoxWallpaper(boxId)], palOffset, sizeof(sBoxTitleColors[0]));
+    x = GetBoxTitleBaseX(GetBoxNamePtr(boxId));
+    adjustedX = x;
+    adjustedX += direction * 192;
+
+    // Title is split across two sprites
+    for (i = 0; i < 2; i++)
+    {
+        u8 spriteId = CreateSprite(&template, i * 32 + x, 28, 24);
+
+        sStorage->nextBoxTitleSprites[i] = &gSprites[spriteId];
+        sStorage->nextBoxTitleSprites[i]->sIncomingDelay = 1;
+        sStorage->nextBoxTitleSprites[i]->callback = SpriteCB_InstantIncomingBoxTitle;
+        sStorage->nextBoxTitleSprites[i]->invisible = TRUE;
+        StartSpriteAnim(sStorage->nextBoxTitleSprites[i], i);
+
+        sStorage->curBoxTitleSprites[i]->sOutgoingDelay = 1;
+        sStorage->curBoxTitleSprites[i]->callback = SpriteCB_InstantOutgoingBoxTitle;
     }
 }
 
@@ -5599,6 +5707,28 @@ static void SpriteCB_OutgoingBoxTitle(struct Sprite *sprite)
         sprite->sOutgoingX = sprite->x + sprite->x2;
         if (sprite->sOutgoingX < 64 || sprite->sOutgoingX > DISPLAY_WIDTH + 16)
             DestroySprite(sprite);
+    }
+}
+
+static void SpriteCB_InstantIncomingBoxTitle(struct Sprite *sprite)
+{
+    if (sprite->sIncomingDelay != 0)
+        sprite->sIncomingDelay--;
+    else {
+        sprite->invisible = FALSE;
+        sprite->callback = SpriteCallbackDummy;
+    }
+}
+
+static void SpriteCB_InstantOutgoingBoxTitle(struct Sprite *sprite)
+{
+    if (sprite->sOutgoingDelay != 0)
+    {
+        sprite->sOutgoingDelay--;
+    }
+    else
+    {
+        DestroySprite(sprite);
     }
 }
 
@@ -5667,16 +5797,16 @@ static void StartBoxScrollArrowsSlide(s8 direction)
     if (direction < 0)
     {
         sStorage->arrowSprites[0]->sTimer = 29;
-        sStorage->arrowSprites[1]->sTimer = 5;
-        sStorage->arrowSprites[0]->data[2] = 72;
-        sStorage->arrowSprites[1]->data[2] = 72;
+        sStorage->arrowSprites[1]->sTimer = 1;
+        sStorage->arrowSprites[0]->data[2] = 72 - BOX_SCROLL_ARROWS_START_X_DELTA;
+        sStorage->arrowSprites[1]->data[2] = 72 - BOX_SCROLL_ARROWS_START_X_DELTA;
     }
     else
     {
-        sStorage->arrowSprites[0]->sTimer = 5;
+        sStorage->arrowSprites[0]->sTimer = 1;
         sStorage->arrowSprites[1]->sTimer = 29;
-        sStorage->arrowSprites[0]->data[2] = DISPLAY_WIDTH + 8;
-        sStorage->arrowSprites[1]->data[2] = DISPLAY_WIDTH + 8;
+        sStorage->arrowSprites[0]->data[2] = DISPLAY_WIDTH + 8 + BOX_SCROLL_ARROWS_START_X_DELTA;
+        sStorage->arrowSprites[1]->data[2] = DISPLAY_WIDTH + 8 + BOX_SCROLL_ARROWS_START_X_DELTA;
     }
     sStorage->arrowSprites[0]->data[7] = 0;
     sStorage->arrowSprites[1]->data[7] = 1;
@@ -5881,7 +6011,7 @@ static bool8 UpdateCursorPos(void)
         else
             return IsItemIconAnimActive();
     }
-    else if (--sStorage->cursorMoveSteps != 0)
+    else if (!INSTANT_BOX && --sStorage->cursorMoveSteps != 0)
     {
         // Update position toward target
         sStorage->cursorNewX += sStorage->cursorSpeedX;
@@ -5923,6 +6053,7 @@ static bool8 UpdateCursorPos(void)
     }
     else
     {
+        sStorage->cursorMoveSteps = 0;
         // Time is up for cursor movement, make sure it's exactly at target
         sStorage->cursorSprite->x = sStorage->cursorTargetX;
         sStorage->cursorSprite->y = sStorage->cursorTargetY;
@@ -5948,9 +6079,9 @@ static void InitCursorMove(void)
     int yDistance, xDistance;
 
     if (sStorage->cursorVerticalWrap != 0 || sStorage->cursorHorizontalWrap != 0)
-        sStorage->cursorMoveSteps = 12;
+        sStorage->cursorMoveSteps = 3;
     else
-        sStorage->cursorMoveSteps = 6;
+        sStorage->cursorMoveSteps = 3;
 
     if (sStorage->cursorFlipTimer)
         sStorage->cursorFlipTimer = sStorage->cursorMoveSteps >> 1;
@@ -7010,6 +7141,8 @@ static u8 HandleInput_InBox(void)
         return InBoxInput_MovingMultiple();
     }
 }
+
+#define JOY_REPEAT(key) (INSTANT_BOX ? JOY_REPEAT(key) : JOY_REPEAT(key))
 
 static u8 InBoxInput_Normal(void)
 {
