@@ -52,6 +52,9 @@
 
 #define INSTANT_BOX 0
 
+#define CURSOR_MOVE_BASE_STEPS_WRAP 3
+#define CURSOR_MOVE_BASE_STEPS_NO_WRAP 3
+
 #define BOX_SCROLL_SPEED_FACTOR 4
 #define BOX_SCROLL_ARROWS_START_X_DELTA 12
 
@@ -6086,9 +6089,9 @@ static void InitCursorMove(void)
     int yDistance, xDistance;
 
     if (sStorage->cursorVerticalWrap != 0 || sStorage->cursorHorizontalWrap != 0)
-        sStorage->cursorMoveSteps = 3;
+        sStorage->cursorMoveSteps = CURSOR_MOVE_BASE_STEPS_WRAP;
     else
-        sStorage->cursorMoveSteps = 3;
+        sStorage->cursorMoveSteps = CURSOR_MOVE_BASE_STEPS_NO_WRAP;
 
     if (sStorage->cursorFlipTimer)
         sStorage->cursorFlipTimer = sStorage->cursorMoveSteps >> 1;
@@ -8396,7 +8399,7 @@ static bool8 MultiMove_GrabSelection(void)
         if (!DoMonPlaceChange())
         {
             StartCursorAnim(CURSOR_ANIM_FIST);
-            MultiMove_InitMove(0, 256, 8);
+            MultiMove_InitMove(0, 256*MON_HAND_DELTA, 8/MON_HAND_DELTA);
             InitMultiMonPlaceChange(TRUE);
             sMultiMove->state++;
         }
@@ -8429,7 +8432,7 @@ static bool8 MultiMove_PlaceMons(void)
     {
     case 0:
         MultiMove_SetPlacedMonData();
-        MultiMove_InitMove(0, -256, 8);
+        MultiMove_InitMove(0, -256*MON_HAND_DELTA, 8/MON_HAND_DELTA);
         InitMultiMonPlaceChange(FALSE);
         sMultiMove->state++;
         break;
@@ -8473,25 +8476,25 @@ static bool8 MultiMove_TryMoveGroup(u8 dir)
         if (sMultiMove->minRow == 0)
             return FALSE;
         sMultiMove->minRow--;
-        MultiMove_InitMove(0, 1024, 6);
+        MultiMove_InitMove(0, 1024 * (6/CURSOR_MOVE_BASE_STEPS_NO_WRAP), CURSOR_MOVE_BASE_STEPS_NO_WRAP);
         break;
     case 1: // Down
         if (sMultiMove->minRow + sMultiMove->rowsTotal >= IN_BOX_ROWS)
             return FALSE;
         sMultiMove->minRow++;
-        MultiMove_InitMove(0, -1024, 6);
+        MultiMove_InitMove(0, -1024 * (6/CURSOR_MOVE_BASE_STEPS_NO_WRAP), CURSOR_MOVE_BASE_STEPS_NO_WRAP);
         break;
     case 2: // Left
         if (sMultiMove->minColumn == 0)
             return FALSE;
         sMultiMove->minColumn--;
-        MultiMove_InitMove(1024, 0, 6);
+        MultiMove_InitMove(1024 * (6/CURSOR_MOVE_BASE_STEPS_NO_WRAP), 0, CURSOR_MOVE_BASE_STEPS_NO_WRAP);
         break;
     case 3: // Right
         if (sMultiMove->minColumn + sMultiMove->columnsTotal >= IN_BOX_COLUMNS)
             return FALSE;
         sMultiMove->minColumn++;
-        MultiMove_InitMove(-1024, 0, 6);
+        MultiMove_InitMove(-1024 * (6/CURSOR_MOVE_BASE_STEPS_NO_WRAP), 0, CURSOR_MOVE_BASE_STEPS_NO_WRAP);
         break;
     }
     return TRUE;
