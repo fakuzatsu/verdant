@@ -68,7 +68,7 @@ u16 gKeyRepeatContinueDelay;
 bool8 gSoftResetDisabled;
 IntrFunc gIntrTable[INTR_COUNT];
 u8 gLinkVSyncDisabled;
-u32 IntrMain_Buffer[0x200];
+u32 IntrMain_Buffer[0x80]; // Reduced to make more IWRAM space
 s8 gPcmDmaCounter;
 void *gAgbMainLoop_sp;
 
