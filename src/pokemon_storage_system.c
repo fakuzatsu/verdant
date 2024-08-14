@@ -57,6 +57,9 @@
 
 #define BOX_SCROLL_SPEED(input) ((input) * 6 * BOX_SCROLL_SPEED_FACTOR)
 
+#define PARTY_MENU_SCROLL_DELTA 2
+#define PARTY_MENU_ADJUSTED_SCROLL_TIMER (20/PARTY_MENU_SCROLL_DELTA)
+
 // PC main menu options
 enum {
     OPTION_WITHDRAW,
@@ -4090,16 +4093,16 @@ static void SetUpShowPartyMenu(void)
 
 static bool8 ShowPartyMenu(void)
 {
-    if (sStorage->partyMenuMoveTimer == 20)
+    if (sStorage->partyMenuMoveTimer == PARTY_MENU_ADJUSTED_SCROLL_TIMER)
         return FALSE;
 
     sStorage->partyMenuUnused1--;
-    sStorage->partyMenuY++;
-    TilemapUtil_Move(TILEMAPID_PARTY_MENU, 3, 1);
+    sStorage->partyMenuY += PARTY_MENU_SCROLL_DELTA;
+    TilemapUtil_Move(TILEMAPID_PARTY_MENU, 3, PARTY_MENU_SCROLL_DELTA);
     TilemapUtil_Update(TILEMAPID_PARTY_MENU);
     ScheduleBgCopyTilemapToVram(1);
-    MovePartySprites(8);
-    if (++sStorage->partyMenuMoveTimer == 20)
+    MovePartySprites(8 * PARTY_MENU_SCROLL_DELTA);
+    if (++sStorage->partyMenuMoveTimer == PARTY_MENU_ADJUSTED_SCROLL_TIMER)
     {
         sInPartyMenu = TRUE;
         return FALSE;
@@ -4121,15 +4124,15 @@ static void SetUpHidePartyMenu(void)
 
 static bool8 HidePartyMenu(void)
 {
-    if (sStorage->partyMenuMoveTimer != 20)
+    if (sStorage->partyMenuMoveTimer != PARTY_MENU_ADJUSTED_SCROLL_TIMER)
     {
         sStorage->partyMenuUnused1++;
-        sStorage->partyMenuY--;
-        TilemapUtil_Move(TILEMAPID_PARTY_MENU, 3, -1);
+        sStorage->partyMenuY -= PARTY_MENU_SCROLL_DELTA;
+        TilemapUtil_Move(TILEMAPID_PARTY_MENU, 3, -PARTY_MENU_SCROLL_DELTA);
         TilemapUtil_Update(TILEMAPID_PARTY_MENU);
-        FillBgTilemapBufferRect_Palette0(1, 0x100, 10, sStorage->partyMenuY, 12, 1);
-        MovePartySprites(-8);
-        if (++sStorage->partyMenuMoveTimer != 20)
+        FillBgTilemapBufferRect_Palette0(1, 0x100, 10, sStorage->partyMenuY, 12, PARTY_MENU_SCROLL_DELTA);
+        MovePartySprites(-8 * PARTY_MENU_SCROLL_DELTA);
+        if (++sStorage->partyMenuMoveTimer != PARTY_MENU_ADJUSTED_SCROLL_TIMER)
         {
             ScheduleBgCopyTilemapToVram(1);
             return TRUE;
@@ -7141,8 +7144,6 @@ static u8 HandleInput_InBox(void)
         return InBoxInput_MovingMultiple();
     }
 }
-
-#define JOY_REPEAT(key) (INSTANT_BOX ? JOY_REPEAT(key) : JOY_REPEAT(key))
 
 static u8 InBoxInput_Normal(void)
 {
