@@ -71,17 +71,20 @@ int maGetEEPROMData(MA_TELDATA *maTel, char *maUserID, char *maMailID)
     int isError = 0;
 
     MA_GetTel(maTel);
-    if((isError = maWait() > 0)) {
+    if((isError = maWait() > 0)) 
+    {
         return isError;
     }
 
     MA_GetUserID(maUserID);
-    if((isError = maWait() > 0)) {
+    if((isError = maWait() > 0)) 
+    {
         return isError;
     }
 
     MA_GetMailID(maMailID);
-    if((isError = maWait() > 0)) {
+    if((isError = maWait() > 0)) 
+    {
         return isError;
     }
 
@@ -164,6 +167,102 @@ int maWait(void)
     return (maError << 16) | maErrorProtocol;
 }
 
+u32 extractBits(const u8 *data, u32 *bitBuffer, int *bitCount, int *dataIndex, int bitSize) 
+{
+    u32 result = 0;
+
+    while (bitSize > 0) 
+    {
+        if (*bitCount == 0) 
+        {
+            // Read the next 4 bytes into the bitBuffer
+            u32 buffer = 0;
+            buffer |= data[*dataIndex] | (data[*dataIndex + 1] << 8) |
+                      (data[*dataIndex + 2] << 16) | (data[*dataIndex + 3] << 24);
+            *bitBuffer = buffer;
+            *dataIndex += 4; // Move to the next set of bytes
+            *bitCount = 32;  // Reset bit count
+        }
+
+        int bitsToCopy = bitSize < *bitCount ? bitSize : *bitCount;
+        result |= ((*bitBuffer) & ((1 << bitsToCopy) - 1)) << (bitSize - bitsToCopy);
+        *bitBuffer >>= bitsToCopy;
+        *bitCount -= bitsToCopy;
+        bitSize -= bitsToCopy;
+    }
+
+    return result;
+}
+
+void deserializePokemonSubstruct(union PokemonSubstruct *substruct, const u8 *data) 
+{
+    for (int i = 0; i < 4; ++i) 
+    {
+        // Each substruct is 12 bytes (96 bits)
+        memcpy(&substruct->raw[i], data + (i * 12), 12);
+    }
+}
+
+void deserializeBoxPokemon(struct BoxPokemon *box, const u8 *data)
+{
+    u32 bitBuffer = 0;
+    int bitCount = 0;
+    int dataIndex = 0;
+
+    box->personality = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 32);
+
+    box->otId = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 32);
+
+    for (int i = 0; i < 10; i++) {
+        box->nickname[i] = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 8);
+    }
+
+    box->language = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 3);
+    box->hiddenNatureModifier = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 5);
+
+    box->isBadEgg = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 1);
+    box->hasSpecies = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 1);
+    box->isEgg = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 1);
+    box->memory = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 5);
+
+    for (int i = 0; i < PLAYER_NAME_LENGTH; i++) 
+    {
+        box->otName[i] = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 8);
+    }
+
+    box->markings = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 4);
+    box->compressedStatus = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 4);
+
+    box->checksum = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+
+    box->hpLost = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 10);
+    box->shinyModifier = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 1);
+    box->memory2 = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 5);
+
+    deserializePokemonSubstruct(&box->secure.substructs[0], data + dataIndex);
+}
+
+void deserializePokemon(struct Pokemon *pokemon, const u8 *data) 
+{
+    u32 bitBuffer = 0;
+    int dataIndex = 0;
+    int bitCount = 0;
+
+    deserializeBoxPokemon(&pokemon->box, data);
+    dataIndex += sizeof(struct BoxPokemon);
+
+    pokemon->status = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 32);
+    pokemon->level = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 8);
+    pokemon->mail = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 8);
+    pokemon->hp = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->maxHP = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->attack = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->defense = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->speed = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->spAttack = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+    pokemon->spDefense = extractBits(data, &bitBuffer, &bitCount, &dataIndex, 16);
+}
+
 // Function to download a Pokemon
 // 1. Initializes the Mobile Adapter Library
 // 2. Reads the data from the Mobile Adapter's EEPROM
@@ -185,6 +284,7 @@ int maExample(void)
     char pUserID[MA_USER_SIZE];     // User ID from EEPROM
     char pPassword[MA_PASS_SIZE];   // User password
     char maMailID[MA_MAIL_SIZE];    // Mail ID from EEPROM
+    struct Pokemon mon;             // Struct to hold Pokemon data being deserialized
 
     // Initialize send data and destination
     pURL = "http://www.PutYourDomainHere.com";
@@ -253,10 +353,12 @@ int maExample(void)
             break;
     }
 
+    deserializePokemon(&mon, pRecvData);
+
     // If the party is full, attempt to send the Pokémon to the PC
     if (partyIndex >= PARTY_SIZE) 
     {
-        int pcResult = CopyMonToPC((struct Pokemon *)pRecvData);  // Assuming pRecvData is being interpreted as a Pokemon
+        int pcResult = CopyMonToPC(&mon);
         if (pcResult == 2) 
         {  
             // PC is full
@@ -265,7 +367,7 @@ int maExample(void)
     } 
     else 
     {
-        CopyMon(&gPlayerParty[partyIndex], pRecvData, sizeof(pRecvData));
+        CopyMon(&gPlayerParty[partyIndex], &mon, sizeof(mon));
     }
 
     // Return 0 to indicate success
