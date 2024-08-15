@@ -5,11 +5,15 @@
 #include "pokemon.h"
 #include "pokedex.h"
 
+// The MA Library has to be excluded from the test ROM which necessitates excluding any references to its functions
+// Unfortunately this means that we will also have to exclude references to the functions defined here...
+#if (!TESTING)
+
 extern void MA_IntrSerialIO(void);
 extern void MA_IntrTimer(void);
 extern u8 CopyMonToPC(struct Pokemon *mon);
 
-//Checks if the MA is connected by starting the library and seeing if there's an errors. Ends the communication as well
+// Checks if the MA is connected by starting the library and seeing if there's an errors. Ends the communication as well
 bool8 maConnected(void)
 {
     int isError = 0;
@@ -267,3 +271,5 @@ int maExample(void)
     // Return 0 to indicate success
     return 0;
 }
+
+#endif
