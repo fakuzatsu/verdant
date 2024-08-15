@@ -360,7 +360,7 @@ struct Wallpaper
 {
     const u32 *tiles;
     const u32 *tilemap;
-    const u16 *palettes;
+    const u16 ALIGNED(4) *palettes;
 };
 
 struct StorageMessage
@@ -465,7 +465,7 @@ struct PokemonStorageSystemData
     u16 unkUnused1; // Never read.
     s16 wallpaperSetId;
     s16 wallpaperId;
-    u16 wallpaperTilemap[360];
+    u16 ALIGNED(4) wallpaperTilemap[360];
     u8 wallpaperChangeState;
     u8 scrollState;
     u8 scrollToBoxId;
