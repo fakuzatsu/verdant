@@ -70,10 +70,10 @@ struct SpeciesItem
     u16 item;
 };
 
-static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon);
+static u16 UNUSED CalculateBoxMonChecksum(struct BoxPokemon *boxMon);
 static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u8 substructType);
-static void EncryptBoxMon(struct BoxPokemon *boxMon);
-static void DecryptBoxMon(struct BoxPokemon *boxMon);
+static void UNUSED EncryptBoxMon(struct BoxPokemon *boxMon);
+static void UNUSED DecryptBoxMon(struct BoxPokemon *boxMon);
 static void Task_PlayMapChosenOrBattleBGM(u8 taskId);
 static bool8 ShouldSkipFriendshipChange(void);
 static void RemoveIVIndexFromList(u8 *ivs, u8 selectedIv);
@@ -1181,7 +1181,6 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
     SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
 
-    EncryptBoxMon(boxMon);
     SetBoxMonData(boxMon, MON_DATA_IS_SHINY, &isShiny);
     StringCopy(speciesName, GetSpeciesName(species));
     SetBoxMonData(boxMon, MON_DATA_NICKNAME, speciesName);
@@ -1721,7 +1720,7 @@ void CreateEnemyEventMon(void)
     }
 }
 
-static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
+static u16 UNUSED CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
 {
     u16 checksum = 0;
     union PokemonSubstruct *substruct0 = GetSubstruct(boxMon, 0);
@@ -2239,7 +2238,7 @@ void SetMultiuseSpriteTemplateToTrainerFront(u16 trainerPicId, u8 battlerPositio
     gMultiuseSpriteTemplate.anims = sAnims_Trainer;
 }
 
-static void EncryptBoxMon(struct BoxPokemon *boxMon)
+static void UNUSED EncryptBoxMon(struct BoxPokemon *boxMon)
 {
     u32 i;
     for (i = 0; i < ARRAY_COUNT(boxMon->secure.raw); i++)
@@ -2249,7 +2248,7 @@ static void EncryptBoxMon(struct BoxPokemon *boxMon)
     }
 }
 
-static void DecryptBoxMon(struct BoxPokemon *boxMon)
+static void UNUSED DecryptBoxMon(struct BoxPokemon *boxMon)
 {
     u32 i;
     for (i = 0; i < ARRAY_COUNT(boxMon->secure.raw); i++)
@@ -2359,7 +2358,6 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
     struct PokemonSubstruct3 *substruct3 = NULL;
     union EvolutionTracker evoTracker;
 
-    // Any field greater than MON_DATA_ENCRYPT_SEPARATOR is encrypted and must be treated as such
     if (field > MON_DATA_ENCRYPT_SEPARATOR)
     {
         substruct0 = &(GetSubstruct(boxMon, 0)->type0);
@@ -2902,17 +2900,6 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         substruct1 = &(GetSubstruct(boxMon, 1)->type1);
         substruct2 = &(GetSubstruct(boxMon, 2)->type2);
         substruct3 = &(GetSubstruct(boxMon, 3)->type3);
-
-        DecryptBoxMon(boxMon);
-
-        if (CalculateBoxMonChecksum(boxMon) != boxMon->checksum)
-        {
-            boxMon->isBadEgg = TRUE;
-            boxMon->isEgg = TRUE;
-            substruct3->isEgg = TRUE;
-            EncryptBoxMon(boxMon);
-            return;
-        }
 
         switch (field)
         {
