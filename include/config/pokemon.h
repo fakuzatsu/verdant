@@ -52,6 +52,7 @@
 #define P_ONLY_OBTAINABLE_SHINIES        TRUE        // If TRUE, Pokémon encountered in the Battle Pyramid won't be shiny.
 #define P_NO_SHINIES_WITHOUT_POKEBALLS   FALSE       // If TRUE, Pokémon encountered when the player is out of Poké Balls won't be shiny
 #define P_REPLACE_ALL_MOVES              TRUE        // When set to TRUE, Pokémon moves can always be forgotten.
+#define P_SHOW_DYNAMIC_TYPES             TRUE       // If TRUE, moves with dynamic type changes will be reflected as their current type in battle/summary screens.
 
 // Learnset helper toggles
 #define P_LEARNSET_HELPER_TEACHABLE TRUE        // If TRUE, teachable_learnsets.h will be populated by tools/learnset_helpers/teachable.py using the included JSON files based on available TMs and tutors.

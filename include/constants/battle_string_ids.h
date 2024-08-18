@@ -712,8 +712,9 @@
 #define STRINGID_FOGISDEEP                            710
 #define STRINGID_FOGLIFTED                            711
 #define STRINGID_PKMNMADESHELLGLEAM                   712
+#define STRINGID_FICKLEBEAMDOUBLED                    713
 
-#define STRINGID_EXPANSION_END                        (STRINGID_PKMNMADESHELLGLEAM + 1)
+#define STRINGID_EXPANSION_END                        (STRINGID_FICKLEBEAMDOUBLED + 1)
 
 #define STRINGID_PLAYERWHITEOUT3                      STRINGID_EXPANSION_END
 
