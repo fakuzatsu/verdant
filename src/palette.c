@@ -14,6 +14,9 @@ enum
     TIME_OF_DAY_FADE,
 };
 
+#define NUM_PALETTE_STRUCTS 16
+#define DEFAULT_LIGHT_COLOR 0x3F9F
+
 static u32 UpdateNormalPaletteFade(void);
 static void BeginFastPaletteFadeInternal(u32);
 static u32 UpdateFastPaletteFade(void);
