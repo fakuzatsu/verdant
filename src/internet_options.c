@@ -51,12 +51,13 @@ void maInternetOptions(struct ScriptContext *ctx)
 
 u8 maTestConnection(void)
 {
+    #if (!TESTING)
+
     MA_TELDATA maTel;           // MA Telephone struct
     char pUserID[32];           // User ID from the MA EEPROM, has max lenght of 32
     char pPassword[16];         // User password from the MA EEPROM, has max lenght of 16
     char maMailID[30];          // User mail ID from the MA EEPROM
     char pURL[1024];            // URL for the API req
-    u8 pSendData[4];            // Data to send
     u16 recvBufSize = 100;      // Size of received data
     u8 pRecvData[recvBufSize];  // Buffer to hold received data
     u16 pRecvSize = 0;          // How many bytes were copied to pRecvData after calling maUpload once
@@ -70,8 +71,7 @@ u8 maTestConnection(void)
     memcpy(pURL, "\0", 1);
 
     // Initialize destination and send data
-    concat(pURL,"http://www.PutYourDomainHere.com/Debug\0");
-    memcpy(pSendData, "GIFT", 4);
+    concat(pURL,"http://api.local/Debug\0");
 
     // Initialize the Mobile Adapter library
     if ((errNum = maInitLibrary()) != 0) 
@@ -95,7 +95,7 @@ u8 maTestConnection(void)
     }
 
     // Send a POST request and receive the response data
-    if ((errNum = maUpload(pURL, NULL, 0, pSendData, sizeof(pSendData), pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword)) != 0) 
+    if ((errNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword)) != 0) 
     {
         maKill();
         return INTERNET_STATE_MA_ERR;
@@ -107,7 +107,7 @@ u8 maTestConnection(void)
         while(tracker < recvBufSize)
         {
             //Keep calling maUpload until all data copied over
-            if ((errNum = maUpload(pURL, NULL, 0, pSendData, sizeof(pSendData), &pRecvData[tracker], recvBufSize - tracker, &pRecvSize, pUserID, pPassword)) != 0)
+            if ((errNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize - tracker, &pRecvSize, pUserID, pPassword)) != 0)
             {
                 maKill();
                 return INTERNET_STATE_MA_ERR;
@@ -128,6 +128,7 @@ u8 maTestConnection(void)
         return INTERNET_STATE_MA_ERR;
     }
 
+    #endif
     return INTERNET_STATE_INPUT_ERR;
 }
 
