@@ -1,16 +1,6 @@
 #ifndef GUARD_GBA_MOBILE_ADAPTER_H
 #define GUARD_GBA_MOBILE_ADAPTER_H
 
-
-//===================================================================
-//	Constants
-//===================================================================
-
-#define MA_DATA_SIZE    100 // The max size of data that can be recieved in u8[x]
-#define MA_USER_SIZE    32 // The max length of username
-#define MA_PASS_SIZE    16 //The max length of password
-#define MA_MAIL_SIZE	30
-
 //-----------------------------
 //	Condition Flags
 //-----------------------------

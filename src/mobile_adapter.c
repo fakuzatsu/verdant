@@ -166,16 +166,6 @@ int maWait(void)
     return (maError << 16) | maErrorProtocol;
 }
 
-void serializePokemon(const struct BoxPokemon *mon, u8 *buffer) 
-{
-    memcpy(buffer, mon, sizeof(struct BoxPokemon));
-}
-
-void deserializePokemon(struct BoxPokemon *mon, const u8 *buffer) 
-{
-    memcpy(mon, buffer, sizeof(struct BoxPokemon));
-}
-
 // Function to download a Pokemon
 // 1. Initializes the Mobile Adapter Library
 // 2. Reads the data from the Mobile Adapter's EEPROM
@@ -184,6 +174,7 @@ void deserializePokemon(struct BoxPokemon *mon, const u8 *buffer)
 // 5. Disconnects the connection and stops the Mobile Adapter Library
 // 6. Adds the Pokemon to the player's party or sends it to the PC if the party is full
 // 7. Returns 0 if successful, Mobile Adapter error code if there’s an error, or 2 if the PC is full
+/*
 int maExample(void) 
 {
     MA_TELDATA maTel;               // MA Telephone struct
@@ -194,10 +185,10 @@ int maExample(void)
     u8 pRecvData[recvBufSize];      // Buffer to hold received data
     u16 pRecvSize = 0;              // Size of data received in each upload call
     int totalRecvSize = 0;          // Total size of data received
-    char pUserID[MA_USER_SIZE];     // User ID from EEPROM
-    char pPassword[MA_PASS_SIZE];   // User password
-    char maMailID[MA_MAIL_SIZE];    // Mail ID from EEPROM
-    struct BoxPokemon mon;             // Struct to hold Pokemon data being deserialized
+    char pUserID[32];               // User ID from EEPROM
+    char pPassword[16];             // User password
+    char maMailID[30];              // Mail ID from EEPROM
+    struct BoxPokemon mon;          // Struct to hold Pokemon data being deserialized
 
     // Initialize send data and destination
     pURL = "http://www.PutYourDomainHere.com";
@@ -208,7 +199,7 @@ int maExample(void)
     if (errNum != 0) 
     {
         maKill();
-        return errNum;
+        return INTERNET_STATE_MA_ERR;
     }
 
     // Get EEPROM Data
@@ -216,7 +207,7 @@ int maExample(void)
     if (errNum != 0) 
     {
         maKill();
-        return errNum;
+        return INTERNET_STATE_MA_ERR;
     }
 
     // Establish a PPP connection to the server
@@ -224,7 +215,7 @@ int maExample(void)
     if (errNum != 0) 
     {
         maKill();
-        return errNum;
+        return INTERNET_STATE_MA_ERR;
     }
 
     // Send a POST request and receive the response data
@@ -232,7 +223,7 @@ int maExample(void)
     if (errNum != 0) 
     {
         maKill();
-        return errNum;
+        return INTERNET_STATE_MA_ERR;
     }
 
     // Ensure all data is received
@@ -243,7 +234,7 @@ int maExample(void)
         if (errNum != 0) 
         {
             maKill();
-            return errNum;
+            return INTERNET_STATE_MA_ERR;
         }
         totalRecvSize += pRecvSize;
     }
@@ -275,16 +266,20 @@ int maExample(void)
         if (pcResult == 2) 
         {  
             // PC is full
-            return 2;
+            return INTERNET_STATE_PC_FULL;
         }
+
+        return INTERNET_STATE_SENT_TO_PC;
     } 
     else 
     {
         BoxMonToMon(&mon, &gPlayerParty[partyIndex]);
+
+        return INTERNET_STATE_SENT_TO_PARTY;
     }
 
-    // Return 0 to indicate success
-    return 0;
+    return INTERNET_STATE_INPUT_ERR;
 }
+*/
 
 #endif

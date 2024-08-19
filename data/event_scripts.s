@@ -33,6 +33,7 @@
 #include "constants/game_stat.h"
 #include "constants/item.h"
 #include "constants/items.h"
+#include "constants/internet_options.h"
 #include "constants/heal_locations.h"
 #include "constants/layouts.h"
 #include "constants/lilycove_lady.h"
@@ -691,6 +692,7 @@ EventScript_SetBrineyLocation_Route109::
 	.include "data/scripts/obtain_item.inc"
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
+	.include "data/scripts/pkmn_center_mobile_plaza.inc"
 
 @ scripts/notices.inc? signs.inc? See comment about text/notices.inc
 Common_EventScript_ShowPokemartSign::
@@ -871,6 +873,7 @@ Common_EventScript_PlayerHandedOverTheItem::
 	.include "data/text/pkmn_center_nurse.inc"
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
+	.include "data/text/pokemon_center_mobile_plaza.inc"
 
 @ The below and surf.inc could be split into some text/notices.inc
 gText_PokemartSign::
