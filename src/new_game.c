@@ -171,6 +171,7 @@ void NewGameInitData(void)
         RtcReset();
 
     gDifferentSaveFile = TRUE;
+    gSaveBlock3Ptr->PID = 0xFFFFFFFF;
     gSaveBlock2Ptr->encryptionKey = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();

@@ -1718,3 +1718,18 @@ const u8 gText_FontShort[] =            _("{FONT_SHORT}");
 const u8 gText_TMCase_Blue[] =          _("{COLOR_HIGHLIGHT_SHADOW BLUE TRANSPARENT LIGHT_BLUE}{STR_VAR_2}");
 
 const u8 gText_AshQty[] = _("ASH QTY:\n{STR_VAR_1}{PAUSE_UNTIL_PRESS}");
+
+//Internet
+const u8 gText_GiftDownload[] = _("Download Gift");
+const u8 gText_ViaInternet[] = _("Via Internet");
+const u8 gText_ViaCode[] = _("Via Code");
+const u8 gText_Bank[] = _("Bank");
+const u8 gText_Friends[] = _("Friends");
+const u8 gText_AddFriends[] = _("Add Friend");
+const u8 gText_ViewFriends[] = _("View Friends");
+const u8 gText_Sync[] = _("Sync Data");
+const u8 gText_GameSync[] = _("Game Sync");
+const u8 gText_UploadSecretBase[] = _("Upload Secret Base");
+const u8 gText_UploadRecordedBattle[] = _("Upload Recorded Battle");
+ALIGNED(4) const u8 gText_InternetOptions[] = _("Internet Options");
+ALIGNED(4) const u8 gText_CreateFriendCode[] = _("No Friend Code found.\nGo online and create one?");

@@ -256,7 +256,7 @@
 #define VAR_ROXANNE_CALL_STEP_COUNTER                    0x40EC
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40ED
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40EE
-#define VAR_UNUSED_0x40EF                                0x40EF // Unused Var
+#define VAR_DEPOSIT_SPECIES                              0x40EF // Species of pokemon deposited to GTS, for detecting Shelmet/Karrablast evolution
 #define VAR_UNUSED_0x40F0                                0x40F0 // Unused Var
 #define VAR_UNUSED_0x40F1                                0x40F1 // Unused Var
 #define VAR_UNUSED_0x40F2                                0x40F2 // Unused Var

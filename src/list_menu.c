@@ -1172,6 +1172,7 @@ static void Task_ScrollIndicatorArrowPair(u8 taskId)
         gSprites[data->bottomSpriteId].invisible = FALSE;
 }
 
+#define tMenuType data[14]
 #define tIsScrolled data[15]
 
 void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
@@ -1179,7 +1180,17 @@ void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
     s16 *data = gTasks[taskId].data;
     struct ScrollIndicatorPair *scrollData = (void *) data;
 
-    if (tIsScrolled)
+    if (tIsScrolled == 2)
+    {
+        gSprites[scrollData->topSpriteId].invisible = FALSE;
+        gSprites[scrollData->bottomSpriteId].invisible = TRUE;
+    }
+    else if (tIsScrolled == 1 && tMenuType == 3)
+    {
+        gSprites[scrollData->topSpriteId].invisible = FALSE;
+        gSprites[scrollData->bottomSpriteId].invisible = FALSE;
+    }
+    else if (tIsScrolled == 1)
     {
         gSprites[scrollData->topSpriteId].invisible = FALSE;
         gSprites[scrollData->bottomSpriteId].invisible = TRUE;
@@ -1191,6 +1202,7 @@ void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
     }
 }
 
+#undef tMenuType
 #undef tIsScrolled
 
 void RemoveScrollIndicatorArrowPair(u8 taskId)

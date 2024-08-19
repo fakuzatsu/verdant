@@ -2385,10 +2385,3 @@
 	callnative TryBestOfThree
 	.2byte \trainer
 	.endm
-
-	@ Tries to connection to the internet with the selected option
-	@ Available options can be seen in 'include/constants/internet_options.h'
-	.macro internetconnection option:req
-	callnative maInternetOptions
-	.byte \option
-	.endm

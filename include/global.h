@@ -178,6 +178,7 @@ struct Time
 
 struct SaveBlock3
 {
+    u32 PID;
     u32 grottoSeed;
 #if OW_USE_FAKE_RTC
     struct Time fakeRTC;
