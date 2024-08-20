@@ -1538,6 +1538,8 @@ s8 DoInternetYesNo(u8 * textState, u16 * windowId, bool8 yesNoBoxPlacement, cons
 
 static void Task_InternetOptions(u8 taskId)
 {
+    #if (!TESTING)
+
     struct InternetOptionsTaskData *data = (void *)gTasks[taskId].data;
     char pUserID[32];  //User ID from the MA EEPROM, has max lenght of 32
     pUserID[0]='\0';
@@ -1888,6 +1890,10 @@ static void Task_InternetOptions(u8 taskId)
         SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
         break;
     }
+    #else
+    DestroyTask(taskId);
+    SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
+    #endif
 }
 
 #undef error
