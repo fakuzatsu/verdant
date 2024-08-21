@@ -3073,8 +3073,8 @@ u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
 {
     u8 battleSceneOption = gSaveBlock2Ptr->optionsSpeedModifer; // Originally GetBattleSceneOption() with a saveblock stored value;
 
-    // Only speeds up when A is held
-    if(!JOY_HELD(A_BUTTON) && !JOY_HELD(L_BUTTON))
+    // Only speeds up when L is held
+    if(!JOY_HELD(L_BUTTON))
         return 1;
 
     // We want to speed up all anims until input selection starts
