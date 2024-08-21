@@ -2239,7 +2239,7 @@ static void Cmd_healthbarupdate(void)
     {
         u32 battler = GetBattlerForBattleScript(cmd->battler);
 
-        if (!DN_CONFIG_ONLY_ATTACK_DAMAGE && !gSaveBlock2Ptr->optionsBattleSceneOff)
+        if (!DN_CONFIG_ONLY_ATTACK_DAMAGE && !gSaveBlock2Ptr->optionsDamageNumsOff)
 			ShowDamageNumbers(battler);
 
         if (DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove) && gDisableStructs[battler].substituteHP && !(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE))
@@ -7715,7 +7715,7 @@ static void Cmd_hitanimation(void)
     }
     else if (!(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE) || !(DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove)) || gDisableStructs[battler].substituteHP == 0)
     {
-        if(DN_CONFIG_ONLY_ATTACK_DAMAGE && !gSaveBlock2Ptr->optionsBattleSceneOff)
+        if(DN_CONFIG_ONLY_ATTACK_DAMAGE && !gSaveBlock2Ptr->optionsDamageNumsOff)
 			ShowDamageNumbers(battler);
         BtlController_EmitHitAnimation(battler, BUFFER_A);
         MarkBattlerForControllerExec(battler);

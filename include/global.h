@@ -520,7 +520,8 @@ struct SaveBlock2
              u16 optionsUnitSystem:1; //tx_optionsPlus
              u16 optionsDifficulty:1; // custom addition to tx_optionsPlus
              u16 optionsLevelCap:2; // custom addition to tx_optionsPlus
-             u16 optionsHpBarSpeed:4; //tx_optionsPlus
+             u16 optionsSpeedModifer:3; //tx_optionsPlus
+             u16 optionsPadding:1; // padding
              u16 optionsExpBarSpeed:4; //tx_optionsPlus
              u16 optionsDisableMatchCall:1; //tx_optionsPlus
              u16 optionsCurrentFont:1; //tx_optionsPlus
