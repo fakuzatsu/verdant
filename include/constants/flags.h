@@ -1346,7 +1346,7 @@
 #define FLAG_SYS_POKEMON_GET                         (SYSTEM_FLAGS + 0x0) // FLAG_0x860
 #define FLAG_SYS_POKEDEX_GET                         (SYSTEM_FLAGS + 0x1) // FLAG_0x861
 #define FLAG_SYS_POKENAV_GET                         (SYSTEM_FLAGS + 0x2) // FLAG_0x862
-#define FLAG_UNUSED_0x863                            (SYSTEM_FLAGS + 0x3) // Unused Flag
+#define FLAG_SYS_DISABLE_FOLLOWER                    (SYSTEM_FLAGS + 0x3) // FLAG_0x863
 #define FLAG_SYS_GAME_CLEAR                          (SYSTEM_FLAGS + 0x4) // FLAG_0x864
 #define FLAG_SYS_CHAT_USED                           (SYSTEM_FLAGS + 0x5) // FLAG_0x865
 #define FLAG_UNLOCKED_TRENDY_SAYINGS                 (SYSTEM_FLAGS + 0x6) // FLAG_0x866

@@ -83,6 +83,8 @@
 enum {
     MENU_SUMMARY,
     MENU_SWITCH,
+    MENU_FOLLOW_ME,
+    MENU_UNFOLLOW_ME,
     MENU_MOVES,
     MENU_NICKNAME,
     MENU_CANCEL1,
@@ -478,6 +480,7 @@ static void CursorCb_Summary(u8);
 static void CursorCb_Nickname(u8);
 static void CursorCb_Moves(u8);
 static void CursorCb_Switch(u8);
+static void CursorCb_FollowMe(u8);
 static void CursorCb_Cancel1(u8);
 static void CursorCb_Item(u8);
 static void CursorCb_Give(u8);
@@ -2955,6 +2958,12 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
     {
         if (GetMonData(&mons[1], MON_DATA_SPECIES) != SPECIES_NONE)
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SWITCH);
+        if (slotId == GetLeadMonIndex() && !FlagGet(FLAG_TEMP_HIDE_FOLLOWER) && OW_FOLLOWERS_ENABLED == TRUE){
+            if (FlagGet(FLAG_SYS_DISABLE_FOLLOWER))
+                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_FOLLOW_ME);
+            else
+                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_UNFOLLOW_ME);
+        }
 		if (GetNumberOfRelearnableMoves(&mons[slotId]) != 0)
 			AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_MOVES);
         if (ItemIsMail(GetMonData(&mons[slotId], MON_DATA_HELD_ITEM)))
@@ -3184,6 +3193,21 @@ static void CursorCb_Switch(u8 taskId)
     AnimatePartySlot(gPartyMenu.slotId, 1);
     gPartyMenu.slotId2 = gPartyMenu.slotId;
     gTasks[taskId].func = Task_HandleChooseMonInput;
+}
+
+static void CursorCb_FollowMe(u8 taskId)
+{
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PlaySE(SE_BALL_TRADE);
+    if (FlagGet(FLAG_SYS_DISABLE_FOLLOWER)){
+        DisplayPartyMenuStdMessage(PARTY_MSG_MON_FOLLOWING);
+        FlagClear(FLAG_SYS_DISABLE_FOLLOWER);
+    }
+    else{
+        DisplayPartyMenuStdMessage(PARTY_MSG_MON_NOT_FOLLOWING);
+        FlagSet(FLAG_SYS_DISABLE_FOLLOWER);
+    } 
+    gTasks[taskId].func = Task_CancelAfterAorBPress;
 }
 
 #define tSlot1Left     data[0]
