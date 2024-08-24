@@ -288,17 +288,16 @@ struct // MENU_RANDOM
 };
 
 // Menu left side option names text
-static const u8 sText_Speedup[]     = _("SPEEDUP");
-static const u8 sText_ExpBar[]      = _("EXP BAR");
-static const u8 sText_DamageNums[]  = _("DMG NUMBRS");
-static const u8 sText_UnitSystem[]  = _("UNIT SYSTEM");
-static const u8 sText_RandWild[]    = _("ENCOUNTERS");
-static const u8 sText_RandTrain[]   = _("TRAINERS");
-static const u8 sText_RandAbil[]    = _("ABILITIES");
-static const u8 sText_RngSeed[]     = _("RNG SEED");
-static const u8 sText_Difficulty[]  = _("MODE");
-static const u8 sText_LevelCaps[]   = _("LEVEL CAPS");
-static const u8 sText_VGCDraft[]    = _("COMPETITIVE");
+static const u8 sText_Speedup[]     = _("Speedup");
+static const u8 sText_DamageNums[]  = _("DMG Numbers");
+static const u8 sText_UnitSystem[]  = _("Unit System");
+static const u8 sText_RandWild[]    = _("Encounters");
+static const u8 sText_RandTrain[]   = _("Trainers");
+static const u8 sText_RandAbil[]    = _("Abilities");
+static const u8 sText_RngSeed[]     = _("RNG Seed");
+static const u8 sText_Difficulty[]  = _("Mode");
+static const u8 sText_LevelCaps[]   = _("LVL Caps");
+static const u8 sText_VGCDraft[]    = _("Competitive");
 static const u8 *const sOptionMenuItemsNamesMain[MENUITEM_MAIN_COUNT] =
 {
     [MENUITEM_MAIN_TEXTSPEED]   = gText_TextSpeed,
@@ -393,26 +392,26 @@ static bool8 CheckConditions(int selection)
 static const u8 sText_Empty[]                   = _("");
 static const u8 sText_Desc_Save[]               = _("Save your settings.");
 static const u8 sText_Desc_TextSpeed[]          = _("Choose one of the four text-display\nspeeds.");
-static const u8 sText_Desc_BattleScene_On[]     = _("Show the POKéMON battle animations.");
-static const u8 sText_Desc_BattleScene_Off[]    = _("Skip the POKéMON battle animations.");
-static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch your\nPOKéMON after the enemies faints.");
-static const u8 sText_Desc_BattleStyle_Set[]    = _("No free switch after fainting the\nenemies POKéMON.");
+static const u8 sText_Desc_BattleScene_On[]     = _("Show the Pokémon battle animations.");
+static const u8 sText_Desc_BattleScene_Off[]    = _("Skip the Pokémon battle animations.");
+static const u8 sText_Desc_BattleStyle_Shift[]  = _("Get the option to switch your\nPokémon after the enemies faints.");
+static const u8 sText_Desc_BattleStyle_Set[]    = _("No free switch after fainting the\nenemies Pokémon.");
 static const u8 sText_Desc_SoundMono[]          = _("Sound is the same in all speakers.\nRecommended for original hardware.");
 static const u8 sText_Desc_SoundStereo[]        = _("Play the left and right audio channel\nseperatly. Great with headphones.");
 static const u8 sText_Desc_ButtonMode[]         = _("All buttons work as normal.");
 static const u8 sText_Desc_ButtonMode_LR[]      = _("On some screens the L and R buttons\nact as left and right.");
 static const u8 sText_Desc_ButtonMode_LA[]      = _("The L button acts as another A\nbutton for one-handed play.");
-static const u8 sText_Desc_UnitSystemImperial[] = _("Display BERRY and POKéMON weight\nand size in pounds and inches.");
-static const u8 sText_Desc_UnitSystemMetric[]   = _("Display BERRY and POKéMON weight\nand size in kilograms and meters.");
+static const u8 sText_Desc_UnitSystemImperial[] = _("Display Berry and Pokémon weight\nand size in pounds and inches.");
+static const u8 sText_Desc_UnitSystemMetric[]   = _("Display Berry and Pokémon weight\nand size in kilograms and meters.");
 static const u8 sText_Desc_BattleSpeedup[]      = _("Adjusts how quickly battle advances\nwhen holding the L button.");
-static const u8 sText_Desc_BattleExpBar[]       = _("Choose how fast the EXP BAR will get\nfilled in battles.");
+static const u8 sText_Desc_BattleExpBar[]       = _("Choose how fast the EXP Bar will get\nfilled in battles.");
 static const u8 sText_Desc_DamageNums_On[]      = _("Floating numbers will appear when\nPokémon take damage.");
 static const u8 sText_Desc_DamageNums_Off[]     = _("Floating damage numbers will always\nbe hidden.");
-static const u8 sText_Desc_SurfOff[]            = _("Disables the SURF theme when\nusing SURF.");
-static const u8 sText_Desc_SurfOn[]             = _("Enables the SURF theme\nwhen using SURF.");
-static const u8 sText_Desc_BikeOff[]            = _("Disables the BIKE theme when\nusing the BIKE.");
-static const u8 sText_Desc_BikeOn[]             = _("Enables the BIKE theme when\nusing the BIKE.");
-static const u8 sText_Desc_OverworldCallsOn[]   = _("TRAINERs will be able to call you,\noffering rematches and info.");
+static const u8 sText_Desc_SurfOff[]            = _("Disables the Surf theme when\nusing Surf.");
+static const u8 sText_Desc_SurfOn[]             = _("Enables the Surf theme\nwhen using Surf.");
+static const u8 sText_Desc_BikeOff[]            = _("Disables the Bike theme when\nusing the Bike.");
+static const u8 sText_Desc_BikeOn[]             = _("Enables the Bike theme when\nusing the Bike.");
+static const u8 sText_Desc_OverworldCallsOn[]   = _("Trainers will be able to call you,\noffering rematches and info.");
 static const u8 sText_Desc_OverworldCallsOff[]  = _("You will not receive calls.\nSpecial events will still occur.");
 static const u8 sText_Desc_RandWildNorm[]       = _("Wild Pokémon encounters will\nbe normal.");
 static const u8 sText_Desc_RandWildRand[]       = _("Wild Pokémon encounters will\nbe randomised.");
@@ -565,15 +564,15 @@ static void VBlankCB(void)
     ChangeBgY(3, 96, BG_COORD_ADD);
 }
 
-static const u8 sText_TopBar_Main[]                = _("GENERAL");
-static const u8 sText_TopBar_Main_To_Left[]        = _("{L_BUTTON}GENERAL");
-static const u8 sText_TopBar_Main_To_Right[]       = _("{R_BUTTON}GENERAL");
-static const u8 sText_TopBar_Random[]              = _("RANDOM");
-static const u8 sText_TopBar_Random_To_Left[]      = _("{L_BUTTON}RANDOM");
-static const u8 sText_TopBar_Random_To_Right[]     = _("{R_BUTTON}RANDOM");
-static const u8 sText_TopBar_Difficulty[]          = _("DIFFICULTY");
-static const u8 sText_TopBar_Difficulty_To_Left[]  = _("{L_BUTTON}DIFFICULTY");
-static const u8 sText_TopBar_Difficulty_To_Right[] = _("{R_BUTTON}DIFFICULTY");
+static const u8 sText_TopBar_Main[]                = _("General");
+static const u8 sText_TopBar_Main_To_Left[]        = _("{L_BUTTON}General");
+static const u8 sText_TopBar_Main_To_Right[]       = _("{R_BUTTON}General");
+static const u8 sText_TopBar_Random[]              = _("Random");
+static const u8 sText_TopBar_Random_To_Left[]      = _("{L_BUTTON}Random");
+static const u8 sText_TopBar_Random_To_Right[]     = _("{R_BUTTON}Random");
+static const u8 sText_TopBar_Difficulty[]          = _("Difficulty");
+static const u8 sText_TopBar_Difficulty_To_Left[]  = _("{L_BUTTON}Difficulty");
+static const u8 sText_TopBar_Difficulty_To_Right[] = _("{R_BUTTON}Difficulty");
 
 static void DrawTopBarText(void)
 {
@@ -1267,8 +1266,8 @@ static void ReDrawAll(void)
 }
 
 // Process Input functions ****SPECIFIC****
-static const u8 sText_Faster[] = _("FASTER");
-static const u8 sText_Instant[] = _("FASTEST");
+static const u8 sText_Faster[] = _("Faster");
+static const u8 sText_Instant[] = _("Fastest");
 static const u8 *const sTextSpeedStrings[] = {gText_TextSpeedSlow, gText_TextSpeedMid, gText_TextSpeedFast, sText_Faster};
 static void DrawChoices_TextSpeed(int selection, int y)
 {
@@ -1276,7 +1275,7 @@ static void DrawChoices_TextSpeed(int selection, int y)
     DrawChoices_Options_Four(sTextSpeedStrings, selection, y, active);
 }
 
-static const u8 sText_SpeedupOff[] = _("OFF");
+static const u8 sText_SpeedupOff[] = _("Off");
 static const u8 sText_SpeedupTwoX[] = _("2x");
 static const u8 sText_SpeedupThreeX[] = _("3x");
 static const u8 sText_SpeedupFourX[] = _("4x");
@@ -1287,8 +1286,8 @@ static void DrawChoices_Speedup(int selection, int y)
     DrawChoices_Options_Four(sSpeedupStrings, selection, y, active);
 }
 
-static const u8 gText_DifficultyEasy[] = _("NORMAL");
-static const u8 gText_DifficultyHard[] = _("HARD");
+static const u8 gText_DifficultyEasy[] = _("Normal");
+static const u8 gText_DifficultyHard[] = _("Hard");
 static void DrawChoices_Difficulty(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIFFICULTY_MODE);
@@ -1299,9 +1298,9 @@ static void DrawChoices_Difficulty(int selection, int y)
     DrawOptionMenuChoice(gText_DifficultyHard, GetStringRightAlignXOffset(FONT_NORMAL, gText_DifficultyHard, 198), y, styles[1], active);
 }
 
-static const u8 sText_LevelCaps_Off[] = _("OFF");
-static const u8 sText_LevelCaps_Soft[] = _("SOFT");
-static const u8 sText_LevelCaps_Hard[] = _("HARD");
+static const u8 sText_LevelCaps_Off[] = _("Off");
+static const u8 sText_LevelCaps_Soft[] = _("Soft");
+static const u8 sText_LevelCaps_Hard[] = _("Hard");
 static void DrawChoices_LevelCaps(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_DIFFICULTY_LEVELCAPS);
@@ -1344,8 +1343,8 @@ static void DrawChoices_BattleStyle(int selection, int y)
     DrawOptionMenuChoice(gText_BattleStyleSet, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleStyleSet, 198), y, styles[1], active);
 }
 
-static const u8 sText_VGCDraft_None[] = _("OFF");
-static const u8 sText_VGCDraft_Draft[] = _("DRAFT");
+static const u8 sText_VGCDraft_None[] = _("Off");
+static const u8 sText_VGCDraft_Draft[] = _("Draft");
 static const u8 sText_VGCDraft_Both[] = _("BO3");
 static void DrawChoices_VGCDraft(int selection, int y)
 {
@@ -1401,8 +1400,8 @@ static void DrawChoices_MatchCall(int selection, int y)
     DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(1, gText_BattleSceneOff, 198), y, styles[1], active);
 }
 
-static const u8 sText_RandomiserNormal[] = _("NORMAL");
-static const u8 sText_RandomiserRandom[] = _("RANDOM");
+static const u8 sText_RandomiserNormal[] = _("Normal");
+static const u8 sText_RandomiserRandom[] = _("Random");
 static void DrawChoices_RandWild(int selection, int y)
 {
     bool8 active = CheckConditions(MENUITEM_RANDOM_WILD);

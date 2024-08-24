@@ -97,7 +97,7 @@ static const u16 sListArrow_Pal[] = INCBIN_U16("graphics/pokenav/list_arrows.gba
 static const u32 sListArrow_Gfx[] = INCBIN_U32("graphics/pokenav/list_arrows.4bpp.lz");
 
 static const u8 gText_PokenavMatchCall_Strategy[] = _("STRATEGY");
-static const u8 gText_PokenavMatchCall_TrainerPokemon[] = _("TRAINER'S POKéMON");
+static const u8 gText_PokenavMatchCall_TrainerPokemon[] = _("Trainer's Pokémon");
 static const u8 gText_PokenavMatchCall_SelfIntroduction[] = _("SELF-INTRODUCTION");
 
 static EWRAM_DATA u32 sMoveWindowDownIndex = 0; // Read, but pointlessly

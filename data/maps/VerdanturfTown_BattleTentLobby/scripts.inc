@@ -67,7 +67,7 @@ VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep:
 	.string "The attraction runs deep…\p"
 	.string "Oh, hi, you didn't see that, did you?\n"
 	.string "Well, it doesn't matter.\p"
-	.string "If you're entering a CONTEST, try this\n"
+	.string "If you're entering a Contest, try this\n"
 	.string "move on for size.$"
 
 VerdanturfTown_BattleTentLobby_Text_AttractionMutual:

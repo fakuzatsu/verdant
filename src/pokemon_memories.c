@@ -14,10 +14,10 @@ static const u8 sText_FatefulEncounter[] = _("{STR_VAR_1} was obtained in a fate
 static const u8 sText_MetSomewhereAt[] = _("{STR_VAR_1} was caught somewhere at {LV_2}{STR_VAR_2}.");
 static const u8 sText_HatchedSomewhereAt[] = _("{STR_VAR_1} hatched from an egg somewhere,\nat {LV_2}{STR_VAR_2}.");
 static const u8 gText_ProbablyMetAt[] = _("{STR_VAR_1} seems to have met {STR_VAR_3}\nat {STR_VAR_2}");
-static const u8 sText_KobesSeedot[] = _("DOTS was caught by KOBE at\n{LV_2}{STR_VAR_2}, ROUTE 102");
-static const u8 sText_RomansPlusle[] = _("PLUSES was caught by CHESTER at\n{LV_2}{STR_VAR_2}, ROUTE 110");
+static const u8 sText_KobesSeedot[] = _("DOTS was caught by KOBE at\n{LV_2}{STR_VAR_2}, Route 102");
+static const u8 sText_RomansPlusle[] = _("PLUSES was caught by CHESTER at\n{LV_2}{STR_VAR_2}, Route 110");
 static const u8 sText_SkylarsHorsea[] = _("SEASOR was hatched by SKYLAR at\n{LV_2}{STR_VAR_2}, PACIFIDLOG TOWN");
-static const u8 sText_IsissMeowth[] = _("MEOWOW was caught by ISIS at\n{LV_2}{STR_VAR_2}, ROUTE 38");
+static const u8 sText_IsissMeowth[] = _("MEOWOW was caught by ISIS at\n{LV_2}{STR_VAR_2}, Route 38");
 static const u8 sText_AtLevelLocation[] = _("{LV_2}{STR_VAR_2}, at {STR_VAR_3}");
 
 extern const u8 MemoryStrings_NoMemory[];

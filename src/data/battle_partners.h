@@ -27,7 +27,7 @@
     [PARTNER_STEVEN] =
     {
 #line 9
-        .trainerName = _("STEVEN"),
+        .trainerName = _("Steven"),
 #line 10
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 11
