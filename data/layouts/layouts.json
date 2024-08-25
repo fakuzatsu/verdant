@@ -4540,6 +4540,16 @@
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto09/border.bin",
       "blockdata_filepath": "data/layouts/Grotto09/map.bin"
+    },
+    {
+      "id": "LAYOUT_SHOAL_CAVE_HIGH_TIDE_PEAK",
+      "name": "ShoalCave_HighTidePeak_Layout",
+      "width": 26,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/ShoalCave_HighTidePeak/border.bin",
+      "blockdata_filepath": "data/layouts/ShoalCave_HighTidePeak/map.bin"
     }
   ]
 }

@@ -447,7 +447,8 @@
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
-    "SafariZone_NorthPassage"
+    "SafariZone_NorthPassage",
+    "ShoalCave_HighTidePeak"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

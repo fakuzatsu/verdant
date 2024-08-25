@@ -1195,3 +1195,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SafariZone_NorthPassage/scripts.inc"
 
 	.include "data/maps/Grotto09/scripts.inc"
+
+	.include "data/maps/ShoalCave_HighTidePeak/scripts.inc"
