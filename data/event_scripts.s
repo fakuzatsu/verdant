@@ -1197,3 +1197,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Grotto09/scripts.inc"
 
 	.include "data/maps/ShoalCave_HighTidePeak/scripts.inc"
+
+	.include "data/maps/MtChimney_North/scripts.inc"

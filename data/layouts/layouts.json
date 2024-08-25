@@ -1355,7 +1355,7 @@
       "id": "LAYOUT_MT_CHIMNEY",
       "name": "MtChimney_Layout",
       "width": 40,
-      "height": 47,
+      "height": 45,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lavaridge",
       "border_filepath": "data/layouts/MtChimney/border.bin",
@@ -2924,7 +2924,7 @@
     {
       "id": "LAYOUT_FIERY_PATH",
       "name": "FieryPath_Layout",
-      "width": 35,
+      "width": 40,
       "height": 38,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Lavaridge",
@@ -4550,6 +4550,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/ShoalCave_HighTidePeak/border.bin",
       "blockdata_filepath": "data/layouts/ShoalCave_HighTidePeak/map.bin"
+    },
+    {
+      "id": "LAYOUT_MT_CHIMNEY_NORTH",
+      "name": "MtChimney_North_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lavaridge",
+      "border_filepath": "data/layouts/MtChimney_North/border.bin",
+      "blockdata_filepath": "data/layouts/MtChimney_North/map.bin"
     }
   ]
 }

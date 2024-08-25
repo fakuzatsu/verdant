@@ -61,7 +61,7 @@ MtChimney_EventScript_Maxie::
 	removeobject LOCALID_MAGMA_GRUNT_2
 	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA
 	fadescreenswapbuffers FADE_FROM_BLACK
-	setobjectxyperm LOCALID_ARCHIE, 10, 12
+	setobjectxyperm LOCALID_ARCHIE, 10, 10
 	addobject LOCALID_ARCHIE
 	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieApproachPlayerEast
 	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieApproachPlayerNorth

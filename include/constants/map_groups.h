@@ -419,6 +419,7 @@
 #define MAP_METEOR_FALLS_STEVENS_CAVE                (107 | (24 << 8))
 #define MAP_SAFARI_ZONE_NORTH_PASSAGE                (108 | (24 << 8))
 #define MAP_SHOAL_CAVE_HIGH_TIDE_PEAK                (109 | (24 << 8))
+#define MAP_MT_CHIMNEY_NORTH                         (110 | (24 << 8))
 
 // gMapGroup_IndoorDynamic
 #define MAP_SECRET_BASE_RED_CAVE1    (0 | (25 << 8))

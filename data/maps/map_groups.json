@@ -448,7 +448,8 @@
     "AlteringCave",
     "MeteorFalls_StevensCave",
     "SafariZone_NorthPassage",
-    "ShoalCave_HighTidePeak"
+    "ShoalCave_HighTidePeak",
+    "MtChimney_North"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",
