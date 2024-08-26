@@ -92,13 +92,12 @@ void DoBrailleDigEffect(void)
 
 bool8 CheckRelicanthWailord(void)
 {
-    // Emerald change: why did they flip it?
-    // First comes Wailord
-    if (GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_WAILORD)
+    // First comes Relicanth.
+    if (GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_RELICANTH)
     {
         CalculatePlayerPartyCount();
-        // Last comes Relicanth
-        if (GetMonData(&gPlayerParty[gPlayerPartyCount - 1], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_RELICANTH)
+        // Last comes Wailord
+        if (GetMonData(&gPlayerParty[gPlayerPartyCount - 1], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_WAILORD)
             return TRUE;
     }
     return FALSE;
@@ -340,6 +339,42 @@ bool8 ShouldDoBrailleRegicePuzzle(void)
         // Player stepped on an incorrect space, puzzle failed.
         FlagSet(FLAG_TEMP_REGICE_PUZZLE_FAILED);
         FlagClear(FLAG_TEMP_REGICE_PUZZLE_STARTED);
+    }
+
+    return FALSE;
+}
+
+// The puzzle to unlock Regieleki's cave requires the player to interact with the braille message on the back wall,
+// then form a bolt shape by moving down and left three times consecutively. Also allows moving left then down.
+bool8 ShouldDoBrailleRegielekiPuzzle(void)
+{
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(THUNDER_ROCK)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(THUNDER_ROCK))
+    {
+        if (FlagGet(FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED))
+            return FALSE;
+        // Set when the player interacts with the braille message
+        if (FlagGet(FLAG_TEMP_REGIELEKI_PUZZLE_STARTED) == FALSE)
+            return FALSE;
+        // Cleared when the player interacts with the braille message
+        if (FlagGet(FLAG_TEMP_REGIELEKI_PUZZLE_FAILED) == TRUE)
+            return FALSE;
+
+        u16 val = VarGet(VAR_REGIELEKI_STEPS);
+        val++;
+        VarSet(VAR_REGIELEKI_STEPS, val);
+
+        // Player exceeded allowed steps.
+        if(VarGet(VAR_REGIELEKI_STEPS) > 6)
+        {
+            FlagSet(FLAG_TEMP_REGICE_PUZZLE_FAILED);
+            FlagClear(FLAG_TEMP_REGICE_PUZZLE_STARTED);
+            return FALSE;
+        }
+
+        // Player is stood on desired tile within allowed steps.
+        if(gSaveBlock1Ptr->pos.x == 5 && gSaveBlock1Ptr->pos.y == 24)
+            return TRUE;
     }
 
     return FALSE;

@@ -53,9 +53,9 @@ SealedChamber_OuterRoom_Braille_DigHere:
 SealedChamber_InnerRoom_Braille_FirstWailordLastRelicanth:
 	brailleformat 0, 0, 29, 19, 3, 3
 	.braille "FIRST COMES\n"
-	.braille "WAILORD.\n"
+	.braille "RELICANTH.\n"
 	.braille "LAST COMES\n"
-	.braille "RELICANTH.$"
+	.braille "WAILORD.$"
 
 SealedChamber_InnerRoom_Braille_InThisCaveWeHaveLived:
 	brailleformat 2, 0, 26, 19, 5, 3
@@ -75,7 +75,7 @@ SealedChamber_InnerRoom_Braille_ButWeSealedThePokemonAway:
 	.braille "BUT, WE\n"
 	.braille "SEALED THE\n"
 	.braille "POKEMON\n"
-	.braille "AWAY.$"
+	.braille "HERE.$"
 
 SealedChamber_InnerRoom_Braille_WeFearedIt:
 	brailleformat 5, 6, 25, 13, 8, 9
@@ -90,10 +90,10 @@ SealedChamber_InnerRoom_Braille_ThoseWithCourageHope:
 
 SealedChamber_InnerRoom_Braille_OpenDoorEternalPokemonWaits:
 	brailleformat 3, 2, 27, 17, 6, 5
-	.braille "OPEN A DOOR.\n"
+	.braille "OPEN ALL OF\n"
+	.braille "THE DOORS.\n"
 	.braille "AN ETERNAL\n"
-	.braille "POKEMON\n"
-	.braille "WAITS.$"
+	.braille "POKEMON WAITS.$"
 
 DesertRuins_Braille_UseRockSmash:
 	brailleformat 1, 0, 27, 19, 4, 3
@@ -115,3 +115,17 @@ AncientTomb_Braille_ShineInTheMiddle:
 	.braille "INHERIT OUR\n"
 	.braille "WILL, SHINE\n"
 	.braille "IN THE MIDDLE.$"
+
+ThunderRock_Braille_DownLeftOver:
+	brailleformat 3, 0, 25, 19, 6, 3
+	.braille "LIKE A BOLT.\n"
+	.braille "DOWN, LEFT,\n"
+	.braille "OVER AND\n"
+	.braille "OVER AGAIN.$"
+
+MythicStone_Braille_FierceStrength:
+	brailleformat 5, 0, 27, 19, 6, 3
+	.braille "WITH FIERCE\n"
+	.braille "STRENGTH,\n"
+	.braille "DESTROY THE\n"
+	.braille "BOUNDRY.$"

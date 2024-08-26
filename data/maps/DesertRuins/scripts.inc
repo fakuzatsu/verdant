@@ -29,11 +29,13 @@ DesertRuins_EventScript_HideRegiEntrance::
 
 DesertRuins_OnTransition:
 	setflag FLAG_LANDMARK_DESERT_RUINS
+	setflag FLAG_TEMP_9
 	call_if_unset FLAG_DEFEATED_REGIROCK, DesertRuins_EventScript_ShowRegirock
 	end
 
 DesertRuins_EventScript_ShowRegirock::
-	clearflag FLAG_HIDE_REGIROCK
+	goto_if_set FLAG_CAUGHT_REGIROCK, Common_EventScript_NopReturn
+	clearflag FLAG_TEMP_9
 	return
 
 DesertRuins_EventScript_CaveEntranceMiddle::
@@ -70,16 +72,18 @@ DesertRuins_EventScript_Regirock::
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, DesertRuins_EventScript_DefeatedRegirock
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, DesertRuins_EventScript_RanFromRegirock
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, DesertRuins_EventScript_RanFromRegirock
-	setflag FLAG_DEFEATED_REGIROCK
+	setflag FLAG_CAUGHT_REGIROCK
 	release
 	end
 
 DesertRuins_EventScript_DefeatedRegirock::
+	setflag FLAG_TEMP_9
 	setflag FLAG_DEFEATED_REGIROCK
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
 DesertRuins_EventScript_RanFromRegirock::
+	setflag FLAG_TEMP_9
 	setvar VAR_0x8004, SPECIES_REGIROCK
 	goto Common_EventScript_LegendaryFlewAway
 	end

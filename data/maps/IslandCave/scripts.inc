@@ -29,12 +29,14 @@ IslandCave_EventScript_HideRegiEntrance::
 
 IslandCave_OnTransition:
 	setflag FLAG_LANDMARK_ISLAND_CAVE
+	setflag FLAG_TEMP_9
 	call IslandCave_EventScript_ClearSteps
 	call_if_unset FLAG_DEFEATED_REGICE, IslandCave_EventScript_ShowRegice
 	end
 
 IslandCave_EventScript_ShowRegice::
-	clearflag FLAG_HIDE_REGICE
+	goto_if_set FLAG_CAUGHT_REGICE, Common_EventScript_NopReturn
+	clearflag FLAG_TEMP_9
 	return
 
 IslandCave_EventScript_OpenRegiEntrance::
@@ -103,16 +105,18 @@ IslandCave_EventScript_Regice::
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, IslandCave_EventScript_DefeatedRegice
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, IslandCave_EventScript_RanFromRegice
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, IslandCave_EventScript_RanFromRegice
-	setflag FLAG_DEFEATED_REGICE
+	setflag FLAG_CAUGHT_REGICE
 	release
 	end
 
 IslandCave_EventScript_DefeatedRegice::
+	setflag FLAG_TEMP_9
 	setflag FLAG_DEFEATED_REGICE
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
 IslandCave_EventScript_RanFromRegice::
+	setflag FLAG_TEMP_9
 	setvar VAR_0x8004, SPECIES_REGICE
 	goto Common_EventScript_LegendaryFlewAway
 	end

@@ -92,7 +92,8 @@
     "Underwater_Route128",
     "Underwater_Route129",
     "Underwater_Route105",
-    "Underwater_Route125"
+    "Underwater_Route125",
+    "Route119_North"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -449,7 +450,8 @@
     "MeteorFalls_StevensCave",
     "SafariZone_NorthPassage",
     "ShoalCave_HighTidePeak",
-    "MtChimney_North"
+    "MtChimney_North",
+    "ThunderRock"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

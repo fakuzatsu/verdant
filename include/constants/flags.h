@@ -347,13 +347,13 @@
 #define FLAG_CAUGHT_ZAPDOS                   0x140
 #define FLAG_DEFEATED_ARTICUNO               0x141
 #define FLAG_CAUGHT_ARTICUNO                 0x142
-#define FLAG_WONDER_CARD_UNUSED_7            0x143
-#define FLAG_WONDER_CARD_UNUSED_8            0x144
+#define FLAG_DEFEATED_REGIELEKI               0x143
+#define FLAG_CAUGHT_REGIELEKI                 0x144
 #define FLAG_WONDER_CARD_UNUSED_9            0x145
 #define FLAG_WONDER_CARD_UNUSED_10           0x146
-#define FLAG_WONDER_CARD_UNUSED_11           0x147
-#define FLAG_WONDER_CARD_UNUSED_12           0x148
-#define FLAG_WONDER_CARD_UNUSED_13           0x149
+#define FLAG_CAUGHT_REGIROCK                 0x147
+#define FLAG_CAUGHT_REGICE                   0x148
+#define FLAG_CAUGHT_REGISTEEL                0x149
 #define FLAG_WONDER_CARD_UNUSED_14           0x14A
 #define FLAG_WONDER_CARD_UNUSED_15           0x14B
 #define FLAG_WONDER_CARD_UNUSED_16           0x14C
@@ -980,9 +980,9 @@
 #define FLAG_HIDE_RUSTURF_TUNNEL_ROCK_2                             0x3A4
 #define FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL                      0x3A5
 #define FLAG_HIDE_MOSSDEEP_CITY_HOUSE_2_WINGULL                     0x3A6
-#define FLAG_HIDE_REGIROCK                                          0x3A7
-#define FLAG_HIDE_REGICE                                            0x3A8
-#define FLAG_HIDE_REGISTEEL                                         0x3A9
+#define FLAG_UNUSED_0x3A7                                           0x3A7 // Previously FLAG_HIDE_REGI flags
+#define FLAG_UNUSED_0x3A8                                           0x3A8
+#define FLAG_UNUSED_0x3A9                                           0x3A9
 #define FLAG_HIDE_METEOR_FALLS_TEAM_AQUA                            0x3AA
 #define FLAG_HIDE_METEOR_FALLS_TEAM_MAGMA                           0x3AB
 #define FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN                      0x3AC
@@ -1505,8 +1505,8 @@
 #define FLAG_SHOWN_HERACROSS                        (SYSTEM_FLAGS + 0x85) // Custom Flag
 #define FLAG_SHOWN_PINSIR                           (SYSTEM_FLAGS + 0x86) // Custom Flag
 #define FLAG_SHOWN_SCYTHER                          (SYSTEM_FLAGS + 0x87) // Custom Flag
-#define FLAG_UNUSED_0x8E8                           (SYSTEM_FLAGS + 0x88) // Unused Flag
-#define FLAG_UNUSED_0x8E9                           (SYSTEM_FLAGS + 0x89) // Unused Flag
+#define FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED         (SYSTEM_FLAGS + 0x88) // Custom Flag
+#define FLAG_LANDMARK_THUNDER_ROCK                  (SYSTEM_FLAGS + 0x89) // Custom Flag
 #define FLAG_UNUSED_0x8EA                           (SYSTEM_FLAGS + 0x8A) // Unused Flag
 #define FLAG_UNUSED_0x8EB                           (SYSTEM_FLAGS + 0x8B) // Unused Flag
 #define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // Unused Flag
@@ -1652,6 +1652,8 @@
 #define FLAG_TEMP_SKIP_GABBY_INTERVIEW          FLAG_TEMP_1
 #define FLAG_TEMP_REGICE_PUZZLE_STARTED         FLAG_TEMP_2
 #define FLAG_TEMP_REGICE_PUZZLE_FAILED          FLAG_TEMP_3
+#define FLAG_TEMP_REGIELEKI_PUZZLE_STARTED       FLAG_TEMP_2
+#define FLAG_TEMP_REGIELEKI_PUZZLE_FAILED        FLAG_TEMP_3
 #define FLAG_TEMP_HIDE_FOLLOWER                 FLAG_TEMP_E
 #define FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE FLAG_TEMP_11
 

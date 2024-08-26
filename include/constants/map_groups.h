@@ -63,6 +63,7 @@
 #define MAP_UNDERWATER_ROUTE129 (54 | (0 << 8))
 #define MAP_UNDERWATER_ROUTE105 (55 | (0 << 8))
 #define MAP_UNDERWATER_ROUTE125 (56 | (0 << 8))
+#define MAP_ROUTE119_NORTH      (57 | (0 << 8))
 
 // gMapGroup_IndoorLittleroot
 #define MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F    (0 | (1 << 8))
@@ -420,6 +421,7 @@
 #define MAP_SAFARI_ZONE_NORTH_PASSAGE                (108 | (24 << 8))
 #define MAP_SHOAL_CAVE_HIGH_TIDE_PEAK                (109 | (24 << 8))
 #define MAP_MT_CHIMNEY_NORTH                         (110 | (24 << 8))
+#define MAP_THUNDER_ROCK                             (111 | (24 << 8))
 
 // gMapGroup_IndoorDynamic
 #define MAP_SECRET_BASE_RED_CAVE1    (0 | (25 << 8))

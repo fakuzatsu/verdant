@@ -4560,6 +4560,26 @@
       "secondary_tileset": "gTileset_Lavaridge",
       "border_filepath": "data/layouts/MtChimney_North/border.bin",
       "blockdata_filepath": "data/layouts/MtChimney_North/map.bin"
+    },
+    {
+      "id": "LAYOUT_THUNDER_ROCK",
+      "name": "ThunderRock_Layout",
+      "width": 17,
+      "height": 33,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/ThunderRock/border.bin",
+      "blockdata_filepath": "data/layouts/ThunderRock/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE119_NORTH",
+      "name": "Route119_North_Layout",
+      "width": 22,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/Route119_North/border.bin",
+      "blockdata_filepath": "data/layouts/Route119_North/map.bin"
     }
   ]
 }
