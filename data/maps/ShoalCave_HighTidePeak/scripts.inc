@@ -1,2 +1,66 @@
+.set LOCALID_MOLTRES, 2
+.set LOCALID_NINJA_1, 3
+.set LOCALID_NINJA_2, 4
+
 ShoalCave_HighTidePeak_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, ShoalCave_HighTidePeak_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, ShoalCave_HighTidePeak_OnResume
 	.byte 0
+
+ShoalCave_HighTidePeak_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, ShoalCave_HighTidePeak_EventScript_TryRemoveArticuno
+	end
+
+ShoalCave_HighTidePeak_EventScript_TryRemoveArticuno::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_MOLTRES
+	removeobject LOCALID_NINJA_1
+	removeobject LOCALID_NINJA_2
+	return
+
+ShoalCave_HighTidePeak_OnTransition:
+	goto_if_set FLAG_CAUGHT_ARTICUNO, ShoalCave_HighTidePeak_EventScript_HideArticuno
+	goto_if_set FLAG_DEFEATED_ARTICUNO, ShoalCave_HighTidePeak_EventScript_HideArticuno
+	clearflag FLAG_TEMP_9
+	end
+
+ShoalCave_HighTidePeak_EventScript_HideArticuno::
+	setflag FLAG_TEMP_9
+	end
+
+ShoalCave_HighTidePeak_EventScript_Articuno::
+	lock
+	faceplayer
+	message ShoalCave_HighTidePeak_Text_Articuno
+	playmoncry SPECIES_ARTICUNO, CRY_MODE_ENCOUNTER
+	waitmoncry
+	closemessage
+	seteventmon SPECIES_ARTICUNO, 60
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, ShoalCave_HighTidePeak_EventScript_ArticunoDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, ShoalCave_HighTidePeak_EventScript_PlayerOrArticunoRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, ShoalCave_HighTidePeak_EventScript_PlayerOrArticunoRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_MON_TELEPORTED, ShoalCave_HighTidePeak_EventScript_PlayerOrArticunoRan
+	setflag FLAG_CAUGHT_ARTICUNO
+	release
+	end
+
+ShoalCave_HighTidePeak_EventScript_ArticunoDefeated::
+	setflag FLAG_DEFEATED_ARTICUNO
+	setvar VAR_0x8004, SPECIES_ARTICUNO
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+ShoalCave_HighTidePeak_EventScript_PlayerOrArticunoRan::
+	setflag FLAG_TEMP_9
+	setvar VAR_0x8004, SPECIES_ARTICUNO
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+ShoalCave_HighTidePeak_Text_Articuno:
+	.string "Kyyuuu$"

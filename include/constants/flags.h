@@ -343,10 +343,10 @@
 
 #define FLAG_DEFEATED_MOLTRES                0x13D // Custom
 #define FLAG_CAUGHT_MOLTRES                  0x13E
-#define FLAG_WONDER_CARD_UNUSED_3            0x13F
-#define FLAG_WONDER_CARD_UNUSED_4            0x140
-#define FLAG_WONDER_CARD_UNUSED_5            0x141
-#define FLAG_WONDER_CARD_UNUSED_6            0x142
+#define FLAG_DEFEATED_ZAPDOS                 0x13F
+#define FLAG_CAUGHT_ZAPDOS                   0x140
+#define FLAG_DEFEATED_ARTICUNO               0x141
+#define FLAG_CAUGHT_ARTICUNO                 0x142
 #define FLAG_WONDER_CARD_UNUSED_7            0x143
 #define FLAG_WONDER_CARD_UNUSED_8            0x144
 #define FLAG_WONDER_CARD_UNUSED_9            0x145
