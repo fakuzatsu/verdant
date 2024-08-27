@@ -1505,9 +1505,9 @@
 #define FLAG_SHOWN_HERACROSS                        (SYSTEM_FLAGS + 0x85) // Custom Flag
 #define FLAG_SHOWN_PINSIR                           (SYSTEM_FLAGS + 0x86) // Custom Flag
 #define FLAG_SHOWN_SCYTHER                          (SYSTEM_FLAGS + 0x87) // Custom Flag
-#define FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED         (SYSTEM_FLAGS + 0x88) // Custom Flag
+#define FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED        (SYSTEM_FLAGS + 0x88) // Custom Flag
 #define FLAG_LANDMARK_THUNDER_ROCK                  (SYSTEM_FLAGS + 0x89) // Custom Flag
-#define FLAG_UNUSED_0x8EA                           (SYSTEM_FLAGS + 0x8A) // Unused Flag
+#define FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED         (SYSTEM_FLAGS + 0x8A) // Custom Flag
 #define FLAG_UNUSED_0x8EB                           (SYSTEM_FLAGS + 0x8B) // Unused Flag
 #define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // Unused Flag
 #define FLAG_UNUSED_0x8ED                           (SYSTEM_FLAGS + 0x8D) // Unused Flag

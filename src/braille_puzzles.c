@@ -13,7 +13,13 @@
 #include "party_menu.h"
 #include "fldeff.h"
 
-EWRAM_DATA static bool8 sIsRegisteelPuzzle = 0;
+#define REGIROCK_PUZZLE  0
+#define REGICE_PUZZLE    1
+#define REGISTEEL_PUZZLE 2
+#define REGIELEKI_PUZZLE 3
+#define REGIDRAGO_PUZZLE 4
+
+EWRAM_DATA static u8 sWhichRegiPuzzle = 0;
 
 static const u8 sRegicePathCoords[][2] =
 {
@@ -58,6 +64,7 @@ static const u8 sRegicePathCoords[][2] =
 static void Task_SealedChamberShakingEffect(u8);
 static void DoBrailleRegirockEffect(void);
 static void DoBrailleRegisteelEffect(void);
+static void DoBrailleRegidragoEffect(void);
 
 bool8 ShouldDoBrailleDigEffect(void)
 {
@@ -172,17 +179,17 @@ bool8 ShouldDoBrailleRegirockEffect(void)
     {
         if (gSaveBlock1Ptr->pos.x == 6 && gSaveBlock1Ptr->pos.y == 23)
         {
-            sIsRegisteelPuzzle = FALSE;
+            sWhichRegiPuzzle = REGIROCK_PUZZLE;
             return TRUE;
         }
         else if (gSaveBlock1Ptr->pos.x == 5 && gSaveBlock1Ptr->pos.y == 23)
         {
-            sIsRegisteelPuzzle = FALSE;
+            sWhichRegiPuzzle = REGIROCK_PUZZLE;
             return TRUE;
         }
         else if (gSaveBlock1Ptr->pos.x == 7 && gSaveBlock1Ptr->pos.y == 23)
         {
-            sIsRegisteelPuzzle = FALSE;
+            sWhichRegiPuzzle = REGIROCK_PUZZLE;
             return TRUE;
         }
     }
@@ -219,11 +226,13 @@ static void DoBrailleRegirockEffect(void)
 
 bool8 ShouldDoBrailleRegisteelEffect(void)
 {
-    if (!FlagGet(FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED) && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ANCIENT_TOMB) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ANCIENT_TOMB)))
+    if (!FlagGet(FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED) 
+        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ANCIENT_TOMB) 
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ANCIENT_TOMB)))
     {
         if (gSaveBlock1Ptr->pos.x == 8 && gSaveBlock1Ptr->pos.y == 25)
         {
-            sIsRegisteelPuzzle = TRUE;
+            sWhichRegiPuzzle = REGISTEEL_PUZZLE;
             return TRUE;
         }
     }
@@ -257,6 +266,58 @@ static void DoBrailleRegisteelEffect(void)
     UnfreezeObjectEvents();
 }
 
+bool8 ShouldDoBrailleRegidragoEffect(void)
+{
+    if (!FlagGet(FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED) 
+        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ANCIENT_TOMB) 
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ANCIENT_TOMB)))
+    {
+        if (gSaveBlock1Ptr->pos.x == 7 && gSaveBlock1Ptr->pos.y == 21)
+        {
+            sWhichRegiPuzzle = REGIDRAGO_PUZZLE;
+            return TRUE;
+        }
+        if (gSaveBlock1Ptr->pos.x == 8 && gSaveBlock1Ptr->pos.y == 21)
+        {
+            sWhichRegiPuzzle = REGIDRAGO_PUZZLE;
+            return TRUE;
+        }
+        if (gSaveBlock1Ptr->pos.x == 9 && gSaveBlock1Ptr->pos.y == 21)
+        {
+            sWhichRegiPuzzle = REGIDRAGO_PUZZLE;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+void SetUpPuzzleEffectRegidrago(void)
+{
+    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    FieldEffectStart(FLDEFF_USE_TOMB_PUZZLE_EFFECT);
+}
+
+void UseRegidragoHm_Callback(void)
+{
+    FieldEffectActiveListRemove(FLDEFF_USE_TOMB_PUZZLE_EFFECT);
+    DoBrailleRegidragoEffect();
+}
+
+static void DoBrailleRegidragoEffect(void)
+{
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_TopLeft);
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_TopMid);
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_TopRight);
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_BottomLeft | MAPGRID_COLLISION_MASK);
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_BottomMid);
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_BottomRight | MAPGRID_COLLISION_MASK);
+    DrawWholeMapView();
+    PlaySE(SE_BANG);
+    FlagSet(FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED);
+    UnlockPlayerFieldControls();
+    UnfreezeObjectEvents();
+}
+
 // theory: another commented out DoBrailleWait and Task_BrailleWait.
 static void UNUSED DoBrailleWait(void)
 {
@@ -267,15 +328,20 @@ bool8 FldEff_UsePuzzleEffect(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    if (sIsRegisteelPuzzle == TRUE)
+    if (sWhichRegiPuzzle == REGISTEEL_PUZZLE)
     {
         gTasks[taskId].data[8] = (u32)UseRegisteelHm_Callback >> 16;
         gTasks[taskId].data[9] = (u32)UseRegisteelHm_Callback;
     }
-    else
+    else if (sWhichRegiPuzzle == REGIROCK_PUZZLE)
     {
         gTasks[taskId].data[8] = (u32)UseRegirockHm_Callback >> 16;
         gTasks[taskId].data[9] = (u32)UseRegirockHm_Callback;
+    }
+    else
+    {
+        gTasks[taskId].data[8] = (u32)UseRegidragoHm_Callback >> 16;
+        gTasks[taskId].data[9] = (u32)UseRegidragoHm_Callback;
     }
     return FALSE;
 }
