@@ -217,6 +217,7 @@ extern const u8 gMenuText_CheckTag[];
 extern const u8 gMenuText_Confirm[];
 extern const u8 gMenuText_Show[];
 extern const u8 gMenuText_Give2[];
+extern const u8 gText_FieldMoves[];
 
 extern const u8 gText_WithdrawPokemon[];
 extern const u8 gText_WithdrawMonDescription[];
@@ -320,9 +321,6 @@ extern const u8 gText_BattleStyle[];
 extern const u8 gText_Sound[];
 extern const u8 gText_Frame[];
 extern const u8 gText_OptionMenuCancel[];
-extern const u8 gText_Font[];               //tx_optionsPlus
-extern const u8 gText_OptionFontFireRed[];  //tx_optionsPlus
-extern const u8 gText_OptionFontEmerald[];  //tx_optionsPlus
 extern const u8 gText_OptionMatchCalls[];   //tx_optionsPlus
 extern const u8 gText_OptionMenuSave[];
 extern const u8 gText_ButtonMode[];
@@ -2115,6 +2113,10 @@ extern const u8 gText_Register[];
 extern const u8 gText_Trade4[];
 extern const u8 gText_Summary5[];
 extern const u8 gText_Switch2[];
+extern const u8 gText_FollowMe[];
+extern const u8 gText_UnfollowMe[];
+extern const u8 gText_MonFollowing[];
+extern const u8 gText_MonNotFollowing[];
 extern const u8 gText_Item[];
 extern const u8 gText_NotPkmnOtherTrainerWants[];
 extern const u8 gText_ThatIsntAnEgg[];

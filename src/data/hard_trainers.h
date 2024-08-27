@@ -29,7 +29,7 @@
     [TRAINER_SAWYER_1] =
     {
 #line 85
-        .trainerName = _("SAWYER"),
+        .trainerName = _("Sawyer"),
 #line 86
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 87
@@ -61,7 +61,7 @@
     [TRAINER_GRUNT_AQUA_HIDEOUT_1] =
     {
 #line 98
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 99
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 100
@@ -93,7 +93,7 @@
     [TRAINER_GRUNT_AQUA_HIDEOUT_2] =
     {
 #line 111
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 112
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 113
@@ -136,7 +136,7 @@
     [TRAINER_GRUNT_AQUA_HIDEOUT_3] =
     {
 #line 128
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 129
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 130
@@ -168,7 +168,7 @@
     [TRAINER_GRUNT_AQUA_HIDEOUT_4] =
     {
 #line 141
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 142
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 143
@@ -200,7 +200,7 @@
     [TRAINER_GRUNT_SEAFLOOR_CAVERN_1] =
     {
 #line 154
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 155
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 156
@@ -232,7 +232,7 @@
     [TRAINER_GRUNT_SEAFLOOR_CAVERN_2] =
     {
 #line 167
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 168
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 169
@@ -264,7 +264,7 @@
     [TRAINER_GRUNT_SEAFLOOR_CAVERN_3] =
     {
 #line 180
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 181
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 182
@@ -296,7 +296,7 @@
     [TRAINER_GABRIELLE_1] =
     {
 #line 193
-        .trainerName = _("GABRIELLE"),
+        .trainerName = _("Gabrielle"),
 #line 194
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 195
@@ -385,7 +385,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_PETALBURG_WOODS] =
     {
 #line 226
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 227
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 228
@@ -417,7 +417,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARCEL] =
     {
 #line 239
-        .trainerName = _("MARCEL"),
+        .trainerName = _("Marcel"),
 #line 240
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 241
@@ -462,7 +462,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALBERTO] =
     {
 #line 257
-        .trainerName = _("ALBERTO"),
+        .trainerName = _("Alberto"),
 #line 258
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 259
@@ -505,7 +505,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ED] =
     {
 #line 274
-        .trainerName = _("ED"),
+        .trainerName = _("Ed"),
 #line 275
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 276
@@ -548,7 +548,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SEAFLOOR_CAVERN_4] =
     {
 #line 291
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 292
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 293
@@ -582,7 +582,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DECLAN] =
     {
 #line 304
-        .trainerName = _("DECLAN"),
+        .trainerName = _("Declan"),
 #line 305
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 306
@@ -614,7 +614,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_RUSTURF_TUNNEL] =
     {
 #line 317
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 318
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 319
@@ -646,7 +646,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_WEATHER_INST_1] =
     {
 #line 330
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 331
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 332
@@ -689,7 +689,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_WEATHER_INST_2] =
     {
 #line 347
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 348
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 349
@@ -732,7 +732,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_WEATHER_INST_3] =
     {
 #line 364
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 365
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 366
@@ -786,7 +786,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MUSEUM_1] =
     {
 #line 385
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 386
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 387
@@ -818,7 +818,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MUSEUM_2] =
     {
 #line 398
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 399
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 400
@@ -861,7 +861,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_1] =
     {
 #line 415
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 416
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 417
@@ -893,7 +893,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_1] =
     {
 #line 428
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 429
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 430
@@ -925,7 +925,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_2] =
     {
 #line 441
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 442
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 443
@@ -957,7 +957,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_3] =
     {
 #line 454
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 455
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 456
@@ -1000,7 +1000,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_WEATHER_INST_4] =
     {
 #line 471
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 472
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 473
@@ -1034,7 +1034,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_AQUA_HIDEOUT_5] =
     {
 #line 484
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 485
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 486
@@ -1068,7 +1068,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_AQUA_HIDEOUT_6] =
     {
 #line 497
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 498
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 499
@@ -1102,7 +1102,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FREDRICK] =
     {
 #line 510
-        .trainerName = _("FREDRICK"),
+        .trainerName = _("Fredrick"),
 #line 511
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 512
@@ -1145,7 +1145,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MATT] =
     {
 #line 527
-        .trainerName = _("MATT"),
+        .trainerName = _("Matt"),
 #line 528
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
 #line 529
@@ -1190,7 +1190,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ZANDER] =
     {
 #line 545
-        .trainerName = _("ZANDER"),
+        .trainerName = _("Zander"),
 #line 546
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 547
@@ -1222,7 +1222,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELLY_WEATHER_INSTITUTE] =
     {
 #line 558
-        .trainerName = _("SHELLY"),
+        .trainerName = _("Shelly"),
 #line 559
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
 #line 560
@@ -1267,7 +1267,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELLY_SEAFLOOR_CAVERN] =
     {
 #line 575
-        .trainerName = _("SHELLY"),
+        .trainerName = _("Shelly"),
 #line 576
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
 #line 577
@@ -1312,7 +1312,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ARCHIE] =
     {
 #line 592
-        .trainerName = _("ARCHIE"),
+        .trainerName = _("Archie"),
 #line 593
         .trainerClass = TRAINER_CLASS_AQUA_LEADER,
 #line 594
@@ -1368,7 +1368,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEAH] =
     {
 #line 614
-        .trainerName = _("LEAH"),
+        .trainerName = _("Leah"),
 #line 615
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 616
@@ -1402,7 +1402,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAISY] =
     {
 #line 627
-        .trainerName = _("DAISY"),
+        .trainerName = _("Daisy"),
 #line 628
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 629
@@ -1447,7 +1447,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROSE_1] =
     {
 #line 644
-        .trainerName = _("ROSE"),
+        .trainerName = _("Rose"),
 #line 645
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 646
@@ -1503,7 +1503,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FELIX] =
     {
 #line 665
-        .trainerName = _("FELIX"),
+        .trainerName = _("Felix"),
 #line 666
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 667
@@ -1557,7 +1557,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VIOLET] =
     {
 #line 686
-        .trainerName = _("VIOLET"),
+        .trainerName = _("Violet"),
 #line 687
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 688
@@ -1602,7 +1602,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROSE_2] =
     {
 #line 703
-        .trainerName = _("ROSE"),
+        .trainerName = _("Rose"),
 #line 704
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 705
@@ -1647,7 +1647,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROSE_3] =
     {
 #line 720
-        .trainerName = _("ROSE"),
+        .trainerName = _("Rose"),
 #line 721
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 722
@@ -1703,7 +1703,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROSE_4] =
     {
 #line 741
-        .trainerName = _("ROSE"),
+        .trainerName = _("Rose"),
 #line 742
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 743
@@ -1759,7 +1759,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROSE_5] =
     {
 #line 762
-        .trainerName = _("ROSE"),
+        .trainerName = _("Rose"),
 #line 763
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 764
@@ -1815,7 +1815,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUSTY_1] =
     {
 #line 783
-        .trainerName = _("DUSTY"),
+        .trainerName = _("Dusty"),
 #line 784
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 785
@@ -1854,7 +1854,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHIP] =
     {
 #line 800
-        .trainerName = _("CHIP"),
+        .trainerName = _("Chip"),
 #line 801
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 802
@@ -1929,7 +1929,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FOSTER] =
     {
 #line 833
-        .trainerName = _("FOSTER"),
+        .trainerName = _("Foster"),
 #line 834
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 835
@@ -1986,7 +1986,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUSTY_2] =
     {
 #line 858
-        .trainerName = _("DUSTY"),
+        .trainerName = _("Dusty"),
 #line 859
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 860
@@ -2025,7 +2025,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUSTY_3] =
     {
 #line 875
-        .trainerName = _("DUSTY"),
+        .trainerName = _("Dusty"),
 #line 876
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 877
@@ -2064,7 +2064,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUSTY_4] =
     {
 #line 892
-        .trainerName = _("DUSTY"),
+        .trainerName = _("Dusty"),
 #line 893
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 894
@@ -2103,7 +2103,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUSTY_5] =
     {
 #line 909
-        .trainerName = _("DUSTY"),
+        .trainerName = _("Dusty"),
 #line 910
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 911
@@ -2142,7 +2142,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_1] =
     {
 #line 926
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 927
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 928
@@ -2185,7 +2185,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_2] =
     {
 #line 943
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 944
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 945
@@ -2228,7 +2228,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_3] =
     {
 #line 960
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 961
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 962
@@ -2271,7 +2271,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_4] =
     {
 #line 977
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 978
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 979
@@ -2314,7 +2314,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_5] =
     {
 #line 994
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 995
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 996
@@ -2357,7 +2357,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABBY_AND_TY_6] =
     {
 #line 1011
-        .trainerName = _("GABBY & TY"),
+        .trainerName = _("Gabby & Ty"),
 #line 1012
         .trainerClass = TRAINER_CLASS_INTERVIEWER,
 #line 1013
@@ -2414,7 +2414,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LOLA_1] =
     {
 #line 1036
-        .trainerName = _("LOLA"),
+        .trainerName = _("Lola"),
 #line 1037
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1038
@@ -2459,7 +2459,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AUSTINA] =
     {
 #line 1053
-        .trainerName = _("AUSTINA"),
+        .trainerName = _("Austina"),
 #line 1054
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1055
@@ -2493,7 +2493,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GWEN] =
     {
 #line 1066
-        .trainerName = _("GWEN"),
+        .trainerName = _("Gwen"),
 #line 1067
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1068
@@ -2527,7 +2527,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LOLA_2] =
     {
 #line 1079
-        .trainerName = _("LOLA"),
+        .trainerName = _("Lola"),
 #line 1080
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1081
@@ -2572,7 +2572,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LOLA_3] =
     {
 #line 1096
-        .trainerName = _("LOLA"),
+        .trainerName = _("Lola"),
 #line 1097
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1098
@@ -2617,7 +2617,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LOLA_4] =
     {
 #line 1113
-        .trainerName = _("LOLA"),
+        .trainerName = _("Lola"),
 #line 1114
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1115
@@ -2662,7 +2662,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LOLA_5] =
     {
 #line 1130
-        .trainerName = _("LOLA"),
+        .trainerName = _("Lola"),
 #line 1131
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 1132
@@ -2707,7 +2707,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICKY_1] =
     {
 #line 1147
-        .trainerName = _("RICKY"),
+        .trainerName = _("Ricky"),
 #line 1148
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1149
@@ -2746,7 +2746,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SIMON] =
     {
 #line 1164
-        .trainerName = _("SIMON"),
+        .trainerName = _("Simon"),
 #line 1165
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1166
@@ -2789,7 +2789,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHARLIE] =
     {
 #line 1181
-        .trainerName = _("CHARLIE"),
+        .trainerName = _("Charlie"),
 #line 1182
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1183
@@ -2821,7 +2821,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICKY_2] =
     {
 #line 1194
-        .trainerName = _("RICKY"),
+        .trainerName = _("Ricky"),
 #line 1195
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1196
@@ -2860,7 +2860,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICKY_3] =
     {
 #line 1211
-        .trainerName = _("RICKY"),
+        .trainerName = _("Ricky"),
 #line 1212
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1213
@@ -2899,7 +2899,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICKY_4] =
     {
 #line 1228
-        .trainerName = _("RICKY"),
+        .trainerName = _("Ricky"),
 #line 1229
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1230
@@ -2938,7 +2938,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICKY_5] =
     {
 #line 1245
-        .trainerName = _("RICKY"),
+        .trainerName = _("Ricky"),
 #line 1246
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 1247
@@ -2977,7 +2977,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RANDALL] =
     {
 #line 1262
-        .trainerName = _("RANDALL"),
+        .trainerName = _("Randall"),
 #line 1263
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1264
@@ -3017,7 +3017,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PARKER] =
     {
 #line 1279
-        .trainerName = _("PARKER"),
+        .trainerName = _("Parker"),
 #line 1280
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1281
@@ -3057,7 +3057,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GEORGE] =
     {
 #line 1296
-        .trainerName = _("GEORGE"),
+        .trainerName = _("George"),
 #line 1297
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1298
@@ -3099,7 +3099,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERKE] =
     {
 #line 1313
-        .trainerName = _("BERKE"),
+        .trainerName = _("Berke"),
 #line 1314
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1315
@@ -3138,7 +3138,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAXTON] =
     {
 #line 1329
-        .trainerName = _("BRAXTON"),
+        .trainerName = _("Braxton"),
 #line 1330
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1331
@@ -3251,7 +3251,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VINCENT] =
     {
 #line 1379
-        .trainerName = _("VINCENT"),
+        .trainerName = _("Vincent"),
 #line 1380
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1381
@@ -3307,7 +3307,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEROY] =
     {
 #line 1401
-        .trainerName = _("LEROY"),
+        .trainerName = _("Leroy"),
 #line 1402
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1403
@@ -3352,7 +3352,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILTON_1] =
     {
 #line 1419
-        .trainerName = _("WILTON"),
+        .trainerName = _("Wilton"),
 #line 1420
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1421
@@ -3408,7 +3408,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDGAR] =
     {
 #line 1441
-        .trainerName = _("EDGAR"),
+        .trainerName = _("Edgar"),
 #line 1442
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1443
@@ -3453,7 +3453,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALBERT] =
     {
 #line 1459
-        .trainerName = _("ALBERT"),
+        .trainerName = _("Albert"),
 #line 1460
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1461
@@ -3498,7 +3498,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAMUEL] =
     {
 #line 1477
-        .trainerName = _("SAMUEL"),
+        .trainerName = _("Samuel"),
 #line 1478
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1479
@@ -3554,7 +3554,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VITO] =
     {
 #line 1499
-        .trainerName = _("VITO"),
+        .trainerName = _("Vito"),
 #line 1500
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1501
@@ -3621,7 +3621,7 @@ F_TRAINER_FEMALE |
     [TRAINER_OWEN] =
     {
 #line 1525
-        .trainerName = _("OWEN"),
+        .trainerName = _("Owen"),
 #line 1526
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1527
@@ -3677,7 +3677,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILTON_2] =
     {
 #line 1547
-        .trainerName = _("WILTON"),
+        .trainerName = _("Wilton"),
 #line 1548
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1549
@@ -3733,7 +3733,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILTON_3] =
     {
 #line 1569
-        .trainerName = _("WILTON"),
+        .trainerName = _("Wilton"),
 #line 1570
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1571
@@ -3789,7 +3789,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILTON_4] =
     {
 #line 1591
-        .trainerName = _("WILTON"),
+        .trainerName = _("Wilton"),
 #line 1592
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1593
@@ -3845,7 +3845,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILTON_5] =
     {
 #line 1613
-        .trainerName = _("WILTON"),
+        .trainerName = _("Wilton"),
 #line 1614
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1615
@@ -3901,7 +3901,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WARREN] =
     {
 #line 1635
-        .trainerName = _("WARREN"),
+        .trainerName = _("Warren"),
 #line 1636
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1637
@@ -3946,7 +3946,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARY] =
     {
 #line 1653
-        .trainerName = _("MARY"),
+        .trainerName = _("Mary"),
 #line 1654
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1655
@@ -3987,7 +3987,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALEXIA] =
     {
 #line 1669
-        .trainerName = _("ALEXIA"),
+        .trainerName = _("Alexia"),
 #line 1670
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1671
@@ -4029,7 +4029,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JODY] =
     {
 #line 1686
-        .trainerName = _("JODY"),
+        .trainerName = _("Jody"),
 #line 1687
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1688
@@ -4070,7 +4070,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WENDY] =
     {
 #line 1702
-        .trainerName = _("WENDY"),
+        .trainerName = _("Wendy"),
 #line 1703
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1704
@@ -4149,7 +4149,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KEIRA] =
     {
 #line 1736
-        .trainerName = _("KEIRA"),
+        .trainerName = _("Keira"),
 #line 1737
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1738
@@ -4196,7 +4196,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BROOKE_1] =
     {
 #line 1754
-        .trainerName = _("BROOKE"),
+        .trainerName = _("Brooke"),
 #line 1755
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1756
@@ -4254,7 +4254,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNIFER] =
     {
 #line 1776
-        .trainerName = _("JENNIFER"),
+        .trainerName = _("Jennifer"),
 #line 1777
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1778
@@ -4290,7 +4290,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HOPE] =
     {
 #line 1790
-        .trainerName = _("HOPE"),
+        .trainerName = _("Hope"),
 #line 1791
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1792
@@ -4326,7 +4326,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHANNON] =
     {
 #line 1804
-        .trainerName = _("SHANNON"),
+        .trainerName = _("Shannon"),
 #line 1805
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1806
@@ -4362,7 +4362,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MICHELLE] =
     {
 #line 1818
-        .trainerName = _("MICHELLE"),
+        .trainerName = _("Michelle"),
 #line 1819
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1820
@@ -4420,7 +4420,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAROLINE] =
     {
 #line 1840
-        .trainerName = _("CAROLINE"),
+        .trainerName = _("Caroline"),
 #line 1841
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1842
@@ -4467,7 +4467,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JULIE] =
     {
 #line 1858
-        .trainerName = _("JULIE"),
+        .trainerName = _("Julie"),
 #line 1859
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1860
@@ -4525,7 +4525,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BROOKE_2] =
     {
 #line 1880
-        .trainerName = _("BROOKE"),
+        .trainerName = _("Brooke"),
 #line 1881
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1882
@@ -4583,7 +4583,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BROOKE_3] =
     {
 #line 1902
-        .trainerName = _("BROOKE"),
+        .trainerName = _("Brooke"),
 #line 1903
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1904
@@ -4641,7 +4641,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BROOKE_4] =
     {
 #line 1924
-        .trainerName = _("BROOKE"),
+        .trainerName = _("Brooke"),
 #line 1925
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1926
@@ -4699,7 +4699,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BROOKE_5] =
     {
 #line 1946
-        .trainerName = _("BROOKE"),
+        .trainerName = _("Brooke"),
 #line 1947
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 1948
@@ -4757,7 +4757,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PATRICIA] =
     {
 #line 1968
-        .trainerName = _("PATRICIA"),
+        .trainerName = _("Patricia"),
 #line 1969
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 1970
@@ -4802,7 +4802,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KINDRA] =
     {
 #line 1985
-        .trainerName = _("KINDRA"),
+        .trainerName = _("Kindra"),
 #line 1986
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 1987
@@ -4847,7 +4847,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TAMMY] =
     {
 #line 2002
-        .trainerName = _("TAMMY"),
+        .trainerName = _("Tammy"),
 #line 2003
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2004
@@ -4892,7 +4892,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VALERIE_1] =
     {
 #line 2019
-        .trainerName = _("VALERIE"),
+        .trainerName = _("Valerie"),
 #line 2020
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2021
@@ -4926,7 +4926,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TASHA] =
     {
 #line 2032
-        .trainerName = _("TASHA"),
+        .trainerName = _("Tasha"),
 #line 2033
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2034
@@ -4960,7 +4960,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VALERIE_2] =
     {
 #line 2045
-        .trainerName = _("VALERIE"),
+        .trainerName = _("Valerie"),
 #line 2046
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2047
@@ -5005,7 +5005,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VALERIE_3] =
     {
 #line 2062
-        .trainerName = _("VALERIE"),
+        .trainerName = _("Valerie"),
 #line 2063
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2064
@@ -5050,7 +5050,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VALERIE_4] =
     {
 #line 2079
-        .trainerName = _("VALERIE"),
+        .trainerName = _("Valerie"),
 #line 2080
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2081
@@ -5095,7 +5095,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VALERIE_5] =
     {
 #line 2096
-        .trainerName = _("VALERIE"),
+        .trainerName = _("Valerie"),
 #line 2097
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 2098
@@ -5151,7 +5151,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_1] =
     {
 #line 2117
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2118
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2119
@@ -5189,7 +5189,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAPHNE] =
     {
 #line 2131
-        .trainerName = _("DAPHNE"),
+        .trainerName = _("Daphne"),
 #line 2132
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2133
@@ -5254,7 +5254,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_2] =
     {
 #line 2157
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 2158
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 2159
@@ -5308,7 +5308,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_2] =
     {
 #line 2178
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2179
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2180
@@ -5351,7 +5351,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRIANNA] =
     {
 #line 2194
-        .trainerName = _("BRIANNA"),
+        .trainerName = _("Brianna"),
 #line 2195
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2196
@@ -5389,7 +5389,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NAOMI] =
     {
 #line 2208
-        .trainerName = _("NAOMI"),
+        .trainerName = _("Naomi"),
 #line 2209
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2210
@@ -5427,7 +5427,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_3] =
     {
 #line 2222
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2223
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2224
@@ -5465,7 +5465,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_4] =
     {
 #line 2236
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2237
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2238
@@ -5503,7 +5503,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_5] =
     {
 #line 2250
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2251
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2252
@@ -5541,7 +5541,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CINDY_6] =
     {
 #line 2264
-        .trainerName = _("CINDY"),
+        .trainerName = _("Cindy"),
 #line 2265
         .trainerClass = TRAINER_CLASS_LADY,
 #line 2266
@@ -5586,7 +5586,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MELISSA] =
     {
 #line 2282
-        .trainerName = _("MELISSA"),
+        .trainerName = _("Melissa"),
 #line 2283
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2284
@@ -5620,7 +5620,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHEILA] =
     {
 #line 2295
-        .trainerName = _("SHEILA"),
+        .trainerName = _("Sheila"),
 #line 2296
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2297
@@ -5654,7 +5654,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHIRLEY] =
     {
 #line 2308
-        .trainerName = _("SHIRLEY"),
+        .trainerName = _("Shirley"),
 #line 2309
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2310
@@ -5688,7 +5688,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JESSICA_1] =
     {
 #line 2321
-        .trainerName = _("JESSICA"),
+        .trainerName = _("Jessica"),
 #line 2322
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2323
@@ -5747,7 +5747,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CONNIE] =
     {
 #line 2346
-        .trainerName = _("CONNIE"),
+        .trainerName = _("Connie"),
 #line 2347
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2348
@@ -5781,7 +5781,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRIDGET] =
     {
 #line 2359
-        .trainerName = _("BRIDGET"),
+        .trainerName = _("Bridget"),
 #line 2360
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2361
@@ -5815,7 +5815,7 @@ F_TRAINER_FEMALE |
     [TRAINER_OLIVIA] =
     {
 #line 2372
-        .trainerName = _("OLIVIA"),
+        .trainerName = _("Olivia"),
 #line 2373
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2374
@@ -5891,7 +5891,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIFFANY] =
     {
 #line 2404
-        .trainerName = _("TIFFANY"),
+        .trainerName = _("Tiffany"),
 #line 2405
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2406
@@ -5936,7 +5936,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JESSICA_2] =
     {
 #line 2421
-        .trainerName = _("JESSICA"),
+        .trainerName = _("Jessica"),
 #line 2422
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2423
@@ -5995,7 +5995,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JESSICA_3] =
     {
 #line 2446
-        .trainerName = _("JESSICA"),
+        .trainerName = _("Jessica"),
 #line 2447
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2448
@@ -6054,7 +6054,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JESSICA_4] =
     {
 #line 2471
-        .trainerName = _("JESSICA"),
+        .trainerName = _("Jessica"),
 #line 2472
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2473
@@ -6113,7 +6113,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JESSICA_5] =
     {
 #line 2496
-        .trainerName = _("JESSICA"),
+        .trainerName = _("Jessica"),
 #line 2497
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2498
@@ -6172,7 +6172,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINSTON_1] =
     {
 #line 2521
-        .trainerName = _("WINSTON"),
+        .trainerName = _("Winston"),
 #line 2522
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2523
@@ -6208,7 +6208,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MOLLIE] =
     {
 #line 2535
-        .trainerName = _("MOLLIE"),
+        .trainerName = _("Mollie"),
 #line 2536
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 2537
@@ -6253,7 +6253,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GARRET] =
     {
 #line 2552
-        .trainerName = _("GARRET"),
+        .trainerName = _("Garret"),
 #line 2553
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2554
@@ -6289,7 +6289,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINSTON_2] =
     {
 #line 2566
-        .trainerName = _("WINSTON"),
+        .trainerName = _("Winston"),
 #line 2567
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2568
@@ -6325,7 +6325,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINSTON_3] =
     {
 #line 2580
-        .trainerName = _("WINSTON"),
+        .trainerName = _("Winston"),
 #line 2581
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2582
@@ -6361,7 +6361,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINSTON_4] =
     {
 #line 2594
-        .trainerName = _("WINSTON"),
+        .trainerName = _("Winston"),
 #line 2595
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2596
@@ -6397,7 +6397,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINSTON_5] =
     {
 #line 2608
-        .trainerName = _("WINSTON"),
+        .trainerName = _("Winston"),
 #line 2609
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 2610
@@ -6440,7 +6440,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVE_1] =
     {
 #line 2626
-        .trainerName = _("STEVE"),
+        .trainerName = _("Steve"),
 #line 2627
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2628
@@ -6472,7 +6472,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THALIA_1] =
     {
 #line 2639
-        .trainerName = _("THALIA"),
+        .trainerName = _("Thalia"),
 #line 2640
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 2641
@@ -6517,7 +6517,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARK] =
     {
 #line 2656
-        .trainerName = _("MARK"),
+        .trainerName = _("Mark"),
 #line 2657
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2658
@@ -6549,7 +6549,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_CHIMNEY_1] =
     {
 #line 2669
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 2670
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 2671
@@ -6583,7 +6583,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVE_2] =
     {
 #line 2682
-        .trainerName = _("STEVE"),
+        .trainerName = _("Steve"),
 #line 2683
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2684
@@ -6615,7 +6615,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVE_3] =
     {
 #line 2695
-        .trainerName = _("STEVE"),
+        .trainerName = _("Steve"),
 #line 2696
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2697
@@ -6658,7 +6658,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVE_4] =
     {
 #line 2712
-        .trainerName = _("STEVE"),
+        .trainerName = _("Steve"),
 #line 2713
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2714
@@ -6701,7 +6701,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVE_5] =
     {
 #line 2729
-        .trainerName = _("STEVE"),
+        .trainerName = _("Steve"),
 #line 2730
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 2731
@@ -6744,7 +6744,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LUIS] =
     {
 #line 2746
-        .trainerName = _("LUIS"),
+        .trainerName = _("Luis"),
 #line 2747
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2748
@@ -6776,7 +6776,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DOMINIK] =
     {
 #line 2759
-        .trainerName = _("DOMINIK"),
+        .trainerName = _("Dominik"),
 #line 2760
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2761
@@ -6808,7 +6808,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DOUGLAS] =
     {
 #line 2772
-        .trainerName = _("DOUGLAS"),
+        .trainerName = _("Douglas"),
 #line 2773
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2774
@@ -6851,7 +6851,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DARRIN] =
     {
 #line 2789
-        .trainerName = _("DARRIN"),
+        .trainerName = _("Darrin"),
 #line 2790
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2791
@@ -6905,7 +6905,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TONY_1] =
     {
 #line 2810
-        .trainerName = _("TONY"),
+        .trainerName = _("Tony"),
 #line 2811
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2812
@@ -6937,7 +6937,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEROME] =
     {
 #line 2823
-        .trainerName = _("JEROME"),
+        .trainerName = _("Jerome"),
 #line 2824
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2825
@@ -6969,7 +6969,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MATTHEW] =
     {
 #line 2836
-        .trainerName = _("MATTHEW"),
+        .trainerName = _("Matthew"),
 #line 2837
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2838
@@ -7001,7 +7001,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAVID] =
     {
 #line 2849
-        .trainerName = _("DAVID"),
+        .trainerName = _("David"),
 #line 2850
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2851
@@ -7044,7 +7044,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SPENCER] =
     {
 #line 2866
-        .trainerName = _("SPENCER"),
+        .trainerName = _("Spencer"),
 #line 2867
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2868
@@ -7087,7 +7087,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROLAND] =
     {
 #line 2883
-        .trainerName = _("ROLAND"),
+        .trainerName = _("Roland"),
 #line 2884
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2885
@@ -7119,7 +7119,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOLEN] =
     {
 #line 2896
-        .trainerName = _("NOLEN"),
+        .trainerName = _("Nolen"),
 #line 2897
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2898
@@ -7151,7 +7151,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STAN] =
     {
 #line 2909
-        .trainerName = _("STAN"),
+        .trainerName = _("Stan"),
 #line 2910
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2911
@@ -7183,7 +7183,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BARRY] =
     {
 #line 2922
-        .trainerName = _("BARRY"),
+        .trainerName = _("Barry"),
 #line 2923
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2924
@@ -7215,7 +7215,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEAN] =
     {
 #line 2935
-        .trainerName = _("DEAN"),
+        .trainerName = _("Dean"),
 #line 2936
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2937
@@ -7269,7 +7269,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RODNEY] =
     {
 #line 2956
-        .trainerName = _("RODNEY"),
+        .trainerName = _("Rodney"),
 #line 2957
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2958
@@ -7301,7 +7301,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICHARD] =
     {
 #line 2969
-        .trainerName = _("RICHARD"),
+        .trainerName = _("Richard"),
 #line 2970
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2971
@@ -7333,7 +7333,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HERMAN] =
     {
 #line 2982
-        .trainerName = _("HERMAN"),
+        .trainerName = _("Herman"),
 #line 2983
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 2984
@@ -7376,7 +7376,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SANTIAGO] =
     {
 #line 2999
-        .trainerName = _("SANTIAGO"),
+        .trainerName = _("Santiago"),
 #line 3000
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3001
@@ -7419,7 +7419,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GILBERT] =
     {
 #line 3016
-        .trainerName = _("GILBERT"),
+        .trainerName = _("Gilbert"),
 #line 3017
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3018
@@ -7451,7 +7451,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FRANKLIN] =
     {
 #line 3029
-        .trainerName = _("FRANKLIN"),
+        .trainerName = _("Franklin"),
 #line 3030
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3031
@@ -7483,7 +7483,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KEVIN] =
     {
 #line 3042
-        .trainerName = _("KEVIN"),
+        .trainerName = _("Kevin"),
 #line 3043
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3044
@@ -7515,7 +7515,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACK] =
     {
 #line 3055
-        .trainerName = _("JACK"),
+        .trainerName = _("Jack"),
 #line 3056
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3057
@@ -7547,7 +7547,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUDLEY] =
     {
 #line 3068
-        .trainerName = _("DUDLEY"),
+        .trainerName = _("Dudley"),
 #line 3069
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3070
@@ -7601,7 +7601,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHAD] =
     {
 #line 3089
-        .trainerName = _("CHAD"),
+        .trainerName = _("Chad"),
 #line 3090
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3091
@@ -7644,7 +7644,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TONY_2] =
     {
 #line 3106
-        .trainerName = _("TONY"),
+        .trainerName = _("Tony"),
 #line 3107
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3108
@@ -7676,7 +7676,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TONY_3] =
     {
 #line 3119
-        .trainerName = _("TONY"),
+        .trainerName = _("Tony"),
 #line 3120
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3121
@@ -7708,7 +7708,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TONY_4] =
     {
 #line 3132
-        .trainerName = _("TONY"),
+        .trainerName = _("Tony"),
 #line 3133
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3134
@@ -7751,7 +7751,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TONY_5] =
     {
 #line 3149
-        .trainerName = _("TONY"),
+        .trainerName = _("Tony"),
 #line 3150
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 3151
@@ -7794,7 +7794,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TAKAO] =
     {
 #line 3166
-        .trainerName = _("TAKAO"),
+        .trainerName = _("Takao"),
 #line 3167
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3168
@@ -7826,7 +7826,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HITOSHI] =
     {
 #line 3179
-        .trainerName = _("HITOSHI"),
+        .trainerName = _("Hitoshi"),
 #line 3180
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3181
@@ -7869,7 +7869,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIYO] =
     {
 #line 3196
-        .trainerName = _("KIYO"),
+        .trainerName = _("Kiyo"),
 #line 3197
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3198
@@ -7901,7 +7901,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOICHI] =
     {
 #line 3209
-        .trainerName = _("KOICHI"),
+        .trainerName = _("Koichi"),
 #line 3210
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3211
@@ -7944,7 +7944,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOB_1] =
     {
 #line 3226
-        .trainerName = _("NOB"),
+        .trainerName = _("Nob"),
 #line 3227
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3228
@@ -7976,7 +7976,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOB_2] =
     {
 #line 3239
-        .trainerName = _("NOB"),
+        .trainerName = _("Nob"),
 #line 3240
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3241
@@ -8008,7 +8008,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOB_3] =
     {
 #line 3252
-        .trainerName = _("NOB"),
+        .trainerName = _("Nob"),
 #line 3253
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3254
@@ -8051,7 +8051,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOB_4] =
     {
 #line 3269
-        .trainerName = _("NOB"),
+        .trainerName = _("Nob"),
 #line 3270
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3271
@@ -8105,7 +8105,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOB_5] =
     {
 #line 3290
-        .trainerName = _("NOB"),
+        .trainerName = _("Nob"),
 #line 3291
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3292
@@ -8172,7 +8172,7 @@ F_TRAINER_FEMALE |
     [TRAINER_YUJI] =
     {
 #line 3315
-        .trainerName = _("YUJI"),
+        .trainerName = _("Yuji"),
 #line 3316
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3317
@@ -8215,7 +8215,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAISUKE] =
     {
 #line 3332
-        .trainerName = _("DAISUKE"),
+        .trainerName = _("Daisuke"),
 #line 3333
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3334
@@ -8247,7 +8247,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ATSUSHI] =
     {
 #line 3345
-        .trainerName = _("ATSUSHI"),
+        .trainerName = _("Atsushi"),
 #line 3346
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 3347
@@ -8279,7 +8279,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRK] =
     {
 #line 3358
-        .trainerName = _("KIRK"),
+        .trainerName = _("Kirk"),
 #line 3359
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3360
@@ -8335,7 +8335,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_AQUA_HIDEOUT_7] =
     {
 #line 3382
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 3383
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 3384
@@ -8380,7 +8380,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_AQUA_HIDEOUT_8] =
     {
 #line 3399
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 3400
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 3401
@@ -8412,7 +8412,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHAWN] =
     {
 #line 3412
-        .trainerName = _("SHAWN"),
+        .trainerName = _("Shawn"),
 #line 3413
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3414
@@ -8455,7 +8455,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FERNANDO_1] =
     {
 #line 3429
-        .trainerName = _("FERNANDO"),
+        .trainerName = _("Fernando"),
 #line 3430
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3431
@@ -8498,7 +8498,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALTON_1] =
     {
 #line 3446
-        .trainerName = _("DALTON"),
+        .trainerName = _("Dalton"),
 #line 3447
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3448
@@ -8541,7 +8541,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALTON_2] =
     {
 #line 3463
-        .trainerName = _("DALTON"),
+        .trainerName = _("Dalton"),
 #line 3464
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3465
@@ -8595,7 +8595,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALTON_3] =
     {
 #line 3484
-        .trainerName = _("DALTON"),
+        .trainerName = _("Dalton"),
 #line 3485
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3486
@@ -8649,7 +8649,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALTON_4] =
     {
 #line 3505
-        .trainerName = _("DALTON"),
+        .trainerName = _("Dalton"),
 #line 3506
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3507
@@ -8703,7 +8703,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALTON_5] =
     {
 #line 3526
-        .trainerName = _("DALTON"),
+        .trainerName = _("Dalton"),
 #line 3527
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 3528
@@ -8757,7 +8757,7 @@ F_TRAINER_FEMALE |
     [TRAINER_COLE] =
     {
 #line 3547
-        .trainerName = _("COLE"),
+        .trainerName = _("Cole"),
 #line 3548
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3549
@@ -8789,7 +8789,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFF] =
     {
 #line 3560
-        .trainerName = _("JEFF"),
+        .trainerName = _("Jeff"),
 #line 3561
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3562
@@ -8832,7 +8832,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AXLE] =
     {
 #line 3577
-        .trainerName = _("AXLE"),
+        .trainerName = _("Axle"),
 #line 3578
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3579
@@ -8864,7 +8864,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACE] =
     {
 #line 3590
-        .trainerName = _("JACE"),
+        .trainerName = _("Jace"),
 #line 3591
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3592
@@ -8896,7 +8896,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KEEGAN] =
     {
 #line 3603
-        .trainerName = _("KEEGAN"),
+        .trainerName = _("Keegan"),
 #line 3604
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3605
@@ -8928,7 +8928,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERNIE_1] =
     {
 #line 3616
-        .trainerName = _("BERNIE"),
+        .trainerName = _("Bernie"),
 #line 3617
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3618
@@ -8971,7 +8971,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERNIE_2] =
     {
 #line 3633
-        .trainerName = _("BERNIE"),
+        .trainerName = _("Bernie"),
 #line 3634
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3635
@@ -9014,7 +9014,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERNIE_3] =
     {
 #line 3650
-        .trainerName = _("BERNIE"),
+        .trainerName = _("Bernie"),
 #line 3651
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3652
@@ -9057,7 +9057,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERNIE_4] =
     {
 #line 3667
-        .trainerName = _("BERNIE"),
+        .trainerName = _("Bernie"),
 #line 3668
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3669
@@ -9100,7 +9100,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BERNIE_5] =
     {
 #line 3684
-        .trainerName = _("BERNIE"),
+        .trainerName = _("Bernie"),
 #line 3685
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 3686
@@ -9143,7 +9143,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DREW] =
     {
 #line 3701
-        .trainerName = _("DREW"),
+        .trainerName = _("Drew"),
 #line 3702
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3703
@@ -9182,7 +9182,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BEAU] =
     {
 #line 3718
-        .trainerName = _("BEAU"),
+        .trainerName = _("Beau"),
 #line 3719
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3720
@@ -9257,7 +9257,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LARRY] =
     {
 #line 3751
-        .trainerName = _("LARRY"),
+        .trainerName = _("Larry"),
 #line 3752
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3753
@@ -9289,7 +9289,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHANE] =
     {
 #line 3764
-        .trainerName = _("SHANE"),
+        .trainerName = _("Shane"),
 #line 3765
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3766
@@ -9332,7 +9332,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUSTIN] =
     {
 #line 3781
-        .trainerName = _("JUSTIN"),
+        .trainerName = _("Justin"),
 #line 3782
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3783
@@ -9364,7 +9364,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ETHAN_1] =
     {
 #line 3794
-        .trainerName = _("ETHAN"),
+        .trainerName = _("Ethan"),
 #line 3795
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3796
@@ -9407,7 +9407,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AUTUMN] =
     {
 #line 3811
-        .trainerName = _("AUTUMN"),
+        .trainerName = _("Autumn"),
 #line 3812
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 3813
@@ -9441,7 +9441,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRAVIS] =
     {
 #line 3824
-        .trainerName = _("TRAVIS"),
+        .trainerName = _("Travis"),
 #line 3825
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3826
@@ -9473,7 +9473,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ETHAN_2] =
     {
 #line 3837
-        .trainerName = _("ETHAN"),
+        .trainerName = _("Ethan"),
 #line 3838
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3839
@@ -9516,7 +9516,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ETHAN_3] =
     {
 #line 3854
-        .trainerName = _("ETHAN"),
+        .trainerName = _("Ethan"),
 #line 3855
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3856
@@ -9559,7 +9559,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ETHAN_4] =
     {
 #line 3871
-        .trainerName = _("ETHAN"),
+        .trainerName = _("Ethan"),
 #line 3872
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3873
@@ -9613,7 +9613,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ETHAN_5] =
     {
 #line 3892
-        .trainerName = _("ETHAN"),
+        .trainerName = _("Ethan"),
 #line 3893
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 3894
@@ -9667,7 +9667,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENT] =
     {
 #line 3913
-        .trainerName = _("BRENT"),
+        .trainerName = _("Brent"),
 #line 3914
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 3915
@@ -9699,7 +9699,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DONALD] =
     {
 #line 3926
-        .trainerName = _("DONALD"),
+        .trainerName = _("Donald"),
 #line 3927
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 3928
@@ -9753,7 +9753,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TAYLOR] =
     {
 #line 3947
-        .trainerName = _("TAYLOR"),
+        .trainerName = _("Taylor"),
 #line 3948
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 3949
@@ -9807,7 +9807,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFFREY_1] =
     {
 #line 3968
-        .trainerName = _("JEFFREY"),
+        .trainerName = _("Jeffrey"),
 #line 3969
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 3970
@@ -9861,7 +9861,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEREK] =
     {
 #line 3989
-        .trainerName = _("DEREK"),
+        .trainerName = _("Derek"),
 #line 3990
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 3991
@@ -9904,7 +9904,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFFREY_2] =
     {
 #line 4006
-        .trainerName = _("JEFFREY"),
+        .trainerName = _("Jeffrey"),
 #line 4007
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 4008
@@ -9958,7 +9958,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFFREY_3] =
     {
 #line 4027
-        .trainerName = _("JEFFREY"),
+        .trainerName = _("Jeffrey"),
 #line 4028
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 4029
@@ -10012,7 +10012,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFFREY_4] =
     {
 #line 4048
-        .trainerName = _("JEFFREY"),
+        .trainerName = _("Jeffrey"),
 #line 4049
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 4050
@@ -10077,7 +10077,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JEFFREY_5] =
     {
 #line 4073
-        .trainerName = _("JEFFREY"),
+        .trainerName = _("Jeffrey"),
 #line 4074
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 4075
@@ -10155,7 +10155,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWARD] =
     {
 #line 4102
-        .trainerName = _("EDWARD"),
+        .trainerName = _("Edward"),
 #line 4103
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4104
@@ -10191,7 +10191,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PRESTON] =
     {
 #line 4116
-        .trainerName = _("PRESTON"),
+        .trainerName = _("Preston"),
 #line 4117
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4118
@@ -10223,7 +10223,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VIRGIL] =
     {
 #line 4129
-        .trainerName = _("VIRGIL"),
+        .trainerName = _("Virgil"),
 #line 4130
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4131
@@ -10255,7 +10255,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BLAKE] =
     {
 #line 4142
-        .trainerName = _("BLAKE"),
+        .trainerName = _("Blake"),
 #line 4143
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4144
@@ -10287,7 +10287,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WILLIAM] =
     {
 #line 4155
-        .trainerName = _("WILLIAM"),
+        .trainerName = _("William"),
 #line 4156
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4157
@@ -10341,7 +10341,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOSHUA] =
     {
 #line 4176
-        .trainerName = _("JOSHUA"),
+        .trainerName = _("Joshua"),
 #line 4177
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4178
@@ -10384,7 +10384,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMERON_1] =
     {
 #line 4193
-        .trainerName = _("CAMERON"),
+        .trainerName = _("Cameron"),
 #line 4194
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4195
@@ -10416,7 +10416,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMERON_2] =
     {
 #line 4206
-        .trainerName = _("CAMERON"),
+        .trainerName = _("Cameron"),
 #line 4207
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4208
@@ -10459,7 +10459,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMERON_3] =
     {
 #line 4223
-        .trainerName = _("CAMERON"),
+        .trainerName = _("Cameron"),
 #line 4224
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4225
@@ -10502,7 +10502,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMERON_4] =
     {
 #line 4240
-        .trainerName = _("CAMERON"),
+        .trainerName = _("Cameron"),
 #line 4241
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4242
@@ -10545,7 +10545,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMERON_5] =
     {
 #line 4257
-        .trainerName = _("CAMERON"),
+        .trainerName = _("Cameron"),
 #line 4258
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4259
@@ -10588,7 +10588,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACLYN] =
     {
 #line 4274
-        .trainerName = _("JACLYN"),
+        .trainerName = _("Jaclyn"),
 #line 4275
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4276
@@ -10626,7 +10626,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HANNAH] =
     {
 #line 4288
-        .trainerName = _("HANNAH"),
+        .trainerName = _("Hannah"),
 #line 4289
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4290
@@ -10660,7 +10660,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAMANTHA] =
     {
 #line 4301
-        .trainerName = _("SAMANTHA"),
+        .trainerName = _("Samantha"),
 #line 4302
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4303
@@ -10694,7 +10694,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAURA] =
     {
 #line 4314
-        .trainerName = _("MAURA"),
+        .trainerName = _("Maura"),
 #line 4315
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4316
@@ -10728,7 +10728,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAYLA] =
     {
 #line 4327
-        .trainerName = _("KAYLA"),
+        .trainerName = _("Kayla"),
 #line 4328
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4329
@@ -10784,7 +10784,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALEXIS] =
     {
 #line 4348
-        .trainerName = _("ALEXIS"),
+        .trainerName = _("Alexis"),
 #line 4349
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4350
@@ -10829,7 +10829,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKI_1] =
     {
 #line 4365
-        .trainerName = _("JACKI"),
+        .trainerName = _("Jacki"),
 #line 4366
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4367
@@ -10874,7 +10874,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKI_2] =
     {
 #line 4382
-        .trainerName = _("JACKI"),
+        .trainerName = _("Jacki"),
 #line 4383
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4384
@@ -10919,7 +10919,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKI_3] =
     {
 #line 4399
-        .trainerName = _("JACKI"),
+        .trainerName = _("Jacki"),
 #line 4400
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4401
@@ -10964,7 +10964,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKI_4] =
     {
 #line 4416
-        .trainerName = _("JACKI"),
+        .trainerName = _("Jacki"),
 #line 4417
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4418
@@ -11009,7 +11009,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKI_5] =
     {
 #line 4433
-        .trainerName = _("JACKI"),
+        .trainerName = _("Jacki"),
 #line 4434
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 4435
@@ -11054,7 +11054,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALTER_1] =
     {
 #line 4450
-        .trainerName = _("WALTER"),
+        .trainerName = _("Walter"),
 #line 4451
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4452
@@ -11086,7 +11086,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MICAH] =
     {
 #line 4463
-        .trainerName = _("MICAH"),
+        .trainerName = _("Micah"),
 #line 4464
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4465
@@ -11129,7 +11129,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THOMAS] =
     {
 #line 4480
-        .trainerName = _("THOMAS"),
+        .trainerName = _("Thomas"),
 #line 4481
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4482
@@ -11161,7 +11161,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALTER_2] =
     {
 #line 4493
-        .trainerName = _("WALTER"),
+        .trainerName = _("Walter"),
 #line 4494
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4495
@@ -11193,7 +11193,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALTER_3] =
     {
 #line 4506
-        .trainerName = _("WALTER"),
+        .trainerName = _("Walter"),
 #line 4507
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4508
@@ -11250,7 +11250,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALTER_4] =
     {
 #line 4531
-        .trainerName = _("WALTER"),
+        .trainerName = _("Walter"),
 #line 4532
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4533
@@ -11306,7 +11306,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALTER_5] =
     {
 #line 4555
-        .trainerName = _("WALTER"),
+        .trainerName = _("Walter"),
 #line 4556
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 4557
@@ -11381,7 +11381,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SIDNEY] =
     {
 #line 4588
-        .trainerName = _("SIDNEY"),
+        .trainerName = _("Sidney"),
 #line 4589
         .trainerClass = TRAINER_CLASS_ELITE_FOUR,
 #line 4590
@@ -11499,7 +11499,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PHOEBE] =
     {
 #line 4639
-        .trainerName = _("PHOEBE"),
+        .trainerName = _("Phoebe"),
 #line 4640
         .trainerClass = TRAINER_CLASS_ELITE_FOUR,
 #line 4641
@@ -11619,7 +11619,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GLACIA] =
     {
 #line 4690
-        .trainerName = _("GLACIA"),
+        .trainerName = _("Glacia"),
 #line 4691
         .trainerClass = TRAINER_CLASS_ELITE_FOUR,
 #line 4692
@@ -11739,7 +11739,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DRAKE] =
     {
 #line 4741
-        .trainerName = _("DRAKE"),
+        .trainerName = _("Drake"),
 #line 4742
         .trainerClass = TRAINER_CLASS_ELITE_FOUR,
 #line 4743
@@ -11857,7 +11857,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROXANNE_1] =
     {
 #line 4792
-        .trainerName = _("ROXANNE"),
+        .trainerName = _("Roxanne"),
 #line 4793
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4794
@@ -11938,7 +11938,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAWLY_1] =
     {
 #line 4826
-        .trainerName = _("BRAWLY"),
+        .trainerName = _("Brawly"),
 #line 4827
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4828
@@ -12017,7 +12017,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WATTSON_1] =
     {
 #line 4860
-        .trainerName = _("WATTSON"),
+        .trainerName = _("Wattson"),
 #line 4861
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4862
@@ -12114,7 +12114,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLANNERY_1] =
     {
 #line 4902
-        .trainerName = _("FLANNERY"),
+        .trainerName = _("Flannery"),
 #line 4903
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4904
@@ -12213,7 +12213,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NORMAN_1] =
     {
 #line 4944
-        .trainerName = _("NORMAN"),
+        .trainerName = _("Norman"),
 #line 4945
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4946
@@ -12310,7 +12310,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINONA_1] =
     {
 #line 4986
-        .trainerName = _("WINONA"),
+        .trainerName = _("Winona"),
 #line 4987
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 4988
@@ -12427,7 +12427,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TATE_AND_LIZA_1] =
     {
 #line 5036
-        .trainerName = _("TATE&LIZA"),
+        .trainerName = _("Tate&Liza"),
 #line 5037
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 5038
@@ -12526,7 +12526,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUAN_1] =
     {
 #line 5078
-        .trainerName = _("JUAN"),
+        .trainerName = _("Juan"),
 #line 5079
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 5080
@@ -12641,7 +12641,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JERRY_1] =
     {
 #line 5128
-        .trainerName = _("JERRY"),
+        .trainerName = _("Jerry"),
 #line 5129
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5130
@@ -12673,7 +12673,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TED] =
     {
 #line 5141
-        .trainerName = _("TED"),
+        .trainerName = _("Ted"),
 #line 5142
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5143
@@ -12705,7 +12705,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PAUL] =
     {
 #line 5154
-        .trainerName = _("PAUL"),
+        .trainerName = _("Paul"),
 #line 5155
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5156
@@ -12759,7 +12759,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JERRY_2] =
     {
 #line 5175
-        .trainerName = _("JERRY"),
+        .trainerName = _("Jerry"),
 #line 5176
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5177
@@ -12802,7 +12802,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JERRY_3] =
     {
 #line 5192
-        .trainerName = _("JERRY"),
+        .trainerName = _("Jerry"),
 #line 5193
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5194
@@ -12845,7 +12845,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JERRY_4] =
     {
 #line 5209
-        .trainerName = _("JERRY"),
+        .trainerName = _("Jerry"),
 #line 5210
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5211
@@ -12888,7 +12888,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JERRY_5] =
     {
 #line 5226
-        .trainerName = _("JERRY"),
+        .trainerName = _("Jerry"),
 #line 5227
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5228
@@ -12942,7 +12942,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAREN_1] =
     {
 #line 5247
-        .trainerName = _("KAREN"),
+        .trainerName = _("Karen"),
 #line 5248
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5249
@@ -12976,7 +12976,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GEORGIA] =
     {
 #line 5260
-        .trainerName = _("GEORGIA"),
+        .trainerName = _("Georgia"),
 #line 5261
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5262
@@ -13021,7 +13021,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAREN_2] =
     {
 #line 5277
-        .trainerName = _("KAREN"),
+        .trainerName = _("Karen"),
 #line 5278
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5279
@@ -13066,7 +13066,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAREN_3] =
     {
 #line 5294
-        .trainerName = _("KAREN"),
+        .trainerName = _("Karen"),
 #line 5295
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5296
@@ -13111,7 +13111,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAREN_4] =
     {
 #line 5311
-        .trainerName = _("KAREN"),
+        .trainerName = _("Karen"),
 #line 5312
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5313
@@ -13156,7 +13156,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAREN_5] =
     {
 #line 5328
-        .trainerName = _("KAREN"),
+        .trainerName = _("Karen"),
 #line 5329
         .trainerClass = TRAINER_CLASS_SCHOOL_KID,
 #line 5330
@@ -13201,7 +13201,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATE_AND_JOY] =
     {
 #line 5345
-        .trainerName = _("KATE & JOY"),
+        .trainerName = _("Kate & Joy"),
 #line 5346
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5347
@@ -13258,7 +13258,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNA_AND_MEG_1] =
     {
 #line 5370
-        .trainerName = _("ANNA & MEG"),
+        .trainerName = _("Anna & Meg"),
 #line 5371
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5372
@@ -13314,7 +13314,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNA_AND_MEG_2] =
     {
 #line 5394
-        .trainerName = _("ANNA & MEG"),
+        .trainerName = _("Anna & Meg"),
 #line 5395
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5396
@@ -13370,7 +13370,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNA_AND_MEG_3] =
     {
 #line 5418
-        .trainerName = _("ANNA & MEG"),
+        .trainerName = _("Anna & Meg"),
 #line 5419
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5420
@@ -13426,7 +13426,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNA_AND_MEG_4] =
     {
 #line 5442
-        .trainerName = _("ANNA & MEG"),
+        .trainerName = _("Anna & Meg"),
 #line 5443
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5444
@@ -13482,7 +13482,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNA_AND_MEG_5] =
     {
 #line 5466
-        .trainerName = _("ANNA & MEG"),
+        .trainerName = _("Anna & Meg"),
 #line 5467
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 5468
@@ -13538,7 +13538,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VICTOR] =
     {
 #line 5490
-        .trainerName = _("VICTOR"),
+        .trainerName = _("Victor"),
 #line 5491
         .trainerClass = TRAINER_CLASS_WINSTRATE,
 #line 5492
@@ -13585,7 +13585,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIGUEL_1] =
     {
 #line 5507
-        .trainerName = _("MIGUEL"),
+        .trainerName = _("Miguel"),
 #line 5508
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5509
@@ -13619,7 +13619,7 @@ F_TRAINER_FEMALE |
     [TRAINER_COLTON] =
     {
 #line 5520
-        .trainerName = _("COLTON"),
+        .trainerName = _("Colton"),
 #line 5521
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5522
@@ -13760,7 +13760,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIGUEL_2] =
     {
 #line 5577
-        .trainerName = _("MIGUEL"),
+        .trainerName = _("Miguel"),
 #line 5578
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5579
@@ -13794,7 +13794,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIGUEL_3] =
     {
 #line 5590
-        .trainerName = _("MIGUEL"),
+        .trainerName = _("Miguel"),
 #line 5591
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5592
@@ -13828,7 +13828,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIGUEL_4] =
     {
 #line 5603
-        .trainerName = _("MIGUEL"),
+        .trainerName = _("Miguel"),
 #line 5604
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5605
@@ -13862,7 +13862,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIGUEL_5] =
     {
 #line 5616
-        .trainerName = _("MIGUEL"),
+        .trainerName = _("Miguel"),
 #line 5617
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5618
@@ -13896,7 +13896,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VICTORIA] =
     {
 #line 5629
-        .trainerName = _("VICTORIA"),
+        .trainerName = _("Victoria"),
 #line 5630
         .trainerClass = TRAINER_CLASS_WINSTRATE,
 #line 5631
@@ -13932,7 +13932,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VANESSA] =
     {
 #line 5642
-        .trainerName = _("VANESSA"),
+        .trainerName = _("Vanessa"),
 #line 5643
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5644
@@ -13968,7 +13968,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BETHANY] =
     {
 #line 5655
-        .trainerName = _("BETHANY"),
+        .trainerName = _("Bethany"),
 #line 5656
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5657
@@ -14030,7 +14030,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABEL_1] =
     {
 #line 5676
-        .trainerName = _("ISABEL"),
+        .trainerName = _("Isabel"),
 #line 5677
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5678
@@ -14079,7 +14079,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABEL_2] =
     {
 #line 5693
-        .trainerName = _("ISABEL"),
+        .trainerName = _("Isabel"),
 #line 5694
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5695
@@ -14128,7 +14128,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABEL_3] =
     {
 #line 5710
-        .trainerName = _("ISABEL"),
+        .trainerName = _("Isabel"),
 #line 5711
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5712
@@ -14177,7 +14177,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABEL_4] =
     {
 #line 5727
-        .trainerName = _("ISABEL"),
+        .trainerName = _("Isabel"),
 #line 5728
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5729
@@ -14226,7 +14226,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABEL_5] =
     {
 #line 5744
-        .trainerName = _("ISABEL"),
+        .trainerName = _("Isabel"),
 #line 5745
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 5746
@@ -14275,7 +14275,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMOTHY_1] =
     {
 #line 5761
-        .trainerName = _("TIMOTHY"),
+        .trainerName = _("Timothy"),
 #line 5762
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5763
@@ -14307,7 +14307,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMOTHY_2] =
     {
 #line 5774
-        .trainerName = _("TIMOTHY"),
+        .trainerName = _("Timothy"),
 #line 5775
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5776
@@ -14346,7 +14346,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMOTHY_3] =
     {
 #line 5791
-        .trainerName = _("TIMOTHY"),
+        .trainerName = _("Timothy"),
 #line 5792
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5793
@@ -14385,7 +14385,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMOTHY_4] =
     {
 #line 5808
-        .trainerName = _("TIMOTHY"),
+        .trainerName = _("Timothy"),
 #line 5809
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5810
@@ -14424,7 +14424,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMOTHY_5] =
     {
 #line 5825
-        .trainerName = _("TIMOTHY"),
+        .trainerName = _("Timothy"),
 #line 5826
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5827
@@ -14463,7 +14463,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VICKY] =
     {
 #line 5842
-        .trainerName = _("VICKY"),
+        .trainerName = _("Vicky"),
 #line 5843
         .trainerClass = TRAINER_CLASS_WINSTRATE,
 #line 5844
@@ -14504,7 +14504,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELBY_1] =
     {
 #line 5859
-        .trainerName = _("SHELBY"),
+        .trainerName = _("Shelby"),
 #line 5860
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5861
@@ -14549,7 +14549,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELBY_2] =
     {
 #line 5876
-        .trainerName = _("SHELBY"),
+        .trainerName = _("Shelby"),
 #line 5877
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5878
@@ -14594,7 +14594,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELBY_3] =
     {
 #line 5893
-        .trainerName = _("SHELBY"),
+        .trainerName = _("Shelby"),
 #line 5894
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5895
@@ -14639,7 +14639,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELBY_4] =
     {
 #line 5910
-        .trainerName = _("SHELBY"),
+        .trainerName = _("Shelby"),
 #line 5911
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5912
@@ -14684,7 +14684,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHELBY_5] =
     {
 #line 5927
-        .trainerName = _("SHELBY"),
+        .trainerName = _("Shelby"),
 #line 5928
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 5929
@@ -14729,7 +14729,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_1] =
     {
 #line 5944
-        .trainerName = _("CALVIN"),
+        .trainerName = _("Calvin"),
 #line 5945
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 5946
@@ -14761,7 +14761,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BILLY] =
     {
 #line 5957
-        .trainerName = _("BILLY"),
+        .trainerName = _("Billy"),
 #line 5958
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 5959
@@ -14804,7 +14804,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOSH] =
     {
 #line 5974
-        .trainerName = _("JOSH"),
+        .trainerName = _("Josh"),
 #line 5975
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 5976
@@ -14840,7 +14840,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TOMMY] =
     {
 #line 5988
-        .trainerName = _("TOMMY"),
+        .trainerName = _("Tommy"),
 #line 5989
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 5990
@@ -14883,7 +14883,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOEY] =
     {
 #line 6005
-        .trainerName = _("JOEY"),
+        .trainerName = _("Joey"),
 #line 6006
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6007
@@ -14915,7 +14915,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BEN] =
     {
 #line 6018
-        .trainerName = _("BEN"),
+        .trainerName = _("Ben"),
 #line 6019
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6020
@@ -14972,7 +14972,7 @@ F_TRAINER_FEMALE |
     [TRAINER_QUINCY] =
     {
 #line 6043
-        .trainerName = _("QUINCY"),
+        .trainerName = _("Quincy"),
 #line 6044
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 6045
@@ -15031,7 +15031,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYNN] =
     {
 #line 6069
-        .trainerName = _("KATELYNN"),
+        .trainerName = _("Katelynn"),
 #line 6070
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 6071
@@ -15092,7 +15092,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAYLEN] =
     {
 #line 6095
-        .trainerName = _("JAYLEN"),
+        .trainerName = _("Jaylen"),
 #line 6096
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6097
@@ -15124,7 +15124,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DILLON] =
     {
 #line 6108
-        .trainerName = _("DILLON"),
+        .trainerName = _("Dillon"),
 #line 6109
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6110
@@ -15156,7 +15156,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_2] =
     {
 #line 6121
-        .trainerName = _("CALVIN"),
+        .trainerName = _("Calvin"),
 #line 6122
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6123
@@ -15188,7 +15188,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_3] =
     {
 #line 6134
-        .trainerName = _("CALVIN"),
+        .trainerName = _("Calvin"),
 #line 6135
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6136
@@ -15231,7 +15231,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_4] =
     {
 #line 6151
-        .trainerName = _("CALVIN"),
+        .trainerName = _("Calvin"),
 #line 6152
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6153
@@ -15285,7 +15285,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_5] =
     {
 #line 6172
-        .trainerName = _("CALVIN"),
+        .trainerName = _("Calvin"),
 #line 6173
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6174
@@ -15339,7 +15339,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDDIE] =
     {
 #line 6193
-        .trainerName = _("EDDIE"),
+        .trainerName = _("Eddie"),
 #line 6194
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6195
@@ -15382,7 +15382,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALLEN] =
     {
 #line 6210
-        .trainerName = _("ALLEN"),
+        .trainerName = _("Allen"),
 #line 6211
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6212
@@ -15425,7 +15425,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIMMY] =
     {
 #line 6227
-        .trainerName = _("TIMMY"),
+        .trainerName = _("Timmy"),
 #line 6228
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6229
@@ -15468,7 +15468,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLACE] =
     {
 #line 6244
-        .trainerName = _("WALLACE"),
+        .trainerName = _("Wallace"),
 #line 6245
         .trainerClass = TRAINER_CLASS_CHAMPION,
 #line 6246
@@ -15604,7 +15604,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDREW] =
     {
 #line 6303
-        .trainerName = _("ANDREW"),
+        .trainerName = _("Andrew"),
 #line 6304
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6305
@@ -15658,7 +15658,7 @@ F_TRAINER_FEMALE |
     [TRAINER_IVAN] =
     {
 #line 6324
-        .trainerName = _("IVAN"),
+        .trainerName = _("Ivan"),
 #line 6325
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6326
@@ -15712,7 +15712,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CLAUDE] =
     {
 #line 6345
-        .trainerName = _("CLAUDE"),
+        .trainerName = _("Claude"),
 #line 6346
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6347
@@ -15766,7 +15766,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELLIOT_1] =
     {
 #line 6366
-        .trainerName = _("ELLIOT"),
+        .trainerName = _("Elliot"),
 #line 6367
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6368
@@ -15820,7 +15820,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NED] =
     {
 #line 6387
-        .trainerName = _("NED"),
+        .trainerName = _("Ned"),
 #line 6388
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6389
@@ -15852,7 +15852,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DALE] =
     {
 #line 6400
-        .trainerName = _("DALE"),
+        .trainerName = _("Dale"),
 #line 6401
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6402
@@ -15917,7 +15917,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOLAN] =
     {
 #line 6425
-        .trainerName = _("NOLAN"),
+        .trainerName = _("Nolan"),
 #line 6426
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6427
@@ -15949,7 +15949,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BARNY] =
     {
 #line 6438
-        .trainerName = _("BARNY"),
+        .trainerName = _("Barny"),
 #line 6439
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6440
@@ -15992,7 +15992,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WADE] =
     {
 #line 6455
-        .trainerName = _("WADE"),
+        .trainerName = _("Wade"),
 #line 6456
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6457
@@ -16024,7 +16024,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CARTER] =
     {
 #line 6468
-        .trainerName = _("CARTER"),
+        .trainerName = _("Carter"),
 #line 6469
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6470
@@ -16067,7 +16067,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELLIOT_2] =
     {
 #line 6485
-        .trainerName = _("ELLIOT"),
+        .trainerName = _("Elliot"),
 #line 6486
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6487
@@ -16121,7 +16121,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELLIOT_3] =
     {
 #line 6506
-        .trainerName = _("ELLIOT"),
+        .trainerName = _("Elliot"),
 #line 6507
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6508
@@ -16186,7 +16186,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELLIOT_4] =
     {
 #line 6531
-        .trainerName = _("ELLIOT"),
+        .trainerName = _("Elliot"),
 #line 6532
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6533
@@ -16251,7 +16251,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELLIOT_5] =
     {
 #line 6556
-        .trainerName = _("ELLIOT"),
+        .trainerName = _("Elliot"),
 #line 6557
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6558
@@ -16316,7 +16316,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RONALD] =
     {
 #line 6581
-        .trainerName = _("RONALD"),
+        .trainerName = _("Ronald"),
 #line 6582
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 6583
@@ -16403,7 +16403,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACOB] =
     {
 #line 6614
-        .trainerName = _("JACOB"),
+        .trainerName = _("Jacob"),
 #line 6615
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6616
@@ -16457,7 +16457,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANTHONY] =
     {
 #line 6635
-        .trainerName = _("ANTHONY"),
+        .trainerName = _("Anthony"),
 #line 6636
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6637
@@ -16500,7 +16500,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENJAMIN_1] =
     {
 #line 6652
-        .trainerName = _("BENJAMIN"),
+        .trainerName = _("Benjamin"),
 #line 6653
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6654
@@ -16532,7 +16532,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENJAMIN_2] =
     {
 #line 6665
-        .trainerName = _("BENJAMIN"),
+        .trainerName = _("Benjamin"),
 #line 6666
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6667
@@ -16564,7 +16564,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENJAMIN_3] =
     {
 #line 6678
-        .trainerName = _("BENJAMIN"),
+        .trainerName = _("Benjamin"),
 #line 6679
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6680
@@ -16596,7 +16596,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENJAMIN_4] =
     {
 #line 6691
-        .trainerName = _("BENJAMIN"),
+        .trainerName = _("Benjamin"),
 #line 6692
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6693
@@ -16628,7 +16628,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENJAMIN_5] =
     {
 #line 6704
-        .trainerName = _("BENJAMIN"),
+        .trainerName = _("Benjamin"),
 #line 6705
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6706
@@ -16660,7 +16660,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ABIGAIL_1] =
     {
 #line 6717
-        .trainerName = _("ABIGAIL"),
+        .trainerName = _("Abigail"),
 #line 6718
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6719
@@ -16694,7 +16694,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JASMINE] =
     {
 #line 6730
-        .trainerName = _("JASMINE"),
+        .trainerName = _("Jasmine"),
 #line 6731
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6732
@@ -16750,7 +16750,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ABIGAIL_2] =
     {
 #line 6751
-        .trainerName = _("ABIGAIL"),
+        .trainerName = _("Abigail"),
 #line 6752
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6753
@@ -16784,7 +16784,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ABIGAIL_3] =
     {
 #line 6764
-        .trainerName = _("ABIGAIL"),
+        .trainerName = _("Abigail"),
 #line 6765
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6766
@@ -16818,7 +16818,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ABIGAIL_4] =
     {
 #line 6777
-        .trainerName = _("ABIGAIL"),
+        .trainerName = _("Abigail"),
 #line 6778
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6779
@@ -16852,7 +16852,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ABIGAIL_5] =
     {
 #line 6790
-        .trainerName = _("ABIGAIL"),
+        .trainerName = _("Abigail"),
 #line 6791
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6792
@@ -16886,7 +16886,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DYLAN_1] =
     {
 #line 6803
-        .trainerName = _("DYLAN"),
+        .trainerName = _("Dylan"),
 #line 6804
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6805
@@ -16918,7 +16918,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DYLAN_2] =
     {
 #line 6816
-        .trainerName = _("DYLAN"),
+        .trainerName = _("Dylan"),
 #line 6817
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6818
@@ -16950,7 +16950,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DYLAN_3] =
     {
 #line 6829
-        .trainerName = _("DYLAN"),
+        .trainerName = _("Dylan"),
 #line 6830
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6831
@@ -16982,7 +16982,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DYLAN_4] =
     {
 #line 6842
-        .trainerName = _("DYLAN"),
+        .trainerName = _("Dylan"),
 #line 6843
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6844
@@ -17014,7 +17014,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DYLAN_5] =
     {
 #line 6855
-        .trainerName = _("DYLAN"),
+        .trainerName = _("Dylan"),
 #line 6856
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6857
@@ -17046,7 +17046,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIA_1] =
     {
 #line 6868
-        .trainerName = _("MARIA"),
+        .trainerName = _("Maria"),
 #line 6869
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6870
@@ -17080,7 +17080,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIA_2] =
     {
 #line 6881
-        .trainerName = _("MARIA"),
+        .trainerName = _("Maria"),
 #line 6882
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6883
@@ -17114,7 +17114,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIA_3] =
     {
 #line 6894
-        .trainerName = _("MARIA"),
+        .trainerName = _("Maria"),
 #line 6895
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6896
@@ -17148,7 +17148,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIA_4] =
     {
 #line 6907
-        .trainerName = _("MARIA"),
+        .trainerName = _("Maria"),
 #line 6908
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6909
@@ -17182,7 +17182,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIA_5] =
     {
 #line 6920
-        .trainerName = _("MARIA"),
+        .trainerName = _("Maria"),
 #line 6921
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6922
@@ -17216,7 +17216,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMDEN] =
     {
 #line 6933
-        .trainerName = _("CAMDEN"),
+        .trainerName = _("Camden"),
 #line 6934
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6935
@@ -17259,7 +17259,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEMETRIUS] =
     {
 #line 6950
-        .trainerName = _("DEMETRIUS"),
+        .trainerName = _("Demetrius"),
 #line 6951
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6952
@@ -17302,7 +17302,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAIAH_1] =
     {
 #line 6967
-        .trainerName = _("ISAIAH"),
+        .trainerName = _("Isaiah"),
 #line 6968
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6969
@@ -17334,7 +17334,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PABLO_1] =
     {
 #line 6980
-        .trainerName = _("PABLO"),
+        .trainerName = _("Pablo"),
 #line 6981
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6982
@@ -17377,7 +17377,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHASE] =
     {
 #line 6997
-        .trainerName = _("CHASE"),
+        .trainerName = _("Chase"),
 #line 6998
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 6999
@@ -17420,7 +17420,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAIAH_2] =
     {
 #line 7014
-        .trainerName = _("ISAIAH"),
+        .trainerName = _("Isaiah"),
 #line 7015
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7016
@@ -17452,7 +17452,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAIAH_3] =
     {
 #line 7027
-        .trainerName = _("ISAIAH"),
+        .trainerName = _("Isaiah"),
 #line 7028
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7029
@@ -17484,7 +17484,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAIAH_4] =
     {
 #line 7040
-        .trainerName = _("ISAIAH"),
+        .trainerName = _("Isaiah"),
 #line 7041
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7042
@@ -17516,7 +17516,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAIAH_5] =
     {
 #line 7053
-        .trainerName = _("ISAIAH"),
+        .trainerName = _("Isaiah"),
 #line 7054
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7055
@@ -17548,7 +17548,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISOBEL] =
     {
 #line 7066
-        .trainerName = _("ISOBEL"),
+        .trainerName = _("Isobel"),
 #line 7067
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7068
@@ -17582,7 +17582,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DONNY] =
     {
 #line 7079
-        .trainerName = _("DONNY"),
+        .trainerName = _("Donny"),
 #line 7080
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7081
@@ -17627,7 +17627,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TALIA] =
     {
 #line 7096
-        .trainerName = _("TALIA"),
+        .trainerName = _("Talia"),
 #line 7097
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7098
@@ -17661,7 +17661,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYN_1] =
     {
 #line 7109
-        .trainerName = _("KATELYN"),
+        .trainerName = _("Katelyn"),
 #line 7110
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7111
@@ -17695,7 +17695,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALLISON] =
     {
 #line 7122
-        .trainerName = _("ALLISON"),
+        .trainerName = _("Allison"),
 #line 7123
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7124
@@ -17740,7 +17740,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYN_2] =
     {
 #line 7139
-        .trainerName = _("KATELYN"),
+        .trainerName = _("Katelyn"),
 #line 7140
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7141
@@ -17774,7 +17774,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYN_3] =
     {
 #line 7152
-        .trainerName = _("KATELYN"),
+        .trainerName = _("Katelyn"),
 #line 7153
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7154
@@ -17808,7 +17808,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYN_4] =
     {
 #line 7165
-        .trainerName = _("KATELYN"),
+        .trainerName = _("Katelyn"),
 #line 7166
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7167
@@ -17842,7 +17842,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATELYN_5] =
     {
 #line 7178
-        .trainerName = _("KATELYN"),
+        .trainerName = _("Katelyn"),
 #line 7179
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 7180
@@ -17876,7 +17876,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICOLAS_1] =
     {
 #line 7191
-        .trainerName = _("NICOLAS"),
+        .trainerName = _("Nicolas"),
 #line 7192
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7193
@@ -17919,7 +17919,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICOLAS_2] =
     {
 #line 7208
-        .trainerName = _("NICOLAS"),
+        .trainerName = _("Nicolas"),
 #line 7209
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7210
@@ -17962,7 +17962,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICOLAS_3] =
     {
 #line 7225
-        .trainerName = _("NICOLAS"),
+        .trainerName = _("Nicolas"),
 #line 7226
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7227
@@ -18005,7 +18005,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICOLAS_4] =
     {
 #line 7242
-        .trainerName = _("NICOLAS"),
+        .trainerName = _("Nicolas"),
 #line 7243
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7244
@@ -18059,7 +18059,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICOLAS_5] =
     {
 #line 7263
-        .trainerName = _("NICOLAS"),
+        .trainerName = _("Nicolas"),
 #line 7264
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7265
@@ -18115,7 +18115,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AARON] =
     {
 #line 7284
-        .trainerName = _("AARON"),
+        .trainerName = _("Aaron"),
 #line 7285
         .trainerClass = TRAINER_CLASS_DRAGON_TAMER,
 #line 7286
@@ -18154,7 +18154,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PERRY] =
     {
 #line 7301
-        .trainerName = _("PERRY"),
+        .trainerName = _("Perry"),
 #line 7302
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7303
@@ -18186,7 +18186,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HUGH] =
     {
 #line 7314
-        .trainerName = _("HUGH"),
+        .trainerName = _("Hugh"),
 #line 7315
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7316
@@ -18229,7 +18229,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PHIL] =
     {
 #line 7331
-        .trainerName = _("PHIL"),
+        .trainerName = _("Phil"),
 #line 7332
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7333
@@ -18261,7 +18261,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JARED] =
     {
 #line 7344
-        .trainerName = _("JARED"),
+        .trainerName = _("Jared"),
 #line 7345
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7346
@@ -18315,7 +18315,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HUMBERTO] =
     {
 #line 7365
-        .trainerName = _("HUMBERTO"),
+        .trainerName = _("Humberto"),
 #line 7366
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7367
@@ -18347,7 +18347,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PRESLEY] =
     {
 #line 7378
-        .trainerName = _("PRESLEY"),
+        .trainerName = _("Presley"),
 #line 7379
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7380
@@ -18390,7 +18390,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWARDO] =
     {
 #line 7395
-        .trainerName = _("EDWARDO"),
+        .trainerName = _("Edwardo"),
 #line 7396
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7397
@@ -18433,7 +18433,7 @@ F_TRAINER_FEMALE |
     [TRAINER_COLIN] =
     {
 #line 7412
-        .trainerName = _("COLIN"),
+        .trainerName = _("Colin"),
 #line 7413
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7414
@@ -18476,7 +18476,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBERT_1] =
     {
 #line 7429
-        .trainerName = _("ROBERT"),
+        .trainerName = _("Robert"),
 #line 7430
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7431
@@ -18508,7 +18508,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BENNY] =
     {
 #line 7442
-        .trainerName = _("BENNY"),
+        .trainerName = _("Benny"),
 #line 7443
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7444
@@ -18562,7 +18562,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHESTER] =
     {
 #line 7463
-        .trainerName = _("CHESTER"),
+        .trainerName = _("Chester"),
 #line 7464
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7465
@@ -18605,7 +18605,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBERT_2] =
     {
 #line 7480
-        .trainerName = _("ROBERT"),
+        .trainerName = _("Robert"),
 #line 7481
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7482
@@ -18648,7 +18648,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBERT_3] =
     {
 #line 7497
-        .trainerName = _("ROBERT"),
+        .trainerName = _("Robert"),
 #line 7498
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7499
@@ -18691,7 +18691,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBERT_4] =
     {
 #line 7514
-        .trainerName = _("ROBERT"),
+        .trainerName = _("Robert"),
 #line 7515
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7516
@@ -18734,7 +18734,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBERT_5] =
     {
 #line 7531
-        .trainerName = _("ROBERT"),
+        .trainerName = _("Robert"),
 #line 7532
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7533
@@ -18777,7 +18777,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALEX] =
     {
 #line 7548
-        .trainerName = _("ALEX"),
+        .trainerName = _("Alex"),
 #line 7549
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7550
@@ -18820,7 +18820,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BECK] =
     {
 #line 7565
-        .trainerName = _("BECK"),
+        .trainerName = _("Beck"),
 #line 7566
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 7567
@@ -18852,7 +18852,7 @@ F_TRAINER_FEMALE |
     [TRAINER_YASU] =
     {
 #line 7578
-        .trainerName = _("YASU"),
+        .trainerName = _("Yasu"),
 #line 7579
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7580
@@ -18884,7 +18884,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TAKASHI] =
     {
 #line 7591
-        .trainerName = _("TAKASHI"),
+        .trainerName = _("Takashi"),
 #line 7592
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7593
@@ -18927,7 +18927,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANNE] =
     {
 #line 7608
-        .trainerName = _("DIANNE"),
+        .trainerName = _("Dianne"),
 #line 7609
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 7610
@@ -18982,7 +18982,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JANI] =
     {
 #line 7629
-        .trainerName = _("JANI"),
+        .trainerName = _("Jani"),
 #line 7630
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 7631
@@ -19014,7 +19014,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAO_1] =
     {
 #line 7641
-        .trainerName = _("LAO"),
+        .trainerName = _("Lao"),
 #line 7642
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7643
@@ -19087,7 +19087,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LUNG] =
     {
 #line 7673
-        .trainerName = _("LUNG"),
+        .trainerName = _("Lung"),
 #line 7674
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7675
@@ -19128,7 +19128,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAO_2] =
     {
 #line 7689
-        .trainerName = _("LAO"),
+        .trainerName = _("Lao"),
 #line 7690
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7691
@@ -19216,7 +19216,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAO_3] =
     {
 #line 7726
-        .trainerName = _("LAO"),
+        .trainerName = _("Lao"),
 #line 7727
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7728
@@ -19304,7 +19304,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAO_4] =
     {
 #line 7763
-        .trainerName = _("LAO"),
+        .trainerName = _("Lao"),
 #line 7764
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7765
@@ -19390,7 +19390,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAO_5] =
     {
 #line 7798
-        .trainerName = _("LAO"),
+        .trainerName = _("Lao"),
 #line 7799
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 7800
@@ -19480,7 +19480,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOCELYN] =
     {
 #line 7835
-        .trainerName = _("JOCELYN"),
+        .trainerName = _("Jocelyn"),
 #line 7836
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7837
@@ -19514,7 +19514,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAURA] =
     {
 #line 7848
-        .trainerName = _("LAURA"),
+        .trainerName = _("Laura"),
 #line 7849
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7850
@@ -19548,7 +19548,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CYNDY_1] =
     {
 #line 7861
-        .trainerName = _("CYNDY"),
+        .trainerName = _("Cyndy"),
 #line 7862
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7863
@@ -19593,7 +19593,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORA] =
     {
 #line 7878
-        .trainerName = _("CORA"),
+        .trainerName = _("Cora"),
 #line 7879
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7880
@@ -19627,7 +19627,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PAULA] =
     {
 #line 7891
-        .trainerName = _("PAULA"),
+        .trainerName = _("Paula"),
 #line 7892
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7893
@@ -19661,7 +19661,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CYNDY_2] =
     {
 #line 7904
-        .trainerName = _("CYNDY"),
+        .trainerName = _("Cyndy"),
 #line 7905
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7906
@@ -19706,7 +19706,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CYNDY_3] =
     {
 #line 7921
-        .trainerName = _("CYNDY"),
+        .trainerName = _("Cyndy"),
 #line 7922
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7923
@@ -19751,7 +19751,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CYNDY_4] =
     {
 #line 7938
-        .trainerName = _("CYNDY"),
+        .trainerName = _("Cyndy"),
 #line 7939
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7940
@@ -19796,7 +19796,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CYNDY_5] =
     {
 #line 7955
-        .trainerName = _("CYNDY"),
+        .trainerName = _("Cyndy"),
 #line 7956
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 7957
@@ -19841,7 +19841,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MADELINE_1] =
     {
 #line 7972
-        .trainerName = _("MADELINE"),
+        .trainerName = _("Madeline"),
 #line 7973
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 7974
@@ -19882,7 +19882,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CLARISSA] =
     {
 #line 7989
-        .trainerName = _("CLARISSA"),
+        .trainerName = _("Clarissa"),
 #line 7990
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 7991
@@ -19927,7 +19927,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANGELICA] =
     {
 #line 8006
-        .trainerName = _("ANGELICA"),
+        .trainerName = _("Angelica"),
 #line 8007
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 8008
@@ -19968,7 +19968,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MADELINE_2] =
     {
 #line 8023
-        .trainerName = _("MADELINE"),
+        .trainerName = _("Madeline"),
 #line 8024
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 8025
@@ -20009,7 +20009,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MADELINE_3] =
     {
 #line 8040
-        .trainerName = _("MADELINE"),
+        .trainerName = _("Madeline"),
 #line 8041
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 8042
@@ -20050,7 +20050,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MADELINE_4] =
     {
 #line 8057
-        .trainerName = _("MADELINE"),
+        .trainerName = _("Madeline"),
 #line 8058
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 8059
@@ -20109,7 +20109,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MADELINE_5] =
     {
 #line 8082
-        .trainerName = _("MADELINE"),
+        .trainerName = _("Madeline"),
 #line 8083
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 8084
@@ -20168,7 +20168,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BEVERLY] =
     {
 #line 8107
-        .trainerName = _("BEVERLY"),
+        .trainerName = _("Beverly"),
 #line 8108
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8109
@@ -20213,7 +20213,7 @@ F_TRAINER_FEMALE |
     [TRAINER_IMANI] =
     {
 #line 8124
-        .trainerName = _("IMANI"),
+        .trainerName = _("Imani"),
 #line 8125
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8126
@@ -20247,7 +20247,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KYLA] =
     {
 #line 8137
-        .trainerName = _("KYLA"),
+        .trainerName = _("Kyla"),
 #line 8138
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8139
@@ -20281,7 +20281,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DENISE] =
     {
 #line 8150
-        .trainerName = _("DENISE"),
+        .trainerName = _("Denise"),
 #line 8151
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8152
@@ -20326,7 +20326,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BETH] =
     {
 #line 8167
-        .trainerName = _("BETH"),
+        .trainerName = _("Beth"),
 #line 8168
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8169
@@ -20360,7 +20360,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TARA] =
     {
 #line 8180
-        .trainerName = _("TARA"),
+        .trainerName = _("Tara"),
 #line 8181
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8182
@@ -20405,7 +20405,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MISSY] =
     {
 #line 8197
-        .trainerName = _("MISSY"),
+        .trainerName = _("Missy"),
 #line 8198
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8199
@@ -20439,7 +20439,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALICE] =
     {
 #line 8210
-        .trainerName = _("ALICE"),
+        .trainerName = _("Alice"),
 #line 8211
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8212
@@ -20495,7 +20495,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNY_1] =
     {
 #line 8231
-        .trainerName = _("JENNY"),
+        .trainerName = _("Jenny"),
 #line 8232
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8233
@@ -20529,7 +20529,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRACE] =
     {
 #line 8244
-        .trainerName = _("GRACE"),
+        .trainerName = _("Grace"),
 #line 8245
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8246
@@ -20563,7 +20563,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TANYA] =
     {
 #line 8257
-        .trainerName = _("TANYA"),
+        .trainerName = _("Tanya"),
 #line 8258
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8259
@@ -20597,7 +20597,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHARON] =
     {
 #line 8270
-        .trainerName = _("SHARON"),
+        .trainerName = _("Sharon"),
 #line 8271
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8272
@@ -20631,7 +20631,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NIKKI] =
     {
 #line 8283
-        .trainerName = _("NIKKI"),
+        .trainerName = _("Nikki"),
 #line 8284
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8285
@@ -20676,7 +20676,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDA] =
     {
 #line 8300
-        .trainerName = _("BRENDA"),
+        .trainerName = _("Brenda"),
 #line 8301
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8302
@@ -20710,7 +20710,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATIE] =
     {
 #line 8313
-        .trainerName = _("KATIE"),
+        .trainerName = _("Katie"),
 #line 8314
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8315
@@ -20755,7 +20755,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SUSIE] =
     {
 #line 8330
-        .trainerName = _("SUSIE"),
+        .trainerName = _("Susie"),
 #line 8331
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8332
@@ -20789,7 +20789,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KARA] =
     {
 #line 8343
-        .trainerName = _("KARA"),
+        .trainerName = _("Kara"),
 #line 8344
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8345
@@ -20823,7 +20823,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DANA] =
     {
 #line 8356
-        .trainerName = _("DANA"),
+        .trainerName = _("Dana"),
 #line 8357
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8358
@@ -20857,7 +20857,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SIENNA] =
     {
 #line 8369
-        .trainerName = _("SIENNA"),
+        .trainerName = _("Sienna"),
 #line 8370
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8371
@@ -20902,7 +20902,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEBRA] =
     {
 #line 8386
-        .trainerName = _("DEBRA"),
+        .trainerName = _("Debra"),
 #line 8387
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8388
@@ -20936,7 +20936,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LINDA] =
     {
 #line 8399
-        .trainerName = _("LINDA"),
+        .trainerName = _("Linda"),
 #line 8400
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8401
@@ -20981,7 +20981,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAYLEE] =
     {
 #line 8416
-        .trainerName = _("KAYLEE"),
+        .trainerName = _("Kaylee"),
 #line 8417
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8418
@@ -21026,7 +21026,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAUREL] =
     {
 #line 8433
-        .trainerName = _("LAUREL"),
+        .trainerName = _("Laurel"),
 #line 8434
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8435
@@ -21071,7 +21071,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CARLEE] =
     {
 #line 8450
-        .trainerName = _("CARLEE"),
+        .trainerName = _("Carlee"),
 #line 8451
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8452
@@ -21105,7 +21105,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNY_2] =
     {
 #line 8463
-        .trainerName = _("JENNY"),
+        .trainerName = _("Jenny"),
 #line 8464
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8465
@@ -21139,7 +21139,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNY_3] =
     {
 #line 8476
-        .trainerName = _("JENNY"),
+        .trainerName = _("Jenny"),
 #line 8477
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8478
@@ -21173,7 +21173,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNY_4] =
     {
 #line 8489
-        .trainerName = _("JENNY"),
+        .trainerName = _("Jenny"),
 #line 8490
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8491
@@ -21218,7 +21218,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNY_5] =
     {
 #line 8506
-        .trainerName = _("JENNY"),
+        .trainerName = _("Jenny"),
 #line 8507
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 8508
@@ -21274,7 +21274,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HEIDI] =
     {
 #line 8527
-        .trainerName = _("HEIDI"),
+        .trainerName = _("Heidi"),
 #line 8528
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8529
@@ -21333,7 +21333,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BECKY] =
     {
 #line 8552
-        .trainerName = _("BECKY"),
+        .trainerName = _("Becky"),
 #line 8553
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8554
@@ -21392,7 +21392,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAROL] =
     {
 #line 8577
-        .trainerName = _("CAROL"),
+        .trainerName = _("Carol"),
 #line 8578
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8579
@@ -21437,7 +21437,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NANCY] =
     {
 #line 8594
-        .trainerName = _("NANCY"),
+        .trainerName = _("Nancy"),
 #line 8595
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8596
@@ -21482,7 +21482,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARTHA] =
     {
 #line 8611
-        .trainerName = _("MARTHA"),
+        .trainerName = _("Martha"),
 #line 8612
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8613
@@ -21527,7 +21527,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANA_1] =
     {
 #line 8628
-        .trainerName = _("DIANA"),
+        .trainerName = _("Diana"),
 #line 8629
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8630
@@ -21583,7 +21583,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CEDRIC] =
     {
 #line 8649
-        .trainerName = _("CEDRIC"),
+        .trainerName = _("Cedric"),
 #line 8650
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 8651
@@ -21622,7 +21622,7 @@ F_TRAINER_FEMALE |
     [TRAINER_IRENE] =
     {
 #line 8666
-        .trainerName = _("IRENE"),
+        .trainerName = _("Irene"),
 #line 8667
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8668
@@ -21667,7 +21667,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANA_2] =
     {
 #line 8683
-        .trainerName = _("DIANA"),
+        .trainerName = _("Diana"),
 #line 8684
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8685
@@ -21723,7 +21723,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANA_3] =
     {
 #line 8704
-        .trainerName = _("DIANA"),
+        .trainerName = _("Diana"),
 #line 8705
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8706
@@ -21779,7 +21779,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANA_4] =
     {
 #line 8725
-        .trainerName = _("DIANA"),
+        .trainerName = _("Diana"),
 #line 8726
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8727
@@ -21835,7 +21835,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DIANA_5] =
     {
 #line 8746
-        .trainerName = _("DIANA"),
+        .trainerName = _("Diana"),
 #line 8747
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 8748
@@ -21891,7 +21891,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_1] =
     {
 #line 8767
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8768
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8769
@@ -21934,7 +21934,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_2] =
     {
 #line 8784
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8785
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8786
@@ -21977,7 +21977,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GINA_AND_MIA_1] =
     {
 #line 8801
-        .trainerName = _("GINA & MIA"),
+        .trainerName = _("Gina & Mia"),
 #line 8802
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8803
@@ -22020,7 +22020,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIU_AND_YUKI] =
     {
 #line 8818
-        .trainerName = _("MIU & YUKI"),
+        .trainerName = _("Miu & Yuki"),
 #line 8819
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8820
@@ -22063,7 +22063,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_3] =
     {
 #line 8835
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8836
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8837
@@ -22106,7 +22106,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GINA_AND_MIA_2] =
     {
 #line 8852
-        .trainerName = _("GINA & MIA"),
+        .trainerName = _("Gina & Mia"),
 #line 8853
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8854
@@ -22159,7 +22159,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_4] =
     {
 #line 8873
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8874
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8875
@@ -22202,7 +22202,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_5] =
     {
 #line 8890
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8891
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8892
@@ -22259,7 +22259,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AMY_AND_LIV_6] =
     {
 #line 8915
-        .trainerName = _("AMY & LIV"),
+        .trainerName = _("Amy & Liv"),
 #line 8916
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 8917
@@ -22316,7 +22316,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HUEY] =
     {
 #line 8940
-        .trainerName = _("HUEY"),
+        .trainerName = _("Huey"),
 #line 8941
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 8942
@@ -22359,7 +22359,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDMOND] =
     {
 #line 8957
-        .trainerName = _("EDMOND"),
+        .trainerName = _("Edmond"),
 #line 8958
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 8959
@@ -22391,7 +22391,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERNEST_1] =
     {
 #line 8970
-        .trainerName = _("ERNEST"),
+        .trainerName = _("Ernest"),
 #line 8971
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 8972
@@ -22434,7 +22434,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DWAYNE] =
     {
 #line 8987
-        .trainerName = _("DWAYNE"),
+        .trainerName = _("Dwayne"),
 #line 8988
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 8989
@@ -22488,7 +22488,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PHILLIP] =
     {
 #line 9008
-        .trainerName = _("PHILLIP"),
+        .trainerName = _("Phillip"),
 #line 9009
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9010
@@ -22531,7 +22531,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEONARD] =
     {
 #line 9025
-        .trainerName = _("LEONARD"),
+        .trainerName = _("Leonard"),
 #line 9026
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9027
@@ -22585,7 +22585,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DUNCAN] =
     {
 #line 9046
-        .trainerName = _("DUNCAN"),
+        .trainerName = _("Duncan"),
 #line 9047
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9048
@@ -22628,7 +22628,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERNEST_2] =
     {
 #line 9063
-        .trainerName = _("ERNEST"),
+        .trainerName = _("Ernest"),
 #line 9064
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9065
@@ -22682,7 +22682,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERNEST_3] =
     {
 #line 9084
-        .trainerName = _("ERNEST"),
+        .trainerName = _("Ernest"),
 #line 9085
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9086
@@ -22736,7 +22736,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERNEST_4] =
     {
 #line 9105
-        .trainerName = _("ERNEST"),
+        .trainerName = _("Ernest"),
 #line 9106
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9107
@@ -22790,7 +22790,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERNEST_5] =
     {
 #line 9126
-        .trainerName = _("ERNEST"),
+        .trainerName = _("Ernest"),
 #line 9127
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9128
@@ -22844,7 +22844,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELI] =
     {
 #line 9147
-        .trainerName = _("ELI"),
+        .trainerName = _("Eli"),
 #line 9148
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 9149
@@ -22876,7 +22876,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANNIKA] =
     {
 #line 9160
-        .trainerName = _("ANNIKA"),
+        .trainerName = _("Annika"),
 #line 9161
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 9162
@@ -22939,7 +22939,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAZMYN] =
     {
 #line 9185
-        .trainerName = _("JAZMYN"),
+        .trainerName = _("Jazmyn"),
 #line 9186
         .trainerClass = TRAINER_CLASS_COOLTRAINER_2,
 #line 9187
@@ -22975,7 +22975,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JONAS] =
     {
 #line 9199
-        .trainerName = _("JONAS"),
+        .trainerName = _("Jonas"),
 #line 9200
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 9201
@@ -23014,7 +23014,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAYLEY] =
     {
 #line 9216
-        .trainerName = _("KAYLEY"),
+        .trainerName = _("Kayley"),
 #line 9217
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 9218
@@ -23055,7 +23055,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AURON] =
     {
 #line 9233
-        .trainerName = _("AURON"),
+        .trainerName = _("Auron"),
 #line 9234
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 9235
@@ -23098,7 +23098,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KELVIN] =
     {
 #line 9250
-        .trainerName = _("KELVIN"),
+        .trainerName = _("Kelvin"),
 #line 9251
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9252
@@ -23141,7 +23141,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARLEY] =
     {
 #line 9267
-        .trainerName = _("MARLEY"),
+        .trainerName = _("Marley"),
 #line 9268
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 9269
@@ -23184,7 +23184,7 @@ F_TRAINER_FEMALE |
     [TRAINER_REYNA] =
     {
 #line 9285
-        .trainerName = _("REYNA"),
+        .trainerName = _("Reyna"),
 #line 9286
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 9287
@@ -23229,7 +23229,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HUDSON] =
     {
 #line 9302
-        .trainerName = _("HUDSON"),
+        .trainerName = _("Hudson"),
 #line 9303
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 9304
@@ -23261,7 +23261,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CONOR] =
     {
 #line 9315
-        .trainerName = _("CONOR"),
+        .trainerName = _("Conor"),
 #line 9316
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 9317
@@ -23304,7 +23304,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWIN_1] =
     {
 #line 9332
-        .trainerName = _("EDWIN"),
+        .trainerName = _("Edwin"),
 #line 9333
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9334
@@ -23347,7 +23347,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HECTOR] =
     {
 #line 9349
-        .trainerName = _("HECTOR"),
+        .trainerName = _("Hector"),
 #line 9350
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9351
@@ -23390,7 +23390,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TABITHA_MOSSDEEP] =
     {
 #line 9366
-        .trainerName = _("TABITHA"),
+        .trainerName = _("Tabitha"),
 #line 9367
         .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
 #line 9368
@@ -23444,7 +23444,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWIN_2] =
     {
 #line 9387
-        .trainerName = _("EDWIN"),
+        .trainerName = _("Edwin"),
 #line 9388
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9389
@@ -23487,7 +23487,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWIN_3] =
     {
 #line 9404
-        .trainerName = _("EDWIN"),
+        .trainerName = _("Edwin"),
 #line 9405
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9406
@@ -23530,7 +23530,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWIN_4] =
     {
 #line 9421
-        .trainerName = _("EDWIN"),
+        .trainerName = _("Edwin"),
 #line 9422
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9423
@@ -23573,7 +23573,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EDWIN_5] =
     {
 #line 9438
-        .trainerName = _("EDWIN"),
+        .trainerName = _("Edwin"),
 #line 9439
         .trainerClass = TRAINER_CLASS_COLLECTOR,
 #line 9440
@@ -23616,7 +23616,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_VR_1] =
     {
 #line 9455
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 9456
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9457
@@ -23729,7 +23729,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_103_MUDKIP] =
     {
 #line 9505
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9506
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9507
@@ -23766,7 +23766,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_110_MUDKIP] =
     {
 #line 9520
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9521
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9522
@@ -23820,7 +23820,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_119_MUDKIP] =
     {
 #line 9541
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9542
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9543
@@ -23874,7 +23874,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_103_TREECKO] =
     {
 #line 9562
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9563
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9564
@@ -23911,7 +23911,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_110_TREECKO] =
     {
 #line 9577
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9578
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9579
@@ -23965,7 +23965,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_119_TREECKO] =
     {
 #line 9598
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9599
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9600
@@ -24019,7 +24019,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_103_TORCHIC] =
     {
 #line 9619
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9620
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9621
@@ -24056,7 +24056,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_110_TORCHIC] =
     {
 #line 9634
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9635
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9636
@@ -24110,7 +24110,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_ROUTE_119_TORCHIC] =
     {
 #line 9655
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 9656
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9657
@@ -24164,7 +24164,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_103_MUDKIP] =
     {
 #line 9676
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9677
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9678
@@ -24203,7 +24203,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_110_MUDKIP] =
     {
 #line 9691
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9692
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9693
@@ -24259,7 +24259,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_119_MUDKIP] =
     {
 #line 9712
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9713
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9714
@@ -24315,7 +24315,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_103_TREECKO] =
     {
 #line 9733
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9734
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9735
@@ -24354,7 +24354,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_110_TREECKO] =
     {
 #line 9748
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9749
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9750
@@ -24410,7 +24410,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_119_TREECKO] =
     {
 #line 9769
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9770
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9771
@@ -24466,7 +24466,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_103_TORCHIC] =
     {
 #line 9790
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9791
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9792
@@ -24505,7 +24505,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_110_TORCHIC] =
     {
 #line 9805
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9806
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9807
@@ -24561,7 +24561,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_ROUTE_119_TORCHIC] =
     {
 #line 9826
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 9827
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 9828
@@ -24617,7 +24617,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAAC_1] =
     {
 #line 9847
-        .trainerName = _("ISAAC"),
+        .trainerName = _("Isaac"),
 #line 9848
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 9849
@@ -24704,7 +24704,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAVIS] =
     {
 #line 9880
-        .trainerName = _("DAVIS"),
+        .trainerName = _("Davis"),
 #line 9881
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 9882
@@ -24736,7 +24736,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MITCHELL] =
     {
 #line 9893
-        .trainerName = _("MITCHELL"),
+        .trainerName = _("Mitchell"),
 #line 9894
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 9895
@@ -24793,7 +24793,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAAC_2] =
     {
 #line 9918
-        .trainerName = _("ISAAC"),
+        .trainerName = _("Isaac"),
 #line 9919
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 9920
@@ -24880,7 +24880,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAAC_3] =
     {
 #line 9951
-        .trainerName = _("ISAAC"),
+        .trainerName = _("Isaac"),
 #line 9952
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 9953
@@ -24967,7 +24967,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAAC_4] =
     {
 #line 9984
-        .trainerName = _("ISAAC"),
+        .trainerName = _("Isaac"),
 #line 9985
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 9986
@@ -25054,7 +25054,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISAAC_5] =
     {
 #line 10017
-        .trainerName = _("ISAAC"),
+        .trainerName = _("Isaac"),
 #line 10018
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10019
@@ -25141,7 +25141,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYDIA_1] =
     {
 #line 10050
-        .trainerName = _("LYDIA"),
+        .trainerName = _("Lydia"),
 #line 10051
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10052
@@ -25230,7 +25230,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALLE] =
     {
 #line 10083
-        .trainerName = _("HALLE"),
+        .trainerName = _("Halle"),
 #line 10084
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 10085
@@ -25277,7 +25277,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GARRISON] =
     {
 #line 10101
-        .trainerName = _("GARRISON"),
+        .trainerName = _("Garrison"),
 #line 10102
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 10103
@@ -25309,7 +25309,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYDIA_2] =
     {
 #line 10114
-        .trainerName = _("LYDIA"),
+        .trainerName = _("Lydia"),
 #line 10115
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10116
@@ -25398,7 +25398,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYDIA_3] =
     {
 #line 10147
-        .trainerName = _("LYDIA"),
+        .trainerName = _("Lydia"),
 #line 10148
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10149
@@ -25487,7 +25487,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYDIA_4] =
     {
 #line 10180
-        .trainerName = _("LYDIA"),
+        .trainerName = _("Lydia"),
 #line 10181
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10182
@@ -25576,7 +25576,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYDIA_5] =
     {
 #line 10213
-        .trainerName = _("LYDIA"),
+        .trainerName = _("Lydia"),
 #line 10214
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 10215
@@ -25665,7 +25665,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKSON_1] =
     {
 #line 10246
-        .trainerName = _("JACKSON"),
+        .trainerName = _("Jackson"),
 #line 10247
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10248
@@ -25699,7 +25699,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LORENZO] =
     {
 #line 10260
-        .trainerName = _("LORENZO"),
+        .trainerName = _("Lorenzo"),
 #line 10261
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10262
@@ -25755,7 +25755,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SEBASTIAN] =
     {
 #line 10282
-        .trainerName = _("SEBASTIAN"),
+        .trainerName = _("Sebastian"),
 #line 10283
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10284
@@ -25789,7 +25789,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKSON_2] =
     {
 #line 10296
-        .trainerName = _("JACKSON"),
+        .trainerName = _("Jackson"),
 #line 10297
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10298
@@ -25823,7 +25823,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKSON_3] =
     {
 #line 10310
-        .trainerName = _("JACKSON"),
+        .trainerName = _("Jackson"),
 #line 10311
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10312
@@ -25857,7 +25857,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKSON_4] =
     {
 #line 10324
-        .trainerName = _("JACKSON"),
+        .trainerName = _("Jackson"),
 #line 10325
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10326
@@ -25891,7 +25891,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JACKSON_5] =
     {
 #line 10338
-        .trainerName = _("JACKSON"),
+        .trainerName = _("Jackson"),
 #line 10339
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10340
@@ -25936,7 +25936,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CATHERINE_1] =
     {
 #line 10356
-        .trainerName = _("CATHERINE"),
+        .trainerName = _("Catherine"),
 #line 10357
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10358
@@ -25983,7 +25983,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JENNA] =
     {
 #line 10374
-        .trainerName = _("JENNA"),
+        .trainerName = _("Jenna"),
 #line 10375
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10376
@@ -26041,7 +26041,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SOPHIA] =
     {
 #line 10396
-        .trainerName = _("SOPHIA"),
+        .trainerName = _("Sophia"),
 #line 10397
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10398
@@ -26088,7 +26088,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CATHERINE_2] =
     {
 #line 10414
-        .trainerName = _("CATHERINE"),
+        .trainerName = _("Catherine"),
 #line 10415
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10416
@@ -26135,7 +26135,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CATHERINE_3] =
     {
 #line 10432
-        .trainerName = _("CATHERINE"),
+        .trainerName = _("Catherine"),
 #line 10433
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10434
@@ -26182,7 +26182,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CATHERINE_4] =
     {
 #line 10450
-        .trainerName = _("CATHERINE"),
+        .trainerName = _("Catherine"),
 #line 10451
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10452
@@ -26229,7 +26229,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CATHERINE_5] =
     {
 #line 10468
-        .trainerName = _("CATHERINE"),
+        .trainerName = _("Catherine"),
 #line 10469
         .trainerClass = TRAINER_CLASS_PKMN_RANGER,
 #line 10470
@@ -26276,7 +26276,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JULIO] =
     {
 #line 10486
-        .trainerName = _("JULIO"),
+        .trainerName = _("Julio"),
 #line 10487
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 10488
@@ -26308,7 +26308,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SEAFLOOR_CAVERN_5] =
     {
 #line 10499
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10500
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 10501
@@ -26351,7 +26351,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_UNUSED] =
     {
 #line 10516
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10517
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10518
@@ -26396,7 +26396,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_4] =
     {
 #line 10533
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10534
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 10535
@@ -26441,7 +26441,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_JAGGED_PASS] =
     {
 #line 10550
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10551
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10552
@@ -26484,7 +26484,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARC] =
     {
 #line 10567
-        .trainerName = _("MARC"),
+        .trainerName = _("Marc"),
 #line 10568
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 10569
@@ -26527,7 +26527,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDEN] =
     {
 #line 10584
-        .trainerName = _("BRENDEN"),
+        .trainerName = _("Brenden"),
 #line 10585
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 10586
@@ -26559,7 +26559,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILITH] =
     {
 #line 10597
-        .trainerName = _("LILITH"),
+        .trainerName = _("Lilith"),
 #line 10598
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 10599
@@ -26593,7 +26593,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIAN] =
     {
 #line 10610
-        .trainerName = _("CRISTIAN"),
+        .trainerName = _("Cristian"),
 #line 10611
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 10612
@@ -26625,7 +26625,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SYLVIA] =
     {
 #line 10623
-        .trainerName = _("SYLVIA"),
+        .trainerName = _("Sylvia"),
 #line 10624
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 10625
@@ -26659,7 +26659,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEONARDO] =
     {
 #line 10636
-        .trainerName = _("LEONARDO"),
+        .trainerName = _("Leonardo"),
 #line 10637
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 10638
@@ -26691,7 +26691,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ATHENA] =
     {
 #line 10649
-        .trainerName = _("ATHENA"),
+        .trainerName = _("Athena"),
 #line 10650
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 10651
@@ -26749,7 +26749,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HARRISON] =
     {
 #line 10672
-        .trainerName = _("HARRISON"),
+        .trainerName = _("Harrison"),
 #line 10673
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 10674
@@ -26781,7 +26781,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_CHIMNEY_2] =
     {
 #line 10685
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10686
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10687
@@ -26813,7 +26813,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CLARENCE] =
     {
 #line 10698
-        .trainerName = _("CLARENCE"),
+        .trainerName = _("Clarence"),
 #line 10699
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 10700
@@ -26845,7 +26845,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TERRY] =
     {
 #line 10711
-        .trainerName = _("TERRY"),
+        .trainerName = _("Terry"),
 #line 10712
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 10713
@@ -26879,7 +26879,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NATE] =
     {
 #line 10724
-        .trainerName = _("NATE"),
+        .trainerName = _("Nate"),
 #line 10725
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 10726
@@ -26911,7 +26911,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KATHLEEN] =
     {
 #line 10737
-        .trainerName = _("KATHLEEN"),
+        .trainerName = _("Kathleen"),
 #line 10738
         .trainerClass = TRAINER_CLASS_HEX_MANIAC,
 #line 10739
@@ -26945,7 +26945,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CLIFFORD] =
     {
 #line 10750
-        .trainerName = _("CLIFFORD"),
+        .trainerName = _("Clifford"),
 #line 10751
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 10752
@@ -26977,7 +26977,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NICHOLAS] =
     {
 #line 10763
-        .trainerName = _("NICHOLAS"),
+        .trainerName = _("Nicholas"),
 #line 10764
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 10765
@@ -27009,7 +27009,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_3] =
     {
 #line 10776
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10777
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10778
@@ -27054,7 +27054,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_4] =
     {
 #line 10793
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10794
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10795
@@ -27086,7 +27086,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_5] =
     {
 #line 10806
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10807
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10808
@@ -27118,7 +27118,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_6] =
     {
 #line 10819
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10820
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10821
@@ -27150,7 +27150,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_SPACE_CENTER_7] =
     {
 #line 10832
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10833
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10834
@@ -27182,7 +27182,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MACEY] =
     {
 #line 10845
-        .trainerName = _("MACEY"),
+        .trainerName = _("Macey"),
 #line 10846
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 10847
@@ -27216,7 +27216,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_RUSTBORO_TREECKO] =
     {
 #line 10858
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 10859
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 10860
@@ -27259,7 +27259,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_RUSTBORO_MUDKIP] =
     {
 #line 10875
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 10876
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 10877
@@ -27302,7 +27302,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PAXTON] =
     {
 #line 10892
-        .trainerName = _("PAXTON"),
+        .trainerName = _("Paxton"),
 #line 10893
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 10894
@@ -27345,7 +27345,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABELLA] =
     {
 #line 10909
-        .trainerName = _("ISABELLA"),
+        .trainerName = _("Isabella"),
 #line 10910
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 10911
@@ -27379,7 +27379,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_WEATHER_INST_5] =
     {
 #line 10922
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10923
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 10924
@@ -27424,7 +27424,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TABITHA_MT_CHIMNEY] =
     {
 #line 10939
-        .trainerName = _("TABITHA"),
+        .trainerName = _("Tabitha"),
 #line 10940
         .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
 #line 10941
@@ -27489,7 +27489,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JONATHAN] =
     {
 #line 10964
-        .trainerName = _("JONATHAN"),
+        .trainerName = _("Jonathan"),
 #line 10965
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 10966
@@ -27534,7 +27534,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_RUSTBORO_TORCHIC] =
     {
 #line 10982
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 10983
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 10984
@@ -27577,7 +27577,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_RUSTBORO_MUDKIP] =
     {
 #line 10999
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 11000
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 11001
@@ -27622,7 +27622,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAXIE_MAGMA_HIDEOUT] =
     {
 #line 11016
-        .trainerName = _("MAXIE"),
+        .trainerName = _("Maxie"),
 #line 11017
         .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
 #line 11018
@@ -27678,7 +27678,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAXIE_MT_CHIMNEY] =
     {
 #line 11038
-        .trainerName = _("MAXIE"),
+        .trainerName = _("Maxie"),
 #line 11039
         .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
 #line 11040
@@ -27734,7 +27734,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TIANA] =
     {
 #line 11060
-        .trainerName = _("TIANA"),
+        .trainerName = _("Tiana"),
 #line 11061
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11062
@@ -27779,7 +27779,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALEY_1] =
     {
 #line 11077
-        .trainerName = _("HALEY"),
+        .trainerName = _("Haley"),
 #line 11078
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11079
@@ -27824,7 +27824,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JANICE] =
     {
 #line 11094
-        .trainerName = _("JANICE"),
+        .trainerName = _("Janice"),
 #line 11095
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11096
@@ -27858,7 +27858,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VIVI] =
     {
 #line 11107
-        .trainerName = _("VIVI"),
+        .trainerName = _("Vivi"),
 #line 11108
         .trainerClass = TRAINER_CLASS_WINSTRATE,
 #line 11109
@@ -27914,7 +27914,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALEY_2] =
     {
 #line 11128
-        .trainerName = _("HALEY"),
+        .trainerName = _("Haley"),
 #line 11129
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11130
@@ -27959,7 +27959,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALEY_3] =
     {
 #line 11145
-        .trainerName = _("HALEY"),
+        .trainerName = _("Haley"),
 #line 11146
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11147
@@ -28004,7 +28004,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALEY_4] =
     {
 #line 11162
-        .trainerName = _("HALEY"),
+        .trainerName = _("Haley"),
 #line 11163
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11164
@@ -28049,7 +28049,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HALEY_5] =
     {
 #line 11179
-        .trainerName = _("HALEY"),
+        .trainerName = _("Haley"),
 #line 11180
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11181
@@ -28105,7 +28105,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SALLY] =
     {
 #line 11200
-        .trainerName = _("SALLY"),
+        .trainerName = _("Sally"),
 #line 11201
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11202
@@ -28139,7 +28139,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROBIN] =
     {
 #line 11213
-        .trainerName = _("ROBIN"),
+        .trainerName = _("Robin"),
 #line 11214
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11215
@@ -28195,7 +28195,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDREA] =
     {
 #line 11234
-        .trainerName = _("ANDREA"),
+        .trainerName = _("Andrea"),
 #line 11235
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11236
@@ -28229,7 +28229,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISSY] =
     {
 #line 11247
-        .trainerName = _("CRISSY"),
+        .trainerName = _("Crissy"),
 #line 11248
         .trainerClass = TRAINER_CLASS_LASS,
 #line 11249
@@ -28274,7 +28274,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RICK] =
     {
 #line 11264
-        .trainerName = _("RICK"),
+        .trainerName = _("Rick"),
 #line 11265
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11266
@@ -28317,7 +28317,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LYLE] =
     {
 #line 11281
-        .trainerName = _("LYLE"),
+        .trainerName = _("Lyle"),
 #line 11282
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11283
@@ -28382,7 +28382,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOSE] =
     {
 #line 11306
-        .trainerName = _("JOSE"),
+        .trainerName = _("Jose"),
 #line 11307
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11308
@@ -28425,7 +28425,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DOUG] =
     {
 #line 11323
-        .trainerName = _("DOUG"),
+        .trainerName = _("Doug"),
 #line 11324
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11325
@@ -28468,7 +28468,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GREG] =
     {
 #line 11340
-        .trainerName = _("GREG"),
+        .trainerName = _("Greg"),
 #line 11341
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11342
@@ -28511,7 +28511,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KENT] =
     {
 #line 11357
-        .trainerName = _("KENT"),
+        .trainerName = _("Kent"),
 #line 11358
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11359
@@ -28543,7 +28543,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAMES_1] =
     {
 #line 11370
-        .trainerName = _("JAMES"),
+        .trainerName = _("James"),
 #line 11371
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11372
@@ -28586,7 +28586,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAMES_2] =
     {
 #line 11387
-        .trainerName = _("JAMES"),
+        .trainerName = _("James"),
 #line 11388
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11389
@@ -28618,7 +28618,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAMES_3] =
     {
 #line 11400
-        .trainerName = _("JAMES"),
+        .trainerName = _("James"),
 #line 11401
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11402
@@ -28661,7 +28661,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAMES_4] =
     {
 #line 11417
-        .trainerName = _("JAMES"),
+        .trainerName = _("James"),
 #line 11418
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11419
@@ -28715,7 +28715,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAMES_5] =
     {
 #line 11438
-        .trainerName = _("JAMES"),
+        .trainerName = _("James"),
 #line 11439
         .trainerClass = TRAINER_CLASS_BUG_CATCHER,
 #line 11440
@@ -28780,7 +28780,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRICE] =
     {
 #line 11463
-        .trainerName = _("BRICE"),
+        .trainerName = _("Brice"),
 #line 11464
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11465
@@ -28823,7 +28823,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRENT_1] =
     {
 #line 11480
-        .trainerName = _("TRENT"),
+        .trainerName = _("Trent"),
 #line 11481
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11482
@@ -28877,7 +28877,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LENNY] =
     {
 #line 11501
-        .trainerName = _("LENNY"),
+        .trainerName = _("Lenny"),
 #line 11502
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11503
@@ -28920,7 +28920,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LUCAS_1] =
     {
 #line 11518
-        .trainerName = _("LUCAS"),
+        .trainerName = _("Lucas"),
 #line 11519
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11520
@@ -28963,7 +28963,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALAN] =
     {
 #line 11535
-        .trainerName = _("ALAN"),
+        .trainerName = _("Alan"),
 #line 11536
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11537
@@ -29017,7 +29017,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CLARK] =
     {
 #line 11556
-        .trainerName = _("CLARK"),
+        .trainerName = _("Clark"),
 #line 11557
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11558
@@ -29049,7 +29049,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ERIC] =
     {
 #line 11569
-        .trainerName = _("ERIC"),
+        .trainerName = _("Eric"),
 #line 11570
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11571
@@ -29092,7 +29092,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LUCAS_2] =
     {
 #line 11586
-        .trainerName = _("LUCAS"),
+        .trainerName = _("Lucas"),
 #line 11587
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11588
@@ -29129,7 +29129,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIKE_1] =
     {
 #line 11601
-        .trainerName = _("MIKE"),
+        .trainerName = _("Mike"),
 #line 11602
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11603
@@ -29182,7 +29182,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MIKE_2] =
     {
 #line 11622
-        .trainerName = _("MIKE"),
+        .trainerName = _("Mike"),
 #line 11623
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11624
@@ -29236,7 +29236,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRENT_2] =
     {
 #line 11643
-        .trainerName = _("TRENT"),
+        .trainerName = _("Trent"),
 #line 11644
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11645
@@ -29301,7 +29301,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRENT_3] =
     {
 #line 11668
-        .trainerName = _("TRENT"),
+        .trainerName = _("Trent"),
 #line 11669
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11670
@@ -29366,7 +29366,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRENT_4] =
     {
 #line 11693
-        .trainerName = _("TRENT"),
+        .trainerName = _("Trent"),
 #line 11694
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11695
@@ -29431,7 +29431,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TRENT_5] =
     {
 #line 11718
-        .trainerName = _("TRENT"),
+        .trainerName = _("Trent"),
 #line 11719
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 11720
@@ -29496,7 +29496,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEZ_AND_LUKE] =
     {
 #line 11743
-        .trainerName = _("DEZ & LUKE"),
+        .trainerName = _("Dez & Luke"),
 #line 11744
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11745
@@ -29539,7 +29539,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEA_AND_JED] =
     {
 #line 11760
-        .trainerName = _("LEA & JED"),
+        .trainerName = _("Lea & Jed"),
 #line 11761
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11762
@@ -29582,7 +29582,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRA_AND_DAN_1] =
     {
 #line 11777
-        .trainerName = _("KIRA & DAN"),
+        .trainerName = _("Kira & Dan"),
 #line 11778
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11779
@@ -29625,7 +29625,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRA_AND_DAN_2] =
     {
 #line 11794
-        .trainerName = _("KIRA & DAN"),
+        .trainerName = _("Kira & Dan"),
 #line 11795
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11796
@@ -29668,7 +29668,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRA_AND_DAN_3] =
     {
 #line 11811
-        .trainerName = _("KIRA & DAN"),
+        .trainerName = _("Kira & Dan"),
 #line 11812
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11813
@@ -29711,7 +29711,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRA_AND_DAN_4] =
     {
 #line 11828
-        .trainerName = _("KIRA & DAN"),
+        .trainerName = _("Kira & Dan"),
 #line 11829
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11830
@@ -29754,7 +29754,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIRA_AND_DAN_5] =
     {
 #line 11845
-        .trainerName = _("KIRA & DAN"),
+        .trainerName = _("Kira & Dan"),
 #line 11846
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 11847
@@ -29797,7 +29797,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHANNA] =
     {
 #line 11862
-        .trainerName = _("JOHANNA"),
+        .trainerName = _("Johanna"),
 #line 11863
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 11864
@@ -29831,7 +29831,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GERALD] =
     {
 #line 11875
-        .trainerName = _("GERALD"),
+        .trainerName = _("Gerald"),
 #line 11876
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 11877
@@ -29872,7 +29872,7 @@ F_TRAINER_FEMALE |
     [TRAINER_VIVIAN] =
     {
 #line 11893
-        .trainerName = _("VIVIAN"),
+        .trainerName = _("Vivian"),
 #line 11894
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 11895
@@ -29931,7 +29931,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DANIELLE] =
     {
 #line 11918
-        .trainerName = _("DANIELLE"),
+        .trainerName = _("Danielle"),
 #line 11919
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 11920
@@ -29972,7 +29972,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HIDEO] =
     {
 #line 11935
-        .trainerName = _("HIDEO"),
+        .trainerName = _("Hideo"),
 #line 11936
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 11937
@@ -30029,7 +30029,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KEIGO] =
     {
 #line 11960
-        .trainerName = _("KEIGO"),
+        .trainerName = _("Keigo"),
 #line 11961
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 11962
@@ -30086,7 +30086,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RILEY] =
     {
 #line 11985
-        .trainerName = _("RILEY"),
+        .trainerName = _("Riley"),
 #line 11986
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 11987
@@ -30143,7 +30143,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLINT] =
     {
 #line 12010
-        .trainerName = _("FLINT"),
+        .trainerName = _("Flint"),
 #line 12011
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 12012
@@ -30186,7 +30186,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ASHLEY] =
     {
 #line 12027
-        .trainerName = _("ASHLEY"),
+        .trainerName = _("Ashley"),
 #line 12028
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 12029
@@ -30242,7 +30242,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_MAUVILLE] =
     {
 #line 12048
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 12049
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12050
@@ -30274,7 +30274,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_VR_2] =
     {
 #line 12061
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 12062
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12063
@@ -30387,7 +30387,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_VR_3] =
     {
 #line 12111
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 12112
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12113
@@ -30500,7 +30500,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_VR_4] =
     {
 #line 12161
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 12162
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12163
@@ -30613,7 +30613,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WALLY_VR_5] =
     {
 #line 12211
-        .trainerName = _("WALLY"),
+        .trainerName = _("Wally"),
 #line 12212
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12213
@@ -30726,7 +30726,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_LILYCOVE_MUDKIP] =
     {
 #line 12261
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 12262
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12263
@@ -30791,7 +30791,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_LILYCOVE_TREECKO] =
     {
 #line 12286
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 12287
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12288
@@ -30856,7 +30856,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_LILYCOVE_TORCHIC] =
     {
 #line 12311
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 12312
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12313
@@ -30921,7 +30921,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_LILYCOVE_MUDKIP] =
     {
 #line 12336
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 12337
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12338
@@ -30988,7 +30988,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_LILYCOVE_TREECKO] =
     {
 #line 12361
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 12362
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12363
@@ -31055,7 +31055,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_LILYCOVE_TORCHIC] =
     {
 #line 12386
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 12387
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 12388
@@ -31122,7 +31122,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JONAH] =
     {
 #line 12411
-        .trainerName = _("JONAH"),
+        .trainerName = _("Jonah"),
 #line 12412
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12413
@@ -31176,7 +31176,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HENRY] =
     {
 #line 12432
-        .trainerName = _("HENRY"),
+        .trainerName = _("Henry"),
 #line 12433
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12434
@@ -31219,7 +31219,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROGER] =
     {
 #line 12449
-        .trainerName = _("ROGER"),
+        .trainerName = _("Roger"),
 #line 12450
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12451
@@ -31273,7 +31273,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALEXA] =
     {
 #line 12470
-        .trainerName = _("ALEXA"),
+        .trainerName = _("Alexa"),
 #line 12471
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 12472
@@ -31320,7 +31320,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RUBEN] =
     {
 #line 12488
-        .trainerName = _("RUBEN"),
+        .trainerName = _("Ruben"),
 #line 12489
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 12490
@@ -31365,7 +31365,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOJI_1] =
     {
 #line 12506
-        .trainerName = _("KOJI"),
+        .trainerName = _("Koji"),
 #line 12507
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 12508
@@ -31397,7 +31397,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WAYNE] =
     {
 #line 12519
-        .trainerName = _("WAYNE"),
+        .trainerName = _("Wayne"),
 #line 12520
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12521
@@ -31451,7 +31451,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AIDAN] =
     {
 #line 12540
-        .trainerName = _("AIDAN"),
+        .trainerName = _("Aidan"),
 #line 12541
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 12542
@@ -31494,7 +31494,7 @@ F_TRAINER_FEMALE |
     [TRAINER_REED] =
     {
 #line 12557
-        .trainerName = _("REED"),
+        .trainerName = _("Reed"),
 #line 12558
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 12559
@@ -31537,7 +31537,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TISHA] =
     {
 #line 12574
-        .trainerName = _("TISHA"),
+        .trainerName = _("Tisha"),
 #line 12575
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 12576
@@ -31571,7 +31571,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TORI_AND_TIA] =
     {
 #line 12587
-        .trainerName = _("TORI & TIA"),
+        .trainerName = _("Tori & Tia"),
 #line 12588
         .trainerClass = TRAINER_CLASS_TWINS,
 #line 12589
@@ -31614,7 +31614,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KIM_AND_IRIS] =
     {
 #line 12604
-        .trainerName = _("KIM & IRIS"),
+        .trainerName = _("Kim & Iris"),
 #line 12605
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 12606
@@ -31671,7 +31671,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TYRA_AND_IVY] =
     {
 #line 12629
-        .trainerName = _("TYRA & IVY"),
+        .trainerName = _("Tyra & Ivy"),
 #line 12630
         .trainerClass = TRAINER_CLASS_SR_AND_JR,
 #line 12631
@@ -31728,7 +31728,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MEL_AND_PAUL] =
     {
 #line 12654
-        .trainerName = _("MEL & PAUL"),
+        .trainerName = _("Mel & Paul"),
 #line 12655
         .trainerClass = TRAINER_CLASS_YOUNG_COUPLE,
 #line 12656
@@ -31785,7 +31785,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHN_AND_JAY_1] =
     {
 #line 12679
-        .trainerName = _("JOHN & JAY"),
+        .trainerName = _("John & Jay"),
 #line 12680
         .trainerClass = TRAINER_CLASS_OLD_COUPLE,
 #line 12681
@@ -31842,7 +31842,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHN_AND_JAY_2] =
     {
 #line 12704
-        .trainerName = _("JOHN & JAY"),
+        .trainerName = _("John & Jay"),
 #line 12705
         .trainerClass = TRAINER_CLASS_OLD_COUPLE,
 #line 12706
@@ -31899,7 +31899,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHN_AND_JAY_3] =
     {
 #line 12729
-        .trainerName = _("JOHN & JAY"),
+        .trainerName = _("John & Jay"),
 #line 12730
         .trainerClass = TRAINER_CLASS_OLD_COUPLE,
 #line 12731
@@ -31956,7 +31956,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHN_AND_JAY_4] =
     {
 #line 12754
-        .trainerName = _("JOHN & JAY"),
+        .trainerName = _("John & Jay"),
 #line 12755
         .trainerClass = TRAINER_CLASS_OLD_COUPLE,
 #line 12756
@@ -32013,7 +32013,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHN_AND_JAY_5] =
     {
 #line 12779
-        .trainerName = _("JOHN & JAY"),
+        .trainerName = _("John & Jay"),
 #line 12780
         .trainerClass = TRAINER_CLASS_OLD_COUPLE,
 #line 12781
@@ -32070,7 +32070,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RELI_AND_IAN] =
     {
 #line 12804
-        .trainerName = _("RELI & IAN"),
+        .trainerName = _("Reli & Ian"),
 #line 12805
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12806
@@ -32113,7 +32113,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILA_AND_ROY_1] =
     {
 #line 12821
-        .trainerName = _("LILA & ROY"),
+        .trainerName = _("Lila & Roy"),
 #line 12822
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12823
@@ -32156,7 +32156,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILA_AND_ROY_2] =
     {
 #line 12838
-        .trainerName = _("LILA & ROY"),
+        .trainerName = _("Lila & Roy"),
 #line 12839
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12840
@@ -32199,7 +32199,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILA_AND_ROY_3] =
     {
 #line 12855
-        .trainerName = _("LILA & ROY"),
+        .trainerName = _("Lila & Roy"),
 #line 12856
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12857
@@ -32242,7 +32242,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILA_AND_ROY_4] =
     {
 #line 12872
-        .trainerName = _("LILA & ROY"),
+        .trainerName = _("Lila & Roy"),
 #line 12873
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12874
@@ -32285,7 +32285,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LILA_AND_ROY_5] =
     {
 #line 12889
-        .trainerName = _("LILA & ROY"),
+        .trainerName = _("Lila & Roy"),
 #line 12890
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12891
@@ -32328,7 +32328,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LISA_AND_RAY] =
     {
 #line 12906
-        .trainerName = _("LISA & RAY"),
+        .trainerName = _("Lisa & Ray"),
 #line 12907
         .trainerClass = TRAINER_CLASS_SIS_AND_BRO,
 #line 12908
@@ -32371,7 +32371,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHRIS] =
     {
 #line 12923
-        .trainerName = _("CHRIS"),
+        .trainerName = _("Chris"),
 #line 12924
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12925
@@ -32436,7 +32436,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAWSON] =
     {
 #line 12948
-        .trainerName = _("DAWSON"),
+        .trainerName = _("Dawson"),
 #line 12949
         .trainerClass = TRAINER_CLASS_RICH_BOY,
 #line 12950
@@ -32481,7 +32481,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SARAH] =
     {
 #line 12965
-        .trainerName = _("SARAH"),
+        .trainerName = _("Sarah"),
 #line 12966
         .trainerClass = TRAINER_CLASS_LADY,
 #line 12967
@@ -32530,7 +32530,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DARIAN] =
     {
 #line 12983
-        .trainerName = _("DARIAN"),
+        .trainerName = _("Darian"),
 #line 12984
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 12985
@@ -32562,7 +32562,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HAILEY] =
     {
 #line 12996
-        .trainerName = _("HAILEY"),
+        .trainerName = _("Hailey"),
 #line 12997
         .trainerClass = TRAINER_CLASS_TUBER_F,
 #line 12998
@@ -32596,7 +32596,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHANDLER] =
     {
 #line 13009
-        .trainerName = _("CHANDLER"),
+        .trainerName = _("Chandler"),
 #line 13010
         .trainerClass = TRAINER_CLASS_TUBER_M,
 #line 13011
@@ -32639,7 +32639,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KALEB] =
     {
 #line 13026
-        .trainerName = _("KALEB"),
+        .trainerName = _("Kaleb"),
 #line 13027
         .trainerClass = TRAINER_CLASS_POKEFAN,
 #line 13028
@@ -32686,7 +32686,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOSEPH] =
     {
 #line 13043
-        .trainerName = _("JOSEPH"),
+        .trainerName = _("Joseph"),
 #line 13044
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 13045
@@ -32729,7 +32729,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALYSSA] =
     {
 #line 13060
-        .trainerName = _("ALYSSA"),
+        .trainerName = _("Alyssa"),
 #line 13061
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 13062
@@ -32763,7 +32763,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARCOS] =
     {
 #line 13073
-        .trainerName = _("MARCOS"),
+        .trainerName = _("Marcos"),
 #line 13074
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 13075
@@ -32795,7 +32795,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RHETT] =
     {
 #line 13086
-        .trainerName = _("RHETT"),
+        .trainerName = _("Rhett"),
 #line 13087
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 13088
@@ -32827,7 +32827,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TYRON] =
     {
 #line 13099
-        .trainerName = _("TYRON"),
+        .trainerName = _("Tyron"),
 #line 13100
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 13101
@@ -32859,7 +32859,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CELINA] =
     {
 #line 13112
-        .trainerName = _("CELINA"),
+        .trainerName = _("Celina"),
 #line 13113
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 13114
@@ -32893,7 +32893,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BIANCA] =
     {
 #line 13125
-        .trainerName = _("BIANCA"),
+        .trainerName = _("Bianca"),
 #line 13126
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 13127
@@ -32927,7 +32927,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HAYDEN] =
     {
 #line 13138
-        .trainerName = _("HAYDEN"),
+        .trainerName = _("Hayden"),
 #line 13139
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 13140
@@ -32959,7 +32959,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SOPHIE] =
     {
 #line 13151
-        .trainerName = _("SOPHIE"),
+        .trainerName = _("Sophie"),
 #line 13152
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 13153
@@ -33004,7 +33004,7 @@ F_TRAINER_FEMALE |
     [TRAINER_COBY] =
     {
 #line 13168
-        .trainerName = _("COBY"),
+        .trainerName = _("Coby"),
 #line 13169
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 13170
@@ -33047,7 +33047,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LAWRENCE] =
     {
 #line 13185
-        .trainerName = _("LAWRENCE"),
+        .trainerName = _("Lawrence"),
 #line 13186
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 13187
@@ -33090,7 +33090,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WYATT] =
     {
 #line 13202
-        .trainerName = _("WYATT"),
+        .trainerName = _("Wyatt"),
 #line 13203
         .trainerClass = TRAINER_CLASS_POKEMANIAC,
 #line 13204
@@ -33133,7 +33133,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANGELINA] =
     {
 #line 13219
-        .trainerName = _("ANGELINA"),
+        .trainerName = _("Angelina"),
 #line 13220
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 13221
@@ -33178,7 +33178,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KAI] =
     {
 #line 13236
-        .trainerName = _("KAI"),
+        .trainerName = _("Kai"),
 #line 13237
         .trainerClass = TRAINER_CLASS_FISHERMAN,
 #line 13238
@@ -33210,7 +33210,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CHARLOTTE] =
     {
 #line 13249
-        .trainerName = _("CHARLOTTE"),
+        .trainerName = _("Charlotte"),
 #line 13250
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 13251
@@ -33244,7 +33244,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEANDRE] =
     {
 #line 13262
-        .trainerName = _("DEANDRE"),
+        .trainerName = _("Deandre"),
 #line 13263
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 13264
@@ -33298,7 +33298,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_1] =
     {
 #line 13283
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13284
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13285
@@ -33330,7 +33330,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_2] =
     {
 #line 13296
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13297
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13298
@@ -33362,7 +33362,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_3] =
     {
 #line 13309
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13310
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13311
@@ -33394,7 +33394,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_4] =
     {
 #line 13322
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13323
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13324
@@ -33437,7 +33437,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_5] =
     {
 #line 13339
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13340
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13341
@@ -33480,7 +33480,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_6] =
     {
 #line 13356
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13357
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13358
@@ -33512,7 +33512,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_7] =
     {
 #line 13369
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13370
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13371
@@ -33544,7 +33544,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_8] =
     {
 #line 13382
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13383
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13384
@@ -33576,7 +33576,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_9] =
     {
 #line 13395
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13396
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13397
@@ -33608,7 +33608,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_10] =
     {
 #line 13408
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13409
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13410
@@ -33640,7 +33640,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_11] =
     {
 #line 13421
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13422
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13423
@@ -33672,7 +33672,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_12] =
     {
 #line 13434
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13435
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13436
@@ -33704,7 +33704,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_13] =
     {
 #line 13447
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13448
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13449
@@ -33736,7 +33736,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_14] =
     {
 #line 13460
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13461
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13462
@@ -33770,7 +33770,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_15] =
     {
 #line 13473
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13474
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13475
@@ -33804,7 +33804,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MAGMA_HIDEOUT_16] =
     {
 #line 13486
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 13487
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 13488
@@ -33838,7 +33838,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TABITHA_MAGMA_HIDEOUT] =
     {
 #line 13499
-        .trainerName = _("TABITHA"),
+        .trainerName = _("Tabitha"),
 #line 13500
         .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
 #line 13501
@@ -33903,7 +33903,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DARCY] =
     {
 #line 13524
-        .trainerName = _("DARCY"),
+        .trainerName = _("Darcy"),
 #line 13525
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 13526
@@ -33950,7 +33950,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAXIE_MOSSDEEP] =
     {
 #line 13542
-        .trainerName = _("MAXIE"),
+        .trainerName = _("Maxie"),
 #line 13543
         .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
 #line 13544
@@ -34004,7 +34004,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PETE] =
     {
 #line 13563
-        .trainerName = _("PETE"),
+        .trainerName = _("Pete"),
 #line 13564
         .trainerClass = TRAINER_CLASS_SWIMMER_M,
 #line 13565
@@ -34036,7 +34036,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ISABELLE] =
     {
 #line 13576
-        .trainerName = _("ISABELLE"),
+        .trainerName = _("Isabelle"),
 #line 13577
         .trainerClass = TRAINER_CLASS_SWIMMER_F,
 #line 13578
@@ -34070,7 +34070,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDRES_1] =
     {
 #line 13589
-        .trainerName = _("ANDRES"),
+        .trainerName = _("Andres"),
 #line 13590
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 13591
@@ -34113,7 +34113,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOSUE] =
     {
 #line 13606
-        .trainerName = _("JOSUE"),
+        .trainerName = _("Josue"),
 #line 13607
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 13608
@@ -34156,7 +34156,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAMRON] =
     {
 #line 13623
-        .trainerName = _("CAMRON"),
+        .trainerName = _("Camron"),
 #line 13624
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 13625
@@ -34188,7 +34188,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORY_1] =
     {
 #line 13636
-        .trainerName = _("CORY"),
+        .trainerName = _("Cory"),
 #line 13637
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 13638
@@ -34242,7 +34242,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CAROLINA] =
     {
 #line 13657
-        .trainerName = _("CAROLINA"),
+        .trainerName = _("Carolina"),
 #line 13658
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 13659
@@ -34300,7 +34300,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ELIJAH] =
     {
 #line 13679
-        .trainerName = _("ELIJAH"),
+        .trainerName = _("Elijah"),
 #line 13680
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 13681
@@ -34343,7 +34343,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CELIA] =
     {
 #line 13696
-        .trainerName = _("CELIA"),
+        .trainerName = _("Celia"),
 #line 13697
         .trainerClass = TRAINER_CLASS_PICNICKER,
 #line 13698
@@ -34388,7 +34388,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRYAN] =
     {
 #line 13713
-        .trainerName = _("BRYAN"),
+        .trainerName = _("Bryan"),
 #line 13714
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 13715
@@ -34431,7 +34431,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRANDEN] =
     {
 #line 13730
-        .trainerName = _("BRANDEN"),
+        .trainerName = _("Branden"),
 #line 13731
         .trainerClass = TRAINER_CLASS_CAMPER,
 #line 13732
@@ -34474,7 +34474,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRYANT] =
     {
 #line 13747
-        .trainerName = _("BRYANT"),
+        .trainerName = _("Bryant"),
 #line 13748
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 13749
@@ -34517,7 +34517,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SHAYLA] =
     {
 #line 13764
-        .trainerName = _("SHAYLA"),
+        .trainerName = _("Shayla"),
 #line 13765
         .trainerClass = TRAINER_CLASS_AROMA_LADY,
 #line 13766
@@ -34562,7 +34562,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KYRA] =
     {
 #line 13781
-        .trainerName = _("KYRA"),
+        .trainerName = _("Kyra"),
 #line 13782
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 13783
@@ -34607,7 +34607,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JAIDEN] =
     {
 #line 13798
-        .trainerName = _("JAIDEN"),
+        .trainerName = _("Jaiden"),
 #line 13799
         .trainerClass = TRAINER_CLASS_NINJA_BOY,
 #line 13800
@@ -34650,7 +34650,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALIX] =
     {
 #line 13815
-        .trainerName = _("ALIX"),
+        .trainerName = _("Alix"),
 #line 13816
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 13817
@@ -34695,7 +34695,7 @@ F_TRAINER_FEMALE |
     [TRAINER_HELENE] =
     {
 #line 13832
-        .trainerName = _("HELENE"),
+        .trainerName = _("Helene"),
 #line 13833
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 13834
@@ -34740,7 +34740,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARLENE] =
     {
 #line 13849
-        .trainerName = _("MARLENE"),
+        .trainerName = _("Marlene"),
 #line 13850
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 13851
@@ -34785,7 +34785,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DEVAN] =
     {
 #line 13866
-        .trainerName = _("DEVAN"),
+        .trainerName = _("Devan"),
 #line 13867
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 13868
@@ -34828,7 +34828,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JOHNSON] =
     {
 #line 13883
-        .trainerName = _("JOHNSON"),
+        .trainerName = _("Johnson"),
 #line 13884
         .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 13885
@@ -34871,7 +34871,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MELINA] =
     {
 #line 13900
-        .trainerName = _("MELINA"),
+        .trainerName = _("Melina"),
 #line 13901
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 13902
@@ -34905,7 +34905,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRANDI] =
     {
 #line 13913
-        .trainerName = _("BRANDI"),
+        .trainerName = _("Brandi"),
 #line 13914
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 13915
@@ -34939,7 +34939,7 @@ F_TRAINER_FEMALE |
     [TRAINER_AISHA] =
     {
 #line 13926
-        .trainerName = _("AISHA"),
+        .trainerName = _("Aisha"),
 #line 13927
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 13928
@@ -34973,7 +34973,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAKAYLA] =
     {
 #line 13939
-        .trainerName = _("MAKAYLA"),
+        .trainerName = _("Makayla"),
 #line 13940
         .trainerClass = TRAINER_CLASS_EXPERT,
 #line 13941
@@ -35020,7 +35020,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FABIAN] =
     {
 #line 13957
-        .trainerName = _("FABIAN"),
+        .trainerName = _("Fabian"),
 #line 13958
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 13959
@@ -35052,7 +35052,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DAYTON] =
     {
 #line 13970
-        .trainerName = _("DAYTON"),
+        .trainerName = _("Dayton"),
 #line 13971
         .trainerClass = TRAINER_CLASS_KINDLER,
 #line 13972
@@ -35095,7 +35095,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RACHEL] =
     {
 #line 13987
-        .trainerName = _("RACHEL"),
+        .trainerName = _("Rachel"),
 #line 13988
         .trainerClass = TRAINER_CLASS_PARASOL_LADY,
 #line 13989
@@ -35129,7 +35129,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEONEL] =
     {
 #line 14000
-        .trainerName = _("LEONEL"),
+        .trainerName = _("Leonel"),
 #line 14001
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 14002
@@ -35169,7 +35169,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALLIE] =
     {
 #line 14017
-        .trainerName = _("CALLIE"),
+        .trainerName = _("Callie"),
 #line 14018
         .trainerClass = TRAINER_CLASS_BATTLE_GIRL,
 #line 14019
@@ -35214,7 +35214,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CALE] =
     {
 #line 14034
-        .trainerName = _("CALE"),
+        .trainerName = _("Cale"),
 #line 14035
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 14036
@@ -35257,7 +35257,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MYLES] =
     {
 #line 14051
-        .trainerName = _("MYLES"),
+        .trainerName = _("Myles"),
 #line 14052
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 14053
@@ -35344,7 +35344,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PAT] =
     {
 #line 14084
-        .trainerName = _("PAT"),
+        .trainerName = _("Pat"),
 #line 14085
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 14086
@@ -35433,7 +35433,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIN_1] =
     {
 #line 14117
-        .trainerName = _("CRISTIN"),
+        .trainerName = _("Cristin"),
 #line 14118
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 14119
@@ -35480,7 +35480,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_RUSTBORO_TREECKO] =
     {
 #line 14135
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 14136
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 14137
@@ -35525,7 +35525,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_RUSTBORO_TORCHIC] =
     {
 #line 14152
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 14153
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 14154
@@ -35570,7 +35570,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROXANNE_2] =
     {
 #line 14169
-        .trainerName = _("ROXANNE"),
+        .trainerName = _("Roxanne"),
 #line 14170
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14171
@@ -35671,7 +35671,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROXANNE_3] =
     {
 #line 14211
-        .trainerName = _("ROXANNE"),
+        .trainerName = _("Roxanne"),
 #line 14212
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14213
@@ -35790,7 +35790,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROXANNE_4] =
     {
 #line 14261
-        .trainerName = _("ROXANNE"),
+        .trainerName = _("Roxanne"),
 #line 14262
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14263
@@ -35909,7 +35909,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ROXANNE_5] =
     {
 #line 14311
-        .trainerName = _("ROXANNE"),
+        .trainerName = _("Roxanne"),
 #line 14312
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14313
@@ -36046,7 +36046,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAWLY_2] =
     {
 #line 14369
-        .trainerName = _("BRAWLY"),
+        .trainerName = _("Brawly"),
 #line 14370
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14371
@@ -36145,7 +36145,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAWLY_3] =
     {
 #line 14411
-        .trainerName = _("BRAWLY"),
+        .trainerName = _("Brawly"),
 #line 14412
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14413
@@ -36244,7 +36244,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAWLY_4] =
     {
 #line 14453
-        .trainerName = _("BRAWLY"),
+        .trainerName = _("Brawly"),
 #line 14454
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14455
@@ -36361,7 +36361,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRAWLY_5] =
     {
 #line 14503
-        .trainerName = _("BRAWLY"),
+        .trainerName = _("Brawly"),
 #line 14504
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14505
@@ -36496,7 +36496,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WATTSON_2] =
     {
 #line 14561
-        .trainerName = _("WATTSON"),
+        .trainerName = _("Wattson"),
 #line 14562
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14563
@@ -36595,7 +36595,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WATTSON_3] =
     {
 #line 14603
-        .trainerName = _("WATTSON"),
+        .trainerName = _("Wattson"),
 #line 14604
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14605
@@ -36712,7 +36712,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WATTSON_4] =
     {
 #line 14653
-        .trainerName = _("WATTSON"),
+        .trainerName = _("Wattson"),
 #line 14654
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14655
@@ -36829,7 +36829,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WATTSON_5] =
     {
 #line 14703
-        .trainerName = _("WATTSON"),
+        .trainerName = _("Wattson"),
 #line 14704
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14705
@@ -36964,7 +36964,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLANNERY_2] =
     {
 #line 14761
-        .trainerName = _("FLANNERY"),
+        .trainerName = _("Flannery"),
 #line 14762
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14763
@@ -37067,7 +37067,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLANNERY_3] =
     {
 #line 14803
-        .trainerName = _("FLANNERY"),
+        .trainerName = _("Flannery"),
 #line 14804
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14805
@@ -37188,7 +37188,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLANNERY_4] =
     {
 #line 14853
-        .trainerName = _("FLANNERY"),
+        .trainerName = _("Flannery"),
 #line 14854
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14855
@@ -37327,7 +37327,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FLANNERY_5] =
     {
 #line 14911
-        .trainerName = _("FLANNERY"),
+        .trainerName = _("Flannery"),
 #line 14912
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14913
@@ -37466,7 +37466,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NORMAN_2] =
     {
 #line 14969
-        .trainerName = _("NORMAN"),
+        .trainerName = _("Norman"),
 #line 14970
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 14971
@@ -37565,7 +37565,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NORMAN_3] =
     {
 #line 15011
-        .trainerName = _("NORMAN"),
+        .trainerName = _("Norman"),
 #line 15012
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15013
@@ -37682,7 +37682,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NORMAN_4] =
     {
 #line 15061
-        .trainerName = _("NORMAN"),
+        .trainerName = _("Norman"),
 #line 15062
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15063
@@ -37799,7 +37799,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NORMAN_5] =
     {
 #line 15111
-        .trainerName = _("NORMAN"),
+        .trainerName = _("Norman"),
 #line 15112
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15113
@@ -37934,7 +37934,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINONA_2] =
     {
 #line 15169
-        .trainerName = _("WINONA"),
+        .trainerName = _("Winona"),
 #line 15170
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15171
@@ -38053,7 +38053,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINONA_3] =
     {
 #line 15219
-        .trainerName = _("WINONA"),
+        .trainerName = _("Winona"),
 #line 15220
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15221
@@ -38190,7 +38190,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINONA_4] =
     {
 #line 15277
-        .trainerName = _("WINONA"),
+        .trainerName = _("Winona"),
 #line 15278
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15279
@@ -38327,7 +38327,7 @@ F_TRAINER_FEMALE |
     [TRAINER_WINONA_5] =
     {
 #line 15335
-        .trainerName = _("WINONA"),
+        .trainerName = _("Winona"),
 #line 15336
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15337
@@ -38464,7 +38464,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TATE_AND_LIZA_2] =
     {
 #line 15393
-        .trainerName = _("TATE&LIZA"),
+        .trainerName = _("Tate&Liza"),
 #line 15394
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15395
@@ -38583,7 +38583,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TATE_AND_LIZA_3] =
     {
 #line 15443
-        .trainerName = _("TATE&LIZA"),
+        .trainerName = _("Tate&Liza"),
 #line 15444
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15445
@@ -38720,7 +38720,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TATE_AND_LIZA_4] =
     {
 #line 15501
-        .trainerName = _("TATE&LIZA"),
+        .trainerName = _("Tate&Liza"),
 #line 15502
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15503
@@ -38857,7 +38857,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TATE_AND_LIZA_5] =
     {
 #line 15559
-        .trainerName = _("TATE&LIZA"),
+        .trainerName = _("Tate&Liza"),
 #line 15560
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15561
@@ -38994,7 +38994,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUAN_2] =
     {
 #line 15617
-        .trainerName = _("JUAN"),
+        .trainerName = _("Juan"),
 #line 15618
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15619
@@ -39111,7 +39111,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUAN_3] =
     {
 #line 15667
-        .trainerName = _("JUAN"),
+        .trainerName = _("Juan"),
 #line 15668
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15669
@@ -39228,7 +39228,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUAN_4] =
     {
 #line 15717
-        .trainerName = _("JUAN"),
+        .trainerName = _("Juan"),
 #line 15718
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15719
@@ -39363,7 +39363,7 @@ F_TRAINER_FEMALE |
     [TRAINER_JUAN_5] =
     {
 #line 15775
-        .trainerName = _("JUAN"),
+        .trainerName = _("Juan"),
 #line 15776
         .trainerClass = TRAINER_CLASS_LEADER,
 #line 15777
@@ -39498,7 +39498,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANGELO] =
     {
 #line 15833
-        .trainerName = _("ANGELO"),
+        .trainerName = _("Angelo"),
 #line 15834
         .trainerClass = TRAINER_CLASS_BUG_MANIAC,
 #line 15835
@@ -39553,7 +39553,7 @@ F_TRAINER_FEMALE |
     [TRAINER_DARIUS] =
     {
 #line 15856
-        .trainerName = _("DARIUS"),
+        .trainerName = _("Darius"),
 #line 15857
         .trainerClass = TRAINER_CLASS_BIRD_KEEPER,
 #line 15858
@@ -39585,7 +39585,7 @@ F_TRAINER_FEMALE |
     [TRAINER_STEVEN] =
     {
 #line 15869
-        .trainerName = _("STEVEN"),
+        .trainerName = _("Steven"),
 #line 15870
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 15871
@@ -39718,7 +39718,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANABEL] =
     {
 #line 15927
-        .trainerName = _("ANABEL"),
+        .trainerName = _("Anabel"),
 #line 15928
         .trainerClass = TRAINER_CLASS_SALON_MAIDEN,
 #line 15929
@@ -39752,7 +39752,7 @@ F_TRAINER_FEMALE |
     [TRAINER_TUCKER] =
     {
 #line 15940
-        .trainerName = _("TUCKER"),
+        .trainerName = _("Tucker"),
 #line 15941
         .trainerClass = TRAINER_CLASS_DOME_ACE,
 #line 15942
@@ -39784,7 +39784,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SPENSER] =
     {
 #line 15953
-        .trainerName = _("SPENSER"),
+        .trainerName = _("Spenser"),
 #line 15954
         .trainerClass = TRAINER_CLASS_PALACE_MAVEN,
 #line 15955
@@ -39816,7 +39816,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRETA] =
     {
 #line 15966
-        .trainerName = _("GRETA"),
+        .trainerName = _("Greta"),
 #line 15967
         .trainerClass = TRAINER_CLASS_ARENA_TYCOON,
 #line 15968
@@ -39850,7 +39850,7 @@ F_TRAINER_FEMALE |
     [TRAINER_NOLAND] =
     {
 #line 15979
-        .trainerName = _("NOLAND"),
+        .trainerName = _("Noland"),
 #line 15980
         .trainerClass = TRAINER_CLASS_FACTORY_HEAD,
 #line 15981
@@ -39882,7 +39882,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LUCY] =
     {
 #line 15992
-        .trainerName = _("LUCY"),
+        .trainerName = _("Lucy"),
 #line 15993
         .trainerClass = TRAINER_CLASS_PIKE_QUEEN,
 #line 15994
@@ -39916,7 +39916,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRANDON] =
     {
 #line 16005
-        .trainerName = _("BRANDON"),
+        .trainerName = _("Brandon"),
 #line 16006
         .trainerClass = TRAINER_CLASS_PYRAMID_KING,
 #line 16007
@@ -39948,7 +39948,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDRES_2] =
     {
 #line 16018
-        .trainerName = _("ANDRES"),
+        .trainerName = _("Andres"),
 #line 16019
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 16020
@@ -39991,7 +39991,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDRES_3] =
     {
 #line 16035
-        .trainerName = _("ANDRES"),
+        .trainerName = _("Andres"),
 #line 16036
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 16037
@@ -40045,7 +40045,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDRES_4] =
     {
 #line 16056
-        .trainerName = _("ANDRES"),
+        .trainerName = _("Andres"),
 #line 16057
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 16058
@@ -40099,7 +40099,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ANDRES_5] =
     {
 #line 16077
-        .trainerName = _("ANDRES"),
+        .trainerName = _("Andres"),
 #line 16078
         .trainerClass = TRAINER_CLASS_RUIN_MANIAC,
 #line 16079
@@ -40153,7 +40153,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORY_2] =
     {
 #line 16098
-        .trainerName = _("CORY"),
+        .trainerName = _("Cory"),
 #line 16099
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 16100
@@ -40207,7 +40207,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORY_3] =
     {
 #line 16119
-        .trainerName = _("CORY"),
+        .trainerName = _("Cory"),
 #line 16120
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 16121
@@ -40261,7 +40261,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORY_4] =
     {
 #line 16140
-        .trainerName = _("CORY"),
+        .trainerName = _("Cory"),
 #line 16141
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 16142
@@ -40315,7 +40315,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CORY_5] =
     {
 #line 16161
-        .trainerName = _("CORY"),
+        .trainerName = _("Cory"),
 #line 16162
         .trainerClass = TRAINER_CLASS_SAILOR,
 #line 16163
@@ -40369,7 +40369,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PABLO_2] =
     {
 #line 16182
-        .trainerName = _("PABLO"),
+        .trainerName = _("Pablo"),
 #line 16183
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 16184
@@ -40412,7 +40412,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PABLO_3] =
     {
 #line 16199
-        .trainerName = _("PABLO"),
+        .trainerName = _("Pablo"),
 #line 16200
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 16201
@@ -40466,7 +40466,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PABLO_4] =
     {
 #line 16220
-        .trainerName = _("PABLO"),
+        .trainerName = _("Pablo"),
 #line 16221
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 16222
@@ -40520,7 +40520,7 @@ F_TRAINER_FEMALE |
     [TRAINER_PABLO_5] =
     {
 #line 16241
-        .trainerName = _("PABLO"),
+        .trainerName = _("Pablo"),
 #line 16242
         .trainerClass = TRAINER_CLASS_TRIATHLETE,
 #line 16243
@@ -40574,7 +40574,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOJI_2] =
     {
 #line 16262
-        .trainerName = _("KOJI"),
+        .trainerName = _("Koji"),
 #line 16263
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 16264
@@ -40617,7 +40617,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOJI_3] =
     {
 #line 16279
-        .trainerName = _("KOJI"),
+        .trainerName = _("Koji"),
 #line 16280
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 16281
@@ -40671,7 +40671,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOJI_4] =
     {
 #line 16300
-        .trainerName = _("KOJI"),
+        .trainerName = _("Koji"),
 #line 16301
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 16302
@@ -40725,7 +40725,7 @@ F_TRAINER_FEMALE |
     [TRAINER_KOJI_5] =
     {
 #line 16321
-        .trainerName = _("KOJI"),
+        .trainerName = _("Koji"),
 #line 16322
         .trainerClass = TRAINER_CLASS_BLACK_BELT,
 #line 16323
@@ -40779,7 +40779,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIN_2] =
     {
 #line 16342
-        .trainerName = _("CRISTIN"),
+        .trainerName = _("Cristin"),
 #line 16343
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 16344
@@ -40826,7 +40826,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIN_3] =
     {
 #line 16360
-        .trainerName = _("CRISTIN"),
+        .trainerName = _("Cristin"),
 #line 16361
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 16362
@@ -40884,7 +40884,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIN_4] =
     {
 #line 16382
-        .trainerName = _("CRISTIN"),
+        .trainerName = _("Cristin"),
 #line 16383
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 16384
@@ -40942,7 +40942,7 @@ F_TRAINER_FEMALE |
     [TRAINER_CRISTIN_5] =
     {
 #line 16404
-        .trainerName = _("CRISTIN"),
+        .trainerName = _("Cristin"),
 #line 16405
         .trainerClass = TRAINER_CLASS_COOLTRAINER,
 #line 16406
@@ -41000,7 +41000,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FERNANDO_2] =
     {
 #line 16426
-        .trainerName = _("FERNANDO"),
+        .trainerName = _("Fernando"),
 #line 16427
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 16428
@@ -41054,7 +41054,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FERNANDO_3] =
     {
 #line 16447
-        .trainerName = _("FERNANDO"),
+        .trainerName = _("Fernando"),
 #line 16448
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 16449
@@ -41108,7 +41108,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FERNANDO_4] =
     {
 #line 16468
-        .trainerName = _("FERNANDO"),
+        .trainerName = _("Fernando"),
 #line 16469
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 16470
@@ -41162,7 +41162,7 @@ F_TRAINER_FEMALE |
     [TRAINER_FERNANDO_5] =
     {
 #line 16489
-        .trainerName = _("FERNANDO"),
+        .trainerName = _("Fernando"),
 #line 16490
         .trainerClass = TRAINER_CLASS_GUITARIST,
 #line 16491
@@ -41216,7 +41216,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAWYER_2] =
     {
 #line 16510
-        .trainerName = _("SAWYER"),
+        .trainerName = _("Sawyer"),
 #line 16511
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 16512
@@ -41259,7 +41259,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAWYER_3] =
     {
 #line 16527
-        .trainerName = _("SAWYER"),
+        .trainerName = _("Sawyer"),
 #line 16528
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 16529
@@ -41313,7 +41313,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAWYER_4] =
     {
 #line 16548
-        .trainerName = _("SAWYER"),
+        .trainerName = _("Sawyer"),
 #line 16549
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 16550
@@ -41367,7 +41367,7 @@ F_TRAINER_FEMALE |
     [TRAINER_SAWYER_5] =
     {
 #line 16569
-        .trainerName = _("SAWYER"),
+        .trainerName = _("Sawyer"),
 #line 16570
         .trainerClass = TRAINER_CLASS_HIKER,
 #line 16571
@@ -41421,7 +41421,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABRIELLE_2] =
     {
 #line 16590
-        .trainerName = _("GABRIELLE"),
+        .trainerName = _("Gabrielle"),
 #line 16591
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 16592
@@ -41510,7 +41510,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABRIELLE_3] =
     {
 #line 16623
-        .trainerName = _("GABRIELLE"),
+        .trainerName = _("Gabrielle"),
 #line 16624
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 16625
@@ -41599,7 +41599,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABRIELLE_4] =
     {
 #line 16656
-        .trainerName = _("GABRIELLE"),
+        .trainerName = _("Gabrielle"),
 #line 16657
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 16658
@@ -41688,7 +41688,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GABRIELLE_5] =
     {
 #line 16689
-        .trainerName = _("GABRIELLE"),
+        .trainerName = _("Gabrielle"),
 #line 16690
         .trainerClass = TRAINER_CLASS_PKMN_BREEDER,
 #line 16691
@@ -41777,7 +41777,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THALIA_2] =
     {
 #line 16722
-        .trainerName = _("THALIA"),
+        .trainerName = _("Thalia"),
 #line 16723
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 16724
@@ -41822,7 +41822,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THALIA_3] =
     {
 #line 16739
-        .trainerName = _("THALIA"),
+        .trainerName = _("Thalia"),
 #line 16740
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 16741
@@ -41878,7 +41878,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THALIA_4] =
     {
 #line 16760
-        .trainerName = _("THALIA"),
+        .trainerName = _("Thalia"),
 #line 16761
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 16762
@@ -41934,7 +41934,7 @@ F_TRAINER_FEMALE |
     [TRAINER_THALIA_5] =
     {
 #line 16781
-        .trainerName = _("THALIA"),
+        .trainerName = _("Thalia"),
 #line 16782
         .trainerClass = TRAINER_CLASS_BEAUTY,
 #line 16783
@@ -41990,7 +41990,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MARIELA] =
     {
 #line 16802
-        .trainerName = _("MARIELA"),
+        .trainerName = _("Mariela"),
 #line 16803
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 16804
@@ -42022,7 +42022,7 @@ F_TRAINER_FEMALE |
     [TRAINER_ALVARO] =
     {
 #line 16814
-        .trainerName = _("ALVARO"),
+        .trainerName = _("Alvaro"),
 #line 16815
         .trainerClass = TRAINER_CLASS_PSYCHIC,
 #line 16816
@@ -42063,7 +42063,7 @@ F_TRAINER_FEMALE |
     [TRAINER_EVERETT] =
     {
 #line 16830
-        .trainerName = _("EVERETT"),
+        .trainerName = _("Everett"),
 #line 16831
         .trainerClass = TRAINER_CLASS_GENTLEMAN,
 #line 16832
@@ -42093,7 +42093,7 @@ F_TRAINER_FEMALE |
     [TRAINER_RED] =
     {
 #line 16842
-        .trainerName = _("RED"),
+        .trainerName = _("Red"),
 #line 16843
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 16844
@@ -42123,7 +42123,7 @@ F_TRAINER_FEMALE |
     [TRAINER_LEAF] =
     {
 #line 16854
-        .trainerName = _("LEAF"),
+        .trainerName = _("Leaf"),
 #line 16855
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 16856
@@ -42155,7 +42155,7 @@ F_TRAINER_FEMALE |
     [TRAINER_BRENDAN_PLACEHOLDER] =
     {
 #line 16866
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("Brendan"),
 #line 16867
         .trainerClass = TRAINER_CLASS_RS_PROTAG,
 #line 16868
@@ -42185,7 +42185,7 @@ F_TRAINER_FEMALE |
     [TRAINER_MAY_PLACEHOLDER] =
     {
 #line 16878
-        .trainerName = _("MAY"),
+        .trainerName = _("May"),
 #line 16879
         .trainerClass = TRAINER_CLASS_RS_PROTAG,
 #line 16880

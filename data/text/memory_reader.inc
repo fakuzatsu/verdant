@@ -36,24 +36,24 @@ MemoryGirl_Text_WellTravelledMon::
 
 MemoryGirl_Text_PleaseGiveItThisHistoricRibbon::
 	.string "As its reward, please give it this\n"
-	.string "HISTORIC RIBBON.$"
+	.string "HISTORIC Ribbon.$"
 
 MemoryGirl_Text_PleaseGiveItThisTravellerRibbon::
 	.string "As its reward, please give it this\n"
-	.string "TRAVELLER RIBBON.$"
+	.string "TRAVELLER Ribbon.$"
 
 MemoryGirl_Text_ReceivedHistoricRibbon::
-	.string "{PLAYER} received the HISTORIC RIBBON.$"
+	.string "{PLAYER} received the HISTORIC Ribbon.$"
 
 MemoryGirl_Text_ReceivedTravellerRibbon::
-	.string "{PLAYER} received the TRAVELLER RIBBON.$"
+	.string "{PLAYER} received the TRAVELLER Ribbon.$"
 
 MemoryGirl_Text_PutHistoricRibbonOnMon::
-	.string "{PLAYER} put the HISTORIC RIBBON\n"
+	.string "{PLAYER} put the HISTORIC Ribbon\n"
 	.string "on {STR_VAR_1}.$"
 
 MemoryGirl_Text_PutTravellerRibbonOnMon::
-	.string "{PLAYER} put the TRAVELLER RIBBON\n"
+	.string "{PLAYER} put the TRAVELLER Ribbon\n"
 	.string "on {STR_VAR_1}.$"
 
 MemoryStrings_NoMemory::

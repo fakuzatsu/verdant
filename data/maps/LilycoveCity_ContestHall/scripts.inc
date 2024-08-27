@@ -419,13 +419,13 @@ LilycoveCity_ContestHall_Text_TodayWonSmartnessContest:
 	.string "This Pokémon won the Beauty Contest\n"
 	.string "here before.\p"
 	.string "Well, guess what? Today, I made it\n"
-	.string "win a SMARTNESS Contest!\p"
+	.string "win a Smartness Contest!\p"
 	.string "My abilities scare even me…$"
 
 LilycoveCity_ContestHall_Text_EnteredBunchOfContests:
-	.string "I've entered a bunch of CONTESTS,\n"
+	.string "I've entered a bunch of Contests,\n"
 	.string "so I'm seeing how things work.\p"
-	.string "If you're in a COOLNESS Contest,\n"
+	.string "If you're in a Coolness Contest,\n"
 	.string "cool moves go over as appeals.\p"
 	.string "But smart moves and cute moves\n"
 	.string "don't go over well, for instance.$"
@@ -442,8 +442,8 @@ LilycoveCity_ContestHall_Text_IsntThisPlaceHumongous:
 	.string "like a Contest hall in the sticks.$"
 
 LilycoveCity_ContestHall_Text_GiveItBestSmartAppeal:
-	.string "MC: Okay, SMART Pokémon and their\n"
-	.string "TRAINERS, are you ready?!\p"
+	.string "MC: Okay, Smart Pokémon and their\n"
+	.string "Trainers, are you ready?!\p"
 	.string "Give it your best showing!\n"
 	.string "Let's appeal!$"
 
@@ -456,9 +456,9 @@ LilycoveCity_ContestHall_Text_EnteredWrongContest:
 	.string "Ayayayay…\n"
 	.string "I entered the wrong Contest.\p"
 	.string "I entered this tough Pokémon in\n"
-	.string "the SMARTNESS Contest…\p"
+	.string "the Smartness Contest…\p"
 	.string "Come on, wow them with a smart-looking\n"
-	.string "ROCK SMASH.$"
+	.string "Rock Smash.$"
 
 LilycoveCity_ContestHall_Text_RaisedMonToBeSmart:
 	.string "I've spent many a year, and all my\n"
@@ -475,7 +475,7 @@ LilycoveCity_ContestHall_Text_IfMonPullsSmartMoveNext:
 
 LilycoveCity_ContestHall_Text_DontAppreciateCuteLeechLife:
 	.string "Oh, dear, no!\p"
-	.string "My darling ZUBAT's LEECH LIFE is so\n"
+	.string "My darling Zubat's Leech Life is so\n"
 	.string "cute I kept using it over and over!\p"
 	.string "But these mean people don't appreciate\n"
 	.string "it at all!$"
@@ -484,7 +484,7 @@ LilycoveCity_ContestHall_Text_YoureBeautifulGrandpa:
 	.string "Kiyaaah! You're beautiful, Grandpa!$"
 
 LilycoveCity_ContestHall_Text_AllSeemToUseDifferentMoves:
-	.string "Even when TRAINERS enter the same\n"
+	.string "Even when Trainers enter the same\n"
 	.string "kind of Pokémon, they all seem to use\l"
 	.string "different moves for appeals.\p"
 	.string "It's just like the way people have\n"
@@ -492,11 +492,11 @@ LilycoveCity_ContestHall_Text_AllSeemToUseDifferentMoves:
 
 LilycoveCity_ContestHall_Text_PokemonSmarterThanTrainers:
 	.string "I think the Pokémon look smarter\n"
-	.string "than their TRAINERS. By a lot.$"
+	.string "than their Trainers. By a lot.$"
 
 LilycoveCity_ContestHall_Text_StillLoveSmartnessContests:
 	.string "When all's said and done, I still love\n"
-	.string "SMARTNESS CONTESTS.\p"
+	.string "Smartness ContestS.\p"
 	.string "That intellectual green color…\n"
 	.string "It's so… So… Cool.$"
 
@@ -524,7 +524,7 @@ LilycoveCity_ContestHall_Text_OverdidGrooming:
 	.string "What should I do?$"
 
 LilycoveCity_ContestHall_Text_JudgeWontSeeAuroraBeam:
-	.string "This AURORA BEAM is so dazzling,\n"
+	.string "This Aurora Beam is so dazzling,\n"
 	.string "the Judge won't be able to see it.\p"
 	.string "Uh, wait a second…\n"
 	.string "That'll be meaningless, then!$"
@@ -563,10 +563,10 @@ LilycoveCity_ContestHall_Text_SuchCharmingCuteAppeals:
 	.string "Judge: Oh, such charming and cute\n"
 	.string "appeals!\p"
 	.string "Oh, my goodness! What a perfectly\n"
-	.string "adorable WATER SPORT appeal!$"
+	.string "adorable Water Sport appeal!$"
 
 LilycoveCity_ContestHall_Text_MyAzurillWasDistracted:
-	.string "Oh, no… My sweet AZURILL was\n"
+	.string "Oh, no… My sweet Azurill was\n"
 	.string "distracted by another Pokémon.$"
 
 LilycoveCity_ContestHall_Text_NeverWonBattleButContest:
@@ -574,7 +574,7 @@ LilycoveCity_ContestHall_Text_NeverWonBattleButContest:
 	.string "but put it in a Contest and look out!$"
 
 LilycoveCity_ContestHall_Text_PetalDanceIsMarvel:
-	.string "My Pokémon's PETAL DANCE is a marvel\n"
+	.string "My Pokémon's Petal Dance is a marvel\n"
 	.string "of elegance.\p"
 	.string "I won't let anyone disturb its\n"
 	.string "performance.$"
@@ -625,7 +625,7 @@ LilycoveCity_ContestHall_Text_ToughContestant3:
 
 LilycoveCity_ContestHall_Text_ToughContestant4:
 	.string "I fed my Pokémon all of the Orange\n"
-	.string "{POKEBLOCK}S I could get my hands on.\p"
+	.string "{POKEBLOCK}s I could get my hands on.\p"
 	.string "We're sure to earn the favor of the\n"
 	.string "audience.$"
 

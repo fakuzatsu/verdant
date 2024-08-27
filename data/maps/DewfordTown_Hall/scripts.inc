@@ -272,7 +272,7 @@ DewfordTown_Hall_Text_GettingBoredOfTrend:
 	.string "I should look for the next big thing.$"
 
 DewfordTown_Hall_Text_TeachingMonAboutTrend:
-	.string "I'm teaching my POKéMON about\n"
+	.string "I'm teaching my Pokémon about\n"
 	.string "“{STR_VAR_1},”\l"
 	.string "but it's not going well.\p"
 	.string "It's a bit too much, I think.$"
@@ -415,7 +415,7 @@ DewfordTown_Hall_Text_TrendWeighsHeavilyOnMind:
 	.string "you're awake or asleep.\p"
 	.string "Absolutely, you're the\n"
 	.string "“{STR_VAR_1}”\l"
-	.string "PROFESSOR, old sport!$"
+	.string "Professor, old sport!$"
 
 DewfordTown_Hall_Text_IfWeTeamUpWellBeInvincible:
 	.string "If you and me team up as a combo,\n"
@@ -430,16 +430,16 @@ DewfordTown_Hall_Text_WellBeTrendDuo:
 	.string "Hahahah!$"
 
 DewfordTown_Hall_Text_GiveYouSludgeBomb:
-	.string "For me, SLUDGE BOMB is at the peak\n"
+	.string "For me, Sludge Bomb is at the peak\n"
 	.string "of popularity. It's the one.\p"
 	.string "Hunh? You're telling me that you don't\n"
-	.string "know about SLUDGE BOMB?\p"
+	.string "know about Sludge Bomb?\p"
 	.string "That's outright pitiful.\n"
 	.string "I'll give you one.$"
 
 DewfordTown_Hall_Text_LoveSludgeBombButTrendInToo:
-	.string "I love SLUDGE BOMB.\p"
-	.string "But POKéMON with the move\n"
+	.string "I love Sludge Bomb.\p"
+	.string "But Pokémon with the move\n"
 	.string "“{STR_VAR_1}”\l"
 	.string "are in, too.$"
 

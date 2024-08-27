@@ -803,6 +803,8 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_ALREADY_HOLDING_ONE]    = gText_AlreadyHoldingOne,
     [PARTY_MSG_WHICH_APPLIANCE]        = gText_WhichAppliance,
     [PARTY_MSG_CHOOSE_SECOND_FUSION]   = gText_NextFusionMon,
+    [PARTY_MSG_MON_FOLLOWING]          = gText_MonFollowing,
+    [PARTY_MSG_MON_NOT_FOLLOWING]      = gText_MonNotFollowing,
 };
 
 static const u8 *const sDescriptionStringTable[] =
@@ -840,6 +842,8 @@ struct
     [MENU_NICKNAME] = {gText_Nickname, CursorCb_Nickname},
     [MENU_MOVES] = {gText_Moves_Menu, CursorCb_Moves},
     [MENU_SWITCH] = {gText_Switch2, CursorCb_Switch},
+    [MENU_FOLLOW_ME] = {gText_FollowMe, CursorCb_FollowMe},
+    [MENU_UNFOLLOW_ME] = {gText_UnfollowMe, CursorCb_FollowMe},
     [MENU_CANCEL1] = {gText_Cancel2, CursorCb_Cancel1},
     [MENU_ITEM] = {gText_Item, CursorCb_Item},
     [MENU_GIVE] = {gMenuText_Give, CursorCb_Give},
@@ -857,6 +861,7 @@ struct
     [MENU_TRADE1] = {gText_Trade4, CursorCb_Trade1},
     [MENU_TRADE2] = {gText_Trade4, CursorCb_Trade2},
     [MENU_TOSS] = {gMenuText_Toss, CursorCb_Toss},
+    [MENU_SUB_FIELD_MOVES] = {gText_FieldMoves, CursorCb_FieldMovesSubMenu},
     [MENU_CATALOG_BULB] = {gText_LightBulb, CursorCb_CatalogBulb},
     [MENU_CATALOG_OVEN] = {gText_MicrowaveOven, CursorCb_CatalogOven},
     [MENU_CATALOG_WASHING] = {gText_WashingMachine, CursorCb_CatalogWashing},

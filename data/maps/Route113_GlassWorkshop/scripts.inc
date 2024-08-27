@@ -358,7 +358,7 @@ Route113_GlassWorkshop_Text_IveFinishedGlassItem:
 
 Route113_GlassWorkshop_Text_NoRoomInBag:
 	.string "Oh?\n"
-	.string "You've no room in your BAG, huff-puff.\p"
+	.string "You've no room in your Bag, huff-puff.\p"
 	.string "I'll hold on to it, so come back later,\n"
 	.string "huff-puff.$"
 
@@ -369,7 +369,7 @@ Route113_GlassWorkshop_Text_NoRoomInPC:
 	.string "huff-puff.$"
 
 Route113_GlassWorkshop_Text_HaventGotYourSootSack:
-	.string "Hah? You haven't got your SOOT SACK\n"
+	.string "Hah? You haven't got your Soot Sack\n"
 	.string "with you, huff-puff.\p"
 	.string "You have to keep it with you to collect\n"
 	.string "volcanic ash, huff-puff.$"

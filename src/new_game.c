@@ -92,17 +92,18 @@ static void InitPlayerTrainerId(void)
 // L=A isnt set here for some reason.
 static void SetDefaultOptions(void)
 {
+    gSaveBlock2Ptr->optionsButtonMode = OPTIONS_BUTTON_MODE_LR;
     gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsLevelCap = OPTIONS_LEVEL_CAPS_OFF; //custom tx_optionsPlus
     gSaveBlock2Ptr->optionsVGCDraft = OPTIONS_DRAFT_BO3_OFF;  //custom tx_optionsPlus
+    gSaveBlock2Ptr->optionsSpeedModifer = OPTIONS_BATTLE_SCENE_2X; //tx_optionsPlus
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->optionsDamageNumsOff = TRUE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->optionsUnitSystem = 0;        //tx_optionsPlus
-    gSaveBlock2Ptr->optionsHpBarSpeed = 0;        //tx_optionsPlus
     gSaveBlock2Ptr->optionsExpBarSpeed = 0;       //tx_optionsPlus
     gSaveBlock2Ptr->optionsDisableMatchCall = 0;  //tx_optionsPlus
     gSaveBlock2Ptr->optionsCurrentFont = 0;       //tx_optionsPlus
@@ -190,7 +191,7 @@ void NewGameInitData(void)
     ResetGabbyAndTy();
     ClearSecretBases();
     ClearBerryTrees();
-    SetMoney(&gSaveBlock1Ptr->money, 3000);
+    SetMoney(&gSaveBlock1Ptr->money, 200);
     SetCoins(0);
     ResetLinkContestBoolean();
     ResetGameStats();

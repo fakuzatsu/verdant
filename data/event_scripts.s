@@ -875,11 +875,11 @@ Common_EventScript_PlayerHandedOverTheItem::
 @ The below and surf.inc could be split into some text/notices.inc
 gText_PokemartSign::
 	.string "“Selected items for your convenience!”\n"
-	.string "POKéMON MART$"
+	.string "Pokémon Mart$"
 
 gText_PokemonCenterSign::
 	.string "“Rejuvenate your tired partners!”\n"
-	.string "POKéMON CENTER$"
+	.string "Pokémon Center$"
 
 gText_MomOrDadMightLikeThisProgram::
 	.string "{STR_VAR_1} might like this program.\n"
@@ -887,7 +887,7 @@ gText_MomOrDadMightLikeThisProgram::
 	.string "Better get going!$"
 
 gText_WhichFloorWouldYouLike::
-	.string "Welcome to LILYCOVE DEPARTMENT STORE.\p"
+	.string "Welcome to LILYCOVE Department Store.\p"
 	.string "Which floor would you like?$"
 
 gText_SandstormIsVicious::
@@ -895,16 +895,16 @@ gText_SandstormIsVicious::
 	.string "It's impossible to keep going.$"
 
 gText_SelectWithoutRegisteredItem::
-	.string "Up to four items in the BAG can be\n"
+	.string "Up to four items in the Bag can be\n"
 	.string "registered to SELECT for easy use.$"
 
 gText_PokemonTrainerSchoolEmail::
-	.string "There's an e-mail from POKéMON TRAINER\n"
+	.string "There's an e-mail from Pokémon Trainer\n"
 	.string "SCHOOL.\p"
 	.string "… … … … … …\p"
-	.string "A POKéMON may learn up to four moves.\p"
-	.string "A TRAINER's expertise is tested on the\n"
-	.string "move sets chosen for POKéMON.\p"
+	.string "A Pokémon may learn up to four moves.\p"
+	.string "A Trainer's expertise is tested on the\n"
+	.string "move sets chosen for Pokémon.\p"
 	.string "… … … … … …$"
 
 gText_PlayerHouseBootPC::
@@ -919,24 +919,24 @@ gText_UnusedNicknameReceivedPokemon::
 
 gText_PlayerWhitedOut::
 	.string "{PLAYER} is out of usable\n"
-	.string "POKéMON!\p{PLAYER} whited out!$"
+	.string "Pokémon!\p{PLAYER} whited out!$"
 
 gText_FirstShouldRestoreMonsHealth::
 	.string "First, you should restore your\n"
-	.string "POKéMON to full health.$"
+	.string "Pokémon to full health.$"
 
 gText_MonsHealedShouldBuyPotions::
-	.string "Your POKéMON have been healed\n"
+	.string "Your Pokémon have been healed\n"
 	.string "to perfect health.\p"
-	.string "If your POKéMON's energy, HP,\n"
+	.string "If your Pokémon's energy, HP,\n"
 	.string "is down, please come see us.\p"
 	.string "If you're planning to go far in the\n"
 	.string "field, you should buy some POTIONS\l"
-	.string "at the POKéMON MART.\p"
+	.string "at the .\p"
 	.string "We hope you excel!$"
 
 gText_MonsHealed::
-	.string "Your POKéMON have been healed\n"
+	.string "Your Pokémon have been healed\n"
 	.string "to perfect health.\p"
 	.string "We hope you excel!$"
 
@@ -950,25 +950,25 @@ gText_HadQuiteAnExperienceTakeRest::
 
 gText_MomExplainHPGetPotions::
 	.string "MOM: Oh, good! You and your\n"
-	.string "POKéMON are looking great.\p"
-	.string "I just heard from PROF. BIRCH.\p"
-	.string "He said that POKéMON's energy is\n"
+	.string "Pokémon are looking great.\p"
+	.string "I just heard from Prof. Birch.\p"
+	.string "He said that Pokémon's energy is\n"
 	.string "measured in HP.\p"
-	.string "If your POKéMON lose their HP,\n"
+	.string "If your Pokémon lose their HP,\n"
 	.string "you can restore them at any\l"
-	.string "POKéMON CENTER.\p"
+	.string "Pokémon Center.\p"
 	.string "If you're going to travel far away,\n"
-	.string "the smart TRAINER stocks up on\l"
-	.string "POTIONS at the POKéMON MART.\p"
+	.string "the smart Trainer stocks up on\l"
+	.string "POTIONS at the .\p"
 	.string "Make me proud, honey!\p"
 	.string "Take care!$"
 
 gText_RegisteredTrainerinPokeNav::
 	.string "Registered {STR_VAR_1} {STR_VAR_2}\n"
-	.string "in the POKéNAV.$"
+	.string "in the Pokénav.$"
 
 gText_ComeBackWithSecretPower::
-	.string "Do you know the TM SECRET POWER?\p"
+	.string "Do you know the TM Secret Power?\p"
 	.string "Our group, we love the TM SECRET\n"
 	.string "POWER.\p"
 	.string "One of our members will give it to you.\n"
@@ -977,12 +977,12 @@ gText_ComeBackWithSecretPower::
 	.string "you good stuff in secrecy.$"
 
 gText_PokerusExplanation::
-	.string "Your POKéMON may be infected with\n"
+	.string "Your Pokémon may be infected with\n"
 	.string "POKéRUS.\p"
 	.string "Little is known about the POKéRUS\n"
 	.string "except that they are microscopic life-\l"
-	.string "forms that attach to POKéMON.\p"
-	.string "While infected, POKéMON are said to\n"
+	.string "forms that attach to Pokémon.\p"
+	.string "While infected, Pokémon are said to\n"
 	.string "grow exceptionally well.$"
 
 	.include "data/text/surf.inc"
@@ -996,7 +996,7 @@ gText_BigHoleInTheWall::
 
 gText_SorryWirelessClubAdjustments::
 	.string "I'm terribly sorry.\n"
-	.string "The POKéMON WIRELESS CLUB is\l"
+	.string "The Pokémon WIRELESS CLUB is\l"
 	.string "undergoing adjustments now.$"
 
 gText_UndergoingAdjustments::
@@ -1010,7 +1010,7 @@ gText_SorryTradeCenterInspections::
 
 @ Unused
 gText_SorryRecordCornerPreparation::
-	.string "I'm terribly sorry. The RECORD CORNER\n"
+	.string "I'm terribly sorry. The Record Corner\n"
 	.string "is under preparation.$"
 
 gText_PlayerHandedOverTheItem::
@@ -1019,7 +1019,7 @@ gText_PlayerHandedOverTheItem::
 
 gText_ThankYouForAccessingMysteryGift::
 	.string "Thank you for accessing the\n"
-	.string "MYSTERY GIFT System.$"
+	.string "Mystery Gift System.$"
 
 gText_PlayerFoundOneTMHM::
 	.string "{PLAYER} found one {STR_VAR_1}\n"
@@ -1195,3 +1195,11 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SafariZone_NorthPassage/scripts.inc"
 
 	.include "data/maps/Grotto09/scripts.inc"
+
+	.include "data/maps/ShoalCave_HighTidePeak/scripts.inc"
+
+	.include "data/maps/MtChimney_North/scripts.inc"
+
+	.include "data/maps/ThunderRock/scripts.inc"
+
+	.include "data/maps/Route119_North/scripts.inc"

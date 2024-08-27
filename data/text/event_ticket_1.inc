@@ -1,12 +1,12 @@
 EventTicket_Text_ShowOldSeaMap:
-	.string "The ferry to SLATEPORT is…\p"
+	.string "The ferry to Slateport is…\p"
 	.string "I beg your pardon?\n"
 	.string "Can we sail to this place on the map?\p"
 	.string "I know someone who will help you better.\n"
 	.string "Please wait.$"
 
 EventTicket_Text_ThatPass:
-	.string "The ferry to SLATEPORT is…\p"
+	.string "The ferry to Slateport is…\p"
 	.string "Oh?\n"
 	.string "That PASS…$"
 
@@ -23,7 +23,7 @@ EventTicket_Text_ShowEonTicket:
 EventTicket_Text_SouthernIslandSailBack:
 	.string "Aye, mate, there's nothing here to\n"
 	.string "see or do on this forgettable island.\p"
-	.string "What say we sail back to LILYCOVE?$"
+	.string "What say we sail back to Lilycove?$"
 
 EventTicket_Text_SailHome:
 	.string "Aye, right, then!\n"
