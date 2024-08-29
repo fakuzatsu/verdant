@@ -68,7 +68,7 @@ static EWRAM_DATA struct UnkStruct_203B10C sTMCaseStaticResources = {};
 static EWRAM_DATA struct UnkStruct_203B118 * sTMCaseDynamicResources = NULL;
 static EWRAM_DATA void * sTilemapBuffer = NULL; // tilemap buffer
 static EWRAM_DATA struct ListMenuItem * sListMenuItemsBuffer = NULL;
-static EWRAM_DATA u8 (* sListMenuStringsBuffer)[29] = NULL;
+static EWRAM_DATA u8 (* sListMenuStringsBuffer)[MOVE_NAME_LENGTH * 2] = NULL;
 static EWRAM_DATA u16 * sTMSpritePaletteBuffer = NULL;
 static EWRAM_DATA u8    spriteIdData[PARTY_SIZE] = {};
 static EWRAM_DATA u16   spriteIdPalette[PARTY_SIZE] = {};
@@ -466,7 +466,7 @@ static void CreateTMCaseListMenuBuffers(void)
 {
     struct BagPocket * pocket = &gBagPockets[POCKET_TM_HM - 1];
     sListMenuItemsBuffer = Alloc((pocket->capacity) * sizeof(struct ListMenuItem));
-    sListMenuStringsBuffer = Alloc(sTMCaseDynamicResources->numTMs * 29);
+    sListMenuStringsBuffer = Alloc(sTMCaseDynamicResources->numTMs * (MOVE_NAME_LENGTH * 2));
 }
 
 static void InitTMCaseListMenuItems(void)
