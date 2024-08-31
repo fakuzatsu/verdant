@@ -83,7 +83,7 @@ ThunderRock_EventScript_CloseBrailleMsg::
 	end
 
 ThunderRock_EventScript_ClearSteps::
-	setvar VAR_REGIELEKI_STEPS, 0
+	setvar VAR_REGIELEKI_PUZZLE_STATUS, 0
 	clearflag FLAG_TEMP_REGIELEKI_PUZZLE_FAILED
 	return
 

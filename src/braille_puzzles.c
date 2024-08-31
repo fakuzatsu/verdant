@@ -9,6 +9,7 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
+#include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "party_menu.h"
 #include "fldeff.h"
@@ -426,12 +427,21 @@ bool8 ShouldDoBrailleRegielekiPuzzle(void)
         if (FlagGet(FLAG_TEMP_REGIELEKI_PUZZLE_FAILED) == TRUE)
             return FALSE;
 
-        u16 val = VarGet(VAR_REGIELEKI_STEPS);
-        val++;
-        VarSet(VAR_REGIELEKI_STEPS, val);
+        u8 direction = GetPlayerFacingDirection();
+        u16 puzzleStatus = VarGet(VAR_REGIELEKI_PUZZLE_STATUS);
 
-        // Player exceeded allowed steps.
-        if(VarGet(VAR_REGIELEKI_STEPS) > 6)
+        u8 prevDirection = (puzzleStatus >> 8) & 0xFF;
+        u8 steps = puzzleStatus & 0xFF;
+        steps++;
+
+        puzzleStatus = (direction << 8) | steps;
+        VarSet(VAR_REGIELEKI_PUZZLE_STATUS, puzzleStatus);
+
+        // Checks if player did not alter direction or exceeded allowed steps.
+        if ((((prevDirection == DIR_SOUTH && direction != DIR_WEST)
+            || (prevDirection == DIR_WEST && direction != DIR_SOUTH)
+            || (direction != DIR_SOUTH && direction != DIR_WEST))
+            && steps > 2) || steps > 7)
         {
             FlagSet(FLAG_TEMP_REGICE_PUZZLE_FAILED);
             FlagClear(FLAG_TEMP_REGICE_PUZZLE_STARTED);
@@ -439,7 +449,8 @@ bool8 ShouldDoBrailleRegielekiPuzzle(void)
         }
 
         // Player is stood on desired tile within allowed steps.
-        if(gSaveBlock1Ptr->pos.x == 5 && gSaveBlock1Ptr->pos.y == 24)
+        if(gSaveBlock1Ptr->pos.x >= 4 && gSaveBlock1Ptr->pos.x <= 6
+            && gSaveBlock1Ptr->pos.y == 24 && steps == 7)
             return TRUE;
     }
 
