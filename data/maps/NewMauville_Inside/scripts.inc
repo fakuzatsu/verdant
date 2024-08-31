@@ -1,3 +1,5 @@
+.set LOCALID_ZAPDOS, 9
+
 NewMauville_Inside_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, NewMauville_Inside_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, NewMauville_Inside_OnTransition
@@ -5,10 +7,17 @@ NewMauville_Inside_MapScripts::
 	.byte 0
 
 NewMauville_Inside_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, NewMauville_Inside_EventScript_TryRemoveZapdos
 	call_if_eq VAR_TEMP_1, 1, NewMauville_Inside_EventScript_SetBarrierStateBlueButton
 	call_if_eq VAR_TEMP_2, 1, NewMauville_Inside_EventScript_SetBarrierStateGreenButton
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, NewMauville_Inside_EventScript_TryRemoveVoltorb
 	end
+
+NewMauville_Inside_EventScript_TryRemoveZapdos::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_ZAPDOS
+	return
 
 NewMauville_Inside_EventScript_TryRemoveVoltorb::
 	specialvar VAR_RESULT, GetBattleOutcome
@@ -19,9 +28,25 @@ NewMauville_Inside_EventScript_TryRemoveVoltorb::
 NewMauville_Inside_OnTransition:
 	setvar VAR_TEMP_1, 0
 	setvar VAR_TEMP_2, 0
+	setflag FLAG_TEMP_8
 	call_if_unset FLAG_DEFEATED_VOLTORB_1_NEW_MAUVILLE, NewMauville_Inside_EventScript_ShowVoltorb1
 	call_if_unset FLAG_DEFEATED_VOLTORB_2_NEW_MAUVILLE, NewMauville_Inside_EventScript_ShowVoltorb2
 	call_if_unset FLAG_DEFEATED_VOLTORB_3_NEW_MAUVILLE, NewMauville_Inside_EventScript_ShowVoltorb3
+	call_if_ge VAR_NEW_MAUVILLE_STATE, 2, NewMauville_Inside_EventScript_SetPostSwitchState
+	goto_if_lt VAR_NEW_MAUVILLE_STATE, 2, NewMauville_Inside_EventScript_HideZapdos
+	goto_if_set FLAG_CAUGHT_ZAPDOS, NewMauville_Inside_EventScript_HideZapdos
+	goto_if_set FLAG_DEFEATED_ZAPDOS, NewMauville_Inside_EventScript_HideZapdos
+	clearflag FLAG_TEMP_9
+	end
+
+NewMauville_Inside_EventScript_SetPostSwitchState::
+	clearflag FLAG_TEMP_8
+	setobjectxyperm LOCALID_ZAPDOS, 30, 3
+	setweather WEATHER_SHADE
+	return
+
+NewMauville_Inside_EventScript_HideZapdos::
+	setflag FLAG_TEMP_9
 	end
 
 NewMauville_Inside_EventScript_ShowVoltorb1::
@@ -144,9 +169,23 @@ NewMauville_Inside_EventScript_RedButton::
 	lockall
 	msgbox NewMauville_Inside_Text_SteppedOnSwitchGeneratorStopped, MSGBOX_DEFAULT
 	call NewMauville_Inside_EventScript_SetGeneratorOffMetatiles
-	setvar VAR_NEW_MAUVILLE_STATE, 2
-	releaseall
+	setflag FLAG_TEMP_5
+	playse SE_THUNDER
+	fadescreen FADE_TO_WHITE
+	clearflag FLAG_TEMP_9
+	addobject LOCALID_ZAPDOS
+	delay 10
+	fadescreen FADE_FROM_WHITE
+	delay 60
+	applymovement LOCALID_ZAPDOS, NewMauville_Inside_Movement_ZapdosApproach
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	delay 10
+	setweather WEATHER_SHADE
+	setvar VAR_LAST_TALKED, LOCALID_ZAPDOS
+	goto NewMauville_Inside_EventScript_Zapdos
 	end
+
 
 NewMauville_Inside_EventScript_SetGeneratorOffMetatiles::
 	setmetatile 33, 6, METATILE_BikeShop_Button_Pressed, FALSE
@@ -159,6 +198,45 @@ NewMauville_Inside_EventScript_SetGeneratorOffMetatiles::
 	setmetatile 34, 3, METATILE_BikeShop_Generator_Off_Tile6, TRUE
 	setmetatile 35, 3, METATILE_BikeShop_Generator_Off_Tile7, TRUE
 	special DrawWholeMapView
+	return
+
+NewMauville_Inside_EventScript_Zapdos::
+	message NewMauville_Inside_Text_Zapdos
+	playmoncry SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER
+	waitmoncry
+	delay 10
+	closemessage
+	seteventmon SPECIES_ZAPDOS, 60
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, NewMauville_Inside_EventScript_ZapdosDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, NewMauville_Inside_EventScript_PlayerOrZapdosRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, NewMauville_Inside_EventScript_PlayerOrZapdosRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_MON_TELEPORTED, NewMauville_Inside_EventScript_PlayerOrZapdosRan
+	setflag FLAG_CAUGHT_ZAPDOS
+	call_if_set FLAG_TEMP_5, NewMauville_Inside_EventScript_UpdateState
+	releaseall
+	end
+
+NewMauville_Inside_EventScript_ZapdosDefeated::
+	setflag FLAG_DEFEATED_MOLTRES
+	setvar VAR_0x8004, SPECIES_ZAPDOS
+	call_if_set FLAG_TEMP_5, NewMauville_Inside_EventScript_UpdateState
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+NewMauville_Inside_EventScript_PlayerOrZapdosRan::
+	setflag FLAG_TEMP_9
+	setvar VAR_0x8004, SPECIES_ZAPDOS
+	call_if_set FLAG_TEMP_5, NewMauville_Inside_EventScript_UpdateState
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+NewMauville_Inside_EventScript_UpdateState:
+	setvar VAR_NEW_MAUVILLE_STATE, 2
 	return
 
 NewMauville_Inside_EventScript_Generator::
@@ -244,6 +322,14 @@ NewMauville_Inside_EventScript_DefeatedVoltorb3::
 	setflag FLAG_DEFEATED_VOLTORB_3_NEW_MAUVILLE
 	goto Common_EventScript_RemoveStaticPokemon
 	end
+
+NewMauville_Inside_Movement_ZapdosApproach:
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+NewMauville_Inside_Text_Zapdos:
+	.string "Kyyuuu$"
 
 NewMauville_Inside_Text_GeneratorRadiatingHeat:
 	.string "The generator is radiating heat that\n"
