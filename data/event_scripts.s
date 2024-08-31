@@ -1203,3 +1203,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/ThunderRock/scripts.inc"
 
 	.include "data/maps/Route119_North/scripts.inc"
+
+	.include "data/maps/MythicStone/scripts.inc"

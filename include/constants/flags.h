@@ -347,10 +347,10 @@
 #define FLAG_CAUGHT_ZAPDOS                   0x140
 #define FLAG_DEFEATED_ARTICUNO               0x141
 #define FLAG_CAUGHT_ARTICUNO                 0x142
-#define FLAG_DEFEATED_REGIELEKI               0x143
-#define FLAG_CAUGHT_REGIELEKI                 0x144
-#define FLAG_WONDER_CARD_UNUSED_9            0x145
-#define FLAG_WONDER_CARD_UNUSED_10           0x146
+#define FLAG_DEFEATED_REGIELEKI              0x143
+#define FLAG_CAUGHT_REGIELEKI                0x144
+#define FLAG_DEFEATED_REGIDRAGO              0x145
+#define FLAG_CAUGHT_REGIDRAGO                0x146
 #define FLAG_CAUGHT_REGIROCK                 0x147
 #define FLAG_CAUGHT_REGICE                   0x148
 #define FLAG_CAUGHT_REGISTEEL                0x149
@@ -1508,7 +1508,7 @@
 #define FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED        (SYSTEM_FLAGS + 0x88) // Custom Flag
 #define FLAG_LANDMARK_THUNDER_ROCK                  (SYSTEM_FLAGS + 0x89) // Custom Flag
 #define FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED         (SYSTEM_FLAGS + 0x8A) // Custom Flag
-#define FLAG_UNUSED_0x8EB                           (SYSTEM_FLAGS + 0x8B) // Unused Flag
+#define FLAG_LANDMARK_MYTHIC_STONE                  (SYSTEM_FLAGS + 0x8B) // Custom Flag
 #define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // Unused Flag
 #define FLAG_UNUSED_0x8ED                           (SYSTEM_FLAGS + 0x8D) // Unused Flag
 #define FLAG_UNUSED_0x8EE                           (SYSTEM_FLAGS + 0x8E) // Unused Flag

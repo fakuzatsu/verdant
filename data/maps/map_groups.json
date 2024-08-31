@@ -451,7 +451,8 @@
     "SafariZone_NorthPassage",
     "ShoalCave_HighTidePeak",
     "MtChimney_North",
-    "ThunderRock"
+    "ThunderRock",
+    "MythicStone"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

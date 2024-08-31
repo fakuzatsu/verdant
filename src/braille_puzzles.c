@@ -269,8 +269,8 @@ static void DoBrailleRegisteelEffect(void)
 bool8 ShouldDoBrailleRegidragoEffect(void)
 {
     if (!FlagGet(FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED) 
-        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ANCIENT_TOMB) 
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ANCIENT_TOMB)))
+        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MYTHIC_STONE) 
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MYTHIC_STONE)))
     {
         if (gSaveBlock1Ptr->pos.x == 7 && gSaveBlock1Ptr->pos.y == 21)
         {

@@ -5,9 +5,15 @@ Route115_MapScripts::
 	.byte 0
 
 Route115_OnLoad:
+	call_if_unset FLAG_REGI_DOORS_OPENED, Route115_EventScript_CloseMythicStone
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_EventScript_PlaceTilesRoute115West
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_EventScript_PlaceTilesRoute115East
 	end
+
+Route115_EventScript_CloseMythicStone::
+	setmetatile 31, 42, METATILE_Fallarbor_BrownRockWall, TRUE
+	setmetatile 31, 41, METATILE_Fallarbor_BrownRockWall, TRUE
+	return
 
 Route115_OnTransition:
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup

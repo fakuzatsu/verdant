@@ -11,7 +11,6 @@
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
-  "has_night_table": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
@@ -347,6 +346,13 @@
       "elevation": 0,
       "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 31,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_MYTHIC_STONE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
@@ -392,8 +398,8 @@
     },
     {
       "type": "secret_base",
-      "x": 32,
-      "y": 39,
+      "x": 22,
+      "y": 38,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_BROWN_CAVE1_2"
     },
@@ -454,5 +460,6 @@
       "item": "ITEM_HEART_SCALE",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_115_HEART_SCALE"
     }
-  ]
+  ],
+  "has_night_table": false
 }

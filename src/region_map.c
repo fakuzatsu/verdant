@@ -1091,6 +1091,16 @@ static void InitMapBasedOnPlayerLocation(void)
         if (y != 0)
             x = 0;
         break;
+    case MAPSEC_ROUTE_119:
+        if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119_NORTH)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119_NORTH))
+            || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(THUNDER_ROCK)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(THUNDER_ROCK)))
+        {
+            x = 0;
+            y = 0;
+        }
+        break;
     case MAPSEC_ROUTE_126:
     case MAPSEC_UNDERWATER_126:
         x = 0;

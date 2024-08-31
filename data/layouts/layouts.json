@@ -4580,6 +4580,16 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/Route119_North/border.bin",
       "blockdata_filepath": "data/layouts/Route119_North/map.bin"
+    },
+    {
+      "id": "LAYOUT_MYTHIC_STONE",
+      "name": "MythicStone_Layout",
+      "width": 17,
+      "height": 33,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MythicStone/border.bin",
+      "blockdata_filepath": "data/layouts/MythicStone/map.bin"
     }
   ]
 }

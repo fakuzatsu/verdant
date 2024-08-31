@@ -58,6 +58,7 @@ static const u8 LandmarkName_AlteringCave[] = _("Altering Cave");
 static const u8 LandmarkName_DesertUnderpass[] = _("Desert Underpass");
 static const u8 LandmarkName_TrainerHill[] = _("Trainer Hill");
 static const u8 LandmarkName_ThunderRock[] = _("Thunder Rock");
+static const u8 LandmarkName_MythicStone[] = _("Mythic Stone");
 
 static const struct Landmark Landmark_FlowerShop = {LandmarkName_FlowerShop, FLAG_LANDMARK_FLOWER_SHOP};
 static const struct Landmark Landmark_PetalburgWoods = {LandmarkName_PetalburgWoods, -1};
@@ -101,6 +102,7 @@ static const struct Landmark Landmark_AlteringCave = {LandmarkName_AlteringCave,
 static const struct Landmark Landmark_DesertUnderpass = {LandmarkName_DesertUnderpass, FLAG_LANDMARK_DESERT_UNDERPASS};
 static const struct Landmark Landmark_TrainerHill = {LandmarkName_TrainerHill, FLAG_LANDMARK_TRAINER_HILL};
 static const struct Landmark Landmark_ThunderRock = {LandmarkName_ThunderRock, FLAG_LANDMARK_THUNDER_ROCK};
+static const struct Landmark Landmark_MythicStone = {LandmarkName_MythicStone, FLAG_LANDMARK_MYTHIC_STONE};
 
 static const struct Landmark *const Landmarks_Route103_2[]  =
 {
@@ -233,6 +235,12 @@ static const struct Landmark *const Landmarks_Route114_2[]  =
     NULL,
 };
 
+static const struct Landmark *const Landmarks_Route115_2[]   =
+{
+    &Landmark_MythicStone,
+    NULL,
+};
+
 static const struct Landmark *const Landmarks_MeteorFalls[]  =
 {
     &Landmark_MeteorFalls,
@@ -258,10 +266,15 @@ static const struct Landmark *const Landmarks_Route117_2[]  =
     NULL,
 };
 
+static const struct Landmark *const Landmarks_Route119_0[]  =
+{
+    &Landmark_ThunderRock,
+    NULL,
+};
+
 static const struct Landmark *const Landmarks_Route119_1[]  =
 {
     &Landmark_WeatherInstitute,
-    &Landmark_ThunderRock,
     NULL,
 };
 
@@ -364,9 +377,11 @@ static const struct LandmarkList sLandmarkLists[] =
     {MAPSEC_ROUTE_114, 3, Landmarks_MeteorFalls},
     {MAPSEC_ROUTE_115, 0, Landmarks_MeteorFalls},
     {MAPSEC_ROUTE_115, 1, Landmarks_MeteorFalls},
+    {MAPSEC_ROUTE_115, 2, Landmarks_Route115_2},
     {MAPSEC_ROUTE_116, 1, Landmarks_Route116_1},
     {MAPSEC_ROUTE_116, 2, Landmarks_Route116_2},
     {MAPSEC_ROUTE_117, 2, Landmarks_Route117_2},
+    {MAPSEC_ROUTE_119, 0, Landmarks_Route119_0},
     {MAPSEC_ROUTE_119, 1, Landmarks_Route119_1},
     {MAPSEC_ROUTE_120, 0, Landmarks_Route120_0},
     {MAPSEC_ROUTE_120, 2, Landmarks_Route120_2},

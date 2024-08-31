@@ -1726,6 +1726,14 @@
       "y": 0,
       "width": 1,
       "height": 1
+    },
+    {
+      "map_section": "MAPSEC_MYTHIC_STONE",
+      "name": "Mythic Stone",
+      "x": 0,
+      "y": 2,
+      "width": 1,
+      "height": 1
     }
   ]
 }
