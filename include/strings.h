@@ -2931,6 +2931,16 @@ extern const u8 gText_AshQty[];
 extern const u8 gText_PlayerScurriedToCenter[];
 extern const u8 gText_PlayerScurriedBackHome[];
 
+// Day Strings
+extern const u8 gText_Sunday[];
+extern const u8 gText_Monday[];
+extern const u8 gText_Tuesday[];
+extern const u8 gText_Wednesday[];
+extern const u8 gText_Thursday[];
+extern const u8 gText_Friday[];
+extern const u8 gText_Saturday[];
+extern const u8 *const gDayNameStringsTable[];
+
 //Internet
 extern const u8 gText_GiftDownload[];
 extern const u8 gText_ViaInternet[];
