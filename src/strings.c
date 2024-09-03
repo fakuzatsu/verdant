@@ -895,6 +895,7 @@ const u8 gPCText_Simple[] = _("Simple");
 const u8 gText_WhatWouldYouLikeToDo[] = _("What would you like to do?"); // Unused
 const u8 gText_WithdrawPokemon[] = _("Withdraw Pokémon");
 const u8 gText_DepositPokemon[] = _("Deposit Pokémon");
+const u8 gText_SearchPokemon[] = _("Search Pokémon");
 const u8 gText_MovePokemon[] = _("Move Pokémon");
 const u8 gText_MoveItems[] = _("Move Items");
 const u8 gText_SeeYa[] = _("See Ya!");

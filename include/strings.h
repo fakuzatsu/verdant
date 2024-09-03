@@ -222,6 +222,7 @@ extern const u8 gText_FieldMoves[];
 extern const u8 gText_WithdrawPokemon[];
 extern const u8 gText_WithdrawMonDescription[];
 extern const u8 gText_DepositPokemon[];
+extern const u8 gText_SearchPokemon[];
 extern const u8 gText_DepositMonDescription[];
 extern const u8 gText_MovePokemon[];
 extern const u8 gText_MoveMonDescription[];

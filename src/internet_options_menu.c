@@ -197,36 +197,6 @@ static const struct WindowTemplate sWindowTemplate_YesNoMsg = {
     .baseBlock = 0x00e5
 };
 
-static const struct WindowTemplate sWindowTemplate_GiftSelect = {
-    .bg = 0,
-    .tilemapLeft = 1,
-    .tilemapTop = 15,
-    .width = 19,
-    .height = 4,
-    .paletteNum = 12,
-    .baseBlock = 0x00e5
-};
-
-static const struct WindowTemplate sWindowTemplate_ABCSelect = {
-    .bg = 0,
-    .tilemapLeft = 13,
-    .tilemapTop = 3,
-    .width = 4,
-    .height = 10,
-    .paletteNum = 12,
-    .baseBlock = 0x00e5
-};
-
-static const struct WindowTemplate sWindowTemplate_LevelSelect = {
-    .bg = 0,
-    .tilemapLeft = 17,
-    .tilemapTop = 3,
-    .width = 12,
-    .height = 10,
-    .paletteNum = 12,
-    .baseBlock = 0x00e5
-};
-
 static const struct WindowTemplate sWindowTemplate_PokemonSelect = {
     .bg = 0,
     .tilemapLeft = 19,
@@ -267,120 +237,24 @@ static const struct WindowTemplate sWindowTemplate_YesNoBox = {
     .baseBlock = 0x0155
 };
 
-static const struct WindowTemplate sWindowTemplate_GiftSelect_3Options = {
-    .bg = 0,
-    .tilemapLeft = 22,
-    .tilemapTop = 11,
-    .width = 7,
-    .height = 8,
-    .paletteNum = 12,
-    .baseBlock = 0x0155
-};
-
-static const struct WindowTemplate sWindowTemplate_GiftSelect_2Options = {
-    .bg = 0,
-    .tilemapLeft = 22,
-    .tilemapTop = 13,
-    .width = 7,
-    .height = 6,
-    .paletteNum = 12,
-    .baseBlock = 0x0155
-};
-
-static const struct WindowTemplate sWindowTemplate_GiftSelect_1Option = {
-    .bg = 0,
-    .tilemapLeft = 22,
-    .tilemapTop = 15,
-    .width = 7,
-    .height = 4,
-    .paletteNum = 12,
-    .baseBlock = 0x0155
-};
-
-static const u8 gText_SearchPokemon[] = _("Search");
-static const u8 gText_AnyLevel[] = _("Any Level");
-static const u8 gText_UnderLevel10[] = _("Under Lvl 10");
-static const u8 gText_AboveLevel10[] = _("Above Lvl 10");
-static const u8 gText_AboveLevel20[] = _("Above Lvl 20");
-static const u8 gText_AboveLevel30[] = _("Above Lvl 30");
-static const u8 gText_AboveLevel40[] = _("Above Lvl 40");
-static const u8 gText_AboveLevel50[] = _("Above Lvl 50");
-static const u8 gText_AboveLevel60[] = _("Above Lvl 60");
-static const u8 gText_AboveLevel70[] = _("Above Lvl 70");
-static const u8 gText_AboveLevel80[] = _("Above Lvl 80");
-static const u8 gText_AboveLevel90[] = _("Above Lvl 90");
-static const u8 gText_Level1to10[] = _("Lvl 1 - 10");
-static const u8 gText_Level11to20[] = _("Lvl 11 - 20");
-static const u8 gText_Level21to30[] = _("Lvl 21 - 30");
-static const u8 gText_Level31to40[] = _("Lvl 31 - 40");
-static const u8 gText_Level41to50[] = _("Lvl 41 - 50");
-static const u8 gText_Level51to60[] = _("Lvl 51 - 60");
-static const u8 gText_Level61to70[] = _("Lvl 61 - 70");
-static const u8 gText_Level71to80[] = _("Lvl 71 - 80");
-static const u8 gText_Level81to90[] = _("Lvl 81 - 90");
-static const u8 gText_Level91to100[] = _("Lvl 91 - 100");
-
 static const struct ListMenuItem sListMenuItems_SearchDeposit[] = {
-    { gText_SearchPokemon,  0 },
-    { gText_DepositPokemon,   1 },
-    { gText_Exit3,        LIST_CANCEL }
+    { gText_SearchPokemon,      0 },
+    { gText_DepositPokemon,     1 },
+    { gText_Exit3,    LIST_CANCEL },
 };
 
 static const struct ListMenuItem sListMenuItems_SearchWithdraw[] = {
-    { gText_SearchPokemon,  0 },
-    { gText_WithdrawPokemon,                1 },
-    { gText_Exit3,                LIST_CANCEL }
+    { gText_SearchPokemon,      0 },
+    { gText_WithdrawPokemon,    1 },
+    { gText_Exit3,    LIST_CANCEL },
 };
 
 static const struct ListMenuItem sListMenuItems_InternetOptions[] = {
-    { gText_GiftDownload,  0 },
-    { gText_Bank,   1 },
-    { gText_Friends,   2 },
-    { gText_Sync,   3 },
-    { gText_Exit3,        LIST_CANCEL }
-};
-
-static const struct ListMenuItem sListMenuItems_ABC[] = {
-    { gText_DexSearchAlphaABC,  0 },
-    { gText_DexSearchAlphaDEF,  1 },
-    { gText_DexSearchAlphaGHI,  2 },
-    { gText_DexSearchAlphaJKL,  3 },
-    { gText_DexSearchAlphaMNO,  4 },
-    { gText_DexSearchAlphaPQR,  5 },
-    { gText_DexSearchAlphaSTU,  6 },
-    { gText_DexSearchAlphaVWX,  7 },
-    { gText_DexSearchAlphaYZ,   8 },
-    { gText_Exit3,                LIST_CANCEL }
-};
-
-static const struct ListMenuItem sListMenuItems_Levels[] = {
-    { gText_AnyLevel,  0 },
-    { gText_UnderLevel10,  1 },
-    { gText_AboveLevel10,  2 },
-    { gText_AboveLevel20,  3 },
-    { gText_AboveLevel30,  4 },
-    { gText_AboveLevel40,  5 },
-    { gText_AboveLevel50,  6 },
-    { gText_AboveLevel60,  7 },
-    { gText_AboveLevel70,  8 },
-    { gText_AboveLevel80,  9 },
-    { gText_AboveLevel90, 10 },
-    { gText_Exit3,                LIST_CANCEL }
-};
-
-static const struct ListMenuItem sListMenuItems_LevelsWanted[] = {
-    { gText_AnyLevel,  0 },
-    { gText_Level1to10,  1 },
-    { gText_Level11to20,  2 },
-    { gText_Level21to30,  3 },
-    { gText_Level31to40,  4 },
-    { gText_Level41to50,  5 },
-    { gText_Level51to60,  6 },
-    { gText_Level61to70,  7 },
-    { gText_Level71to80,  8 },
-    { gText_Level81to90,  9 },
-    { gText_Level91to100, 10 },
-    { gText_Exit3,                LIST_CANCEL }
+    { gText_GiftDownload,       0 },
+    { gText_Bank,               1 },
+    { gText_Friends,            2 },
+    { gText_Sync,               3 },
+    { gText_Exit3,    LIST_CANCEL },
 };
 
 static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions = {
@@ -491,69 +365,6 @@ static const struct ListMenuTemplate sListMenu_ReceiveToss = {
     .cursorKind = 0
 };
 
-static const struct ListMenuTemplate sListMenu_ABCMenu = {
-    .items = sListMenuItems_ABC,
-    .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
-    .itemPrintFunc = NULL,
-    .totalItems = 9,
-    .maxShowed = 5,
-    .windowId = 0,
-    .header_X = 0,
-    .item_X = 8,
-    .cursor_X = 0,
-    .upText_Y = 1,
-    .cursorPal = 2,
-    .fillValue = 1,
-    .cursorShadowPal = 3,
-    .lettersSpacing = 0,
-    .itemVerticalPadding = 0,
-    .scrollMultiple = 0,
-    .fontId = FONT_NORMAL,
-    .cursorKind = 0
-};
-
-static const struct ListMenuTemplate sListMenu_Levels = {
-    .items = sListMenuItems_Levels,
-    .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
-    .itemPrintFunc = NULL,
-    .totalItems = 11,
-    .maxShowed = 5,
-    .windowId = 0,
-    .header_X = 0,
-    .item_X = 8,
-    .cursor_X = 0,
-    .upText_Y = 1,
-    .cursorPal = 2,
-    .fillValue = 1,
-    .cursorShadowPal = 3,
-    .lettersSpacing = 0,
-    .itemVerticalPadding = 0,
-    .scrollMultiple = 0,
-    .fontId = FONT_NORMAL,
-    .cursorKind = 0
-};
-
-static const struct ListMenuTemplate sListMenu_LevelsWanted = {
-    .items = sListMenuItems_LevelsWanted,
-    .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
-    .itemPrintFunc = NULL,
-    .totalItems = 11,
-    .maxShowed = 5,
-    .windowId = 0,
-    .header_X = 0,
-    .item_X = 8,
-    .cursor_X = 0,
-    .upText_Y = 1,
-    .cursorPal = 2,
-    .fillValue = 1,
-    .cursorShadowPal = 3,
-    .lettersSpacing = 0,
-    .itemVerticalPadding = 0,
-    .scrollMultiple = 0,
-    .fontId = FONT_NORMAL,
-    .cursorKind = 0
-};
-
 static const struct ListMenuTemplate sListMenu_ReceiveSend = {
     .items = sListMenuItems_ReceiveSend,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
@@ -596,17 +407,9 @@ static const struct ListMenuTemplate sListMenu_Receive = {
     .cursorKind = 0
 };
 
-static const u8 *const sUnusedMenuTexts[] = {
-    gText_VarietyOfEventsImportedWireless,
-    gText_WonderCardsInPossession,
-    gText_ReadNewsThatArrived,
-    gText_ReturnToTitle
-};
-
-ALIGNED(2) static const u8 sTextColors_TopMenu[]      = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,     TEXT_COLOR_DARK_GRAY };
-ALIGNED(2) static const u8 sTextColors_TopMenu_Copy[] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,     TEXT_COLOR_DARK_GRAY };
+ALIGNED(2) static const u8 sTextColors_TopMenu[]                   = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,     TEXT_COLOR_DARK_GRAY };
+ALIGNED(2) static const u8 sTextColors_TopMenu_Copy[]              = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,     TEXT_COLOR_DARK_GRAY };
 ALIGNED(2) static const u8 sInternetOptions_Ereader_TextColor_2[]  = { TEXT_COLOR_WHITE,       TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY };
-
 
 struct SearchOptionText
 {
@@ -616,13 +419,13 @@ struct SearchOptionText
 void concat_str(char *dest, const char *src)
 {
     while (*dest != '\0') dest++;
-    for (;;) {
+    for (;;) 
+    {
         *dest++ = *src;
         if (*src == '\0') break;
         src++;
     }
 }
-
 
 static void VBlankCB_MysteryGiftEReader(void)
 {
@@ -798,50 +601,15 @@ bool32 PrintInternetOptionsMenuMessage(u8 *textState, const u8 *str)
         if (({JOY_NEW(A_BUTTON);}))
             (*textState)++;
         if (({JOY_NEW(B_BUTTON);}))
-            //(*textState)==3;
             return TRUE;
         break;
     case 2:
         DrawDownArrow(1, DOWN_ARROW_X, DOWN_ARROW_Y, 1, TRUE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
         *textState = 0;
-        //ClearTextWindow();
-        return TRUE;
-    case 3:
-        //DrawDownArrow(1, DOWN_ARROW_X, DOWN_ARROW_Y, 1, TRUE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
-        //*textState = 3;
-        //ClearTextWindow();
         return TRUE;
     case 0xFF:
         *textState = 2;
         return FALSE;
-    }
-    return FALSE;
-}
-
-static void HideDownArrow(void)
-{
-    DrawDownArrow(1, DOWN_ARROW_X, DOWN_ARROW_Y, 1, FALSE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
-}
-
-static void ShowDownArrow(void)
-{
-    DrawDownArrow(1, DOWN_ARROW_X, DOWN_ARROW_Y, 1, TRUE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
-}
-
-// Unused
-static bool32 UNUSED HideDownArrowAndWaitButton(u8 * textState)
-{
-    switch (*textState)
-    {
-    case 0:
-        HideDownArrow();
-        if (JOY_NEW(A_BUTTON | B_BUTTON))
-            (*textState)++;
-        break;
-    case 1:
-        ShowDownArrow();
-        *textState = 0;
-        return TRUE;
     }
     return FALSE;
 }
@@ -1325,9 +1093,6 @@ int sha1digest(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t datab
     ConvertIntToHexStringN_v2(hexdigest+16, H[2], STR_CONV_MODE_RIGHT_ALIGN, 8);
     ConvertIntToHexStringN_v2(hexdigest+24, H[3], STR_CONV_MODE_RIGHT_ALIGN, 8);
     ConvertIntToHexStringN_v2(hexdigest+32, H[4], STR_CONV_MODE_RIGHT_ALIGN, 8);
-    //if (hexdigest){
-    //    snprintf (hexdigest, 41, "%08x%08x%08x%08x%08x",H[0],H[1],H[2],H[3],H[4]);
-    //}
 
     return 0;
 }
@@ -1335,7 +1100,7 @@ int sha1digest(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t datab
 void pid_to_fc(u32 pid, u8 *hexdigest) {
     if (pid == 0)
         // behaviour observed in MKWii, more likely an error condition
-        hexdigest[0]='z';
+        hexdigest[0] = 'z';
     else {
         u8 i = 0;
         u8 buffer[8];
@@ -1355,34 +1120,31 @@ void pid_to_fc(u32 pid, u8 *hexdigest) {
         checksum = ((checksum << 32) | pid);
 
         ConvertIntToHexStringN_v2(hexdigest, checksum, STR_CONV_MODE_RIGHT_ALIGN, 16);
-        for(i=0;i<12;i++){
+        for(i = 0; i < 12; i++){
             hexdigest[i]=hexdigest[i+4];
         }
 
-        for(i=13;i>9;i--){
+        for(i = 13; i > 9; i--){
             hexdigest[i]=hexdigest[i-2];
         }
-        for(i=8;i>4;i--){
+        for(i=8; i>4; i--){
             hexdigest[i]=hexdigest[i-1];
         }
-        hexdigest[4]='-';
-        hexdigest[9]='-';
-        hexdigest[14]='\0';
-        for(i=0;i<14;i++){
-            if(hexdigest[i]=='\0'){
+        hexdigest[4] = '-';
+        hexdigest[9] = '-';
+        hexdigest[14] = '\0';
+        for(i = 0; i < 14; i++){
+            if (hexdigest[i] == '\0'){
                 break;
             }
-            else if(hexdigest[i]>0x60){
-                hexdigest[i] = hexdigest[i]-0x20;
+            else if (hexdigest[i] > 0x60){
+                hexdigest[i] = hexdigest[i] - 0x20;
             }
         }
     }
 }
 
-// States for Task_MysteryGift.
-// CLIENT states are for when the player is receiving a gift, and use mystery_gift_client.c link functions.
-// SERVER states are for when the player is sending a gift, and use mystery_gift_server.c link functions.
-// Other states handle the general Mystery Gift menu usage.
+// States for Task_InternetOptions
 enum {
     INTERNET_STATE_TO_MAIN_MENU,
     INTERNET_STATE_MAIN_MENU,
@@ -1461,18 +1223,18 @@ static void CreateInternetOptionsTask(void)
 {
     u8 taskId = CreateTask(Task_InternetOptions, 0);
     struct InternetOptionsTaskData * data = (void *)gTasks[taskId].data;
-    data->state = INTERNET_MA_CONNECTED;
-    data->textState = 0;
-    data->nextstate = 0;
-    data->unused5 = 0;
-    data->isWonderNews = 0;
+    data->state          = INTERNET_MA_CONNECTED;
+    data->textState      = 0;
+    data->nextstate      = 0;
+    data->unused5        = 0;
+    data->isWonderNews   = 0;
     data->sourceIsFriend = 0;
-    data->var = 0;
+    data->var            = 0;
     data->depositPokemon = 0;
-    data->searchPokemon = 0;
-    data->errorNum = 0;
-    data->msgId = 0;
-    data->clientMsg = AllocZeroed(CLIENT_MAX_MSG_SIZE);
+    data->searchPokemon  = 0;
+    data->errorNum       = 0;
+    data->msgId          = 0;
+    data->clientMsg      = AllocZeroed(CLIENT_MAX_MSG_SIZE);
 }
 
 ALIGNED(2) static const u8 sGTS_Ereader_TextColor_2[] = { TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY };
@@ -1541,16 +1303,16 @@ static void Task_InternetOptions(u8 taskId)
     #if (!TESTING)
 
     struct InternetOptionsTaskData *data = (void *)gTasks[taskId].data;
-    char pUserID[32];  //User ID from the MA EEPROM, has max lenght of 32
-    pUserID[0]='\0';
-    char pPassword[16];    //User password from the MA EEPROM, has max lenght of 16
-    pPassword[0]='\0';
-    char maMailID[30]; //User mail ID from the MA EEPROM
-    char pURL[1024];
-    memcpy(pURL, "\0", 1);
-    u16 recvBufSize = 100;  //Size of received data
-    u8 pRecvData[recvBufSize];  //Buffer to hold received data
-    u16 pRecvSize;  //How many bytes were copied to pRecvData after calling maUpload once
+    char pUserID[32];           // User ID from the MA EEPROM, has max lenght of 32
+    pUserID[0]='\0';            // Init
+    char pPassword[16];         // User password from the MA EEPROM, has max lenght of 16
+    pPassword[0]='\0';          // Init
+    char maMailID[30];          // User mail ID from the MA EEPROM
+    char pURL[1024];            // URL for the endpoint
+    memcpy(pURL, "\0", 1);      // Init
+    u16 recvBufSize = 100;      // Size of received data
+    u8 pRecvData[recvBufSize];  // Buffer to hold received data
+    u16 pRecvSize;              // How many bytes were copied to pRecvData after calling maUpload once
     char halftoken[53];
     char hash[41];
     int input = 0;
@@ -1561,8 +1323,7 @@ static void Task_InternetOptions(u8 taskId)
     char *encoded_data = 0;
     u8 pidhex[8];
 
-
-    MA_TELDATA maTel;   //MA Telephone struct
+    MA_TELDATA maTel; // MA Telephone struct
 
     switch (data->state)
     {
@@ -1571,50 +1332,57 @@ static void Task_InternetOptions(u8 taskId)
         break;
     case INTERNET_MA_CONNECTED:
         if (!gPaletteFade.active)
+        {
+            if (maConnected())
             {
-            if(maConnected()){
                 data->state = INTERNET_CONNECT_TO_SERVER;
             }
-            else{
+            else
+            {
                 data->state = INTERNET_STATE_EXIT;
             }
         }
         break;
     case INTERNET_CONNECT_TO_SERVER:
-        //Initialise MA Library
+        // Initialise MA Library
         data->errorNum = maInitLibrary();
 
-        //If there was an error stop MA Library and return the error code
-        if(data->errorNum !=0){
+        // If there was an error stop MA Library and return the error code
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
         
         //Get EEPROM Data
-        data->errorNum=maGetEEPROMData(&maTel, pUserID, maMailID);
+        data->errorNum = maGetEEPROMData(&maTel, pUserID, maMailID);
 
-        //If there was an error stop MA Library and return the error code
-        if(data->errorNum !=0){
+        // If there was an error stop MA Library and return the error code
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        //Set your password, must end in Null byte
-        memcpy(pPassword,"password1", 10);
+        // Set your password, must end in Null byte
+        memcpy(pPassword, "password1", 10);
 
-        //Makes a call and establishes a PPP connection 
-        data->errorNum=maConnectServer(&maTel,pUserID,pPassword);
+        // Makes a call and establishes a PPP connection 
+        data->errorNum = maConnectServer(&maTel, pUserID, pPassword);
 
-        //If there was an error stop MA Library and return the error code
-        if(data->errorNum !=0){
+        // If there was an error stop MA Library and return the error code
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        if(gSaveBlock3Ptr->PID==0xFFFFFFFF){
+        if (gSaveBlock3Ptr->PID == 0xFFFFFFFF)
+        {
             data->state = INTERNET_ASK_PID;
         }
-        else {
+        else 
+        {
             data->state = INTERNET_PING_SERVER;
         }
         break;
@@ -1643,108 +1411,113 @@ static void Task_InternetOptions(u8 taskId)
         }
         break;
     case INTERNET_GET_PID:
-        concat_str(pURL,"http://www.PutYourDomainHere.com/pokemonrse/common/createprofile?pid=\0");
+        concat_str(pURL, "http://www.PutYourDomainHere.com/pokemonrse/common/createprofile?pid=\0");
 
-        //Will be receiving a 32-byte long token
-        recvBufSize=32;
+        // Will be receiving a 32-byte long token
+        recvBufSize= 32;
 
-        //Player doesn't have a PID yet, use the TID this once
-        pid=(gSaveBlock2Ptr->playerTrainerId[0] << 24)+(gSaveBlock2Ptr->playerTrainerId[1] << 16)+(gSaveBlock2Ptr->playerTrainerId[2] << 8)+(gSaveBlock2Ptr->playerTrainerId[3]);
-        //Turn hex to str
-        ConvertIntToHexStringN_v2(pidhex, pid,STR_CONV_MODE_RIGHT_ALIGN,8);
+        // Player doesn't have a PID yet, use the TID this once
+        pid = (gSaveBlock2Ptr->playerTrainerId[0] << 24) + (gSaveBlock2Ptr->playerTrainerId[1] << 16) 
+            + (gSaveBlock2Ptr->playerTrainerId[2] << 8) + (gSaveBlock2Ptr->playerTrainerId[3]);
+        // Turn hex to str
+        ConvertIntToHexStringN_v2(pidhex, pid, STR_CONV_MODE_RIGHT_ALIGN, 8);
 
-        //Add PID to URL
+        // Add PID to URL
         concat_str(pURL,(char *)pidhex);
         
-        //Request a PID
+        // Request a PID
         data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-        if(data->errorNum !=0){
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        //If pRecvSize<recvBufSize then not all the data that was expected was copied into pRecvData
-        if(pRecvSize<recvBufSize){
-            tracker=pRecvSize;  //Keep track of the number of bytes copied
-            while(tracker<recvBufSize){ //While that is less than the Buffer size
-                //Keep calling maUpload until all data copied over
+        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
+        if (pRecvSize < recvBufSize)
+        {
+            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
+            while(tracker < recvBufSize)
+            {
                 data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, pUserID, pPassword);
-                if(data->errorNum !=0){
+                if (data->errorNum !=0)
+                {
                     maKill();
                     data->state = INTERNET_STATE_EXIT;
                 }
-                tracker=tracker+pRecvSize;
+                tracker = tracker + pRecvSize;
             }
         }
 
-        //Add salt prefix to token (using Gen 4 salt)
+        // Add salt prefix to token (using Gen 4 salt)
         memcpy(halftoken, "sAdeqWo3voLeC5r16DYv\0", 21);
         concat_str(halftoken,(char *)pRecvData);
-        //Just making sure string is 52 bytes long
-        halftoken[52]='\0';
+        // Just making sure string is 52 bytes long
+        halftoken[52] = '\0';
 
-        //Create a hash using SHA-1
+        // Create a hash using SHA-1
         sha1digest(NULL,(u8 *)hash,(u8 *)halftoken,52);
 
-        //Make hash lowercase
-        for(tracker=0;tracker<41;tracker++){
-            if(hash[tracker]=='\0'){
+        // Make hash lowercase
+        for(tracker = 0; tracker < 41; tracker++)
+        {
+            if (hash[tracker]=='\0')
+            {
                 break;
             }
-            else if(hash[tracker]>0x40){
-                hash[tracker]=hash[tracker]+0x20;
+            else if (hash[tracker] > 0x40)
+            {
+                hash[tracker] = hash[tracker] + 0x20;
             }
         }
 
         //Add hash to URL
-        concat_str(pURL,"&hash=");
-        concat_str(pURL,hash);
+        concat_str(pURL, "&hash=");
+        concat_str(pURL, hash);
 
-        //Now we'll be receiving a u32 to use as the PID
-        recvBufSize=4;
-
-        //Cleaning up pRecvData
-        for(tracker=0;tracker<100;tracker++){
-            pRecvData[tracker]='\0';
+        // Clean up pRecvData to receive a u32 to use as the PID
+        recvBufSize = 4;
+        for(tracker = 0; tracker < 100; tracker++)
+        {
+            pRecvData[tracker] = '\0';
         }
-        tracker=0;
+        tracker = 0;
 
-        //Request a PID
+        // Request a PID
         data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-        if(data->errorNum !=0){
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        //If pRecvSize<recvBufSize then not all the data that was expected was copied into pRecvData
-        if(pRecvSize<recvBufSize){
-            tracker=pRecvSize;  //Keep track of the number of bytes copied
-            while(tracker<recvBufSize){ //While that is less than the Buffer size
-                //Keep calling maUpload until all data copied over
+        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
+        if (pRecvSize < recvBufSize)
+        {
+            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
+            while(tracker < recvBufSize)
+            {
                 data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, pUserID, pPassword);
-                if(data->errorNum !=0){
+                if (data->errorNum !=0)
+                {
                     maKill();
                     data->state = INTERNET_STATE_EXIT;
                 }
-                tracker=tracker+pRecvSize;
+                tracker = tracker + pRecvSize;
             }
         }
 
-        //Get PID from HTTP content
-        pid=(pRecvData[0] << 24)+(pRecvData[1] << 16)+(pRecvData[2] << 8)+(pRecvData[3]);
-        
-        //Add to saveblock then save
-        gSaveBlock3Ptr->PID=pid;
-
-        //Show Friend code then save
+        // Get PID from HTTP content, add to saveblock, show and then save
+        pid = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[2] << 8) + (pRecvData[3]);
+        gSaveBlock3Ptr->PID = pid;
         data->state = INTERNET_SHOW_FRIENDCODE;
         data->nextstate = INTERNET_SAVE_GAME;
         break;
     case INTERNET_SHOW_FRIENDCODE:
-        //Convert PID to FC and display it
-        concat_str(pURL,"Your Friend Code is:\n");
+        // Convert PID to FC and display it
+        concat_str(pURL, "Your Friend Code is:\n");
         pid_to_fc(data->unused5,(u8 *)hash);
-        concat_str(pURL,hash);
+        concat_str(pURL, hash);
         ASCIIToPkmnStr((u8 *)halftoken,(u8 *)pURL);
         if (PrintInternetOptionsMenuMessage(&data->textState, (u8 *)halftoken))
         {
@@ -1758,29 +1531,32 @@ static void Task_InternetOptions(u8 taskId)
         data->state = INTERNET_INITIAL_SETUP;
         break;
     case INTERNET_INITIAL_SETUP:
-        concat_str(pURL,"http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
+        concat_str(pURL, "http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
         pid = gSaveBlock3Ptr->PID;
         concat_str(pURL,(char *)pid);
-        recvBufSize=32;
+        recvBufSize = 32;
 
-        //Initial Profile Setup
+        // Initial Profile Setup
         data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        if(data->errorNum !=0){
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        //If pRecvSize<recvBufSize then not all the data that was expected was copied into pRecvData
-        if(pRecvSize<recvBufSize){
-            tracker=pRecvSize;  //Keep track of the number of bytes copied
-            while(tracker<recvBufSize){ //While that is less than the Buffer size
-                //Keep calling maUpload until
+        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
+        if (pRecvSize < recvBufSize)
+        {
+            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
+            while(tracker < recvBufSize)
+            {
                 data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, "", "");
-                if(data->errorNum !=0){
+                if (data->errorNum != 0)
+                {
                     maKill();
                     data->state = INTERNET_STATE_EXIT;
                 }
-                tracker=tracker+pRecvSize;
+                tracker = tracker + pRecvSize;
             }
         }
 
@@ -1789,69 +1565,72 @@ static void Task_InternetOptions(u8 taskId)
 
         sha1digest((u8 *)hash,NULL,(u8 *)halftoken,52);
 
-        //Add hash to URL
-        concat_str(pURL,"&hash=");
-        concat_str(pURL,hash);
+        // Add hash to URL
+        concat_str(pURL, "&hash=");
+        concat_str(pURL, hash);
 
-        userprofile->version=0x03;
-        userprofile->romhackID=0x03;
-        userprofile->romhackVer=0x03;
-        userprofile->language=0x02;
-        userprofile->country=12;
-        userprofile->region=8;
-        userprofile->trainerID[0]=gSaveBlock2Ptr->playerTrainerId[0];
-        userprofile->trainerID[1]=gSaveBlock2Ptr->playerTrainerId[1];
-        userprofile->trainerID[2]=gSaveBlock2Ptr->playerTrainerId[2];
-        userprofile->trainerID[3]=gSaveBlock2Ptr->playerTrainerId[3];
+        userprofile->version      = 0x03;
+        userprofile->romhackID    = 0x03;
+        userprofile->romhackVer   = 0x03;
+        userprofile->language     = 0x02;
+        userprofile->country      = 12;
+        userprofile->region       = 8;
+        userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
+        userprofile->trainerID[1] = gSaveBlock2Ptr->playerTrainerId[1];
+        userprofile->trainerID[2] = gSaveBlock2Ptr->playerTrainerId[2];
+        userprofile->trainerID[3] = gSaveBlock2Ptr->playerTrainerId[3];
+
         for (int i = 0; i < PLAYER_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
         {
             userprofile->trainerName[i]=gSaveBlock2Ptr->playerName[i];
         }
         for (int i = 0; i < 6; i++)
         {
-            userprofile->MAC[i]=0;
+            userprofile->MAC[i] = 0;
         }
         for (int i = 0; i < 56; i++)
         {
             userprofile->email[i]=0;
         }
-        userprofile->notify=0;
-        userprofile->clientSecret=0;
-        userprofile->mailSecret=0;
+        userprofile->notify        = 0;
+        userprofile->clientSecret  = 0;
+        userprofile->mailSecret    = 0;
 
 
-        checksum=encrypt_data(pid, (char *)userprofile, sizeof(userprofile));
+        checksum = encrypt_data(pid, (char *)userprofile, sizeof(userprofile));
 
-        concat_str(pURL,"&data=");
+        concat_str(pURL, "&data=");
         *encoded_data=base64_encode(checksum, (char *)userprofile, sizeof(userprofile)+4);
-        concat_str(pURL,encoded_data);
+        concat_str(pURL, encoded_data);
 
         recvBufSize=8;
 
-        //Request a PID
+        // Request a PID
         data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        if(data->errorNum !=0){
+        if (data->errorNum != 0){
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
 
-        //If pRecvSize<recvBufSize then not all the data that was expected was copied into pRecvData
-        if(pRecvSize<recvBufSize){
-            tracker=pRecvSize;  //Keep track of the number of bytes copied
-            while(tracker<recvBufSize){ //While that is less than the Buffer size
-                //Keep calling maUpload until
+        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
+        if (pRecvSize < recvBufSize)
+        {
+            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
+            while(tracker < recvBufSize)
+            {
                 data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, "", "");
-                if(data->errorNum !=0){
+                if (data->errorNum != 0)
+                {
                     maKill();
                     data->state = INTERNET_STATE_EXIT;
                 }
-                tracker=tracker+pRecvSize;
+                tracker = tracker + pRecvSize;
             }
         }
 
         int i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
 
-        if(i==0){
+        if (i == 0){
             data->state = INTERNET_STATE_MAIN_MENU;
         }
         else{
@@ -1868,7 +1647,7 @@ static void Task_InternetOptions(u8 taskId)
 
             break;
         case 1: // "Deposit Pokemon"
-            if(VarGet(VAR_DEPOSIT_SPECIES)>0)
+            if (VarGet(VAR_DEPOSIT_SPECIES) > 0)
                 data->state = INTERNET_STATE_WITHDRAW_POKEMON;
             else
                 data->state = INTERNET_STATE_DEPOSIT_POKEMON;
