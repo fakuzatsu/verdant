@@ -113,7 +113,8 @@ static const struct BgTemplate sBGTemplates[] = {
         .paletteMode = 0,
         .priority = 0,
         .baseTile = 0x000
-    }, {
+    }, 
+    {
         .bg = 1,
         .charBaseIndex = 0,
         .mapBaseIndex = 14,
@@ -121,7 +122,8 @@ static const struct BgTemplate sBGTemplates[] = {
         .paletteMode = 0,
         .priority = 1,
         .baseTile = 0x000
-    }, {
+    }, 
+    {
         .bg = 2,
         .charBaseIndex = 0,
         .mapBaseIndex = 13,
@@ -129,7 +131,8 @@ static const struct BgTemplate sBGTemplates[] = {
         .paletteMode = 0,
         .priority = 2,
         .baseTile = 0x000
-    }, {
+    }, 
+    {
         .bg = 3,
         .charBaseIndex = 0,
         .mapBaseIndex = 12,
@@ -149,7 +152,8 @@ static const struct WindowTemplate sMainWindows[] = {
         .height = 2,
         .paletteNum = 12,
         .baseBlock = 0x0013
-    }, {
+    }, 
+    {
         .bg = 0,
         .tilemapLeft = 1,
         .tilemapTop = 15,
@@ -157,7 +161,8 @@ static const struct WindowTemplate sMainWindows[] = {
         .height = 4,
         .paletteNum = 12,
         .baseBlock = 0x004f
-    }, {
+    }, 
+    {
         .bg = 0,
         .tilemapLeft = 0,
         .tilemapTop = 15,
@@ -165,7 +170,8 @@ static const struct WindowTemplate sMainWindows[] = {
         .height = 5,
         .paletteNum = 13,
         .baseBlock = 0x004f
-    }, {
+    }, 
+    {
         .bg = 0,
         .tilemapLeft = 18,
         .tilemapTop = 2,
@@ -177,7 +183,8 @@ static const struct WindowTemplate sMainWindows[] = {
     DUMMY_WIN_TEMPLATE
 };
 
-static const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide = {
+static const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide = 
+{
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 15,
@@ -187,7 +194,8 @@ static const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide = {
     .baseBlock = 0x00e5
 };
 
-static const struct WindowTemplate sWindowTemplate_YesNoMsg = {
+static const struct WindowTemplate sWindowTemplate_YesNoMsg = 
+{
     .bg = 0,
     .tilemapLeft = 1,
     .tilemapTop = 15,
@@ -197,7 +205,8 @@ static const struct WindowTemplate sWindowTemplate_YesNoMsg = {
     .baseBlock = 0x00e5
 };
 
-static const struct WindowTemplate sWindowTemplate_PokemonSelect = {
+static const struct WindowTemplate sWindowTemplate_PokemonSelect = 
+{
     .bg = 0,
     .tilemapLeft = 19,
     .tilemapTop = 3,
@@ -207,7 +216,8 @@ static const struct WindowTemplate sWindowTemplate_PokemonSelect = {
     .baseBlock = 0x0155
 };
 
-static const struct WindowTemplate sWindowTemplate_ThreeOptions = {
+static const struct WindowTemplate sWindowTemplate_ThreeOptions = 
+{
     .bg = 0,
     .tilemapLeft = 8,
     .tilemapTop = 6,
@@ -217,7 +227,8 @@ static const struct WindowTemplate sWindowTemplate_ThreeOptions = {
     .baseBlock = 0x0155
 };
 
-static const struct WindowTemplate sWindowTemplate_FiveOptions = {
+static const struct WindowTemplate sWindowTemplate_FiveOptions = 
+{
     .bg = 0,
     .tilemapLeft = 8,
     .tilemapTop = 6,
@@ -227,7 +238,8 @@ static const struct WindowTemplate sWindowTemplate_FiveOptions = {
     .baseBlock = 0x0155
 };
 
-static const struct WindowTemplate sWindowTemplate_YesNoBox = {
+static const struct WindowTemplate sWindowTemplate_YesNoBox = 
+{
     .bg = 0,
     .tilemapLeft = 23,
     .tilemapTop = 15,
@@ -237,19 +249,22 @@ static const struct WindowTemplate sWindowTemplate_YesNoBox = {
     .baseBlock = 0x0155
 };
 
-static const struct ListMenuItem sListMenuItems_SearchDeposit[] = {
+static const struct ListMenuItem sListMenuItems_SearchDeposit[] = 
+{
     { gText_SearchPokemon,      0 },
     { gText_DepositPokemon,     1 },
     { gText_Exit3,    LIST_CANCEL },
 };
 
-static const struct ListMenuItem sListMenuItems_SearchWithdraw[] = {
+static const struct ListMenuItem sListMenuItems_SearchWithdraw[] = 
+{
     { gText_SearchPokemon,      0 },
     { gText_WithdrawPokemon,    1 },
     { gText_Exit3,    LIST_CANCEL },
 };
 
-static const struct ListMenuItem sListMenuItems_InternetOptions[] = {
+static const struct ListMenuItem sListMenuItems_InternetOptions[] = 
+{
     { gText_GiftDownload,       0 },
     { gText_Bank,               1 },
     { gText_Friends,            2 },
@@ -257,7 +272,8 @@ static const struct ListMenuItem sListMenuItems_InternetOptions[] = {
     { gText_Exit3,    LIST_CANCEL },
 };
 
-static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions = {
+static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions = 
+{
     .items = NULL,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -278,7 +294,8 @@ static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions = {
     .cursorKind = 0
 };
 
-static const struct ListMenuTemplate sListMenuTemplate_FiveOptions = {
+static const struct ListMenuTemplate sListMenuTemplate_FiveOptions = 
+{
     .items = NULL,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -299,31 +316,36 @@ static const struct ListMenuTemplate sListMenuTemplate_FiveOptions = {
     .cursorKind = 0
 };
 
-static const struct ListMenuItem sListMenuItems_ReceiveSendToss[] = {
+static const struct ListMenuItem sListMenuItems_ReceiveSendToss[] = 
+{
     { gText_Receive,  0 },
     { gText_Send,     1 },
     { gText_Toss,     2 },
     { gText_Cancel2,  LIST_CANCEL }
 };
 
-static const struct ListMenuItem sListMenuItems_ReceiveToss[] = {
+static const struct ListMenuItem sListMenuItems_ReceiveToss[] = 
+{
     { gText_Receive,  0 },
     { gText_Toss,     2 },
     { gText_Cancel2,  LIST_CANCEL }
 };
 
-static const struct ListMenuItem sListMenuItems_ReceiveSend[] = {
+static const struct ListMenuItem sListMenuItems_ReceiveSend[] = 
+{
     { gText_Receive,  0 },
     { gText_Send,     1 },
     { gText_Cancel2,  LIST_CANCEL }
 };
 
-static const struct ListMenuItem sListMenuItems_Receive[] = {
+static const struct ListMenuItem sListMenuItems_Receive[] = 
+{
     { gText_Receive,  0 },
     { gText_Cancel2,  LIST_CANCEL }
 };
 
-static const struct ListMenuTemplate sListMenu_ReceiveSendToss = {
+static const struct ListMenuTemplate sListMenu_ReceiveSendToss = 
+{
     .items = sListMenuItems_ReceiveSendToss,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -344,7 +366,8 @@ static const struct ListMenuTemplate sListMenu_ReceiveSendToss = {
     .cursorKind = 0
 };
 
-static const struct ListMenuTemplate sListMenu_ReceiveToss = {
+static const struct ListMenuTemplate sListMenu_ReceiveToss = 
+{
     .items = sListMenuItems_ReceiveToss,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -365,7 +388,8 @@ static const struct ListMenuTemplate sListMenu_ReceiveToss = {
     .cursorKind = 0
 };
 
-static const struct ListMenuTemplate sListMenu_ReceiveSend = {
+static const struct ListMenuTemplate sListMenu_ReceiveSend = 
+{
     .items = sListMenuItems_ReceiveSend,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -386,7 +410,8 @@ static const struct ListMenuTemplate sListMenu_ReceiveSend = {
     .cursorKind = 0
 };
 
-static const struct ListMenuTemplate sListMenu_Receive = {
+static const struct ListMenuTemplate sListMenu_Receive = 
+{
     .items = sListMenuItems_Receive,
     .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
     .itemPrintFunc = NULL,
@@ -1295,18 +1320,15 @@ s8 DoInternetYesNo(u8 * textState, u16 * windowId, bool8 yesNoBoxPlacement, cons
     return MENU_NOTHING_CHOSEN;
 }
 
-#define error       data[0]
-#define errorType   data[1]
-
 static void Task_InternetOptions(u8 taskId)
 {
     #if (!TESTING)
 
     struct InternetOptionsTaskData *data = (void *)gTasks[taskId].data;
     char pUserID[32];           // User ID from the MA EEPROM, has max lenght of 32
-    pUserID[0]='\0';            // Init
+    pUserID[0] = '\0';          // Init
     char pPassword[16];         // User password from the MA EEPROM, has max lenght of 16
-    pPassword[0]='\0';          // Init
+    pPassword[0] = '\0';        // Init
     char maMailID[30];          // User mail ID from the MA EEPROM
     char pURL[1024];            // URL for the endpoint
     memcpy(pURL, "\0", 1);      // Init
@@ -1315,8 +1337,8 @@ static void Task_InternetOptions(u8 taskId)
     u16 pRecvSize;              // How many bytes were copied to pRecvData after calling maUpload once
     char halftoken[53];
     char hash[41];
-    int input = 0;
-    int tracker = 0;
+    u32 input = 0;
+    u32 tracker = 0;
     u32 pid = 0;
     u32 checksum = 0;
     struct profile *userprofile = AllocZeroed(sizeof(struct profile));
@@ -1674,9 +1696,6 @@ static void Task_InternetOptions(u8 taskId)
     SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
     #endif
 }
-
-#undef error
-#undef errorType
 
 u16 GetInternetOptionsBaseBlock(void)
 {
