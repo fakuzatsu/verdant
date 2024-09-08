@@ -718,6 +718,7 @@ bool8 ScrCmd_gettime(struct ScriptContext *ctx)
     gSpecialVar_0x8000 = gLocalTime.hours;
     gSpecialVar_0x8001 = gLocalTime.minutes;
     gSpecialVar_0x8002 = gLocalTime.seconds;
+    gSpecialVar_0x8003 = gLocalTime.dayOfWeek;
     return FALSE;
 }
 
@@ -1839,6 +1840,23 @@ bool8 ScrCmd_bufferboxname(struct ScriptContext *ctx)
     u16 boxId = VarGet(ScriptReadHalfword(ctx));
 
     StringCopy(sScriptStringVars[stringVarIndex], GetBoxNamePtr(boxId));
+    return FALSE;
+}
+
+extern const u8 *const gDayNameStringsTable[];
+extern const u8 gText_None[];
+
+bool8 ScrCmd_bufferdayofweekstring(struct ScriptContext *ctx)
+{
+    u8 stringVarIndex = ScriptReadByte(ctx);
+    u8 dayOfWeek = ScriptReadByte(ctx);
+
+    if (dayOfWeek <= DAY_SATURDAY)
+        StringCopy(sScriptStringVars[stringVarIndex], gDayNameStringsTable[dayOfWeek]);
+    else if (dayOfWeek == DAY_CURRENT)
+        StringCopy(sScriptStringVars[stringVarIndex], gDayNameStringsTable[gLocalTime.dayOfWeek]);
+    else
+        StringCopy(gStringVar3, gText_None);
     return FALSE;
 }
 

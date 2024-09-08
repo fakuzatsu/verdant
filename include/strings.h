@@ -222,6 +222,7 @@ extern const u8 gText_FieldMoves[];
 extern const u8 gText_WithdrawPokemon[];
 extern const u8 gText_WithdrawMonDescription[];
 extern const u8 gText_DepositPokemon[];
+extern const u8 gText_SearchPokemon[];
 extern const u8 gText_DepositMonDescription[];
 extern const u8 gText_MovePokemon[];
 extern const u8 gText_MoveMonDescription[];
@@ -2930,6 +2931,16 @@ extern const u8 gText_AshQty[];
 // FRLG whiteout
 extern const u8 gText_PlayerScurriedToCenter[];
 extern const u8 gText_PlayerScurriedBackHome[];
+
+// Day Strings
+extern const u8 gText_Sunday[];
+extern const u8 gText_Monday[];
+extern const u8 gText_Tuesday[];
+extern const u8 gText_Wednesday[];
+extern const u8 gText_Thursday[];
+extern const u8 gText_Friday[];
+extern const u8 gText_Saturday[];
+extern const u8 *const gDayNameStringsTable[];
 
 //Internet
 extern const u8 gText_GiftDownload[];
