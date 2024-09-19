@@ -180,4 +180,12 @@ bool8 MapIsInPerpetualDarkness(u8 mapType);
 void UpdateAltBgPalettes(u16 palettes);
 void UpdatePalettesWithTime(u32);
 
+// Item Description Headers
+enum ItemObtainFlags
+{
+    FLAG_GET_ITEM_OBTAINED,
+    FLAG_SET_ITEM_OBTAINED,
+};
+bool8 GetSetItemObtained(u16 item, enum ItemObtainFlags caseId);
+
 #endif // GUARD_OVERWORLD_H

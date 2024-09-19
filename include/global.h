@@ -201,6 +201,8 @@ struct Time
     /*0x05*/ s8 dayOfWeek;
 };
 
+#include "constants/items.h"
+#define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
 struct SaveBlock3
 {
@@ -213,6 +215,9 @@ struct SaveBlock3
     u8 dexNavSearchLevels[ROUND_BITS_TO_BYTES(NUM_SPECIES)];
 #endif
     u8 dexNavChain;
+#if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
+    u8 itemFlags[ITEM_FLAGS_COUNT];
+#endif
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
