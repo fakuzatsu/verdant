@@ -425,21 +425,17 @@ static const union AnimCmd sAnimCmd_Kanto[] =
 
 static const union AnimCmd sAnimCmd_Point_HGSS[] =
 {
-    ANIMCMD_FRAME(3, 9),
-    ANIMCMD_FRAME(0, 9),
+    ANIMCMD_FRAME(0, 31),
     ANIMCMD_FRAME(2, 24),
-    ANIMCMD_FRAME(2, 24),
-    ANIMCMD_FRAME(3, 50),
+    ANIMCMD_FRAME(3, 1),
     ANIMCMD_END,
 };
 
 static const union AnimCmd sAnimCmd_Point_HGSS_Red_Leaf[] =
 {
-    ANIMCMD_FRAME(0, 9),
-    ANIMCMD_FRAME(1, 9),
-    ANIMCMD_FRAME(3, 24),
-    ANIMCMD_FRAME(3, 24),
-    ANIMCMD_FRAME(0, 50),
+    ANIMCMD_FRAME(1, 31),
+    ANIMCMD_FRAME(4, 24),
+    ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
