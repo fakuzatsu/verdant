@@ -563,3 +563,4 @@ gSpecials::
 	def_special GiveMonHistoricRibbon
 	def_special SetGrottoWarp
 	def_special HaveAllSpeciesBeenShown
+	def_special UseBlankMessageToCancelPokemonPic
