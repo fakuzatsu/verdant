@@ -4,6 +4,7 @@
 // Movement config
 #define OW_RUNNING_INDOORS          GEN_LATEST  // In Gen4+, players are allowed to run indoors.
 #define OW_AUTO_SIGNPOST            FALSE       // When enabled, if the tile that the player is facing has MB_SIGNPOST, MB_POKEMART_SIGN, or MB_POKEMON_CENTER_SIGN, the player will automatically read the signpost, as seen in FRLG.
+#define SLOW_MOVEMENT_ON_STAIRS     FALSE       // If enabled, the player will move slower up/down stairs like in FR
 
 // Other settings
 #define OW_POISON_DAMAGE                GEN_LATEST // In Gen4, Pokémon no longer faint from Poison in the overworld. In Gen5+, they no longer take damage at all.
@@ -51,6 +52,7 @@
                                                   // Compressed gfx are incompatible with non-power-of-two sprite sizes:
                                                   // (You should not use 48x48 sprites/tables for compressed gfx)
                                                   // 16x32, 32x32, 64x64 etc are fine
+#define OW_MON_WANDER_WALK             TRUE       // If true, OW pokemon with MOVEMENT_TYPE_WANDER will walk-in-place in between steps.
 // Follower Pokémon
 #define OW_FOLLOWERS_ENABLED           TRUE       // Enables follower Pokémon, HGSS style. Requires OW_POKEMON_OBJECT_EVENTS. Note that additional scripting may be required for them to be fully supported!
 #define OW_FOLLOWERS_BOBBING           TRUE       // If true, follower pokemon will bob up and down during their idle & walking animations
@@ -104,6 +106,8 @@
 #define OW_POPUP_BW_ALPHA_BLEND    FALSE                    // Enables alpha blending/transparency for the pop-ups. Mainly intended to be used with the black color option.
 
 // Pokémon Center
-#define OW_IGNORE_EGGS_ON_HEAL     GEN_LATEST               // In Gen 4+, the nurse in the Pokémon Center does not heal Eggs on healing machine.
+#define OW_IGNORE_EGGS_ON_HEAL           GEN_LATEST         // In Gen 4+, the nurse in the Pokémon Center does not heal Eggs on healing machine.
+#define OW_UNION_DISABLE_CHECK           FALSE              // When TRUE, the nurse does not inform the player if there is a trainer waiting in the Union Room. This speeds up the loading of the Pokémon Center.
+#define OW_FLAG_MOVE_UNION_ROOM_CHECK    0                  // If this flag is set, the game will only check if players are in the Union Room while healing Pokémon, and not when players enter the Pokémon Center. This speeds up the loading of the Pokémon Center. This is ignored if OW_UNION_DISABLE_CHECK is TRUE.
 
 #endif // GUARD_CONFIG_OVERWORLD_H

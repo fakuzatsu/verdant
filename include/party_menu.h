@@ -109,5 +109,6 @@ void BufferMoveDeleterNicknameAndMove(void);
 void GetNumMovesSelectedMonHas(void);
 void MoveDeleterChooseMoveToForget(void);
 void CB2_ReturnToPartyMenuFromSummaryScreen(void);
+bool32 IsItemFlute(u16 item);
 
 #endif // GUARD_PARTY_MENU_H

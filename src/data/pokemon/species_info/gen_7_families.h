@@ -128,7 +128,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .levelUpLearnset = sDartrixLevelUpLearnset,
         .teachableLearnset = sDartrixTeachableLearnset,
         .evolutions = EVOLUTION({EVO_LEVEL, 34, SPECIES_DECIDUEYE},
-                                {EVO_NONE, 0, SPECIES_DECIDUEYE_HISUIAN}),
+                                {EVO_NONE, 0, SPECIES_DECIDUEYE_HISUI}),
     },
 
     [SPECIES_DECIDUEYE] =
@@ -194,7 +194,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
     },
 
 #if P_HISUIAN_FORMS
-    [SPECIES_DECIDUEYE_HISUIAN] =
+    [SPECIES_DECIDUEYE_HISUI] =
     {
         .baseHP        = 88,
         .baseAttack    = 112,
@@ -1507,6 +1507,14 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 1,
         SHADOW(5, 8, SHADOW_SIZE_S)
         FOOTPRINT(Oricorio)
+        OVERWORLD(
+            sPicTable_OricorioPomPom,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_OricorioPomPom,
+            gShinyOverworldPalette_OricorioPomPom
+        )
         .levelUpLearnset = sOricorioLevelUpLearnset,
         .teachableLearnset = sOricorioTeachableLearnset,
         .eggMoveLearnset = sOricorioEggMoveLearnset,
@@ -1564,6 +1572,14 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 1,
         SHADOW(-3, 11, SHADOW_SIZE_S)
         FOOTPRINT(Oricorio)
+        OVERWORLD(
+            sPicTable_OricorioPau,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_OricorioPau,
+            gShinyOverworldPalette_OricorioPau
+        )
         .levelUpLearnset = sOricorioLevelUpLearnset,
         .teachableLearnset = sOricorioTeachableLearnset,
         .eggMoveLearnset = sOricorioEggMoveLearnset,
@@ -1621,6 +1637,14 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 0,
         SHADOW(7, 10, SHADOW_SIZE_S)
         FOOTPRINT(Oricorio)
+        OVERWORLD(
+            sPicTable_OricorioSensu,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_OricorioSensu,
+            gShinyOverworldPalette_OricorioSensu
+        )
         .levelUpLearnset = sOricorioLevelUpLearnset,
         .teachableLearnset = sOricorioTeachableLearnset,
         .eggMoveLearnset = sOricorioEggMoveLearnset,
@@ -4704,6 +4728,14 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 1,
         SHADOW(-3, 1, SHADOW_SIZE_S)
         FOOTPRINT(Mimikyu)
+        OVERWORLD(
+            sPicTable_MimikyuDisguised,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_MimikyuDisguised,
+            gShinyOverworldPalette_MimikyuDisguised
+        )
         .isTotem = TRUE,
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
         .levelUpLearnset = sMimikyuLevelUpLearnset,
@@ -4713,7 +4745,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .formChangeTable = sMimikyuTotemFormChangeTable,
     },
 
-    [SPECIES_MIMIKYU_TOTEM_BUSTED] =
+    [SPECIES_MIMIKYU_BUSTED_TOTEM] =
     {
         .baseHP        = 55,
         .baseAttack    = 90,
@@ -6545,7 +6577,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .teachableLearnset = sMagearnaTeachableLearnset,
         .formSpeciesIdTable = sMagearnaFormSpeciesIdTable,
     },
-    [SPECIES_MAGEARNA_ORIGINAL_COLOR] =
+    [SPECIES_MAGEARNA_ORIGINAL] =
     {
         .baseHP        = 80,
         .baseAttack    = 95,
@@ -6594,6 +6626,14 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 0,
         SHADOW(-2, 14, SHADOW_SIZE_M)
         FOOTPRINT(Magearna)
+        OVERWORLD(
+            sPicTable_MagearnaOriginalColor,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_MagearnaOriginalColor,
+            gShinyOverworldPalette_MagearnaOriginalColor
+        )
         .isMythical = TRUE,
         .isFrontierBanned = TRUE,
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
@@ -7125,7 +7165,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_MELMETAL_GIGANTAMAX] =
+    [SPECIES_MELMETAL_GMAX] =
     {
         .baseHP        = 135,
         .baseAttack    = 143,

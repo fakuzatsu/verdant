@@ -390,7 +390,7 @@ void Ai_UpdateFaintData(u32 battler)
     aiMon->isFainted = TRUE;
 }
 
-static void SetBattlerAiData(u32 battler, struct AiLogicData *aiData)
+void SetBattlerAiData(u32 battler, struct AiLogicData *aiData)
 {
     u32 ability, holdEffect;
 
@@ -505,12 +505,12 @@ static bool32 AI_SwitchMonIfSuitable(u32 battler, bool32 doubleBattle)
         if (doubleBattle)
         {
             u32 partner = BATTLE_PARTNER(battler);
-            if (AI_DATA->shouldSwitchMon & (1u << partner) && AI_DATA->monToSwitchId[partner] == monToSwitchId)
+            if (AI_DATA->shouldSwitchIfBadMoves & (1u << partner) && AI_DATA->monToSwitchId[partner] == monToSwitchId)
             {
                 return FALSE;
             }
         }
-        AI_DATA->shouldSwitchMon |= 1 << battler;
+        AI_DATA->shouldSwitchIfBadMoves |= 1 << battler;
         AI_DATA->monToSwitchId[battler] = monToSwitchId;
         return TRUE;
     }
@@ -835,6 +835,9 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
 
     if (IsTwoTurnNotSemiInvulnerableMove(battlerAtk, move) && CanTargetFaintAi(battlerDef, battlerAtk))
         RETURN_SCORE_MINUS(10);
+
+    if (gBattleStruct->commandingDondozo & (1u << battlerDef))
+        RETURN_SCORE_MINUS(20);
 
     // check if negates type
     switch (effectiveness)
@@ -3346,6 +3349,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
     case EFFECT_ABSORB:
         if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && effectiveness >= AI_EFFECTIVENESS_x1)
             ADJUST_SCORE(DECENT_EFFECT);
+        break;
     case EFFECT_EXPLOSION:
     case EFFECT_MEMENTO:
         if (AI_THINKING_STRUCT->aiFlags[battlerAtk] & AI_FLAG_WILL_SUICIDE && gBattleMons[battlerDef].statStages[STAT_EVASION] < 7)
@@ -3360,7 +3364,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         break;
     case EFFECT_MIRROR_MOVE:
         if (predictedMove != MOVE_NONE)
-            return AI_CheckViability(battlerAtk, battlerDef, gLastMoves[battlerDef], score);
+            return AI_CheckViability(battlerAtk, battlerDef, predictedMove, score);
         break;
     case EFFECT_ATTACK_UP:
     case EFFECT_ATTACK_UP_USER_ALLY:
@@ -3680,7 +3684,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         }
         break;
     case EFFECT_BATON_PASS:
-        if (ShouldSwitch(battlerAtk, FALSE) && (gBattleMons[battlerAtk].status2 & STATUS2_SUBSTITUTE
+        if ((AI_DATA->shouldSwitch & (1u << battlerAtk)) && (gBattleMons[battlerAtk].status2 & STATUS2_SUBSTITUTE
           || (gStatuses3[battlerAtk] & (STATUS3_ROOTED | STATUS3_AQUA_RING | STATUS3_MAGNET_RISE | STATUS3_POWER_TRICK))
           || AnyStatIsRaised(battlerAtk)))
             ADJUST_SCORE(BEST_EFFECT);
@@ -4091,7 +4095,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
                 ADJUST_SCORE(DECENT_EFFECT); // Force 'em out next turn
             break;
         default:
-            if (gMovesInfo[gCurrentMove].effect != EFFECT_BESTOW && aiData->items[battlerAtk] == ITEM_NONE)
+            if (gMovesInfo[move].effect != EFFECT_BESTOW && aiData->items[battlerAtk] == ITEM_NONE && aiData->items[battlerDef] != ITEM_NONE)
             {
                 switch (aiData->holdEffects[battlerDef])
                 {

@@ -684,7 +684,7 @@
               {
                 "min_level": 24,
                 "max_level": 25,
-                "species": "SPECIES_FLORGES_RED_FLOWER"
+                "species": "SPECIES_FLORGES_RED"
               },
               {
                 "min_level": 24,
@@ -2688,7 +2688,7 @@
               {
                 "min_level": 15,
                 "max_level": 18,
-                "species": "SPECIES_FLABEBE_RED_FLOWER"
+                "species": "SPECIES_FLABEBE_RED"
               },
               {
                 "min_level": 15,
@@ -2708,12 +2708,12 @@
               {
                 "min_level": 15,
                 "max_level": 17,
-                "species": "SPECIES_FLABEBE_YELLOW_FLOWER"
+                "species": "SPECIES_FLABEBE_YELLOW"
               },
               {
                 "min_level": 16,
                 "max_level": 18,
-                "species": "SPECIES_FLABEBE_WHITE_FLOWER"
+                "species": "SPECIES_FLABEBE_WHITE"
               },
               {
                 "min_level": 15,
@@ -2833,7 +2833,7 @@
               {
                 "min_level": 24,
                 "max_level": 25,
-                "species": "SPECIES_FLORGES_ORANGE_FLOWER"
+                "species": "SPECIES_FLORGES_ORANGE"
               }
             ]
           }
@@ -2882,12 +2882,12 @@
               {
                 "min_level": 15,
                 "max_level": 17,
-                "species": "SPECIES_FLABEBE_BLUE_FLOWER"
+                "species": "SPECIES_FLABEBE_BLUE"
               },
               {
                 "min_level": 16,
                 "max_level": 18,
-                "species": "SPECIES_FLABEBE_WHITE_FLOWER"
+                "species": "SPECIES_FLABEBE_WHITE"
               },
               {
                 "min_level": 15,

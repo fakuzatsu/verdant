@@ -198,6 +198,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Venusaur,
             gShinyOverworldPalette_Venusaur
         )
+        OVERWORLD_FEMALE(
+            sPicTable_VenusaurF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sVenusaurLevelUpLearnset,
         .teachableLearnset = sVenusaurTeachableLearnset,
         .formSpeciesIdTable = sVenusaurFormSpeciesIdTable,
@@ -263,7 +269,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_MEGA_EVOLUTIONS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_VENUSAUR_GIGANTAMAX] =
+    [SPECIES_VENUSAUR_GMAX] =
     {
         .baseHP        = 80,
         .baseAttack    = 82,
@@ -632,7 +638,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_MEGA_EVOLUTIONS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_CHARIZARD_GIGANTAMAX] =
+    [SPECIES_CHARIZARD_GMAX] =
     {
         .baseHP        = 78,
         .baseAttack    = 84,
@@ -946,7 +952,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_MEGA_EVOLUTIONS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_BLASTOISE_GIGANTAMAX] =
+    [SPECIES_BLASTOISE_GMAX] =
     {
         .baseHP        = 79,
         .baseAttack    = 83,
@@ -1205,6 +1211,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Butterfree,
             gShinyOverworldPalette_Butterfree
         )
+        OVERWORLD_FEMALE(
+            sPicTable_ButterfreeF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sButterfreeLevelUpLearnset,
         .teachableLearnset = sButterfreeTeachableLearnset,
         .formSpeciesIdTable = sButterfreeFormSpeciesIdTable,
@@ -1212,7 +1224,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_BUTTERFREE_GIGANTAMAX] =
+    [SPECIES_BUTTERFREE_GMAX] =
     {
         .baseHP        = 60,
         .baseAttack    = 45,
@@ -1874,6 +1886,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Rattata,
             gShinyOverworldPalette_Rattata
         )
+        OVERWORLD_FEMALE(
+            sPicTable_RattataF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sRattataLevelUpLearnset,
         .teachableLearnset = sRattataTeachableLearnset,
         .eggMoveLearnset = sRattataEggMoveLearnset,
@@ -1942,13 +1960,19 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Raticate,
             gShinyOverworldPalette_Raticate
         )
+        OVERWORLD_FEMALE(
+            sPicTable_RaticateF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sRaticateLevelUpLearnset,
         .teachableLearnset = sRaticateTeachableLearnset,
         .formSpeciesIdTable = sRaticateFormSpeciesIdTable,
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_RATTATA_ALOLAN] =
+    [SPECIES_RATTATA_ALOLA] =
     {
         .baseHP        = 30,
         .baseAttack    = 56,
@@ -2011,11 +2035,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sRattataAlolanTeachableLearnset,
         .eggMoveLearnset = sRattataAlolanEggMoveLearnset,
         .formSpeciesIdTable = sRattataFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL_NIGHT, 20, SPECIES_RATICATE_ALOLAN},
-                                {EVO_NONE, 0, SPECIES_RATICATE_ALOLAN_TOTEM}),
+        .evolutions = EVOLUTION({EVO_LEVEL_NIGHT, 20, SPECIES_RATICATE_ALOLA},
+                                {EVO_NONE, 0, SPECIES_RATICATE_ALOLA_TOTEM}),
     },
 
-    [SPECIES_RATICATE_ALOLAN] =
+    [SPECIES_RATICATE_ALOLA] =
     {
         .baseHP        = 75,
         .baseAttack    = 71,
@@ -2075,7 +2099,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sRaticateFormSpeciesIdTable,
     },
 
-    [SPECIES_RATICATE_ALOLAN_TOTEM] =
+    [SPECIES_RATICATE_ALOLA_TOTEM] =
     {
         .baseHP        = 75,
         .baseAttack    = 71,
@@ -2121,6 +2145,14 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconPalIndex = 2,
         SHADOW(-4, 3, SHADOW_SIZE_L)
         FOOTPRINT(Raticate)
+        OVERWORLD(
+            sPicTable_RaticateAlolan,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_RaticateAlolan,
+            gShinyOverworldPalette_RaticateAlolan
+        )
         .isTotem = TRUE,
         .isAlolanForm = TRUE,
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
@@ -2588,13 +2620,19 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Pikachu,
             gShinyOverworldPalette_Pikachu
         )
+        OVERWORLD_FEMALE(
+            sPicTable_PikachuF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         FOOTPRINT(Pikachu)
         .levelUpLearnset = sPikachuLevelUpLearnset,
         .teachableLearnset = sPikachuTeachableLearnset,
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
         .formChangeTable = sPikachuFormChangeTable,
         .evolutions = EVOLUTION({EVO_ITEM, ITEM_THUNDER_STONE, SPECIES_RAICHU},
-                                {EVO_NONE, 0, SPECIES_RAICHU_ALOLAN}),
+                                {EVO_NONE, 0, SPECIES_RAICHU_ALOLA}),
     },
 
 #if P_COSPLAY_PIKACHU_FORMS
@@ -2804,7 +2842,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_PH_D] =
+    [SPECIES_PIKACHU_PHD] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -2909,7 +2947,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_COSPLAY_PIKACHU_FORMS
 
 #if P_CAP_PIKACHU_FORMS
-    [SPECIES_PIKACHU_ORIGINAL_CAP] =
+    [SPECIES_PIKACHU_ORIGINAL] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -2965,7 +3003,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_HOENN_CAP] =
+    [SPECIES_PIKACHU_HOENN] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3020,7 +3058,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_SINNOH_CAP] =
+    [SPECIES_PIKACHU_SINNOH] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3075,7 +3113,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_UNOVA_CAP] =
+    [SPECIES_PIKACHU_UNOVA] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3130,7 +3168,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_KALOS_CAP] =
+    [SPECIES_PIKACHU_KALOS] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3185,7 +3223,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_ALOLA_CAP] =
+    [SPECIES_PIKACHU_ALOLA] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3296,7 +3334,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sPikachuFormSpeciesIdTable,
     },
 
-    [SPECIES_PIKACHU_WORLD_CAP] =
+    [SPECIES_PIKACHU_WORLD] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3354,7 +3392,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_CAP_PIKACHU_FORMS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_PIKACHU_GIGANTAMAX] =
+    [SPECIES_PIKACHU_GMAX] =
     {
         .baseHP        = 35,
         .baseAttack    = 55,
@@ -3412,7 +3450,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 #endif //P_GIGANTAMAX_FORMS
 
-    [SPECIES_PIKACHU_PARTNER] =
+    [SPECIES_PIKACHU_STARTER] =
     {
         .baseHP        = 45,
         .baseAttack    = 80,
@@ -3467,6 +3505,14 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     #endif
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Pikachu)
+        OVERWORLD(
+            sPicTable_Pikachu,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_Pikachu,
+            gShinyOverworldPalette_Pikachu
+        )
         .cannotBeTraded = TRUE,
         .perfectIVCount = NUM_STATS,
         .levelUpLearnset = sPikachuLevelUpLearnset,
@@ -3545,13 +3591,19 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Raichu,
             gShinyOverworldPalette_Raichu
         )
+        OVERWORLD_FEMALE(
+            sPicTable_RaichuF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sRaichuLevelUpLearnset,
         .teachableLearnset = sRaichuTeachableLearnset,
         .formSpeciesIdTable = sRaichuFormSpeciesIdTable,
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_RAICHU_ALOLAN] =
+    [SPECIES_RAICHU_ALOLA] =
     {
         .baseHP        = 60,
         .baseAttack    = 85,
@@ -3747,7 +3799,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_SANDSHREW_ALOLAN] =
+    [SPECIES_SANDSHREW_ALOLA] =
     {
         .baseHP        = 50,
         .baseAttack    = 75,
@@ -3810,10 +3862,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sSandshrewAlolanTeachableLearnset,
         .eggMoveLearnset = sSandshrewAlolanEggMoveLearnset,
         .formSpeciesIdTable = sSandshrewFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_ICE_STONE, SPECIES_SANDSLASH_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_ICE_STONE, SPECIES_SANDSLASH_ALOLA}),
     },
 
-    [SPECIES_SANDSLASH_ALOLAN] =
+    [SPECIES_SANDSLASH_ALOLA] =
     {
         .baseHP        = 75,
         .baseAttack    = 100,
@@ -4648,7 +4700,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_VULPIX_ALOLAN] =
+    [SPECIES_VULPIX_ALOLA] =
     {
         .baseHP        = 38,
         .baseAttack    = 41,
@@ -4711,10 +4763,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sVulpixAlolanTeachableLearnset,
         .eggMoveLearnset = sVulpixAlolanEggMoveLearnset,
         .formSpeciesIdTable = sVulpixFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_ICE_STONE, SPECIES_NINETALES_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_ICE_STONE, SPECIES_NINETALES_ALOLA}),
     },
 
-    [SPECIES_NINETALES_ALOLAN] =
+    [SPECIES_NINETALES_ALOLA] =
     {
         .baseHP        = 73,
         .baseAttack    = 67,
@@ -5065,6 +5117,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Zubat,
             gShinyOverworldPalette_Zubat
         )
+        OVERWORLD_FEMALE(
+            sPicTable_ZubatF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sZubatLevelUpLearnset,
         .teachableLearnset = sZubatTeachableLearnset,
         .eggMoveLearnset = sZubatEggMoveLearnset,
@@ -5132,6 +5190,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Golbat,
             gShinyOverworldPalette_Golbat
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_GolbatF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sGolbatLevelUpLearnset,
         .teachableLearnset = sGolbatTeachableLearnset,
@@ -5336,6 +5400,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Gloom,
             gShinyOverworldPalette_Gloom
         )
+        OVERWORLD_FEMALE(
+            sPicTable_GloomF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sGloomLevelUpLearnset,
         .teachableLearnset = sGloomTeachableLearnset,
         .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_VILEPLUME},
@@ -5411,6 +5481,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Vileplume,
             gShinyOverworldPalette_Vileplume
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_VileplumeF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sVileplumeLevelUpLearnset,
         .teachableLearnset = sVileplumeTeachableLearnset,
@@ -5911,7 +5987,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_DIGLETT_ALOLAN] =
+    [SPECIES_DIGLETT_ALOLA] =
     {
         .baseHP        = 10,
         .baseAttack    = 55,
@@ -5974,10 +6050,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sDiglettAlolanTeachableLearnset,
         .eggMoveLearnset = sDiglettAlolanEggMoveLearnset,
         .formSpeciesIdTable = sDiglettFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL, 26, SPECIES_DUGTRIO_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 26, SPECIES_DUGTRIO_ALOLA}),
     },
 
-    [SPECIES_DUGTRIO_ALOLAN] =
+    [SPECIES_DUGTRIO_ALOLA] =
     {
         .baseHP        = 35,
         .baseAttack    = DUGTRIO_ATTACK,
@@ -6185,7 +6261,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_MEOWTH_ALOLAN] =
+    [SPECIES_MEOWTH_ALOLA] =
     {
         .baseHP        = 40,
         .baseAttack    = 35,
@@ -6248,10 +6324,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sMeowthAlolanTeachableLearnset,
         .eggMoveLearnset = sMeowthAlolanEggMoveLearnset,
         .formSpeciesIdTable = sMeowthFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_FRIENDSHIP, 0, SPECIES_PERSIAN_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_FRIENDSHIP, 0, SPECIES_PERSIAN_ALOLA}),
     },
 
-    [SPECIES_PERSIAN_ALOLAN] =
+    [SPECIES_PERSIAN_ALOLA] =
     {
         .baseHP        = 65,
         .baseAttack    = 60,
@@ -6317,7 +6393,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_ALOLAN_FORMS
 
 #if P_GALARIAN_FORMS
-    [SPECIES_MEOWTH_GALARIAN] =
+    [SPECIES_MEOWTH_GALAR] =
     {
         .baseHP        = 50,
         .baseAttack    = 65,
@@ -6444,7 +6520,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_GALARIAN_FORMS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_MEOWTH_GIGANTAMAX] =
+    [SPECIES_MEOWTH_GMAX] =
     {
         .baseHP        = 40,
         .baseAttack    = 45,
@@ -6959,7 +7035,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_HISUIAN_FORMS
-    [SPECIES_GROWLITHE_HISUIAN] =
+    [SPECIES_GROWLITHE_HISUI] =
     {
         .baseHP        = 60,
         .baseAttack    = 75,
@@ -7020,10 +7096,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sGrowlitheHisuianLevelUpLearnset,
         .teachableLearnset = sGrowlitheHisuianTeachableLearnset,
         .formSpeciesIdTable = sGrowlitheFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_FIRE_STONE, SPECIES_ARCANINE_HISUIAN}),
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_FIRE_STONE, SPECIES_ARCANINE_HISUI}),
     },
 
-    [SPECIES_ARCANINE_HISUIAN] =
+    [SPECIES_ARCANINE_HISUI] =
     {
         .baseHP        = 95,
         .baseAttack    = 115,
@@ -7362,6 +7438,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Politoed,
             gShinyOverworldPalette_Politoed
         )
+        OVERWORLD_FEMALE(
+            sPicTable_PolitoedF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sPolitoedLevelUpLearnset,
         .teachableLearnset = sPolitoedTeachableLearnset,
     },
@@ -7502,6 +7584,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Kadabra,
             gShinyOverworldPalette_Kadabra
         )
+        OVERWORLD_FEMALE(
+            sPicTable_KadabraF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_NONE
+        )
         .levelUpLearnset = sKadabraLevelUpLearnset,
         .teachableLearnset = sKadabraTeachableLearnset,
         .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_ALAKAZAM},
@@ -7579,6 +7667,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_NONE,
             gOverworldPalette_Alakazam,
             gShinyOverworldPalette_Alakazam
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_AlakazamF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_NONE
         )
         .levelUpLearnset = sAlakazamLevelUpLearnset,
         .teachableLearnset = sAlakazamTeachableLearnset,
@@ -7867,7 +7961,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_MACHAMP_GIGANTAMAX] =
+    [SPECIES_MACHAMP_GMAX] =
     {
         .baseHP        = 90,
         .baseAttack    = 130,
@@ -8472,7 +8566,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_GEODUDE_ALOLAN] =
+    [SPECIES_GEODUDE_ALOLA] =
     {
         .baseHP        = 40,
         .baseAttack    = 80,
@@ -8536,10 +8630,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sGeodudeAlolanTeachableLearnset,
         .eggMoveLearnset = sGeodudeAlolanEggMoveLearnset,
         .formSpeciesIdTable = sGeodudeFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL, 25, SPECIES_GRAVELER_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 25, SPECIES_GRAVELER_ALOLA}),
     },
 
-    [SPECIES_GRAVELER_ALOLAN] =
+    [SPECIES_GRAVELER_ALOLA] =
     {
         .baseHP        = 55,
         .baseAttack    = 95,
@@ -8601,11 +8695,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sGravelerAlolanLevelUpLearnset,
         .teachableLearnset = sGravelerAlolanTeachableLearnset,
         .formSpeciesIdTable = sGravelerFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_GOLEM_ALOLAN},
-                                {EVO_ITEM, ITEM_LINKING_CORD, SPECIES_GOLEM_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_TRADE, 0, SPECIES_GOLEM_ALOLA},
+                                {EVO_ITEM, ITEM_LINKING_CORD, SPECIES_GOLEM_ALOLA}),
     },
 
-    [SPECIES_GOLEM_ALOLAN] =
+    [SPECIES_GOLEM_ALOLA] =
     {
         .baseHP        = 80,
         .baseAttack    = GOLEM_ATTACK,
@@ -8800,7 +8894,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_PONYTA_GALARIAN] =
+    [SPECIES_PONYTA_GALAR] =
     {
         .baseHP        = 50,
         .baseAttack    = 85,
@@ -8862,10 +8956,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sPonytaGalarianTeachableLearnset,
         .eggMoveLearnset = sPonytaGalarianEggMoveLearnset,
         .formSpeciesIdTable = sPonytaFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL, 40, SPECIES_RAPIDASH_GALARIAN}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 40, SPECIES_RAPIDASH_GALAR}),
     },
 
-    [SPECIES_RAPIDASH_GALARIAN] =
+    [SPECIES_RAPIDASH_GALAR] =
     {
         .baseHP        = 65,
         .baseAttack    = 100,
@@ -9187,7 +9281,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_MEGA_EVOLUTIONS
 
 #if P_GALARIAN_FORMS
-    [SPECIES_SLOWPOKE_GALARIAN] =
+    [SPECIES_SLOWPOKE_GALAR] =
     {
         .baseHP        = 90,
         .baseAttack    = 65,
@@ -9249,11 +9343,11 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sSlowpokeGalarianTeachableLearnset,
         .eggMoveLearnset = sSlowpokeGalarianEggMoveLearnset,
         .formSpeciesIdTable = sSlowpokeFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_GALARICA_CUFF, SPECIES_SLOWBRO_GALARIAN},
-                                {EVO_ITEM, ITEM_GALARICA_WREATH, SPECIES_SLOWKING_GALARIAN}),
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_GALARICA_CUFF, SPECIES_SLOWBRO_GALAR},
+                                {EVO_ITEM, ITEM_GALARICA_WREATH, SPECIES_SLOWKING_GALAR}),
     },
 
-    [SPECIES_SLOWBRO_GALARIAN] =
+    [SPECIES_SLOWBRO_GALAR] =
     {
         .baseHP        = 95,
         .baseAttack    = 100,
@@ -9303,11 +9397,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconPalIndex = 0,
         SHADOW(-5, 9, SHADOW_SIZE_L)
         FOOTPRINT(Slowbro)
-        OVERWORLD(
+        OVERWORLD_SET_ANIM(
             sPicTable_SlowbroGalarian,
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
+            sAnimTable_Following_Asym,
             gOverworldPalette_SlowbroGalarian,
             gShinyOverworldPalette_SlowbroGalarian
         )
@@ -9318,7 +9413,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GEN_2_CROSS_EVOS
-    [SPECIES_SLOWKING_GALARIAN] =
+    [SPECIES_SLOWKING_GALAR] =
     {
         .baseHP        = 95,
         .baseAttack    = 65,
@@ -9647,11 +9742,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconPalIndex = 1,
         SHADOW(-3, 5, SHADOW_SIZE_M)
         FOOTPRINT(Farfetchd)
-        OVERWORLD(
+        OVERWORLD_SET_ANIM(
             sPicTable_Farfetchd,
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_NONE,
+            sAnimTable_Following_Asym,
             gOverworldPalette_Farfetchd,
             gShinyOverworldPalette_Farfetchd
         )
@@ -9662,7 +9758,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_FARFETCHD_GALARIAN] =
+    [SPECIES_FARFETCHD_GALAR] =
     {
         .baseHP        = 52,
         .baseAttack    = FARFETCHD_ATTACK + 5,
@@ -9855,6 +9951,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Doduo,
             gShinyOverworldPalette_Doduo
         )
+        OVERWORLD_FEMALE(
+            sPicTable_DoduoF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sDoduoLevelUpLearnset,
         .teachableLearnset = sDoduoTeachableLearnset,
         .eggMoveLearnset = sDoduoEggMoveLearnset,
@@ -9928,6 +10030,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Dodrio,
             gShinyOverworldPalette_Dodrio
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_DodrioF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sDodrioLevelUpLearnset,
         .teachableLearnset = sDodrioTeachableLearnset,
@@ -10200,7 +10308,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_GRIMER_ALOLAN] =
+    [SPECIES_GRIMER_ALOLA] =
     {
         .baseHP        = 80,
         .baseAttack    = 80,
@@ -10263,10 +10371,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sGrimerAlolanTeachableLearnset,
         .eggMoveLearnset = sGrimerAlolanEggMoveLearnset,
         .formSpeciesIdTable = sGrimerFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_LEVEL, 38, SPECIES_MUK_ALOLAN}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 38, SPECIES_MUK_ALOLA}),
     },
 
-    [SPECIES_MUK_ALOLAN] =
+    [SPECIES_MUK_ALOLA] =
     {
         .baseHP        = 105,
         .baseAttack    = 105,
@@ -10737,7 +10845,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
 #endif //P_MEGA_EVOLUTIONS
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_GENGAR_GIGANTAMAX] =
+    [SPECIES_GENGAR_GMAX] =
     {
         .baseHP        = 60,
         .baseAttack    = 65,
@@ -10923,6 +11031,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_SLITHER,
             gOverworldPalette_Steelix,
             gShinyOverworldPalette_Steelix
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_SteelixF,
+            SIZE_64x64,
+            SHADOW_SIZE_M,
+            TRACKS_SLITHER
         )
         .levelUpLearnset = sSteelixLevelUpLearnset,
         .teachableLearnset = sSteelixTeachableLearnset,
@@ -11126,6 +11240,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Hypno,
             gShinyOverworldPalette_Hypno
         )
+        OVERWORLD_FEMALE(
+            sPicTable_HypnoF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sHypnoLevelUpLearnset,
         .teachableLearnset = sHypnoTeachableLearnset,
     },
@@ -11261,7 +11381,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_KINGLER_GIGANTAMAX] =
+    [SPECIES_KINGLER_GMAX] =
     {
         .baseHP        = 55,
         .baseAttack    = 130,
@@ -11455,7 +11575,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_HISUIAN_FORMS
-    [SPECIES_VOLTORB_HISUIAN] =
+    [SPECIES_VOLTORB_HISUI] =
     {
         .baseHP        = 40,
         .baseAttack    = 30,
@@ -11516,10 +11636,10 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sVoltorbHisuianLevelUpLearnset,
         .teachableLearnset = sVoltorbHisuianTeachableLearnset,
         .formSpeciesIdTable = sVoltorbFormSpeciesIdTable,
-        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_ELECTRODE_HISUIAN}),
+        .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_ELECTRODE_HISUI}),
     },
 
-    [SPECIES_ELECTRODE_HISUIAN] =
+    [SPECIES_ELECTRODE_HISUI] =
     {
         .baseHP        = 60,
         .baseAttack    = 50,
@@ -11647,7 +11767,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sExeggcuteTeachableLearnset,
         .eggMoveLearnset = sExeggcuteEggMoveLearnset,
         .evolutions = EVOLUTION({EVO_ITEM, ITEM_LEAF_STONE, SPECIES_EXEGGUTOR},
-                                {EVO_NONE, 0, SPECIES_EXEGGUTOR_ALOLAN}),
+                                {EVO_NONE, 0, SPECIES_EXEGGUTOR_ALOLA}),
     },
 
 #if P_UPDATED_EXP_YIELDS >= GEN_7
@@ -11723,7 +11843,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_EXEGGUTOR_ALOLAN] =
+    [SPECIES_EXEGGUTOR_ALOLA] =
     {
         .baseHP        = 95,
         .baseAttack    = 105,
@@ -11852,8 +11972,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sCuboneTeachableLearnset,
         .eggMoveLearnset = sCuboneEggMoveLearnset,
         .evolutions = EVOLUTION({EVO_LEVEL, 28, SPECIES_MAROWAK},
-                                {EVO_NONE, 0, SPECIES_MAROWAK_ALOLAN},
-                                {EVO_NONE, 0, SPECIES_MAROWAK_ALOLAN_TOTEM}),
+                                {EVO_NONE, 0, SPECIES_MAROWAK_ALOLA},
+                                {EVO_NONE, 0, SPECIES_MAROWAK_ALOLA_TOTEM}),
     },
 
     [SPECIES_MAROWAK] =
@@ -11920,7 +12040,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_ALOLAN_FORMS
-    [SPECIES_MAROWAK_ALOLAN] =
+    [SPECIES_MAROWAK_ALOLA] =
     {
         .baseHP        = 60,
         .baseAttack    = 80,
@@ -11980,7 +12100,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sMarowakFormSpeciesIdTable,
     },
 
-    [SPECIES_MAROWAK_ALOLAN_TOTEM] =
+    [SPECIES_MAROWAK_ALOLA_TOTEM] =
     {
         .baseHP        = 60,
         .baseAttack    = 80,
@@ -12026,6 +12146,14 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .iconPalIndex = 1,
         SHADOW(-2, 11, SHADOW_SIZE_M)
         FOOTPRINT(Marowak)
+        OVERWORLD(
+            sPicTable_MarowakAlolan,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_MarowakAlolan,
+            gShinyOverworldPalette_MarowakAlolan
+        )
         .isTotem = TRUE,
         .isAlolanForm = TRUE,
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
@@ -12504,7 +12632,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sKoffingTeachableLearnset,
         .eggMoveLearnset = sKoffingEggMoveLearnset,
         .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_WEEZING},
-                                {EVO_NONE, 0, SPECIES_WEEZING_GALARIAN}),
+                                {EVO_NONE, 0, SPECIES_WEEZING_GALAR}),
     },
 
     [SPECIES_WEEZING] =
@@ -12577,7 +12705,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_WEEZING_GALARIAN] =
+    [SPECIES_WEEZING_GALAR] =
     {
         .baseHP        = 65,
         .baseAttack    = 90,
@@ -12707,6 +12835,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Rhyhorn,
             gShinyOverworldPalette_Rhyhorn
         )
+        OVERWORLD_FEMALE(
+            sPicTable_RhyhornF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sRhyhornLevelUpLearnset,
         .teachableLearnset = sRhyhornTeachableLearnset,
         .eggMoveLearnset = sRhyhornEggMoveLearnset,
@@ -12773,6 +12907,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Rhydon,
             gShinyOverworldPalette_Rhydon
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_RhydonF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sRhydonLevelUpLearnset,
         .teachableLearnset = sRhydonTeachableLearnset,
@@ -12847,6 +12987,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Rhyperior,
             gShinyOverworldPalette_Rhyperior
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_RhyperiorF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sRhyperiorLevelUpLearnset,
         .teachableLearnset = sRhyperiorTeachableLearnset,
@@ -13178,6 +13324,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Tangrowth,
             gShinyOverworldPalette_Tangrowth
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_TangrowthF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sTangrowthLevelUpLearnset,
         .teachableLearnset = sTangrowthTeachableLearnset,
@@ -13588,6 +13740,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Goldeen,
             gShinyOverworldPalette_Goldeen
         )
+        OVERWORLD_FEMALE(
+            sPicTable_GoldeenF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_SPOT
+        )
         .levelUpLearnset = sGoldeenLevelUpLearnset,
         .teachableLearnset = sGoldeenTeachableLearnset,
         .eggMoveLearnset = sGoldeenEggMoveLearnset,
@@ -13655,6 +13813,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_SPOT,
             gOverworldPalette_Seaking,
             gShinyOverworldPalette_Seaking
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_SeakingF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_SPOT
         )
         .levelUpLearnset = sSeakingLevelUpLearnset,
         .teachableLearnset = sSeakingTeachableLearnset,
@@ -13862,7 +14026,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sMimeJrTeachableLearnset,
         .eggMoveLearnset = sMimeJrEggMoveLearnset,
         .evolutions = EVOLUTION({EVO_MOVE, MOVE_MIMIC, SPECIES_MR_MIME},
-                                {EVO_NONE, 0, SPECIES_MR_MIME_GALARIAN}),
+                                {EVO_NONE, 0, SPECIES_MR_MIME_GALAR}),
     },
 #endif //P_GEN_4_CROSS_EVOS
 
@@ -13934,7 +14098,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_MR_MIME_GALARIAN] =
+    [SPECIES_MR_MIME_GALAR] =
     {
         .baseHP        = 50,
         .baseAttack    = 65,
@@ -14126,6 +14290,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Scyther,
             gShinyOverworldPalette_Scyther
         )
+        OVERWORLD_FEMALE(
+            sPicTable_ScytherF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sScytherLevelUpLearnset,
         .teachableLearnset = sScytherTeachableLearnset,
         .eggMoveLearnset = sScytherEggMoveLearnset,
@@ -14198,6 +14368,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_FOOT,
             gOverworldPalette_Scizor,
             gShinyOverworldPalette_Scizor
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_ScizorF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
         )
         .levelUpLearnset = sScizorLevelUpLearnset,
         .teachableLearnset = sScizorTeachableLearnset,
@@ -15073,7 +15249,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_PALDEAN_FORMS
-    [SPECIES_TAUROS_PALDEAN_COMBAT_BREED] =
+    [SPECIES_TAUROS_PALDEA_COMBAT] =
     {
         .baseHP        = 75,
         .baseAttack    = 110,
@@ -15137,7 +15313,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sTaurosFormSpeciesIdTable,
     },
 
-    [SPECIES_TAUROS_PALDEAN_BLAZE_BREED] =
+    [SPECIES_TAUROS_PALDEA_BLAZE] =
     {
         .baseHP        = 75,
         .baseAttack    = 110,
@@ -15201,7 +15377,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sTaurosFormSpeciesIdTable,
     },
 
-    [SPECIES_TAUROS_PALDEAN_AQUA_BREED] =
+    [SPECIES_TAUROS_PALDEA_AQUA] =
     {
         .baseHP        = 75,
         .baseAttack    = 110,
@@ -15329,6 +15505,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Magikarp,
             gShinyOverworldPalette_Magikarp
         )
+        OVERWORLD_FEMALE(
+            sPicTable_MagikarpF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_SPOT
+        )
         .tmIlliterate = TRUE,
         .levelUpLearnset = sMagikarpLevelUpLearnset,
         .teachableLearnset = sMagikarpTeachableLearnset,
@@ -15395,6 +15577,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             TRACKS_SLITHER,
             gOverworldPalette_Gyarados,
             gShinyOverworldPalette_Gyarados
+        )
+        OVERWORLD_FEMALE(
+            sPicTable_GyaradosF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_SLITHER
         )
         .levelUpLearnset = sGyaradosLevelUpLearnset,
         .teachableLearnset = sGyaradosTeachableLearnset,
@@ -15530,7 +15718,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_LAPRAS_GIGANTAMAX] =
+    [SPECIES_LAPRAS_GMAX] =
     {
         .baseHP        = 130,
         .baseAttack    = 85,
@@ -15719,6 +15907,12 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
             gOverworldPalette_Eevee,
             gShinyOverworldPalette_Eevee
         )
+        OVERWORLD_FEMALE(
+            sPicTable_EeveeF,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT
+        )
         .levelUpLearnset = sEeveeLevelUpLearnset,
         .teachableLearnset = sEeveeTeachableLearnset,
         .eggMoveLearnset = sEeveeEggMoveLearnset,
@@ -15737,7 +15931,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_EEVEE_GIGANTAMAX] =
+    [SPECIES_EEVEE_GMAX] =
     {
         .baseHP        = 55,
         .baseAttack    = 55,
@@ -15795,7 +15989,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 #endif //P_GIGANTAMAX_FORMS
 
-    [SPECIES_EEVEE_PARTNER] =
+    [SPECIES_EEVEE_STARTER] =
     {
         .baseHP        = 65,
         .baseAttack    = 75,
@@ -15848,6 +16042,14 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     #endif
         SHADOW(-2, 2, SHADOW_SIZE_S)
         FOOTPRINT(Eevee)
+        OVERWORLD(
+            sPicTable_Eevee,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_Eevee,
+            gShinyOverworldPalette_Eevee
+        )
         .cannotBeTraded = TRUE,
         .perfectIVCount = NUM_STATS,
         .levelUpLearnset = sEeveeLevelUpLearnset,
@@ -17092,7 +17294,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GIGANTAMAX_FORMS
-    [SPECIES_SNORLAX_GIGANTAMAX] =
+    [SPECIES_SNORLAX_GMAX] =
     {
         .baseHP        = 160,
         .baseAttack    = 110,
@@ -17225,7 +17427,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_ARTICUNO_GALARIAN] =
+    [SPECIES_ARTICUNO_GALAR] =
     {
         .baseHP        = 90,
         .baseAttack    = 85,
@@ -17370,7 +17572,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_ZAPDOS_GALARIAN] =
+    [SPECIES_ZAPDOS_GALAR] =
     {
         .baseHP        = 90,
         .baseAttack    = 125,
@@ -17509,7 +17711,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     },
 
 #if P_GALARIAN_FORMS
-    [SPECIES_MOLTRES_GALARIAN] =
+    [SPECIES_MOLTRES_GALAR] =
     {
         .baseHP        = 90,
         .baseAttack    = 85,
