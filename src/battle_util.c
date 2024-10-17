@@ -256,20 +256,7 @@ void HandleAction_UseMove(void)
         {
             if (moveTarget & MOVE_TARGET_RANDOM)
             {
-                if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-                {
-                    if (Random() & 1)
-                        gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-                    else
-                        gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
-                }
-                else
-                {
-                    if (Random() & 1)
-                        gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
-                    else
-                        gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
-                }
+                gBattlerTarget = SetRandomTarget(gBattlerAttacker);
             }
             else if (moveTarget & MOVE_TARGET_FOES_AND_ALLY)
             {
@@ -316,21 +303,7 @@ void HandleAction_UseMove(void)
     }
 	else if (IsDoubleBattle() && moveTarget & MOVE_TARGET_RANDOM)
     {
-        if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-        {
-            if (Random() & 1)
-                gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-            else
-                gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
-        }
-        else
-        {
-            if (Random() & 1)
-                gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
-            else
-                gBattlerTarget = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
-        }
-
+        gBattlerTarget = SetRandomTarget(gBattlerAttacker);
         if (gAbsentBattlerFlags & (1u << gBattlerTarget)
             && GetBattlerSide(gBattlerAttacker) != GetBattlerSide(gBattlerTarget))
         {
@@ -454,6 +427,10 @@ bool32 TryRunFromBattle(u32 battler)
     u8 holdEffect;
     u8 pyramidMultiplier;
     u8 speedVar;
+
+    // If this flag is set, running will never be successful under any circumstances.
+    if (FlagGet(B_FLAG_NO_RUNNING))
+        return effect;
 
     if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY_E_READER)
         holdEffect = gEnigmaBerries[battler].holdEffect;
@@ -2669,7 +2646,7 @@ u8 DoBattlerEndTurnEffects(void)
                 for (gBattlerAttacker = 0; gBattlerAttacker < gBattlersCount; gBattlerAttacker++)
                 {
                     if ((gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
-                     && GetBattlerAbility(gBattlerAttacker) != ABILITY_SOUNDPROOF)
+                     && (B_UPROAR_IGNORE_SOUNDPROOF >= GEN_5 || GetBattlerAbility(gBattlerAttacker) != ABILITY_SOUNDPROOF))
                     {
                         gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_SLEEP;
                         gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
@@ -5012,10 +4989,10 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
              && CountBattlerStatIncreases(BATTLE_PARTNER(battler), FALSE))
             {
                 gSpecialStatuses[battler].switchInAbilityDone = TRUE;
-                gBattlerAttacker = battler;
+                gBattlerAttacker = gBattlerAbility = battler;
                 for (i = 0; i < NUM_BATTLE_STATS; i++)
                     gBattleMons[battler].statStages[i] = gBattleMons[BATTLE_PARTNER(battler)].statStages[i];
-                gBattlerTarget = BATTLE_PARTNER(battler);
+                gBattleScripting.battler = BATTLE_PARTNER(battler);
                 BattleScriptPushCursorAndCallback(BattleScript_CostarActivates);
                 effect++;
             }
@@ -5623,7 +5600,8 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                     break;
                 }
 
-                gLastUsedAbility = gBattleMons[gBattlerAttacker].ability = gBattleStruct->overwrittenAbilities[gBattlerAttacker] = gBattleMons[gBattlerTarget].ability;
+                gLastUsedAbility = gBattleMons[gBattlerAttacker].ability;
+                gBattleMons[gBattlerAttacker].ability = gBattleStruct->overwrittenAbilities[gBattlerAttacker] = gBattleMons[gBattlerTarget].ability;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_MummyActivates;
                 effect++;
@@ -6403,7 +6381,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
             }
             break;
         case ABILITY_PROTOSYNTHESIS:
-            if (!gDisableStructs[battler].weatherAbilityDone 
+            if (!gDisableStructs[battler].weatherAbilityDone
              && (gBattleWeather & B_WEATHER_SUN) && WEATHER_HAS_EFFECT
              && !(gBattleMons[battler].status2 & STATUS2_TRANSFORMED)
              && !(gBattleStruct->boosterEnergyActivates & (1u << battler)))
@@ -8352,7 +8330,7 @@ void HandleAction_RunBattleScript(void) // identical to RunBattleScriptCommands
         gBattleScriptingCommandsTable[*gBattlescriptCurrInstr]();
 }
 
-u32 SetRandomTarget(u32 battler)
+u32 SetRandomTarget(u32 battlerAtk)
 {
     u32 target;
     static const u8 targets[2][2] =
@@ -8363,13 +8341,13 @@ u32 SetRandomTarget(u32 battler)
 
     if (IsDoubleBattle())
     {
-        target = GetBattlerAtPosition(targets[GetBattlerSide(battler)][Random() % 2]);
+        target = GetBattlerAtPosition(targets[GetBattlerSide(battlerAtk)][RandomUniform(RNG_RANDOM_TARGET, 0, 1)]);
         if (!IsBattlerAlive(target))
             target ^= BIT_FLANK;
     }
     else
     {
-        target = GetBattlerAtPosition(targets[GetBattlerSide(battler)][0]);
+        target = GetBattlerAtPosition(targets[GetBattlerSide(battlerAtk)][0]);
     }
 
     return target;
@@ -8680,7 +8658,7 @@ bool32 IsBattlerProtected(u32 battlerAtk, u32 battlerDef, u32 move)
 }
 
 // Only called directly when calculating damage type effectiveness
-static bool32 IsBattlerGrounded2(u32 battler, bool32 considerInverse)
+static bool32 IsBattlerGroundedInverseCheck(u32 battler, bool32 considerInverse)
 {
     u32 holdEffect = GetBattlerHoldEffect(battler, TRUE);
 
@@ -8698,7 +8676,7 @@ static bool32 IsBattlerGrounded2(u32 battler, bool32 considerInverse)
         return FALSE;
     if (holdEffect == HOLD_EFFECT_AIR_BALLOON)
         return FALSE;
-    if (GetBattlerAbility(battler) == ABILITY_LEVITATE)
+    if ((AI_DATA->aiCalcInProgress ? AI_DATA->abilities[battler] : GetBattlerAbility(battler)) == ABILITY_LEVITATE)
         return FALSE;
     if (IS_BATTLER_OF_TYPE(battler, TYPE_FLYING) && (!considerInverse || !FlagGet(B_FLAG_INVERSE_BATTLE)))
         return FALSE;
@@ -8707,7 +8685,7 @@ static bool32 IsBattlerGrounded2(u32 battler, bool32 considerInverse)
 
 bool32 IsBattlerGrounded(u32 battler)
 {
-    return IsBattlerGrounded2(battler, FALSE);
+    return IsBattlerGroundedInverseCheck(battler, FALSE);
 }
 
 bool32 IsBattlerAlive(u32 battler)
@@ -10499,7 +10477,7 @@ static inline uq4_12_t CalcTypeEffectivenessMultiplierInternal(u32 move, u32 mov
         if (B_GLARE_GHOST < GEN_4 && move == MOVE_GLARE && IS_BATTLER_OF_TYPE(battlerDef, TYPE_GHOST))
             modifier = UQ_4_12(0.0);
     }
-    else if (moveType == TYPE_GROUND && !IsBattlerGrounded2(battlerDef, TRUE) && !(gMovesInfo[move].ignoreTypeIfFlyingAndUngrounded))
+    else if (moveType == TYPE_GROUND && !IsBattlerGroundedInverseCheck(battlerDef, TRUE) && !(gMovesInfo[move].ignoreTypeIfFlyingAndUngrounded))
     {
         modifier = UQ_4_12(0.0);
         if (recordAbilities && defAbility == ABILITY_LEVITATE)

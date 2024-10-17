@@ -1897,15 +1897,55 @@ static void Cmd_ppreduce(void)
 }
 
 // The chance is 1/N for each stage.
-#if B_CRIT_CHANCE >= GEN_7
-    static const u8 sCriticalHitOdds[] = {24, 8, 2, 1, 1};
-#elif B_CRIT_CHANCE == GEN_6
-    static const u8 sCriticalHitOdds[] = {16, 8, 2, 1, 1};
-#else
-    static const u8 sCriticalHitOdds[] = {16, 8, 4, 3, 2}; // Gens 2,3,4,5
-#endif // B_CRIT_CHANCE
+static const u32 sGen7CriticalHitOdds[] = {24, 8, 2, 1, 1};
+static const u32 sGen6CriticalHitOdds[] = {16, 8, 2, 1, 1};
+static const u32 sCriticalHitOdds[]     = {16, 8, 4, 3, 2}; // Gens 2,3,4,5
 
-#define BENEFITS_FROM_LEEK(battler, holdEffect)((holdEffect == HOLD_EFFECT_LEEK) && (GET_BASE_SPECIES_ID(gBattleMons[battler].species) == SPECIES_FARFETCHD || gBattleMons[battler].species == SPECIES_SIRFETCHD))
+static inline u32 GetCriticalHitOdds(u32 critChance)
+{
+    if (B_CRIT_CHANCE >= GEN_7)
+        return sGen7CriticalHitOdds[critChance];
+    if (B_CRIT_CHANCE == GEN_6)
+        return sGen6CriticalHitOdds[critChance];
+
+    return sCriticalHitOdds[critChance];
+}
+
+static inline u32 IsBattlerLeekAffected(u32 battler, u32 holdEffect)
+{
+    if (holdEffect == HOLD_EFFECT_LEEK)
+    {
+        return GET_BASE_SPECIES_ID(gBattleMons[battler].species) == SPECIES_FARFETCHD
+            || gBattleMons[battler].species == SPECIES_SIRFETCHD;
+    }
+    return FALSE;
+}
+
+static inline u32 GetHoldEffectCritChanceIncrease(u32 battler, u32 holdEffect)
+{
+    u32 critStageIncrease = 0;
+
+    switch (holdEffect)
+    {
+    case HOLD_EFFECT_SCOPE_LENS:
+        critStageIncrease = 1;
+        break;
+    case HOLD_EFFECT_LUCKY_PUNCH:
+        if (gBattleMons[battler].species == SPECIES_CHANSEY)
+            critStageIncrease = 2;
+        break;
+    case HOLD_EFFECT_LEEK:
+        if (IsBattlerLeekAffected(battler, holdEffect))
+            critStageIncrease = 2;
+        break;
+    default:
+        critStageIncrease = 0;
+        break;
+    }
+
+    return critStageIncrease;
+}
+
 s32 CalcCritChanceStageArgs(u32 battlerAtk, u32 battlerDef, u32 move, bool32 recordAbility, u32 abilityAtk, u32 abilityDef, u32 holdEffectAtk)
 {
     s32 critChance = 0;
@@ -1925,9 +1965,7 @@ s32 CalcCritChanceStageArgs(u32 battlerAtk, u32 battlerDef, u32 move, bool32 rec
         critChance  = 2 * ((gBattleMons[battlerAtk].status2 & STATUS2_FOCUS_ENERGY) != 0)
                     + 1 * ((gBattleMons[battlerAtk].status2 & STATUS2_DRAGON_CHEER) != 0)
                     + gMovesInfo[move].criticalHitStage
-                    + (holdEffectAtk == HOLD_EFFECT_SCOPE_LENS)
-                    + 2 * (holdEffectAtk == HOLD_EFFECT_LUCKY_PUNCH && gBattleMons[battlerAtk].species == SPECIES_CHANSEY)
-                    + 2 * BENEFITS_FROM_LEEK(battlerAtk, holdEffectAtk)
+                    + GetHoldEffectCritChanceIncrease(battlerAtk, holdEffectAtk)
                     + 2 * (B_AFFECTION_MECHANICS == TRUE && GetBattlerAffectionHearts(battlerAtk) == AFFECTION_FIVE_HEARTS)
                     + (abilityAtk == ABILITY_SUPER_LUCK)
                     + gBattleStruct->bonusCritStages[gBattlerAttacker];
@@ -1943,7 +1981,7 @@ s32 CalcCritChanceStageArgs(u32 battlerAtk, u32 battlerDef, u32 move, bool32 rec
         {
             if (critChance == -2)
                 RecordAbilityBattle(battlerDef, abilityDef);
-            else if (sCriticalHitOdds[critChance] == 1)
+            else if (GetCriticalHitOdds(critChance) == 1)
                 RecordAbilityBattle(battlerDef, abilityDef);
         }
         critChance = -1;
@@ -1965,7 +2003,7 @@ s32 CalcCritChanceStage(u32 battlerAtk, u32 battlerDef, u32 move, bool32 recordA
 // Threshold = Base Speed / 2
 // High crit move = 8 * (Base Speed / 2)
 // Focus Energy = 4 * (Base Speed / 2)
-s32 CalcCritChanceStageGen1(u8 battlerAtk, u8 battlerDef, u32 move, bool32 recordAbility)
+s32 CalcCritChanceStageGen1(u32 battlerAtk, u32 battlerDef, u32 move, bool32 recordAbility)
 {
     // Vanilla
     u32 focusEnergyScaler = 4;
@@ -1975,13 +2013,13 @@ s32 CalcCritChanceStageGen1(u8 battlerAtk, u8 battlerDef, u32 move, bool32 recor
     u32 superLuckScaler = 4;
     u32 scopeLensScaler = 4;
     u32 luckyPunchScaler = 8;
-    u32 farfetchedLeekScaler = 8;
+    u32 farfetchdLeekScaler = 8;
 
     s32 critChance = 0;
     s32 moveCritStage = gMovesInfo[gCurrentMove].criticalHitStage;
-    s32 bonusCritStage = gBattleStruct->bonusCritStages[gBattlerAttacker]; // G-Max Chi Strike
-    u32 abilityAtk = GetBattlerAbility(gBattlerAttacker);
-    u32 abilityDef = GetBattlerAbility(gBattlerTarget);
+    s32 bonusCritStage = gBattleStruct->bonusCritStages[battlerAtk]; // G-Max Chi Strike
+    u32 abilityAtk = GetBattlerAbility(battlerAtk);
+    u32 abilityDef = GetBattlerAbility(battlerDef);
     u32 holdEffectAtk = GetBattlerHoldEffect(battlerAtk, TRUE);
     u16 baseSpeed = gSpeciesInfo[gBattleMons[battlerAtk].species].baseSpeed;
 
@@ -1994,17 +2032,15 @@ s32 CalcCritChanceStageGen1(u8 battlerAtk, u8 battlerDef, u32 move, bool32 recor
     if (bonusCritStage > 0)
         critChance = critChance * bonusCritStage;
 
-    if ((gBattleMons[gBattlerAttacker].status2 & STATUS2_FOCUS_ENERGY_ANY) != 0)
+    if ((gBattleMons[battlerAtk].status2 & STATUS2_FOCUS_ENERGY_ANY) != 0)
         critChance = critChance * focusEnergyScaler;
 
     if (holdEffectAtk == HOLD_EFFECT_SCOPE_LENS)
         critChance = critChance * scopeLensScaler;
-
-    if (holdEffectAtk == HOLD_EFFECT_LUCKY_PUNCH && gBattleMons[gBattlerAttacker].species == SPECIES_CHANSEY)
+    else if (holdEffectAtk == HOLD_EFFECT_LUCKY_PUNCH && gBattleMons[battlerAtk].species == SPECIES_CHANSEY)
         critChance = critChance * luckyPunchScaler;
-
-    if (BENEFITS_FROM_LEEK(battlerAtk, holdEffectAtk))
-        critChance = critChance * farfetchedLeekScaler;
+    else if (IsBattlerLeekAffected(battlerAtk, holdEffectAtk))
+        critChance = critChance * farfetchdLeekScaler;
 
     if (abilityAtk == ABILITY_SUPER_LUCK)
         critChance = critChance * superLuckScaler;
@@ -2032,14 +2068,13 @@ s32 CalcCritChanceStageGen1(u8 battlerAtk, u8 battlerDef, u32 move, bool32 recor
 
     return critChance;
 }
-#undef BENEFITS_FROM_LEEK
 
 s32 GetCritHitOdds(s32 critChanceIndex)
 {
     if (critChanceIndex < 0)
         return -1;
     else
-        return sCriticalHitOdds[critChanceIndex];
+        return GetCriticalHitOdds(critChanceIndex);
 }
 
 static void Cmd_critcalc(void)
@@ -2073,7 +2108,7 @@ static void Cmd_critcalc(void)
                 gIsCriticalHit = 0;
         }
         else
-            gIsCriticalHit = RandomChance(RNG_CRITICAL_HIT, 1, sCriticalHitOdds[critChance]);
+            gIsCriticalHit = RandomChance(RNG_CRITICAL_HIT, 1, GetCriticalHitOdds(critChance));
     }
 
     // Counter for EVO_CRITICAL_HITS.
@@ -7007,7 +7042,7 @@ static void Cmd_openpartyscreen(void)
         else if (IsDoubleBattle())
         {
             bool32 hasReplacement;
-            
+
             hitmarkerFaintBits = gHitMarker >> 28;
             for (i = 0; i < gBattlersCount; i++)
             {
@@ -7015,7 +7050,7 @@ static void Cmd_openpartyscreen(void)
                 {
                     if (i > 1 && ((1u << BATTLE_PARTNER(i)) & hitmarkerFaintBits))
                         continue;
-                    
+
                     battler = i;
                     if (HasNoMonsToSwitch(battler, PARTY_SIZE, PARTY_SIZE))
                     {
@@ -7037,7 +7072,7 @@ static void Cmd_openpartyscreen(void)
                     }
                 }
             }
-            
+
             for (i = 0; i < NUM_BATTLE_SIDES; i++)
             {
                 if (!(gSpecialStatuses[i].faintedHasReplacement))
@@ -8903,7 +8938,7 @@ u32 GetHighestStatId(u32 battler)
     }
     if (gBattleMons[battler].speed > highestStat)
         highestId = STAT_SPEED;
-    
+
     return highestId;
 }
 
@@ -9123,6 +9158,7 @@ static void Cmd_various(void)
     {
     // Roar will fail in a double wild battle when used by the player against one of the two alive wild mons.
     // Also when an opposing wild mon uses it againt its partner.
+    // Also when B_FLAG_NO_RUNNING is enabled.
     case VARIOUS_JUMP_IF_ROAR_FAILS:
     {
         VARIOUS_ARGS(const u8 *jumpInstr);
@@ -9134,6 +9170,8 @@ static void Cmd_various(void)
         else if (WILD_DOUBLE_BATTLE
                  && GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
                  && GetBattlerSide(gBattlerTarget) == B_SIDE_OPPONENT)
+            gBattlescriptCurrInstr = cmd->jumpInstr;
+        else if (FlagGet(B_FLAG_NO_RUNNING))
             gBattlescriptCurrInstr = cmd->jumpInstr;
         else
             gBattlescriptCurrInstr = cmd->nextInstr;
@@ -9898,6 +9936,7 @@ static void Cmd_various(void)
             if (gBattleMons[gBattlerTarget].ability == ABILITY_NEUTRALIZING_GAS)
                 gSpecialStatuses[gBattlerTarget].neutralizingGasRemoved = TRUE;
 
+            gBattleScripting.abilityPopupOverwrite = gBattleMons[gBattlerTarget].ability;
             gBattleMons[gBattlerTarget].ability = gBattleStruct->overwrittenAbilities[gBattlerTarget] = ABILITY_SIMPLE;
             gBattlescriptCurrInstr = cmd->nextInstr;
         }
@@ -11449,10 +11488,11 @@ static void Cmd_setmiracleeye(void)
 bool8 UproarWakeUpCheck(u8 battler)
 {
     s32 i;
+    bool32 hasSoundproof = (B_UPROAR_IGNORE_SOUNDPROOF < GEN_5 && GetBattlerAbility(battler) == ABILITY_SOUNDPROOF);
 
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || (GetBattlerAbility(battler) == ABILITY_SOUNDPROOF && B_UPROAR_IGNORE_SOUNDPROOF < GEN_5))
+        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || hasSoundproof)
             continue;
 
         gBattleScripting.battler = i;
@@ -14377,7 +14417,7 @@ static void Cmd_trycopyability(void)
     if (gBattleMons[battler].ability == defAbility
       || defAbility == ABILITY_NONE
       || gAbilitiesInfo[gBattleMons[battler].ability].cantBeSuppressed
-      || gAbilitiesInfo[gBattleMons[BATTLE_PARTNER(battler)].ability].cantBeSuppressed
+      || (IsBattlerAlive(BATTLE_PARTNER(battler)) && gAbilitiesInfo[gBattleMons[BATTLE_PARTNER(battler)].ability].cantBeSuppressed && gMovesInfo[gCurrentMove].effect == EFFECT_DOODLE)
       || gAbilitiesInfo[defAbility].cantBeCopied)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
@@ -14573,9 +14613,11 @@ static void Cmd_tryswapabilities(void)
         }
         else
         {
-            u16 abilityAtk = gBattleMons[gBattlerAttacker].ability;
-            gBattleMons[gBattlerAttacker].ability = gBattleStruct->overwrittenAbilities[gBattlerAttacker] = gBattleMons[gBattlerTarget].ability;
-            gBattleMons[gBattlerTarget].ability = gBattleStruct->overwrittenAbilities[gBattlerTarget] = abilityAtk;
+            if (GetBattlerSide(gBattlerAttacker) != GetBattlerSide(gBattlerTarget))
+                gBattleScripting.abilityPopupOverwrite = gBattleMons[gBattlerAttacker].ability;
+            gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
+            gBattleMons[gBattlerTarget].ability = gBattleStruct->overwrittenAbilities[gBattlerTarget] = gBattleMons[gBattlerAttacker].ability;
+            gBattleMons[gBattlerAttacker].ability = gBattleStruct->overwrittenAbilities[gBattlerAttacker] = gLastUsedAbility;
 
             gBattlescriptCurrInstr = cmd->nextInstr;
         }
@@ -15867,6 +15909,7 @@ static void Cmd_tryworryseed(void)
     }
     else
     {
+        gBattleScripting.abilityPopupOverwrite = gBattleMons[gBattlerTarget].ability;
         gBattleMons[gBattlerTarget].ability = gBattleStruct->overwrittenAbilities[gBattlerTarget] = ABILITY_INSOMNIA;
         gBattlescriptCurrInstr = cmd->nextInstr;
     }

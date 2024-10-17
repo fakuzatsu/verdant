@@ -3845,7 +3845,6 @@ static void DoBattleIntro(void)
             gBattleStruct->eventsBeforeFirstTurnState = 0;
             gBattleStruct->switchInBattlerCounter = 0;
             gBattleStruct->overworldWeatherDone = FALSE;
-            SetAiLogicDataForTurn(AI_DATA); // get assumed abilities, hold effects, etc of all battlers
             Ai_InitPartyStruct(); // Save mons party counts, and first 2/4 mons on the battlefield.
 
             // Try to set a status to start the battle with
@@ -4165,6 +4164,12 @@ u8 IsRunningFromBattleImpossible(u32 battler)
 {
     u32 holdEffect, i;
 
+    if (FlagGet(B_FLAG_NO_RUNNING))
+    {
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CANT_ESCAPE;
+        return BATTLE_RUN_FORBIDDEN;
+    }
+
     if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY_E_READER)
         holdEffect = gEnigmaBerries[battler].holdEffect;
     else
@@ -4288,6 +4293,7 @@ static void HandleTurnActionSelectionState(void)
             if ((gBattleTypeFlags & BATTLE_TYPE_HAS_AI || IsWildMonSmart())
                     && (BattlerHasAi(battler) && !(gBattleTypeFlags & BATTLE_TYPE_PALACE)))
             {
+                AI_DATA->aiCalcInProgress = TRUE;
                 if (ShouldSwitch(battler, FALSE))
                     AI_DATA->shouldSwitch |= (1u << battler);
                 if (AI_THINKING_STRUCT->aiFlags[battler] & AI_FLAG_RISKY) // Risky AI switches aggressively even mid battle
@@ -4296,6 +4302,7 @@ static void HandleTurnActionSelectionState(void)
                     AI_DATA->mostSuitableMonId[battler] = GetMostSuitableMonToSwitchInto(battler, FALSE);
 
                 gBattleStruct->aiMoveOrAction[battler] = ComputeBattleAiScores(battler);
+                AI_DATA->aiCalcInProgress = FALSE;
             }
             // fallthrough
         case STATE_BEFORE_ACTION_CHOSEN: // Choose an action.
@@ -4520,8 +4527,9 @@ static void HandleTurnActionSelectionState(void)
                     BattleScriptExecute(BattleScript_PrintCantRunFromTrainer);
                     gBattleCommunication[battler] = STATE_BEFORE_ACTION_CHOSEN;
                 }
-                else if (IsRunningFromBattleImpossible(battler) != BATTLE_RUN_SUCCESS
+                else if ((IsRunningFromBattleImpossible(battler) != BATTLE_RUN_SUCCESS
                          && gBattleResources->bufferB[battler][1] == B_ACTION_RUN)
+                         || (FlagGet(B_FLAG_NO_RUNNING) == TRUE && gBattleResources->bufferB[battler][1] == B_ACTION_RUN))
                 {
                     gSelectionBattleScripts[battler] = BattleScript_PrintCantEscapeFromBattle;
                     gBattleCommunication[battler] = STATE_SELECTION_SCRIPT;
