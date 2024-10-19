@@ -235,7 +235,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 32,
+      "x": 33,
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_MAUVILLE_CITY_HOUSE1",
@@ -249,7 +249,7 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 19,
+      "x": 18,
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_MAUVILLE_CITY_HOUSE2",
