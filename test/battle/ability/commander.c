@@ -270,16 +270,16 @@ DOUBLE_BATTLE_TEST("Commander Tatsugiri is still affected by Perish Song while c
         ABILITY_POPUP(playerRight, ABILITY_COMMANDER);
         MESSAGE("Tatsugiri was swallowed by Dondozo and became Dondozo's commander!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_PERISH_SONG, opponentLeft);
-        MESSAGE("All affected POKéMON will faint in three turns!");
-        MESSAGE("Dondozo's PERISH count fell to 0!");
+        MESSAGE("All affected Pokémon will faint in three turns!");
+        MESSAGE("Dondozo's Perish count fell to 0!");
         MESSAGE("Dondozo fainted!");
-        MESSAGE("Foe Wobbuffet's PERISH count fell to 0!");
+        MESSAGE("Foe Wobbuffet's Perish count fell to 0!");
         MESSAGE("Foe Wobbuffet fainted!");
         NONE_OF {
-            MESSAGE("Tatsugiri's PERISH count fell to 0!");
+            MESSAGE("Tatsugiri's Perish count fell to 0!");
             MESSAGE("Tatsugiri fainted!");
         }
-        MESSAGE("Foe Wynaut's PERISH count fell to 0!");
+        MESSAGE("Foe Wynaut's Perish count fell to 0!");
         MESSAGE("Foe Wynaut fainted!");
     }
 }

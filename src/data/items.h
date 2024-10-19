@@ -14757,7 +14757,7 @@ const struct Item gItemsInfo[] =
         .name = _("Infinite Candy"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "A special rare candy\n"
+            "A special candy\n"
             "that never seems to\n"
             "run out."),
         .importance = 1,
