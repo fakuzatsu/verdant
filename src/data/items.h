@@ -14757,9 +14757,9 @@ const struct Item gItemsInfo[] =
         .name = _("Infinite Candy"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "A special candy\n"
-            "that never seems to\n"
-            "run out."),
+            "A unique candy\n"
+            "that never seems\n"
+            "to run out."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
