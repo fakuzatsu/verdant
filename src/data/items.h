@@ -14742,7 +14742,7 @@ const struct Item gItemsInfo[] =
         .price = 2000,
         .description = COMPOUND_STRING(
             "A wooden toy\n"
-            "resembling a Poké-.\n"
+            "resembling a Poké-\n"
             "mon. Can be sold."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
@@ -14774,9 +14774,9 @@ const struct Item gItemsInfo[] =
         .name = _("DexNav"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "A handy device for\n"
-            "keeping track of and\n"
-            "finding Pokémon."),
+            "A handy device\n"
+            "for keeping track\n"
+            "of Pokémon."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
