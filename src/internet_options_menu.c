@@ -1613,18 +1613,19 @@ static void Task_InternetOptions(u8 taskId)
         // Get PID from HTTP content, add to saveblock, show and then save
         pid = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[2] << 8) + (pRecvData[3]);
         gSaveBlock3Ptr->PID = pid;
+         //Show Friend code then save
         data->state = INTERNET_SHOW_FRIENDCODE;
-        data->nextstate = INTERNET_SAVE_GAME;
+        data->nextstate = INTERNET_SET_PROFILE;
         break;
     case INTERNET_SHOW_FRIENDCODE:
-        // Convert PID to FC and display it
-        concat_str(pURL, "Your Friend Code is:\n");
-        pid_to_fc(data->unused5,(u8 *)hash);
-        concat_str(pURL, hash);
+        //Convert PID to FC and display it
+        concat_str(pURL,"Your Friend Code is:\n");
+        pid_to_fc(gSaveBlock3Ptr->PID,(u8 *)hash);
+        concat_str(pURL,hash);
         ASCIIToPkmnStr((u8 *)halftoken,(u8 *)pURL);
         if (PrintInternetOptionsMenuMessage(&data->textState, (u8 *)halftoken))
         {
-            data->state = data->nextstate;
+            data->state = INTERNET_SAVE_GAME;
         }
         break;
     case INTERNET_ASK_COUNTRY:
@@ -1744,16 +1745,20 @@ static void Task_InternetOptions(u8 taskId)
         // Main Mystery Gift menu, player can select Wonder Cards or News (or exit)
         switch (InternetOptions_HandleThreeOptionMenu(&data->textState, &data->var, 0))
         {
-        case 0: // "Search Pokemon"
-            data->state = INTERNET_STATE_SEEK_SETUP;
+        case 0: // "Mystergy Gift Download"
+            data->state = INTERNET_STATE_EXIT;
             PlaySE(SE_SELECT);
-
             break;
-        case 1: // "Deposit Pokemon"
-            if (VarGet(VAR_DEPOSIT_SPECIES) > 0)
-                data->state = INTERNET_STATE_WITHDRAW_POKEMON;
-            else
-                data->state = INTERNET_STATE_DEPOSIT_POKEMON;
+        case 1: // "Bank"
+            data->state = INTERNET_STATE_EXIT;
+            PlaySE(SE_SELECT);
+            break;
+        case 2: // "Friends"
+            data->state = INTERNET_STATE_EXIT;
+            PlaySE(SE_SELECT);
+            break;
+        case 3: // "Sync"
+            data->state = INTERNET_STATE_EXIT;
             PlaySE(SE_SELECT);
             break;
         case LIST_CANCEL:
