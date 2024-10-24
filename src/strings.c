@@ -1710,3 +1710,4 @@ const u8 gText_UploadSecretBase[] = _("Upload Secret Base");
 const u8 gText_UploadRecordedBattle[] = _("Upload Recorded Battle");
 ALIGNED(4) const u8 gText_InternetOptions[] = _("Internet Options");
 ALIGNED(4) const u8 gText_CreateFriendCode[] = _("No Friend Code found.\nGo online and create one?");
+ALIGNED(4) const u8 gText_FC[] = _("FC:");

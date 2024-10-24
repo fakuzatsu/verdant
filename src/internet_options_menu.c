@@ -868,7 +868,6 @@ char base64_encode(u32 checksum, char *data, size_t input_length) {
                                 '4', '5', '6', '7', '8', '9', '-', '_'};
 
     char input_data[output_length];
-    if (encoded_data == NULL) return NULL;
 
     input_data[0] = checksum >> 24 & 0xFF;
     input_data[1] = checksum >> 16 & 0xFF;
@@ -880,6 +879,7 @@ char base64_encode(u32 checksum, char *data, size_t input_length) {
     }
  
     char encoded_data[output_length];
+        if (encoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
  
@@ -1443,12 +1443,12 @@ static void Task_InternetOptions(u8 taskId)
         //Add data= to URL
         concat_str(pURL,"&data=\0");
 
-        userprofile->version = VERSION_EMERALD;
-        userprofile->romhackID = 0x00000013;
-        userprofile->romhackVer = SAVE_VERSION;
-        userprofile->language = LANGUAGE_ENGLISH;
-        userprofile->country = 12;
-        userprofile->region = 8;
+        userprofile->version      = VERSION_EMERALD;
+        userprofile->romhackID    = 0x00000013;
+        userprofile->romhackVer   = SAVE_VERSION;
+        userprofile->language     = LANGUAGE_ENGLISH;
+        userprofile->country      = 12;
+        userprofile->region       = 8;
         userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
         userprofile->trainerID[1] = gSaveBlock2Ptr->playerTrainerId[1];
         userprofile->trainerID[2] = gSaveBlock2Ptr->playerTrainerId[2];
@@ -1673,10 +1673,10 @@ static void Task_InternetOptions(u8 taskId)
         concat_str(pURL, "&hash=");
         concat_str(pURL, hash);
 
-        userprofile->version      = 0x03;
-        userprofile->romhackID    = 0x03;
-        userprofile->romhackVer   = 0x03;
-        userprofile->language     = 0x02;
+        userprofile->version      = VERSION_EMERALD;
+        userprofile->romhackID    = 0x00000013;
+        userprofile->romhackVer   = SAVE_VERSION;
+        userprofile->language     = LANGUAGE_ENGLISH;
         userprofile->country      = 12;
         userprofile->region       = 8;
         userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
@@ -1694,7 +1694,7 @@ static void Task_InternetOptions(u8 taskId)
         }
         for (int i = 0; i < 56; i++)
         {
-            userprofile->email[i]=0;
+            userprofile->email[i] = 0;
         }
         userprofile->notify        = 0;
         userprofile->clientSecret  = 0;
@@ -1704,14 +1704,15 @@ static void Task_InternetOptions(u8 taskId)
         checksum = encrypt_data(pid, (char *)userprofile, sizeof(userprofile));
 
         concat_str(pURL, "&data=");
-        *encoded_data=base64_encode(checksum, (char *)userprofile, sizeof(userprofile)+4);
+        *encoded_data = base64_encode(checksum, (char *)userprofile, sizeof(userprofile)+4);
         concat_str(pURL, encoded_data);
 
-        recvBufSize=8;
+        recvBufSize = 8;
 
         // Request a PID
         data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        if (data->errorNum != 0){
+        if (data->errorNum != 0)
+        {
             maKill();
             data->state = INTERNET_STATE_EXIT;
         }
@@ -1732,7 +1733,7 @@ static void Task_InternetOptions(u8 taskId)
             }
         }
 
-        int i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
+        i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
 
         if (i == 0){
             data->state = INTERNET_STATE_MAIN_MENU;

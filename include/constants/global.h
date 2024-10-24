@@ -30,6 +30,8 @@
 
 #define NUM_VERSIONS 15
 
+#define SAVE_VERSION 0 // Tracks the current save iteration for connectivity.
+
 #define LANGUAGE_JAPANESE 1
 #define LANGUAGE_ENGLISH  2
 #define LANGUAGE_FRENCH   3
