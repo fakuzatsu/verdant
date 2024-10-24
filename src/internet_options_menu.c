@@ -879,7 +879,6 @@ char base64_encode(u32 checksum, char *data, size_t input_length) {
     }
  
     char encoded_data[output_length];
-        if (encoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
  
