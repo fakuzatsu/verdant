@@ -515,7 +515,7 @@ static bool32 HandleInternetOptionsSetup()
         FillBgTilemapBufferRect(1, 0x000, 0, 0, 32, 32, 0x11);
         FillBgTilemapBufferRect(2, 0x000, 0, 0, 32, 32, 0x11);
         InternetOptions_DrawCheckerboardPattern(3);
-        PrintInternetOptionsTopMenu(FALSE, FALSE);
+        PrintInternetOptionsTopMenu(FALSE);
         gMain.state++;
         break;
     case 2:
@@ -548,21 +548,25 @@ void CB2_InitInternetOptions(void)
     RunTasks();
 }
 
-void PrintInternetOptionsTopMenu(bool8 isEReader, bool32 useCancel)
+void PrintInternetOptionsTopMenu(bool32 connecting)
 {
     const u8 * header;
     const u8 * options;
+    options = !connecting ? gJPText_Connecting : gText_PickOKCancel;
+    
     FillWindowPixelBuffer(0, 0);
-    if (!isEReader)
+    if (gSaveBlock2Ptr->PID == 0xFFFFFFFF)
     {
         header = gText_InternetOptions;
-        options = !useCancel ? gText_PickOKExit : gText_PickOKCancel;
     }
     else
     {
-        header = gJPText_MysteryGift;
-        options = gJPText_DecideStop;
+        pid_to_fc(gSaveBlock2Ptr->PID,(u8 *)options);
+        header = gText_FC;
+        concat_str((char *)header,(char *)options);
     }
+
+    options = !connecting ? gJPText_Connecting : gText_PickOKCancel;
 
     AddTextPrinterParameterized4(0, FONT_NORMAL, 4, 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, header);
     AddTextPrinterParameterized4(0, FONT_SMALL, GetStringRightAlignXOffset(FONT_SMALL, options, 0xDE), 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, options);
@@ -864,6 +868,7 @@ char base64_encode(u32 checksum, char *data, size_t input_length) {
                                 '4', '5', '6', '7', '8', '9', '-', '_'};
 
     char input_data[output_length];
+    if (encoded_data == NULL) return NULL;
 
     input_data[0] = checksum >> 24 & 0xFF;
     input_data[1] = checksum >> 16 & 0xFF;
@@ -1122,11 +1127,15 @@ int sha1digest(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t datab
     return 0;
 }
 
-void pid_to_fc(u32 pid, u8 *hexdigest) {
+void pid_to_fc(u32 pid, u8 *hexdigest) 
+{
     if (pid == 0)
+    {
         // behaviour observed in MKWii, more likely an error condition
         hexdigest[0] = 'z';
-    else {
+    }
+    else 
+    {
         u8 i = 0;
         u8 buffer[8];
         // buffer is pid in little endian, followed by RMCJ in little endian
@@ -1144,28 +1153,24 @@ void pid_to_fc(u32 pid, u8 *hexdigest) {
         u64 checksum = gencrc8(buffer);
         checksum = ((checksum << 32) | pid);
 
-        ConvertIntToHexStringN_v2(hexdigest, checksum, STR_CONV_MODE_RIGHT_ALIGN, 16);
-        for(i = 0; i < 12; i++){
-            hexdigest[i]=hexdigest[i+4];
+        ConvertUIntToDecimalStringN(hexdigest, checksum, STR_CONV_MODE_LEADING_ZEROS, 16);
+        for(i = 0; i < 12; i++)
+        {
+            hexdigest[i]=hexdigest[i + 4];
         }
 
-        for(i = 13; i > 9; i--){
-            hexdigest[i]=hexdigest[i-2];
+        for(i = 13; i > 9; i--)
+        {
+            hexdigest[i]=hexdigest[i - 2];
         }
-        for(i=8; i>4; i--){
-            hexdigest[i]=hexdigest[i-1];
+        for(i = 8; i > 4; i--)
+        {
+            hexdigest[i]=hexdigest[i - 1];
         }
-        hexdigest[4] = '-';
-        hexdigest[9] = '-';
-        hexdigest[14] = '\0';
-        for(i = 0; i < 14; i++){
-            if (hexdigest[i] == '\0'){
-                break;
-            }
-            else if (hexdigest[i] > 0x60){
-                hexdigest[i] = hexdigest[i] - 0x20;
-            }
-        }
+
+        hexdigest[4]='-';
+        hexdigest[9]='-';
+        hexdigest[14]='\0';
     }
 }
 
@@ -1399,18 +1404,94 @@ static void Task_InternetOptions(u8 taskId)
             data->state = INTERNET_STATE_EXIT;
         }
 
-        if (gSaveBlock3Ptr->PID == 0xFFFFFFFF)
-        {
-            data->state = INTERNET_ASK_PID;
-        }
-        else 
-        {
-            data->state = INTERNET_PING_SERVER;
-        }
+        data->state = INTERNET_PING_SERVER;
         break;
     case INTERNET_PING_SERVER:
+        recvBufSize = 4;
+        concat_str(pURL,"http://www.PutYourDomainHere.com/pokemonrse/worldexchange/info\0");
+        //Request a PID
+        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
+        if(data->errorNum != 0)
+        {
+            maKill();
+            data->state = INTERNET_STATE_EXIT;
+        }
+
+        recvBufSize=(pRecvData[0] << 8) + pRecvData[1];
+
+        if(recvBufSize == 0x0001)
+        {
+            if(gSaveBlock2Ptr->PID == 0xFFFFFFFF)
+            {
+                data->state = INTERNET_ASK_PID;
+            }
+            else 
+            {
+                data->state = INTERNET_SET_PROFILE;
+            }
+            break;
+        }
         break;
     case INTERNET_SET_PROFILE:
+        concat_str(pURL,"http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
+        //Turn hex to str
+        ConvertIntToHexStringN_v2(pidhex, gSaveBlock2Ptr->PID, STR_CONV_MODE_RIGHT_ALIGN,8);
+
+        //Add PID to URL
+        concat_str(pURL,(char *)pidhex);
+
+        //Add data= to URL
+        concat_str(pURL,"&data=\0");
+
+        userprofile->version = VERSION_EMERALD;
+        userprofile->romhackID = 0x00000013;
+        userprofile->romhackVer = SAVE_VERSION;
+        userprofile->language = LANGUAGE_ENGLISH;
+        userprofile->country = 12;
+        userprofile->region = 8;
+        userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
+        userprofile->trainerID[1] = gSaveBlock2Ptr->playerTrainerId[1];
+        userprofile->trainerID[2] = gSaveBlock2Ptr->playerTrainerId[2];
+        userprofile->trainerID[3] = gSaveBlock2Ptr->playerTrainerId[3];
+        for (int i = 0; i < PLAYER_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
+        {
+            userprofile->trainerName[i] = gSaveBlock2Ptr->playerName[i];
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            userprofile->MAC[i] = 0;
+        }
+        for (int i = 0; i < 56; i++)
+        {
+            userprofile->email[i] = 0;
+        }
+        userprofile->notify = 0;
+        userprofile->clientSecret = 0;
+        userprofile->mailSecret = 0;
+
+
+        checksum = encrypt_data(pid, (char *)userprofile, sizeof(userprofile));
+
+        *encoded_data = base64_encode(checksum, (char *)userprofile, sizeof(userprofile) + 4);
+        concat_str(pURL, encoded_data);
+
+        recvBufSize = 8;
+
+        //Request a PID
+        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
+        if(data->errorNum != 0){
+            maKill();
+            data->state = INTERNET_STATE_EXIT;
+        }
+
+        int i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
+
+        if(i == 0){
+            data->state = INTERNET_STATE_MAIN_MENU;
+        }
+        else{
+            data->state = INTERNET_STATE_EXIT;
+        }
         break;
     case INTERNET_ASK_PID:
         input = DoInternetYesNo(&data->textState, &data->var, FALSE, gText_CreateFriendCode);
