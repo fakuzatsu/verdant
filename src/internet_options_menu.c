@@ -555,13 +555,13 @@ void PrintInternetOptionsTopMenu(bool32 connecting)
     options = !connecting ? gJPText_Connecting : gText_PickOKCancel;
     
     FillWindowPixelBuffer(0, 0);
-    if (gSaveBlock2Ptr->PID == 0xFFFFFFFF)
+    if (gSaveBlock3Ptr->PID == 0xFFFFFFFF)
     {
         header = gText_InternetOptions;
     }
     else
     {
-        pid_to_fc(gSaveBlock2Ptr->PID,(u8 *)options);
+        pid_to_fc(gSaveBlock3Ptr->PID,(u8 *)options);
         header = gText_FC;
         concat_str((char *)header,(char *)options);
     }
@@ -1421,7 +1421,7 @@ static void Task_InternetOptions(u8 taskId)
 
         if(recvBufSize == 0x0001)
         {
-            if(gSaveBlock2Ptr->PID == 0xFFFFFFFF)
+            if(gSaveBlock3Ptr->PID == 0xFFFFFFFF)
             {
                 data->state = INTERNET_ASK_PID;
             }
@@ -1435,7 +1435,7 @@ static void Task_InternetOptions(u8 taskId)
     case INTERNET_SET_PROFILE:
         concat_str(pURL,"http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
         //Turn hex to str
-        ConvertIntToHexStringN_v2(pidhex, gSaveBlock2Ptr->PID, STR_CONV_MODE_RIGHT_ALIGN,8);
+        ConvertIntToHexStringN_v2(pidhex, gSaveBlock3Ptr->PID, STR_CONV_MODE_RIGHT_ALIGN,8);
 
         //Add PID to URL
         concat_str(pURL,(char *)pidhex);
