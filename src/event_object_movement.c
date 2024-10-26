@@ -1249,6 +1249,16 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     return objectEventId;
 }
 
+u8 GetMaxObjectEventCount(void)
+{
+    if (InBattlePyramid())
+        return GetNumBattlePyramidObjectEvents();
+    else if (InTrainerHill())
+        return HILL_TRAINERS_PER_FLOOR;
+    else
+        return gMapHeader.events->objectEventCount;
+}
+
 u8 Unref_TryInitLocalObjectEvent(u8 localId)
 {
     u8 i;
@@ -1257,12 +1267,7 @@ u8 Unref_TryInitLocalObjectEvent(u8 localId)
 
     if (gMapHeader.events != NULL)
     {
-        if (InBattlePyramid())
-            objectEventCount = GetNumBattlePyramidObjectEvents();
-        else if (InTrainerHill())
-            objectEventCount = HILL_TRAINERS_PER_FLOOR;
-        else
-            objectEventCount = gMapHeader.events->objectEventCount;
+        objectEventCount = GetMaxObjectEventCount();
 
         for (i = 0; i < objectEventCount; i++)
         {
