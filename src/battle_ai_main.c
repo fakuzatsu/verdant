@@ -1808,7 +1808,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
                 ADJUST_SCORE(-10);
             break;
         case EFFECT_REST:
-            if (!CanBeSlept(battlerAtk, aiData->abilities[battlerAtk]))
+            if (!CanBeSlept(battlerAtk, aiData->abilities[battlerAtk], FALSE))
                 ADJUST_SCORE(-10);
             //fallthrough
         case EFFECT_RESTORE_HP:
@@ -2670,7 +2670,8 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
     // check what effect partner is using
     if (aiData->partnerMove != 0)
     {
-        switch (gMovesInfo[aiData->partnerMove].effect)
+        u32 partnerEffect = gMovesInfo[aiData->partnerMove].effect;
+        switch (partnerEffect)
         {
         case EFFECT_HELPING_HAND:
             if (IS_MOVE_STATUS(move))
@@ -2694,6 +2695,11 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
                 ADJUST_SCORE(-10);
             break;
         }
+
+        // Don't use sleep effect if partner will activate sleep clause
+        if (IsSleepClauseTriggeringEffect(partnerEffect) && IsSleepClauseTriggeringEffect(effect) && B_FLAG_SLEEP_CLAUSE)
+            ADJUST_SCORE(-20);
+
     } // check partner move effect
 
     // Adjust for always crit moves
@@ -3471,7 +3477,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         }
         break;
     case EFFECT_REST:
-        if (!(CanBeSlept(battlerAtk, aiData->abilities[battlerAtk])))
+        if (!(CanBeSlept(battlerAtk, aiData->abilities[battlerAtk], FALSE)))
         {
             break;
         }

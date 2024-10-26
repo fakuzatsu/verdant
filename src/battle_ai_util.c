@@ -2328,6 +2328,19 @@ bool32 IsSwitchOutEffect(u32 effect)
     }
 }
 
+bool32 IsSleepClauseTriggeringEffect(u32 effect)
+{
+    // Move effects that directly induce sleep get blocked by sleep clause
+    switch (effect)
+    {
+    case EFFECT_SLEEP:
+    case EFFECT_YAWN:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 bool32 HasDamagingMove(u32 battlerId)
 {
     u32 i;
@@ -2859,7 +2872,7 @@ bool32 IsBattlerIncapacitated(u32 battler, u32 ability)
 
 bool32 AI_CanPutToSleep(u32 battlerAtk, u32 battlerDef, u32 defAbility, u32 move, u32 partnerMove)
 {
-    if (!CanBeSlept(battlerDef, defAbility)
+    if (!CanBeSlept(battlerDef, defAbility, TRUE)
       || DoesSubstituteBlockMove(battlerAtk, battlerDef, move)
       || PartnerMoveEffectIsStatusSameTarget(BATTLE_PARTNER(battlerAtk), battlerDef, partnerMove))   // shouldn't try to sleep mon that partner is trying to make sleep
         return FALSE;

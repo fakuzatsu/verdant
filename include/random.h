@@ -170,6 +170,7 @@ enum RandomTag
     RNG_SHELL_SIDE_ARM,
     RNG_DEXNAV_ENCOUNTER_LEVEL,
     RNG_RANDOM_TARGET,
+    RNG_HEALER,
 };
 
 #define RandomWeighted(tag, ...) \

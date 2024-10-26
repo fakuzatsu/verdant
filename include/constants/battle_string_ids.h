@@ -716,8 +716,9 @@
 #define STRINGID_POKEFLUTECATCHY                      714
 #define STRINGID_POKEFLUTE                            715
 #define STRINGID_MONHEARINGFLUTEAWOKE                 716
+#define STRINGID_BLOCKEDBYSLEEPCLAUSE                 717
 
-#define STRINGID_EXPANSION_END                        (STRINGID_MONHEARINGFLUTEAWOKE + 1)
+#define STRINGID_EXPANSION_END                        (STRINGID_BLOCKEDBYSLEEPCLAUSE + 1)
 
 #define STRINGID_PLAYERWHITEOUT3                      STRINGID_EXPANSION_END
 

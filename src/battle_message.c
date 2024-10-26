@@ -456,6 +456,7 @@ static const u8 sText_SpAttack[] = _("Sp. Atk");
 static const u8 sText_SpDefense[] = _("Sp. Def");
 static const u8 sText_Accuracy[] = _("accuracy");
 static const u8 sText_Evasiveness[] = _("evasiveness");
+static const u8 sText_BlockedBySleepClause[] = _("Sleep Clause kept {B_DEF_NAME_WITH_PREFIX} awake!");
 
 const u8 *const gStatNamesTable[NUM_BATTLE_STATS] =
 {
@@ -1563,6 +1564,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_POKEFLUTECATCHY - BATTLESTRINGS_TABLE_START] = sText_PlayedFluteCatchyTune,
     [STRINGID_POKEFLUTE - BATTLESTRINGS_TABLE_START] = sText_PlayedThe,
     [STRINGID_MONHEARINGFLUTEAWOKE - BATTLESTRINGS_TABLE_START] = sText_PkmnHearingFluteAwoke,
+    [STRINGID_BLOCKEDBYSLEEPCLAUSE - BATTLESTRINGS_TABLE_START] = sText_BlockedBySleepClause,
 };
 
 const u16 gTrainerUsedItemStringIds[] =
