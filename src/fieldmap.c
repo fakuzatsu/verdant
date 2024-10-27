@@ -66,11 +66,14 @@ const struct MapHeader *const GetMapHeaderFromConnection(const struct MapConnect
     return Overworld_GetMapHeaderByGroupAndId(connection->mapGroup, connection->mapNum);
 }
 
+extern void SetRoofBirds(void);
+
 void InitMap(void)
 {
     InitMapLayoutData(&gMapHeader);
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     RunOnLoadMapScript();
+    SetRoofBirds();
     GetGrottoWarp();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
@@ -83,6 +86,7 @@ void InitMapFromSavedGame(void)
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     LoadSavedMapView();
     RunOnLoadMapScript();
+    SetRoofBirds();
     GetGrottoWarp();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
