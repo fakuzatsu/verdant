@@ -2809,7 +2809,7 @@ u8 DoBattlerEndTurnEffects(void)
                             gBattleMons[battler].status1 |= ((Random() % 4) + 3);
 
                         // Try to activate Sleep Clause when a mon is put to Sleep by Yawn
-                        TryActivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+                        TryActivateSleepClause(battler, gBattlerPartyIndexes[battler]);
                         BtlController_EmitSetMonData(battler, BUFFER_A, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[battler].status1);
                         MarkBattlerForControllerExec(battler);
                         BattleScriptExecute(BattleScript_YawnMakesAsleep);
@@ -5785,7 +5785,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                  && IsMoveMakingContact(move, gBattlerAttacker))
                 {
                     if (FlagGet(B_FLAG_SLEEP_CLAUSE))
-                        gBattleStruct->sleepClauseEffectExempt = TRUE;
+                        gBattleStruct->sleepClauseEffectExempt[gBattlerAttacker] = TRUE;
                     gBattleScripting.moveEffect = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_SLEEP;
                     PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
                     BattleScriptPushCursor();
@@ -11928,16 +11928,16 @@ u32 GetMoveType(u32 move)
     return gMovesInfo[move].type;
 }
 
-void TryActivateSleepClause(u32 battlerSide, u32 indexInParty)
+void TryActivateSleepClause(u32 battler, u32 indexInParty)
 {
-    if (gBattleStruct->sleepClauseEffectExempt)
+    if (gBattleStruct->sleepClauseEffectExempt[battler])
     {
-        gBattleStruct->sleepClauseEffectExempt = FALSE;
+        gBattleStruct->sleepClauseEffectExempt[battler] = FALSE;
         return;
     }
 
     if (FlagGet(B_FLAG_SLEEP_CLAUSE))
-        gBattleStruct->monCausingSleepClause[battlerSide] = indexInParty;
+        gBattleStruct->monCausingSleepClause[GetBattlerSide(battler)] = indexInParty;
 }
 
 void TryDeactivateSleepClause(u32 battlerSide, u32 indexInParty)

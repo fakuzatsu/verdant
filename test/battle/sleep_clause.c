@@ -1747,3 +1747,71 @@ DOUBLE_BATTLE_TEST("Sleep Clause: Sleep moves used after being Encore'd are prev
         }
     }
 }
+
+DOUBLE_BATTLE_TEST("Sleep Clause: Spore'ing opponent after Yawn'ing partner does not prevent Yawn's effect from sleeping partner")
+{
+    GIVEN {
+        FLAG_SET(B_FLAG_SLEEP_CLAUSE);
+        ASSUME(gMovesInfo[MOVE_SPORE].effect == EFFECT_SLEEP);
+        ASSUME(gMovesInfo[MOVE_YAWN].effect == EFFECT_YAWN);
+        PLAYER(SPECIES_ZIGZAGOON);
+        PLAYER(SPECIES_ZIGZAGOON);
+        PLAYER(SPECIES_ZIGZAGOON);
+        OPPONENT(SPECIES_ZIGZAGOON);
+        OPPONENT(SPECIES_ZIGZAGOON);
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_SPORE, target: playerRight); }
+        TURN { SWITCH(playerRight, 2); MOVE(playerLeft, MOVE_YAWN, target: playerRight); }
+        TURN { MOVE(playerLeft, MOVE_SPORE, target: opponentLeft); MOVE(playerRight, MOVE_SPORE, target: opponentRight); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, playerLeft);
+        ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, playerRight);
+        MESSAGE("Zigzagoon fell asleep!");
+        STATUS_ICON(playerRight, sleep: TRUE);
+        MESSAGE("Go! Zigzagoon!");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_YAWN, playerLeft);
+        MESSAGE("Zigzagoon made Zigzagoon drowsy!");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, playerLeft);
+        ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponentLeft);
+        MESSAGE("Foe Zigzagoon fell asleep!");
+        STATUS_ICON(opponentLeft, sleep: TRUE);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, playerRight);
+            ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponentRight);
+            MESSAGE("Foe Zigzagoon fell asleep!");
+            STATUS_ICON(opponentRight, sleep: TRUE);
+        }
+        MESSAGE("Zigzagoon fell asleep!");
+    }
+}
+
+DOUBLE_BATTLE_TEST("Sleep Clause: Opponent Spore'ing player's partner after partner was Yawn'd by player does not prevent Spore's effect from sleeping partner and activating clause")
+{
+    GIVEN {
+        FLAG_SET(B_FLAG_SLEEP_CLAUSE);
+        ASSUME(gMovesInfo[MOVE_SPORE].effect == EFFECT_SLEEP);
+        ASSUME(gMovesInfo[MOVE_YAWN].effect == EFFECT_YAWN);
+        PLAYER(SPECIES_ZIGZAGOON);
+        PLAYER(SPECIES_ZIGZAGOON);
+        PLAYER(SPECIES_ZIGZAGOON);
+        OPPONENT(SPECIES_ZIGZAGOON);
+        OPPONENT(SPECIES_ZIGZAGOON);
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_YAWN, target: playerRight); }
+        TURN { MOVE(opponentLeft, MOVE_SPORE, target: playerRight); MOVE(opponentRight, MOVE_SPORE, target:playerLeft); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_YAWN, playerLeft);
+        MESSAGE("Zigzagoon made Zigzagoon drowsy!");
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, opponentLeft);
+        ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, playerRight);
+        MESSAGE("Zigzagoon fell asleep!");
+        STATUS_ICON(playerRight, sleep: TRUE);
+        NONE_OF {
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, opponentRight);
+            ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, playerLeft);
+            MESSAGE("Zigzagoon fell asleep!");
+            STATUS_ICON(playerLeft, sleep: TRUE);
+        }
+        MESSAGE("Sleep Clause kept Zigzagoon awake!");
+    }
+}

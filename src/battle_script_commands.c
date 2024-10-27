@@ -1310,6 +1310,8 @@ static void Cmd_attackcanceler(void)
             gHitMarker |= HITMARKER_OBEYS;
             return;
         case DISOBEYS_FALL_ASLEEP:
+            if (FlagGet(B_FLAG_SLEEP_CLAUSE))
+                gBattleStruct->sleepClauseEffectExempt[gBattlerAttacker] = TRUE;
             gBattlescriptCurrInstr = BattleScript_IgnoresAndFallsAsleep;
             gMoveResultFlags |= MOVE_RESULT_MISSED;
             return;
@@ -3023,7 +3025,7 @@ void SetMoveEffect(bool32 primary, bool32 certain)
 
             if (i != gBattlersCount)
                 break;
-            if (!CanBeSlept(gEffectBattler, GetBattlerAbility(gEffectBattler), TRUE) && !gBattleStruct->sleepClauseEffectExempt)
+            if (!CanBeSlept(gEffectBattler, GetBattlerAbility(gEffectBattler), TRUE) && !gBattleStruct->sleepClauseEffectExempt[gEffectBattler])
                 break;
 
             cancelMultiTurnMovesResult = CancelMultiTurnMoves(gEffectBattler);
@@ -3243,7 +3245,7 @@ void SetMoveEffect(bool32 primary, bool32 certain)
                 else
                     gBattleMons[gEffectBattler].status1 |= STATUS1_SLEEP_TURN(1 + RandomUniform(RNG_SLEEP_TURNS, 2, 5));
 
-                TryActivateSleepClause(GetBattlerSide(gEffectBattler), gBattlerPartyIndexes[gEffectBattler]);
+                TryActivateSleepClause(gEffectBattler, gBattlerPartyIndexes[gEffectBattler]);
             }
             else
             {
@@ -10245,7 +10247,7 @@ static void Cmd_various(void)
             MarkBattlerForControllerExec(battler);
             gBattlescriptCurrInstr = cmd->nextInstr;
             // Try to activate Sleep Clause when a mon is put to Sleep by Psycho Shift
-            TryActivateSleepClause(GetBattlerSide(battler), gBattlerPartyIndexes[battler]);
+            TryActivateSleepClause(battler, gBattlerPartyIndexes[battler]);
             return;
         }
     case VARIOUS_CURE_STATUS:
@@ -17367,11 +17369,13 @@ void BS_JumpIfSleepClause(void)
     // Can freely sleep own partner
     if (IsDoubleBattle() && B_FLAG_SLEEP_CLAUSE && GetBattlerSide(gBattlerAttacker) == GetBattlerSide(gBattlerTarget))
     {
-        gBattleStruct->sleepClauseEffectExempt = TRUE;
+        gBattleStruct->sleepClauseEffectExempt[gBattlerTarget] = TRUE;
         gBattlescriptCurrInstr = cmd->nextInstr;
+        return;
     }
+    gBattleStruct->sleepClauseEffectExempt[gBattlerTarget] = FALSE;
     // Can't sleep if clause is active otherwise
-    else if (IsSleepClauseActiveForSide(GetBattlerSide(battler)))
+    if (IsSleepClauseActiveForSide(GetBattlerSide(battler)))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;
