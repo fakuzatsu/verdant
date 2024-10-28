@@ -171,7 +171,7 @@ struct SaveBlock1_v0
     const struct SaveBlock2_v0* sOldSaveBlock2Ptr = (struct SaveBlock2_v0*)(locations[0].data); // SECTOR_ID_SAVEBLOCK2
     const struct SaveBlock1_v0* sOldSaveBlock1Ptr = (struct SaveBlock1_v0*)(locations[1].data); // SECTOR_ID_SAVEBLOCK1_START
     const struct PokemonStorage* sOldPokemonStoragePtr = (struct PokemonStorage*)(locations[5].data); // SECTOR_ID_PKMN_STORAGE_START
-    u32 arg, i, j, k;
+    u32 i;
 
 #define COPY_FIELD(field) gSaveBlock2Ptr->field = sOldSaveBlock2Ptr->field
 #define COPY_BLOCK(field) CpuCopy16(&sOldSaveBlock2Ptr->field, &gSaveBlock2Ptr->field, sizeof(gSaveBlock2Ptr->field))
@@ -328,7 +328,7 @@ struct SaveBlock1_v0
     COPY_BLOCK(giftRibbons);
     COPY_FIELD(externalEventData);
     COPY_FIELD(externalEventFlags);
-    COPY_FIELD(roamer);
+    COPY_ARRAY(roamer);
 
     // Pokedex
     COPY_BLOCK(dexSeen);
