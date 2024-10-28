@@ -259,6 +259,9 @@ static const u16 sBirchSpeechPlatformBlackPal[] = {RGB_BLACK, RGB_BLACK, RGB_BLA
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
 static const u8 gText_SaveFileErased[] = _("The save file has been erased\ndue to corruption or damage.");
+static const u8 gText_SaveFileOldUpdated[] = _("Your save file is for an older release\nof Verdant Emerald.\pYour save will be updated. Please back\nup your old save if you wish to keep it.");
+static const u8 gText_SaveFileOldErrored[] = _("Your save file is for an older release\nof Verdant Emerald.\pThe attempt to update the save file\nhas failed: {STR_VAR_1}\pPlease report this to Zatsu.");
+static const u8 gText_SaveFileOld_Unsupported[] = _("Unsupported version.");
 static const u8 gJPText_No1MSubCircuit[] = _("1Mサブきばんが ささっていません！");
 static const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
@@ -673,7 +676,7 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
 
         if (IsWirelessAdapterConnected())
             tWirelessAdapterConnected = TRUE;
-        switch (gSaveFileStatus)
+        switch (gSaveFileStatus & 0xFF) /** We're using the upper 8 bits to store fail reason. */
         {
             case SAVE_STATUS_OK:
                 tMenuType = HAS_SAVED_GAME;
@@ -683,6 +686,20 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
                 break;
             case SAVE_STATUS_CORRUPT:
                 CreateMainMenuErrorWindow(gText_SaveFileErased);
+                tMenuType = HAS_NO_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_UPDATED:
+                /** If the save file has been updated, display a message about it here. */
+                CreateMainMenuErrorWindow(gText_SaveFileOldUpdated);
+                tMenuType = HAS_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_OUTDATED:
+                /** If the save file is still outdated when we reach here, we couldn't update it. */
+                BufferUpdateFailReason();
+                StringExpandPlaceholders(gStringVar4, gText_SaveFileOldErrored);
+                CreateMainMenuErrorWindow(gStringVar4);
                 tMenuType = HAS_NO_SAVED_GAME;
                 gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
                 break;

@@ -1567,26 +1567,26 @@
 // The start and end are byte-aligned because the flags are cleared in byte increments
 #define DAILY_FLAGS_START                           (FLAG_UNUSED_0x91F + (8 - FLAG_UNUSED_0x91F % 8))
 #define FLAG_UNUSED_0x920                           (DAILY_FLAGS_START + 0x0)  // Unused Flag
-#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
-#define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)
-#define FLAG_DAILY_MASSAGE_SERVICE                  (DAILY_FLAGS_START + 0x3)  // Custom Flag
-#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag
-#define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // Unused Flag
-#define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // Unused Flag
-#define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // Unused Flag
-#define FLAG_UNUSED_0x928                           (DAILY_FLAGS_START + 0x8)  // Unused Flag
-#define FLAG_UNUSED_0x929                           (DAILY_FLAGS_START + 0x9)  // Unused Flag
-#define FLAG_DAILY_PICKED_LOTO_TICKET               (DAILY_FLAGS_START + 0xA)
-#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xB)
-#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xC)
-#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY      (DAILY_FLAGS_START + 0xD)
-#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xE)
-#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xF)
-#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY       (DAILY_FLAGS_START + 0x10)
-#define FLAG_DAILY_BERRY_MASTERS_WIFE               (DAILY_FLAGS_START + 0x11)
-#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY        (DAILY_FLAGS_START + 0x12)
+#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)  // FLAG_0x921
+#define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)  // FLAG_0x922
+#define FLAG_DAILY_MASSAGE_SERVICE                  (DAILY_FLAGS_START + 0x3)  // FLAG_0x923
+#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // FLAG_0x924
+#define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // FLAG_0x925
+#define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // FLAG_0x926
+#define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // FLAG_0x927
+#define FLAG_UNUSED_0x928                           (DAILY_FLAGS_START + 0x8)  // FLAG_0x928
+#define FLAG_UNUSED_0x929                           (DAILY_FLAGS_START + 0x9)  // FLAG_0x929
+#define FLAG_DAILY_PICKED_LOTO_TICKET               (DAILY_FLAGS_START + 0xA)  // FLAG_0x92A
+#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xB)  // FLAG_0x92B
+#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xC)  // FLAG_0x92C
+#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY      (DAILY_FLAGS_START + 0xD)  // FLAG_0x92D
+#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xE)  // FLAG_0x92E
+#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xF)  // FLAG_0x92F
+#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY       (DAILY_FLAGS_START + 0x10) // FLAG_0x930
+#define FLAG_DAILY_BERRY_MASTERS_WIFE               (DAILY_FLAGS_START + 0x11) // FLAG_0x931
+#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY        (DAILY_FLAGS_START + 0x12) // FLAG_0x922
 #define FLAG_UNUSED_0x933                           (DAILY_FLAGS_START + 0x13) // Unused Flag
-#define FLAG_DAILY_APPRENTICE_LEAVES                (DAILY_FLAGS_START + 0x14)
+#define FLAG_DAILY_APPRENTICE_LEAVES                (DAILY_FLAGS_START + 0x14) // FLAG_0x924
 
 #define FLAG_UNUSED_0x935                           (DAILY_FLAGS_START + 0x15) // Unused Flag
 #define FLAG_UNUSED_0x936                           (DAILY_FLAGS_START + 0x16) // Unused Flag
@@ -1621,16 +1621,16 @@
 #define FLAG_UNUSED_0x953                           (DAILY_FLAGS_START + 0x33) // Unused Flag
 #define FLAG_UNUSED_0x954                           (DAILY_FLAGS_START + 0x34) // Unused Flag
 #define FLAG_UNUSED_0x955                           (DAILY_FLAGS_START + 0x35) // Unused Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_SWAGGER              (DAILY_FLAGS_START + 0x36) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_ROLLOUT              (DAILY_FLAGS_START + 0x37) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_FURY_CUTTER          (DAILY_FLAGS_START + 0x38) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_MIMIC                (DAILY_FLAGS_START + 0x39) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_METRONOME            (DAILY_FLAGS_START + 0x3A) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_SLEEP_TALK           (DAILY_FLAGS_START + 0x3B) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_SUBSTITUTE           (DAILY_FLAGS_START + 0x3C) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_DYNAMICPUNCH         (DAILY_FLAGS_START + 0x3D) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_DOUBLE_EDGE          (DAILY_FLAGS_START + 0x3E) // Tutor Flag
-#define FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION            (DAILY_FLAGS_START + 0x3F) // Tutor Flag
+#define FLAG_MOVE_TUTOR_TAUGHT_SWAGGER              (DAILY_FLAGS_START + 0x36) // FLAG_0x956
+#define FLAG_MOVE_TUTOR_TAUGHT_ROLLOUT              (DAILY_FLAGS_START + 0x37) // FLAG_0x957
+#define FLAG_MOVE_TUTOR_TAUGHT_FURY_CUTTER          (DAILY_FLAGS_START + 0x38) // FLAG_0x958
+#define FLAG_MOVE_TUTOR_TAUGHT_MIMIC                (DAILY_FLAGS_START + 0x39) // FLAG_0x959
+#define FLAG_MOVE_TUTOR_TAUGHT_METRONOME            (DAILY_FLAGS_START + 0x3A) // FLAG_0x95A
+#define FLAG_MOVE_TUTOR_TAUGHT_SLEEP_TALK           (DAILY_FLAGS_START + 0x3B) // FLAG_0x95B
+#define FLAG_MOVE_TUTOR_TAUGHT_SUBSTITUTE           (DAILY_FLAGS_START + 0x3C) // FLAG_0x95C
+#define FLAG_MOVE_TUTOR_TAUGHT_DYNAMICPUNCH         (DAILY_FLAGS_START + 0x3D) // FLAG_0x95D
+#define FLAG_MOVE_TUTOR_TAUGHT_DOUBLE_EDGE          (DAILY_FLAGS_START + 0x3E) // FLAG_0x95E
+#define FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION            (DAILY_FLAGS_START + 0x3F) // FLAG_0x95F
 #define DAILY_FLAGS_END                             (FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION + (7 - FLAG_MOVE_TUTOR_TAUGHT_EXPLOSION % 8))
 #define NUM_DAILY_FLAGS                             (DAILY_FLAGS_END - DAILY_FLAGS_START + 1)
 

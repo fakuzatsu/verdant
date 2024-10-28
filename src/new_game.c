@@ -173,6 +173,7 @@ void NewGameInitData(void)
         RtcReset();
 
     gDifferentSaveFile = TRUE;
+    gSaveBlock3Ptr->saveVersion = SAVE_VERSION;
     gSaveBlock3Ptr->PID = 0xFFFFFFFF;
     gSaveBlock2Ptr->encryptionKey = 0;
     ZeroPlayerPartyMons();
