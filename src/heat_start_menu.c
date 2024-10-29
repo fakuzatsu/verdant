@@ -1068,21 +1068,30 @@ static void DoCleanUpAndOpenTrainerCard(void)
         PlayRainStoppingSoundEffect();
         HeatStartMenu_ExitAndClearTilemap();
         CleanupOverworldWindowsAndTilemaps();
-        if (IsOverworldLinkActive() || InUnionRoom()) 
+        if (IsOverworldLinkActive() || InUnionRoom())
         {
             ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
-            DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-        } 
-        else if (FlagGet(FLAG_SYS_FRONTIER_PASS)) 
+        }
+        else if (FlagGet(FLAG_SYS_FRONTIER_PASS))
         {
             ShowFrontierPass(CB2_ReturnToFieldWithOpenMenu); // Display frontier pass
-            DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-        } 
-        else 
-        {
-        ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
-        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
         }
+        else
+        {
+            ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
+        }
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+    }
+}
+
+static void DoCleanUpAndOpenDexNav(void)
+{
+    if (!gPaletteFade.active)
+    {
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+        PlayRainStoppingSoundEffect();
+        HeatStartMenu_ExitAndClearTilemap();
+        CreateTask(Task_OpenDexNavFromStartMenu, 0);
     }
 }
 
@@ -1563,7 +1572,12 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();  
         DestroyTask(taskId);
-    } 
+    }
+    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0)
+    {
+        FadeScreen(FADE_TO_BLACK, 0);
+        sHeatStartMenu->loadState = 2;
+    }
     else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0) 
     {
         HeatStartMenu_HandleInput_DPADDOWN();
@@ -1572,12 +1586,17 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
     {
         HeatStartMenu_HandleInput_DPADUP();
     } 
-    else if (sHeatStartMenu->loadState == 1) 
+    else if (sHeatStartMenu->loadState >= 1) 
     {
-        if (menuSelected != MENU_SAVE) {
+        if (sHeatStartMenu->loadState == 2)
+        {
+            DoCleanUpAndOpenDexNav();
+        }
+        else if (menuSelected != MENU_SAVE)
+        {
             HeatStartMenu_OpenMenu();
         } 
-        else 
+        else
         {
         DoCleanUpAndStartSaveMenu();
         }
