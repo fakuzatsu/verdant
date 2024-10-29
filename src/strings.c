@@ -1,8 +1,8 @@
 #include "global.h"
 #include "strings.h"
 #include "battle_pyramid_bag.h"
-#include "battle_frontier.h"
 #include "item_menu.h"
+#include "constants/battle_frontier.h"
 
 ALIGNED(4)
 const u8 gText_ExpandedPlaceholder_Empty[] = _("");
@@ -1388,9 +1388,10 @@ const u8 gText_MenuExit[] = _("Exit");
 const u8 gText_MenuRetire[] = _("Retire");
 const u8 gText_MenuRest[] = _("Rest");
 const u8 gText_MenuDexNav[] = _("DexNav");
-const u8 gText_MenuDexNavShortcut[] = _("{L_BUTTON} DexNav");
+const u8 gText_MenuDexNavShortcut[] = _(" {L_BUTTON} DexNav");
 const u8 gText_SafariBallStock[] = _("Safari Balls\nStock: {STR_VAR_1}");
 const u8 gText_BattlePyramidFloor[] = _("Battle Pyramid\n{STR_VAR_1}");
+const u8 gText_PyramidFloor[] = _("Btl. Pyramid\n{STR_VAR_1}");
 const u8 gText_Floor1[] = _("Floor 1");
 const u8 gText_Floor2[] = _("Floor 2");
 const u8 gText_Floor3[] = _("Floor 3");

@@ -1331,7 +1331,7 @@
 #define FLAG_DEFEATED_ELITE_4_GLACIA                                0x4FD
 #define FLAG_DEFEATED_ELITE_4_DRAKE                                 0x4FE
 
-#define FLAG_UNUSED_0x4FF                                           0x4FF // Unused Flag
+#define FLAG_SYS_INVALID_CHALLENGE                                  0x4FF // Custom Flag
 
 // Trainer Flags
 // Trainer flags occupy 0x500 - 0x85F, the last 9 of which are unused
@@ -1409,7 +1409,7 @@
 #define FLAG_SYS_MIX_RECORD                         (SYSTEM_FLAGS + 0x34) // FLAG_0x894
 #define FLAG_SYS_CLOCK_SET                          (SYSTEM_FLAGS + 0x35) // FLAG_0x895
 #define FLAG_SYS_NATIONAL_DEX                       (SYSTEM_FLAGS + 0x36) // FLAG_0x896
-#define FLAG_SYS_INVALID_CHALLENGE                  (SYSTEM_FLAGS + 0x37) // FLAG_0x897
+#define FLAG_SYS_DEXNAV_GET                         (SYSTEM_FLAGS + 0x37) // FLAG_0x897 
 #define FLAG_SYS_DEXNAV_SEARCH                      (SYSTEM_FLAGS + 0x38) // FLAG_0x898
 #define FLAG_SHINY_CREATION                         (SYSTEM_FLAGS + 0x39) // FLAG_0x899
 #define FLAG_SYS_SHOAL_TIDE                         (SYSTEM_FLAGS + 0x3A) // FLAG_0x89A
