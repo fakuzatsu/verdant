@@ -6,6 +6,7 @@
 #include "battle_pyramid_bag.h"
 #include "bg.h"
 #include "decompress.h"
+#include "dexnav.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "event_object_lock.h"
@@ -128,7 +129,7 @@ struct HeatStartMenu
     u32 loadState;
     u32 sStartClockWindowId;
     u32 sMenuNameWindowId;
-    u32 sSafariBallsWindowId;
+    u32 sTopLeftWindowId;
     u32 flag; // some u32 holding values for controlling the sprite anims and lifetime
     
     u32 spriteIdPoketch;
@@ -150,6 +151,7 @@ static EWRAM_DATA u8 sSaveInfoWindowId = 0;
 // --BG-GFX--
 static const u32 sStartMenuTiles[] = INCBIN_U32("graphics/heat_start_menu/bg.4bpp.lz");
 static const u32 sStartMenuTilemap[] = INCBIN_U32("graphics/heat_start_menu/bg.bin.lz");
+static const u32 sStartMenuTilemapDexNav[] = INCBIN_U32("graphics/heat_start_menu/bg_dexnav.bin.lz");
 static const u32 sStartMenuTilemapSafari[] = INCBIN_U32("graphics/heat_start_menu/bg_safari.bin.lz");
 static const u16 sStartMenuPalette[] = INCBIN_U16("graphics/heat_start_menu/bg.gbapal");
 const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.gbapal");
@@ -194,13 +196,24 @@ static const struct WindowTemplate sWindowTemplate_MenuName =
     .baseBlock = 0x30 + (12*2)
 };
 
-static const struct WindowTemplate sWindowTemplate_SafariBalls = 
+static const struct WindowTemplate sWindowTemplate_SafariBallsOrPyramidFloor = 
 {
     .bg = 0,
     .tilemapLeft = 2,
     .tilemapTop = 1,
     .width = 7,
     .height = 4,
+    .paletteNum = 15,
+    .baseBlock = (0x30 + (12*2)) + (7*2)
+};
+
+static const struct WindowTemplate sWindowTemplate_DexNav =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 1,
+    .width = 7,
+    .height = 2,
     .paletteNum = 15,
     .baseBlock = (0x30 + (12*2)) + (7*2)
 };
@@ -647,15 +660,35 @@ static void SetSelectedMenu(void)
     }
 }
 
+static void ShowDexNavWindow(void)
+{
+    sHeatStartMenu->sTopLeftWindowId = AddWindow(&sWindowTemplate_DexNav);
+    FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_WHITE));
+    PutWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
+    AddTextPrinterParameterized(sHeatStartMenu->sTopLeftWindowId, FONT_NARROW, gText_MenuDexNavShortcut, 0, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
+}
+
+static void ShowBattlePyramidFloor(void)
+{
+    sHeatStartMenu->sTopLeftWindowId = AddWindow(&sWindowTemplate_SafariBallsOrPyramidFloor);
+    FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_WHITE));
+    PutWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
+    StringCopy(gStringVar1, sPyramidFloorNames[gSaveBlock2Ptr->frontier.curChallengeBattleNum]);
+    StringExpandPlaceholders(gStringVar4, gText_PyramidFloor);
+    AddTextPrinterParameterized(sHeatStartMenu->sTopLeftWindowId, FONT_NARROW, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
+}
+
 static void ShowSafariBallsWindow(void)
 {
-    sHeatStartMenu->sSafariBallsWindowId = AddWindow(&sWindowTemplate_SafariBalls);
-    FillWindowPixelBuffer(sHeatStartMenu->sSafariBallsWindowId, PIXEL_FILL(TEXT_COLOR_WHITE));
-    PutWindowTilemap(sHeatStartMenu->sSafariBallsWindowId);
+    sHeatStartMenu->sTopLeftWindowId = AddWindow(&sWindowTemplate_SafariBallsOrPyramidFloor);
+    FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_WHITE));
+    PutWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
     ConvertIntToDecimalStringN(gStringVar1, gNumSafariBalls, STR_CONV_MODE_RIGHT_ALIGN, 2);
     StringExpandPlaceholders(gStringVar4, gText_SafariBallStock);
-    AddTextPrinterParameterized(sHeatStartMenu->sSafariBallsWindowId, FONT_NARROW, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
-    CopyWindowToVram(sHeatStartMenu->sSafariBallsWindowId, COPYWIN_GFX);
+    AddTextPrinterParameterized(sHeatStartMenu->sTopLeftWindowId, FONT_NARROW, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
 }
 
 bool8 InitHeatMenuStep(void)
@@ -706,8 +739,12 @@ void HeatStartMenu_Init(void)
         HeatStartMenu_LoadSprites();
         HeatStartMenu_CreateSprites();
         SetupHeatMenuCommonComponents();
+        if (InBattlePyramid())
+            ShowBattlePyramidFloor();
+        else if (GetDexNavFlag())
+            ShowDexNavWindow();
         CreateTask(Task_HeatStartMenu_HandleMainInput, 0);
-    } 
+    }
     else 
     {
         if (menuSelected == 255 || menuSelected == MENU_POKETCH || menuSelected == MENU_SAVE) 
@@ -810,10 +847,12 @@ static void HeatStartMenu_LoadBgGfx(void)
     u8* buf = GetBgTilemapBuffer(0);
     LoadBgTilemap(0, 0, 0, 0);
     DecompressAndCopyTileDataToVram(0, sStartMenuTiles, 0, 0, 0);
-    if (GetSafariZoneFlag() == FALSE)
-        LZDecompressWram(sStartMenuTilemap, buf);
-    else
+    if (GetSafariZoneFlag() || InBattlePyramid())
         LZDecompressWram(sStartMenuTilemapSafari, buf);
+    else if (GetDexNavFlag())
+        LZDecompressWram(sStartMenuTilemapDexNav, buf);
+    else
+        LZDecompressWram(sStartMenuTilemap, buf);
 
     LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LoadPalette(sStartMenuPalette, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
@@ -952,12 +991,12 @@ static void HeatStartMenu_ExitAndClearTilemap(void)
     RemoveWindow(sHeatStartMenu->sStartClockWindowId);
     RemoveWindow(sHeatStartMenu->sMenuNameWindowId);
 
-    if (GetSafariZoneFlag() == TRUE) 
+    if (GetDexNavFlag() || GetSafariZoneFlag() || InBattlePyramid())
     {
-        FillWindowPixelBuffer(sHeatStartMenu->sSafariBallsWindowId, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
-        ClearWindowTilemap(sHeatStartMenu->sSafariBallsWindowId); 
-        CopyWindowToVram(sHeatStartMenu->sSafariBallsWindowId, COPYWIN_GFX);
-        RemoveWindow(sHeatStartMenu->sSafariBallsWindowId);
+        FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
+        ClearWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
+        CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
+        RemoveWindow(sHeatStartMenu->sTopLeftWindowId);
     }
 
     for(i = 0; i < 2048; i++)

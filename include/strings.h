@@ -238,8 +238,13 @@ extern const u8 gText_Floor5[];
 extern const u8 gText_Floor6[];
 extern const u8 gText_Floor7[];
 extern const u8 gText_Peak[];
+
+extern const u8 *const sPyramidFloorNames[];
+
+extern const u8 gText_MenuDexNavShortcut[];
 extern const u8 gText_SafariBallStock[];
 extern const u8 gText_BattlePyramidFloor[];
+extern const u8 gText_PyramidFloor[];
 
 extern const u8 gText_MenuOptionPokedex[];
 extern const u8 gText_MenuOptionPokemon[];
