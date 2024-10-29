@@ -4,6 +4,8 @@
 #include "fieldmap.h"
 #include "save.h"
 #include "task.h"
+#include "malloc.h"
+#include "string_util.h"
 #include "decompress.h"
 #include "load_save.h"
 #include "overworld.h"
@@ -485,6 +487,9 @@ static u8 TryLoadSaveSlot(u16 sectorId, struct SaveSectorLocation *locations)
         CopySaveSlotData(FULL_SAVE_SLOT, locations);
     }
 
+    if (status == SAVE_STATUS_OK && gSaveBlock3Ptr->saveVersion != SAVE_VERSION)
+        status = SAVE_STATUS_OUTDATED;
+
     return status;
 }
 
@@ -504,7 +509,7 @@ static u8 CopySaveSlotData(u16 sectorId, struct SaveSectorLocation *locations)
         if (id == 0)
             gLastWrittenSector = i;
 
-        checksum = CalculateChecksum(gReadWriteSector->data, locations[id].size);
+        checksum = CalculateChecksum(gReadWriteSector->data, SECTOR_DATA_SIZE); //locations[id].size);
 
         // Only copy data for sectors whose signature and checksum fields are correct
         if (gReadWriteSector->signature == SECTOR_SIGNATURE && gReadWriteSector->checksum == checksum)
@@ -537,7 +542,10 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
         if (gReadWriteSector->signature == SECTOR_SIGNATURE)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            /** Note: because the save block might be a different size than expected, we need to calculate the checksum
+             * of the entire sector. This doesn't affect anything with vanilla because the remaining bytes which would
+             * otherwise not be checked in the checksum are zero, thus not changing the checksum. */
+            checksum = CalculateChecksum(gReadWriteSector->data, SECTOR_DATA_SIZE); //locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
                 saveSlot1Counter = gReadWriteSector->counter;
@@ -569,7 +577,7 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
         if (gReadWriteSector->signature == SECTOR_SIGNATURE)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            checksum = CalculateChecksum(gReadWriteSector->data, SECTOR_DATA_SIZE); //locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
                 saveSlot2Counter = gReadWriteSector->counter;
@@ -651,7 +659,7 @@ static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size)
     ReadFlashSector(sectorId, sector);
     if (sector->signature == SECTOR_SIGNATURE)
     {
-        u16 checksum = CalculateChecksum(sector->data, size);
+        u16 checksum = CalculateChecksum(sector->data, SECTOR_DATA_SIZE); //size);
         if (sector->id == checksum)
         {
             // Signature and checksum are correct, copy data
@@ -1076,4 +1084,89 @@ static void CopyFromSaveBlock3(u32 sectorId, struct SaveSector *sector)
 {
     u32 size = SaveBlock3Size(sectorId);
     memcpy(sector->saveBlock3Chunk, (u8 *)&gSaveblock3 + (sectorId * SAVE_BLOCK_3_CHUNK_SIZE), size);
+}
+
+/** 
+ * Below this point, the saveblock versioning is handled.
+**/
+
+#include "data/old_saves/save.v0.h"
+
+static const u8 gText_SaveFileOld_Unsupported[] = _("Unsupported version.");
+
+void BufferUpdateFailReason(void)
+{
+    switch (gSaveFileStatus >> 8) {
+        // Add other reasons as cases here
+        default:
+        case SAVE_UFR_VERSION_UNSUPPORTED:
+            StringCopy(gStringVar1, gText_SaveFileOld_Unsupported);
+            break;
+    }
+}
+
+u8 UpdateSaveFile(void)
+{
+    u16 version = gSaveBlock3Ptr->saveVersion;
+    u8* sOldSaveBlock;
+    bool8 result = SAVE_UFR_SUCCESS;
+
+    /** When we enter this function, we're at the end of the copyright screen and the game has just loaded
+     * the save and determined it is an outdated save. Above we determine what version the save is, so
+     * we can now update the save. First, we need to grab a spot in memory (on the heap) to load up the
+     * old data so we can read it how we want. */
+
+    // Load the old save file into the heap
+    sOldSaveBlock = AllocZeroed(SECTOR_DATA_SIZE * NUM_SECTORS_PER_SLOT);
+    {
+        /** The following assigns pointers to gRamSaveSectorLocations to locations of the old save
+         * block located on the heap. We will be passing gRamSaveSectorLocations to the update function
+         * later so it can use these pointer locations to set up the old save structs to the data.
+         */
+        // Assign locations to load the old save block into the heap
+        u8* ptr1 = sOldSaveBlock;
+        u8* ptr2 = sOldSaveBlock;
+        u8* ptr3 = sOldSaveBlock;
+        int i = SECTOR_ID_SAVEBLOCK2;
+
+        gRamSaveSectorLocations[i].data = (void *)(ptr1) + sSaveSlotLayout[i].offset;
+        gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
+        ptr3 = ptr2 = ptr1 + sSaveSlotLayout[i].size;
+
+        for (i = SECTOR_ID_SAVEBLOCK1_START; i <= SECTOR_ID_SAVEBLOCK1_END; i++)
+        {
+            gRamSaveSectorLocations[i].data = (void *)(ptr2) + sSaveSlotLayout[i].offset;
+            gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
+            ptr3 += sSaveSlotLayout[i].size;
+        }
+
+        for (; i <= SECTOR_ID_PKMN_STORAGE_END; i++) //setting i to SECTOR_ID_PKMN_STORAGE_START does not match
+        {
+            gRamSaveSectorLocations[i].data = (void *)(ptr3) + sSaveSlotLayout[i].offset;
+            gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
+        }
+        // Load the save from FLASH and onto the heap
+        CopySaveSlotData(FULL_SAVE_SLOT, gRamSaveSectorLocations);
+    }
+
+    // Zero out the data currently loaded into the save structs
+    CpuFill16(0, &gSaveblock2, sizeof(struct SaveBlock2ASLR));
+    CpuFill16(0, &gSaveblock1, sizeof(struct SaveBlock1ASLR));
+    CpuFill16(0, &gPokemonStorage, sizeof(struct PokemonStorageASLR));
+
+    // Attempt to update the save
+    switch (version) {
+        case 0: 
+            result = UpdateSave_v0_v1(gRamSaveSectorLocations);
+            break;
+        default:
+            result = SAVE_UFR_VERSION_UNSUPPORTED;
+            break;
+    }
+
+    // Clean up and perform post-load copying operations
+    Free(sOldSaveBlock);
+    CopyPartyAndObjectsFromSave();
+    // Note, the save is now up to date, but it won't be saved back to FLASH until the player saves the game.
+    return result;
 }

@@ -1153,10 +1153,24 @@ void CB2_InitCopyrightScreenAfterBootup(void)
 {
     if (!SetUpCopyrightScreen())
     {
+        /** When the copyright screen is over, the following happens. */
         SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
         ResetMenuAndMonGlobals();
         Save_ResetSaveCounters();
+        /** The save is loaded now and gSaveFileStatus is set to the status of the save. */
         LoadGameSave(SAVE_NORMAL);
+        /** If the game determines the save is outdated, attempt to update it here. */
+        if (gSaveFileStatus == SAVE_STATUS_OUTDATED)
+        {
+            u8 status = UpdateSaveFile();
+            if (status == SAVE_UFR_SUCCESS) {
+                gSaveFileStatus = SAVE_STATUS_UPDATED;
+
+            } else {
+                /** We're using the upper 8 bits of gSaveFileStatus to store reason that things failed to update. */
+                gSaveFileStatus = SAVE_STATUS_OUTDATED | (status << 8); 
+            }
+        }
         if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
             Sav2_ClearSetDefault();
         SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);

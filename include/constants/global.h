@@ -30,7 +30,11 @@
 
 #define NUM_VERSIONS 15
 
-#define SAVE_VERSION 0 // Tracks the current save iteration for connectivity.
+// Tracks the current save iteration for connectivity and save migration.
+#define SAVE_VERSION_0 0 // Current
+#define SAVE_VERSION_1 1
+
+#define SAVE_VERSION (SAVE_VERSION_0)
 
 #define LANGUAGE_JAPANESE 1
 #define LANGUAGE_ENGLISH  2
@@ -60,7 +64,7 @@
 #define POKEBLOCKS_COUNT 40
 #define OBJECT_EVENTS_COUNT 16
 #define MAIL_COUNT (10 + PARTY_SIZE)
-#define SECRET_BASES_COUNT 20
+#define SECRET_BASES_COUNT 10
 #define POKE_NEWS_COUNT 16
 #define PC_ITEMS_COUNT 50
 #define BAG_ITEMS_COUNT 100

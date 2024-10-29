@@ -204,24 +204,6 @@ struct Time
 #include "constants/items.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
-struct SaveBlock3
-{
-    u32 PID;
-    u32 grottoSeed;
-#if OW_USE_FAKE_RTC
-    struct Time fakeRTC;
-#endif
-#if USE_DEXNAV_SEARCH_LEVELS == TRUE
-    u8 dexNavSearchLevels[ROUND_BITS_TO_BYTES(NUM_SPECIES)];
-#endif
-    u8 dexNavChain;
-#if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
-    u8 itemFlags[ITEM_FLAGS_COUNT];
-#endif
-}; /* max size 1624 bytes */
-
-extern struct SaveBlock3 *gSaveBlock3Ptr;
-
 struct Pokedex
 {
     /*0x00*/ u8 order;
@@ -531,59 +513,6 @@ struct RankingHall2P
     //u8 padding;
 };
 
-struct SaveBlock2
-{
-    /*0x00*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
-    /*0x08*/ u8 playerGender; // MALE, FEMALE
-    /*0x09*/ u8 specialSaveWarpFlags;
-    /*0x0A*/ u8 playerTrainerId[TRAINER_ID_LENGTH];
-    /*0x0E*/ u16 playTimeHours;
-    /*0x10*/ u8 playTimeMinutes;
-    /*0x11*/ u8 playTimeSeconds;
-    /*0x12*/ u8 playTimeVBlanks;
-    /*0x13*/ u8 optionsButtonMode; // OPTIONS_BUTTON_MODE_[NORMAL/LR/L_EQUALS_A]
-    /*0x14*/ u16 optionsTextSpeed:3; // OPTIONS_TEXT_SPEED_[SLOW/MID/FAST]
-             u16 optionsWindowFrameType:5; // Specifies one of the 20 decorative borders for text boxes
-             u16 optionsSound:1; // OPTIONS_SOUND_[MONO/STEREO]
-             u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
-             u16 optionsBattleSceneOff:1; // whether battle animations are disabled
-             u16 regionMapZoom:1; // whether the map is zoomed in
-             u16 optionsUnitSystem:1; //tx_optionsPlus
-             u16 optionsDifficulty:1; // custom addition to tx_optionsPlus
-             u16 optionsLevelCap:2; // custom addition to tx_optionsPlus
-             u16 optionsSpeedModifer:3; //tx_optionsPlus
-             u16 optionsPadding:1; // padding
-             u16 optionsExpBarSpeed:4; //tx_optionsPlus
-             u16 optionsDisableMatchCall:1; //tx_optionsPlus
-             u16 optionsCurrentFont:1; //tx_optionsPlus
-             u16 optionsWildRandomiser:1; // custom addition to tx_optionsPlus
-             u16 optionsTrainerRandomiser:1; // custom addition to tx_optionsPlus
-             u16 optionsAbilityRandomiser:1; // custom addition to tx_optionsPlus
-             u16 optionsVGCDraft:2; // custom addition to tx_optionsPlus
-             u16 optionsDamageNumsOff:1; // custom addition to tx_optionsPlus
-             u32 randomiserSeed;
-    /*0x18*/ struct Pokedex pokedex;
-    /*0x90*/ u8 filler_90[0x8];
-    /*0x98*/ struct Time localTimeOffset;
-    /*0xA0*/ struct Time lastBerryTreeUpdate;
-    /*0xA8*/ u32 gcnLinkFlags; // Read by Pokémon Colosseum/XD
-    /*0xAC*/ u32 encryptionKey;
-    /*0xB0*/ struct PlayersApprentice playerApprentice;
-    /*0xDC*/ struct Apprentice apprentices[APPRENTICE_COUNT];
-    /*0x1EC*/ struct BerryCrush berryCrush;
-#if FREE_POKEMON_JUMP == FALSE
-    /*0x1FC*/ struct PokemonJumpRecords pokeJump;
-#endif //FREE_POKEMON_JUMP
-    /*0x20C*/ struct BerryPickingResults berryPick;
-#if FREE_RECORD_MIXING_HALL_RECORDS == FALSE
-    /*0x21C*/ struct RankingHall1P hallRecords1P[HALL_FACILITIES_COUNT][FRONTIER_LVL_MODE_COUNT][HALL_RECORDS_COUNT]; // From record mixing.
-    /*0x57C*/ struct RankingHall2P hallRecords2P[FRONTIER_LVL_MODE_COUNT][HALL_RECORDS_COUNT]; // From record mixing.
-#endif //FREE_RECORD_MIXING_HALL_RECORDS
-    /*0x624*/ u16 contestLinkResults[CONTEST_CATEGORIES_COUNT][CONTESTANT_COUNT];
-    /*0x64C*/ struct BattleFrontier frontier;
-}; // sizeof=0xF2C
-
-extern struct SaveBlock2 *gSaveBlock2Ptr;
 extern u8 UpdateSpritePaletteWithTime(u8);
 
 struct SecretBaseParty
@@ -1026,126 +955,11 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
-struct SaveBlock1
-{
-    /*0x00*/ struct Coords16 pos;
-    /*0x04*/ struct WarpData location;
-    /*0x0C*/ struct WarpData continueGameWarp;
-    /*0x14*/ struct WarpData dynamicWarp;
-    /*0x1C*/ struct WarpData lastHealLocation; // used by white-out and teleport
-    /*0x24*/ struct WarpData escapeWarp; // used by Dig and Escape Rope
-    /*0x2C*/ u16 savedMusic;
-    /*0x2E*/ u8 weather;
-    /*0x2F*/ u8 weatherCycleStage;
-    /*0x30*/ u8 flashLevel;
-    /*0x31*/ //u8 padding1;
-    /*0x32*/ u16 mapLayoutId;
-    /*0x34*/ u16 mapView[0x100];
-    /*0x234*/ u8 playerPartyCount;
-    /*0x235*/ //u8 padding2[3];
-    /*0x238*/ struct Pokemon playerParty[PARTY_SIZE];
-    /*0x490*/ u32 money;
-    /*0x494*/ u16 coins;
-    /*0x496*/ u16 registeredItemCompat; // used for vanilla registered item
-    /*0x498*/ struct ItemSlot pcItems[PC_ITEMS_COUNT];
-    /*0x560*/ struct ItemSlot bagPocket_Items[BAG_ITEMS_COUNT];
-    /*0x5D8*/ struct ItemSlot bagPocket_KeyItems[BAG_KEYITEMS_COUNT];
-              struct ItemSlot bagPocket_TeraShards[BAG_TERASHARDS_COUNT];
-    /*0x650*/ struct ItemSlot bagPocket_PokeBalls[BAG_POKEBALLS_COUNT];
-    /*0x690*/ struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
-    /*0x790*/ struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
-    /*0x848*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
-#if FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1 == FALSE
-    /*0x988*/ u8 filler1[0x34]; // Previously Dex Flags, feel free to remove.
-#endif //FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1
-    /*0x9BC*/ u16 berryBlenderRecords[3];
-    /*0x9C2*/ u8 unused_9C2[6];
-#if FREE_MATCH_CALL == FALSE
-    /*0x9C8*/ u16 trainerRematchStepCounter;
-    // MAX_REMATCH_ENTRIES decreased from vanilla's 100 to 92
-    // This is to accomodate 4 non-vanilla registeredItems
-    /*0x9CA*/ u8 trainerRematches[MAX_REMATCH_ENTRIES];
-#endif //FREE_MATCH_CALL
-    /*0xA26*/ u16 registeredItems[MAX_REGISTERED_ITEMS];
-    /*0xA2E*/ //u8 padding3[2];
-    /*0xA30*/ struct ObjectEvent objectEvents[OBJECT_EVENTS_COUNT];
-    /*0xC70*/ struct ObjectEventTemplate objectEventTemplates[OBJECT_EVENT_TEMPLATES_COUNT];
-    /*0x1270*/ u8 flags[NUM_FLAG_BYTES];
-    /*0x139C*/ u16 vars[VARS_COUNT];
-    /*0x159C*/ u32 gameStats[NUM_GAME_STATS];
-    /*0x169C*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
-    /*0x1A9C*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
-    /*0x271C*/ u8 playerRoomDecorations[DECOR_MAX_PLAYERS_HOUSE];
-    /*0x2728*/ u8 playerRoomDecorationPositions[DECOR_MAX_PLAYERS_HOUSE];
-    /*0x2734*/ u8 decorationDesks[10];
-    /*0x273E*/ u8 decorationChairs[10];
-    /*0x2748*/ u8 decorationPlants[10];
-    /*0x2752*/ u8 decorationOrnaments[30];
-    /*0x2770*/ u8 decorationMats[30];
-    /*0x278E*/ u8 decorationPosters[10];
-    /*0x2798*/ u8 decorationDolls[40];
-    /*0x27C0*/ u8 decorationCushions[10];
-    /*0x27CC*/ TVShow tvShows[TV_SHOWS_COUNT];
-    /*0x27CA*/ //u8 padding4[2];
-    /*0x2B50*/ PokeNews pokeNews[POKE_NEWS_COUNT];
-    /*0x2B90*/ u16 outbreakPokemonSpecies;
-    /*0x2B92*/ u8 outbreakLocationMapNum;
-    /*0x2B93*/ u8 outbreakLocationMapGroup;
-    /*0x2B94*/ u8 outbreakPokemonLevel;
-    /*0x2B95*/ u8 outbreakUnused1;
-    /*0x2B96*/ u16 outbreakUnused2;
-    /*0x2B98*/ u16 outbreakPokemonMoves[MAX_MON_MOVES];
-    /*0x2BA0*/ u8 outbreakUnused3;
-    /*0x2BA1*/ u8 outbreakPokemonProbability;
-    /*0x2BA2*/ u16 outbreakDaysLeft;
-    /*0x2BA4*/ struct GabbyAndTyData gabbyAndTyData;
-    /*0x2BB0*/ u16 easyChatProfile[EASY_CHAT_BATTLE_WORDS_COUNT];
-    /*0x2BBC*/ u16 easyChatBattleStart[EASY_CHAT_BATTLE_WORDS_COUNT];
-    /*0x2BC8*/ u16 easyChatBattleWon[EASY_CHAT_BATTLE_WORDS_COUNT];
-    /*0x2BD4*/ u16 easyChatBattleLost[EASY_CHAT_BATTLE_WORDS_COUNT];
-    /*0x2BE0*/ struct Mail mail[MAIL_COUNT];
-    /*0x2E20*/ u8 unlockedTrendySayings[NUM_TRENDY_SAYING_BYTES]; // Bitfield for unlockable Easy Chat words in EC_GROUP_TRENDY_SAYING
-    /*0x2E25*/ //u8 padding5[3];
-    /*0x2E28*/ OldMan oldMan;
-    /*0x2e64*/ struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
-    /*0x2e90*/ struct ContestWinner contestWinners[NUM_CONTEST_WINNERS]; // see CONTEST_WINNER_*
-    /*0x3030*/ struct DayCare daycare;
-#if FREE_LINK_BATTLE_RECORDS == FALSE
-    /*0x3150*/ struct LinkBattleRecords linkBattleRecords;
-#endif //FREE_LINK_BATTLE_RECORDS
-    /*0x31A8*/ u8 giftRibbons[GIFT_RIBBONS_COUNT];
-    /*0x31B3*/ struct ExternalEventData externalEventData;
-    /*0x31C7*/ struct ExternalEventFlags externalEventFlags;
-    /*0x31DC*/ struct Roamer roamer[ROAMER_COUNT];
-#if FREE_ENIGMA_BERRY == FALSE
-    /*0x31F8*/ struct EnigmaBerry enigmaBerry;
-#endif //FREE_ENIGMA_BERRY
-#if FREE_MYSTERY_GIFT == FALSE
-    /*0x322C*/ struct MysteryGiftSave mysteryGift;
-#endif //FREE_MYSTERY_GIFT
-    /*0x3???*/ u8 dexSeen[NUM_DEX_FLAG_BYTES];
-    /*0x3???*/ u8 dexCaught[NUM_DEX_FLAG_BYTES];
-#if FREE_TRAINER_HILL == FALSE
-    /*0x3???*/ u32 trainerHillTimes[NUM_TRAINER_HILL_MODES];
-#endif //FREE_TRAINER_HILL
-#if FREE_MYSTERY_EVENT_BUFFERS == FALSE
-    /*0x3???*/ struct RamScript ramScript;
-#endif //FREE_MYSTERY_EVENT_BUFFERS
-    /*0x3???*/ struct RecordMixingGift recordMixingGift;
-    /*0x3???*/ LilycoveLady lilycoveLady;
-    /*0x3???*/ struct TrainerNameRecord trainerNameRecords[20];
-#if FREE_UNION_ROOM_CHAT == FALSE
-    /*0x3???*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
-#endif //FREE_UNION_ROOM_CHAT
-#if FREE_TRAINER_HILL == FALSE
-    /*0x3???*/ struct TrainerHillSave trainerHill;
-#endif //FREE_TRAINER_HILL
-    /*0x3???*/ struct WaldaPhrase waldaPhrase;
-    // sizeof: 0x3???
-};
-// sizeof: 0x3D88
+#include "save.v-current.h"
 
+extern struct SaveBlock2* gSaveBlock2Ptr;
 extern struct SaveBlock1* gSaveBlock1Ptr;
+extern struct SaveBlock3 *gSaveBlock3Ptr;
 
 struct MapPosition
 {

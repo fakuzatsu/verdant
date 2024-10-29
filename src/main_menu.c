@@ -174,6 +174,7 @@ static EWRAM_DATA bool8 sStartedPokeBallTask = 0;
 static EWRAM_DATA u16 sCurrItemAndOptionMenuCheck = 0;
 
 static u8 sBirchSpeechMainTaskId;
+
 // Static ROM declarations
 
 static u32 InitMainMenu(bool8);
@@ -259,6 +260,8 @@ static const u16 sBirchSpeechPlatformBlackPal[] = {RGB_BLACK, RGB_BLACK, RGB_BLA
 
 static const u8 gText_SaveFileCorrupted[] = _("The save file is corrupted. The\nprevious save file will be loaded.");
 static const u8 gText_SaveFileErased[] = _("The save file has been erased\ndue to corruption or damage.");
+static const u8 gText_SaveFileOldUpdated[] = _("Your save file is for an older release\nof Verdant Emerald.\pYour save will be updated. Please back\nup your old save if you wish to keep it.");
+static const u8 gText_SaveFileOldErrored[] = _("Your save file is for an older release\nof Verdant Emerald.\pThe attempt to update the save file\nhas failed: {STR_VAR_1}\pPlease report this to Zatsu.");
 static const u8 gJPText_No1MSubCircuit[] = _("1Mサブきばんが ささっていません！");
 static const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
@@ -352,7 +355,7 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
         .paletteNum = 15,
         .baseBlock = 0x9D
     },
-    // OPTION / Mystery Gift
+    // OPTION / MYSTERY GIFT
     {
         .bg = 0,
         .tilemapLeft = MENU_LEFT,
@@ -362,7 +365,7 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
         .paletteNum = 15,
         .baseBlock = 0xD1
     },
-    // OPTION / Mystery Events
+    // OPTION / MYSTERY EVENTS
     {
         .bg = 0,
         .tilemapLeft = MENU_LEFT,
@@ -400,7 +403,7 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
         .width = MENU_WIDTH_ERROR,
         .height = MENU_HEIGHT_ERROR,
         .paletteNum = 15,
-        .baseBlock = 0x1A1
+        .baseBlock = 0x16D
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -545,8 +548,8 @@ enum
 {
     HAS_NO_SAVED_GAME,  //NEW GAME, OPTION
     HAS_SAVED_GAME,     //CONTINUE, NEW GAME, INTERNET OPTION, OPTION
-    HAS_MYSTERY_GIFT,   //CONTINUE, NEW GAME, Mystery Gift, INTERNET OPTION, OPTION
-    HAS_MYSTERY_EVENTS, //CONTINUE, NEW GAME, Mystery Gift, Mystery Events, INTERNET OPTION, OPTION
+    HAS_MYSTERY_GIFT,   //CONTINUE, NEW GAME, MYSTERY GIFT, INTERNET OPTION, OPTION
+    HAS_MYSTERY_EVENTS, //CONTINUE, NEW GAME, MYSTERY GIFT, MYSTERY EVENTS, INTERNET OPTION, OPTION
 };
 
 enum
@@ -673,7 +676,7 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
 
         if (IsWirelessAdapterConnected())
             tWirelessAdapterConnected = TRUE;
-        switch (gSaveFileStatus)
+        switch (gSaveFileStatus & 0xFF) /** We're using the upper 8 bits to store fail reason. */
         {
             case SAVE_STATUS_OK:
                 tMenuType = HAS_SAVED_GAME;
@@ -683,6 +686,20 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
                 break;
             case SAVE_STATUS_CORRUPT:
                 CreateMainMenuErrorWindow(gText_SaveFileErased);
+                tMenuType = HAS_NO_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_UPDATED:
+                /** If the save file has been updated, display a message about it here. */
+                CreateMainMenuErrorWindow(gText_SaveFileOldUpdated);
+                tMenuType = HAS_SAVED_GAME;
+                gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+                break;
+            case SAVE_STATUS_OUTDATED:
+                /** If the save file is still outdated when we reach here, we couldn't update it. */
+                BufferUpdateFailReason();
+                StringExpandPlaceholders(gStringVar4, gText_SaveFileOldErrored);
+                CreateMainMenuErrorWindow(gStringVar4);
                 tMenuType = HAS_NO_SAVED_GAME;
                 gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
                 break;
@@ -729,10 +746,10 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
 static void Task_WaitForSaveFileErrorWindow(u8 taskId)
 {
     RunTextPrinters();
-    if (!IsTextPrinterActive(7) && (JOY_NEW(A_BUTTON)))
+    if (!IsTextPrinterActive(8) && (JOY_NEW(A_BUTTON)))
     {
-        ClearWindowTilemap(7);
-        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[7]);
+        ClearWindowTilemap(8);
+        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[8]);
         gTasks[taskId].func = Task_MainMenuCheckBattery;
     }
 }
@@ -764,10 +781,10 @@ static void Task_MainMenuCheckBattery(u8 taskId)
 static void Task_WaitForBatteryDryErrorWindow(u8 taskId)
 {
     RunTextPrinters();
-    if (!IsTextPrinterActive(7) && (JOY_NEW(A_BUTTON)))
+    if (!IsTextPrinterActive(8) && (JOY_NEW(A_BUTTON)))
     {
-        ClearWindowTilemap(7);
-        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[7]);
+        ClearWindowTilemap(8);
+        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[8]);
         gTasks[taskId].func = Task_DisplayMainMenu;
     }
 }
@@ -1254,7 +1271,7 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
             break;
         case 2:
             RunTextPrinters();
-            if (!IsTextPrinterActive(7))
+            if (!IsTextPrinterActive(8))
                 gTasks[taskId].tCurrItem++;
             break;
         case 3:
@@ -2258,11 +2275,11 @@ void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId)
 
 static void CreateMainMenuErrorWindow(const u8 *str)
 {
-    FillWindowPixelBuffer(7, PIXEL_FILL(1));
-    AddTextPrinterParameterized(7, FONT_NORMAL, str, 0, 1, 2, 0);
-    PutWindowTilemap(7);
-    CopyWindowToVram(7, COPYWIN_GFX);
-    DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[7], MAIN_MENU_BORDER_TILE);
+    FillWindowPixelBuffer(8, PIXEL_FILL(1));
+    AddTextPrinterParameterized(8, FONT_NORMAL, str, 0, 1, 2, 0);
+    PutWindowTilemap(8);
+    CopyWindowToVram(8, COPYWIN_GFX);
+    DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[8], MAIN_MENU_BORDER_TILE);
     SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(9, DISPLAY_WIDTH - 9));
     SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(113, DISPLAY_HEIGHT - 1));
 }
