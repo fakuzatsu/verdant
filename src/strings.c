@@ -1,6 +1,7 @@
 #include "global.h"
 #include "strings.h"
 #include "battle_pyramid_bag.h"
+#include "battle_frontier.h"
 #include "item_menu.h"
 
 ALIGNED(4)
@@ -1387,6 +1388,7 @@ const u8 gText_MenuExit[] = _("Exit");
 const u8 gText_MenuRetire[] = _("Retire");
 const u8 gText_MenuRest[] = _("Rest");
 const u8 gText_MenuDexNav[] = _("DexNav");
+const u8 gText_MenuDexNavShortcut[] = _("{L_BUTTON} DexNav");
 const u8 gText_SafariBallStock[] = _("Safari Balls\nStock: {STR_VAR_1}");
 const u8 gText_BattlePyramidFloor[] = _("Battle Pyramid\n{STR_VAR_1}");
 const u8 gText_Floor1[] = _("Floor 1");
@@ -1397,6 +1399,19 @@ const u8 gText_Floor5[] = _("Floor 5");
 const u8 gText_Floor6[] = _("Floor 6");
 const u8 gText_Floor7[] = _("Floor 7");
 const u8 gText_Peak[] = _("Peak");
+
+const u8 *const sPyramidFloorNames[FRONTIER_STAGES_PER_CHALLENGE + 1] =
+{
+    gText_Floor1,
+    gText_Floor2,
+    gText_Floor3,
+    gText_Floor4,
+    gText_Floor5,
+    gText_Floor6,
+    gText_Floor7,
+    gText_Peak
+};
+
 const u8 gText_LinkStandby2[] = _("Link standby…\n… … B Button: Cancel");
 const u8 gText_PressAToLoadEvent[] = _("Press the A Button to load event.\n… … B Button: Cancel");
 const u8 gText_LoadingEvent[] = _("Loading event…");
