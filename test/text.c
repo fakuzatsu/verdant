@@ -584,6 +584,7 @@ TEST("Ability names fit on Ability Pop-Up")
     EXPECT_LE(GetStringWidth(fontId, gAbilitiesInfo[ability].name, 0), widthPx);
 }
 
+#if BW_SUMMARY_SCREEN == FALSE
 TEST("Ability descriptions fit on Pokemon Summary Screen")
 {
     u32 i;
@@ -595,6 +596,7 @@ TEST("Ability descriptions fit on Pokemon Summary Screen")
     }
     EXPECT_LE(GetStringWidth(fontId, gAbilitiesInfo[ability].description, 0), widthPx);
 }
+#endif
 
 TEST("Type names fit on Battle Screen")
 {
