@@ -2739,6 +2739,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .description = COMPOUND_STRING("Changes its type to that of a queued\nmove once per battle entrance."),
 #else
         .description = COMPOUND_STRING("Changes type to move's."),
+#endif
     },
 
     [ABILITY_BALL_FETCH] =

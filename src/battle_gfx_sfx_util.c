@@ -1272,7 +1272,7 @@ void SpriteCB_EnemyShadow(struct Sprite *shadowSprite)
     shadowSprite->y = battlerSprite->y + yOffset;
     shadowSprite->invisible = invisible;
 
-    if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4 && P_GBA_STYLE_SPECIES_GFX == FALSE)
+    if (B_ENEMY_MON_SHADOW_STYLE >= GEN_4)
         shadowSprite->oam.tileNum = shadowSprite->tBaseTileNum + (8 * size);
 }
 
