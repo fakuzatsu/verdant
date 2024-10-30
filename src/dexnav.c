@@ -438,6 +438,12 @@ static const struct CompressedSpriteSheet sOwnedIconSpriteSheet = {sOwnedIconGfx
 static const struct CompressedSpriteSheet sHiddenMonIconSpriteSheet = {sHiddenMonIconGfx, (8 * 8) / 2, HIDDEN_MON_ICON_TAG};
 
 //// functions
+
+bool32 GetDexNavFlag(void)
+{
+    return FlagGet(FLAG_SYS_DEXNAV_GET);
+}
+
 ///////////////////////
 //// DEXNAV SEARCH ////
 ///////////////////////

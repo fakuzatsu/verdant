@@ -6,6 +6,7 @@
 #include "battle_pyramid_bag.h"
 #include "bg.h"
 #include "decompress.h"
+#include "dexnav.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "event_object_lock.h"
@@ -150,6 +151,7 @@ static EWRAM_DATA u8 sSaveInfoWindowId = 0;
 // --BG-GFX--
 static const u32 sStartMenuTiles[] = INCBIN_U32("graphics/heat_start_menu/bg.4bpp.lz");
 static const u32 sStartMenuTilemap[] = INCBIN_U32("graphics/heat_start_menu/bg.bin.lz");
+static const u32 sStartMenuTilemapDexNav[] = INCBIN_U32("graphics/heat_start_menu/bg_dexnav.bin.lz");
 static const u32 sStartMenuTilemapSafari[] = INCBIN_U32("graphics/heat_start_menu/bg_safari.bin.lz");
 static const u16 sStartMenuPalette[] = INCBIN_U16("graphics/heat_start_menu/bg.gbapal");
 const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.gbapal");
@@ -208,7 +210,7 @@ static const struct WindowTemplate sWindowTemplate_SafariBallsOrPyramidFloor =
 static const struct WindowTemplate sWindowTemplate_DexNav =
 {
     .bg = 0,
-    .tilemapLeft = 2,
+    .tilemapLeft = 1,
     .tilemapTop = 1,
     .width = 7,
     .height = 2,
@@ -673,7 +675,7 @@ static void ShowBattlePyramidFloor(void)
     FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_WHITE));
     PutWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
     StringCopy(gStringVar1, sPyramidFloorNames[gSaveBlock2Ptr->frontier.curChallengeBattleNum]);
-    StringExpandPlaceholders(gStringVar4, gText_BattlePyramidFloor);
+    StringExpandPlaceholders(gStringVar4, gText_PyramidFloor);
     AddTextPrinterParameterized(sHeatStartMenu->sTopLeftWindowId, FONT_NARROW, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
 }
@@ -739,7 +741,7 @@ void HeatStartMenu_Init(void)
         SetupHeatMenuCommonComponents();
         if (InBattlePyramid())
             ShowBattlePyramidFloor();
-        else
+        else if (GetDexNavFlag())
             ShowDexNavWindow();
         CreateTask(Task_HeatStartMenu_HandleMainInput, 0);
     }
@@ -845,10 +847,12 @@ static void HeatStartMenu_LoadBgGfx(void)
     u8* buf = GetBgTilemapBuffer(0);
     LoadBgTilemap(0, 0, 0, 0);
     DecompressAndCopyTileDataToVram(0, sStartMenuTiles, 0, 0, 0);
-    if (GetSafariZoneFlag() == FALSE)
-        LZDecompressWram(sStartMenuTilemap, buf);
-    else
+    if (GetSafariZoneFlag() || InBattlePyramid())
         LZDecompressWram(sStartMenuTilemapSafari, buf);
+    else if (GetDexNavFlag())
+        LZDecompressWram(sStartMenuTilemapDexNav, buf);
+    else
+        LZDecompressWram(sStartMenuTilemap, buf);
 
     LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LoadPalette(sStartMenuPalette, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
@@ -987,10 +991,10 @@ static void HeatStartMenu_ExitAndClearTilemap(void)
     RemoveWindow(sHeatStartMenu->sStartClockWindowId);
     RemoveWindow(sHeatStartMenu->sMenuNameWindowId);
 
-    if (GetSafariZoneFlag() == TRUE) 
+    if (GetDexNavFlag() || GetSafariZoneFlag() || InBattlePyramid())
     {
         FillWindowPixelBuffer(sHeatStartMenu->sTopLeftWindowId, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
-        ClearWindowTilemap(sHeatStartMenu->sTopLeftWindowId); 
+        ClearWindowTilemap(sHeatStartMenu->sTopLeftWindowId);
         CopyWindowToVram(sHeatStartMenu->sTopLeftWindowId, COPYWIN_GFX);
         RemoveWindow(sHeatStartMenu->sTopLeftWindowId);
     }
@@ -1064,21 +1068,30 @@ static void DoCleanUpAndOpenTrainerCard(void)
         PlayRainStoppingSoundEffect();
         HeatStartMenu_ExitAndClearTilemap();
         CleanupOverworldWindowsAndTilemaps();
-        if (IsOverworldLinkActive() || InUnionRoom()) 
+        if (IsOverworldLinkActive() || InUnionRoom())
         {
             ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
-            DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-        } 
-        else if (FlagGet(FLAG_SYS_FRONTIER_PASS)) 
+        }
+        else if (FlagGet(FLAG_SYS_FRONTIER_PASS))
         {
             ShowFrontierPass(CB2_ReturnToFieldWithOpenMenu); // Display frontier pass
-            DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
-        } 
-        else 
-        {
-        ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
-        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
         }
+        else
+        {
+            ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu); // Display trainer card
+        }
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+    }
+}
+
+static void DoCleanUpAndOpenDexNav(void)
+{
+    if (!gPaletteFade.active)
+    {
+        DestroyTask(FindTaskIdByFunc(Task_HeatStartMenu_HandleMainInput));
+        PlayRainStoppingSoundEffect();
+        HeatStartMenu_ExitAndClearTilemap();
+        CreateTask(Task_OpenDexNavFromStartMenu, 0);
     }
 }
 
@@ -1559,7 +1572,13 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();  
         DestroyTask(taskId);
-    } 
+    }
+    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0
+     && GetDexNavFlag() && !InBattlePyramid() && !GetSafariZoneFlag())
+    {
+        FadeScreen(FADE_TO_BLACK, 0);
+        sHeatStartMenu->loadState = 2;
+    }
     else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0) 
     {
         HeatStartMenu_HandleInput_DPADDOWN();
@@ -1568,12 +1587,17 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
     {
         HeatStartMenu_HandleInput_DPADUP();
     } 
-    else if (sHeatStartMenu->loadState == 1) 
+    else if (sHeatStartMenu->loadState >= 1) 
     {
-        if (menuSelected != MENU_SAVE) {
+        if (sHeatStartMenu->loadState == 2)
+        {
+            DoCleanUpAndOpenDexNav();
+        }
+        else if (menuSelected != MENU_SAVE)
+        {
             HeatStartMenu_OpenMenu();
         } 
-        else 
+        else
         {
         DoCleanUpAndStartSaveMenu();
         }
