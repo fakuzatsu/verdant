@@ -1573,7 +1573,8 @@ static void Task_HeatStartMenu_HandleMainInput(u8 taskId)
         HeatStartMenu_ExitAndClearTilemap();  
         DestroyTask(taskId);
     }
-    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0)
+    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0
+     && GetDexNavFlag() && !InBattlePyramid() && !GetSafariZoneFlag())
     {
         FadeScreen(FADE_TO_BLACK, 0);
         sHeatStartMenu->loadState = 2;
