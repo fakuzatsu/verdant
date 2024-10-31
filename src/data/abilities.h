@@ -2714,7 +2714,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Intrepid Sword"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Boosts the Pokémon's Attack stat\nthe first time it enters battle.")
+        .description = COMPOUND_STRING("Boosts the Pokémon's Attack stat\nthe first time it enters battle."),
 #else
         .description = COMPOUND_STRING("Ups Attack on entry."),
 #endif
