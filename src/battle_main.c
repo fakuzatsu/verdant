@@ -3053,12 +3053,12 @@ void BeginBattleIntro(void)
     gBattleMainFunc = DoBattleIntro;
 }
 
-bool32 InBattleChoosingMoves()
+bool32 InBattleChoosingMoves(void)
 {
     return gBattleMainFunc == HandleTurnActionSelectionState;
 }
 
-bool32 InBattleRunningActions()
+bool32 InBattleRunningActions(void)
 {
     return gBattleMainFunc == RunTurnActionsFunctions;
 }

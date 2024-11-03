@@ -18,6 +18,7 @@
 #include "string_util.h"
 #include "strings.h"
 #include "script.h"
+#include "script_menu.h"
 #include "task.h"
 #include "text_window.h"
 #include "window.h"
@@ -70,7 +71,6 @@ static EWRAM_DATA u8 sHofPCTopBarWindowId = 0;
 static EWRAM_DATA bool8 sScheduledBgCopiesToVram[4] = {FALSE};
 static EWRAM_DATA u16 sTempTileDataBufferIdx = 0;
 static EWRAM_DATA void *sTempTileDataBuffer[0x20] = {NULL};
-static EWRAM_DATA u8 sActiveOverworldDialog;
 
 // const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.gbapal");
 
@@ -339,7 +339,7 @@ void DrawDialogueFrame(u8 windowId, bool8 copyToVram)
     PutWindowTilemap(windowId);
     if (copyToVram == TRUE)
         CopyWindowToVram(windowId, COPYWIN_FULL);
-    sActiveOverworldDialog = gMsgIsSignPost + 1;
+    gMain.activeOverworldDialog = TRUE;
 }
 
 void DrawStdWindowFrame(u8 windowId, bool8 copyToVram)
@@ -358,7 +358,7 @@ void ClearDialogWindowAndFrame(u8 windowId, bool8 copyToVram)
     ClearWindowTilemap(windowId);
     if (copyToVram == TRUE)
         CopyWindowToVram(windowId, COPYWIN_FULL);
-    sActiveOverworldDialog = 0;
+    gMain.activeOverworldDialog = FALSE;
 }
 
 void ClearStdWindowAndFrame(u8 windowId, bool8 copyToVram)
@@ -803,7 +803,7 @@ void ClearDialogWindowAndFrameToTransparent(u8 windowId, bool8 copyToVram)
     ClearWindowTilemap(windowId);
     if (copyToVram == TRUE)
         CopyWindowToVram(windowId, COPYWIN_FULL);
-    sActiveOverworldDialog = 0;
+    gMain.activeOverworldDialog = FALSE;
 }
 
 static void WindowFunc_ClearDialogWindowAndFrameNullPalette(u8 bg, u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height, u8 paletteNum)
@@ -2314,7 +2314,7 @@ void HBlankCB_DoublePopupWindow(void)
 
 bool32 FieldDialogIsActive(void)
 {
-    if (sActiveOverworldDialog && !gMain.inBattle)
+    if (gMain.activeOverworldDialog && !gMain.inBattle && !HandlingFieldDialogInput())
         return TRUE;
     return FALSE;
 }

@@ -88,8 +88,8 @@ u16 trainerPokemonRandomiser(u16 species, u16 random);
 void ModifyPersonalityForNature(u32 *personality, u32 newNature);
 u32 GeneratePersonalityForGender(u32 gender, u32 species);
 void CustomTrainerPartyAssignMoves(struct Pokemon *mon, const struct TrainerMon *partyEntry);
-bool32 InBattleChoosingMoves();
-bool32 InBattleRunningActions();
+bool32 InBattleChoosingMoves(void);
+bool32 InBattleRunningActions(void);
 
 extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 
