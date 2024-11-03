@@ -3263,6 +3263,9 @@ static void SortItemsInBag(u8 pocket, u8 type)
         itemMem = gSaveBlock1Ptr->bagPocket_TMHM;
         itemAmount = BAG_TMHM_COUNT;
         break;
+    case TERASHARDS_POCKET:
+        itemMem = gSaveBlock1Ptr->bagPocket_TeraShards;
+        itemAmount = BAG_TERASHARDS_COUNT;
     default:
         return;
     }
