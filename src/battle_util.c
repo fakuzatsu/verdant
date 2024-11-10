@@ -5785,7 +5785,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                  && IsMoveMakingContact(move, gBattlerAttacker))
                 {
                     if (FlagGet(B_FLAG_SLEEP_CLAUSE))
-                        gBattleStruct->sleepClauseEffectExempt[gBattlerAttacker] = TRUE;
+                        gBattleStruct->sleepClauseEffectExempt |= (1u << gBattlerAttacker);
                     gBattleScripting.moveEffect = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_SLEEP;
                     PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
                     BattleScriptPushCursor();
@@ -6659,6 +6659,9 @@ bool32 IsBattlerTerrainAffected(u32 battler, u32 terrainFlag)
 
 bool32 CanBeSlept(u32 battler, u32 ability, u32 isBlockedBySleepClause)
 {
+    if(IsSleepClauseActiveForSide(GetBattlerSide(battler)) && isBlockedBySleepClause)
+        return FALSE;
+
     if (ability == ABILITY_INSOMNIA
      || ability == ABILITY_VITAL_SPIRIT
      || ability == ABILITY_COMATOSE
@@ -6667,8 +6670,7 @@ bool32 CanBeSlept(u32 battler, u32 ability, u32 isBlockedBySleepClause)
      || gBattleMons[battler].status1 & STATUS1_ANY
      || IsAbilityOnSide(battler, ABILITY_SWEET_VEIL)
      || IsAbilityStatusProtected(battler)
-     || IsBattlerTerrainAffected(battler, STATUS_FIELD_ELECTRIC_TERRAIN | STATUS_FIELD_MISTY_TERRAIN)
-     || (isBlockedBySleepClause && IsSleepClauseActiveForSide(GetBattlerSide(battler))))
+     || IsBattlerTerrainAffected(battler, STATUS_FIELD_ELECTRIC_TERRAIN | STATUS_FIELD_MISTY_TERRAIN))
         return FALSE;
     return TRUE;
 }
@@ -11930,9 +11932,9 @@ u32 GetMoveType(u32 move)
 
 void TryActivateSleepClause(u32 battler, u32 indexInParty)
 {
-    if (gBattleStruct->sleepClauseEffectExempt[battler])
+    if (gBattleStruct->sleepClauseEffectExempt & (1u << battler))
     {
-        gBattleStruct->sleepClauseEffectExempt[battler] = FALSE;
+        gBattleStruct->sleepClauseEffectExempt &= ~(1u << battler);
         return;
     }
 

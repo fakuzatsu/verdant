@@ -1311,7 +1311,7 @@ static void Cmd_attackcanceler(void)
             return;
         case DISOBEYS_FALL_ASLEEP:
             if (FlagGet(B_FLAG_SLEEP_CLAUSE))
-                gBattleStruct->sleepClauseEffectExempt[gBattlerAttacker] = TRUE;
+                gBattleStruct->sleepClauseEffectExempt |= (1u << gBattlerAttacker);
             gBattlescriptCurrInstr = BattleScript_IgnoresAndFallsAsleep;
             gMoveResultFlags |= MOVE_RESULT_MISSED;
             return;
@@ -3025,7 +3025,7 @@ void SetMoveEffect(bool32 primary, bool32 certain)
 
             if (i != gBattlersCount)
                 break;
-            if (!CanBeSlept(gEffectBattler, GetBattlerAbility(gEffectBattler), TRUE) && !gBattleStruct->sleepClauseEffectExempt[gEffectBattler])
+            if (!CanBeSlept(gEffectBattler, GetBattlerAbility(gEffectBattler), TRUE) && !(gBattleStruct->sleepClauseEffectExempt & (1u << gEffectBattler)))
                 break;
 
             cancelMultiTurnMovesResult = CancelMultiTurnMoves(gEffectBattler);
@@ -17369,11 +17369,11 @@ void BS_JumpIfSleepClause(void)
     // Can freely sleep own partner
     if (IsDoubleBattle() && B_FLAG_SLEEP_CLAUSE && GetBattlerSide(gBattlerAttacker) == GetBattlerSide(gBattlerTarget))
     {
-        gBattleStruct->sleepClauseEffectExempt[gBattlerTarget] = TRUE;
+        gBattleStruct->sleepClauseEffectExempt |= (1u << gBattlerTarget);
         gBattlescriptCurrInstr = cmd->nextInstr;
         return;
     }
-    gBattleStruct->sleepClauseEffectExempt[gBattlerTarget] = FALSE;
+    gBattleStruct->sleepClauseEffectExempt &= ~(1u << gBattlerTarget);
     // Can't sleep if clause is active otherwise
     if (IsSleepClauseActiveForSide(GetBattlerSide(battler)))
         gBattlescriptCurrInstr = cmd->jumpInstr;
