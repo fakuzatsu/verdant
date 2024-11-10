@@ -685,7 +685,7 @@ static void OpponentHandleChoosePokemon(u32 battler)
                  || chosenMonId == gBattlerPartyIndexes[battler2])
                     continue;
                 if ((AI_THINKING_STRUCT->aiFlags[battler] & AI_FLAG_ACE_POKEMON)
-                 && ((chosenMonId != CalculateEnemyPartyCount() - 1) || CountAIAliveNonEggMonsExcept(PARTY_SIZE) == pokemonInBattle))
+                 && ((chosenMonId == CalculateEnemyPartyCountInSide(battler) - 1) || CountAIAliveNonEggMonsExcept(PARTY_SIZE) == pokemonInBattle))
                     continue;
                 // mon is valid
                 break;
