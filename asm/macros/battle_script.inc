@@ -930,8 +930,9 @@
 	.4byte \failInstr
 	.endm
 
-	.macro setdestinybond
+	.macro trysetdestinybond failInstr:req
 	.byte 0xaa
+	.4byte \failInstr
 	.endm
 
 	.macro trysetdestinybondtohappen
