@@ -309,8 +309,8 @@ static void ReadKeys(void)
             gMain.heldKeys |= A_BUTTON;
     }
 
-    // Turns L into Turbo A during Field Messages.
-    if (JOY_HELD(L_BUTTON) && FieldDialogIsActive())
+    // Turns L into Turbo A during Field and Battle Messages.
+    if (JOY_HELD(L_BUTTON) && (FieldDialogIsActive() || BattleDialogIsActive()))
        gMain.newKeys ^= A_BUTTON;
 
     if (JOY_NEW(gMain.watchedKeysMask))
