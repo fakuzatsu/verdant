@@ -346,7 +346,7 @@ void SetControllerToLinkPartner(u32 battler);
 // Battle Speed Up (Credit to Pokabbie)
 u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar);
 
-//
-bool32 BattleDialogIsActive(void)
+// Turbo A during battle dialog
+bool32 BattleDialogIsActive(void);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H
