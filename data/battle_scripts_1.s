@@ -444,7 +444,7 @@ BattleScript_EffectTakeHeart::
 	attackcanceler
 	attackstring
 	ppreduce
-	cureifburnedparalysedorpoisoned BattleScript_CalmMindTryToRaiseStats
+	curestatuswithmove BattleScript_CalmMindTryToRaiseStats
 	attackanimation
 	waitanimation
 	updatestatusicon BS_ATTACKER
@@ -5230,7 +5230,7 @@ BattleScript_EffectRefresh::
 	attackcanceler
 	attackstring
 	ppreduce
-	cureifburnedparalysedorpoisoned BattleScript_ButItFailed
+	curestatuswithmove BattleScript_ButItFailed
 	attackanimation
 	waitanimation
 	printstring STRINGID_PKMNSTATUSNORMAL
