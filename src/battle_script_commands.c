@@ -6368,6 +6368,7 @@ static void Cmd_moveend(void)
                                 else
                                 {
                                     gBattlescriptCurrInstr = BattleScript_EjectPackActivates;
+                                    AI_DATA->ejectPackSwitch = TRUE;
                                     gProtectStructs[battler].statFell = FALSE;
                                     gSpecialStatuses[gBattlerAttacker].preventLifeOrbDamage = TRUE;
                                 }
