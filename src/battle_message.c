@@ -498,6 +498,8 @@ static const u8 sText_PkmnSentToPC[] = _("{B_DEF_NAME} was sent to\n{B_PC_CREATO
 static const u8 sText_Someones[] = _("someone's");
 static const u8 sText_Lanettes[] = _("Lanette's");
 static const u8 sText_PkmnDataAddedToDex[] = _("{B_DEF_NAME}'s data was\nadded to the Pokédex.\p");
+static const u8 sText_SendCaughtMonPartyOrBox[] = _("Add {B_DEF_NAME} to your party?")
+
 static const u8 sText_ItIsRaining[] = _("It is raining.");
 static const u8 sText_SandstormIsRaging[] = _("A sandstorm is raging.");
 static const u8 sText_BoxIsFull[] = _("The BOX is full!\nYou can't catch any more!\p");
@@ -1565,6 +1567,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_POKEFLUTE - BATTLESTRINGS_TABLE_START] = sText_PlayedThe,
     [STRINGID_MONHEARINGFLUTEAWOKE - BATTLESTRINGS_TABLE_START] = sText_PkmnHearingFluteAwoke,
     [STRINGID_BLOCKEDBYSLEEPCLAUSE - BATTLESTRINGS_TABLE_START] = sText_BlockedBySleepClause,
+    [STRINGID_SENDCAUGHTMONPARTYORBOX - BATTLESTRINGS_TABLE_START] = sText_SendCaughtMonPartyOrBox,
 };
 
 const u16 gTrainerUsedItemStringIds[] =

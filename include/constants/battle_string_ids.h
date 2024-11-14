@@ -718,11 +718,12 @@
 #define STRINGID_MONHEARINGFLUTEAWOKE                 716
 #define STRINGID_BLOCKEDBYSLEEPCLAUSE                 717
 
-#define STRINGID_EXPANSION_END                        (STRINGID_BLOCKEDBYSLEEPCLAUSE + 1)
+#define STRINGID_EXPANSION_END                        STRINGID_BLOCKEDBYSLEEPCLAUSE
 
-#define STRINGID_PLAYERWHITEOUT3                      STRINGID_EXPANSION_END
+#define STRINGID_PLAYERWHITEOUT3                      (STRINGID_EXPANSION_END + 1)
+#define STRINGID_SENDCAUGHTMONPARTYORBOX              (STRINGID_EXPANSION_END + 2)
 
-#define BATTLESTRINGS_COUNT                           (STRINGID_PLAYERWHITEOUT3 + 1)
+#define BATTLESTRINGS_COUNT                           (STRINGID_SENDCAUGHTMONPARTYORBOX + 1)
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,

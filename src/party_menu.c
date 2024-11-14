@@ -1538,6 +1538,10 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
             }
             break;
         }
+        case PARTY_ACTION_SEND_MON_TO_BOX:
+            PlaySE(SE_SELECT);
+            TrySendMonToBox((u8)*slotPtr);
+            break;
         default:
         case PARTY_ACTION_ABILITY_PREVENTS:
         case PARTY_ACTION_SWITCHING:
@@ -1574,6 +1578,10 @@ static void HandleChooseMonCancel(u8 taskId, s8 *slotPtr)
     case PARTY_ACTION_MINIGAME:
         PlaySE(SE_SELECT);
         CancelParticipationPrompt(taskId);
+        break;
+    case PARTY_ACTION_SEND_MON_TO_BOX:
+        PlaySE(SE_SELECT);
+        CancelSendingMonToBox(taskId);
         break;
     default:
         PlaySE(SE_SELECT);

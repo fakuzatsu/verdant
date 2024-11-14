@@ -571,7 +571,7 @@ static void Cmd_jumpifhasnohp(void);
 static void Cmd_jumpifnotcurrentmoveargtype(void);
 static void Cmd_pickup(void);
 static void Cmd_unused3(void);
-static void Cmd_unused4(void);
+static void Cmd_tryaddcaughtmontofullparty(void);
 static void Cmd_settypebasedhalvers(void);
 static void Cmd_jumpifsubstituteblocks(void);
 static void Cmd_tryrecycleitem(void);
@@ -593,7 +593,7 @@ static void Cmd_settelekinesis(void);
 static void Cmd_swapstatstages(void);
 static void Cmd_averagestats(void);
 static void Cmd_jumpifoppositegenders(void);
-static void Cmd_unused(void);
+static void Cmd_jumpiffullparty(void);
 static void Cmd_tryworryseed(void);
 static void Cmd_callnative(void);
 
@@ -830,7 +830,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_jumpifnotcurrentmoveargtype,             //0xE4
     Cmd_pickup,                                  //0xE5
     Cmd_unused3,                                 //0xE6
-    Cmd_unused4,                                 //0xE7
+    Cmd_tryaddcaughtmontofullparty,              //0xE7
     Cmd_settypebasedhalvers,                     //0xE8
     Cmd_jumpifsubstituteblocks,                  //0xE9
     Cmd_tryrecycleitem,                          //0xEA
@@ -852,7 +852,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_swapstatstages,                          //0xFA
     Cmd_averagestats,                            //0xFB
     Cmd_jumpifoppositegenders,                   //0xFC
-    Cmd_unused,                                  //0xFD
+    Cmd_jumpiffullparty,                         //0xFD
     Cmd_tryworryseed,                            //0xFE
     Cmd_callnative,                              //0xFF
 };
@@ -15952,8 +15952,95 @@ static void Cmd_jumpifoppositegenders(void)
         gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static void Cmd_unused(void)
+static void Cmd_jumpiffullparty(void)
 {
+    CMD_ARGS(const u8 *jumpInstr);
+
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
+            break;
+    }
+
+    if (i >= PARTY_SIZE)
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    else
+        gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+static void Cmd_tryaddcaughtmontofullparty(void)
+{
+    CMD_ARGS(const u8 *successInstr);
+
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case 0:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 1:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                gBattleCommunication[MULTIUSE_STATE]++;
+                BeginFastPaletteFade(3);
+            }
+            else
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 4;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleCommunication[MULTIUSE_STATE] = 4;
+        }
+        break;
+    case 2:
+        BattleStopLowHpSound();
+        BeginNormalPaletteFade(PALETTES_ALL, 2, 0, 16, RGB_BLACK);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 3:
+        if (!gPaletteFade.active)
+        {
+            OpenPartyMenuInBattle(PARTY_ACTION_SEND_MON_TO_BOX);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case 4:
+        if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+        {
+            // do the effect
+            gBattlescriptCurrInstr = cmd->successInstr;
+        }
+        break;
+    case 4:
+        if (CalculatePlayerPartyCount() == PARTY_SIZE)
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        else
+            gBattlescriptCurrInstr = cmd->successInstr;
+        break;
+    }
 }
 
 static void Cmd_tryworryseed(void)

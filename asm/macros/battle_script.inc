@@ -1237,8 +1237,9 @@
 	.byte 0xe6
 	.endm
 
-	.macro unused4
+	.macro tryaddcaughtmontofullparty
 	.byte 0xe7
+	.4byte \successInstr
 	.endm
 
 	.macro settypebasedhalvers failInstr:req
@@ -2540,4 +2541,9 @@
 	.macro flushtextbox
 	printstring STRINGID_EMPTYSTRING3
 	waitmessage 1
+	.endm
+
+	.macro jumpiffullparty jumpInstr:req
+	.byte 0xFD
+	.4byte \jumpInstr
 	.endm

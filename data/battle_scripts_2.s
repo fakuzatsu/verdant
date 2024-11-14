@@ -195,16 +195,37 @@ BattleScript_TryNicknameCaughtMon::
 	printstring STRINGID_GIVENICKNAMECAPTURED
 	waitstate
 	setbyte gBattleCommunication, 0
-	trygivecaughtmonnick BattleScript_GiveCaughtMonEnd
+	trygivecaughtmonnick BattleScript_CheckFullPartyThenEnd
+	jumpiffullparty BattleScript_SendCaughtMonPartyOrBox
 	givecaughtmon
 	printfromtable gCaughtMonStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_SuccessBallThrowEnd
+
+BattleScript_CheckFullPartyThenEnd::
+	jumpiffullparty BattleScript_SendCaughtMonPartyOrBoxWithNick
 BattleScript_GiveCaughtMonEnd::
 	givecaughtmon
 BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
+
+BattleScript_SendCaughtMonPartyOrBox::
+	printstring STRINGID_SENDCAUGHTMONPARTYORBOX
+	waitstate
+	setbyte gBattleCommunication, 0
+	tryaddcaughtmontofullparty BattleScript_GiveCaughtMonEnd
+	givecaughtmon
+	printfromtable gCaughtMonStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_SuccessBallThrowEnd
+
+BattleScript_SendCaughtMonPartyOrBoxWithNick::
+	printstring STRINGID_SENDCAUGHTMONPARTYORBOX
+	waitstate
+	setbyte gBattleCommunication, 0
+	tryaddcaughtmontofullparty BattleScript_GiveCaughtMonEnd
+	goto BattleScript_GiveCaughtMonEnd
 
 BattleScript_WallyBallThrow::
 	printstring STRINGID_GOTCHAPKMNCAUGHTWALLY
