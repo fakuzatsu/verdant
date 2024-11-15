@@ -15999,7 +15999,6 @@ static void Cmd_tryaddcaughtmontofullparty(void)
             if (gBattleCommunication[CURSOR_POSITION] == 0)
             {
                 gBattleCommunication[MULTIUSE_STATE]++;
-                BeginFastPaletteFade(3);
             }
             else
             {
@@ -16013,12 +16012,9 @@ static void Cmd_tryaddcaughtmontofullparty(void)
         }
         break;
     case 2:
-        if (!gPaletteFade.active)
-        {
-            BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
-            MarkBattlerForControllerExec(gBattlerAttacker);
-            gBattleCommunication[MULTIUSE_STATE]++;
-        }
+        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+        MarkBattlerForControllerExec(gBattlerAttacker);
+        gBattleCommunication[MULTIUSE_STATE]++;
         break;
     case 3:
         if (gSelectedMonPartyId != PARTY_SIZE)
