@@ -129,6 +129,7 @@ enum {
     STATE_WAIT_PAGE_SWAP,
     STATE_PRESSED_OK,
     STATE_WAIT_SENT_TO_PC_MESSAGE,
+    STATE_ASK_ADD_MON_TO_PARTY,
     STATE_FADE_OUT,
     STATE_EXIT,
 };
@@ -341,7 +342,9 @@ static bool8 MainState_PressedOKButton(void);
 static bool8 MainState_FadeOut(void);
 static bool8 MainState_Exit(void);
 static void DisplaySentToPCMessage(void);
+static void AskAddMonToParty(void);
 static bool8 MainState_WaitSentToPCMessage(void);
+static bool8 MainState_WaitAddMonToPartyResponse(void);
 static bool8 MainState_StartPageSwap(void);
 static bool8 MainState_WaitPageSwap(void);
 static void StartPageSwapAnim(void);
@@ -572,6 +575,9 @@ static void Task_NamingScreen(u8 taskId)
     case STATE_WAIT_SENT_TO_PC_MESSAGE:
         MainState_WaitSentToPCMessage();
         break;
+    case STATE_ASK_ADD_MON_TO_PARTY:
+        MainState_WaitAddMonToPartyResponse();
+        break;
     case STATE_FADE_OUT:
         MainState_FadeOut();
         break;
@@ -676,8 +682,8 @@ static bool8 MainState_PressedOKButton(void)
     if (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
         && CalculatePlayerPartyCount() >= PARTY_SIZE)
     {
-        DisplaySentToPCMessage();
-        sNamingScreen->state = STATE_WAIT_SENT_TO_PC_MESSAGE;
+        AskAddMonToParty();
+        sNamingScreen->state = STATE_ASK_ADD_MON_TO_PARTY;
         return FALSE;
     }
     else
@@ -735,7 +741,28 @@ static void DisplaySentToPCMessage(void)
     CopyWindowToVram(0, COPYWIN_FULL);
 }
 
+static const u8 sText_SendCaughtMonPartyOrBox[] = _("Add {STR_VAR_2} to your party?");
+
+static void AskAddMonToParty(void)
+{
+    StringCopy(gStringVar2, sNamingScreen->destBuffer);
+    StringExpandPlaceholders(gStringVar4, sText_SendCaughtMonPartyOrBox);
+    DrawDialogueFrame(0, FALSE);
+    gTextFlags.canABSpeedUpPrint = TRUE;
+    AddTextPrinterParameterized2(0, FONT_NORMAL, gStringVar4, GetPlayerTextSpeedDelay(), 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+    CopyWindowToVram(0, COPYWIN_FULL);
+}
+
 static bool8 MainState_WaitSentToPCMessage(void)
+{
+    RunTextPrinters();
+    if (!IsTextPrinterActive(0) && JOY_NEW(A_BUTTON))
+        sNamingScreen->state = STATE_FADE_OUT;
+
+    return FALSE;
+}
+
+static bool8 MainState_WaitAddMonToPartyResponse(void)
 {
     RunTextPrinters();
     if (!IsTextPrinterActive(0) && JOY_NEW(A_BUTTON))

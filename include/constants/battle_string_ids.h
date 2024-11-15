@@ -877,10 +877,11 @@
 #define B_MSG_WEAKEN_FIRE     1
 
 // gCaughtMonStringIds
-#define B_MSG_SENT_SOMEONES_PC  0
-#define B_MSG_SENT_LANETTES_PC  1
-#define B_MSG_SOMEONES_BOX_FULL 2
-#define B_MSG_LANETTES_BOX_FULL 3
+#define B_MSG_SENT_SOMEONES_PC   0
+#define B_MSG_SENT_LANETTES_PC   1
+#define B_MSG_SOMEONES_BOX_FULL  2
+#define B_MSG_LANETTES_BOX_FULL  3
+#define B_MSG_SWAPPED_INTO_PARTY 4
 
 // gPrimalWeatherBlocksStringIds
 #define B_MSG_PRIMAL_WEATHER_FIZZLED_BY_RAIN    0

@@ -1746,11 +1746,6 @@
 	callnative BS_WaitFanfare
 	.endm
 
-	.macro tryaddcaughtmontofullparty successInstr:req
-	callnative BS_tryaddcaughtmontofullparty
-	.4byte \successInstr
-	.endm
-
 @ various command changed to more readable macros
 	.macro cancelmultiturnmoves battler:req
 	various \battler, VARIOUS_CANCEL_MULTI_TURN_MOVES
@@ -2545,9 +2540,4 @@
 	.macro flushtextbox
 	printstring STRINGID_EMPTYSTRING3
 	waitmessage 1
-	.endm
-
-	.macro jumpiffullparty jumpInstr:req
-	.byte 0xFD
-	.4byte \jumpInstr
 	.endm

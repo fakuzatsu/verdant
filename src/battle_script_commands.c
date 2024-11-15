@@ -593,7 +593,7 @@ static void Cmd_settelekinesis(void);
 static void Cmd_swapstatstages(void);
 static void Cmd_averagestats(void);
 static void Cmd_jumpifoppositegenders(void);
-static void Cmd_jumpiffullparty(void);
+static void Cmd_unused(void);
 static void Cmd_tryworryseed(void);
 static void Cmd_callnative(void);
 
@@ -852,7 +852,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_swapstatstages,                          //0xFA
     Cmd_averagestats,                            //0xFB
     Cmd_jumpifoppositegenders,                   //0xFC
-    Cmd_jumpiffullparty,                         //0xFD
+    Cmd_unused,                                  //0xFD
     Cmd_tryworryseed,                            //0xFE
     Cmd_callnative,                              //0xFF
 };
@@ -15573,39 +15573,132 @@ static void Cmd_givecaughtmon(void)
 {
     CMD_ARGS();
 
-    if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
+    switch (gBattleCommunication[MULTIUSE_STATE])
     {
-        u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
-        if (lostItem != ITEM_NONE && ItemId_GetPocket(lostItem) != POCKET_BERRIES)
-            SetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_HELD_ITEM, &lostItem);  // Restore non-berry items
-    }
-
-    if (GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]]) != MON_GIVEN_TO_PARTY)
-    {
-        if (!ShouldShowBoxWasFullMessage())
+    case 0:
+        if (CalculatePlayerPartyCount() == PARTY_SIZE)
         {
-            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SENT_SOMEONES_PC;
-            StringCopy(gStringVar1, GetBoxNamePtr(VarGet(VAR_PC_BOX_TO_SEND_MON)));
-            GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gStringVar2);
+            PrepareStringBattle(STRINGID_SENDCAUGHTMONPARTYORBOX, gBattlerAttacker);
+            gBattleCommunication[MSG_DISPLAY] = 1;
+            gBattleCommunication[MULTIUSE_STATE]++;
         }
         else
         {
-            StringCopy(gStringVar1, GetBoxNamePtr(VarGet(VAR_PC_BOX_TO_SEND_MON))); // box the mon was sent to
-            GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gStringVar2);
-            StringCopy(gStringVar3, GetBoxNamePtr(GetPCBoxToSendMon())); //box the mon was going to be sent to
-            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SOMEONES_BOX_FULL;
+            gBattleCommunication[MULTIUSE_STATE] = 5;
+        }
+        break;
+    case 1:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 2:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
+            else
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 5;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleCommunication[MULTIUSE_STATE] = 5;
+        }
+        break;
+    case 3:
+        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+        MarkBattlerForControllerExec(gBattlerAttacker);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 4:
+        if (gSelectedMonPartyId != PARTY_SIZE)
+        {
+            if (gSelectedMonPartyId > PARTY_SIZE)
+            {
+                // Choosing Pokemon was cancelled
+                gSelectedMonPartyId = PARTY_SIZE;
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
+            else
+            {
+                // Mon chosen, try to put it in the PC
+                if (CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]) == MON_GIVEN_TO_PC)
+                {
+                    GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
+                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
+                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWAPPED_INTO_PARTY;
+                    gSelectedMonPartyId = PARTY_SIZE;
+                    gBattleCommunication[MULTIUSE_STATE]++;
+                }
+                else
+                {
+                    gSelectedMonPartyId = PARTY_SIZE;
+                    gBattleCommunication[MULTIUSE_STATE]++;
+                }
+            }
+        }
+        break;
+    case 5:
+        if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
+        {
+            u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
+            if (lostItem != ITEM_NONE && ItemId_GetPocket(lostItem) != POCKET_BERRIES)
+                SetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_HELD_ITEM, &lostItem);  // Restore non-berry items
         }
 
-        // Change to B_MSG_SENT_LANETTES_PC or B_MSG_LANETTES_BOX_FULL
-        if (FlagGet(FLAG_SYS_PC_LANETTE))
-            gBattleCommunication[MULTISTRING_CHOOSER]++;
+        if (GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]]) != MON_GIVEN_TO_PARTY
+         && gBattleCommunication[MULTISTRING_CHOOSER] != B_MSG_SWAPPED_INTO_PARTY)
+        {
+            if (!ShouldShowBoxWasFullMessage())
+            {
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SENT_SOMEONES_PC;
+                StringCopy(gStringVar1, GetBoxNamePtr(VarGet(VAR_PC_BOX_TO_SEND_MON)));
+                GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gStringVar2);
+            }
+            else
+            {
+                StringCopy(gStringVar1, GetBoxNamePtr(VarGet(VAR_PC_BOX_TO_SEND_MON))); // box the mon was sent to
+                GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gStringVar2);
+                StringCopy(gStringVar3, GetBoxNamePtr(GetPCBoxToSendMon())); //box the mon was going to be sent to
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SOMEONES_BOX_FULL;
+            }
+
+            // Change to B_MSG_SENT_LANETTES_PC or B_MSG_LANETTES_BOX_FULL
+            if (FlagGet(FLAG_SYS_PC_LANETTE))
+                gBattleCommunication[MULTISTRING_CHOOSER]++;
+        }
+
+        gBattleResults.caughtMonSpecies = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_SPECIES, NULL);
+        GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
+        gBattleResults.caughtMonBall = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_POKEBALL, NULL);
+
+        gBattleCommunication[MULTIUSE_STATE] = 0;
+        gBattlescriptCurrInstr = cmd->nextInstr;
+        break;
     }
-
-    gBattleResults.caughtMonSpecies = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_SPECIES, NULL);
-    GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
-    gBattleResults.caughtMonBall = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_POKEBALL, NULL);
-
-    gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
 static void Cmd_trysetcaughtmondexflags(void)
@@ -15816,6 +15909,7 @@ static void Cmd_trygivecaughtmonnick(void)
         }
         break;
     case 4:
+        gBattleCommunication[MULTIUSE_STATE] = 0;
         if (CalculatePlayerPartyCount() == PARTY_SIZE)
             gBattlescriptCurrInstr = cmd->nextInstr;
         else
@@ -15952,21 +16046,8 @@ static void Cmd_jumpifoppositegenders(void)
         gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static void Cmd_jumpiffullparty(void)
+static void Cmd_unused(void)
 {
-    CMD_ARGS(const u8 *jumpInstr);
-    u32 i = 0;
-
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
-            break;
-    }
-
-    if (i >= PARTY_SIZE)
-        gBattlescriptCurrInstr = cmd->jumpInstr;
-    else
-        gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
 static void Cmd_tryworryseed(void)
@@ -17669,89 +17750,4 @@ void BS_WaitFanfare(void)
         return;
 
     gBattlescriptCurrInstr = cmd->nextInstr;
-}
-
-void BS_tryaddcaughtmontofullparty(void)
-{
-    NATIVE_ARGS(const u8 *successInstr);
-
-    switch (gBattleCommunication[MULTIUSE_STATE])
-    {
-    case 0:
-        HandleBattleWindow(YESNOBOX_X_Y, 0);
-        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        gBattleCommunication[CURSOR_POSITION] = 0;
-        BattleCreateYesNoCursorAt(0);
-        break;
-    case 1:
-        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
-        {
-            PlaySE(SE_SELECT);
-            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
-            gBattleCommunication[CURSOR_POSITION] = 0;
-            BattleCreateYesNoCursorAt(0);
-        }
-        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
-        {
-            PlaySE(SE_SELECT);
-            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
-            gBattleCommunication[CURSOR_POSITION] = 1;
-            BattleCreateYesNoCursorAt(1);
-        }
-        if (JOY_NEW(A_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            if (gBattleCommunication[CURSOR_POSITION] == 0)
-            {
-                gBattleCommunication[MULTIUSE_STATE]++;
-            }
-            else
-            {
-                gBattleCommunication[MULTIUSE_STATE] = 4;
-            }
-        }
-        else if (JOY_NEW(B_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            gBattleCommunication[MULTIUSE_STATE] = 4;
-        }
-        break;
-    case 2:
-        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
-        MarkBattlerForControllerExec(gBattlerAttacker);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        break;
-    case 3:
-        if (gSelectedMonPartyId != PARTY_SIZE)
-        {
-            if (gSelectedMonPartyId > PARTY_SIZE)
-            {
-                // Choosing Pokemon was cancelled
-                gSelectedMonPartyId = PARTY_SIZE;
-                gBattleCommunication[MULTIUSE_STATE]++;
-            }
-            else
-            {
-                // Mon chosen, try to put it in the PC
-                if (CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]) == MON_GIVEN_TO_PC)
-                {
-                    GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
-                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
-                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
-                    gSelectedMonPartyId = PARTY_SIZE;
-                    gBattlescriptCurrInstr = cmd->successInstr;
-                }
-                else
-                {
-                    gSelectedMonPartyId = PARTY_SIZE;
-                    gBattleCommunication[MULTIUSE_STATE]++;
-                }
-            }
-        }
-        break;
-    case 4:
-        gBattlescriptCurrInstr = cmd->nextInstr;
-        break;
-    }
 }
