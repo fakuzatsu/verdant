@@ -571,7 +571,7 @@ static void Cmd_jumpifhasnohp(void);
 static void Cmd_jumpifnotcurrentmoveargtype(void);
 static void Cmd_pickup(void);
 static void Cmd_unused3(void);
-static void Cmd_tryaddcaughtmontofullparty(void);
+static void Cmd_unused4(void);
 static void Cmd_settypebasedhalvers(void);
 static void Cmd_jumpifsubstituteblocks(void);
 static void Cmd_tryrecycleitem(void);
@@ -830,7 +830,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_jumpifnotcurrentmoveargtype,             //0xE4
     Cmd_pickup,                                  //0xE5
     Cmd_unused3,                                 //0xE6
-    Cmd_tryaddcaughtmontofullparty,              //0xE7
+    Cmd_unused4,                                 //0xE7
     Cmd_settypebasedhalvers,                     //0xE8
     Cmd_jumpifsubstituteblocks,                  //0xE9
     Cmd_tryrecycleitem,                          //0xEA
@@ -15001,6 +15001,10 @@ static void Cmd_unused3(void)
 {
 }
 
+static void Cmd_unused4(void)
+{
+}
+
 // Water and Mud Sport
 static void Cmd_settypebasedhalvers(void)
 {
@@ -15963,84 +15967,6 @@ static void Cmd_jumpiffullparty(void)
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;
-}
-
-static void Cmd_tryaddcaughtmontofullparty(void)
-{
-    CMD_ARGS(const u8 *successInstr);
-
-    switch (gBattleCommunication[MULTIUSE_STATE])
-    {
-    case 0:
-        HandleBattleWindow(YESNOBOX_X_Y, 0);
-        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        gBattleCommunication[CURSOR_POSITION] = 0;
-        BattleCreateYesNoCursorAt(0);
-        break;
-    case 1:
-        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
-        {
-            PlaySE(SE_SELECT);
-            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
-            gBattleCommunication[CURSOR_POSITION] = 0;
-            BattleCreateYesNoCursorAt(0);
-        }
-        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
-        {
-            PlaySE(SE_SELECT);
-            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
-            gBattleCommunication[CURSOR_POSITION] = 1;
-            BattleCreateYesNoCursorAt(1);
-        }
-        if (JOY_NEW(A_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            if (gBattleCommunication[CURSOR_POSITION] == 0)
-            {
-                gBattleCommunication[MULTIUSE_STATE]++;
-            }
-            else
-            {
-                gBattleCommunication[MULTIUSE_STATE] = 4;
-            }
-        }
-        else if (JOY_NEW(B_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            gBattleCommunication[MULTIUSE_STATE] = 4;
-        }
-        break;
-    case 2:
-        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
-        MarkBattlerForControllerExec(gBattlerAttacker);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        break;
-    case 3:
-        if (gSelectedMonPartyId != PARTY_SIZE)
-        {
-            MarkBattlerForControllerExec(gBattlerAttacker);
-            PREPARE_SPECIES_BUFFER(gBattleTextBuff1, GetMonData(&gPlayerParty[gSelectedMonPartyId], MON_DATA_SPECIES));
-
-            // Choosing Pokemon was cancelled if = PARTY_SIZE + 1
-            if (gSelectedMonPartyId != PARTY_SIZE + 1)
-            {
-                u8 state = CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]);
-                if (state == MON_GIVEN_TO_PC)
-                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
-            }
-
-            gSelectedMonPartyId = PARTY_SIZE;
-            gBattleCommunication[MULTIUSE_STATE]++;
-        }
-        break;
-    case 4:
-        if (CalculatePlayerPartyCount() == PARTY_SIZE)
-            gBattlescriptCurrInstr = cmd->nextInstr;
-        else
-            gBattlescriptCurrInstr = cmd->successInstr;
-        break;
-    }
 }
 
 static void Cmd_tryworryseed(void)
@@ -17743,4 +17669,89 @@ void BS_WaitFanfare(void)
         return;
 
     gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_tryaddcaughtmontofullparty(void)
+{
+    NATIVE_ARGS(const u8 *successInstr);
+
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case 0:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 1:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
+            else
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 3;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleCommunication[MULTIUSE_STATE] = 3;
+        }
+        break;
+    case 2:
+        if (gSelectedMonPartyId != PARTY_SIZE)
+        {
+            MarkBattlerForControllerExec(gBattlerAttacker);
+            GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
+
+            // Choosing Pokemon was cancelled if = PARTY_SIZE + 1
+            if (gSelectedMonPartyId != PARTY_SIZE + 1)
+            {
+                u8 state = CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]);
+                if (state == MON_GIVEN_TO_PC)
+                {
+                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
+                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
+                }
+            }
+
+            gSelectedMonPartyId = PARTY_SIZE;
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        else
+        {
+            BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+            MarkBattlerForControllerExec(gBattlerAttacker);
+        }
+        break;
+    case 3:
+        if (CalculatePlayerPartyCount() == PARTY_SIZE)
+        {
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = cmd->successInstr;
+        }
+        break;
+    }
 }

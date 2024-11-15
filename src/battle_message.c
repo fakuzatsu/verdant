@@ -499,7 +499,7 @@ static const u8 sText_Someones[] = _("someone's");
 static const u8 sText_Lanettes[] = _("Lanette's");
 static const u8 sText_PkmnDataAddedToDex[] = _("{B_DEF_NAME}'s data was\nadded to the Pokédex.\p");
 static const u8 sText_SendCaughtMonPartyOrBox[] = _("Add {B_DEF_NAME} to your party?");
-static const u8 sText_PkmnSentToPCAfterCatch[] = _("{B_BUFF1} was sent to\n{B_PC_CREATOR_NAME} PC.");
+static const u8 sText_PkmnSentToPCAfterCatch[] = _("{B_BUFF1} was sent to\n{B_PC_CREATOR_NAME} PC.\pIt was placed in \nBOX “{B_BUFF2}”.");
 
 static const u8 sText_ItIsRaining[] = _("It is raining.");
 static const u8 sText_SandstormIsRaging[] = _("A sandstorm is raging.");
