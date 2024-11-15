@@ -17708,50 +17708,50 @@ void BS_tryaddcaughtmontofullparty(void)
             }
             else
             {
-                gBattleCommunication[MULTIUSE_STATE] = 3;
+                gBattleCommunication[MULTIUSE_STATE] = 4;
             }
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gBattleCommunication[MULTIUSE_STATE] = 3;
+            gBattleCommunication[MULTIUSE_STATE] = 4;
         }
         break;
     case 2:
-        if (gSelectedMonPartyId != PARTY_SIZE)
-        {
-            MarkBattlerForControllerExec(gBattlerAttacker);
-            GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
-
-            // Choosing Pokemon was cancelled if = PARTY_SIZE + 1
-            if (gSelectedMonPartyId != PARTY_SIZE + 1)
-            {
-                u8 state = CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]);
-                if (state == MON_GIVEN_TO_PC)
-                {
-                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
-                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
-                }
-            }
-
-            gSelectedMonPartyId = PARTY_SIZE;
-            gBattleCommunication[MULTIUSE_STATE]++;
-        }
-        else
-        {
-            BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
-            MarkBattlerForControllerExec(gBattlerAttacker);
-        }
+        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+        MarkBattlerForControllerExec(gBattlerAttacker);
+        gBattleCommunication[MULTIUSE_STATE]++;
         break;
     case 3:
-        if (CalculatePlayerPartyCount() == PARTY_SIZE)
+        if (gSelectedMonPartyId != PARTY_SIZE)
         {
-            gBattlescriptCurrInstr = cmd->nextInstr;
+            if (gSelectedMonPartyId > PARTY_SIZE)
+            {
+                // Choosing Pokemon was cancelled
+                gSelectedMonPartyId = PARTY_SIZE;
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
+            else
+            {
+                // Mon chosen, try to put it in the PC
+                if (CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]) == MON_GIVEN_TO_PC)
+                {
+                    GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
+                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
+                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
+                    gSelectedMonPartyId = PARTY_SIZE;
+                    gBattlescriptCurrInstr = cmd->successInstr;
+                }
+                else
+                {
+                    gSelectedMonPartyId = PARTY_SIZE;
+                    gBattleCommunication[MULTIUSE_STATE]++;
+                }
+            }
         }
-        else
-        {
-            gBattlescriptCurrInstr = cmd->successInstr;
-        }
+        break;
+    case 4:
+        gBattlescriptCurrInstr = cmd->nextInstr;
         break;
     }
 }
