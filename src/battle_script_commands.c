@@ -15001,10 +15001,6 @@ static void Cmd_unused3(void)
 {
 }
 
-static void Cmd_unused4(void)
-{
-}
-
 // Water and Mud Sport
 static void Cmd_settypebasedhalvers(void)
 {
@@ -15955,8 +15951,9 @@ static void Cmd_jumpifoppositegenders(void)
 static void Cmd_jumpiffullparty(void)
 {
     CMD_ARGS(const u8 *jumpInstr);
+    u32 i = 0;
 
-    for (u32 i = 0; i < PARTY_SIZE; i++)
+    for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
             break;
@@ -16016,22 +16013,29 @@ static void Cmd_tryaddcaughtmontofullparty(void)
         }
         break;
     case 2:
-        BattleStopLowHpSound();
-        BeginNormalPaletteFade(PALETTES_ALL, 2, 0, 16, RGB_BLACK);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        break;
-    case 3:
         if (!gPaletteFade.active)
         {
-            OpenPartyMenuInBattle(PARTY_ACTION_SEND_MON_TO_BOX);
+            BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+            MarkBattlerForControllerExec(gBattlerAttacker);
             gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
-    case 4:
-        if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+    case 3:
+        if (gSelectedMonPartyId != PARTY_SIZE)
         {
-            // do the effect
-            gBattlescriptCurrInstr = cmd->successInstr;
+            MarkBattlerForControllerExec(gBattlerAttacker);
+            PREPARE_SPECIES_BUFFER(gBattleTextBuff1, GetMonData(&gPlayerParty[gSelectedMonPartyId], MON_DATA_SPECIES));
+
+            // Choosing Pokemon was cancelled if = PARTY_SIZE + 1
+            if (gSelectedMonPartyId != PARTY_SIZE + 1)
+            {
+                u8 state = CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]);
+                if (state == MON_GIVEN_TO_PC)
+                    ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
+            }
+
+            gSelectedMonPartyId = PARTY_SIZE;
+            gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
     case 4:

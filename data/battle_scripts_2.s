@@ -214,7 +214,7 @@ BattleScript_SendCaughtMonPartyOrBox::
 	printstring STRINGID_SENDCAUGHTMONPARTYORBOX
 	waitstate
 	setbyte gBattleCommunication, 0
-	tryaddcaughtmontofullparty BattleScript_GiveCaughtMonEnd
+	tryaddcaughtmontofullparty BattleScript_SentMonToBoxToMakeSpace
 	givecaughtmon
 	printfromtable gCaughtMonStringIds
 	waitmessage B_WAIT_TIME_LONG
@@ -224,7 +224,12 @@ BattleScript_SendCaughtMonPartyOrBoxWithNick::
 	printstring STRINGID_SENDCAUGHTMONPARTYORBOX
 	waitstate
 	setbyte gBattleCommunication, 0
-	tryaddcaughtmontofullparty BattleScript_GiveCaughtMonEnd
+	tryaddcaughtmontofullparty BattleScript_SentMonToBoxToMakeSpace
+	goto BattleScript_GiveCaughtMonEnd
+
+BattleScript_SentMonToBoxToMakeSpace::
+	printstring STRINGID_PKMNSENTTOPCAFTERCATCH
+	waitmessage B_WAIT_TIME_MED
 	goto BattleScript_GiveCaughtMonEnd
 
 BattleScript_WallyBallThrow::
