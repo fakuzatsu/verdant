@@ -15584,7 +15584,7 @@ static void Cmd_givecaughtmon(void)
         }
         else
         {
-            gSelectedMonPartyId = PARTY_SIZE + 1;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_NO_MESSSAGE_SKIP;
             gBattleCommunication[MULTIUSE_STATE] = 5;
         }
         break;
@@ -15650,8 +15650,8 @@ static void Cmd_givecaughtmon(void)
                 // Mon chosen, try to put it in the PC
                 if (CopyMonToPC(&gPlayerParty[gSelectedMonPartyId]) == MON_GIVEN_TO_PC)
                 {
-                    GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gBattleTextBuff1);
-                    StringCopy(gBattleTextBuff2, GetBoxNamePtr(GetPCBoxToSendMon()));
+                    GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gStringVar2);
+                    StringCopy(gStringVar1, GetBoxNamePtr(GetPCBoxToSendMon()));
                     ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
                     gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWAPPED_INTO_PARTY;
                     gSelectedMonPartyId = PARTY_SIZE;
@@ -15699,12 +15699,13 @@ static void Cmd_givecaughtmon(void)
         GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
         gBattleResults.caughtMonBall = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_POKEBALL, NULL);
 
-        if (gSelectedMonPartyId > PARTY_SIZE)
+        gSelectedMonPartyId = PARTY_SIZE;
+        gBattleCommunication[MULTIUSE_STATE] = 0;
+
+        if (gBattleCommunication[MULTISTRING_CHOOSER] == B_MSG_NO_MESSSAGE_SKIP)
             gBattlescriptCurrInstr = cmd->passInstr;
         else
             gBattlescriptCurrInstr = cmd->nextInstr;
-        gSelectedMonPartyId = PARTY_SIZE;
-        gBattleCommunication[MULTIUSE_STATE] = 0;
         break;
     }
 }
@@ -15849,7 +15850,7 @@ void BattleDestroyYesNoCursorAt(u8 cursorPosition)
 
 static void Cmd_trygivecaughtmonnick(void)
 {
-    CMD_ARGS(const u8 *successInstr);
+    CMD_ARGS();
 
     switch (gBattleCommunication[MULTIUSE_STATE])
     {
@@ -15913,15 +15914,7 @@ static void Cmd_trygivecaughtmonnick(void)
         if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
         {
             SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
-            if (CalculatePlayerPartyCount() <= PARTY_SIZE)
-            {
-                gBattleCommunication[MULTIUSE_STATE] = 0;
-                gBattlescriptCurrInstr = cmd->successInstr;
-            }
-            else
-            {
-                gBattleCommunication[MULTIUSE_STATE]++;
-            }
+            gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
     case 4:
