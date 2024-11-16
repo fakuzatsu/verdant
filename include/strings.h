@@ -1881,6 +1881,7 @@ extern const u8 gDaycareText_PlayOther[];
 extern const u8 gText_ChoosePokemon[];
 extern const u8 gText_ChoosePokemonCancel[];
 extern const u8 gText_ChoosePokemonConfirm[];
+extern const u8 gText_SendWhichMonToPC[];
 extern const u8 gText_MoveToWhere[];
 extern const u8 gText_TeachWhichPokemon[];
 extern const u8 gText_UseOnWhichPokemon[];

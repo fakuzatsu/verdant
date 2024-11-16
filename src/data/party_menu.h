@@ -805,6 +805,7 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_CHOOSE_SECOND_FUSION]   = gText_NextFusionMon,
     [PARTY_MSG_MON_FOLLOWING]          = gText_MonFollowing,
     [PARTY_MSG_MON_NOT_FOLLOWING]      = gText_MonNotFollowing,
+    [PARTY_MSG_CHOOSE_MON_FOR_BOX]     = gText_SendWhichMonToPC,
 };
 
 static const u8 *const sDescriptionStringTable[] =
