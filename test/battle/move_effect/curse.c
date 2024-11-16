@@ -50,6 +50,7 @@ SINGLE_BATTLE_TEST("Curse applies to the user if used with Protean")
         HP_BAR(player, damage: playerMaxHP / 4);
     }
 }
+
 SINGLE_BATTLE_TEST("Curse applies to the opponent if user is afflicted by Trick-or-Treat in the same turn")
 {
     GIVEN {
