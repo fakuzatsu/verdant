@@ -15571,7 +15571,7 @@ static void Cmd_handleballthrow(void)
 
 static void Cmd_givecaughtmon(void)
 {
-    CMD_ARGS();
+    CMD_ARGS(const u8 *passInstr);
 
     switch (gBattleCommunication[MULTIUSE_STATE])
     {
@@ -15584,6 +15584,7 @@ static void Cmd_givecaughtmon(void)
         }
         else
         {
+            gSelectedMonPartyId = PARTY_SIZE + 1;
             gBattleCommunication[MULTIUSE_STATE] = 5;
         }
         break;
@@ -15628,9 +15629,12 @@ static void Cmd_givecaughtmon(void)
         }
         break;
     case 3:
-        BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
-        MarkBattlerForControllerExec(gBattlerAttacker);
-        gBattleCommunication[MULTIUSE_STATE]++;
+        if (!gPaletteFade.active)
+        {
+            BtlController_EmitChoosePokemon(gBattlerAttacker, BUFFER_A, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
+            MarkBattlerForControllerExec(gBattlerAttacker);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
         break;
     case 4:
         if (gSelectedMonPartyId != PARTY_SIZE)
@@ -15695,8 +15699,12 @@ static void Cmd_givecaughtmon(void)
         GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
         gBattleResults.caughtMonBall = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetCatchingBattler()]], MON_DATA_POKEBALL, NULL);
 
+        if (gSelectedMonPartyId > PARTY_SIZE)
+            gBattlescriptCurrInstr = cmd->passInstr;
+        else
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        gSelectedMonPartyId = PARTY_SIZE;
         gBattleCommunication[MULTIUSE_STATE] = 0;
-        gBattlescriptCurrInstr = cmd->nextInstr;
         break;
     }
 }
@@ -15896,7 +15904,7 @@ static void Cmd_trygivecaughtmonnick(void)
                            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_SPECIES),
                            GetMonGender(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]]),
                            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_PERSONALITY, NULL),
-                           BattleMainCB2);
+                           ReshowBattleScreenAfterMenu);
 
             gBattleCommunication[MULTIUSE_STATE]++;
         }
@@ -15905,15 +15913,20 @@ static void Cmd_trygivecaughtmonnick(void)
         if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
         {
             SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
-            gBattlescriptCurrInstr = cmd->successInstr;
+            if (CalculatePlayerPartyCount() <= PARTY_SIZE)
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 0;
+                gBattlescriptCurrInstr = cmd->successInstr;
+            }
+            else
+            {
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
         }
         break;
     case 4:
         gBattleCommunication[MULTIUSE_STATE] = 0;
-        if (CalculatePlayerPartyCount() == PARTY_SIZE)
-            gBattlescriptCurrInstr = cmd->nextInstr;
-        else
-            gBattlescriptCurrInstr = cmd->successInstr;
+        gBattlescriptCurrInstr = cmd->nextInstr;
         break;
     }
 }

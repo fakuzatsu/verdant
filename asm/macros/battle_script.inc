@@ -1278,8 +1278,9 @@
 	.byte 0xef
 	.endm
 
-	.macro givecaughtmon
+	.macro givecaughtmon passInstr:req
 	.byte 0xf0
+	.4byte \passInstr
 	.endm
 
 	.macro trysetcaughtmondexflags failInstr:req
