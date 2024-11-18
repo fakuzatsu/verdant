@@ -48,7 +48,7 @@
 #define PARTY_ACTION_CHOOSE_AND_CLOSE   11
 #define PARTY_ACTION_MOVE_TUTOR         12
 #define PARTY_ACTION_MINIGAME           13
-#define PARTY_ACTION_REUSABLE_ITEM      14  // Unused. The only reusable items are handled separately
+#define PARTY_ACTION_SEND_MON_TO_BOX    14  // Reused from PARTY_ACTION_REUSABLE_ITEM. The only reusable items are handled separately
 #define PARTY_ACTION_CHOOSE_FAINTED_MON 15
 
 // IDs for DisplayPartyMenuStdMessage, to display the message at the bottom of the party menu
@@ -84,8 +84,9 @@
 
 #define PARTY_MSG_LAST_EXPANSION            PARTY_MSG_CHOOSE_SECOND_FUSION
 
-#define PARTY_MSG_MON_FOLLOWING             (PARTY_MSG_CHOOSE_SECOND_FUSION + 1)
-#define PARTY_MSG_MON_NOT_FOLLOWING         (PARTY_MSG_CHOOSE_SECOND_FUSION + 2)
+#define PARTY_MSG_MON_FOLLOWING             (PARTY_MSG_LAST_EXPANSION + 1)
+#define PARTY_MSG_MON_NOT_FOLLOWING         (PARTY_MSG_LAST_EXPANSION + 2)
+#define PARTY_MSG_CHOOSE_MON_FOR_BOX        (PARTY_MSG_LAST_EXPANSION + 3)
 
 #define PARTY_MSG_NONE                      127
 
