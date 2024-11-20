@@ -2607,7 +2607,9 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                     }
                     if (j == 5)
                     {
+                        #ifndef NDEBUG
                         MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                        #endif
                         // Loop until the next seen entry
                         do
                         {
@@ -2616,7 +2618,9 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                         } while (!monSeen && i < temp_dexCount - 1);
                         
                         temp_dexNum = HoennToNationalOrder(i + 1);
+                        #ifndef NDEBUG
                         MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                        #endif
                         sPokedexView->pokedexList[r5].dexNum = 0;
                         sPokedexView->pokedexList[r5].seen = FALSE;
                         sPokedexView->pokedexList[r5].owned = FALSE;
@@ -2652,7 +2656,9 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                         }
                         if (j == 5)
                         {
+                            #ifndef NDEBUG
                             MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                            #endif
                             // Loop until the next seen entry
                             while (i < temp_dexCount - 1 && !GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
                             {
@@ -2660,7 +2666,9 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                             }
                             
                             temp_dexNum = i + 1;
+                            #ifndef NDEBUG
                             MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                            #endif
                             sPokedexView->pokedexList[r5].dexNum = 0;
                             sPokedexView->pokedexList[r5].seen = FALSE;
                             sPokedexView->pokedexList[r5].owned = FALSE;
