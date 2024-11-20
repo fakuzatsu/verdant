@@ -718,11 +718,13 @@
 #define STRINGID_MONHEARINGFLUTEAWOKE                 716
 #define STRINGID_BLOCKEDBYSLEEPCLAUSE                 717
 
-#define STRINGID_EXPANSION_END                        (STRINGID_BLOCKEDBYSLEEPCLAUSE + 1)
+#define STRINGID_EXPANSION_END                        STRINGID_BLOCKEDBYSLEEPCLAUSE
 
-#define STRINGID_PLAYERWHITEOUT3                      STRINGID_EXPANSION_END
+#define STRINGID_PLAYERWHITEOUT3                      (STRINGID_EXPANSION_END + 1)
+#define STRINGID_SENDCAUGHTMONPARTYORBOX              (STRINGID_EXPANSION_END + 2)
+#define STRINGID_PKMNSENTTOPCAFTERCATCH               (STRINGID_EXPANSION_END + 3)
 
-#define BATTLESTRINGS_COUNT                           (STRINGID_PLAYERWHITEOUT3 + 1)
+#define BATTLESTRINGS_COUNT                           (STRINGID_PKMNSENTTOPCAFTERCATCH + 1)
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,
@@ -875,10 +877,12 @@
 #define B_MSG_WEAKEN_FIRE     1
 
 // gCaughtMonStringIds
-#define B_MSG_SENT_SOMEONES_PC  0
-#define B_MSG_SENT_LANETTES_PC  1
-#define B_MSG_SOMEONES_BOX_FULL 2
-#define B_MSG_LANETTES_BOX_FULL 3
+#define B_MSG_NO_MESSSAGE_SKIP   0
+#define B_MSG_SENT_SOMEONES_PC   1
+#define B_MSG_SENT_LANETTES_PC   2
+#define B_MSG_SOMEONES_BOX_FULL  3
+#define B_MSG_LANETTES_BOX_FULL  4
+#define B_MSG_SWAPPED_INTO_PARTY 5
 
 // gPrimalWeatherBlocksStringIds
 #define B_MSG_PRIMAL_WEATHER_FIZZLED_BY_RAIN    0
