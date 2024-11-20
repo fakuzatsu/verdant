@@ -125,6 +125,7 @@ extern const u16 gPokedexOrder_Weight[];
 static const u8 sText_No0000[] = _("0000");
 static const u8 sCaughtBall_Gfx[] = INCBIN_U8("graphics/pokedex/caught_ball.4bpp");
 static const u8 sText_TenDashes[] = _("----------");
+static const u8 sText_TripleBullet[] = _("   ···");
 ALIGNED(4) static const u8 sExpandedPlaceholder_PokedexDescription[] = _("");
 static const u16 sSizeScreenSilhouette_Pal[] = INCBIN_U16("graphics/pokedex/size_silhouette.gbapal");
 static const u16 sSizeScreenSilhouette_inverted_Pal[] = INCBIN_U16("graphics/pokedex/size_silhouette_inverted.gbapal");
@@ -2560,7 +2561,8 @@ static void CreatePokedexList(u8 dexMode, u8 order)
 #define temp_dexCount   vars[0]
 #define temp_isHoennDex vars[1]
 #define temp_dexNum     vars[2]
-    s16 i;
+    s16 i, j;
+    u16 monSeen;
 
     sPokedexView->pokemonListCount = 0;
 
@@ -2590,14 +2592,43 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     case ORDER_NUMERICAL:
         if (temp_isHoennDex)
         {
-            for (i = 0; i < temp_dexCount; i++)
+            s16 r5;
+            for (i = 0, r5 = 0; i < temp_dexCount; i++)
             {
                 temp_dexNum = HoennToNationalOrder(i + 1);
-                sPokedexView->pokedexList[i].dexNum = temp_dexNum;
-                sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
-                sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
-                if (sPokedexView->pokedexList[i].seen)
-                    sPokedexView->pokemonListCount = i + 1;
+                monSeen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                if (!monSeen && i < temp_dexCount - 1 - 3)
+                {
+                    // Check if the next 4 entries are also unseen
+                    for (j = 1; j <= 4; j++)
+                    {
+                        if (GetSetPokedexFlag(HoennToNationalOrder(i + j), FLAG_GET_SEEN))
+                            break;
+                    }
+                    if (j == 5)
+                    {
+                        MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                        // Loop until the next seen entry
+                        do
+                        {
+                            i++;
+                            monSeen = GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_SEEN);
+                        } while (!monSeen && i < temp_dexCount - 1);
+                        
+                        temp_dexNum = HoennToNationalOrder(i + 1);
+                        MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                        sPokedexView->pokedexList[r5].dexNum = 0;
+                        sPokedexView->pokedexList[r5].seen = FALSE;
+                        sPokedexView->pokedexList[r5].owned = FALSE;
+                        r5++;
+                    }
+                }
+                sPokedexView->pokedexList[r5].dexNum = temp_dexNum;
+                sPokedexView->pokedexList[r5].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                sPokedexView->pokedexList[r5].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
+                if (sPokedexView->pokedexList[r5].seen)
+                    sPokedexView->pokemonListCount = r5 + 1;
+                r5++;
             }
         }
         else
@@ -2606,10 +2637,36 @@ static void CreatePokedexList(u8 dexMode, u8 order)
             for (i = 0, r5 = 0, r10 = 0; i < temp_dexCount; i++)
             {
                 temp_dexNum = i + 1;
-                if (GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN))
+                monSeen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                if (monSeen)
                     r10 = 1;
                 if (r10)
                 {
+                    if (!monSeen && i < temp_dexCount - 1 - 3)
+                    {
+                        // Check if the next 4 entries are also unseen
+                        for (j = 1; j <= 4; j++)
+                        {
+                            if (GetSetPokedexFlag(i + j + 1, FLAG_GET_SEEN))
+                                break;
+                        }
+                        if (j == 5)
+                        {
+                            MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                            // Loop until the next seen entry
+                            while (i < temp_dexCount - 1 && !GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                            {
+                                i++;
+                            }
+                            
+                            temp_dexNum = i + 1;
+                            MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
+                            sPokedexView->pokedexList[r5].dexNum = 0;
+                            sPokedexView->pokedexList[r5].seen = FALSE;
+                            sPokedexView->pokedexList[r5].owned = FALSE;
+                            r5++;
+                        }
+                    }
                     sPokedexView->pokedexList[r5].dexNum = temp_dexNum;
                     sPokedexView->pokedexList[r5].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
                     sPokedexView->pokedexList[r5].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
@@ -2744,15 +2801,15 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
                 ClearMonListEntry(MON_LIST_X, i * 2, ignored);
                 if (sPokedexView->pokedexList[entryNum].seen)
                 {
-                    CreateMonDexNum(entryNum, MON_LIST_X+1, i * 2, ignored);
+                    CreateMonDexNum(entryNum, MON_LIST_X+1, i * 2, FALSE);
                     CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, MON_LIST_X, i * 2, ignored);
                     CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, MON_LIST_X + 5, i * 2);
                 }
                 else
                 {
-                    CreateMonDexNum(entryNum, MON_LIST_X+1, i * 2, ignored);
+                    CreateMonDexNum(entryNum, MON_LIST_X+1, i * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                     CreateCaughtBall(FALSE, MON_LIST_X, i * 2, ignored);
-                    CreateMonName(0, MON_LIST_X + 5, i * 2);
+                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, i * 2);
                 }
             }
             entryNum++;
@@ -2769,15 +2826,15 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
             ClearMonListEntry(MON_LIST_X, sPokedexView->listVOffset * 2, ignored);
             if (sPokedexView->pokedexList[entryNum].seen)
             {
-                CreateMonDexNum(entryNum, MON_LIST_X+1, sPokedexView->listVOffset * 2, ignored);
+                CreateMonDexNum(entryNum, MON_LIST_X+1, sPokedexView->listVOffset * 2, FALSE);
                 CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, MON_LIST_X, sPokedexView->listVOffset * 2, ignored);
                 CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, MON_LIST_X + 5, sPokedexView->listVOffset * 2);
             }
             else
             {
-                CreateMonDexNum(entryNum, MON_LIST_X+1, sPokedexView->listVOffset * 2, ignored);
+                CreateMonDexNum(entryNum, MON_LIST_X+1, sPokedexView->listVOffset * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                 CreateCaughtBall(FALSE, MON_LIST_X, sPokedexView->listVOffset * 2, ignored);
-                CreateMonName(0, MON_LIST_X + 5, sPokedexView->listVOffset * 2);
+                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, sPokedexView->listVOffset * 2);
             }
         }
         break;
@@ -2793,15 +2850,15 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
             ClearMonListEntry(MON_LIST_X, vOffset * 2, ignored);
             if (sPokedexView->pokedexList[entryNum].seen)
             {
-                CreateMonDexNum(entryNum, MON_LIST_X+1, vOffset * 2, ignored);
+                CreateMonDexNum(entryNum, MON_LIST_X+1, vOffset * 2, FALSE);
                 CreateCaughtBall(sPokedexView->pokedexList[entryNum].owned, MON_LIST_X, vOffset * 2, ignored);
                 CreateMonName(sPokedexView->pokedexList[entryNum].dexNum, MON_LIST_X + 5, vOffset * 2);
             }
             else
             {
-                CreateMonDexNum(entryNum, MON_LIST_X+1, vOffset * 2, ignored);
+                CreateMonDexNum(entryNum, MON_LIST_X+1, vOffset * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                 CreateCaughtBall(FALSE, MON_LIST_X, vOffset * 2, ignored);
-                CreateMonName(0, MON_LIST_X + 5, vOffset * 2);
+                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, vOffset * 2);
             }
         }
         break;
@@ -2809,7 +2866,7 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
     CopyWindowToVram(0, COPYWIN_GFX);
 }
 
-static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
+static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 skip)
 {
     u8 text[5];
     u16 dexNum, offset = 0;
@@ -2818,15 +2875,22 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
     if (sPokedexView->dexMode == DEX_MODE_HOENN)
         dexNum = NationalToHoennOrder(dexNum);
     memcpy(text, sText_No0000, ARRAY_COUNT(sText_No0000));
-    if (NATIONAL_DEX_COUNT > 999 && sPokedexView->dexMode != DEX_MODE_HOENN)
+    if (skip)
     {
-        text[0] = CHAR_0 + dexNum / 1000;
-        offset++;
+        text[offset++] = EOS;
     }
-    text[offset++] = CHAR_0 + (dexNum % 1000) / 100;
-    text[offset++] = CHAR_0 + ((dexNum % 1000) % 100) / 10;
-    text[offset++] = CHAR_0 + ((dexNum % 1000) % 100) % 10;
-    text[offset++] = EOS;
+    else
+    {
+        if (NATIONAL_DEX_COUNT > 999 && sPokedexView->dexMode != DEX_MODE_HOENN)
+        {
+            text[0] = CHAR_0 + dexNum / 1000;
+            offset++;
+        }
+        text[offset++] = CHAR_0 + (dexNum % 1000) / 100;
+        text[offset++] = CHAR_0 + ((dexNum % 1000) % 100) / 10;
+        text[offset++] = CHAR_0 + ((dexNum % 1000) % 100) % 10;
+        text[offset++] = EOS;
+    }
     PrintMonDexNumAndName(0, FONT_NARROW, text, left, top);
 }
 
@@ -2841,12 +2905,18 @@ static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused)
 static u8 CreateMonName(u16 num, u8 left, u8 top)
 {
     const u8 *str;
-
-    num = NationalPokedexNumToSpecies(num);
-    if (num)
-        str = GetSpeciesName(num);
+    if (num == 0xFFFF)
+    {
+        str = sText_TripleBullet;
+    }
     else
-        str = sText_TenDashes;
+    {
+        num = NationalPokedexNumToSpecies(num);
+        if (num)
+            str = GetSpeciesName(num);
+        else
+            str = sText_TenDashes;
+    }
     PrintMonDexNumAndName_2(0, FONT_NARROW, str, left, top);
     return StringLength(str);
 }
