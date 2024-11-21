@@ -357,6 +357,9 @@ static const u16* const sDexPalettes[HGSS_COLOR_COUNT][HGSS_PAL_TYPE_COUNT] =
 
 #define LIST_SCROLL_STEP         16
 
+#define SKIP_THRESHOLD          4      // Number of Pokémon to check are unseen before triggering a skip
+#define SHOW_TRIPLE_BULLET      0xFFFE // Used to indicate sText_TripleBullet should be displayed (0xFFFE is an invalid dex number)
+
 #define POKEBALL_ROTATION_TOP    64
 #define POKEBALL_ROTATION_BOTTOM (POKEBALL_ROTATION_TOP - 16)
 
@@ -2597,15 +2600,15 @@ static void CreatePokedexList(u8 dexMode, u8 order)
             {
                 temp_dexNum = HoennToNationalOrder(i + 1);
                 monSeen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
-                if (!monSeen && i < temp_dexCount - 1 - 3)
+                if (!monSeen && i < temp_dexCount - 1 - SKIP_THRESHOLD)
                 {
-                    // Check if the next 4 entries are also unseen
-                    for (j = 1; j <= 4; j++)
+                    // Check if the next SKIP_THRESHOLD entries are also unseen
+                    for (j = 1; j <= SKIP_THRESHOLD; j++)
                     {
                         if (GetSetPokedexFlag(HoennToNationalOrder(i + j), FLAG_GET_SEEN))
                             break;
                     }
-                    if (j == 5)
+                    if (j == SKIP_THRESHOLD + 1)
                     {
                         #ifndef NDEBUG
                         MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
@@ -2646,15 +2649,15 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                     r10 = 1;
                 if (r10)
                 {
-                    if (!monSeen && i < temp_dexCount - 1 - 3)
+                    if (!monSeen && i < temp_dexCount - 1 - SKIP_THRESHOLD)
                     {
-                        // Check if the next 4 entries are also unseen
-                        for (j = 1; j <= 4; j++)
+                        // Check if the next SKIP_THRESHOLD entries are also unseen
+                        for (j = 1; j <= SKIP_THRESHOLD; j++)
                         {
                             if (GetSetPokedexFlag(i + j + 1, FLAG_GET_SEEN))
                                 break;
                         }
-                        if (j == 5)
+                        if (j == SKIP_THRESHOLD + 1)
                         {
                             #ifndef NDEBUG
                             MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
@@ -2817,7 +2820,7 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
                 {
                     CreateMonDexNum(entryNum, MON_LIST_X+1, i * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                     CreateCaughtBall(FALSE, MON_LIST_X, i * 2, ignored);
-                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, i * 2);
+                    CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? SHOW_TRIPLE_BULLET : 0, MON_LIST_X + 5, i * 2);
                 }
             }
             entryNum++;
@@ -2842,7 +2845,7 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
             {
                 CreateMonDexNum(entryNum, MON_LIST_X+1, sPokedexView->listVOffset * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                 CreateCaughtBall(FALSE, MON_LIST_X, sPokedexView->listVOffset * 2, ignored);
-                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, sPokedexView->listVOffset * 2);
+                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? SHOW_TRIPLE_BULLET : 0, MON_LIST_X + 5, sPokedexView->listVOffset * 2);
             }
         }
         break;
@@ -2866,7 +2869,7 @@ static void CreateMonListEntry(u8 position, u16 b, u16 ignored)
             {
                 CreateMonDexNum(entryNum, MON_LIST_X+1, vOffset * 2, sPokedexView->pokedexList[entryNum].dexNum == 0);
                 CreateCaughtBall(FALSE, MON_LIST_X, vOffset * 2, ignored);
-                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? 0xFFFF : 0, MON_LIST_X + 5, vOffset * 2);
+                CreateMonName(sPokedexView->pokedexList[entryNum].dexNum == 0 ? SHOW_TRIPLE_BULLET : 0, MON_LIST_X + 5, vOffset * 2);
             }
         }
         break;
@@ -2913,7 +2916,7 @@ static void CreateCaughtBall(bool16 owned, u8 x, u8 y, u16 unused)
 static u8 CreateMonName(u16 num, u8 left, u8 top)
 {
     const u8 *str;
-    if (num == 0xFFFF)
+    if (num == SHOW_TRIPLE_BULLET)
     {
         str = sText_TripleBullet;
     }
