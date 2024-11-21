@@ -357,7 +357,6 @@ static const u16* const sDexPalettes[HGSS_COLOR_COUNT][HGSS_PAL_TYPE_COUNT] =
 
 #define LIST_SCROLL_STEP         16
 
-#define SKIP_THRESHOLD          4      // Number of Pokémon to check are unseen before triggering a skip
 #define SHOW_TRIPLE_BULLET      0xFFFE // Used to indicate sText_TripleBullet should be displayed (0xFFFE is an invalid dex number)
 
 #define POKEBALL_ROTATION_TOP    64
@@ -2595,39 +2594,41 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     case ORDER_NUMERICAL:
         if (temp_isHoennDex)
         {
-            s16 r5;
-            for (i = 0, r5 = 0; i < temp_dexCount; i++)
+            s16 r5 = 0;
+            for (i = 0; i < temp_dexCount; i++)
             {
                 temp_dexNum = HoennToNationalOrder(i + 1);
-                monSeen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
-                if (!monSeen && i < temp_dexCount - 1 - SKIP_THRESHOLD)
+
+                if (POKEDEX_PLUS_SKIP_GAPS)
                 {
-                    // Check if the next SKIP_THRESHOLD entries are also unseen
-                    for (j = 1; j <= SKIP_THRESHOLD; j++)
+                    monSeen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+
+                    if (!monSeen && i < temp_dexCount - 1 - SKIP_THRESHOLD)
                     {
-                        if (GetSetPokedexFlag(HoennToNationalOrder(i + j), FLAG_GET_SEEN))
-                            break;
-                    }
-                    if (j == SKIP_THRESHOLD + 1)
-                    {
-                        #ifndef NDEBUG
-                        MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
-                        #endif
-                        // Loop until the next seen entry
-                        do
+                        // Check if the next SKIP_THRESHOLD entries are also unseen
+                        for (j = 1; j <= SKIP_THRESHOLD; j++)
                         {
-                            i++;
-                            monSeen = GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_SEEN);
-                        } while (!monSeen && i < temp_dexCount - 1);
-                        
-                        temp_dexNum = HoennToNationalOrder(i + 1);
-                        #ifndef NDEBUG
-                        MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
-                        #endif
-                        sPokedexView->pokedexList[r5].dexNum = 0;
-                        sPokedexView->pokedexList[r5].seen = FALSE;
-                        sPokedexView->pokedexList[r5].owned = FALSE;
-                        r5++;
+                            if (GetSetPokedexFlag(HoennToNationalOrder(i + j), FLAG_GET_SEEN))
+                                break;
+                        }
+
+                        // If all within threshold are unseen, skip ahead
+                        if (j == SKIP_THRESHOLD + 1)
+                        {
+                            do
+                            {
+                                i++;
+                                monSeen = GetSetPokedexFlag(HoennToNationalOrder(i + 1), FLAG_GET_SEEN);
+                            } while (!monSeen && i < temp_dexCount - 1);
+
+                            temp_dexNum = HoennToNationalOrder(i + 1);
+
+                            // Mark skipped entry as unseen
+                            sPokedexView->pokedexList[r5].dexNum = 0;
+                            sPokedexView->pokedexList[r5].seen = FALSE;
+                            sPokedexView->pokedexList[r5].owned = FALSE;
+                            r5++;
+                        }
                     }
                 }
                 sPokedexView->pokedexList[r5].dexNum = temp_dexNum;
@@ -2649,7 +2650,8 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                     r10 = 1;
                 if (r10)
                 {
-                    if (!monSeen && i < temp_dexCount - 1 - SKIP_THRESHOLD)
+                    if (POKEDEX_PLUS_SKIP_GAPS && !monSeen 
+                     && i < temp_dexCount - 1 - SKIP_THRESHOLD)
                     {
                         // Check if the next SKIP_THRESHOLD entries are also unseen
                         for (j = 1; j <= SKIP_THRESHOLD; j++)
@@ -2659,19 +2661,13 @@ static void CreatePokedexList(u8 dexMode, u8 order)
                         }
                         if (j == SKIP_THRESHOLD + 1)
                         {
-                            #ifndef NDEBUG
-                            MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
-                            #endif
                             // Loop until the next seen entry
                             while (i < temp_dexCount - 1 && !GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
                             {
                                 i++;
                             }
-                            
+
                             temp_dexNum = i + 1;
-                            #ifndef NDEBUG
-                            MgbaPrintf(MGBA_LOG_DEBUG, "i: %d, temp_dexNum: %d\n", i, temp_dexNum);
-                            #endif
                             sPokedexView->pokedexList[r5].dexNum = 0;
                             sPokedexView->pokedexList[r5].seen = FALSE;
                             sPokedexView->pokedexList[r5].owned = FALSE;
