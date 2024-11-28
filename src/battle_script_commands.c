@@ -14263,6 +14263,9 @@ static void Cmd_curestatuswithmove(void)
 
     if (shouldHeal)
     {
+        if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
+            TryDeactivateSleepClause(GetBattlerSide(gBattlerAttacker), gBattlerPartyIndexes[gBattlerAttacker]);
+
         gBattleMons[gBattlerAttacker].status1 = 0;
         gBattlescriptCurrInstr = cmd->nextInstr;
         BtlController_EmitSetMonData(gBattlerAttacker, BUFFER_A, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[gBattlerAttacker].status1), &gBattleMons[gBattlerAttacker].status1);
