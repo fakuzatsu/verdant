@@ -138,4 +138,8 @@
 // param1: weather to check.
 #define FORM_CHANGE_OVERWORLD_WEATHER           24
 
+// Form change for Aegislash
+#define FORM_CHANGE_BATTLE_ATTACK               25
+#define FORM_CHANGE_BATTLE_KINGS_SHIELD         26
+
 #endif // GUARD_CONSTANTS_FORM_CHANGE_TYPES_H
