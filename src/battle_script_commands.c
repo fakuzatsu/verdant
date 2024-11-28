@@ -11669,12 +11669,9 @@ static void Cmd_setdrainedhp(void)
     CMD_ARGS();
 
     if (gMovesInfo[gCurrentMove].argument != 0)
-        gBattleMoveDamage = (gHpDealt * gMovesInfo[gCurrentMove].argument / 100);
+        gBattleMoveDamage = max(1, (gHpDealt * gMovesInfo[gCurrentMove].argument / 100));
     else
         gBattleMoveDamage = (gHpDealt / 2);
-
-    if (gBattleMoveDamage == 0)
-        gBattleMoveDamage = 1;
 
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
