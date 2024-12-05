@@ -2799,7 +2799,7 @@ u8 DoBattlerEndTurnEffects(void)
                  && !IsLeafGuardProtected(battler))
                 {
                     CancelMultiTurnMoves(battler);
-                    gEffectBattler = battler;
+                    gEffectBattler = gBattlerTarget = battler;
                     if (IsBattlerTerrainAffected(battler, STATUS_FIELD_ELECTRIC_TERRAIN))
                     {
                         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TERRAINPREVENTS_ELECTRIC;
@@ -10734,13 +10734,14 @@ bool32 DoesSpeciesUseHoldItemToChangeForm(u16 species, u16 heldItemId)
     {
         switch (formChanges[i].method)
         {
-        case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM:
-        case FORM_CHANGE_BATTLE_PRIMAL_REVERSION:
-        case FORM_CHANGE_BATTLE_ULTRA_BURST:
-        case FORM_CHANGE_ITEM_HOLD:
-            if (formChanges[i].param1 == heldItemId)
-                return TRUE;
-            break;
+            case FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM:
+            case FORM_CHANGE_BATTLE_PRIMAL_REVERSION:
+            case FORM_CHANGE_BATTLE_ULTRA_BURST:
+            case FORM_CHANGE_ITEM_HOLD:
+            case FORM_CHANGE_BEGIN_BATTLE:
+                if (formChanges[i].param1 == heldItemId)
+                    return TRUE;
+                break;
         }
     }
     return FALSE;
@@ -10962,6 +10963,10 @@ u16 GetBattleFormChangeTargetSpecies(u32 battler, u16 method)
             case FORM_CHANGE_BATTLE_TERASTALLIZATION:
                 if (GetBattlerTeraType(battler) == formChanges[i].param1)
                     targetSpecies = formChanges[i].targetSpecies;
+                break;
+            case FORM_CHANGE_BATTLE_ATTACK:
+            case FORM_CHANGE_BATTLE_KINGS_SHIELD:
+                targetSpecies = formChanges[i].targetSpecies;
                 break;
             }
         }
