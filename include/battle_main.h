@@ -19,6 +19,45 @@ struct MultiPartnerMenuPokemon
     /*0x1D*/ u8 language;
 };
 
+struct PoolRules
+{
+    bool8 speciesClause;
+    bool8 excludeForms;
+    bool8 itemClause;
+    bool8 itemClauseExclusions;
+    u32 tagLead:4;
+    u32 tagAce:4;
+    u32 tagWeatherSetter:4;
+    u32 tagWeatherAbuser:4;
+    u32 tagSupport:4;
+    u32 tag6:4;
+    u32 tag7:4;
+    u32 tag8:4;
+};
+
+union PoolRuleAccess {
+    u32 ruleAccess[2];
+    struct PoolRules poolRules;
+};
+
+// defines for Trainer Party Pools
+#define POOL_SLOT_DISABLED  0xff
+
+#define POOL_TAG_DISABLED   0x1
+#define POOL_TAG_UNIQUE     0x2
+#define POOL_TAG_2_MAX      0x4
+#define POOL_TAG_REQUIRED   0x8
+
+#define POOL_TAG_LEAD           1 << 0
+#define POOL_TAG_ACE            1 << 1
+#define POOL_TAG_WEATHER_SETTER 1 << 2
+#define POOL_TAG_WEATHER_ABUSER 1 << 3
+#define POOL_TAG_SUPPORT        1 << 4
+#define POOL_TAG_6              1 << 5
+#define POOL_TAG_7              1 << 6
+#define POOL_TAG_8              1 << 7
+#define NUM_TAGS                8
+
 // defines for the 'DoBounceEffect' function
 #define BOUNCE_MON          0x0
 #define BOUNCE_HEALTHBOX    0x1
@@ -90,6 +129,9 @@ u32 GeneratePersonalityForGender(u32 gender, u32 species);
 void CustomTrainerPartyAssignMoves(struct Pokemon *mon, const struct TrainerMon *partyEntry);
 bool32 InBattleChoosingMoves(void);
 bool32 InBattleRunningActions(void);
+
+void UseDoublesPoolRules(void);
+void SetDefaultPoolRules(void);
 
 extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 

@@ -293,4 +293,11 @@
 // Pokémon battle sprite settings
 #define B_ENEMY_MON_SHADOW_STYLE        GEN_LATEST // In Gen4+, all enemy Pokemon will have a shadow drawn beneath them.
 
+// Settings for Trainer Party Pools
+#define B_POOL_SETTING_FAST_VERIFICATION    FALSE // Skips the pool verification for Trainer Party Pools, relies on the user creating valid pools for all trainers
+#define B_POOL_RULE_SPECIES_CLAUSE          TRUE  // Only pick a single pokemon of a unique NatDex number
+#define B_POOL_RULE_EXCLUDE_FORMS           TRUE  // Exclude different forms from the Species Clause
+#define B_POOL_RULE_ITEM_CLAUSE             TRUE  // Only allow each item to be picked once
+#define B_POOL_RULES_USE_ITEM_EXCLUSIONS    FALSE // Exclude items listed in poolItemClauseExclusions
+
 #endif // GUARD_CONFIG_BATTLE_H

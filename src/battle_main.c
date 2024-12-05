@@ -1963,6 +1963,281 @@ void CustomTrainerPartyAssignMoves(struct Pokemon *mon, const struct TrainerMon 
     }
 }
 
+#include "data/battle_pool_rules.h"
+
+EWRAM_INIT struct PoolRules poolRules = defaultPoolRules;
+
+void SetDefaultPoolRules(void) {poolRules = defaultPoolRules;}
+
+static bool32 IsPoolLegal(const struct Trainer *trainer, u32 battleTypeFlags)
+{
+    //  Verify that the trainer has a valid pool
+    if (B_POOL_SETTING_FAST_VERIFICATION)
+        return TRUE;
+    return TRUE;
+}
+
+void UseDoublesPoolRules(void) {poolRules = doublesPoolRules;}
+
+static u32 PickMonFromPool(const struct Trainer *trainer, u8 *poolIndexArray, u32 partyIndex, u32 battleTypeFlags)
+{
+    u32 arrayIndex = 0;
+    //  monIndex is set to 255 if nothing has been chosen yet, this gives an upper limit on pool size of 255
+    u32 monIndex = 255;
+    if ((partyIndex == 0
+      && poolRules.tagLead != POOL_TAG_DISABLED)
+     || (partyIndex == 1
+      && poolRules.tagLead != POOL_TAG_DISABLED
+      && poolRules.tagLead != POOL_TAG_UNIQUE
+      && battleTypeFlags & BATTLE_TYPE_DOUBLE))
+    {
+        //  Find a mon with a POOL_TAG_LEAD if it exists
+        //  Need to look for combined lead and required flags
+        u32 tempMonIndex = 255;
+        for (u32 currIndex = 0; currIndex < trainer->poolSize; currIndex++)
+        {
+            bool32 foundRequired = FALSE;
+            if (trainer->party[poolIndexArray[currIndex]].tags & POOL_TAG_LEAD)
+                tempMonIndex = poolIndexArray[currIndex];
+            else
+                continue;
+            for (u32 currTag = 0; currTag < NUM_TAGS; currTag++)
+            {
+                switch (1 << currTag)
+                {
+                    case (POOL_TAG_LEAD):
+                        continue;
+                    case (POOL_TAG_ACE):
+                        continue;
+                    case (POOL_TAG_WEATHER_SETTER):
+                        if (poolRules.tagWeatherSetter & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_WEATHER_SETTER)
+                        {
+                            monIndex = tempMonIndex;
+                            foundRequired = TRUE;
+                        }
+                        break;
+                    case (POOL_TAG_WEATHER_ABUSER):
+                        if (poolRules.tagWeatherAbuser & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_WEATHER_ABUSER)
+                            monIndex = tempMonIndex;
+                        break;
+                    case (POOL_TAG_SUPPORT):
+                        if (poolRules.tagSupport & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_SUPPORT)
+                        {
+                            monIndex = tempMonIndex;
+                            foundRequired = TRUE;
+                        }
+                        break;
+                    case (POOL_TAG_6):
+                        if (poolRules.tag6 & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_6)
+                        {
+                            monIndex = tempMonIndex;
+                            foundRequired = TRUE;
+                        }
+                        break;
+                    case (POOL_TAG_7):
+                        if (poolRules.tag7 & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_7)
+                        {
+                            monIndex = tempMonIndex;
+                            foundRequired = TRUE;
+                        }
+                        break;
+                    case (POOL_TAG_8):
+                        if (poolRules.tag8 & POOL_TAG_REQUIRED
+                         && trainer->party[monIndex].tags & POOL_TAG_8)
+                        {
+                            monIndex = tempMonIndex;
+                            foundRequired = TRUE;
+                        }
+                        break;
+                }
+                if (foundRequired)
+                    break;
+            }
+            if (foundRequired)
+                break;
+            monIndex = tempMonIndex;
+        }
+    }
+    //  Find Ace if last party index
+    if (partyIndex == trainer->partySize-1)
+    {
+        for (u32 i = 0; i < trainer->poolSize; i++)
+        {
+             if (trainer->party[poolIndexArray[i]].tags & POOL_TAG_ACE)
+            {
+                arrayIndex = i;
+                break;
+            }
+        }
+        monIndex = poolIndexArray[arrayIndex];
+    }
+    //  Find other required rules
+
+    //  If no other rule is required, pick first available that's not an Ace
+    if (monIndex == 255)
+    {
+        for (u32 i = 0; i < trainer->poolSize; i++)
+        {
+            if (poolIndexArray[i] != 255
+             && !(trainer->party[poolIndexArray[i]].tags & POOL_TAG_ACE))
+            {
+                arrayIndex = i;
+                break;
+            }
+        }
+        monIndex = poolIndexArray[arrayIndex];
+    }
+    //  Disable indices according to rules
+    u32 chosenSpecies = trainer->party[monIndex].species;
+    u32 chosenTags = trainer->party[monIndex].tags;
+    for (u32 i = 0; i < trainer->poolSize; i++)
+    {
+        if (poolIndexArray[i] == 255)
+            continue;
+        u32 currSpecies = trainer->party[poolIndexArray[i]].species;
+        //  Species rules
+        if (poolRules.speciesClause)
+        {
+            //  Are the same species + form
+            if (currSpecies == chosenSpecies)
+            {
+                poolIndexArray[i] = 255;
+                continue;
+            }
+            if (!poolRules.excludeForms && gSpeciesInfo[chosenSpecies].natDexNum == gSpeciesInfo[currSpecies].natDexNum)
+            {
+                poolIndexArray[i] = 255;
+                continue;
+            }
+        }
+        //  Item rules
+        if (poolRules.itemClause)
+        {
+            u16 chosenItem = trainer->party[monIndex].heldItem;
+            u32 itemExcludeListIndex = 0;
+            while (poolItemClauseExclusions[itemExcludeListIndex] != ITEM_NONE)
+            {
+                if (poolItemClauseExclusions[itemExcludeListIndex] == chosenItem)
+                    chosenItem = ITEM_NONE;
+                itemExcludeListIndex++;
+            }
+            if (chosenItem != ITEM_NONE)
+            {
+                if (chosenItem == trainer->party[poolIndexArray[i]].heldItem)
+                {
+                    poolIndexArray[i] = 255;
+                    continue;
+                }
+            }
+        }
+        //  Tag Rules
+        u32 currTags = trainer->party[poolIndexArray[i]].tags;
+        //u32 poolTagRules = *((u32 *)&poolRules + 1);
+        union PoolRuleAccess ruleAccess;
+        ruleAccess.poolRules = poolRules;
+        for (u32 currTag = 0; currTag < NUM_TAGS; currTag++)
+        {
+            u32 ruleTag = (ruleAccess.ruleAccess[1] >> (currTag*4)) & 0xF;
+            if (currTags >> currTag & 0x1
+             && chosenTags >> currTag & 0x1
+             && ruleTag & POOL_TAG_UNIQUE)
+            {
+                poolIndexArray[i] = 255;
+            }
+        }
+    }
+    //  Set Tag rules for the pool
+    if (trainer->party[monIndex].tags & POOL_TAG_LEAD)
+    {
+        if (poolRules.tagLead & POOL_TAG_UNIQUE)
+        {
+            poolRules.tagLead ^= POOL_TAG_UNIQUE;
+            poolRules.tagLead |= POOL_TAG_DISABLED;
+        }
+        else if (poolRules.tagLead & POOL_TAG_2_MAX)
+        {
+            poolRules.tagLead ^= POOL_TAG_2_MAX;
+            poolRules.tagLead |= POOL_TAG_UNIQUE;
+        }
+    }
+    if (trainer->party[monIndex].tags & POOL_TAG_ACE)
+    {
+        //  This isn't really required, since Ace is only used for the last slot
+    }
+    if (trainer->party[monIndex].tags & POOL_TAG_WEATHER_SETTER)
+    {
+        if (poolRules.tagWeatherSetter & POOL_TAG_UNIQUE)
+        {
+            poolRules.tagWeatherSetter ^= POOL_TAG_UNIQUE;
+            poolRules.tagLead |= POOL_TAG_DISABLED;
+        }
+        else if (poolRules.tagWeatherSetter & POOL_TAG_2_MAX)
+        {
+            poolRules.tagWeatherSetter ^= POOL_TAG_2_MAX;
+            poolRules.tagWeatherSetter |= POOL_TAG_UNIQUE;
+        }
+    }
+    if (trainer->party[monIndex].tags & POOL_TAG_WEATHER_ABUSER)
+    {
+        if (poolRules.tagWeatherAbuser & POOL_TAG_UNIQUE)
+        {
+            poolRules.tagWeatherAbuser ^= POOL_TAG_UNIQUE;
+            poolRules.tagLead |= POOL_TAG_DISABLED;
+        }
+        else if (poolRules.tagWeatherAbuser & POOL_TAG_2_MAX)
+        {
+            poolRules.tagWeatherAbuser ^= POOL_TAG_2_MAX;
+            poolRules.tagWeatherAbuser |= POOL_TAG_UNIQUE;
+        }
+    }
+    return monIndex;
+}
+
+static void RandomizePoolIndices(const struct Trainer *trainer, u8 *poolIndexArray)
+{
+    //  Basically the modern (Durstenfield's) Fisher-Yates shuffle
+    //  Reducing the amount of calls to random needed by only using as many bits as needed per shuffle
+    u32 poolSize = trainer->poolSize;
+    for (u32 i = 0; i < poolSize; i++)
+        poolIndexArray[i] = i;
+    u32 rnd = Random32();
+    u32 usedBits = 0;
+    for (u32 i = 0; i < poolSize - 1; i++)
+    {
+        u32 numBits = 1;
+        if (poolSize - i > 127)
+            numBits = 8;
+        else if (poolSize - i > 63)
+            numBits = 7;
+        else if (poolSize - i > 31)
+            numBits = 6;
+        else if (poolSize - i > 15)
+            numBits = 5;
+        else if (poolSize - i > 7)
+            numBits = 4;
+        else if (poolSize - i > 3)
+            numBits = 3;
+        else if (poolSize - i > 1)
+            numBits = 2;
+        if (usedBits + numBits > 32)
+        {
+            rnd = Random32();
+            usedBits = 0;
+        }
+        u32 currIndex = (rnd & ((1 << numBits) - 1)) % (poolSize - i);
+        rnd = rnd >> numBits;
+        usedBits += numBits;
+        u32 tempValue = poolIndexArray[poolSize - 1 - i];
+        poolIndexArray[poolSize - 1 - i] = poolIndexArray[currIndex];
+        poolIndexArray[currIndex] = tempValue;
+    }
+}
+
 u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer *trainer, bool32 firstTrainer, u32 battleTypeFlags)
 {
     u32 personalityValue;
@@ -1987,15 +2262,30 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             monsCount = trainer->partySize;
         }
 
+        // Trainer Party Pools
+        bool32 usingPool = FALSE;
+        u8 *poolIndexArray = NULL;
+        if (trainer->poolSize != 0 && IsPoolLegal(trainer, battleTypeFlags))
+        {
+            usingPool = TRUE;
+            poolIndexArray = Alloc(trainer->poolSize);
+            RandomizePoolIndices(trainer, poolIndexArray);
+        }
+
         for (i = 0; i < monsCount; i++)
         {
+            //  Pick mon from pool here if using pool
+            u32 monIndex = i;
+            if (usingPool)
+                monIndex = PickMonFromPool(trainer, poolIndexArray, i, battleTypeFlags);
+
             s32 ball = -1;
             u32 personalityHash = GeneratePartyHash(trainer, i);
             const struct TrainerMon *partyData = trainer->party;
             u32 otIdType = OT_ID_RANDOM_NO_SHINY;
             u32 fixedOtId = 0;
             u32 ability = 0;
-            u16 species = trainerPokemonRandomiser(partyData[i].species, trainer->trainerClass);
+            u16 species = trainerPokemonRandomiser(partyData[monIndex].species, trainer->trainerClass);
 
             if (trainer->doubleBattle == TRUE)
                 personalityValue = 0x80;
@@ -2005,39 +2295,39 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 personalityValue = 0x88; // Use personality more likely to result in a male Pokémon
 
             personalityValue += personalityHash << 8;
-            if (partyData[i].gender == TRAINER_MON_MALE)
+            if (partyData[monIndex].gender == TRAINER_MON_MALE)
                 personalityValue = (personalityValue & 0xFFFFFF00) | GeneratePersonalityForGender(MON_MALE, species);
-            else if (partyData[i].gender == TRAINER_MON_FEMALE)
+            else if (partyData[monIndex].gender == TRAINER_MON_FEMALE)
                 personalityValue = (personalityValue & 0xFFFFFF00) | GeneratePersonalityForGender(MON_FEMALE, species);
-            else if (partyData[i].gender == TRAINER_MON_RANDOM_GENDER)
+            else if (partyData[monIndex].gender == TRAINER_MON_RANDOM_GENDER)
                 personalityValue = (personalityValue & 0xFFFFFF00) | GeneratePersonalityForGender(Random() & 1 ? MON_MALE : MON_FEMALE, species);
-            ModifyPersonalityForNature(&personalityValue, partyData[i].nature);
-            if (partyData[i].isShiny)
+            ModifyPersonalityForNature(&personalityValue, partyData[monIndex].nature);
+            if (partyData[monIndex].isShiny)
             {
                 otIdType = OT_ID_PRESET;
                 fixedOtId = HIHALF(personalityValue) ^ LOHALF(personalityValue);
             }
-            CreateMon(&party[i], species, partyData[i].lvl, 0, TRUE, personalityValue, otIdType, fixedOtId);
-            SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
+            CreateMon(&party[i], species, partyData[monIndex].lvl, 0, TRUE, personalityValue, otIdType, fixedOtId);
+            SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
-            CustomTrainerPartyAssignMoves(&party[i], &partyData[i]);
-            SetMonData(&party[i], MON_DATA_IVS, &(partyData[i].iv));
-            if (partyData[i].ev != NULL)
+            CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);
+            SetMonData(&party[i], MON_DATA_IVS, &(partyData[monIndex].iv));
+            if (partyData[monIndex].ev != NULL)
             {
-                SetMonData(&party[i], MON_DATA_HP_EV, &(partyData[i].ev[0]));
-                SetMonData(&party[i], MON_DATA_ATK_EV, &(partyData[i].ev[1]));
-                SetMonData(&party[i], MON_DATA_DEF_EV, &(partyData[i].ev[2]));
-                SetMonData(&party[i], MON_DATA_SPATK_EV, &(partyData[i].ev[3]));
-                SetMonData(&party[i], MON_DATA_SPDEF_EV, &(partyData[i].ev[4]));
-                SetMonData(&party[i], MON_DATA_SPEED_EV, &(partyData[i].ev[5]));
+                SetMonData(&party[i], MON_DATA_HP_EV, &(partyData[monIndex].ev[0]));
+                SetMonData(&party[i], MON_DATA_ATK_EV, &(partyData[monIndex].ev[1]));
+                SetMonData(&party[i], MON_DATA_DEF_EV, &(partyData[monIndex].ev[2]));
+                SetMonData(&party[i], MON_DATA_SPATK_EV, &(partyData[monIndex].ev[3]));
+                SetMonData(&party[i], MON_DATA_SPDEF_EV, &(partyData[monIndex].ev[4]));
+                SetMonData(&party[i], MON_DATA_SPEED_EV, &(partyData[monIndex].ev[5]));
             }
-            if (partyData[i].ability != ABILITY_NONE)
+            if (partyData[monIndex].ability != ABILITY_NONE)
             {
                 const struct SpeciesInfo *speciesInfo = &gSpeciesInfo[species];
                 u32 maxAbilities = ARRAY_COUNT(speciesInfo->abilities);
                 for (ability = 0; ability < maxAbilities; ++ability)
                 {
-                    if (speciesInfo->abilities[ability] == partyData[i].ability)
+                    if (speciesInfo->abilities[ability] == partyData[monIndex].ability)
                         break;
                 }
                 if (ability >= maxAbilities)
@@ -2045,7 +2335,7 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             }
             else if (B_TRAINER_MON_RANDOM_ABILITY)
             {
-                const struct SpeciesInfo *speciesInfo = &gSpeciesInfo[partyData[i].species];
+                const struct SpeciesInfo *speciesInfo = &gSpeciesInfo[partyData[monIndex].species];
                 ability = personalityHash % 3;
                 while (speciesInfo->abilities[ability] == ABILITY_NONE)
                 {
@@ -2053,34 +2343,34 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 }
             }
             SetMonData(&party[i], MON_DATA_ABILITY_NUM, &ability);
-            SetMonData(&party[i], MON_DATA_FRIENDSHIP, &(partyData[i].friendship));
-            if (partyData[i].ball != ITEM_NONE)
+            SetMonData(&party[i], MON_DATA_FRIENDSHIP, &(partyData[monIndex].friendship));
+            if (partyData[monIndex].ball != ITEM_NONE)
             {
-                ball = partyData[i].ball;
+                ball = partyData[monIndex].ball;
                 SetMonData(&party[i], MON_DATA_POKEBALL, &ball);
             }
-            if (partyData[i].nickname != NULL)
+            if (partyData[monIndex].nickname != NULL)
             {
-                SetMonData(&party[i], MON_DATA_NICKNAME, partyData[i].nickname);
+                SetMonData(&party[i], MON_DATA_NICKNAME, partyData[monIndex].nickname);
             }
-            if (partyData[i].isShiny)
+            if (partyData[monIndex].isShiny)
             {
                 u32 data = TRUE;
                 SetMonData(&party[i], MON_DATA_IS_SHINY, &data);
             }
-            if (partyData[i].dynamaxLevel > 0)
+            if (partyData[monIndex].dynamaxLevel > 0)
             {
-                u32 data = partyData[i].dynamaxLevel;
+                u32 data = partyData[monIndex].dynamaxLevel;
                 SetMonData(&party[i], MON_DATA_DYNAMAX_LEVEL, &data);
             }
-            if (partyData[i].gigantamaxFactor)
+            if (partyData[monIndex].gigantamaxFactor)
             {
-                u32 data = partyData[i].gigantamaxFactor;
+                u32 data = partyData[monIndex].gigantamaxFactor;
                 SetMonData(&party[i], MON_DATA_GIGANTAMAX_FACTOR, &data);
             }
-            if (partyData[i].teraType > 0)
+            if (partyData[monIndex].teraType > 0)
             {
-                u32 data = partyData[i].teraType;
+                u32 data = partyData[monIndex].teraType;
                 SetMonData(&party[i], MON_DATA_TERA_TYPE, &data);
             }
             CalculateMonStats(&party[i]);
@@ -2090,6 +2380,12 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 ball = gTrainerClasses[trainer->trainerClass].ball ?: ITEM_POKE_BALL;
                 SetMonData(&party[i], MON_DATA_POKEBALL, &ball);
             }
+        }
+
+        if (usingPool)
+        {
+            Free(poolIndexArray);
+            poolRules = defaultPoolRules;
         }
     }
 
