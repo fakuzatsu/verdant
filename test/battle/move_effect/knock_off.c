@@ -318,7 +318,7 @@ SINGLE_BATTLE_TEST("Knock Off doesn't knock off begin-battle form-change hold it
 {
     GIVEN {
         PLAYER(SPECIES_WOBBUFFET);
-        OPPONENT(SPECIES_ZAMAZENTA_HERO_OF_MANY_BATTLES) { Item(ITEM_RUSTED_SHIELD); }
+        OPPONENT(SPECIES_ZAMAZENTA_HERO) { Item(ITEM_RUSTED_SHIELD); }
     } WHEN {
         TURN { MOVE(opponent, MOVE_CELEBRATE); MOVE(player, MOVE_KNOCK_OFF); }
     } SCENE {
