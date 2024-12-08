@@ -277,6 +277,8 @@ LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter:
 LittlerootTown_ProfessorBirchsLab_EventScript_Aide::
 	lock
 	faceplayer
+	goto_if_ge VAR_BIRCH_LAB_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyRecievedDexNav
+	goto_if_ge VAR_BIRCH_LAB_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
 	goto_if_ge VAR_BIRCH_LAB_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter
 	goto_if_set FLAG_BIRCH_AIDE_MET, LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchAwayOnFieldwork, MSGBOX_DEFAULT
@@ -291,6 +293,229 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet::
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger1::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 1
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer1
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger2::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 2
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer2
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger3::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 3
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer3
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger4::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 4
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer4
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger5::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 5
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer5
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideRecievedPokedexTrigger6::
+	lockall
+	call LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement
+	setvar VAR_0x8009, 6
+	delay 30
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer6
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AideCommonMovement::
+	applymovement LOCALID_AIDE, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_AIDE, Common_Movement_ExclamationMark
+	waitmovement 0
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DexNavMessage::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_YouShouldTakeThisToo, MSGBOX_DEFAULT
+	closemessage
+	playfanfare MUS_OBTAIN_ITEM
+	message LittlerootTown_ProfessorBirchsLab_Text_ObtainedDexNav
+	waitfanfare
+	setflag FLAG_SYS_DEXNAV_GET
+	setvar VAR_BIRCH_LAB_STATE, 6
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DexNavDescription, MSGBOX_DEFAULT
+	closemessage
+	call_if_eq VAR_0x8009, 1, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer1
+	call_if_eq VAR_0x8009, 2, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer2
+	call_if_eq VAR_0x8009, 3, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer3
+	call_if_eq VAR_0x8009, 4, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer4
+	call_if_eq VAR_0x8009, 5, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer5
+	call_if_eq VAR_0x8009, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer6
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer1::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer1
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer2::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer2
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer3::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer3
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer4::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer4
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer5::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer5
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidLeavePlayer6::
+	applymovement LOCALID_AIDE, LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer6
+	waitmovement 0
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer1:
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer2:
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer3:
+	walk_down
+	walk_left
+	walk_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer4:
+	walk_down
+	walk_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer5:
+	walk_down
+	walk_in_place_faster_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_AideApproachPlayer6:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer1:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer2:
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer3:
+	walk_right
+	walk_right
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer4:
+	walk_right
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer5:
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_Movement_LeavePlayer6:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyRecievedDexNav::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DexNavDescription
 	release
 	end
 
@@ -493,6 +718,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister::
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3, ProfBirch_EventScript_RatePokedexOrRegister
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, ProfBirch_EventScript_RatePokedexOrRegister
 	goto_if_eq VAR_BIRCH_LAB_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait
+	goto_if_eq VAR_BIRCH_LAB_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_HowIsYourPokedexComingAlong
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome, MSGBOX_DEFAULT
 	release
 	end
@@ -559,6 +785,11 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex::
 
 LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_HowIsYourPokedexComingAlong::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_HowIsYourPokedexComingAlong, MSGBOX_DEFAULT
 	release
 	end
 
@@ -767,6 +998,14 @@ LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
 	.string "Argh, I'm getting the itch to get out\n"
 	.string "and do fieldwork again!$"
 
+LittlerootTown_ProfessorBirchsLab_Text_HowIsYourPokedexComingAlong:
+	.string "Prof. Birch: Oh, hi {PLAYER}{KUN}!\p"
+	.string "How is your Pokédex coming along?\p"
+	.string "Are you catching plenty of Pokémon?\p"
+	.string "I'm working on a few improvements\n"
+	.string "to the Pokédex myself.\p"
+	.string "Hopefully they will be ready soon!$"
+
 LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese:
 	.string "May: Oh, wow, {PLAYER}{KUN}!\n"
 	.string "You got a Pokédex, too!\p"
@@ -808,6 +1047,21 @@ LittlerootTown_ProfessorBirchsLab_Text_HeyYourBagsFull:
 LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext:
 	.string "Brendan: Where should I look for\n"
 	.string "Pokémon next…$"
+
+LittlerootTown_ProfessorBirchsLab_Text_YouShouldTakeThisToo:
+	.string "So the professor gave you a Pokédex?\p"
+	.string "Then you should take this too!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_ObtainedDexNav:
+	.string "{PLAYER} received the DexNav!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DexNavDescription:
+	.string "The DexNav is a little project of mine.\n"
+	.string "You can open it from your Menu.\p"
+	.string "Select a Pokémon that you have seen\n"
+	.string "and the DexNav will search for it.\p"
+	.string "While active, you can sneak towards a\n"
+	.string "Pokémon by holding A.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine:
 	.string "It's a serious-looking machine.\n"
