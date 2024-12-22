@@ -84,10 +84,10 @@ DOUBLE_BATTLE_TEST("Cotton Down correctly gets blocked by stat reduction prevent
             ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, playerRight);
             MESSAGE("Wynaut's Speed fell!");
         }
-        MESSAGE("The effects of the Clear Amulet held by Wynaut prevents its stats from being lowered!");
+        MESSAGE("Wynaut's Clear Amulet prevents its stats from being lowered!");
         NONE_OF {
             ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponentRight);
-            MESSAGE("The opposing Corviknight's Speed fell!");
+            MESSAGE("Foe Corviknight's Speed fell!");
         }
         ABILITY_POPUP(opponentRight, ABILITY_MIRROR_ARMOR);
     } THEN {

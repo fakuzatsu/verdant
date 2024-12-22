@@ -117,8 +117,8 @@ SINGLE_BATTLE_TEST("Shed Tail creates a Substitute with 1/4 of user maximum heal
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SHED_TAIL, player);
         if (hp == 160)
-            MESSAGE("Bulbasaur's substitute faded!");
+            MESSAGE("Bulbasaur's SUBSTITUTE faded!");
         else
-            NOT MESSAGE("Bulbasaur's substitute faded!");
+            NOT MESSAGE("Bulbasaur's SUBSTITUTE faded!");
     }
 }

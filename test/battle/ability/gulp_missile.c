@@ -182,7 +182,7 @@ SINGLE_BATTLE_TEST("(Gulp Missile) Transformed Cramorant Gulping lowers defense 
         HP_BAR(opponent);
         if (ability == ABILITY_INFILTRATOR) {
             ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponent);
-            MESSAGE("The opposing Dragapult's Defense fell!");
+            MESSAGE("Foe Dragapult's Defense fell!");
         } else {
             ABILITY_POPUP(opponent, ABILITY_CLEAR_BODY);
         }
