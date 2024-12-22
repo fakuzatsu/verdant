@@ -23353,7 +23353,7 @@ static const u16 sBurmyTeachableLearnset[] = {
     MOVE_UNAVAILABLE,
 };
 
-static const u16 sWormadamPlantCloakTeachableLearnset[] = {
+static const u16 sWormadamPlantTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BUG_BUZZ,
     MOVE_BULLET_SEED,
@@ -23388,7 +23388,7 @@ static const u16 sWormadamPlantCloakTeachableLearnset[] = {
     MOVE_UNAVAILABLE,
 };
 
-static const u16 sWormadamSandyCloakTeachableLearnset[] = {
+static const u16 sWormadamSandyTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BUG_BUZZ,
     MOVE_BULLDOZE,
@@ -23426,7 +23426,7 @@ static const u16 sWormadamSandyCloakTeachableLearnset[] = {
     MOVE_UNAVAILABLE,
 };
 
-static const u16 sWormadamTrashCloakTeachableLearnset[] = {
+static const u16 sWormadamTrashTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BUG_BUZZ,
     MOVE_DIG,
