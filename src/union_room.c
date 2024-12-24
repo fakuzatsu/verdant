@@ -1732,7 +1732,7 @@ static void Task_StartActivity(u8 taskId)
         break;
     case ACTIVITY_BERRY_CRUSH:
         WarpForWirelessMinigame(USING_BERRY_CRUSH, 9, 1);
-        StartBerryCrush(CB2_LoadMap);
+        StartBerryCrush(CB2_LoadMap, FALSE);
         break;
     case ACTIVITY_BERRY_PICK:
         WarpForWirelessMinigame(USING_MINIGAME, 5, 1);
