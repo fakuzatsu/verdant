@@ -268,6 +268,15 @@ top:
                 block = block->next;
             }
             while (block != head);
+
+            for (i = 0; i < NUM_TASKS; i++)
+            {
+                if (gTasks[i].isActive)
+                {
+                    Test_MgbaPrintf(":L%s:%d - %p: task not freed", gTestRunnerState.test->filename, SourceLine(0), gTasks[i].func);
+                    gTestRunnerState.result = TEST_RESULT_FAIL;
+                }
+            }
         }
 
         if (gTestRunnerState.test->runner == &gAssumptionsRunner)
