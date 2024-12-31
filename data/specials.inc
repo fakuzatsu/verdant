@@ -563,3 +563,4 @@ gSpecials::
 	def_special SetGrottoWarp
 	def_special HaveAllSpeciesBeenShown
 	def_special UseBlankMessageToCancelPokemonPic
+    def_special StartBerryCrushSolo

@@ -948,8 +948,9 @@ static u32 (*const sBerryCrushCommands[])(struct BerryCrushGame * game, u8 *data
 };
 
 // Per group size, the number of A presses required to increase the number of sparkles.
-static const u8 sSparkleThresholds[MAX_RFU_PLAYERS - 1][4] =
+static const u8 sSparkleThresholds[MAX_RFU_PLAYERS][4] =
 {
+    {1,  3,  5,  6}, // 1 player
     {2,  4,  6,  7}, // 2 players
     {3,  5,  8, 11}, // 3 players
     {3,  7, 11, 15}, // 4 players
@@ -957,7 +958,7 @@ static const u8 sSparkleThresholds[MAX_RFU_PLAYERS - 1][4] =
 };
 
 // Per group size, the number of A presses required to get big sparkles
-static const u8 sBigSparkleThresholds[MAX_RFU_PLAYERS - 1] = {5, 7, 9, 12};
+static const u8 sBigSparkleThresholds[MAX_RFU_PLAYERS] = {4, 5, 7, 9, 12};
 
 static const u8 sReceivedPlayerBitmasks[] = {0x03, 0x07, 0x0F, 0x1F};
 
@@ -1051,7 +1052,15 @@ static void GetBerryFromBag(void)
 
     sGame->players[sGame->localId].berryId = gSpecialVar_ItemId - FIRST_BERRY_INDEX;
     sGame->nextCmd = CMD_FADE;
-    sGame->afterPalFadeCmd = CMD_WAIT_BERRIES;
+    if (sGame->solo)
+    {
+        sGame->afterPalFadeCmd = CMD_DROP_BERRIES;
+        sGame->gameState = STATE_DROP_BERRIES;
+    }
+    else
+    {
+        sGame->afterPalFadeCmd = CMD_WAIT_BERRIES;
+    }
     SetPaletteFadeArgs(sGame->commandArgs, FALSE, PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     RunOrScheduleCommand(CMD_SHOW_GAME, 1, sGame->commandArgs);
     sGame->taskId = CreateTask(MainTask, 8);
@@ -1162,12 +1171,19 @@ static void MainTask(u8 taskId)
 static void SetNamesAndTextSpeed(struct BerryCrushGame *game)
 {
     u8 i;
-    for (i = 0; i < game->playerCount; i++)
-        StringCopy(game->players[i].name, gLinkPlayers[i].name);
-    for (; i < MAX_RFU_PLAYERS; i++)
+    if (game->solo)
     {
-        memset(game->players[i].name, 1, PLAYER_NAME_LENGTH);
-        game->players[i].name[PLAYER_NAME_LENGTH] = EOS;
+        StringCopy(game->players[0].name, gSaveBlock2Ptr->playerName);
+    }
+    else
+    {
+        for (i = 0; i < game->playerCount; i++)
+            StringCopy(game->players[i].name, gLinkPlayers[i].name);
+        for (; i < MAX_RFU_PLAYERS; i++)
+        {
+            memset(game->players[i].name, 1, PLAYER_NAME_LENGTH);
+            game->players[i].name[PLAYER_NAME_LENGTH] = EOS;
+        }
     }
 
     switch (gSaveBlock2Ptr->optionsTextSpeed)
@@ -1303,11 +1319,7 @@ static s32 HideGameDisplay(void)
     case 1:
         if (!game->solo && !IsLinkTaskFinished())
             return 0;
-        // fall through
-        // This will call BeginNormalPaletteFade() twice.
-#ifdef BUGFIX
         break;
-#endif
     case 2:
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         UpdatePaletteFade();
@@ -1910,9 +1922,11 @@ static void HideTimer(struct BerryCrushGame_Gfx *gfx)
 static void CreatePlayerNameWindows(struct BerryCrushGame *game)
 {
     u8 i;
+    u8 currPlayer;
     for (i = 0; i < game->playerCount; i++)
     {
-        game->gfx.playerCoords[i] = &sPlayerCoords[sPlayerIdToPosId[game->playerCount - 2][i]];
+        currPlayer = game->solo ? 0 : game->playerCount - 2;
+        game->gfx.playerCoords[i] = &sPlayerCoords[sPlayerIdToPosId[currPlayer][i]];
         game->gfx.nameWindowIds[i] = AddWindow(&sWindowTemplates_PlayerNames[game->gfx.playerCoords[i]->playerId]);
         PutWindowTilemap(game->gfx.nameWindowIds[i]);
         FillWindowPixelBuffer(game->gfx.nameWindowIds[i], 0);
@@ -2381,17 +2395,9 @@ static u32 Cmd_WaitForOthersToPickBerries(struct BerryCrushGame *game, u8 *args)
     switch (game->cmdState)
     {
     case 0:
-        // Go straight to state 4 if playing solo
-        if (game->solo)
-        {
-            game->cmdState = 4;
-        }
-        else
-        {
         SetPrintMessageArgs(args, MSG_WAIT_PICK, 0, 0, 1);
         game->nextCmd = CMD_WAIT_BERRIES;
         RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
-        }
         return 0;
     case 1:
         Rfu_SetLinkStandbyCallback();
@@ -2412,7 +2418,7 @@ static u32 Cmd_WaitForOthersToPickBerries(struct BerryCrushGame *game, u8 *args)
         break;
     case 4:
         // Wait for partners responses
-        if (!game->solo && GetBlockReceivedStatus() != sReceivedPlayerBitmasks[game->playerCount - 2])
+        if (GetBlockReceivedStatus() != sReceivedPlayerBitmasks[game->playerCount - 2])
             return 0;
 
         // Read partners chosen berries
@@ -2766,7 +2772,7 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
     // depending on how many A presses there were in that time
     if (game->timer % 30 == 0)
     {
-        if (game->bigSparkleCounter > sBigSparkleThresholds[game->playerCount - 2])
+        if (game->bigSparkleCounter > sBigSparkleThresholds[game->playerCount - 1])
         {
             game->numBigSparkles++;
             game->bigSparkle = TRUE;
@@ -2783,27 +2789,17 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
     // depending on how many A presses there were in that time (including the bonus)
     if (game->timer % 15 == 0)
     {
-        // BUG: The wrong field is used twice below
-        // As a result, only a sparkleAmount of 0, 1, or 4 is attainable
-        #ifdef BUGFIX
-        #define field sparkleAmount
-        #else
-        #define field sparkleCounter
-        #endif
-
-        if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][0])
+        if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 1][0])
             game->sparkleAmount = 0;
-        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][1])
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 1][1])
             game->sparkleAmount = 1;
-        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][2])
-            game->field = 2;
-        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][3])
-            game->field = 3;
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 1][2])
+            game->sparkleAmount = 2;
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 1][3])
+            game->sparkleAmount = 3;
         else
             game->sparkleAmount = 4;
         game->sparkleCounter = 0;
-
-        #undef field
     }
     else
     {
@@ -3556,8 +3552,7 @@ static void ResetGame(struct BerryCrushGame *game)
     game->targetAPresses = 0;
     game->totalAPresses = 0;
     game->targetDepth = 0;
-    game->newDepth = 0;
-    game->solo = FALSE;
+    game->newDepth = 0;    
     game->newRecord = FALSE;
     game->playedSound = FALSE;
     game->endGame = FALSE;

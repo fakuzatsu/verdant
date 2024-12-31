@@ -131,7 +131,7 @@ const u32 sBO3InfoCard_Pal[] = INCBIN_U32("graphics/best_of_three/infocard.gbapa
 
 //==========FUNCTIONS==========//
 // UI loader template
-void Task_OpenMenuFromStartMenu(u8 taskId)
+void Task_OpenBO3MenuFromStartMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
