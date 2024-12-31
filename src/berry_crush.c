@@ -1045,15 +1045,20 @@ void StartBerryCrush(MainCallback exitCallback, bool32 isSolo)
 
 static void GetBerryFromBag(void)
 {
+    u32 berryId;
+
     if (gSpecialVar_ItemId < FIRST_BERRY_INDEX || gSpecialVar_ItemId > LAST_BERRY_INDEX + 1)
         gSpecialVar_ItemId = FIRST_BERRY_INDEX;
     else
         RemoveBagItem(gSpecialVar_ItemId, 1);
 
-    sGame->players[sGame->localId].berryId = gSpecialVar_ItemId - FIRST_BERRY_INDEX;
+    berryId = gSpecialVar_ItemId - FIRST_BERRY_INDEX;
+    sGame->players[sGame->localId].berryId = berryId;
     sGame->nextCmd = CMD_FADE;
     if (sGame->solo)
     {
+        sGame->targetAPresses += gBerryCrush_BerryData[berryId].difficulty;
+        sGame->powder += gBerryCrush_BerryData[berryId].powder;
         sGame->afterPalFadeCmd = CMD_DROP_BERRIES;
         sGame->gameState = STATE_DROP_BERRIES;
     }
@@ -2751,6 +2756,105 @@ static void UpdateLeaderGameState(struct BerryCrushGame *game)
     game->localState.timer = game->leaderTimer;
 }
 
+static void UpdateSoloGameState(struct BerryCrushGame *game)
+{
+    bool32 playerPressed = FALSE;
+    u16 temp = 0;
+    u16 timeDiff;
+
+    if (JOY_NEW(A_BUTTON))
+        playerPressed = TRUE;
+
+    temp = (u16)game->newDepth;
+    game->depth = temp;
+
+    if (playerPressed == TRUE)
+    {
+        game->players[game->localId].numAPresses++;
+        timeDiff = game->timer - game->players[game->localId].inputTime;
+
+        // If the interval between inputs is regular, the input is considered "neat"
+        // This counts toward the player's neatness score
+        if (timeDiff >= game->players[game->localId].timeSincePrevInput - 1
+         && timeDiff <= game->players[game->localId].timeSincePrevInput + 1)
+        {
+            // On neat input streak
+            game->players[game->localId].neatInputStreak++;
+            game->players[game->localId].timeSincePrevInput = timeDiff;
+            if (game->players[game->localId].neatInputStreak > game->players[game->localId].maxNeatInputStreak)
+                game->players[game->localId].maxNeatInputStreak = game->players[game->localId].neatInputStreak;
+        }
+        else
+        {
+            // End neat input streak
+            game->players[game->localId].neatInputStreak = 0;
+            game->players[game->localId].timeSincePrevInput = timeDiff;
+        }
+
+        game->players[game->localId].inputTime = game->timer;
+    }
+
+    if (playerPressed == FALSE)
+    {
+        if (game->gfx.vibrating)
+            game->gfx.counter++;
+    }
+    else if (game->gfx.vibrating)
+    {
+        game->gfx.vibrationIdx = 1;
+        game->gfx.numVibrations = 3;
+    }
+    else
+    {
+        game->gfx.counter = 0;
+        game->gfx.vibrationIdx = 1;
+        game->gfx.numVibrations = 3;
+        game->gfx.vibrating = TRUE;
+    }
+
+    if (game->gfx.vibrating)
+    {
+        if (game->gfx.counter >= game->gfx.numVibrations)
+        {
+            game->gfx.counter = 0;
+            game->gfx.vibrationIdx = 0;
+            game->gfx.numVibrations = 0;
+            game->gfx.vibrating = FALSE;
+            temp = 0;
+        }
+        else
+        {
+            temp = 3;
+        }
+        game->vibration = (u8)temp;
+    }
+    else
+    {
+        game->vibration = 0;
+    }
+
+    game->timer++;
+    if (playerPressed == FALSE)
+        return;
+
+    game->bigSparkleCounter++;
+    game->sparkleCounter++;
+    game->totalAPresses++;
+    if (game->targetAPresses - game->totalAPresses > 0)
+    {
+        temp = (s32)game->totalAPresses;
+        temp = Q_24_8(temp);
+        temp = MathUtil_Div32(temp, game->targetDepth);
+        temp = Q_24_8_TO_INT(temp);
+        game->newDepth = (u8)temp;
+        return;
+    }
+
+    // Target number of A presses has been reached, game is complete
+    game->newDepth = 32;
+    game->endGame = TRUE;
+}
+
 // Checks for input and sends data to group members
 static void HandlePlayerInput(struct BerryCrushGame *game)
 {
@@ -2764,9 +2868,11 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
     }
 
     // Only send data to other players if you are the leader or you pressed A
-    if ((game->localId != 0 && !game->localState.pushedAButton) || game->solo == TRUE)
+    if (game->localId != 0 && !game->localState.pushedAButton)
         return;
-    game->localState.sendFlag = SEND_GAME_STATE;
+
+    if (!game->solo)
+        game->localState.sendFlag = SEND_GAME_STATE;
 
     // Every 30 frames, check whether the sparkles produced should be big,
     // depending on how many A presses there were in that time
@@ -2819,12 +2925,20 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
         }
 
     }
-    if (game->timer >= MAX_TIME)
-        game->localState.endGame = TRUE;
-    game->localState.bigSparkle = game->bigSparkle;
-    game->localState.sparkleAmount = game->sparkleAmount;
-    memcpy(game->sendCmd, &game->localState, sizeof(game->sendCmd));
-    Rfu_SendPacket(game->sendCmd);
+    if (game->solo)
+    {
+        if (game->timer >= MAX_TIME)
+            game->endGame = TRUE; 
+    }
+    else
+    {
+        if (game->timer >= MAX_TIME)
+            game->localState.endGame = TRUE;
+        game->localState.bigSparkle = game->bigSparkle;
+        game->localState.sparkleAmount = game->sparkleAmount;
+        memcpy(game->sendCmd, &game->localState, sizeof(game->sendCmd));
+        Rfu_SendPacket(game->sendCmd);
+    }
 }
 
 static void RecvLinkData(struct BerryCrushGame *game)
@@ -2882,8 +2996,7 @@ static u32 Cmd_PlayGame_Solo(struct BerryCrushGame *game, u8 *args)
     }
     else
     {
-        game->leaderTimer++;
-        UpdateLeaderGameState(game);
+        UpdateSoloGameState(game);
         HandlePlayerInput(game);
         return 0;
     }
