@@ -1047,6 +1047,14 @@ static void GetBerryFromBag(void)
 {
     u32 berryId;
 
+    if (sGame->solo && gSpecialVar_ItemId < FIRST_BERRY_INDEX)
+    {
+        RunOrScheduleCommand(CMD_PLAY_AGAIN_NO, RUN_CMD, NULL);
+        sGame->taskId = CreateTask(MainTask, 8);
+        SetMainCallback2(MainCB);
+        return;
+    }
+
     if (gSpecialVar_ItemId < FIRST_BERRY_INDEX || gSpecialVar_ItemId > LAST_BERRY_INDEX + 1)
         gSpecialVar_ItemId = FIRST_BERRY_INDEX;
     else
@@ -1075,7 +1083,7 @@ static void GetBerryFromBag(void)
 static void ChooseBerry(void)
 {
     DestroyTask(sGame->taskId);
-    ChooseBerryForMachine(GetBerryFromBag);
+    ChooseBerryForMachine(GetBerryFromBag, sGame->solo);
 }
 
 static void BerryCrush_SetVBlankCB(void)
@@ -1570,6 +1578,72 @@ static void UpdateInputEffects(struct BerryCrushGame *game, struct BerryCrushGam
         else
         {
             if (numPlayersPressed == 1)
+                PlaySE(SE_MUD_BALL);
+            else
+                PlaySE(SE_BREAKABLE_DOOR);
+
+            game->playedSound = TRUE;
+        }
+    }
+}
+
+static void UpdateSoloInputEffects(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 playerPressed = FALSE;
+    u32 i;
+    u16 temp1, xModifier;
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        playerPressed = TRUE;
+        StartSpriteAnim(gfx->impactSprites[game->localId], 0); // Small impact sprite
+
+        gfx->impactSprites[game->localId]->invisible = FALSE;
+        gfx->impactSprites[game->localId]->animPaused = FALSE;
+        gfx->impactSprites[game->localId]->x2 = sImpactCoords[0][0];
+        gfx->impactSprites[game->localId]->y2 = sImpactCoords[0][1];
+    }
+
+    if (playerPressed == FALSE)
+    {
+        game->playedSound = FALSE;
+    }
+    else
+    {
+        // Update sparkle effect
+        #define yModifier temp1
+
+        yModifier = (u8)(game->timer % 3);
+        xModifier = yModifier;
+        for (i = 0; i < game->sparkleAmount * 2 + 3; i++)
+        {
+            if (gfx->sparkleSprites[i]->invisible)
+            {
+                gfx->sparkleSprites[i]->callback = SpriteCB_Sparkle_Init;
+                gfx->sparkleSprites[i]->x = sSparkleCoords[i][0] + 120;
+                gfx->sparkleSprites[i]->y = sSparkleCoords[i][1] + 136 - (yModifier * 4);
+                gfx->sparkleSprites[i]->x2 = sSparkleCoords[i][0] + (sSparkleCoords[i][0] / (xModifier * 4));
+                gfx->sparkleSprites[i]->y2 = sSparkleCoords[i][1];
+                if (game->bigSparkle)
+                    StartSpriteAnim(gfx->sparkleSprites[i], 1);
+                else
+                    StartSpriteAnim(gfx->sparkleSprites[i], 0);
+
+                yModifier++;
+                if (yModifier > 3)
+                    yModifier = 0;
+            }
+        }
+
+        #undef yModifier
+
+        if (game->playedSound)
+        {
+            game->playedSound = FALSE;
+        }
+        else
+        {
+            if (playerPressed == TRUE)
                 PlaySE(SE_MUD_BALL);
             else
                 PlaySE(SE_BREAKABLE_DOOR);
@@ -2914,12 +2988,14 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
         {
             if (game->cmdTimer > 70)
             {
-                ClearRecvCommands();
+                if (!game->solo)
+                    ClearRecvCommands();
                 game->cmdTimer = 0;
             }
             else if (game->localState.playerPressedAFlags == 0)
             {
-                ClearRecvCommands();
+                if (!game->solo)
+                    ClearRecvCommands();
                 game->cmdTimer = 0;
             }
         }
@@ -2928,7 +3004,7 @@ static void HandlePlayerInput(struct BerryCrushGame *game)
     if (game->solo)
     {
         if (game->timer >= MAX_TIME)
-            game->endGame = TRUE; 
+            game->endGame = TRUE;
     }
     else
     {
@@ -2973,9 +3049,8 @@ static void RecvLinkData(struct BerryCrushGame *game)
 
 static u32 Cmd_PlayGame_Solo(struct BerryCrushGame *game, u8 *args)
 {
-    memset(&game->localState, 0, sizeof(game->localState));
-    memset(&game->recvCmd, 0, sizeof(game->recvCmd));
-    RecvLinkData(game);
+    game->playedSound = FALSE;
+    UpdateSoloInputEffects(game, &(game->gfx));
     SetGpuReg(REG_OFFSET_BG0VOFS, -game->vibration);
     SetGpuReg(REG_OFFSET_BG2VOFS, -game->vibration);
     SetGpuReg(REG_OFFSET_BG3VOFS, -game->vibration);
@@ -3178,6 +3253,7 @@ static u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
         if (game->solo)
         {
             game->cmdState = 3;
+            return 0;
         }
         else
         {
@@ -3223,6 +3299,8 @@ static u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
         temp1 = MathUtil_Mul32(Q_24_8(game->numBigSparkles), Q_24_8(50));
         temp1 = MathUtil_Div32(temp1, Q_24_8(game->numBigSparkleChecks)) + Q_24_8(50);
         temp1 = Q_24_8_TO_INT(temp1);
+        if (temp1 <= 0)
+            temp1 = 1;
         game->results.silkiness = temp1 & 0x7F;
 
         // Calculate amount of powder
@@ -3333,16 +3411,24 @@ static u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
                 }
             }
         }
-        if (!game->solo)
+        // Skip over recieving data if solo, since it's all local
+        if (game->solo)
+        {
+            game->cmdState = 7;
+            return 0;
+        }
+        else
+        {
             SendBlock(0, &game->results, sizeof(game->results));
+        }
         break;
     case 5:
-        if (!game->solo && !IsLinkTaskFinished())
+        if (!IsLinkTaskFinished())
             return 0;
         game->cmdTimer = 0;
         break;
     case 6:
-        if (!game->solo && GetBlockReceivedStatus() != 1)
+        if (GetBlockReceivedStatus() != 1)
             return 0;
 
         // Receive results calculated by leader
@@ -3416,15 +3502,22 @@ static u32 Cmd_SaveGame(struct BerryCrushGame *game, u8 *args)
     case 0:
         if (game->timer >= MAX_TIME)
             HideTimer(&game->gfx);
-        SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 1);
-        game->nextCmd = CMD_SAVE;
-        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
-        game->cmdState = 0; // State is progressed by CMD_PRINT_MSG
-        game->cmdTimer = 0;
+        if (game->solo)
+        {
+            game->cmdState = 2;
+            game->cmdTimer = 0;
+        }
+        else
+        {
+            SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 1);
+            game->nextCmd = CMD_SAVE;
+            RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+            game->cmdState = 0; // State is progressed by CMD_PRINT_MSG
+            game->cmdTimer = 0;
+        }
         return 0;
     case 1:
-        if (!game->solo)
-            Rfu_SetLinkStandbyCallback();
+        Rfu_SetLinkStandbyCallback();
         break;
     case 2:
         if (!game->solo && !IsLinkTaskFinished())
@@ -3432,17 +3525,27 @@ static u32 Cmd_SaveGame(struct BerryCrushGame *game, u8 *args)
         DrawDialogueFrame(0, FALSE);
         AddTextPrinterParameterized2(0, FONT_NORMAL, gText_SavingDontTurnOffPower, 0, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
         CopyWindowToVram(0, COPYWIN_FULL);
-        game->cmdTimer = 150;
         if (game->solo)
+        {
+            game->cmdTimer = 100;
             TrySavingData(SAVE_NORMAL);
+        }
         else
+        {
+            game->cmdTimer = 0;
             CreateTask(Task_LinkFullSave, 0);
+        }
         break;
     case 3:
-        game->cmdTimer--;
-        if (game->solo && game->cmdTimer > 0)
-            return 0;
-        if (FuncIsActiveTask(Task_LinkFullSave))
+        if (game->solo)
+        {
+            game->cmdTimer--;
+            if (game->cmdTimer <= 0)
+                PlaySE(SE_SAVE);
+            else
+                return 0;
+        }
+        else if (FuncIsActiveTask(Task_LinkFullSave))
             return 0;
         break;
     case 4:
@@ -3492,12 +3595,20 @@ static u32 Cmd_AskPlayAgain(struct BerryCrushGame *game, u8 *args)
 
             // Close Yes/No and start communication
             ClearDialogWindowAndFrame(0, TRUE);
-            SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 0);
+
             if (game->solo)
-                game->nextCmd = CMD_PLAY_AGAIN_YES;
+            {
+                if (game->playAgainState == PLAY_AGAIN_YES)
+                    RunOrScheduleCommand(CMD_PLAY_AGAIN_YES, SCHEDULE_CMD, NULL);
+                else
+                    RunOrScheduleCommand(CMD_PLAY_AGAIN_NO, SCHEDULE_CMD, NULL);
+            }
             else
+            {
+                SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 0);
                 game->nextCmd = CMD_COMM_PLAY_AGAIN;
-            RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+                RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+            }
             game->cmdState = 0;
         }
         return 0;
@@ -3595,12 +3706,12 @@ static u32 Cmd_StopGame(struct BerryCrushGame *game, u8 *args)
         }
         else
         {
-        DrawDialogueFrame(0, FALSE);
-        if (game->playAgainState == PLAY_AGAIN_NO_BERRIES)
-            AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_NO_BERRIES], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
-        else
-            AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_DROPPED], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
-        CopyWindowToVram(0, COPYWIN_FULL);
+            DrawDialogueFrame(0, FALSE);
+            if (game->playAgainState == PLAY_AGAIN_NO_BERRIES)
+                AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_NO_BERRIES], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+            else
+                AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_DROPPED], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+            CopyWindowToVram(0, COPYWIN_FULL);
         }
         break;
     case 1:
