@@ -211,6 +211,7 @@ const u8 *const gBagMenu_ReturnToStrings[] =
     [ITEMMENULOCATION_SHOP]                = gText_TheShop,
     [ITEMMENULOCATION_BERRY_TREE]          = gText_TheField,
     [ITEMMENULOCATION_BERRY_BLENDER_CRUSH] = gText_TheField,
+    [ITEMMENULOCATION_BERRY_CRUSH_SOLO]    = gText_TheField,
     [ITEMMENULOCATION_ITEMPC]              = gText_ThePC,
     [ITEMMENULOCATION_FAVOR_LADY]          = gText_TheField,
     [ITEMMENULOCATION_QUIZ_LADY]           = gText_TheField,

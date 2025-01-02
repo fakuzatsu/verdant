@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-void Task_OpenMenuFromStartMenu(u8 taskId);
+void Task_OpenBO3MenuFromStartMenu(u8 taskId);
 void Menu_Init(MainCallback callback);
 
 

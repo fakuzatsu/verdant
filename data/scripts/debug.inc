@@ -139,7 +139,10 @@ Debug_EventScript_ToggleDayNight::
 	release
 	end
 
-Debug_EventScript_Script_3::
+Debug_EventScript_StartSoloBerryCrush::
+    lockall
+    fadescreenswapbuffers FADE_TO_BLACK
+    special StartBerryCrushSolo
 	release
 	end
 

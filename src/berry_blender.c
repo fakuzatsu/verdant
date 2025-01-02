@@ -1053,6 +1053,7 @@ void DoBerryBlending(void)
 static void CB2_LoadBerryBlender(void)
 {
     s32 i;
+    bool32 isSolo = gSpecialVar_0x8004;
 
     switch (sBerryBlender->mainState)
     {
@@ -1122,7 +1123,7 @@ static void CB2_LoadBerryBlender(void)
             UnsetBgTilemapBuffer(2);
             UnsetBgTilemapBuffer(1);
             SetVBlankCallback(NULL);
-            ChooseBerryForMachine(StartBlender);
+            ChooseBerryForMachine(StartBlender, isSolo);
 
             sBerryBlender->mainState = 0;
         }
@@ -1630,6 +1631,15 @@ static void CB2_StartBlenderLocal(void)
     switch (sBerryBlender->mainState)
     {
     case 0:
+        if (gSpecialVar_ItemId == ITEM_NONE)
+        {
+            sBerryBlender->playAgainState = PLAY_AGAIN_NO;
+            SetMainCallback2(CB2_CheckPlayAgainLocal);
+            sBerryBlender->gameEndState = 0;
+            sBerryBlender->mainState = 0;
+            break;
+        }
+
         SetWirelessCommType0();
         InitBlenderBgs();
         SetPlayerBerryData(0, gSpecialVar_ItemId);
