@@ -424,7 +424,7 @@ static void PrintBerrySize(void)
     AddTextPrinterParameterized(WIN_SIZE_FIRM, FONT_NORMAL, sText_SizeSlash, 0, 1, TEXT_SKIP_DRAW, NULL);
     if (berry->size != 0)
     {
-        if (gSaveBlock2Ptr->optionsUnitSystem == 0)
+        if (gSaveBlock2Ptr->optionsUnitSystem == OPTIONS_UNITS_IMPERIAL)
         {
             u32 inches, fraction;
 
@@ -469,7 +469,7 @@ static const u8 sBerryDescriptionPart2_WatmelMetric[] = _("meter discovered. Exc
 static void PrintBerryDescription1(void)
 {
     //Metric
-    if (gSaveBlock2Ptr->optionsUnitSystem == 1 && sBerryTag->berryId == ItemIdToBerryType(ITEM_WATMEL_BERRY))
+    if (gSaveBlock2Ptr->optionsUnitSystem == OPTIONS_UNITS_METRIC && sBerryTag->berryId == ItemIdToBerryType(ITEM_WATMEL_BERRY))
     {
         AddTextPrinterParameterized(WIN_DESC, FONT_NORMAL, sBerryDescriptionPart1_WatmelMetric, 0, 1, 0, NULL);
     }
@@ -483,7 +483,7 @@ static void PrintBerryDescription1(void)
 static void PrintBerryDescription2(void)
 {
     //Metric
-    if (gSaveBlock2Ptr->optionsUnitSystem == 1 && sBerryTag->berryId == ItemIdToBerryType(ITEM_WATMEL_BERRY))
+    if (gSaveBlock2Ptr->optionsUnitSystem == OPTIONS_UNITS_METRIC && sBerryTag->berryId == ItemIdToBerryType(ITEM_WATMEL_BERRY))
     {
         AddTextPrinterParameterized(WIN_DESC, FONT_NORMAL, sBerryDescriptionPart2_WatmelMetric, 0, 0x11, 0, NULL);
     }

@@ -45,9 +45,15 @@ gText_Birch_SoItsPlayer::
 gText_Birch_YourePlayer::
 	.string "Ah, okay!\p"
 	.string "You're {PLAYER}{KUN} who's moving to my\n"
-	.string "hometown of Littleroot.\l"
-	.string "I get it now!\p"
-	.string "$"
+	.string "hometown of Littleroot.\p"
+    .string "Tell me {PLAYER}{KUN},\p"
+    .string "$"
+
+gText_Birch_WhatDifficulty::
+    .string "What kind of challenge do you prefer?$"
+
+gText_Birch_IsThisDifficultyRight::
+    .string "Ah, so you're the {STR_VAR_1} type?$"
 
 gText_Birch_AreYouReady::
 	.string "All right, are you ready?\p"

@@ -42,19 +42,19 @@ struct SaveBlock2
     u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
     u16 optionsBattleSceneOff:1; // whether battle animations are disabled
     u16 regionMapZoom:1; // whether the map is zoomed in
-    u16 optionsUnitSystem:1; //tx_optionsPlus
-    u16 optionsDifficulty:1; // custom addition to tx_optionsPlus
-    u16 optionsLevelCap:2; // custom addition to tx_optionsPlus
-    u16 optionsSpeedModifer:3; //tx_optionsPlus
-    u16 optionsPadding:1; // padding
-    u16 optionsExpBarSpeed:4; //tx_optionsPlus
-    u16 optionsDisableMatchCall:1; //tx_optionsPlus
-    u16 optionsCurrentFont:1; //tx_optionsPlus
-    u16 optionsWildRandomiser:1; // custom addition to tx_optionsPlus
-    u16 optionsTrainerRandomiser:1; // custom addition to tx_optionsPlus
-    u16 optionsAbilityRandomiser:1; // custom addition to tx_optionsPlus
-    u16 optionsVGCDraft:2; // custom addition to tx_optionsPlus
-    u16 optionsDamageNumsOff:1; // custom addition to tx_optionsPlus
+    u16 optionsUnitSystem:1; // OPTIONS_UNITS_[IMPERIAL/METRIC]
+    u16 optionsPadding1:1; //Padding
+    u16 optionsLevelCap:2; // OPTIONS_LEVEL_CAPS_[OFF/SOFT/HARD]
+    u16 optionsSpeedModifer:3; // OPTIONS_BATTLE_SCENE_[OFF/2X/3X/4X]
+    u16 optionsPadding2:4; // Padding
+    u16 optionsDifficulty:2; // OPTIONS_DIFFICULTY_[NORMAL/HARD]
+    u16 optionsDisableMatchCall:1; // Whether match call is disabled
+    u16 optionsCurrentFont:1; // OPTIONS_FONT_[EMERALD/FIRERED]
+    u16 optionsWildRandomiser:1; // Whether wild encounters are randomized
+    u16 optionsTrainerRandomiser:1; // Whether trainer battles are randomized
+    u16 optionsAbilityRandomiser:1; // Whether abilities are randomized
+    u16 optionsVGCDraft:2; // OPTIONS_DRAFT_[ALL_OFF/ONLY_DRAFT/ON_PLUS_BO3]
+    u16 optionsDamageNumsOff:1; // Whether damage numbers are disabled
     u32 randomiserSeed;
     struct Pokedex pokedex;
     u8 filler_90[0x8];
@@ -106,9 +106,7 @@ struct SaveBlock1
     struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
     struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
     struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
-#if FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1 == FALSE
-    u8 filler1[0x34]; // Previously Dex Flags, feel free to remove.
-#endif //FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1
+    // u8 filler1[0x34]; // Previously Dex Flags, feel free to remove.
     u16 berryBlenderRecords[3];
     u8 unused_9C2[6];
 #if FREE_MATCH_CALL == FALSE

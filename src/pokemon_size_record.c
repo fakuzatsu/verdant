@@ -143,7 +143,7 @@ static u32 GetMonSize(u16 species, u16 b)
 
 static void FormatMonSizeRecord(u8 *string, u32 size)
 {
-    if (gSaveBlock2Ptr->optionsUnitSystem == 0) //Imperial
+    if (gSaveBlock2Ptr->optionsUnitSystem == OPTIONS_UNITS_IMPERIAL)
     {
         size = (f64)(size * 10) / (CM_PER_INCH * 10);
     }
@@ -240,7 +240,7 @@ void BufferUnitSystemText(void)
             break;
     }
 
-    if (gSaveBlock2Ptr->optionsUnitSystem == 0) //Imperial
+    if (gSaveBlock2Ptr->optionsUnitSystem == OPTIONS_UNITS_IMPERIAL)
     {
         StringCopy(strvar, sImperialText[textType]);
     }

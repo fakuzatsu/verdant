@@ -2069,7 +2069,7 @@ void TryBestOfThree(struct ScriptContext *ctx)
     u16 trainer = ScriptReadHalfword(ctx);
     const u8 *script;
 
-    if (gSaveBlock2Ptr->optionsVGCDraft != OPTIONS_DRAFT_BO3_ON
+    if (gSaveBlock2Ptr->optionsVGCDraft != OPTIONS_DRAFT_ON_PLUS_BO3
      || !IsValidBestOfThreeTrainer(trainer)
      || HasTrainerBeenFought(trainer))
         return;

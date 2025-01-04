@@ -315,6 +315,8 @@ extern const u8 gText_Birch_BoyOrGirl[];
 extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
+extern const u8 gText_Birch_WhatDifficulty[];
+extern const u8 gText_Birch_IsThisDifficultyRight[];
 extern const u8 gText_Birch_AreYouReady[];
 extern const u8 gText_AM[];
 extern const u8 gText_PM[];

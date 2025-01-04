@@ -267,7 +267,7 @@ struct // MENU_DIFFICULTY
     int (*processInput)(int selection);
 } static const sItemFunctionsDifficulty[MENUITEM_DIFFICULTY_COUNT] =
 {
-    [MENUITEM_DIFFICULTY_MODE]         = {DrawChoices_Difficulty, ProcessInput_Options_Two},
+    [MENUITEM_DIFFICULTY_MODE]         = {DrawChoices_Difficulty, ProcessInput_Options_Three},
     [MENUITEM_DIFFICULTY_LEVELCAPS]    = {DrawChoices_LevelCaps,  ProcessInput_Options_Three},
     [MENUITEM_DIFFICULTY_BATTLESTYLE]  = {DrawChoices_BattleStyle, ProcessInput_Options_Two},
     [MENUITEM_DIFFICULTY_VGC_DRAFT]    = {DrawChoices_VGCDraft, ProcessInput_Options_Three},
@@ -422,6 +422,7 @@ static const u8 sText_Desc_RandAbilRand[]       = _("Pokémon Abilities will be\
 static const u8 sText_Desc_RngSeed[]            = _("Change the RNG Seed.\nInvalidates challenge runs.");
 static const u8 sText_Desc_DifficultyEasy[]     = _("Trainer's have their standard teams.\nThe intended difficulty.");
 static const u8 sText_Desc_DifficultyHard[]     = _("Trainer's have more difficult teams.\nIntended for challenge runs.");
+static const u8 sText_Desc_DifficultyDouble[]  = _("Trainer battles are always doubles.\nIntended for challenge runs.");
 static const u8 sText_Desc_LevelCaps_Off[]      = _("No level caps applied.\nThe regular Pokémon experience.");
 static const u8 sText_Desc_LevelCaps_Soft[]     = _("Exp is reduced as you exceed\nthe level of the next gym.");
 static const u8 sText_Desc_LevelCaps_Hard[]     = _("Once you reach the level of the\nnext gym, exp is halted.");
@@ -444,7 +445,7 @@ static const u8 *const sOptionMenuItemDescriptionsMain[MENUITEM_MAIN_COUNT][3] =
 
 static const u8 *const sOptionMenuItemDescriptionsDifficulty[MENUITEM_DIFFICULTY_COUNT][3] =
 {
-    [MENUITEM_DIFFICULTY_MODE]        = {sText_Desc_DifficultyEasy,     sText_Desc_DifficultyHard,  sText_Empty},
+    [MENUITEM_DIFFICULTY_MODE]        = {sText_Desc_DifficultyEasy,     sText_Desc_DifficultyHard,  sText_Desc_DifficultyDouble},
     [MENUITEM_DIFFICULTY_LEVELCAPS]   = {sText_Desc_LevelCaps_Off,      sText_Desc_LevelCaps_Soft,  sText_Desc_LevelCaps_Hard},
     [MENUITEM_DIFFICULTY_BATTLESTYLE] = {sText_Desc_BattleStyle_Shift,  sText_Desc_BattleStyle_Set, sText_Empty},
     [MENUITEM_DIFFICULTY_VGC_DRAFT]   = {sText_Desc_VGCDraft_None,      sText_Desc_VGCDraft_Draft,  sText_Desc_VGCDraft_Both},
@@ -1286,16 +1287,19 @@ static void DrawChoices_Speedup(int selection, int y)
     DrawChoices_Options_Four(sSpeedupStrings, selection, y, active);
 }
 
-static const u8 gText_DifficultyEasy[] = _("Normal");
+static const u8 gText_DifficultyEasy[] = _("Nrml");
 static const u8 gText_DifficultyHard[] = _("Hard");
+static const u8 gText_DifficultyDouble[] = _("Doubl");
 static void DrawChoices_Difficulty(int selection, int y)
 {
-    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_MODE);
-    u8 styles[2] = {0};
+    bool8 active = CheckConditions(MENUITEM_DIFFICULTY_LEVELCAPS);
+    u8 styles[3] = {0};
+    int xMid = GetMiddleX(gText_DifficultyEasy, gText_DifficultyHard, gText_DifficultyDouble);
     styles[selection] = 1;
 
     DrawOptionMenuChoice(gText_DifficultyEasy, 104, y, styles[0], active);
-    DrawOptionMenuChoice(gText_DifficultyHard, GetStringRightAlignXOffset(FONT_NORMAL, gText_DifficultyHard, 198), y, styles[1], active);
+    DrawOptionMenuChoice(gText_DifficultyHard, xMid, y, styles[1], active);
+    DrawOptionMenuChoice(gText_DifficultyDouble, GetStringRightAlignXOffset(1, gText_DifficultyDouble, 198), y, styles[2], active);
 }
 
 static const u8 sText_LevelCaps_Off[] = _("Off");
