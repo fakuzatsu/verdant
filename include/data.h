@@ -192,14 +192,21 @@ static inline u16 SanitizeTrainerId(u16 trainerId)
     return trainerId;
 }
 
+static inline const struct Trainer *GetTrainerArrayFromDifficulty(void)
+{
+    if (gSaveBlock2Ptr->optionsDifficulty == OPTIONS_DIFFICULTY_HARD)
+        return gHardTrainers;
+    return gTrainers;
+}
+
 static inline const struct Trainer *GetTrainerStructFromId(u16 trainerId)
 {
-    return &gTrainers[SanitizeTrainerId(trainerId)];
+    return &GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)];
 }
 
 static inline const u8 GetTrainerClassFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].trainerClass;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].trainerClass;
 }
 
 static inline const u8 *GetTrainerClassNameFromId(u16 trainerId)
@@ -213,52 +220,52 @@ static inline const u8 *GetTrainerNameFromId(u16 trainerId)
 {
     if (trainerId > TRAINER_PARTNER(PARTNER_NONE))
         return gBattlePartners[trainerId - TRAINER_PARTNER(PARTNER_NONE)].trainerName;
-    return gTrainers[SanitizeTrainerId(trainerId)].trainerName;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].trainerName;
 }
 
 static inline const u8 GetTrainerPicFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].trainerPic;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].trainerPic;
 }
 
 static inline const u8 GetTrainerStartingStatusFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].startingStatus;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].startingStatus;
 }
 
 static inline const bool32 IsTrainerDoubleBattle(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].doubleBattle;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].doubleBattle;
 }
 
 static inline const u8 GetTrainerPartySizeFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].partySize;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].partySize;
 }
 
 static inline const bool32 DoesTrainerHaveMugshot(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].mugshotEnabled;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].mugshotEnabled;
 }
 
 static inline const u8 GetTrainerMugshotColorFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].mugshotColor;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].mugshotColor;
 }
 
 static inline const u16 *GetTrainerItemsFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].items;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].items;
 }
 
 static inline const struct TrainerMon *GetTrainerPartyFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].party;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].party;
 }
 
 static inline const bool32 GetTrainerAIFlagsFromId(u16 trainerId)
 {
-    return gTrainers[SanitizeTrainerId(trainerId)].aiFlags;
+    return GetTrainerArrayFromDifficulty()[SanitizeTrainerId(trainerId)].aiFlags;
 }
 
 #endif // GUARD_DATA_H
