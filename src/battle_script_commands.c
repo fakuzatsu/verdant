@@ -16477,6 +16477,26 @@ u8 GetFirstFaintedPartyIndex(u8 battler)
     return PARTY_SIZE;
 }
 
+static inline u8 GetHighestMonLevel(void)
+{
+    u32 i, level;
+    u8 highestLevel = 0;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE)
+        {
+            level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            if(level > highestLevel)
+                highestLevel = level;
+        }
+        else
+            break;
+    }
+
+    return highestLevel;
+}
+
 void ApplyExperienceMultipliers(s32 *expAmount, u8 expGetterMonId, u8 faintedBattler)
 {
     u32 holdEffect = GetMonHoldEffect(&gPlayerParty[expGetterMonId]);
@@ -16502,6 +16522,26 @@ void ApplyExperienceMultipliers(s32 *expAmount, u8 expGetterMonId, u8 faintedBat
 
         value *= sExperienceScalingFactors[(faintedLevel * 2) + 10];
         value /= sExperienceScalingFactors[faintedLevel + expGetterLevel + 10];
+
+        *expAmount = value + 1;
+    }
+
+    if (B_CATCH_UP_EXP)
+    {
+        u64 value = *expAmount;
+        u8 highestMonLevel = GetHighestMonLevel();
+        u8 expGetterMonLevel = GetMonData(&gPlayerParty[expGetterMonId], MON_DATA_LEVEL);
+
+        if (expGetterMonLevel < highestMonLevel)
+        {
+            if (highestMonLevel - expGetterMonLevel >= 20)
+                highestMonLevel = expGetterMonLevel + 20;
+
+            // NOTE: Similar calculation to the scaled exp modifier, but multiplication starts higher to increase impact.
+            //       The clipping above caps the effective exp gains at a maximum of a 20 level difference.
+            value *= sExperienceScalingFactors[(highestMonLevel * 2) + 12];
+            value /= sExperienceScalingFactors[highestMonLevel + expGetterMonLevel + 10];
+        }
 
         *expAmount = value + 1;
     }
