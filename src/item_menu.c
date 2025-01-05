@@ -384,6 +384,10 @@ static const u8 sContextMenuItems_QuizLady[] = {
     ACTION_CONFIRM_QUIZ_LADY, ACTION_CANCEL
 };
 
+static const u8 sContextMenuItems_Unregisterable[] = {
+    ACTION_USE,         ACTION_CANCEL
+};
+
 static const TaskFunc sContextMenuFuncs[] = {
     [ITEMMENULOCATION_FIELD] =                  Task_ItemContext_Normal,
     [ITEMMENULOCATION_BATTLE] =                 Task_ItemContext_Normal,
@@ -1875,11 +1879,18 @@ static void OpenContextMenu(u8 taskId)
                 break;
             case KEYITEMS_POCKET:
                 gBagMenu->contextMenuItemsPtr = gBagMenu->contextMenuItemsBuffer;
-                if (ItemId_GetFieldFunc(gSpecialVar_ItemId) == ItemUseOutOfBattle_CannotUse){
+                if (ItemId_GetFieldFunc(gSpecialVar_ItemId) == ItemUseOutOfBattle_CannotUse)
+                {
                     gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_Cancel);
                     memcpy(&gBagMenu->contextMenuItemsBuffer, &sContextMenuItems_Cancel, sizeof(sContextMenuItems_Cancel));
                 }
-                else{
+                else if (gSpecialVar_ItemId == ITEM_INFINITE_CANDY)
+                {
+                    gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_Unregisterable);
+                    memcpy(&gBagMenu->contextMenuItemsBuffer, &sContextMenuItems_Unregisterable, sizeof(sContextMenuItems_Unregisterable));
+                }
+                else
+                {
                     gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_KeyItemsPocket);
                     memcpy(&gBagMenu->contextMenuItemsBuffer, &sContextMenuItems_KeyItemsPocket, sizeof(sContextMenuItems_KeyItemsPocket));
                 }
