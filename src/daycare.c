@@ -333,6 +333,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
     u16 species;
     u16 newSpecies;
     u32 experience;
+    u32 effectiveSteps;
     struct Pokemon pokemon;
 
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
@@ -349,7 +350,8 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
 
     if (GetMonData(&pokemon, MON_DATA_LEVEL) < GetCurrentLevelCap(FALSE))
     {
-        experience = GetMonData(&pokemon, MON_DATA_EXP) + daycareMon->steps;
+        effectiveSteps = CheckBagHasItem(ITEM_DAYCARE_CHARM, 1) ? ((daycareMon->steps * 150) / 100) : daycareMon->steps;
+        experience = GetMonData(&pokemon, MON_DATA_EXP) + effectiveSteps;
         SetMonData(&pokemon, MON_DATA_EXP, &experience);
         ApplyDaycareExperience(&pokemon);
     }

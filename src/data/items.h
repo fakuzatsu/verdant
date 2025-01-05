@@ -12530,6 +12530,22 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_ExpCharm,
     },
 
+    [ITEM_DAYCARE_CHARM] =
+    {
+        .name = _("Daycare Charm"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Raises the Exp.\n"
+            "gained at the\n"
+            "daycare."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_OvalCharm,
+        .iconPalette = gItemIconPalette_OvalCharm,
+    },
+
 // Form-changing Key Items
 
     [ITEM_ROTOM_CATALOG] =
