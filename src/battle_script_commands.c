@@ -286,6 +286,12 @@ static const s32 sExperienceScalingFactors[] =
     159767,
 };
 
+static const u8 sCatchUpExpFactors[] =
+{
+    100, 110, 125, 140, 160, 175, 190, 200, 210, 220,
+    225, 230, 235, 240, 245, 250,
+};
+
 static const u16 sTrappingMoves[NUM_TRAPPING_MOVES] =
 {
     MOVE_BIND,
@@ -16512,6 +16518,19 @@ void ApplyExperienceMultipliers(s32 *expAmount, u8 expGetterMonId, u8 faintedBat
     if (CheckBagHasItem(ITEM_EXP_CHARM, 1)) //is also for other exp boosting Powers if/when implemented
         *expAmount = (*expAmount * 150) / 100;
 
+    if (B_CATCH_UP_EXP)
+    {
+        s8 levelDiff = GetHighestMonLevel() - GetMonData(&gPlayerParty[expGetterMonId], MON_DATA_LEVEL);
+
+        if (levelDiff < 0)
+            levelDiff = 0;
+
+        if (levelDiff > 15)
+            levelDiff = 15;
+
+        *expAmount = (*expAmount * sCatchUpExpFactors[levelDiff]) / 100;
+    }
+
     if (B_SCALED_EXP >= GEN_5 && B_SCALED_EXP != GEN_6)
     {
         // Note: There is an edge case where if a pokemon receives a large amount of exp, it wouldn't be properly calculated
@@ -16522,26 +16541,6 @@ void ApplyExperienceMultipliers(s32 *expAmount, u8 expGetterMonId, u8 faintedBat
 
         value *= sExperienceScalingFactors[(faintedLevel * 2) + 10];
         value /= sExperienceScalingFactors[faintedLevel + expGetterLevel + 10];
-
-        *expAmount = value + 1;
-    }
-
-    if (B_CATCH_UP_EXP)
-    {
-        u64 value = *expAmount;
-        u8 highestMonLevel = GetHighestMonLevel();
-        u8 expGetterMonLevel = GetMonData(&gPlayerParty[expGetterMonId], MON_DATA_LEVEL);
-
-        if (expGetterMonLevel < highestMonLevel)
-        {
-            if (highestMonLevel - expGetterMonLevel >= 20)
-                highestMonLevel = expGetterMonLevel + 20;
-
-            // NOTE: Similar calculation to the scaled exp modifier, but multiplication starts higher to increase impact.
-            //       The clipping above caps the effective exp gains at a maximum of a 20 level difference.
-            value *= sExperienceScalingFactors[(highestMonLevel * 2) + 12];
-            value /= sExperienceScalingFactors[highestMonLevel + expGetterMonLevel + 10];
-        }
 
         *expAmount = value + 1;
     }
