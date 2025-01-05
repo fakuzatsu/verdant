@@ -564,3 +564,5 @@ gSpecials::
 	def_special HaveAllSpeciesBeenShown
 	def_special UseBlankMessageToCancelPokemonPic
     def_special StartBerryCrushSolo
+    def_special GetSpeciesForRandomEgg
+	def_special GetSpeciesForSpecialEgg

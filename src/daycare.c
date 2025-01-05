@@ -1083,12 +1083,11 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     RemoveEggFromDayCare(daycare);
 }
 
-void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
+void CreateEgg(struct Pokemon *mon, u16 species, u8 specialLocation)
 {
     u8 metLevel;
     u16 ball;
     u8 language;
-    u8 metLocation;
     u8 isEgg;
 
     CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
@@ -1100,10 +1099,9 @@ void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
     SetMonData(mon, MON_DATA_FRIENDSHIP, &gSpeciesInfo[species].eggCycles);
     SetMonData(mon, MON_DATA_MET_LEVEL, &metLevel);
     SetMonData(mon, MON_DATA_LANGUAGE, &language);
-    if (setHotSpringsLocation)
+    if (specialLocation)
     {
-        metLocation = METLOC_SPECIAL_EGG;
-        SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
+        SetMonData(mon, MON_DATA_MET_LOCATION, &specialLocation);
     }
 
     isEgg = TRUE;

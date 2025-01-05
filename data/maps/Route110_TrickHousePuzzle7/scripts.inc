@@ -1,8 +1,6 @@
 Route110_TrickHousePuzzle7_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle7_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle7_OnTransition
-	map_script MAP_SCRIPT_ON_LOAD, Route110_TrickHousePuzzle7_OnLoad
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_TrickHousePuzzle7_OnFrame
 	.byte 0
 
 @ Puzzle Room 7 in RSE uses whatever puzzle Mossdeep Gym uses
@@ -72,27 +70,11 @@ Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOff::
 	return
 
 Route110_TrickHousePuzzle7_OnTransition:
-	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_TeleportedTransition
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5
-	end
-
-Route110_TrickHousePuzzle7_EventScript_TeleportedTransition::
-	end
-
-Route110_TrickHousePuzzle7_OnLoad:
-	call_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles
-	end
-
-Route110_TrickHousePuzzle7_OnFrame:
-	map_script_2 VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_ClearState2
-	.2byte 0
-
-Route110_TrickHousePuzzle7_EventScript_ClearState2::
-	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 0
 	end
 
 Route110_TrickHousePuzzle7_EventScript_Scroll::
@@ -109,7 +91,6 @@ Route110_TrickHousePuzzle7_EventScript_FoundScroll::
 @ Unused, leftover from R/S
 Route110_TrickHousePuzzle7_EventScript_TeleportPad::
 	lockall
-	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
 	warpteleport MAP_ROUTE110_TRICK_HOUSE_PUZZLE7, 3, 19
 	waitstate
 	releaseall

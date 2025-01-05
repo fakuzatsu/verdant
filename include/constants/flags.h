@@ -1570,7 +1570,7 @@
 #define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)  // FLAG_0x921
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)  // FLAG_0x922
 #define FLAG_DAILY_MASSAGE_SERVICE                  (DAILY_FLAGS_START + 0x3)  // FLAG_0x923
-#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // FLAG_0x924
+#define FLAG_DAILY_ADOPT_EGG                        (DAILY_FLAGS_START + 0x4)  // FLAG_0x924
 #define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // FLAG_0x925
 #define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // FLAG_0x926
 #define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // FLAG_0x927

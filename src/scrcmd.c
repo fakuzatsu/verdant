@@ -1869,8 +1869,9 @@ bool8 ScrCmd_bufferdayofweekstring(struct ScriptContext *ctx)
 bool8 ScrCmd_giveegg(struct ScriptContext *ctx)
 {
     u16 species = VarGet(ScriptReadHalfword(ctx));
+    u8 specialLoc = ScriptReadByte(ctx);
 
-    gSpecialVar_Result = ScriptGiveEgg(species);
+    gSpecialVar_Result = ScriptGiveEgg(species, specialLoc);
     return FALSE;
 }
 

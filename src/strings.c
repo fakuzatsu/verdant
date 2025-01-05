@@ -448,6 +448,7 @@ const u8 gText_OddEggFoundByCouple[] = _("An odd Pokémon Egg found\nby the Day 
 const u8 gText_PeculiarEggNicePlace[] = _("A peculiar Pokémon Egg\nobtained at the nice place.");
 const u8 gText_PeculiarEggTrade[] = _("A peculiar Pokémon Egg\nobtained in a trade.");
 const u8 gText_EggFromHotSprings[] = _("A Pokémon Egg obtained\nat the hot springs.");
+const u8 gText_EggFromDaycareAdoption[] = _("A Pokémon Egg adopted\nfrom the day care.");
 const u8 gText_EggFromTraveler[] = _("An odd Pokémon Egg\nobtained from a traveler.");
 const u8 gText_ApostropheSBase[] = _("'s Base");
 const u8 gText_OkayToDeleteFromRegistry[] = _("Is it okay to delete {STR_VAR_1}\nfrom the Registry?");
