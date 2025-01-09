@@ -1188,6 +1188,9 @@ $(MID_SUBDIR)/se_u.s: %.s: %.mid
 $(MID_SUBDIR)/se_sudowoodo_shake.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G129 -V077 -P5
 
+$(MID_SUBDIR)/se_low_health_short.s: %.s: %.mid
+	$(MID) $< $@ -E -R$(STD_REVERB) -G127 -V100 -P3
+
 $(MID_SUBDIR)/se_m_double_slap.s: %.s: %.mid
 	$(MID) $< $@ -E -R$(STD_REVERB) -G128 -V110 -P4
 
