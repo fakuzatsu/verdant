@@ -1001,6 +1001,55 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(170, 170, 170, 0, 0, 0),
         .nature = NATURE_BASHFUL
     },
+    [FRONTIER_MON_PACHIRISU] = {
+        .species = SPECIES_PACHIRISU,
+        .moves = {MOVE_NUZZLE, MOVE_SUPER_FANG, MOVE_PROTECT, MOVE_FOLLOW_ME},
+        .heldItem = ITEM_ORAN_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 252, 0, 0, 0, 0),
+        .nature = NATURE_TIMID
+    },
+    [FRONTIER_MON_HAPPINY] = {
+        .species = SPECIES_HAPPINY,
+        .moves = {MOVE_METRONOME, MOVE_TOXIC, MOVE_HEAL_BELL, MOVE_CHARM},
+        .heldItem = ITEM_PECHA_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_JOLLY
+    },
+    [FRONTIER_MON_PANSAGE] = {
+        .species = SPECIES_PANSAGE,
+        .moves = {MOVE_VINE_WHIP, MOVE_LOW_SWEEP, MOVE_ROCK_TOMB, MOVE_COVET},
+        .heldItem = ITEM_GANLON_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 0, 0),
+        .nature = NATURE_CAREFUL
+    },
+    [FRONTIER_MON_PANSEAR] = {
+        .species = SPECIES_PANSEAR,
+        .moves = {MOVE_FLAME_BURST, MOVE_ROUND, MOVE_ACROBATICS, MOVE_WORK_UP},
+        .heldItem = ITEM_PETAYA_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 0, 170),
+        .nature = NATURE_LONELY
+    },
+    [FRONTIER_MON_PANPOUR] = {
+        .species = SPECIES_PANPOUR,
+        .moves = {MOVE_SCALD, MOVE_ICE_BEAM, MOVE_DISARMING_VOICE, MOVE_RECYCLE},
+        .heldItem = ITEM_APICOT_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 252, 0),
+        .nature = NATURE_MODEST
+    },
+    [FRONTIER_MON_CUTIEFLY] = {
+        .species = SPECIES_CUTIEFLY,
+        .moves = {MOVE_SIGNAL_BEAM, MOVE_DAZZLING_GLEAM, MOVE_POWDER, MOVE_STICKY_WEB},
+        .heldItem = ITEM_ASPEAR_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_MILD
+    },
+    [FRONTIER_MON_SMOLIV] = {
+        .species = SPECIES_SMOLIV,
+        .moves = {MOVE_ENERGY_BALL, MOVE_EARTH_POWER, MOVE_SWIFT, MOVE_GIGA_DRAIN},
+        .heldItem = ITEM_SOFT_SAND,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_RASH
+    },
     [FRONTIER_MON_GRIMER] = {
         .species = SPECIES_GRIMER,
         .moves = {MOVE_SLUDGE, MOVE_ROCK_TOMB, MOVE_ACID_ARMOR, MOVE_MINIMIZE},
