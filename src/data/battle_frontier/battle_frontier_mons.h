@@ -1498,6 +1498,76 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(252, 252, 0, 0, 0, 0),
         .nature = NATURE_QUIRKY
     },
+    [FRONTIER_MON_STARAVIA] = {
+        .species = SPECIES_STARAVIA,
+        .moves = {MOVE_DUAL_WINGBEAT, MOVE_TAKE_DOWN, MOVE_ASTONISH, MOVE_FEATHER_DANCE},
+        .heldItem = ITEM_RAWST_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_LONELY
+    },
+    [FRONTIER_MON_LUXIO] = {
+        .species = SPECIES_LUXIO,
+        .moves = {MOVE_SPARK, MOVE_DOUBLE_KICK, MOVE_BITE, MOVE_CHARGE},
+        .heldItem = ITEM_RAWST_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_BASHFUL
+    },
+    [FRONTIER_MON_CRANIDOS] = {
+        .species = SPECIES_CRANIDOS,
+        .moves = {MOVE_SMACK_DOWN, MOVE_EARTHQUAKE, MOVE_BODY_SLAM, MOVE_IRON_HEAD},
+        .heldItem = ITEM_SOFT_SAND,
+        .ev = TRAINER_PARTY_EVS(252, 0, 252, 0, 0, 0),
+        .nature = NATURE_NAIVE
+    },
+    [FRONTIER_MON_SHIELDON] = {
+        .species = SPECIES_SHIELDON,
+        .moves = {MOVE_ANCIENT_POWER, MOVE_EARTH_POWER, MOVE_POWER_GEM, MOVE_FLASH_CANNON},
+        .heldItem = ITEM_SOFT_SAND,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 252, 252, 0),
+        .nature = NATURE_HASTY
+    },
+    [FRONTIER_MON_BUNEARY] = {
+        .species = SPECIES_BUNEARY,
+        .moves = {MOVE_DOUBLE_KICK, MOVE_DOUBLE_HIT, MOVE_FAKE_OUT, MOVE_FLAIL},
+        .heldItem = ITEM_BLACK_BELT,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_TIMID
+    },
+    [FRONTIER_MON_MUNCHLAX] = {
+        .species = SPECIES_MUNCHLAX,
+        .moves = {MOVE_BODY_SLAM, MOVE_BRICK_BREAK, MOVE_BULLDOZE, MOVE_BELCH},
+        .heldItem = ITEM_ORAN_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_NAUGHTY
+    },
+    [FRONTIER_MON_CROAGUNK] = {
+        .species = SPECIES_CROAGUNK,
+        .moves = {MOVE_POISON_JAB, MOVE_BRICK_BREAK, MOVE_LOW_KICK, MOVE_HEADBUTT},
+        .heldItem = ITEM_CHESTO_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 252, 0, 0, 0, 0),
+        .nature = NATURE_NAIVE
+    },
+    [FRONTIER_MON_MOTHIM_1] = {
+        .species = SPECIES_MOTHIM,
+        .moves = {MOVE_SIGNAL_BEAM, MOVE_PSYBEAM, MOVE_POISON_POWDER, MOVE_PROTECT},
+        .heldItem = ITEM_PETAYA_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 0, 170),
+        .nature = NATURE_HASTY
+    },
+    [FRONTIER_MON_VESPIQUEN_1] = {
+        .species = SPECIES_VESPIQUEN,
+        .moves = {MOVE_ATTACK_ORDER, MOVE_DEFEND_ORDER, MOVE_FELL_STINGER, MOVE_POISON_STING},
+        .heldItem = ITEM_CHESTO_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_CAREFUL
+    },
+    [FRONTIER_MON_CHERRIM_1] = {
+        .species = SPECIES_CHERRIM,
+        .moves = {MOVE_GIGA_DRAIN, MOVE_DAZZLING_GLEAM, MOVE_SOLAR_BEAM, MOVE_SUNNY_DAY},
+        .heldItem = ITEM_FOCUS_BAND,
+        .ev = TRAINER_PARTY_EVS(170, 0, 170, 0, 0, 170),
+        .nature = NATURE_SERIOUS
+    },
     [FRONTIER_MON_IVYSAUR_1] = {
         .species = SPECIES_IVYSAUR,
         .moves = {MOVE_PETAL_DANCE, MOVE_GROWTH, MOVE_SWEET_SCENT, MOVE_FURY_CUTTER},
