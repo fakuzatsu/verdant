@@ -36,6 +36,7 @@
 #include "main.h"
 #include "contest.h"
 #include "item_menu.h"
+#include "internet_options_menu.h"
 #include "pokemon_storage_system.h"
 #include "pokemon_jump.h"
 #include "decoration_inventory.h"
@@ -173,7 +174,7 @@ void NewGameInitData(void)
 
     gDifferentSaveFile = TRUE;
     gSaveBlock3Ptr->saveVersion = SAVE_VERSION;
-    gSaveBlock3Ptr->PID = 0xFFFFFFFF;
+    gSaveBlock3Ptr->PID = NO_PID;
     gSaveBlock2Ptr->encryptionKey = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();

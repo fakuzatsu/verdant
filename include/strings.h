@@ -2779,5 +2779,9 @@ extern const u8 gText_UploadRecordedBattle[];
 extern const u8 gText_InternetOptions[];
 extern const u8 gText_CreateFriendCode[];
 extern const u8 gText_FC[];
+extern const u8 gText_MobileAdapterNotConnected[];
+extern const u8 gText_UnableToInitialiseMALib[];
+extern const u8 gText_UnableToConnectToServer[];
+extern const u8 gText_DisconnectedWhileDownloading[];
 
 #endif // GUARD_STRINGS_H

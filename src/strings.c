@@ -1731,3 +1731,7 @@ const u8 gText_UploadRecordedBattle[] = _("Upload Recorded Battle");
 ALIGNED(4) const u8 gText_InternetOptions[] = _("Internet Options");
 ALIGNED(4) const u8 gText_CreateFriendCode[] = _("No Friend Code found.\nGo online and create one?");
 ALIGNED(4) const u8 gText_FC[] = _("FC:");
+ALIGNED(4) const u8 gText_MobileAdapterNotConnected[] = _("The Mobile Adapter is not connected.\n Exiting…");
+ALIGNED(4) const u8 gText_UnableToInitialiseMALib[] = _("Something went wrong.\n Exiting…");
+ALIGNED(4) const u8 gText_UnableToConnectToServer[] = _("Unable to connect to server.\n Exiting…");
+ALIGNED(4) const u8 gText_DisconnectedWhileDownloading[] = _("Disconnected while downloading.\n Exiting…");
