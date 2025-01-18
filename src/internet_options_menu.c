@@ -466,6 +466,7 @@ static void CreateInternetOptionsTask(void)
     data->clientMsg      = AllocZeroed(CLIENT_MAX_MSG_SIZE);
 }
 
+#if (!TESTING)
 static void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *errorMessage)
 {
     if (data->errorNum != 0)
@@ -476,6 +477,7 @@ static void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *err
         data->state = INTERNET_STATE_PRINT_MESSAGE;
     }
 }
+#endif
 
 // Main Task Machine for Internet Options
 static void Task_InternetOptions(u8 taskId)
