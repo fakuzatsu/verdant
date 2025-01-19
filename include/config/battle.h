@@ -185,7 +185,7 @@
 // Flag settings
 // To use the following features in scripting, replace the 0s with the flag ID you're assigning it to.
 // Eg: Replace with FLAG_UNUSED_0x264 so you can use that flag to toggle the feature.
-#define B_FLAG_INVERSE_BATTLE       0     // If this flag is set, the battle's type effectiveness are inversed. For example, fire is super effective against water.
+#define B_FLAG_INVERSE_BATTLE       FLAG_SYS_INVERSE_BATTLE // If this flag is set, the battle's type effectiveness are inversed. For example, fire is super effective against water.
 #define B_FLAG_FORCE_DOUBLE_WILD    0     // If this flag is set, all land and surfing wild battles will be double battles.
 #define B_SMART_WILD_AI_FLAG        0     // If not 0, you can set this flag in a script to enable smart wild pokemon
 #define B_FLAG_NO_BAG_USE           FLAG_SYS_NO_BAG_USE // If this flag is set, the ability to use the bag in battle is disabled.
@@ -195,7 +195,7 @@
 #define B_FLAG_DYNAMAX_BATTLE       0     // If this flag is set, the ability to Dynamax in battle is enabled for all trainers.
 #define B_FLAG_TERA_ORB_CHARGED     FLAG_SYS_TERA_ORB_CHARGED // If this flag is set, the Tera Orb is charged. It is automatically set upon healing and cleared upon Terastallizing once configured.
 #define B_FLAG_TERA_ORB_NO_COST     0     // If this flag is set, the Tera Orb does not use up its charge upon Terastallization. In S/V, this occurs after an event with Terapagos.
-#define B_FLAG_SLEEP_CLAUSE         0     // If this flag is set, sleep clause is enabled; if the player / AI has already put a Pokémon on the opponent's side to sleep and it is still sleeping, another one can't be put to sleep.
+#define B_FLAG_SLEEP_CLAUSE         FLAG_SYS_SLEEP_CAUSE // If this flag is set, sleep clause is enabled; if the player / AI has already put a Pokémon on the opponent's side to sleep and it is still sleeping, another one can't be put to sleep.
                                           // AI requires AI_FLAG_CHECK_BAD_MOVE to understand.
 
 // Var Settings

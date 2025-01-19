@@ -1509,8 +1509,8 @@
 #define FLAG_LANDMARK_THUNDER_ROCK                  (SYSTEM_FLAGS + 0x89) // FLAG_0x8E9
 #define FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED         (SYSTEM_FLAGS + 0x8A) // FLAG_0x8EA
 #define FLAG_LANDMARK_MYTHIC_STONE                  (SYSTEM_FLAGS + 0x8B) // FLAG_0x8EB
-#define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // FLAG_0x8EC
-#define FLAG_UNUSED_0x8ED                           (SYSTEM_FLAGS + 0x8D) // FLAG_0x8ED
+#define FLAG_SYS_SLEEP_CAUSE                        (SYSTEM_FLAGS + 0x8C) // FLAG_0x8EC
+#define FLAG_SYS_INVERSE_BATTLE                     (SYSTEM_FLAGS + 0x8D) // FLAG_0x8ED
 #define FLAG_UNUSED_0x8EE                           (SYSTEM_FLAGS + 0x8E) // FLAG_0x8EE
 #define FLAG_UNUSED_0x8EF                           (SYSTEM_FLAGS + 0x8F) // FLAG_0x8EF
 #define FLAG_UNUSED_0x8F0                           (SYSTEM_FLAGS + 0x90) // FLAG_0x8F0
