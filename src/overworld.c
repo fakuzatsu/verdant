@@ -1720,9 +1720,22 @@ void CB2_OverworldBasic(void)
 void CB2_Overworld(void)
 {
     bool32 fading = (gPaletteFade.active != 0);
+    u32 loops;
+
     if (fading)
         SetVBlankCallback(NULL);
     OverworldBasic();
+
+    if (JOY_HELD(L_BUTTON))
+    {
+        for (loops = 0; loops < gSaveBlock2Ptr->optionsSpeedModifer; loops++)
+        {
+            AnimateSprites();
+            CameraUpdate();
+            UpdateCameraPanning();
+        }
+    }
+
     if (fading)
     {
         SetFieldVBlankCallback();
