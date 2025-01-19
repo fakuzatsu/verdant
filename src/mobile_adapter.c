@@ -141,7 +141,6 @@ int maReceiveData(u8 *pRecvData, u8 *pRecvSize)
     return maWait();
 }
 
-
 //Waits until action has been completed, check if there's an error and supplies the error code if there is (Nearly all MA functions should use this as their return value, except for maKill and maEnd)
 int maWait(void)
 {
@@ -165,121 +164,5 @@ int maWait(void)
 
     return (maError << 16) | maErrorProtocol;
 }
-
-// Function to download a Pokemon
-// 1. Initializes the Mobile Adapter Library
-// 2. Reads the data from the Mobile Adapter's EEPROM
-// 3. Establishes a PPP connection to a server
-// 4. Sends a POST request to download the Pokemon data
-// 5. Disconnects the connection and stops the Mobile Adapter Library
-// 6. Adds the Pokemon to the player's party or sends it to the PC if the party is full
-// 7. Returns 0 if successful, Mobile Adapter error code if there’s an error, or 2 if the PC is full
-/*
-int maExample(void) 
-{
-    MA_TELDATA maTel;               // MA Telephone struct
-    int errNum;                     // Error code
-    const char *pURL;               // URL to query
-    u8 pSendData[4];                // Data to send
-    u16 recvBufSize = 100;          // Size of the receive buffer
-    u8 pRecvData[recvBufSize];      // Buffer to hold received data
-    u16 pRecvSize = 0;              // Size of data received in each upload call
-    int totalRecvSize = 0;          // Total size of data received
-    char pUserID[32];               // User ID from EEPROM
-    char pPassword[16];             // User password
-    char maMailID[30];              // Mail ID from EEPROM
-    struct BoxPokemon mon;          // Struct to hold Pokemon data being deserialized
-
-    // Initialize send data and destination
-    pURL = "http://www.PutYourDomainHere.com";
-    memcpy(pSendData, "GIFT", 4);
-
-    // Initialize the Mobile Adapter library
-    errNum = maInitLibrary();
-    if (errNum != 0) 
-    {
-        maKill();
-        return INTERNET_STATE_MA_ERR;
-    }
-
-    // Get EEPROM Data
-    errNum = maGetEEPROMData(&maTel, pUserID, maMailID);
-    if (errNum != 0) 
-    {
-        maKill();
-        return INTERNET_STATE_MA_ERR;
-    }
-
-    // Establish a PPP connection to the server
-    errNum = maConnectServer(&maTel, pUserID, pPassword);
-    if (errNum != 0) 
-    {
-        maKill();
-        return INTERNET_STATE_MA_ERR;
-    }
-
-    // Send a POST request and receive the response data
-    errNum = maUpload(pURL, NULL, 0, pSendData, sizeof(pSendData), pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-    if (errNum != 0) 
-    {
-        maKill();
-        return INTERNET_STATE_MA_ERR;
-    }
-
-    // Ensure all data is received
-    totalRecvSize = pRecvSize;
-    while (totalRecvSize < recvBufSize) 
-    {
-        errNum = maUpload(pURL, NULL, 0, pSendData, sizeof(pSendData), &pRecvData[totalRecvSize], recvBufSize - totalRecvSize, &pRecvSize, pUserID, pPassword);
-        if (errNum != 0) 
-        {
-            maKill();
-            return INTERNET_STATE_MA_ERR;
-        }
-        totalRecvSize += pRecvSize;
-    }
-
-    // Disconnect and stop the Mobile Adapter library
-    if (maDisconnect() == 0) 
-    {
-        maEnd();
-    } 
-    else 
-    {
-        maKill();
-    }
-
-    // Calculate the number of Pokémon in the party
-    int partyIndex;
-    for (partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++) 
-    {
-        if (GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
-            break;
-    }
-
-    deserializePokemon(&mon, pRecvData);
-
-    // If the party is full, attempt to send the Pokémon to the PC
-    if (partyIndex >= PARTY_SIZE) 
-    {
-        int pcResult = CopyBoxMonToPC(&mon);
-        if (pcResult == 2) 
-        {  
-            // PC is full
-            return INTERNET_STATE_PC_FULL;
-        }
-
-        return INTERNET_STATE_SENT_TO_PC;
-    } 
-    else 
-    {
-        BoxMonToMon(&mon, &gPlayerParty[partyIndex]);
-
-        return INTERNET_STATE_SENT_TO_PARTY;
-    }
-
-    return INTERNET_STATE_INPUT_ERR;
-}
-*/
 
 #endif

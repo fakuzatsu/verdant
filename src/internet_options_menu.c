@@ -98,9 +98,9 @@ static void AddTextPrinterToWindow1(const u8 *str);
 static void ClearTextWindow(void);
 
 static void StringConcat(char *dest, const char *src);
-static char EncodeBase64(u32 checksum, char *data, size_t input_length);
-static int EncryptData(u32 pid, char *data, int datasize);
-static int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t databytes);
+static UNUSED char EncodeBase64(u32 checksum, char *data, size_t input_length);
+static UNUSED int EncryptData(u32 pid, char *data, int datasize);
+static UNUSED int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t databytes);
 static void GenerateFriendcodeFromPID(u32 pid, u8 *hexdigest);
 
 EWRAM_DATA static u8 sDownArrowCounterAndYCoordIdx[8] = {};
@@ -115,22 +115,26 @@ extern const u16 gPokedexOrder_Alphabetical[];
 
 struct InternetOptionsTaskData
 {
-    u16 var;
-    u16 depositPokemon;
-    u16 searchPokemon;
-    u16 errorNum;
+    struct MAClientDetails *clientDetails;
+    // struct InternetProfile *userProfile;
     u8 state;
+    u8 subState;
     u8 nextState;
     u8 textState;
-    u8 multiuse;
-    bool8 isWonderNews;
-    bool8 sourceIsFriend;
-    u8 msgId;
+    u16 errorNum;
     u8 *clientMsg;
     const u8 *message;
 };
 
-struct profile
+struct MAClientDetails
+{
+    MA_TELDATA maTel;
+    char pUserID[32];
+    char pPassword[16];
+    char maMailID[30];
+};
+
+struct InternetProfile
 {
     u8 version;
     u32 romhackID;
@@ -452,22 +456,19 @@ static void CreateInternetOptionsTask(void)
 {
     u8 taskId = CreateTask(Task_InternetOptions, 0);
     struct InternetOptionsTaskData * data = (void *)gTasks[taskId].data;
-    data->state          = INTERNET_STATE_MA_CONNECTED;
-    data->textState      = 0;
-    data->nextState      = 0;
-    data->multiuse       = 0;
-    data->isWonderNews   = 0;
-    data->sourceIsFriend = 0;
-    data->var            = 0;
-    data->depositPokemon = 0;
-    data->searchPokemon  = 0;
-    data->errorNum       = 0;
-    data->msgId          = 0;
-    data->clientMsg      = AllocZeroed(CLIENT_MAX_MSG_SIZE);
+
+    data->clientDetails = AllocZeroed(sizeof(struct MAClientDetails));
+    // data->userProfile   = AllocZeroed(sizeof(struct InternetProfile));
+    data->state         = INTERNET_STATE_MA_CONNECTED;
+    data->subState      = 0;
+    data->nextState     = 0;
+    data->errorNum      = 0;
+    data->clientMsg     = AllocZeroed(CLIENT_MAX_MSG_SIZE);
+    data->message       = gText_UnableToInitialiseMALib;
 }
 
 #if (!TESTING)
-static void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *errorMessage)
+static inline void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *errorMessage)
 {
     if (data->errorNum != 0)
     {
@@ -482,28 +483,14 @@ static void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *err
 // Main Task Machine for Internet Options
 static void Task_InternetOptions(u8 taskId)
 {
-    #if (!TESTING)
-    struct InternetOptionsTaskData *data = (void *)gTasks[taskId].data;
-    struct profile *userprofile = AllocZeroed(sizeof(struct profile));
-    char pUserID[32];           // User ID from the MA EEPROM, has max lenght of 32
-    pUserID[0] = '\0';          // Init
-    char pPassword[16];         // User password from the MA EEPROM, has max lenght of 16
-    pPassword[0] = '\0';        // Init
-    char maMailID[30];          // User mail ID from the MA EEPROM
-    char pURL[1024];            // URL for the endpoint
-    memcpy(pURL, "\0", 1);      // Init
-    u16 recvBufSize = 100;      // Size of received data
-    u8 pRecvData[recvBufSize];  // Buffer to hold received data
-    u16 pRecvSize;              // How many bytes were copied to pRecvData after calling maUpload once
-    char halftoken[53];
-    char hash[41];
-    u32 tracker = 0;
-    u32 pid = 0;
-    u32 checksum = 0;
-    char *encoded_data = 0;
-    u8 pidhex[8];
-
-    MA_TELDATA maTel; // MA Telephone struct
+#if (!TESTING)
+    struct InternetOptionsTaskData *data  = (void *)gTasks[taskId].data;
+    struct MAClientDetails *clientDetails = data->clientDetails;
+    // struct InternetProfile *userProfile   = data->userProfile;
+    char pURL[1024] = {'\0'};    // URL for the endpoint
+    u16 recvBufSize = 100;       // Size of received data
+    u8 pRecvData[recvBufSize];   // Buffer to hold received data
+    u16 pRecvSize;               // # of Bytes copied to pRecvData
 
     switch (data->state)
     {
@@ -524,123 +511,52 @@ static void Task_InternetOptions(u8 taskId)
         }
         break;
     case INTERNET_STATE_CONNECT_TO_SERVER:
-        switch (data->multiuse)
+        switch (data->subState)
         {
         case 0:
             // Initialise MA Library
+            DebugPrintf("Initialising MA Library");
             data->errorNum = maInitLibrary();
             TerminateIfError(data, gText_UnableToInitialiseMALib);
-            data->multiuse++;
+            data->subState++;
             break;
         case 1:
             //Get EEPROM Data
-            data->errorNum = maGetEEPROMData(&maTel, pUserID, maMailID);
+            DebugPrintf("Getting EEPROM Data");
+            data->errorNum = maGetEEPROMData(&clientDetails->maTel, clientDetails->pUserID, clientDetails->maMailID);
             TerminateIfError(data, gText_UnableToInitialiseMALib);
-            data->multiuse++;
+            data->subState++;
             break;
         case 2:
             // Set your password, must end in Null byte
-            memcpy(pPassword, "password1", 10);
-            data->multiuse++;
+            DebugPrintf("Setting password to default");
+            memcpy(clientDetails->pPassword, "password1", 10);
+            data->subState++;
             break;
         case 3:
-            // Makes a call and establishes a PPP connection 
-            data->errorNum = maConnectServer(&maTel, pUserID, pPassword);
+            // Makes a call and establishes a PPP connection
+            DebugPrintf("Making a call and establishing PPP connection");
+            data->errorNum = maConnectServer(&clientDetails->maTel, clientDetails->pUserID, clientDetails->pPassword);
             TerminateIfError(data, gText_UnableToConnectToServer);
-            data->multiuse++;
+            data->subState++;
             break;
         case 4:
             data->state = INTERNET_STATE_PING_SERVER;
-            data->multiuse = 0;
+            data->subState = 0;
             break;
         }
         break;
     case INTERNET_STATE_PING_SERVER:
-        switch (data->multiuse)
-        {
-        case 0:
-            recvBufSize = 4;
-            StringConcat(pURL,"http://www.PutYourDomainHere.com/pokemonrse/worldexchange/info\0");
-            data->multiuse++;
-            break;
-        case 1:
-            data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-            TerminateIfError(data, gText_UnableToConnectToServer);
-            data->multiuse++;
-            break;
-        case 2:
-            recvBufSize = (pRecvData[0] << 8) + pRecvData[1];
-            if(recvBufSize == PING_RECIEVED)
-                data->multiuse++;
-            else
-            {
-                data->message =  gText_UnableToConnectToServer;
-                data->nextState = INTERNET_STATE_EXIT;
-                data->state = INTERNET_STATE_PRINT_MESSAGE;
-            }
-            break;
-        case 3:
-            data->state = gSaveBlock3Ptr->PID == NO_PID ? INTERNET_STATE_ASK_PID : INTERNET_STATE_SET_PROFILE;
-            data->multiuse = 0;
-            break;
-        }
+        // Removed as this behaviour needs to be customised
+        DebugPrintf("Reached ping state: exiting");
+        data->state = gSaveBlock3Ptr->PID == NO_PID ? INTERNET_STATE_ASK_PID : INTERNET_STATE_SET_PROFILE;
         break;
     case INTERNET_STATE_SET_PROFILE:
-        StringConcat(pURL,"http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
-        //Turn hex to str
-        ConvertIntToHexStringN_v2(pidhex, gSaveBlock3Ptr->PID, STR_CONV_MODE_RIGHT_ALIGN,8);
-
-        //Add PID to URL
-        StringConcat(pURL,(char *)pidhex);
-
-        //Add data= to URL
-        StringConcat(pURL,"&data=\0");
-
-        userprofile->version      = VERSION_EMERALD;
-        userprofile->romhackID    = 0x00000013;
-        userprofile->romhackVer   = SAVE_VERSION;
-        userprofile->language     = LANGUAGE_ENGLISH;
-        userprofile->country      = 12;
-        userprofile->region       = 8;
-        userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
-        userprofile->trainerID[1] = gSaveBlock2Ptr->playerTrainerId[1];
-        userprofile->trainerID[2] = gSaveBlock2Ptr->playerTrainerId[2];
-        userprofile->trainerID[3] = gSaveBlock2Ptr->playerTrainerId[3];
-
-        for (int i = 0; i < PLAYER_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
-            userprofile->trainerName[i] = gSaveBlock2Ptr->playerName[i];
-
-        for (int i = 0; i < 6; i++)
-            userprofile->MAC[i] = 0;
-
-        for (int i = 0; i < 56; i++)
-            userprofile->email[i] = 0;
-
-        userprofile->notify = 0;
-        userprofile->clientSecret = 0;
-        userprofile->mailSecret = 0;
-
-
-        checksum = EncryptData(pid, (char *)userprofile, sizeof(userprofile));
-
-        *encoded_data = EncodeBase64(checksum, (char *)userprofile, sizeof(userprofile) + 4);
-        StringConcat(pURL, encoded_data);
-
-        recvBufSize = 8;
-
-        //Request a PID
-        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        TerminateIfError(data, gText_UnableToConnectToServer);
-
-        int i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
-
-        if(i == 0)
-            data->state = INTERNET_STATE_MAIN_MENU;
-        else
-            data->state = INTERNET_STATE_EXIT;
+        // Removed as this behaviour needs to be customised
+        data->state = INTERNET_STATE_MAIN_MENU;
         break;
     case INTERNET_STATE_ASK_PID:
-        switch (DoInternetYesNo(&data->textState, &data->var, FALSE, gText_CreateFriendCode))
+        switch (DoInternetYesNo(&data->textState, 0, FALSE, gText_CreateFriendCode))
         {
         case 0: // Yes
             data->message = gText_Communicating;
@@ -654,102 +570,13 @@ static void Task_InternetOptions(u8 taskId)
         }
         break;
     case INTERNET_STATE_GET_PID:
-        StringConcat(pURL, "http://www.PutYourDomainHere.com/pokemonrse/common/createprofile?pid=\0");
-
-        // Will be receiving a 32-byte long token
-        recvBufSize= 32;
-
-        // Player doesn't have a PID yet, use the TID this once
-        pid = (gSaveBlock2Ptr->playerTrainerId[0] << 24) + (gSaveBlock2Ptr->playerTrainerId[1] << 16) 
-            + (gSaveBlock2Ptr->playerTrainerId[2] << 8) + (gSaveBlock2Ptr->playerTrainerId[3]);
-        // Turn hex to str
-        ConvertIntToHexStringN_v2(pidhex, pid, STR_CONV_MODE_RIGHT_ALIGN, 8);
-
-        // Add PID to URL
-        StringConcat(pURL,(char *)pidhex);
-        
-        // Request a PID
-        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-        TerminateIfError(data, gText_UnableToConnectToServer);
-
-        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
-        if (pRecvSize < recvBufSize)
-        {
-            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
-            while(tracker < recvBufSize)
-            {
-                data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, pUserID, pPassword);
-                TerminateIfError(data, gText_DisconnectedWhileDownloading);
-                tracker = tracker + pRecvSize;
-            }
-        }
-
-        // Add salt prefix to token (using Gen 4 salt)
-        memcpy(halftoken, "sAdeqWo3voLeC5r16DYv\0", 21);
-        StringConcat(halftoken,(char *)pRecvData);
-        // Just making sure string is 52 bytes long
-        halftoken[52] = '\0';
-
-        // Create a hash using SHA-1
-        DigestSHA1(NULL,(u8 *)hash,(u8 *)halftoken,52);
-
-        // Make hash lowercase
-        for(tracker = 0; tracker < 41; tracker++)
-        {
-            if (hash[tracker]=='\0')
-            {
-                break;
-            }
-            else if (hash[tracker] > 0x40)
-            {
-                hash[tracker] = hash[tracker] + 0x20;
-            }
-        }
-
-        //Add hash to URL
-        StringConcat(pURL, "&hash=");
-        StringConcat(pURL, hash);
-
-        // Clean up pRecvData to receive a u32 to use as the PID
-        recvBufSize = 4;
-        for(tracker = 0; tracker < 100; tracker++)
-        {
-            pRecvData[tracker] = '\0';
-        }
-        tracker = 0;
-
-        // Request a PID
-        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, pUserID, pPassword);
-        TerminateIfError(data, gText_UnableToConnectToServer);
-
-        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
-        if (pRecvSize < recvBufSize)
-        {
-            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
-            while(tracker < recvBufSize)
-            {
-                data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, pUserID, pPassword);
-                TerminateIfError(data, gText_DisconnectedWhileDownloading);
-                tracker = tracker + pRecvSize;
-            }
-        }
-
-        // Get PID from HTTP content, add to saveblock, show and then save
-        pid = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[2] << 8) + (pRecvData[3]);
-        gSaveBlock3Ptr->PID = pid;
-
-         //Show Friend code then save
+        // Removed as this behaviour needs to be customised
         data->state = INTERNET_STATE_SHOW_FRIENDCODE;
         data->nextState = INTERNET_STATE_SET_PROFILE;
         break;
     case INTERNET_STATE_SHOW_FRIENDCODE:
-        //Convert PID to FC and display it
-        StringConcat(pURL,"Your Friend Code is:\n");
-        GenerateFriendcodeFromPID(gSaveBlock3Ptr->PID,(u8 *)hash);
-        StringConcat(pURL,hash);
-        ASCIIToPkmnStr((u8 *)halftoken,(u8 *)pURL);
-        if (PrintInternetOptionsMenuMessage(&data->textState, (u8 *)halftoken))
-            data->state = INTERNET_STATE_SAVE_GAME;
+        // Removed as this behaviour needs to be customised
+        data->state = INTERNET_STATE_SAVE_GAME;
         break;
     case INTERNET_STATE_ASK_COUNTRY:
         data->state = INTERNET_STATE_ASK_REGION;
@@ -758,94 +585,8 @@ static void Task_InternetOptions(u8 taskId)
         data->state = INTERNET_STATE_INITIAL_SETUP;
         break;
     case INTERNET_STATE_INITIAL_SETUP:
-        StringConcat(pURL, "http://www.PutYourDomainHere.com/pokemonrse/common/setprofile?pid=\0");
-        pid = gSaveBlock3Ptr->PID;
-        StringConcat(pURL,(char *)pid);
-        recvBufSize = 32;
-
-        // Initial Profile Setup
-        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        TerminateIfError(data, gText_UnableToConnectToServer);
-
-        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
-        if (pRecvSize < recvBufSize)
-        {
-            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
-            while(tracker < recvBufSize)
-            {
-                data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, "", "");
-                TerminateIfError(data, gText_DisconnectedWhileDownloading);
-                tracker = tracker + pRecvSize;
-            }
-        }
-
-        memcpy(halftoken, "sAdeqWo3voLeC5r16DYv\0", 21);
-        StringConcat(halftoken,(char *)pRecvData);
-        DigestSHA1((u8 *)hash,NULL,(u8 *)halftoken,52);
-
-        // Add hash to URL
-        StringConcat(pURL, "&hash=");
-        StringConcat(pURL, hash);
-
-        userprofile->version      = VERSION_EMERALD;
-        userprofile->romhackID    = 0x00000013;
-        userprofile->romhackVer   = SAVE_VERSION;
-        userprofile->language     = LANGUAGE_ENGLISH;
-        userprofile->country      = 12;
-        userprofile->region       = 8;
-        userprofile->trainerID[0] = gSaveBlock2Ptr->playerTrainerId[0];
-        userprofile->trainerID[1] = gSaveBlock2Ptr->playerTrainerId[1];
-        userprofile->trainerID[2] = gSaveBlock2Ptr->playerTrainerId[2];
-        userprofile->trainerID[3] = gSaveBlock2Ptr->playerTrainerId[3];
-
-        for (int i = 0; i < PLAYER_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
-            userprofile->trainerName[i]=gSaveBlock2Ptr->playerName[i];
-
-        for (int i = 0; i < 6; i++)
-            userprofile->MAC[i] = 0;
-
-        for (int i = 0; i < 56; i++)
-            userprofile->email[i] = 0;
-
-        userprofile->notify        = 0;
-        userprofile->clientSecret  = 0;
-        userprofile->mailSecret    = 0;
-
-
-        checksum = EncryptData(pid, (char *)userprofile, sizeof(userprofile));
-
-        StringConcat(pURL, "&data=");
-        *encoded_data = EncodeBase64(checksum, (char *)userprofile, sizeof(userprofile)+4);
-        StringConcat(pURL, encoded_data);
-
-        recvBufSize = 8;
-
-        // Request a PID
-        data->errorNum = maDownload(pURL, NULL, 0, pRecvData, recvBufSize, &pRecvSize, "", "");
-        TerminateIfError(data, gText_UnableToConnectToServer);
-
-        // If pRecvSize < recvBufSize then not all the data that was expected was copied into pRecvData
-        if (pRecvSize < recvBufSize)
-        {
-            tracker = pRecvSize;  // Track whether all bytes have been copied and continue
-            while(tracker < recvBufSize)
-            {
-                data->errorNum = maDownload(pURL, NULL, 0, &pRecvData[tracker], recvBufSize-tracker, &pRecvSize, "", "");
-                TerminateIfError(data, gText_DisconnectedWhileDownloading);
-                tracker = tracker + pRecvSize;
-            }
-        }
-
-        i = (pRecvData[0] << 24) + (pRecvData[1] << 16) + (pRecvData[3] << 8) + pRecvData[4];
-
-        if (i == 0)
-        {
-            data->state = INTERNET_STATE_MAIN_MENU;
-        }
-        else
-        {
-            data->state = INTERNET_STATE_EXIT;
-        }
+        // Removed as this behaviour needs to be customised
+        data->state = INTERNET_STATE_MAIN_MENU;
         break;
     case INTERNET_STATE_MAIN_MENU:
         // Main Mystery Gift menu, player can select Wonder Cards or News (or exit)
@@ -882,16 +623,17 @@ static void Task_InternetOptions(u8 taskId)
         break;
     case INTERNET_STATE_EXIT:
         CloseLink();
+        Free(data->clientDetails);
+        // Free(data->userProfile);
         Free(data->clientMsg);
-        Free(userprofile);
         DestroyTask(taskId);
         SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
         break;
     }
-    #else
+#else
     DestroyTask(taskId);
     SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
-    #endif
+#endif
 }
 
 #define DOWN_ARROW_X 208
@@ -954,7 +696,7 @@ static u32 InternetOptions_HandleThreeOptionMenu(u8 whichMenu)
     return response;
 }
 
-static s8 UNUSED DoInternetOptionsYesNo(u8 * textState, u16 * windowId, bool8 yesNoBoxPlacement, const u8 * str)
+static UNUSED s8 DoInternetOptionsYesNo(u8 *textState, u16 *windowId, bool8 yesNoBoxPlacement, const u8 *str)
 {
     struct WindowTemplate windowTemplate;
     s8 input;
@@ -1175,7 +917,7 @@ static void StringConcat(char *dest, const char *src)
     }
 }
 
-static char EncodeBase64(u32 checksum, char *data, size_t input_length)
+static UNUSED char EncodeBase64(u32 checksum, char *data, size_t input_length)
 {
     int output_length = 4 * ((input_length + 2) / 3);
     int mod_table[] = {0, 2, 1};
@@ -1226,7 +968,7 @@ static char EncodeBase64(u32 checksum, char *data, size_t input_length)
     return *encoded_data;
 }
 
-static int EncryptData(u32 pid, char *data, int datasize)
+static UNUSED int EncryptData(u32 pid, char *data, int datasize)
 {
     int checksum = 0;
     int i = 0;
@@ -1316,7 +1058,7 @@ static inline u8 gencrc8(u8 *data)
  * @return: 0 on success and non-zero on error.
  ******************************************************************************/
 
-static int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t databytes)
+static UNUSED int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t databytes)
 {
     #define SHA1ROTATELEFT(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 
