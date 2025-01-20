@@ -525,9 +525,9 @@ bool8 ScrCmd_checkitemspace(struct ScriptContext *ctx)
 bool8 ScrCmd_checkpcspace(struct ScriptContext *ctx)
 {
     u16 itemId = VarGet(ScriptReadHalfword(ctx));
-    u32 quantity = VarGet(ScriptReadHalfword(ctx));
+    u16 quantity = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = CheckPCHasSpace(itemId, (u8)quantity);
+    gSpecialVar_Result = CheckPCHasSpace(itemId, quantity);
     return FALSE;
 }
 
@@ -1857,12 +1857,12 @@ bool8 ScrCmd_bufferdayofweekstring(struct ScriptContext *ctx)
     u8 stringVarIndex = ScriptReadByte(ctx);
     u8 dayOfWeek = ScriptReadByte(ctx);
 
-    if (dayOfWeek <= DAY_SATURDAY)
-        StringCopy(sScriptStringVars[stringVarIndex], gDayNameStringsTable[dayOfWeek]);
-    else if (dayOfWeek == DAY_CURRENT)
+    if (dayOfWeek == DAY_CURRENT)
         StringCopy(sScriptStringVars[stringVarIndex], gDayNameStringsTable[gLocalTime.dayOfWeek]);
+    else if (dayOfWeek <= DAY_SATURDAY)
+        StringCopy(sScriptStringVars[stringVarIndex], gDayNameStringsTable[dayOfWeek]);
     else
-        StringCopy(gStringVar3, gText_None);
+        StringCopy(sScriptStringVars[stringVarIndex], gText_None);
     return FALSE;
 }
 
