@@ -655,7 +655,8 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
     headerId = GetCurrentMapWildMonHeaderId();
     if (headerId == HEADER_NONE)
     {
-        if (IsPlayerInAGrotto()) {
+        if (IsPlayerInAGrotto()) 
+        {
             if (prevMetatileBehavior != curMetatileBehavior && !AllowWildCheckOnNewMetatile())
                 return FALSE;
             else if (WildEncounterCheck(GetHiddenGrottoEncounterChance(), FALSE) != TRUE)
@@ -663,15 +664,19 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
 
             wildPokemonInfo.encounterRate = GetHiddenGrottoEncounterChance();
 
-            if (MetatileBehavior_IsLandWildEncounter(curMetatileBehavior) == TRUE) {
+            if (MetatileBehavior_IsLandWildEncounter(curMetatileBehavior) == TRUE) 
+            {
                 wildPokemonInfo.wildPokemon = GetHiddenGrottoLandEncounters();
-                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_LAND, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) {
+                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_LAND, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) 
+                {
                     BattleSetup_StartWildBattle();
                     return TRUE;
                 }
-            } else if (MetatileBehavior_IsWaterWildEncounter(curMetatileBehavior) == TRUE) {
+            } else if (MetatileBehavior_IsWaterWildEncounter(curMetatileBehavior) == TRUE) 
+            {
                 wildPokemonInfo.wildPokemon = GetHiddenGrottoWaterEncounters();
-                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_WATER, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) {
+                if (wildPokemonInfo.wildPokemon != NULL && TryGenerateWildMon(&wildPokemonInfo, WILD_AREA_WATER, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE) 
+                {
                     gIsSurfingEncounter = TRUE;
                     BattleSetup_StartWildBattle();
                     return TRUE;

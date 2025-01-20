@@ -43,7 +43,8 @@ static const struct Grotto sHiddenGrottos[] =
     //{MAP_NUM(GROTTO30), MAP_GROUP(GROTTO30)},
 };
 
-static const struct GrottoEntrance sHiddenGrottoEntrances[] = {
+static const struct GrottoEntrance sHiddenGrottoEntrances[] = 
+{
     {MAP_NUM(ROUTE103), MAP_GROUP(ROUTE103), VAR_HIDDEN_GROTTO_ROUTE_103,       1}, // Yes
     {MAP_NUM(ROUTE104), MAP_GROUP(ROUTE104), VAR_HIDDEN_GROTTO_PETALBURG_WOODS, 6}, // Yes
     {MAP_NUM(ROUTE112), MAP_GROUP(ROUTE112), VAR_HIDDEN_GROTTO_ROUTE_112,       6}, // Yes
@@ -54,7 +55,8 @@ static const struct GrottoEntrance sHiddenGrottoEntrances[] = {
     {MAP_NUM(ROUTE123), MAP_GROUP(ROUTE123), VAR_HIDDEN_GROTTO_ROUTE_123,       1}, // Yes
 };
 
-static const u16 sLandEncounters[NUM_GROTTO_LAND_SPECIES] = {
+static const u16 sLandEncounters[NUM_GROTTO_LAND_SPECIES] = 
+{
     SPECIES_PATRAT,
     SPECIES_YUNGOOS,
     SPECIES_NIDORAN_F,
@@ -126,7 +128,8 @@ static const u16 sLandEncounters[NUM_GROTTO_LAND_SPECIES] = {
     SPECIES_GLAMEOW,
 };
 
-static const u16 sWaterEncounters[NUM_GROTTO_WATER_SPECIES] = {
+static const u16 sWaterEncounters[NUM_GROTTO_WATER_SPECIES] = 
+{
     SPECIES_POLIWAG,
     SPECIES_SURSKIT,
     SPECIES_BASCULIN_RED_STRIPED,
@@ -149,7 +152,8 @@ static const u16 sWaterEncounters[NUM_GROTTO_WATER_SPECIES] = {
     SPECIES_FLAMIGO,
 };
 
-static const u8 sLandDistribution[LAND_WILD_COUNT][2] = {
+static const u8 sLandDistribution[LAND_WILD_COUNT][2] = 
+{
     // SPECIES_1 = 30% || SPECIES_1 = 24%
     // SPECIES_2 = 26% || SPECIES_2 = 20%
     // SPECIES_3 = 26% || SPECIES_3 = 20%
@@ -169,7 +173,8 @@ static const u8 sLandDistribution[LAND_WILD_COUNT][2] = {
     {SPECIES_3, SPECIES_5}, // 1%
 };
 
-static const u8 sWaterDistribution[WATER_WILD_COUNT] = {
+static const u8 sWaterDistribution[WATER_WILD_COUNT] = 
+{
     // SPECIES_1 = 60
     // SPECIES_2 = 40
     SPECIES_1,
@@ -203,12 +208,9 @@ void GetGrottoWarp(void)
 
 void GetGrottoReturnWarp(void)
 {
-    if ((gSaveBlock1Ptr->location.mapGroup >= MAP_GROUP(GROTTO01) && gSaveBlock1Ptr->location.mapGroup <= MAP_GROUP(GROTTO05))
-        && (gSaveBlock1Ptr->location.mapNum >= MAP_NUM(GROTTO01) && gSaveBlock1Ptr->location.mapNum <= MAP_NUM(GROTTO05)))
-    {
-        u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
-        SetDynamicWarp(0, sHiddenGrottoEntrances[var].mapGroup, sHiddenGrottoEntrances[var].mapNum, sHiddenGrottoEntrances[var].warpId);
-    }
+    u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
+
+    SetDynamicWarp(0, sHiddenGrottoEntrances[var].mapGroup, sHiddenGrottoEntrances[var].mapNum, sHiddenGrottoEntrances[var].warpId);
 }
 
 void SetGrottoWarp(void)
@@ -275,12 +277,6 @@ bool32 IsPlayerInAGrotto(void)
     if (gMapHeader.regionMapSectionId == MAPSEC_HIDDEN_GROTTO)
         return TRUE;
     return FALSE;
-}
-
-u8 GetCurrentGrottoEscapeWarp(void)
-{
-    u16 var = VarGet(VAR_HIDDEN_GROTTO_RETURN_WARP);
-    return sHiddenGrottoEntrances[var].warpId;
 }
 
 u8 GetHiddenGrottoEncounterChance(void)

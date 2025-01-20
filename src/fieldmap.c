@@ -74,9 +74,10 @@ void InitMap(void)
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     RunOnLoadMapScript();
     SetRoofBirds();
-    GetGrottoWarp();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
+    else
+        GetGrottoWarp();
 }
 
 void InitMapFromSavedGame(void)
@@ -87,9 +88,10 @@ void InitMapFromSavedGame(void)
     LoadSavedMapView();
     RunOnLoadMapScript();
     SetRoofBirds();
-    GetGrottoWarp();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
+    else
+        GetGrottoWarp();
     UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
 }
 

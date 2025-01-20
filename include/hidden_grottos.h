@@ -30,7 +30,6 @@ void SetGrottoWarp(void);
 void SetGrottoSeed(void);
 void ClearGrottoVars(void);
 bool32 IsPlayerInAGrotto(void);
-u8 GetCurrentGrottoEscapeWarp(void);
 u8 GetHiddenGrottoEncounterChance(void);
 struct WildPokemon *GetHiddenGrottoLandEncounters(void);
 struct WildPokemon *GetHiddenGrottoWaterEncounters(void);
