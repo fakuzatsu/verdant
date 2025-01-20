@@ -15655,6 +15655,7 @@ static void Cmd_givecaughtmon(void)
                     GetMonNickname(&gPlayerParty[gSelectedMonPartyId], gStringVar2);
                     StringCopy(gStringVar1, GetBoxNamePtr(GetPCBoxToSendMon()));
                     ZeroMonData(&gPlayerParty[gSelectedMonPartyId]);
+                    gBattleStruct->itemLost[B_SIDE_PLAYER][gSelectedMonPartyId].originalItem = ITEM_NONE;
                     gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWAPPED_INTO_PARTY;
                     gSelectedMonPartyId = PARTY_SIZE;
                     gBattleCommunication[MULTIUSE_STATE]++;
