@@ -4534,8 +4534,8 @@
     {
       "id": "LAYOUT_GROTTO09",
       "name": "Grotto09_Layout",
-      "width": 28,
-      "height": 28,
+      "width": 20,
+      "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Rustboro",
       "border_filepath": "data/layouts/Grotto09/border.bin",
