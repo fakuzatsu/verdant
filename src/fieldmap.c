@@ -67,6 +67,7 @@ const struct MapHeader *const GetMapHeaderFromConnection(const struct MapConnect
 }
 
 extern void SetRoofBirds(void);
+extern void SetDayOrNightFlag(void);
 
 void InitMap(void)
 {
@@ -74,6 +75,7 @@ void InitMap(void)
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     RunOnLoadMapScript();
     SetRoofBirds();
+    SetDayOrNightFlag();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
     else
@@ -88,6 +90,7 @@ void InitMapFromSavedGame(void)
     LoadSavedMapView();
     RunOnLoadMapScript();
     SetRoofBirds();
+    SetDayOrNightFlag();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
     else

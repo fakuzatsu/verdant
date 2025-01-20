@@ -1548,6 +1548,24 @@ const struct BlendSettings gTimeOfDayBlend[DNS_TIME_COUNT] =
     [DNS_TIME_DAY] = {.coeff = 0, .blendColor = 0},
 };
 
+void SetDayOrNightFlag(void)
+{
+    s32 hours;
+    RtcCalcLocalTime();
+    hours = gLocalTime.hours;
+ 
+    if (hours > 6 && hours < 18)
+    {
+        FlagSet(FLAG_HIDE_NIGHTTIME_OBJECT);
+        FlagClear(FLAG_HIDE_DAYTIME_OBJECT);
+    }
+    else
+    {
+        FlagSet(FLAG_HIDE_DAYTIME_OBJECT);
+        FlagClear(FLAG_HIDE_NIGHTTIME_OBJECT);
+    }
+}
+
 u8 UpdateTimeOfDay(void)
 {
     s32 hours, minutes;
