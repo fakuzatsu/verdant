@@ -488,9 +488,9 @@ static void Task_InternetOptions(u8 taskId)
     struct MAClientDetails *clientDetails = data->clientDetails;
     // struct InternetProfile *userProfile   = data->userProfile;
     char pURL[1024] = {'\0'};    // URL for the endpoint
-    u16 recvBufSize = 100;       // Size of received data
-    u8 pRecvData[recvBufSize];   // Buffer to hold received data
-    u16 pRecvSize;               // # of Bytes copied to pRecvData
+    // u16 recvBufSize = 100;       // Size of received data
+    // u8 pRecvData[recvBufSize];   // Buffer to hold received data
+    // u16 pRecvSize;               // # of Bytes copied to pRecvData
 
     switch (data->state)
     {
