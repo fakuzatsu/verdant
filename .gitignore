@@ -13,6 +13,8 @@
 *.8bpp
 *.gbapal
 *.lz
+*.smol
+*.fastSmol
 *.rl
 *.latfont
 *.hwjpnfont
@@ -40,3 +42,4 @@ prefabs.json
 *.js
 src/data/map_group_count.h
 tools/trainerproc/trainerproc
+tools/compresSmol/compresSmol

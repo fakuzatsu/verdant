@@ -304,7 +304,7 @@ static bool8 Menu_LoadGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(sBO3InfoCard_Tilemap, sBg2TilemapBuffer);
+            DecompressDataWithHeaderWram(sBO3InfoCard_Tilemap, sBg2TilemapBuffer);
             sMenuDataPtr->gfxLoadState++;
         }
         break;

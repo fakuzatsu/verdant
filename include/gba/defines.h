@@ -12,6 +12,8 @@
 #define EWRAM_INIT __attribute__((section(".ewram")))
 #define UNUSED __attribute__((unused))
 
+#define ARM_FUNC __attribute__((target("arm")))
+
 #if MODERN
 #define NOINLINE __attribute__((noinline))
 #else

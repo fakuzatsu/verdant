@@ -135,7 +135,6 @@ void SetDefaultPoolRules(void);
 
 extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 
-extern const struct SpriteTemplate gUnusedBattleInitSprite;
 extern const struct OamData gOamData_BattleSpriteOpponentSide;
 extern const struct OamData gOamData_BattleSpritePlayerSide;
 extern const struct TypeInfo gTypesInfo[NUMBER_OF_MON_TYPES];

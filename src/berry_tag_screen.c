@@ -43,6 +43,7 @@ struct BerryTagScreenStruct
 {
     u16 tilemapBuffers[3][0x400];
     u16 berryId;
+    u16 currentSpriteBerryId;
     u8 berrySpriteId;
     u8 flavorCircleIds[FLAVOR_COUNT];
     u16 gfxState;
@@ -335,12 +336,12 @@ static bool8 LoadBerryTagGfx(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(gBerryTag_Gfx, sBerryTag->tilemapBuffers[0]);
+            DecompressDataWithHeaderWram(gBerryTag_Gfx, sBerryTag->tilemapBuffers[0]);
             sBerryTag->gfxState++;
         }
         break;
     case 2:
-        LZDecompressWram(gBerryTag_Pal, sBerryTag->tilemapBuffers[2]);
+        DecompressDataWithHeaderWram(gBerryTag_Pal, sBerryTag->tilemapBuffers[2]);
         sBerryTag->gfxState++;
         break;
     case 3:
@@ -496,13 +497,13 @@ static void PrintBerryDescription2(void)
 
 static void CreateBerrySprite(void)
 {
-    sBerryTag->berrySpriteId = CreateBerryTagSprite(sBerryTag->berryId - 1, 56, 64);
+    sBerryTag->currentSpriteBerryId = sBerryTag->berryId - 1;
+    sBerryTag->berrySpriteId = CreateBerryTagSprite(sBerryTag->currentSpriteBerryId, 56, 64);
 }
 
 static void DestroyBerrySprite(void)
 {
-    DestroySprite(&gSprites[sBerryTag->berrySpriteId]);
-    FreeBerryTagSpritePalette();
+    DestroyBerryIconSprite(sBerryTag->berrySpriteId, sBerryTag->currentSpriteBerryId, TRUE);
 }
 
 static void CreateFlavorCircleSprites(void)

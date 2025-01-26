@@ -113,7 +113,6 @@ EWRAM_DATA static u16 sDecorationsCursorPos = 0;
 EWRAM_DATA static u16 sDecorationsScrollOffset = 0;
 EWRAM_DATA u8 gCurDecorationIndex = 0;
 EWRAM_DATA static u8 sCurDecorationCategory = DECORCAT_DESK;
-EWRAM_DATA static u32 UNUSED sFiller[2] = {};
 EWRAM_DATA static struct DecorationPCContext sDecorationContext = {};
 EWRAM_DATA static u8 sDecorMenuWindowIds[WINDOW_COUNT] = {};
 EWRAM_DATA static struct DecorationItemsMenu *sDecorationItemsMenu = NULL;
@@ -2074,7 +2073,7 @@ static u8 AddDecorationIconObjectFromIconTable(u16 tilesTag, u16 paletteTag, u8 
     if (!AllocItemIconTemporaryBuffers())
         return MAX_SPRITES;
 
-    LZDecompressWram(GetDecorationIconPicOrPalette(decor, 0), gItemIconDecompressionBuffer);
+    DecompressDataWithHeaderWram(GetDecorationIconPicOrPalette(decor, 0), gItemIconDecompressionBuffer);
     CopyItemIconPicTo4x4Buffer(gItemIconDecompressionBuffer, gItemIcon4x4Buffer);
     sheet.data = gItemIcon4x4Buffer;
     sheet.size = 0x200;
