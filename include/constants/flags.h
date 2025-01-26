@@ -21,9 +21,9 @@
 #define FLAG_TEMP_B      (TEMP_FLAGS_START + 0xB)  // Unused Flag
 #define FLAG_TEMP_C      (TEMP_FLAGS_START + 0xC)  // Unused Flag
 #define FLAG_TEMP_D      (TEMP_FLAGS_START + 0xD)  // Unused Flag
-#define FLAG_TEMP_E      (TEMP_FLAGS_START + 0xE)  // When set, follower pokemon won't be spawned
+#define FLAG_TEMP_E      (TEMP_FLAGS_START + 0xE)  // Unused Flag
 #define FLAG_TEMP_F      (TEMP_FLAGS_START + 0xF)  // Unused Flag
-#define FLAG_TEMP_10     (TEMP_FLAGS_START + 0x10) // Unused Flag
+#define FLAG_TEMP_10     (TEMP_FLAGS_START + 0x10) // When set, follower pokemon won't be spawned
 #define FLAG_TEMP_11     (TEMP_FLAGS_START + 0x11)
 #define FLAG_TEMP_12     (TEMP_FLAGS_START + 0x12)
 #define FLAG_TEMP_13     (TEMP_FLAGS_START + 0x13)
@@ -114,8 +114,8 @@
 #define FLAG_MET_TEAM_AQUA_HARBOR            0x61
 #define FLAG_TV_EXPLAINED                    0x62
 #define FLAG_MAUVILLE_GYM_BARRIERS_STATE     0x63
-#define FLAG_HIDE_DAYTIME_OBJECT             0x64 // Reused
-#define FLAG_HIDE_NIGHTTIME_OBJECT           0x65 // Reused
+#define FLAG_HIDE_OBJECT_AT_DAYTIME          0x64 // Reused
+#define FLAG_HIDE_OBJECT_AT_NIGHTTIME        0x65 // Reused
 #define FLAG_UNUSED_0x66                     0x66 //
 #define FLAG_UNUSED_0x67                     0x67 //
 
@@ -1654,7 +1654,7 @@
 #define FLAG_TEMP_REGICE_PUZZLE_FAILED          FLAG_TEMP_3
 #define FLAG_TEMP_REGIELEKI_PUZZLE_STARTED      FLAG_TEMP_2
 #define FLAG_TEMP_REGIELEKI_PUZZLE_FAILED       FLAG_TEMP_3
-#define FLAG_TEMP_HIDE_FOLLOWER                 FLAG_TEMP_E
+#define FLAG_TEMP_HIDE_FOLLOWER                 FLAG_TEMP_10
 #define FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE FLAG_TEMP_11
 
 #endif // GUARD_CONSTANTS_FLAGS_H

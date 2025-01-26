@@ -4,6 +4,8 @@
 .set LOCALID_GRUNT, 10
 .set LOCALID_RIVAL, 14
 .set LOCALID_SCIENTIST, 15
+.set LOCALID_WANDERING_BIRD1, 37
+.set LOCALID_WANDERING_BIRD2, 39
 
 RustboroCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_OnTransition
@@ -13,6 +15,7 @@ RustboroCity_MapScripts::
 RustboroCity_OnTransition:
 	setflag FLAG_VISITED_RUSTBORO_CITY
 	call Common_EventScript_SetupRivalGfxId
+    call_if_set FLAG_HIDE_OBJECT_AT_DAYTIME, RustboroCity_EventScript_SetBirdNightBehaviour
 	call_if_eq VAR_RUSTBORO_CITY_STATE, 6, RustboroCity_EventScript_HideMapNamePopup
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
 	goto_if_eq VAR_RUSTBORO_CITY_STATE, 6, RustboroCity_EventScript_PositionScientistForExit
@@ -30,6 +33,12 @@ RustboroCity_EventScript_PositionScientistLeftExit::
 RustboroCity_EventScript_HideMapNamePopup::
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return
+
+RustboroCity_EventScript_SetBirdNightBehaviour::
+    setflag FLAG_TEMP_F
+    setobjectmovementtype LOCALID_WANDERING_BIRD1, MOVEMENT_TYPE_FACE_DOWN
+    setobjectmovementtype LOCALID_WANDERING_BIRD2, MOVEMENT_TYPE_FACE_DOWN
+    return
 
 RustboroCity_OnFrame:
 	map_script_2 VAR_RUSTBORO_CITY_STATE, 6, RustboroCity_EventScript_ScientistAddMatchCall

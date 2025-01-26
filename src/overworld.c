@@ -1553,16 +1553,16 @@ void SetDayOrNightFlag(void)
     s32 hours;
     RtcCalcLocalTime();
     hours = gLocalTime.hours;
- 
+
     if (hours > 6 && hours < 18)
     {
-        FlagSet(FLAG_HIDE_NIGHTTIME_OBJECT);
-        FlagClear(FLAG_HIDE_DAYTIME_OBJECT);
+        FlagSet(FLAG_HIDE_OBJECT_AT_NIGHTTIME);
+        FlagClear(FLAG_HIDE_OBJECT_AT_DAYTIME);
     }
     else
     {
-        FlagSet(FLAG_HIDE_DAYTIME_OBJECT);
-        FlagClear(FLAG_HIDE_NIGHTTIME_OBJECT);
+        FlagSet(FLAG_HIDE_OBJECT_AT_DAYTIME);
+        FlagClear(FLAG_HIDE_OBJECT_AT_NIGHTTIME);
     }
 }
 

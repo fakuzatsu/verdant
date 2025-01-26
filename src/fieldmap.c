@@ -72,10 +72,10 @@ extern void SetDayOrNightFlag(void);
 void InitMap(void)
 {
     InitMapLayoutData(&gMapHeader);
-    SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
-    RunOnLoadMapScript();
     SetRoofBirds();
     SetDayOrNightFlag();
+    SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
+    RunOnLoadMapScript();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
     else
@@ -85,12 +85,12 @@ void InitMap(void)
 void InitMapFromSavedGame(void)
 {
     InitMapLayoutData(&gMapHeader);
+    SetRoofBirds();
+    SetDayOrNightFlag();
     InitSecretBaseAppearance(FALSE);
     SetOccupiedSecretBaseEntranceMetatiles(gMapHeader.events);
     LoadSavedMapView();
     RunOnLoadMapScript();
-    SetRoofBirds();
-    SetDayOrNightFlag();
     if (IsPlayerInAGrotto())
         GetGrottoReturnWarp();
     else
