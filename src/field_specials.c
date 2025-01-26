@@ -4395,7 +4395,7 @@ void SetRoofBirds(void)
         if (birdCount > 0)
         {
             u8 visibleCount = randomBirdArray[birdCount][Random() % 4];
-            Shuffle8(birdIndexes, birdCount);
+            Shuffle(birdIndexes, birdCount, sizeof(birdIndexes[0]));
 
             // Hide random birds until only `visibleCount` remain
             for (i = visibleCount; i < birdCount; i++)
