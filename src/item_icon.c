@@ -3,6 +3,7 @@
 #include "graphics.h"
 #include "item_icon.h"
 #include "malloc.h"
+#include "menu.h"
 #include "palette.h"
 #include "sprite.h"
 #include "window.h"
@@ -124,7 +125,8 @@ u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
     }
 }
 
-u8 BlitItemIconToWindow(u16 itemId, u8 windowId, u16 x, u16 y, void * paletteDest) {
+u8 BlitItemIconToWindow(u16 itemId, u8 windowId, u16 x, u16 y, void * paletteDest) 
+{
     if (!AllocItemIconTemporaryBuffers())
         return 16;
 
@@ -134,13 +136,16 @@ u8 BlitItemIconToWindow(u16 itemId, u8 windowId, u16 x, u16 y, void * paletteDes
 
     // if paletteDest is nonzero, copies the decompressed palette directly into it
     // otherwise, loads the compressed palette into the windowId's BG palette ID
-    // This needs fixed as gPaletteDecompressionBuffer was retired
-    //if (paletteDest) {
-    //    DecompressDataWithHeaderWram(GetItemIconPalette(itemId), gPaletteDecompressionBuffer);
-    //    CpuFastCopy(gPaletteDecompressionBuffer, paletteDest, PLTT_SIZE_4BPP);
-    //} else {
+    if (paletteDest) 
+    {
+        void *buffer = malloc_and_decompress(GetItemIconPalette(itemId), NULL);
+        CpuFastCopy(buffer, paletteDest, PLTT_SIZE_4BPP);
+        Free(buffer);
+    } 
+    else 
+    {
         LoadCompressedPalette(GetItemIconPalette(itemId), BG_PLTT_ID(gWindows[windowId].window.paletteNum), PLTT_SIZE_4BPP);
-    //}
+    }
     FreeItemIconTemporaryBuffers();
     return 0;
 }
