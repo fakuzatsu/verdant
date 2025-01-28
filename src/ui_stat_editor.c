@@ -62,10 +62,19 @@ struct StatEditorResources
     u16 ivTotal;
     u16 partyid;
     u16 inputMode;
+    u8 newEVs[6];
+    u8 newIVs[6];
 };
 
 #define INPUT_SELECT_STAT 0
 #define INPUT_EDIT_STAT 1
+
+#define UI_STAT_HP 0
+#define UI_STAT_ATK 1
+#define UI_STAT_DEF 2
+#define UI_STAT_SPATK 3
+#define UI_STAT_SPDEF 4
+#define UI_STAT_SPE 5
 
 enum WindowIds
 {
@@ -73,6 +82,12 @@ enum WindowIds
     WINDOW_2,
     WINDOW_3,
     WINDOW_4,
+};
+
+enum GetOrSetStat
+{
+    GET_STAT,
+    SET_STAT,
 };
 
 //==========EWRAM==========//
@@ -276,6 +291,20 @@ void StatEditor_Init(MainCallback callback)
     sStatEditorDataPtr->savedCallback = callback;
     sStatEditorDataPtr->selectorSpriteId = 0xFF;
     sStatEditorDataPtr->partyid = gSpecialVar_0x8004;
+
+    // Filthy, dirty code
+    sStatEditorDataPtr->newEVs[UI_STAT_HP]    = GetMonData(ReturnPartyMon(), MON_DATA_HP_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_HP]    = GetMonData(ReturnPartyMon(), MON_DATA_HP_IV);
+    sStatEditorDataPtr->newEVs[UI_STAT_ATK]   = GetMonData(ReturnPartyMon(), MON_DATA_ATK_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_ATK]   = GetMonData(ReturnPartyMon(), MON_DATA_ATK_IV);
+    sStatEditorDataPtr->newEVs[UI_STAT_DEF]   = GetMonData(ReturnPartyMon(), MON_DATA_DEF_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_DEF]   = GetMonData(ReturnPartyMon(), MON_DATA_DEF_IV);
+    sStatEditorDataPtr->newEVs[UI_STAT_SPATK] = GetMonData(ReturnPartyMon(), MON_DATA_SPATK_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_SPATK] = GetMonData(ReturnPartyMon(), MON_DATA_SPATK_IV);
+    sStatEditorDataPtr->newEVs[UI_STAT_SPDEF] = GetMonData(ReturnPartyMon(), MON_DATA_SPDEF_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_SPDEF] = GetMonData(ReturnPartyMon(), MON_DATA_SPDEF_IV);
+    sStatEditorDataPtr->newEVs[UI_STAT_SPE]   = GetMonData(ReturnPartyMon(), MON_DATA_SPEED_EV);
+    sStatEditorDataPtr->newIVs[UI_STAT_SPE]   = GetMonData(ReturnPartyMon(), MON_DATA_SPEED_IV);
     
     SetMainCallback2(StatEditor_RunSetup);
 }
@@ -672,7 +701,7 @@ static void PrintMonStats()
 
     for(i = 0; i < 6; i++)
     {
-        currentStat = GetMonData(ReturnPartyMon(), statsToPrintEVs[i]);
+        currentStat = sStatEditorDataPtr->newEVs[i];
         sStatEditorDataPtr->evTotal += currentStat;
         DebugPrintf("Stat: %d", currentStat);
         ConvertIntToDecimalStringN(gStringVar2, currentStat, STR_CONV_MODE_RIGHT_ALIGN, 3);
@@ -681,7 +710,7 @@ static void PrintMonStats()
 
     for(i = 0; i < 6; i++)
     {
-        currentStat = GetMonData(ReturnPartyMon(), statsToPrintIVs[i]);
+        currentStat = sStatEditorDataPtr->newIVs[i];
         sStatEditorDataPtr->ivTotal += currentStat;
         DebugPrintf("Stat: %d", currentStat);
         ConvertIntToDecimalStringN(gStringVar2, currentStat, STR_CONV_MODE_RIGHT_ALIGN, 3);
@@ -802,11 +831,69 @@ static void ReloadNewPokemon(u8 taskId)
     gTasks[taskId].data[11] = 0;
 }
 
+#define GETSETEV(stat) \
+    if (getOrSet == GET_STAT) \
+        sStatEditorDataPtr->editingStat = sStatEditorDataPtr->newEVs[stat]; \
+    else \
+        sStatEditorDataPtr->newEVs[stat] = sStatEditorDataPtr->editingStat;
+
+#define GETSETIV(stat) \
+    if (getOrSet == GET_STAT) \
+        sStatEditorDataPtr->editingStat = sStatEditorDataPtr->newIVs[stat]; \
+    else \
+        sStatEditorDataPtr->newIVs[stat] = sStatEditorDataPtr->editingStat;
+
+static void GetSetStat(u16 selectedStat, enum GetOrSetStat getOrSet)
+{
+    switch(selectedStatToStatEnum[selectedStat])
+    {
+    case MON_DATA_HP_EV:
+        GETSETEV(UI_STAT_HP);
+        break;
+    case MON_DATA_HP_IV:
+        GETSETIV(UI_STAT_HP)
+        break;
+    case MON_DATA_ATK_EV:
+        GETSETEV(UI_STAT_ATK)
+        break;
+    case MON_DATA_ATK_IV:
+        GETSETIV(UI_STAT_ATK)
+        break;
+    case MON_DATA_DEF_EV:
+        GETSETEV(UI_STAT_DEF)
+        break;
+    case MON_DATA_DEF_IV:
+        GETSETIV(UI_STAT_DEF)
+        break;
+    case MON_DATA_SPATK_EV:
+        GETSETEV(UI_STAT_SPATK)
+        break;
+    case MON_DATA_SPATK_IV:
+        GETSETIV(UI_STAT_SPATK)
+        break;
+    case MON_DATA_SPDEF_EV:
+        GETSETEV(UI_STAT_SPDEF)
+        break;
+    case MON_DATA_SPDEF_IV:
+        GETSETIV(UI_STAT_SPDEF)
+        break;
+    case MON_DATA_SPEED_EV:
+        GETSETEV(UI_STAT_SPE)
+        break;
+    case MON_DATA_SPEED_IV:
+        GETSETIV(UI_STAT_SPE)
+        break;
+    }
+}
+
+#undef GETSETEV
+#undef GETSETIV
+
 static void Task_StatEditorMain(u8 taskId) // input control when first loaded into menu
 {
     if (JOY_NEW(A_BUTTON))
     {
-        sStatEditorDataPtr->editingStat = GetMonData(ReturnPartyMon(), selectedStatToStatEnum[sStatEditorDataPtr->selectedStat]);
+        GetSetStat(sStatEditorDataPtr->selectedStat, GET_STAT);
         StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 3);
         PlaySE(SE_SELECT);
         PrintTitleToWindowEditState();
@@ -975,7 +1062,7 @@ static void HandleEditingStatInput(u32 input)
             }
     }
 
-    ChangeAndUpdateStat();
+    GetSetStat(sStatEditorDataPtr->selectedStat, SET_STAT);
 
     if(CHECK_IF_STAT_CANT_INCREASE)
         StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 2);
