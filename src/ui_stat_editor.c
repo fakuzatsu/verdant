@@ -959,7 +959,7 @@ static void Task_StatEditorMain(u8 taskId) // input control when first loaded in
 
 }
 
-static void ChangeAndUpdateStat()
+static UNUSED void ChangeAndUpdateStat()
 {
     u16 currentStatEnum = selectedStatToStatEnum[sStatEditorDataPtr->selectedStat];
     u32 currentHP = 0;
