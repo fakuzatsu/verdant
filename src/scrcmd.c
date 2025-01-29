@@ -55,6 +55,7 @@
 #include "wild_encounter.h"
 #include "list_menu.h"
 #include "malloc.h"
+#include "ui_stat_editor.h"
 #include "constants/event_objects.h"
 
 typedef u16 (*SpecialFunc)(void);
@@ -2588,4 +2589,14 @@ bool8 Scrcmd_getobjectfacingdirection(struct ScriptContext *ctx)
     *varPointer = gObjectEvents[GetObjectEventIdByLocalId(objectId)].facingDirection;
 
     return FALSE;
+}
+
+bool8 Scrcmd_startmenustateditor(struct ScriptContext *ctx)
+{
+    u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
+    if (partyIndex >= PARTY_SIZE)
+        return FALSE;
+
+    StatEditor_Init(CB2_ReturnToField, partyIndex);
+    return TRUE;
 }
