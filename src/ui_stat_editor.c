@@ -594,7 +594,6 @@ static const u16 statsToPrintIVs[] = {
         MON_DATA_HP_IV, MON_DATA_ATK_IV, MON_DATA_DEF_IV, MON_DATA_SPEED_IV, MON_DATA_SPATK_IV, MON_DATA_SPDEF_IV,
 };
 
-
 static const u8 sGenderColors[2][3] =
 {
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_BLUE, TEXT_COLOR_BLUE},
@@ -653,6 +652,44 @@ static void PrintTitleToWindowEditState()
     CopyWindowToVram(WINDOW_1, 3);
 }
 
+#define CALC_HP(baseStat, iv, ev) \
+    (n = (((2 * (baseStat) + (iv) + (ev) / 4) * level) / 100) + level + 10)
+
+#define CALC_STAT(baseStat, iv, ev, statIndex) \
+    (n = (((2 * (baseStat) + (iv) + (ev) / 4) * level) / 100) + 5, \
+     n = ModifyStatByNature(nature, n, statIndex))
+
+static inline u32 CalculateStatFromNewEVIVs(u32 i, u16 species, u16 level, u8 nature)
+{
+    s32 n;
+
+    switch (i)
+    {
+    case 0:
+        if (species == SPECIES_SHEDINJA)
+            return 1;
+        CALC_HP(gSpeciesInfo[species].baseHP, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i]);
+        return n;
+    case 1:
+        CALC_STAT(gSpeciesInfo[species].baseAttack, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i], STAT_ATK);
+        return n;
+    case 2:
+        CALC_STAT(gSpeciesInfo[species].baseDefense, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i], STAT_DEF);
+        return n;
+    case 3:
+        CALC_STAT(gSpeciesInfo[species].baseSpeed, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i], STAT_SPEED);
+        return n;
+    case 4:
+        CALC_STAT(gSpeciesInfo[species].baseSpAttack, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i], STAT_SPATK);
+        return n;
+    case 5:
+        CALC_STAT(gSpeciesInfo[species].baseSpDefense, sStatEditorDataPtr->newIVs[i], sStatEditorDataPtr->newEVs[i], STAT_SPDEF);
+        return n;
+    default:
+        return 0;
+    }
+}
+
 static void PrintMonStats()
 {
     u32 i;
@@ -661,6 +698,7 @@ static void PrintMonStats()
     u16 level = GetMonData(ReturnPartyMon(), MON_DATA_LEVEL);
     u16 personality = GetMonData(ReturnPartyMon(), MON_DATA_PERSONALITY);
     u16 gender = GetGenderFromSpeciesAndPersonality(sStatEditorDataPtr->speciesID, personality);
+    u8 nature = GetNature(ReturnPartyMon());
 
     FillWindowPixelBuffer(WINDOW_2, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
     FillWindowPixelBuffer(WINDOW_3, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
@@ -685,7 +723,7 @@ static void PrintMonStats()
     // Print Mon Stats
     for(i = 0; i < 6; i++)
     {
-        currentStat = GetMonData(ReturnPartyMon(), statsToPrintActual[i]);
+        currentStat = CalculateStatFromNewEVIVs(i, sStatEditorDataPtr->speciesID, level, nature);
         sStatEditorDataPtr->normalTotal += currentStat;
         DebugPrintf("Stat: %d", currentStat);
         ConvertIntToDecimalStringN(gStringVar2, currentStat, STR_CONV_MODE_RIGHT_ALIGN, 3);
@@ -739,7 +777,7 @@ static void PrintMonStats()
         AddTextPrinterParameterized4(WINDOW_3, FONT_NORMAL, 41 + 8, 19, 0, 0, sGenderColors[(gender == MON_FEMALE)], TEXT_SKIP_DRAW, text);
     }
 
-    StringCopy(gStringVar2, gNaturesInfo[GetNature(ReturnPartyMon())].name);
+    StringCopy(gStringVar2, gNaturesInfo[nature].name);
     AddTextPrinterParameterized4(WINDOW_3, FONT_SMALL_NARROW, 4, 50, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
 
     StringCopy(gStringVar2, gAbilitiesInfo[gSpeciesInfo[sStatEditorDataPtr->speciesID].abilities[GetMonData(ReturnPartyMon(), MON_DATA_ABILITY_NUM)]].name);
@@ -946,6 +984,8 @@ static void ChangeAndUpdateStats(void)
     
     for (i = 0; i < 6; i++)
         SetMonData(ReturnPartyMon(), MON_DATA_HP_IV + i, &(sStatEditorDataPtr->newIVs[i]));
+
+    CalculateMonStats(ReturnPartyMon());
 }
 
 #define EDIT_INPUT_INCREASE_STATE           0

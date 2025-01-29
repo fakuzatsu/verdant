@@ -10,5 +10,4 @@ extern const struct SpeciesInfo gSpeciesInfo[];
 extern const struct Ability gAbilitiesInfo[];
 extern const struct NatureInfo gNaturesInfo[];
 
-
 #endif // GUARD_UI_MENU_H
