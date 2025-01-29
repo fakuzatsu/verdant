@@ -72,9 +72,9 @@ struct StatEditorResources
 #define UI_STAT_HP 0
 #define UI_STAT_ATK 1
 #define UI_STAT_DEF 2
-#define UI_STAT_SPATK 3
-#define UI_STAT_SPDEF 4
-#define UI_STAT_SPE 5
+#define UI_STAT_SPE 3
+#define UI_STAT_SPATK 4
+#define UI_STAT_SPDEF 5
 
 enum WindowIds
 {
@@ -109,6 +109,7 @@ static void SampleUi_DrawMonIcon(u16 dexNum);
 static void PrintMonStats(void);
 static void SelectorCallback(struct Sprite *sprite);
 static inline struct Pokemon *ReturnPartyMon();
+static void ChangeAndUpdateStats(void);
 static u8 CreateSelector();
 static void DestroySelector();
 
@@ -272,14 +273,16 @@ void Task_OpenStatEditorFromStartMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        StatEditor_Init(CB2_ReturnToFieldWithOpenMenu);
+        StatEditor_Init(CB2_ReturnToFieldWithOpenMenu, gSpecialVar_0x8004);
         DestroyTask(taskId);
     }
 }
 
 // This is our main initialization function if you want to call the menu from elsewhere
-void StatEditor_Init(MainCallback callback)
+void StatEditor_Init(MainCallback callback, u16 partyIndex)
 {
+    u32 i;
+
     if ((sStatEditorDataPtr = AllocZeroed(sizeof(struct StatEditorResources))) == NULL)
     {
         SetMainCallback2(callback);
@@ -290,21 +293,13 @@ void StatEditor_Init(MainCallback callback)
     sStatEditorDataPtr->gfxLoadState = 0;
     sStatEditorDataPtr->savedCallback = callback;
     sStatEditorDataPtr->selectorSpriteId = 0xFF;
-    sStatEditorDataPtr->partyid = gSpecialVar_0x8004;
+    sStatEditorDataPtr->partyid = partyIndex;
 
-    // Filthy, dirty code
-    sStatEditorDataPtr->newEVs[UI_STAT_HP]    = GetMonData(ReturnPartyMon(), MON_DATA_HP_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_HP]    = GetMonData(ReturnPartyMon(), MON_DATA_HP_IV);
-    sStatEditorDataPtr->newEVs[UI_STAT_ATK]   = GetMonData(ReturnPartyMon(), MON_DATA_ATK_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_ATK]   = GetMonData(ReturnPartyMon(), MON_DATA_ATK_IV);
-    sStatEditorDataPtr->newEVs[UI_STAT_DEF]   = GetMonData(ReturnPartyMon(), MON_DATA_DEF_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_DEF]   = GetMonData(ReturnPartyMon(), MON_DATA_DEF_IV);
-    sStatEditorDataPtr->newEVs[UI_STAT_SPATK] = GetMonData(ReturnPartyMon(), MON_DATA_SPATK_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_SPATK] = GetMonData(ReturnPartyMon(), MON_DATA_SPATK_IV);
-    sStatEditorDataPtr->newEVs[UI_STAT_SPDEF] = GetMonData(ReturnPartyMon(), MON_DATA_SPDEF_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_SPDEF] = GetMonData(ReturnPartyMon(), MON_DATA_SPDEF_IV);
-    sStatEditorDataPtr->newEVs[UI_STAT_SPE]   = GetMonData(ReturnPartyMon(), MON_DATA_SPEED_EV);
-    sStatEditorDataPtr->newIVs[UI_STAT_SPE]   = GetMonData(ReturnPartyMon(), MON_DATA_SPEED_IV);
+    for (i = 0; i < 6; i++)
+        sStatEditorDataPtr->newEVs[i] = GetMonData(ReturnPartyMon(), MON_DATA_HP_EV + i);
+
+    for (i = 0; i < 6; i++)
+        sStatEditorDataPtr->newIVs[i] = GetMonData(ReturnPartyMon(), MON_DATA_HP_IV + i);
     
     SetMainCallback2(StatEditor_RunSetup);
 }
@@ -504,8 +499,6 @@ static void Task_StatEditorWaitFadeIn(u8 taskId)
 
 static void Task_StatEditorTurnOff(u8 taskId)
 {
-    // s16 *data = gTasks[taskId].data;
-
     if (!gPaletteFade.active)
     {
         SetMainCallback2(sStatEditorDataPtr->savedCallback);
@@ -822,7 +815,7 @@ static void Task_DelayedSpriteLoad(u8 taskId) // wait 4 frames after changing th
     }
 }
 
-static void ReloadNewPokemon(u8 taskId)
+static UNUSED void ReloadNewPokemon(u8 taskId)
 {
     gSprites[sStatEditorDataPtr->monIconSpriteId].invisible = TRUE;
     FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconSpriteId], sStatEditorDataPtr->monIconSpriteId);
@@ -843,7 +836,7 @@ static void ReloadNewPokemon(u8 taskId)
     else \
         sStatEditorDataPtr->newIVs[stat] = sStatEditorDataPtr->editingStat;
 
-static void GetSetStat(u16 selectedStat, enum GetOrSetStat getOrSet)
+static void ConvertEnumToFromArray(u16 selectedStat, enum GetOrSetStat getOrSet)
 {
     switch(selectedStatToStatEnum[selectedStat])
     {
@@ -865,6 +858,12 @@ static void GetSetStat(u16 selectedStat, enum GetOrSetStat getOrSet)
     case MON_DATA_DEF_IV:
         GETSETIV(UI_STAT_DEF)
         break;
+    case MON_DATA_SPEED_EV:
+        GETSETEV(UI_STAT_SPE)
+        break;
+    case MON_DATA_SPEED_IV:
+        GETSETIV(UI_STAT_SPE)
+        break;
     case MON_DATA_SPATK_EV:
         GETSETEV(UI_STAT_SPATK)
         break;
@@ -877,12 +876,6 @@ static void GetSetStat(u16 selectedStat, enum GetOrSetStat getOrSet)
     case MON_DATA_SPDEF_IV:
         GETSETIV(UI_STAT_SPDEF)
         break;
-    case MON_DATA_SPEED_EV:
-        GETSETEV(UI_STAT_SPE)
-        break;
-    case MON_DATA_SPEED_IV:
-        GETSETIV(UI_STAT_SPE)
-        break;
     }
 }
 
@@ -893,7 +886,7 @@ static void Task_StatEditorMain(u8 taskId) // input control when first loaded in
 {
     if (JOY_NEW(A_BUTTON))
     {
-        GetSetStat(sStatEditorDataPtr->selectedStat, GET_STAT);
+        ConvertEnumToFromArray(sStatEditorDataPtr->selectedStat, GET_STAT);
         StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 3);
         PlaySE(SE_SELECT);
         PrintTitleToWindowEditState();
@@ -907,27 +900,12 @@ static void Task_StatEditorMain(u8 taskId) // input control when first loaded in
             StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 2);
         return;
     }
-    if (JOY_NEW(L_BUTTON))
+    if (JOY_NEW(START_BUTTON))
     {
-        u16 partyid = sStatEditorDataPtr->partyid;
-        if (partyid == 0)
-            partyid = gPlayerPartyCount - 1;
-        else
-            partyid -= 1;
-        sStatEditorDataPtr->partyid = partyid;
-        PlaySE(SE_SELECT);
-        ReloadNewPokemon(taskId);
-    }
-    if (JOY_NEW(R_BUTTON))
-    {
-        u16 partyid = sStatEditorDataPtr->partyid;
-        if (partyid == gPlayerPartyCount - 1)
-            partyid = 0;
-        else
-            partyid += 1;
-        sStatEditorDataPtr->partyid = partyid;
-        PlaySE(SE_SELECT);
-        ReloadNewPokemon(taskId);
+        PlaySE(SE_PC_OFF);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+        ChangeAndUpdateStats();
+        gTasks[taskId].func = Task_StatEditorTurnOff;
     }
     if (JOY_NEW(B_BUTTON))
     {
@@ -959,35 +937,15 @@ static void Task_StatEditorMain(u8 taskId) // input control when first loaded in
 
 }
 
-static UNUSED void ChangeAndUpdateStat()
+static void ChangeAndUpdateStats(void)
 {
-    u16 currentStatEnum = selectedStatToStatEnum[sStatEditorDataPtr->selectedStat];
-    u32 currentHP = 0;
-    u32 oldMaxHP = 0;
-    u32 amountHPLost = 0;
-    s32 tempDifference = 0;
-    u32 newDifference = 0;
+    u32 i;
 
-    if (currentStatEnum == MON_DATA_HP_EV || currentStatEnum == MON_DATA_HP_IV)
-    {
-        currentHP = GetMonData(ReturnPartyMon(), MON_DATA_HP);
-        oldMaxHP = GetMonData(ReturnPartyMon(), MON_DATA_MAX_HP);
-        amountHPLost = oldMaxHP - currentHP;
-    }
-
-    SetMonData(ReturnPartyMon(), currentStatEnum, &(sStatEditorDataPtr->editingStat));
-    CalculateMonStats(ReturnPartyMon());
-
-    if ((amountHPLost > 0) && (currentHP != 0))
-    {
-        tempDifference = GetMonData(ReturnPartyMon(), MON_DATA_MAX_HP) - amountHPLost;
-        if (tempDifference < 0)
-            tempDifference = 0;
-        newDifference = (u32) tempDifference;
-        SetMonData(ReturnPartyMon(), MON_DATA_HP, &newDifference);
-    }
-
-    PrintMonStats();
+    for (i = 0; i < 6; i++)
+        SetMonData(ReturnPartyMon(), MON_DATA_HP_EV + i, &(sStatEditorDataPtr->newEVs[i]));
+    
+    for (i = 0; i < 6; i++)
+        SetMonData(ReturnPartyMon(), MON_DATA_HP_IV + i, &(sStatEditorDataPtr->newIVs[i]));
 }
 
 #define EDIT_INPUT_INCREASE_STATE           0
@@ -1062,7 +1020,8 @@ static void HandleEditingStatInput(u32 input)
             }
     }
 
-    GetSetStat(sStatEditorDataPtr->selectedStat, SET_STAT);
+    ConvertEnumToFromArray(sStatEditorDataPtr->selectedStat, SET_STAT);
+    PrintMonStats();
 
     if(CHECK_IF_STAT_CANT_INCREASE)
         StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 2);
@@ -1074,7 +1033,7 @@ static void HandleEditingStatInput(u32 input)
 
 static void Task_MenuEditingStat(u8 taskId) // This function should be refactored to not be a hot mess
 {
-    if (JOY_NEW(B_BUTTON))
+    if (JOY_NEW(B_BUTTON) || JOY_NEW(A_BUTTON)) // Change this so that pressing B returns the stat to original value
     {
         gTasks[taskId].func = Task_StatEditorMain;
         StartSpriteAnim(&gSprites[sStatEditorDataPtr->selectorSpriteId], 0);
