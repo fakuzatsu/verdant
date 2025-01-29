@@ -917,7 +917,7 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
         .nature = NATURE_CALM
     },
-    [FRONTIER_MON_SALANDIT] = {
+    [FRONTIER_MON_SALANDIT_1] = {
         .species = SPECIES_SALANDIT,
         .moves = {MOVE_POISON_FANG, MOVE_FIRE_FANG, MOVE_FLING, MOVE_VENOSHOCK},
         .heldItem = ITEM_POISON_BARB,
@@ -959,7 +959,7 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(252, 252, 0, 0, 0, 0),
         .nature = NATURE_BASHFUL
     },
-    [FRONTIER_MON_WOOLOO] = {
+    [FRONTIER_MON_WOOLOO_1] = {
         .species = SPECIES_WOOLOO,
         .moves = {MOVE_COUNTER, MOVE_DOUBLE_KICK, MOVE_COTTON_GUARD, MOVE_GUARD_SPLIT},
         .heldItem = ITEM_CHESTO_BERRY,
@@ -987,7 +987,7 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
         .nature = NATURE_MILD
     },
-    [FRONTIER_MON_LECHONK] = {
+    [FRONTIER_MON_LECHONK_1] = {
         .species = SPECIES_LECHONK,
         .moves = {MOVE_BODY_SLAM, MOVE_YAWN, MOVE_REST, MOVE_SLEEP_TALK},
         .heldItem = ITEM_FOCUS_BAND,
@@ -1728,6 +1728,224 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .heldItem = ITEM_DRAGON_FANG,
         .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 0, 170),
         .nature = NATURE_SASSY
+    },
+    [FRONTIER_MON_TRUMBEAK] = {
+        .species = SPECIES_TRUMBEAK,
+        .moves = {MOVE_AERIAL_ACE, MOVE_BULLET_SEED, MOVE_ROCK_BLAST, MOVE_FEATHER_DANCE},
+        .heldItem = ITEM_LOADED_DICE,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_GUMSHOOS] = {
+        .species = SPECIES_GUMSHOOS,
+        .moves = {MOVE_SUPER_FANG, MOVE_BITE, MOVE_ROCK_TOMB, MOVE_SAND_ATTACK},
+        .heldItem = ITEM_CHERI_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 0, 0),
+        .nature = NATURE_SASSY
+    },
+    [FRONTIER_MON_MUDBRAY] = {
+        .species = SPECIES_MUDBRAY,
+        .moves = {MOVE_BULLDOZE, MOVE_DOUBLE_KICK, MOVE_STOMP, MOVE_ENDURE},
+        .heldItem = ITEM_ORAN_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 170, 0),
+        .nature = NATURE_BOLD
+    },
+    [FRONTIER_MON_SALANDIT_2] = {
+        .species = SPECIES_SALANDIT,
+        .moves = {MOVE_INCINERATE, MOVE_ACID_SPRAY, MOVE_TEMPER_FLARE, MOVE_WILL_O_WISP},
+        .heldItem = ITEM_EVIOLITE,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 252, 0, 252),
+        .nature = NATURE_BASHFUL
+    },
+    [FRONTIER_MON_STEENEE] = {
+        .species = SPECIES_STEENEE,
+        .moves = {MOVE_TRIPLE_AXEL, MOVE_LOW_SWEEP, MOVE_STOMP, MOVE_SYNTHESIS},
+        .heldItem = ITEM_BLACK_BELT,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_TOGEDEMARU] = {
+        .species = SPECIES_TOGEDEMARU,
+        .moves = {MOVE_SPIKY_SHIELD, MOVE_PIN_MISSILE, MOVE_SPARK, MOVE_CHARGE},
+        .heldItem = ITEM_RAWST_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 0, 252, 252),
+        .nature = NATURE_QUIRKY
+    },
+    [FRONTIER_MON_ORICORIO_1] = {
+        .species = SPECIES_ORICORIO_POM_POM,
+        .moves = {MOVE_PLUCK, MOVE_ACROBATICS, MOVE_PSYCH_UP, MOVE_BATON_PASS},
+        .heldItem = ITEM_SALAC_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_NAIVE
+    },
+    [FRONTIER_MON_COMFEY_1] = {
+        .species = SPECIES_COMFEY,
+        .moves = {MOVE_VINE_WHIP, MOVE_ACROBATICS, MOVE_U_TURN, MOVE_GRASSY_TERRAIN},
+        .heldItem = ITEM_SHARP_BEAK,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 170, 0),
+        .nature = NATURE_DOCILE
+    },
+    [FRONTIER_MON_PYUKUMUKU_1] = {
+        .species = SPECIES_PYUKUMUKU,
+        .moves = {MOVE_REFLECT, MOVE_SAFEGUARD, MOVE_PAIN_SPLIT, MOVE_TOXIC},
+        .heldItem = ITEM_CHESTO_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_LAX
+    },
+    [FRONTIER_MON_KOMALA_1] = {
+        .species = SPECIES_KOMALA,
+        .moves = {MOVE_YAWN, MOVE_SLAM, MOVE_FLAIL, MOVE_REVERSAL},
+        .heldItem = ITEM_ZOOM_LENS,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 170, 0),
+        .nature = NATURE_QUIET
+    },
+    [FRONTIER_MON_CORVISQUIRE] = {
+        .species = SPECIES_CORVISQUIRE,
+        .moves = {MOVE_DRILL_PECK, MOVE_POWER_TRIP, MOVE_AGILITY, MOVE_TAKE_DOWN},
+        .heldItem = ITEM_CHERI_BERRY,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_IMPISH
+    },
+    [FRONTIER_MON_THIEVUL] = {
+        .species = SPECIES_THIEVUL,
+        .moves = {MOVE_THIEF, MOVE_NIGHT_SLASH, MOVE_SHADOW_CLAW, MOVE_SUBSTITUTE},
+        .heldItem = ITEM_NONE,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_HASTY
+    },
+    [FRONTIER_MON_WOOLOO_2] = {
+        .species = SPECIES_WOOLOO,
+        .moves = {MOVE_COUNTER, MOVE_REVERSAL, MOVE_PAYBACK, MOVE_COTTON_GUARD},
+        .heldItem = ITEM_BLACK_BELT,
+        .ev = TRAINER_PARTY_EVS(0, 0, 252, 0, 252, 0),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_CARKOL] = {
+        .species = SPECIES_CARKOL,
+        .moves = {MOVE_ROCK_SLIDE, MOVE_RAPID_SPIN, MOVE_IRON_HEAD, MOVE_FLAME_CHARGE},
+        .heldItem = ITEM_CHARCOAL,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_JOLLY
+    },
+    [FRONTIER_MON_HATTREM] = {
+        .species = SPECIES_HATTREM,
+        .moves = {MOVE_DAZZLING_GLEAM, MOVE_PSYBEAM, MOVE_SECRET_POWER, MOVE_MISTY_TERRAIN},
+        .heldItem = ITEM_SILK_SCARF,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 170, 0),
+        .nature = NATURE_CALM
+    },
+    [FRONTIER_MON_MORGREM] = {
+        .species = SPECIES_MORGREM,
+        .moves = {MOVE_FALSE_SURRENDER, MOVE_SHADOW_CLAW, MOVE_TORMENT, MOVE_PARTING_SHOT},
+        .heldItem = ITEM_SPELL_TAG,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_IMPISH
+    },
+    [FRONTIER_MON_CRAMORANT_1] = {
+        .species = SPECIES_CRAMORANT,
+        .moves = {MOVE_AERIAL_ACE, MOVE_DIVE, MOVE_FEATHER_DANCE, MOVE_DEFOG},
+        .heldItem = ITEM_MYSTIC_WATER,
+        .ev = TRAINER_PARTY_EVS(252, 252, 0, 0, 0, 0),
+        .nature = NATURE_BRAVE
+    },
+    [FRONTIER_MON_FALINKS_1] = {
+        .species = SPECIES_FALINKS,
+        .moves = {MOVE_BRICK_BREAK, MOVE_REVERSAL, MOVE_BEAT_UP, MOVE_NO_RETREAT},
+        .heldItem = ITEM_PECHA_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 170, 170, 0, 0, 0),
+        .nature = NATURE_QUIET
+    },
+    [FRONTIER_MON_INDEEDEE_1] = {
+        .species = SPECIES_INDEEDEE_M,
+        .moves = {MOVE_EXPANDING_FORCE, MOVE_SHADOW_BALL, MOVE_STORED_POWER, MOVE_PSYCH_UP},
+        .heldItem = ITEM_SPELL_TAG,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 0, 170),
+        .nature = NATURE_TIMID
+    },
+    [FRONTIER_MON_MORPEKO_1] = {
+        .species = SPECIES_MORPEKO,
+        .moves = {MOVE_AURA_WHEEL, MOVE_RAPID_SPIN, MOVE_CHARGE, MOVE_PARTING_SHOT},
+        .heldItem = ITEM_SILK_SCARF,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 170, 0),
+        .nature = NATURE_JOLLY
+    },
+
+    [FRONTIER_MON_LECHONK_2] = {
+        .species = SPECIES_LECHONK,
+        .moves = {MOVE_HEADBUTT, MOVE_YAWN, MOVE_SPIT_UP, MOVE_STOCKPILE},
+        .heldItem = ITEM_EVIOLITE,
+        .ev = TRAINER_PARTY_EVS(0, 0, 252, 0, 252, 0),
+        .nature = NATURE_BRAVE
+    },
+    [FRONTIER_MON_PAWMO] = {
+        .species = SPECIES_PAWMO,
+        .moves = {MOVE_WILD_CHARGE, MOVE_NUZZLE, MOVE_VOLT_SWITCH, MOVE_UPPER_HAND},
+        .heldItem = ITEM_FOCUS_BAND,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_CAREFUL
+    },
+    [FRONTIER_MON_TANDEMAUS] = {
+        .species = SPECIES_TANDEMAUS,
+        .moves = {MOVE_DOUBLE_HIT, MOVE_BEAT_UP, MOVE_COPYCAT, MOVE_HELPING_HAND},
+        .heldItem = ITEM_BLACK_GLASSES,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_IMPISH
+    },
+    [FRONTIER_MON_DOLLIV] = {
+        .species = SPECIES_DOLLIV,
+        .moves = {MOVE_MAGICAL_LEAF, MOVE_EARTH_POWER, MOVE_TERRAIN_PULSE, MOVE_GRASSY_TERRAIN},
+        .heldItem = ITEM_TERRAIN_EXTENDER,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 252, 252, 0),
+        .nature = NATURE_SASSY
+    },
+    [FRONTIER_MON_NACLSTACK] = {
+        .species = SPECIES_NACLSTACK,
+        .moves = {MOVE_EARTHQUAKE, MOVE_SMACK_DOWN, MOVE_SANDSTORM, MOVE_STEALTH_ROCK},
+        .heldItem = ITEM_HARD_STONE,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 170, 0),
+        .nature = NATURE_RELAXED
+    },
+    [FRONTIER_MON_CHARCADET] = {
+        .species = SPECIES_CHARCADET,
+        .moves = {MOVE_FLARE_BLITZ, MOVE_FLAME_CHARGE, MOVE_ASTONISH, MOVE_NIGHT_SHADE},
+        .heldItem = ITEM_EVIOLITE,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 170, 0),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_TINKATUFF] = {
+        .species = SPECIES_TINKATUFF,
+        .moves = {MOVE_PLAY_ROUGH, MOVE_ICE_HAMMER, MOVE_BRUTAL_SWING, MOVE_STEEL_BEAM},
+        .heldItem = ITEM_CHERI_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 0, 170),
+        .nature = NATURE_HARDY
+    },
+    [FRONTIER_MON_SPIDOPS_1] = {
+        .species = SPECIES_SPIDOPS,
+        .moves = {MOVE_SKITTER_SMACK, MOVE_SILK_TRAP, MOVE_FIRST_IMPRESSION, MOVE_U_TURN},
+        .heldItem = ITEM_CHESTO_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_SERIOUS
+    },
+    [FRONTIER_MON_LOKIX_1] = {
+        .species = SPECIES_LOKIX,
+        .moves = {MOVE_SKITTER_SMACK, MOVE_THROAT_CHOP, MOVE_LOW_KICK, MOVE_SWORDS_DANCE},
+        .heldItem = ITEM_BLACK_BELT,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 0, 252, 252),
+        .nature = NATURE_HASTY
+    },
+    [FRONTIER_MON_DACHSBUN_1] = {
+        .species = SPECIES_DACHSBUN,
+        .moves = {MOVE_PLAY_ROUGH, MOVE_FIRE_FANG, MOVE_SNARL, MOVE_PSYCH_UP},
+        .heldItem = ITEM_CHARCOAL,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 252, 0),
+        .nature = NATURE_LONELY
+    },
+    [FRONTIER_MON_GRAFAIAI_1] = {
+        .species = SPECIES_GRAFAIAI,
+        .moves = {MOVE_SLUDGE_BOMB, MOVE_MUD_SHOT, MOVE_NASTY_PLOT, MOVE_BATON_PASS},
+        .heldItem = ITEM_CHERI_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 252, 0, 252),
+        .nature = NATURE_BOLD
     },
     /*
     [FRONTIER_MON_DRAGALGE_2] = {
