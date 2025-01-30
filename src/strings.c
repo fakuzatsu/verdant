@@ -1735,3 +1735,6 @@ ALIGNED(4) const u8 gText_MobileAdapterNotConnected[] = _("The Mobile Adapter is
 ALIGNED(4) const u8 gText_UnableToInitialiseMALib[] = _("Something went wrong.\n Exiting…");
 ALIGNED(4) const u8 gText_UnableToConnectToServer[] = _("Unable to connect to server.\n Exiting…");
 ALIGNED(4) const u8 gText_DisconnectedWhileDownloading[] = _("Disconnected while downloading.\n Exiting…");
+
+// Switch into Party
+const u8 gText_CannotSendMonToBoxHM[] = _("{STR_VAR_2} won't go to the box.\nIs it worried about you?{PAUSE_UNTIL_PRESS}");

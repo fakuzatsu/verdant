@@ -2784,4 +2784,7 @@ extern const u8 gText_UnableToInitialiseMALib[];
 extern const u8 gText_UnableToConnectToServer[];
 extern const u8 gText_DisconnectedWhileDownloading[];
 
+// Switch into Party
+extern const u8 gText_CannotSendMonToBoxHM[];
+
 #endif // GUARD_STRINGS_H
