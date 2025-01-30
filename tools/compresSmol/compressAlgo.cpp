@@ -218,39 +218,6 @@ void CompressionInstruction::buildBytes()
     bytes = currBytes;
 }
 
-bool CompressionInstruction::verifyInstruction()
-{
-    bool lengthDone = false;
-    bool offsetDone = false;
-    size_t currLength = 0;
-    size_t currOffset = 0;
-    size_t usedLengths = 0;
-    size_t usedOffsets = 0;
-    std::vector<unsigned char> currSymbols;
-    for (size_t i = 0; i < bytes.size(); i++)
-    {
-        if (!lengthDone)
-        {
-            currLength += (bytes[i] & 0x7f) << (7*usedLengths);
-            usedLengths++;
-            if ((bytes[i] & 0x80) != 0x80)
-                lengthDone = true;
-        }
-        else if (!offsetDone)
-        {
-            currOffset += (bytes[i] & 0x7f) << (7*usedOffsets);
-            usedOffsets++;
-            if ((bytes[i] & 0x80) != 0x80)
-                offsetDone = true;
-        }
-        else
-        {
-            currSymbols.push_back(bytes[i]);
-        }
-    }
-    return true;
-}
-
 std::vector<unsigned char> getLosFromInstructions(std::vector<ShortCompressionInstruction> instructions)
 {
     std::vector<unsigned char> loVec;
