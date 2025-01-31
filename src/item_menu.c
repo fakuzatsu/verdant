@@ -82,6 +82,7 @@ enum {
 enum {
     ACTION_USE,
     ACTION_TOSS,
+    ACTION_MOVE,
     ACTION_REGISTER,
     ACTION_GIVE,
     ACTION_CANCEL,
@@ -159,8 +160,7 @@ static void PrintItemQuantity(u8, s16);
 static u8 BagMenu_AddWindow(u8);
 static u8 GetSwitchBagPocketDirection(void);
 static void SwitchBagPocket(u8, s16, bool16);
-static bool8 CanSwapItems(void);
-static void StartItemSwap(u8 taskId);
+static void ItemMenu_ItemSwap(u8 taskId);
 static void Task_SwitchBagPocket(u8);
 static void Task_HandleSwappingItemsInput(u8);
 static void DoItemSwap(u8);
@@ -299,9 +299,11 @@ static const u8 sMenuText_ByType[] = _("TYPE");
 static const u8 sMenuText_ByAmount[] = _("QUANT");
 static const u8 sMenuText_ByNumber[] = _("ID");
 static const u8 sText_NothingToSort[] = _("There's nothing to sort!");
+static const u8 sText_CannotOpenNow[] = _("Cannot open that now!");
 static const struct MenuAction sItemMenuActions[] = {
     [ACTION_USE]               = {gMenuText_Use,      {ItemMenu_UseOutOfBattle}},
     [ACTION_TOSS]              = {gMenuText_Toss,     {ItemMenu_Toss}},
+    [ACTION_MOVE]              = {gMenuText_Move,     {ItemMenu_ItemSwap}},
     [ACTION_REGISTER]          = {gMenuText_Register, {ItemMenu_Register}},
     [ACTION_GIVE]              = {gMenuText_Give,     {ItemMenu_Give}},
     [ACTION_CANCEL]            = {gText_Cancel2,      {ItemMenu_Cancel}},
@@ -325,17 +327,19 @@ static const struct MenuAction sItemMenuActions[] = {
 // these are all 2D arrays with a width of 2 but are represented as 1D arrays
 // ACTION_DUMMY is used to represent blank spaces
 static const u8 sContextMenuItems_ItemsPocket[] = {
-    ACTION_USE,         ACTION_GIVE,
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_MOVE,        ACTION_GIVE,
     ACTION_TOSS,        ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_KeyItemsPocket[] = {
     ACTION_USE,         ACTION_REGISTER,
-    ACTION_DUMMY,       ACTION_CANCEL
+    ACTION_MOVE,        ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_BallsPocket[] = {
-    ACTION_GIVE,        ACTION_DUMMY,
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_MOVE,        ACTION_GIVE,
     ACTION_TOSS,        ACTION_CANCEL
 };
 
@@ -345,14 +349,14 @@ static const u8 sContextMenuItems_TmHmPocket[] = {
 };
 
 static const u8 sContextMenuItems_BerriesPocket[] = {
-    ACTION_CHECK_TAG,   ACTION_DUMMY,
-    ACTION_USE,         ACTION_GIVE,
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_CHECK_TAG,   ACTION_GIVE,
     ACTION_TOSS,        ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_TeraShardsPocket[] = {
-    ACTION_USE,         ACTION_GIVE,
-    ACTION_DUMMY,       ACTION_CANCEL
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_MOVE,        ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_BattleUse[] = {
@@ -368,8 +372,8 @@ static const u8 sContextMenuItems_Cancel[] = {
 };
 
 static const u8 sContextMenuItems_BerryBlenderCrush[] = {
-    ACTION_CONFIRM,     ACTION_CHECK_TAG,
-    ACTION_DUMMY,       ACTION_CANCEL
+    ACTION_CONFIRM,     ACTION_DUMMY,
+    ACTION_CHECK_TAG,   ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_Apprentice[] = {
@@ -385,7 +389,8 @@ static const u8 sContextMenuItems_QuizLady[] = {
 };
 
 static const u8 sContextMenuItems_Unregisterable[] = {
-    ACTION_USE,         ACTION_CANCEL
+    ACTION_USE,        ACTION_DUMMY,
+    ACTION_MOVE,       ACTION_CANCEL
 };
 
 static const TaskFunc sContextMenuFuncs[] = {
@@ -1465,16 +1470,18 @@ static void Task_BagMenu_HandleInput(u8 taskId)
         default:
             if (JOY_NEW(SELECT_BUTTON))
             {
-                if (CanSwapItems() == TRUE)
+                // TM Case can only be opened from the field
+                if (gBagPosition.location == ITEMMENULOCATION_FIELD)
                 {
-                    ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
-                    if ((*scrollPos + *cursorPos) != gBagMenu->numItemStacks[gBagPosition.pocket] - 1)
-                    {
-                        PlaySE(SE_SELECT);
-                        StartItemSwap(taskId);
-                    }
+                    PlaySE(SE_SELECT);
+                    gSpecialVar_ItemId = ITEM_TM_CASE;
+                    sItemMenuActions[ACTION_USE].func.void_u8(taskId);
                 }
-                return;
+                else
+                {
+                    PlaySE(SE_FAILURE);
+                    DisplayItemMessage(taskId, 1, sText_CannotOpenNow, HandleErrorMessage);
+                }
             }
         #if I_BAG_SORT == TRUE
             else if (JOY_NEW(START_BUTTON))
@@ -1676,21 +1683,7 @@ static void DrawPocketIndicatorSquare(u8 x, bool8 isCurrentPocket)
     ScheduleBgCopyTilemapToVram(2);
 }
 
-static bool8 CanSwapItems(void)
-{
-    // Swaps can only be done from the field or in battle (as opposed to while selling items, for example)
-    if (gBagPosition.location == ITEMMENULOCATION_FIELD
-     || gBagPosition.location == ITEMMENULOCATION_BATTLE)
-    {
-        // TMHMs and berries are numbered, and so may not be swapped
-        if (gBagPosition.pocket != TMHM_POCKET
-         && gBagPosition.pocket != BERRIES_POCKET)
-            return TRUE;
-    }
-    return FALSE;
-}
-
-static void StartItemSwap(u8 taskId)
+static void ItemMenu_ItemSwap(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -1770,6 +1763,8 @@ static void DoItemSwap(u8 taskId)
         CreatePocketSwitchArrowPair();
         gTasks[taskId].func = Task_BagMenu_HandleInput;
     }
+
+    ItemMenu_Cancel(taskId);
 }
 
 static void CancelItemSwap(u8 taskId)
@@ -1787,6 +1782,8 @@ static void CancelItemSwap(u8 taskId)
     SetItemMenuSwapLineInvisibility(TRUE);
     CreatePocketSwitchArrowPair();
     gTasks[taskId].func = Task_BagMenu_HandleInput;
+
+    ItemMenu_Cancel(taskId);
 }
 
 static void OpenContextMenu(u8 taskId)

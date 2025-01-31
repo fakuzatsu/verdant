@@ -176,6 +176,7 @@ extern const u8 gText_Gold[];
 
 extern const u8 gMenuText_Use[];
 extern const u8 gMenuText_Toss[];
+extern const u8 gMenuText_Move[];
 extern const u8 gMenuText_Give[];
 extern const u8 gMenuText_Give2[];
 extern const u8 gMenuText_Register[];
