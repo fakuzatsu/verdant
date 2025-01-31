@@ -72,6 +72,7 @@
 #include "constants/metatile_labels.h"
 #include "palette.h"
 #include "battle_util.h"
+#include "voltorb_flip.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -4442,4 +4443,11 @@ u16 GetSpeciesForRandomEgg(void)
 u16 GetSpeciesForSpecialEgg(void)
 {
     return sRandomSpeciesForSpecialEgg[Random() % ARRAY_COUNT(sRandomSpeciesForSpecialEgg)];
+}
+
+void StartVoltorbFlip(void)
+{
+    gMain.savedCallback = CB2_ReturnToField;
+    SetMainCallback2(CB2_ShowVoltorbFlip);
+    LockPlayerFieldControls();
 }
