@@ -270,6 +270,15 @@ static const struct BgTemplate sBgTemplates_ItemMenu[] =
         .priority = 2,
         .baseTile = 0,
     },
+    {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 21,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
 };
 
 static const struct ListMenuTemplate sItemListMenu =
@@ -887,6 +896,8 @@ void VBlankCB_BagMenuRun(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+    ChangeBgX(3, 64, BG_COORD_ADD);
+    ChangeBgY(3, 64, BG_COORD_ADD);
 }
 
 #define tListTaskId        data[0]
@@ -1020,15 +1031,19 @@ static void BagMenu_InitBGs(void)
 {
     ResetVramOamAndBgCntRegs();
     memset(gBagMenu->tilemapBuffer, 0, sizeof(gBagMenu->tilemapBuffer));
+    memset(gBagMenu->tilemapBuffer2, 0, sizeof(gBagMenu->tilemapBuffer2));
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sBgTemplates_ItemMenu, ARRAY_COUNT(sBgTemplates_ItemMenu));
     SetBgTilemapBuffer(2, gBagMenu->tilemapBuffer);
+    SetBgTilemapBuffer(3, gBagMenu->tilemapBuffer2);
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(2);
+    ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
+    ShowBg(3);
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
 }
 
@@ -1060,11 +1075,24 @@ static bool8 LoadBagMenu_Graphics(void)
             LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
         else
             LoadCompressedSpriteSheet(&gBagFemaleSpriteSheet);
+        LoadPalette(gScrollBgPalette, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         gBagMenu->graphicsLoadState++;
         break;
     case 4:
         LoadCompressedSpritePalette(&gBagPaletteTable);
         gBagMenu->graphicsLoadState++;
+        break;
+    case 5:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(3, gScrollBgTiles, 0, 0, 0);
+        gBagMenu->graphicsLoadState++;
+        break;
+    case 6:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            DecompressDataWithHeaderWram(gScrollBgTilemap, gBagMenu->tilemapBuffer2);
+            gBagMenu->graphicsLoadState++;
+        }
         break;
     default:
         LoadListMenuSwapLineGfx();

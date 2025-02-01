@@ -98,7 +98,7 @@ static const struct WindowTemplate sOptionMenuWinTemplates[] =
         .tilemapTop = 3,
         .width = 26,
         .height = 10,
-        .paletteNum = 1,
+        .paletteNum = 4,
         .baseBlock = 62
     },
     {//WIN_DESCRIPTION
@@ -242,6 +242,12 @@ static const u32 sOptionsPlusTilemap[] = INCBIN_U32("graphics/ui_options_plus/op
 #define TEXT_COLOR_OPTIONS_GREEN_DARK_SHADOW    12
 #define TEXT_COLOR_OPTIONS_RED_DARK_FG          13
 #define TEXT_COLOR_OPTIONS_RED_DARK_SHADOW      14
+
+#define TEXT_COLOR_OPTIONS_PAL4_BLACK           1
+#define TEXT_COLOR_OPTIONS_PAL4_GREY            4
+#define TEXT_COLOR_OPTIONS_PAL4_WHITE           6
+#define TEXT_COLOR_OPTIONS_PAL4_DARK_BLUE       8
+#define TEXT_COLOR_OPTIONS_PAL4_LIGHT_BLUE      9
 
 // Menu draw and input functions
 struct // MENU_MAIN
@@ -562,7 +568,8 @@ static void VBlankCB(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    ChangeBgY(3, 96, BG_COORD_ADD);
+    ChangeBgX(3, 64, BG_COORD_ADD);
+    ChangeBgY(3, 64, BG_COORD_ADD);
 }
 
 static const u8 sText_TopBar_Main[]                = _("General");
@@ -583,19 +590,19 @@ static void DrawTopBarText(void)
     switch (sOptions->submenu)
     {
         case MENU_MAIN:
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Main);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 94, 1, color, 0, sText_TopBar_Main);
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Random_To_Left);
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 178, 1, color, 0, sText_TopBar_Difficulty_To_Right);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 172, 1, color, 0, sText_TopBar_Difficulty_To_Right);
             break;
         case MENU_DIFFICULTY:
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Difficulty);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 96, 1, color, 0, sText_TopBar_Difficulty);
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Main_To_Left);
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 190, 1, color, 0, sText_TopBar_Random_To_Right);
             break;
         case MENU_RANDOM:
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 105, 1, color, 0, sText_TopBar_Random);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 110, 1, color, 0, sText_TopBar_Random);
             AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 2, 1, color, 0, sText_TopBar_Difficulty_To_Left);
-            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 190, 1, color, 0, sText_TopBar_Main_To_Right);
+            AddTextPrinterParameterized3(WIN_TOPBAR, FONT_SMALL, 186, 1, color, 0, sText_TopBar_Main_To_Right);
             break;
     }
     PutWindowTilemap(WIN_TOPBAR);
@@ -630,11 +637,11 @@ static void DrawLeftSideOptionText(int selection, int y)
     u8 color_gray[3];
 
     color_yellow[0] = TEXT_COLOR_TRANSPARENT;
-    color_yellow[1] = TEXT_COLOR_WHITE;
-    color_yellow[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
+    color_yellow[1] = TEXT_COLOR_OPTIONS_PAL4_WHITE;
+    color_yellow[2] = TEXT_COLOR_OPTIONS_PAL4_GREY;
     color_gray[0] = TEXT_COLOR_TRANSPARENT;
-    color_gray[1] = TEXT_COLOR_WHITE;
-    color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_SHADOW;
+    color_gray[1] = TEXT_COLOR_OPTIONS_PAL4_WHITE;
+    color_gray[2] = TEXT_COLOR_OPTIONS_PAL4_GREY;
 
     if (CheckConditions(selection))
         AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, 8, y, 0, 0, color_yellow, TEXT_SKIP_DRAW, OptionTextRight(selection));
@@ -650,20 +657,20 @@ static void DrawRightSideChoiceText(const u8 *text, int x, int y, bool8 choosen,
     if (active)
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
-        color_red[1] = TEXT_COLOR_OPTIONS_ORANGE_FG;
-        color_red[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
+        color_red[1] = TEXT_COLOR_OPTIONS_PAL4_LIGHT_BLUE; 
+        color_red[2] = TEXT_COLOR_OPTIONS_PAL4_DARK_BLUE;
         color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_WHITE;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
+        color_gray[1] = TEXT_COLOR_OPTIONS_PAL4_BLACK;
+        color_gray[2] = TEXT_COLOR_OPTIONS_PAL4_GREY;
     }
     else
     {
         color_red[0] = TEXT_COLOR_TRANSPARENT;
-        color_red[1] = TEXT_COLOR_OPTIONS_WHITE;
-        color_red[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
+        color_red[1] = 1;
+        color_red[2] = 4;
         color_gray[0] = TEXT_COLOR_TRANSPARENT;
-        color_gray[1] = TEXT_COLOR_OPTIONS_WHITE;
-        color_gray[2] = TEXT_COLOR_OPTIONS_GRAY_FG;
+        color_gray[1] = 1;
+        color_gray[2] = 4;
     }
 
 
@@ -729,8 +736,8 @@ static bool8 OptionsMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, 
         }
         break;
     case 4:
-        LoadPalette(sOptionsPlusPalette, 64, 32);
-        LoadPalette(gScrollBgPalette, 32, 32);
+        LoadPalette(sOptionsPlusPalette, BG_PLTT_ID(4), PLTT_SIZE_4BPP);
+        LoadPalette(gScrollBgPalette, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         sOptions->gfxLoadState++;
         break;
     default:
@@ -762,17 +769,17 @@ void CB2_InitOptionPlusMenu(void)
         DmaClear16(3, PLTT, PLTT_SIZE);
         ResetBgsAndClearDma3BusyFlags(0);
         ResetBgPositions();
-        
+
         DeactivateAllTextPrinters();
         SetGpuReg(REG_OFFSET_WIN0H, 0);
         SetGpuReg(REG_OFFSET_WIN0V, 0);
         SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
         SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 6));
         SetGpuReg(REG_OFFSET_BLDY, 4);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON);
-        
+
         ResetAllBgsCoordinates();
         ResetBgsAndClearDma3BusyFlags(0);
         InitBgsFromTemplates(0, sOptionMenuBgTemplates, NELEMS(sOptionMenuBgTemplates));
@@ -851,7 +858,7 @@ void CB2_InitOptionPlusMenu(void)
         break;
     case 10:
         CreateTask(Task_OptionMenuFadeIn, 0);
-        sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 240 / 2, 20, 110, MENUITEM_MAIN_COUNT - 1, 110, 110, 0);
+        sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 110, 20, 110, MENUITEM_MAIN_COUNT - 1, 110, 110, 0);
 
         for (i = 0; i < min(OPTIONS_ON_SCREEN, MenuItemCount()); i++)
             DrawChoices(i, i * Y_DIFF);
@@ -886,8 +893,8 @@ static void Task_OptionMenuFadeIn(u8 taskId)
         SetGpuReg(REG_OFFSET_WIN0V, 0);
         SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
         SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2);
-        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 6));
         SetGpuReg(REG_OFFSET_BLDY, 4);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
         ShowBg(0);
@@ -1253,7 +1260,7 @@ static void ReDrawAll(void)
     else
     {
         if (sOptions->arrowTaskId == TASK_NONE)
-            sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 240 / 2, 20, 110, MenuItemCount() - 1, 110, 110, 0);
+            sOptions->arrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 110, 20, 110, MenuItemCount() - 1, 110, 110, 0);
 
     }
 

@@ -2107,6 +2107,6 @@ const u8  gTMCaseHM_Gfx[] = INCBIN_U8("graphics/tm_case/hm.4bpp");
 const u16 gTMCaseMainWindowPalette[] = INCBIN_U16("graphics/tm_case/tm_menu.gbapal");
 
 // Scrolling BL/WH Background
-const u32 gScrollBgTiles[] = INCBIN_U32("graphics/ui_options_plus/scroll_tiles.4bpp.lz");
-const u32 gScrollBgTilemap[] = INCBIN_U32("graphics/ui_options_plus/scroll_tiles.bin.lz");
-const u16 gScrollBgPalette[] = INCBIN_U16("graphics/ui_options_plus/scroll_tiles.gbapal");
+const u32 gScrollBgTiles[] = INCBIN_U32("graphics/scroll_bg/scroll_tiles.4bpp.lz");
+const u32 gScrollBgTilemap[] = INCBIN_U32("graphics/scroll_bg/scroll_tiles.bin.lz");
+const u16 gScrollBgPalette[] = INCBIN_U16("graphics/scroll_bg/scroll_tiles.gbapal");
