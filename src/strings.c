@@ -161,6 +161,7 @@ const u8 gText_GoBackPrevMenu[] = _("Go back to the\nprevious menu.");
 const u8 gText_WhatWouldYouLike[] = _("What would you like to do?");
 const u8 gMenuText_Give2[] = _("Give");
 const u8 gText_xVar1[] = _("×{STR_VAR_1}");
+const u8 gText_BagQty[] = _("{COLOR WHITE}{SHADOW LIGHT_GRAY}×{STR_VAR_1}");
 const u8 gText_Berry2[] = _(" Berry"); // Unused
 const u8 gText_Coins[] = _("{STR_VAR_1} Coins");
 const u8 gText_CloseBag[] = _("Close Bag");
