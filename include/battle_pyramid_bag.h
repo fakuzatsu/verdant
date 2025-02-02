@@ -31,6 +31,7 @@ struct PyramidBagMenu
 {
     void (*newScreenCallback)(void);
     u8 tilemapBuffer[BG_SCREEN_SIZE];
+    u8 tilemapBuffer2[BG_SCREEN_SIZE];
     u8 spriteIds[PBAG_SPRITE_COUNT];
     u8 windowIds[5];
     u8 toSwapPos;

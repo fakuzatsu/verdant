@@ -1512,8 +1512,11 @@ static void HeatStartMenu_OpenMenu(void)
     case MENU_PARTY: 
         DoCleanUpAndChangeCallback(CB2_PartyMenuFromStartMenu);
         break;
-    case MENU_BAG: 
-        DoCleanUpAndChangeCallback(CB2_BagMenuFromStartMenu);
+    case MENU_BAG:
+        if (InBattlePyramid())
+            DoCleanUpAndChangeCallback(CB2_PyramidBagMenuFromStartMenu);
+        else
+            DoCleanUpAndChangeCallback(CB2_BagMenuFromStartMenu);
         break;
     case MENU_TRAINER_CARD:
         DoCleanUpAndOpenTrainerCard();

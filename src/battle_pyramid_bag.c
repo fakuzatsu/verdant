@@ -139,6 +139,15 @@ static const struct BgTemplate sBgTemplates[] =
         .priority = 2,
         .baseTile = 0
     },
+    {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 21,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
 };
 
 static const struct ListMenuTemplate sListMenuTemplate =
@@ -448,6 +457,8 @@ static void VBlankCB_PyramidBag(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+    ChangeBgX(3, 64, BG_COORD_ADD);
+    ChangeBgY(3, 64, BG_COORD_ADD);
 }
 
 static void CB2_LoadPyramidBagMenu(void)
@@ -550,15 +561,21 @@ static void InitPyramidBagBgs(void)
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
     SetBgTilemapBuffer(2, gPyramidBagMenu->tilemapBuffer);
+    memset(gPyramidBagMenu->tilemapBuffer2, 0, sizeof(gPyramidBagMenu->tilemapBuffer2));
+    SetBgTilemapBuffer(3, gPyramidBagMenu->tilemapBuffer2);
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(2);
+    ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
                                   DISPCNT_OBJ_1D_MAP |
                                   DISPCNT_OBJ_ON);
+
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 6));
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
-    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    ShowBg(3);
 }
 
 static bool8 LoadPyramidBagGfx(void)
@@ -583,6 +600,7 @@ static bool8 LoadPyramidBagGfx(void)
         break;
     case 3:
         LoadCompressedSpriteSheet(&sSpriteSheet_PyramidBag);
+        LoadPalette(gScrollBgPalette, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         gPyramidBagMenu->state++;
         break;
     case 4:
@@ -591,8 +609,20 @@ static bool8 LoadPyramidBagGfx(void)
         break;
     default:
         LoadListMenuSwapLineGfx();
-        gPyramidBagMenu->state = 0;
-        return TRUE;
+        gPyramidBagMenu->state++;
+    case 5:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(3, gScrollBgTiles, 0, 0, 0);
+        gPyramidBagMenu->state++;
+        break;
+    case 6:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            DecompressDataWithHeaderWram(gScrollBgTilemap, gPyramidBagMenu->tilemapBuffer2);
+            gPyramidBagMenu->state = 0;
+            return TRUE;
+        }
+        break;
     }
 
     return FALSE;
