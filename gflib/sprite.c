@@ -2,6 +2,7 @@
 #include "sprite.h"
 #include "main.h"
 #include "palette.h"
+#include "gpu_regs.h"
 
 #define MAX_SPRITE_COPY_REQUESTS 64
 
@@ -433,6 +434,52 @@ static void SortSprites(u32 *spritePriorities, s32 n)
     InsertionSort(spritePriorities, n);
 }
 
+u32 CreateSpriteAndMask(const struct SpriteTemplate *template, s16 x, s16 y, u32 subpriority)
+{
+    u32 i;
+    u16 firstSpriteId = MAX_SPRITES;
+    u16 secondSpriteId = MAX_SPRITES;
+
+    // Create the first sprite
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (!gSprites[i].inUse)
+        {
+            firstSpriteId = CreateSprite(template, x, y, subpriority);
+            break;
+        }
+    }
+
+    if (firstSpriteId == MAX_SPRITES) 
+        return ((u32)MAX_SPRITES << 16) | MAX_SPRITES; // No available sprite slots
+
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJWIN_ON);
+    SetGpuRegBits(REG_OFFSET_WINOUT, WINOUT_WINOBJ_OBJ);
+
+    // Create the second sprite with ST_OAM_OBJ_WINDOW mode
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (!gSprites[i].inUse)
+        {
+            secondSpriteId = CreateSprite(template, x, y, subpriority);
+            break;
+        }
+    }
+
+    SetGpuRegBits(REG_OFFSET_DISPCNT, 0);
+    SetGpuRegBits(REG_OFFSET_WINOUT, 0);
+
+    // No space for second, return firstSpriteId only
+    if (secondSpriteId == MAX_SPRITES) 
+        return ((u32)firstSpriteId << 16) | MAX_SPRITES;
+
+    // Make the second sprite a window object (mask)
+    gSprites[secondSpriteId].oam.objMode = ST_OAM_OBJ_WINDOW;
+    gSprites[secondSpriteId].invisible = FALSE;
+
+    return ((u32)firstSpriteId << 16) | secondSpriteId;
+}
+
 u32 CreateSprite(const struct SpriteTemplate *template, s16 x, s16 y, u32 subpriority)
 {
     u32 i;
@@ -547,6 +594,24 @@ u32 CreateSpriteAndAnimate(const struct SpriteTemplate *template, s16 x, s16 y, 
     }
 
     return MAX_SPRITES;
+}
+
+void DestroySpriteAndMask(u32 spriteIds)
+{
+    u16 firstSpriteId = spriteIds >> 16;
+    u16 secondSpriteId = spriteIds & 0xFFFF;
+
+    // Destroy the first sprite if it's valid
+    if (firstSpriteId != MAX_SPRITES)
+    {
+        DestroySprite(&gSprites[firstSpriteId]);
+    }
+
+    // Destroy the second sprite if it's valid
+    if (secondSpriteId != MAX_SPRITES)
+    {
+        DestroySprite(&gSprites[secondSpriteId]);
+    }
 }
 
 void DestroySprite(struct Sprite *sprite)
@@ -821,6 +886,24 @@ void FreeSpritePalette(struct Sprite *sprite)
 #endif
 
     FreeSpritePaletteByTag(sprite->template->paletteTag);
+}
+
+void FreeSpriteAndMaskOamMatrix(u32 spriteIds)
+{
+    u16 firstSpriteId = spriteIds >> 16;
+    u16 secondSpriteId = spriteIds & 0xFFFF;
+
+    // Destroy the first sprite if it's valid
+    if (firstSpriteId != MAX_SPRITES)
+    {
+        FreeSpriteOamMatrix(&gSprites[firstSpriteId]);
+    }
+
+    // Destroy the second sprite if it's valid
+    if (secondSpriteId != MAX_SPRITES)
+    {
+        FreeSpriteOamMatrix(&gSprites[secondSpriteId]);
+    }
 }
 
 void FreeSpriteOamMatrix(struct Sprite *sprite)
