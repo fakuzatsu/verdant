@@ -162,9 +162,9 @@ static const struct ListMenuTemplate sListMenuTemplate =
     .item_X = 8,
     .cursor_X = 0,
     .upText_Y = 1,
-    .cursorPal = 2,
+    .cursorPal = 1,
     .fillValue = 0,
-    .cursorShadowPal = 3,
+    .cursorShadowPal = 12,
     .lettersSpacing = 0,
     .itemVerticalPadding = 0,
     .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
@@ -701,7 +701,7 @@ static void PrintItemQuantity(u8 windowId, u32 itemIndex, u8 y)
                                gSaveBlock2Ptr->frontier.pyramidBag.quantity[gSaveBlock2Ptr->frontier.lvlMode][itemIndex],
                                STR_CONV_MODE_RIGHT_ALIGN,
                                MAX_PYRAMID_ITEM_DIGITS);
-    StringExpandPlaceholders(gStringVar4, gText_xVar1);
+    StringExpandPlaceholders(gStringVar4, gText_BagQty);
     xAlign = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, 119);
     PyramidBagPrint_Quantity(windowId, gStringVar4, xAlign, y, 0, 0, TEXT_SKIP_DRAW, COLORID_DARK_GRAY);
 }

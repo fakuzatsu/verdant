@@ -244,6 +244,7 @@ static const u32 sOptionsPlusTilemap[] = INCBIN_U32("graphics/ui_options_plus/op
 #define TEXT_COLOR_OPTIONS_RED_DARK_SHADOW      14
 
 #define TEXT_COLOR_OPTIONS_PAL4_BLACK           1
+#define TEXT_COLOR_OPTIONS_PAL4_DARK_GREY       2
 #define TEXT_COLOR_OPTIONS_PAL4_GREY            4
 #define TEXT_COLOR_OPTIONS_PAL4_WHITE           6
 #define TEXT_COLOR_OPTIONS_PAL4_DARK_BLUE       8
@@ -638,10 +639,10 @@ static void DrawLeftSideOptionText(int selection, int y)
 
     color_yellow[0] = TEXT_COLOR_TRANSPARENT;
     color_yellow[1] = TEXT_COLOR_OPTIONS_PAL4_WHITE;
-    color_yellow[2] = TEXT_COLOR_OPTIONS_PAL4_GREY;
+    color_yellow[2] = TEXT_COLOR_OPTIONS_PAL4_DARK_GREY;
     color_gray[0] = TEXT_COLOR_TRANSPARENT;
     color_gray[1] = TEXT_COLOR_OPTIONS_PAL4_WHITE;
-    color_gray[2] = TEXT_COLOR_OPTIONS_PAL4_GREY;
+    color_gray[2] = TEXT_COLOR_OPTIONS_PAL4_DARK_GREY;
 
     if (CheckConditions(selection))
         AddTextPrinterParameterized4(WIN_OPTIONS, FONT_NORMAL, 8, y, 0, 0, color_yellow, TEXT_SKIP_DRAW, OptionTextRight(selection));

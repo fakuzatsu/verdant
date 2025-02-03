@@ -295,7 +295,7 @@ static const struct ListMenuTemplate sItemListMenu =
     .upText_Y = 1,
     .cursorPal = 1,
     .fillValue = 0,
-    .cursorShadowPal = 3,
+    .cursorShadowPal = 12,
     .lettersSpacing = 0,
     .itemVerticalPadding = 0,
     .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
@@ -613,7 +613,7 @@ static const u8 sFontColorTable[][3] = {
     [COLORID_NORMAL]        = {TEXT_COLOR_TRANSPARENT, 7, 6},
     [COLORID_POCKET_NAME]   = {TEXT_COLOR_TRANSPARENT, 7, 6},
     [COLORID_BLUE_CURSOR]   = {TEXT_COLOR_TRANSPARENT, 5, 4},
-    [COLORID_NORMAL_CURSOR] = {TEXT_COLOR_TRANSPARENT, 1, 2},
+    [COLORID_NORMAL_CURSOR] = {TEXT_COLOR_TRANSPARENT, 1, 12},
     [COLORID_TMHM_INFO]     = {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_5,  TEXT_DYNAMIC_COLOR_1}
 };
 
