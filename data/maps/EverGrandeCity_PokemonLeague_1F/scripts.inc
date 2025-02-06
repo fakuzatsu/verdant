@@ -103,6 +103,30 @@ EverGrandeCity_PokemonLeague_1F_EventScript_GoForth::
 	releaseall
 	end
 
+EverGrandeCity_PokemonLeague_1F_EventScript_BlackBelt::
+	lock
+	faceplayer
+	goto_if_set FLAG_EVERGRANDE_BOTTLECAP_READY, EverGrandeCity_PokemonLeague_1F_EventScript_GiveBottleCap
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_ILovePokemonLeague, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+EverGrandeCity_PokemonLeague_1F_EventScript_GiveBottleCap::
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_IncredibleBattles, MSGBOX_DEFAULT
+	giveitem ITEM_BOTTLE_CAP
+	goto_if_eq VAR_RESULT, FALSE, EverGrandeCity_PokemonLeague_1F_EventScript_BagIsFull
+	clearflag FLAG_EVERGRANDE_BOTTLECAP_READY
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_FightAgainForMore, MSGBOX_DEFAULT
+	closemessage
+	release
+	end
+
+EverGrandeCity_PokemonLeague_1F_EventScript_BagIsFull::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
+	release
+	end
+
 EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight:
 	walk_down
 	walk_left
@@ -141,3 +165,21 @@ EverGrandeCity_PokemonLeague_1F_Text_GoForth:
 	.string "Trainer! Believe in yourself and your\n"
 	.string "Pokémon, and go forth!$"
 
+EverGrandeCity_PokemonLeague_1F_Text_ILovePokemonLeague:
+	.string "Nnn… Roar!\p"
+	.string "The Pokémon League is the ultimate\n"
+	.string "fighting gauntlet!\p"
+	.string "I want to watch some fights!\p"
+	.string "Nnn… Roar!\p"
+	.string "Fight for me and I'll give you a\n"
+	.string "Bottlecap!$"
+
+EverGrandeCity_PokemonLeague_1F_Text_IncredibleBattles:
+	.string "Nnn… Roar!\p"
+	.string "Your battles!… They were incredible!…\p"
+	.string "Here, have this!$"
+
+EverGrandeCity_PokemonLeague_1F_Text_FightAgainForMore:
+	.string "…I want to see more battles!\p"
+	.string "Fight for me and I'll give you more\n"
+	.string "Bottlecaps!$"
