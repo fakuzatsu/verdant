@@ -47,7 +47,9 @@
 //==========DEFINES==========//
 struct StatEditorResources
 {
-    MainCallback savedCallback;     // determines callback to run when we exit. e.g. where do we want to go after closing the menu
+    MainCallback savedCallback; // determines callback to run when we exit. e.g. where do we want to go after closing the menu
+    u8 sBg1TilemapBuffer[BG_SCREEN_SIZE];
+    u8 sBg3TilemapBuffer[BG_SCREEN_SIZE];
     u8 gfxLoadState;
     u8 mode;
     u8 monIconSpriteId;
@@ -92,7 +94,6 @@ enum GetOrSetStat
 
 //==========EWRAM==========//
 static EWRAM_DATA struct StatEditorResources *sStatEditorDataPtr = NULL;
-static EWRAM_DATA u8 *sBg1TilemapBuffer = NULL;
 
 //==========STATIC=DEFINES==========//
 static void StatEditor_RunSetup(void);
@@ -117,22 +118,28 @@ static void DestroySelector();
 static const struct BgTemplate sStatEditorBgTemplates[] =
 {
     {
-        .bg = 0,    // windows, etc
+        .bg = 0, // windows, etc
         .charBaseIndex = 0,
         .mapBaseIndex = 30,
         .priority = 1
     }, 
     {
-        .bg = 1,    // this bg loads the UI tilemap
+        .bg = 1, // this bg loads the UI tilemap
         .charBaseIndex = 3,
         .mapBaseIndex = 28,
         .priority = 2
     },
     {
-        .bg = 2,    // this bg loads the UI tilemap
+        .bg = 2, // this bg loads the UI tilemap
         .charBaseIndex = 0,
         .mapBaseIndex = 26,
         .priority = 0
+    },
+    {
+        .bg = 3, // scrolling bg
+        .charBaseIndex = 2,
+        .mapBaseIndex = 29,
+        .priority = 2
     }
 };
 
@@ -140,38 +147,38 @@ static const struct WindowTemplate sMenuWindowTemplates[] =
 {
     [WINDOW_1] = 
     {
-        .bg = 0,            // which bg to print text on
-        .tilemapLeft = 1,   // position from left (per 8 pixels)
-        .tilemapTop = 0,    // position from top (per 8 pixels)
-        .width = 30,        // width (per 8 pixels)
-        .height = 2,        // height (per 8 pixels)
-        .paletteNum = 15,   // palette index to use for text
-        .baseBlock = 1,     // tile start in VRAM
+        .bg = 0,          // which bg to print text on
+        .tilemapLeft = 1, // position from left (per 8 pixels)
+        .tilemapTop = 0,  // position from top (per 8 pixels)
+        .width = 30,      // width (per 8 pixels)
+        .height = 2,      // height (per 8 pixels)
+        .paletteNum = 2,  // palette index to use for text
+        .baseBlock = 1,   // tile start in VRAM
     },
     [WINDOW_2] = 
     {
-        .bg = 0,            // which bg to print text on
+        .bg = 0,             // which bg to print text on
         .tilemapLeft = 11,   // position from left (per 8 pixels)
-        .tilemapTop = 2,    // position from top (per 8 pixels)
-        .width = 18,        // width (per 8 pixels)
+        .tilemapTop = 2,     // position from top (per 8 pixels)
+        .width = 18,         // width (per 8 pixels)
         .height = 17,        // height (per 8 pixels)
-        .paletteNum = 15,   // palette index to use for text
-        .baseBlock = 1 + 70,     // tile start in VRAM
+        .paletteNum = 2,     // palette index to use for text
+        .baseBlock = 1 + 70, // tile start in VRAM
     },
     [WINDOW_3] = 
     {
-        .bg = 0,            // which bg to print text on
-        .tilemapLeft = 1,   // position from left (per 8 pixels)
-        .tilemapTop = 11,    // position from top (per 8 pixels)
-        .width = 8,        // width (per 8 pixels)
-        .height = 9,        // height (per 8 pixels)
-        .paletteNum = 15,   // palette index to use for text
-        .baseBlock = 1 + 70 + 306,     // tile start in VRAM
+        .bg = 0,                   // which bg to print text on
+        .tilemapLeft = 1,          // position from left (per 8 pixels)
+        .tilemapTop = 11,          // position from top (per 8 pixels)
+        .width = 8,                // width (per 8 pixels)
+        .height = 9,               // height (per 8 pixels)
+        .paletteNum = 2,           // palette index to use for text
+        .baseBlock = 1 + 70 + 306, // tile start in VRAM
     },
     DUMMY_WIN_TEMPLATE
 };
 
-static const u32 sStatEditorBgTiles[] = INCBIN_U32("graphics/ui_menu/background_tileset.4bpp.lz");
+static const u32 sStatEditorBgTiles[]   = INCBIN_U32("graphics/ui_menu/background_tileset.4bpp.lz");
 static const u32 sStatEditorBgTilemap[] = INCBIN_U32("graphics/ui_menu/background_tileset.bin.lz");
 static const u16 sStatEditorBgPalette[] = INCBIN_U16("graphics/ui_menu/background_pal.gbapal");
 
@@ -179,25 +186,22 @@ enum Colors
 {
     FONT_BLACK,
     FONT_WHITE,
-    FONT_RED,
-    FONT_BLUE,
 };
+
 static const u8 sMenuWindowFontColors[][3] = 
 {
-    [FONT_BLACK]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY},
-    [FONT_WHITE]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_WHITE,  TEXT_COLOR_DARK_GRAY},
-    [FONT_RED]   = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_RED,        TEXT_COLOR_LIGHT_GRAY},
-    [FONT_BLUE]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_BLUE,       TEXT_COLOR_LIGHT_GRAY},
+    [FONT_BLACK]  = {TEXT_COLOR_TRANSPARENT,  2, 9},
+    [FONT_WHITE]  = {TEXT_COLOR_TRANSPARENT,  3, 1},
 };
 
 #define TAG_SELECTOR 30004
 
-static const u16 sSelector_Pal[] = INCBIN_U16("graphics/ui_menu/selector.gbapal");
-static const u32 sSelector_Gfx[] = INCBIN_U32("graphics/ui_menu/selector.4bpp.lz");
-static const u8 sA_ButtonGfx[]         = INCBIN_U8("graphics/ui_menu/a_button.4bpp");
-static const u8 sB_ButtonGfx[]         = INCBIN_U8("graphics/ui_menu/b_button.4bpp");
-static const u8 sR_ButtonGfx[]         = INCBIN_U8("graphics/ui_menu/r_button.4bpp");
-static const u8 sDPad_ButtonGfx[]         = INCBIN_U8("graphics/ui_menu/dpad_button.4bpp");
+static const u16 sSelector_Pal[]   = INCBIN_U16("graphics/ui_menu/selector.gbapal");
+static const u32 sSelector_Gfx[]   = INCBIN_U32("graphics/ui_menu/selector.4bpp.lz");
+static const u8 sA_ButtonGfx[]     = INCBIN_U8("graphics/ui_menu/a_button.4bpp");
+static const u8 sB_ButtonGfx[]     = INCBIN_U8("graphics/ui_menu/b_button.4bpp");
+static const u8 sStart_ButtonGfx[] = INCBIN_U8("graphics/ui_menu/r_button.4bpp");
+static const u8 sDPad_ButtonGfx[]  = INCBIN_U8("graphics/ui_menu/dpad_button.4bpp");
 
 static const struct OamData sOamData_Selector =
 {
@@ -327,6 +331,8 @@ static void StatEditor_VBlankCB(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+    ChangeBgX(3, 64, BG_COORD_ADD);
+    ChangeBgY(3, 64, BG_COORD_ADD);
 }
 
 static bool8 StatEditor_DoGfxSetup(void)
@@ -409,7 +415,6 @@ static void StatEditor_FreeResources(void)
     DestroySelector();
     FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconSpriteId], sStatEditorDataPtr->monIconSpriteId);
     try_free(sStatEditorDataPtr);
-    try_free(sBg1TilemapBuffer);
     FreeAllWindowBuffers();
 }
 
@@ -435,19 +440,21 @@ static void StatEditor_FadeAndBail(void)
 static bool8 StatEditor_InitBgs(void)
 {
     ResetAllBgsCoordinates();
-    sBg1TilemapBuffer = Alloc(0x800);
-    if (sBg1TilemapBuffer == NULL)
-        return FALSE;
-    
-    memset(sBg1TilemapBuffer, 0, 0x800);
+    memset(sStatEditorDataPtr->sBg1TilemapBuffer, 0, sizeof(sStatEditorDataPtr->sBg1TilemapBuffer));
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sStatEditorBgTemplates, NELEMS(sStatEditorBgTemplates));
-    SetBgTilemapBuffer(1, sBg1TilemapBuffer);
+    SetBgTilemapBuffer(1, sStatEditorDataPtr->sBg1TilemapBuffer);
+    memset(sStatEditorDataPtr->sBg3TilemapBuffer, 0, sizeof(sStatEditorDataPtr->sBg3TilemapBuffer));
+    SetBgTilemapBuffer(3, sStatEditorDataPtr->sBg3TilemapBuffer);
     ScheduleBgCopyTilemapToVram(1);
+    ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG3 | BLDCNT_TGT2_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG1);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 6));
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
+    ShowBg(3);
     return TRUE;
 }
 
@@ -463,13 +470,26 @@ static bool8 StatEditor_LoadGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            DecompressDataWithHeaderWram(sStatEditorBgTilemap, sBg1TilemapBuffer);
+            DecompressDataWithHeaderWram(sStatEditorBgTilemap, sStatEditorDataPtr->sBg1TilemapBuffer);
             sStatEditorDataPtr->gfxLoadState++;
         }
         break;
     case 2:
-        LoadPalette(sStatEditorBgPalette, 0, 32);
+        LoadPalette(sStatEditorBgPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        LoadPalette(gScrollBgPalette, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         sStatEditorDataPtr->gfxLoadState++;
+        break;
+    case 3:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(3, gScrollBgTiles, 0, 0, 0);
+        sStatEditorDataPtr->gfxLoadState++;
+        break;
+    case 4:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            DecompressDataWithHeaderWram(gScrollBgTilemap, sStatEditorDataPtr->sBg3TilemapBuffer);
+            sStatEditorDataPtr->gfxLoadState++;
+        }
         break;
     default:
         sStatEditorDataPtr->gfxLoadState = 0;
@@ -545,9 +565,9 @@ static void DestroySelector()
 }
 
 #define DISTANCE_BETWEEN_STATS_Y 16
-#define SECOND_COLUMN ((8 * 4))
-#define THIRD_COLUMN ((8 * 8))
-#define STARTING_X 60
+#define SECOND_COLUMN ((8 * 4) + 10)
+#define THIRD_COLUMN ((8 * 8) + 10)
+#define STARTING_X 50
 #define STARTING_Y 26
 
 struct MonPrintData {
@@ -596,28 +616,28 @@ static const u16 statsToPrintIVs[] = {
 
 static const u8 sGenderColors[2][3] =
 {
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_BLUE, TEXT_COLOR_BLUE},
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_RED}
+    {TEXT_COLOR_TRANSPARENT, 4, 5},
+    {TEXT_COLOR_TRANSPARENT, 6, 7}
 };
 
-static const u8 sText_MenuTitle[] = _("Stat Editor");
-static const u8 sText_MenuHP[] = _("HP");
-static const u8 sText_MenuAttack[] = _("Attack");
-static const u8 sText_MenuSpAttack[] = _("Sp. Atk");
-static const u8 sText_MenuDefense[] = _("Defense");
+static const u8 sText_MenuTitle[]     = _("Stat Editor");
+static const u8 sText_MenuHP[]        = _("HP");
+static const u8 sText_MenuAttack[]    = _("Attack");
+static const u8 sText_MenuSpAttack[]  = _("Sp. Atk");
+static const u8 sText_MenuDefense[]   = _("Defense");
 static const u8 sText_MenuSpDefense[] = _("Sp. Def");
-static const u8 sText_MenuSpeed[] = _("Speed");
-static const u8 sText_MenuTotal[] = _("Total");
-static const u8 sText_MenuStat[] = _("Stat");
-static const u8 sText_MenuActual[] = _("Actual");
-static const u8 sText_MenuEV[] = _("EV");
-static const u8 sText_MenuIV[] = _("IV");
-static const u8 sText_MonLevel[]         = _("Lv.{CLEAR 1}{STR_VAR_1}");
+static const u8 sText_MenuSpeed[]     = _("Speed");
+static const u8 sText_MenuTotal[]     = _("Total");
+static const u8 sText_MenuStat[]      = _("Stat");
+static const u8 sText_MenuActual[]    = _("Actual");
+static const u8 sText_MenuEV[]        = _("EV");
+static const u8 sText_MenuIV[]        = _("IV");
+static const u8 sText_MonLevel[]      = _("Lv.{CLEAR 1}{STR_VAR_1}");
 
-static const u8 sText_MenuLRButtonTextMain[]   = _("Cycle Party");
-static const u8 sText_MenuAButtonTextMain[]    = _("Edit Stats");
-static const u8 sText_MenuBButtonTextMain[]    = _("Back");
-static const u8 sText_MenuDPadButtonTextMain[] = _("Change Stat");
+static const u8 sText_MenuStartButtonTextMain[] = _("Confirm");
+static const u8 sText_MenuAButtonTextMain[]     = _("Edit Stats");
+static const u8 sText_MenuBButtonTextMain[]     = _("Back");
+static const u8 sText_MenuDPadButtonTextMain[]  = _("Change Stat");
 
 #define BUTTON_Y 4
 static void PrintTitleToWindowMainState()
@@ -626,11 +646,11 @@ static void PrintTitleToWindowMainState()
     
     AddTextPrinterParameterized4(WINDOW_1, FONT_NORMAL, 1, 0, 0, 0, sMenuWindowFontColors[FONT_WHITE], TEXT_SKIP_DRAW, sText_MenuTitle);
 
-    BlitBitmapToWindow(WINDOW_1, sR_ButtonGfx, 75, (BUTTON_Y), 24, 8);
-    AddTextPrinterParameterized4(WINDOW_1, FONT_NARROW, 102, 0, 0, 0, sMenuWindowFontColors[FONT_WHITE], TEXT_SKIP_DRAW, sText_MenuLRButtonTextMain);
+    BlitBitmapToWindow(WINDOW_1, sA_ButtonGfx, 75, (BUTTON_Y), 8, 8);
+    AddTextPrinterParameterized4(WINDOW_1, FONT_NARROW, 87, 0, 0, 0, sMenuWindowFontColors[FONT_WHITE], TEXT_SKIP_DRAW, sText_MenuAButtonTextMain);
 
-    BlitBitmapToWindow(WINDOW_1, sA_ButtonGfx, 160, (BUTTON_Y), 8, 8);
-    AddTextPrinterParameterized4(WINDOW_1, FONT_NARROW, 172, 0, 0, 0, sMenuWindowFontColors[FONT_WHITE], TEXT_SKIP_DRAW, sText_MenuAButtonTextMain);
+    BlitBitmapToWindow(WINDOW_1, sStart_ButtonGfx, 140, (BUTTON_Y), 24, 8);
+    AddTextPrinterParameterized4(WINDOW_1, FONT_NARROW, 168, 0, 0, 0, sMenuWindowFontColors[FONT_WHITE], TEXT_SKIP_DRAW, sText_MenuStartButtonTextMain);
 
     PutWindowTilemap(WINDOW_1);
     CopyWindowToVram(WINDOW_1, 3);
@@ -698,6 +718,7 @@ static void PrintMonStats()
     u16 level = GetMonData(ReturnPartyMon(), MON_DATA_LEVEL);
     u16 personality = GetMonData(ReturnPartyMon(), MON_DATA_PERSONALITY);
     u16 gender = GetGenderFromSpeciesAndPersonality(sStatEditorDataPtr->speciesID, personality);
+    u16 ability = GetAbilityBySpecies(sStatEditorDataPtr->speciesID, GetMonData(ReturnPartyMon(), MON_DATA_ABILITY_NUM));
     u8 nature = GetNature(ReturnPartyMon());
 
     FillWindowPixelBuffer(WINDOW_2, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
@@ -707,18 +728,18 @@ static void PrintMonStats()
     sStatEditorDataPtr->evTotal = 0;
     sStatEditorDataPtr->ivTotal = 0;
 
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 18, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuStat);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, STARTING_X - 6, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuActual);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 14, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuStat);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, STARTING_X - 2, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuActual);
     AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, STARTING_X + SECOND_COLUMN + 4, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuEV);
     AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, STARTING_X + THIRD_COLUMN + 5, 7, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuIV);
 
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 24, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 0), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuHP);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 12, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 1), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuAttack);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 12, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 2), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuDefense);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 10, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 3), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuSpAttack);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 12, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 4), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuSpDefense);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 16, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 5), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuSpeed);
-    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 16, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 6), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, sText_MenuTotal);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 20, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 0), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuHP);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 8,  STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 1), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuAttack);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 8,  STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 2), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuDefense);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 6,  STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 3), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuSpAttack);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 8,  STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 4), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuSpDefense);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 12, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 5), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuSpeed);
+    AddTextPrinterParameterized4(WINDOW_2, FONT_NARROW, 12, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 6), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, sText_MenuTotal);
 
     // Print Mon Stats
     for(i = 0; i < 6; i++)
@@ -727,7 +748,7 @@ static void PrintMonStats()
         sStatEditorDataPtr->normalTotal += currentStat;
         DebugPrintf("Stat: %d", currentStat);
         ConvertIntToDecimalStringN(gStringVar2, currentStat, STR_CONV_MODE_RIGHT_ALIGN, 3);
-        AddTextPrinterParameterized4(WINDOW_2, 1, StatPrintData[statsToPrintActual[i]].x, StatPrintData[statsToPrintActual[i]].y, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
+        AddTextPrinterParameterized4(WINDOW_2, 1, StatPrintData[statsToPrintActual[i]].x, StatPrintData[statsToPrintActual[i]].y, 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, gStringVar2);
     }
 
     for(i = 0; i < 6; i++)
@@ -750,7 +771,7 @@ static void PrintMonStats()
 
     // Calc Totals
     ConvertIntToDecimalStringN(gStringVar2, sStatEditorDataPtr->normalTotal, STR_CONV_MODE_RIGHT_ALIGN, 4);
-    AddTextPrinterParameterized4(WINDOW_2, 1, STARTING_X - 6, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 6), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
+    AddTextPrinterParameterized4(WINDOW_2, 1, STARTING_X - 6, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 6), 0, 0, sMenuWindowFontColors[FONT_BLACK], 0xFF, gStringVar2);
 
     ConvertIntToDecimalStringN(gStringVar2, sStatEditorDataPtr->evTotal, STR_CONV_MODE_RIGHT_ALIGN, 3);
     AddTextPrinterParameterized4(WINDOW_2, 1, STARTING_X + SECOND_COLUMN, STARTING_Y + (DISTANCE_BETWEEN_STATS_Y * 6), 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
@@ -780,7 +801,7 @@ static void PrintMonStats()
     StringCopy(gStringVar2, gNaturesInfo[nature].name);
     AddTextPrinterParameterized4(WINDOW_3, FONT_SMALL_NARROW, 4, 50, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
 
-    StringCopy(gStringVar2, gAbilitiesInfo[gSpeciesInfo[sStatEditorDataPtr->speciesID].abilities[GetMonData(ReturnPartyMon(), MON_DATA_ABILITY_NUM)]].name);
+    StringCopy(gStringVar2, gAbilitiesInfo[ability].name);
     AddTextPrinterParameterized4(WINDOW_3, FONT_SMALL_NARROW, 4, 34, 0, 0, sMenuWindowFontColors[FONT_WHITE], 0xFF, gStringVar2);
 
     PutWindowTilemap(WINDOW_3);
