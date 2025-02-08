@@ -53,6 +53,7 @@ struct StatEditorResources
     u8 gfxLoadState;
     u8 mode;
     u8 monIconSpriteId;
+    u8 monIconShadowId;
     u16 speciesID;
     u16 selectedStat;
     u16 selectorSpriteId;
@@ -77,6 +78,15 @@ struct StatEditorResources
 #define UI_STAT_SPE 3
 #define UI_STAT_SPATK 4
 #define UI_STAT_SPDEF 5
+
+#define TAG_MON_SHADOW 30010
+
+static const u16 sMonShadowPalette[] = INCBIN_U16("graphics/summary_screen/bw/shadow.gbapal");
+
+static const struct SpritePalette sSpritePal_MonShadow =
+{
+    sMonShadowPalette, TAG_MON_SHADOW
+};
 
 enum WindowIds
 {
@@ -414,6 +424,7 @@ static void StatEditor_FreeResources(void)
 {
     DestroySelector();
     FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconSpriteId], sStatEditorDataPtr->monIconSpriteId);
+    FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconShadowId], sStatEditorDataPtr->monIconShadowId);
     try_free(sStatEditorDataPtr);
     FreeAllWindowBuffers();
 }
@@ -449,7 +460,7 @@ static bool8 StatEditor_InitBgs(void)
     ScheduleBgCopyTilemapToVram(1);
     ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG3 | BLDCNT_TGT2_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG1);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG3 | BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG1);
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(14, 6));
     ShowBg(0);
     ShowBg(1);
@@ -538,12 +549,21 @@ static inline struct Pokemon *ReturnPartyMon()
 
 #define MON_ICON_X     32 + 8
 #define MON_ICON_Y     32 + 24
+
 static void SampleUi_DrawMonIcon(u16 dexNum)
 {
+    u8 shadowPalette = 0;
     u16 speciesId = dexNum;
     sStatEditorDataPtr->monIconSpriteId = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X, MON_ICON_Y, 0, TAG_NONE);
+    sStatEditorDataPtr->monIconShadowId = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X + 5, MON_ICON_Y - 2, 0, TAG_NONE);
 
     gSprites[sStatEditorDataPtr->monIconSpriteId].oam.priority = 0;
+    gSprites[sStatEditorDataPtr->monIconShadowId].oam.priority = 1;
+
+    FreeSpritePaletteByTag(TAG_MON_SHADOW); // reload the palette entirely because some sprite anims modify it
+    shadowPalette = LoadSpritePalette(&sSpritePal_MonShadow);
+    gSprites[sStatEditorDataPtr->monIconShadowId].oam.paletteNum = shadowPalette;
+    gSprites[sStatEditorDataPtr->monIconShadowId].oam.objMode = ST_OAM_OBJ_BLEND;
 }
 
 static u8 CreateSelector()
