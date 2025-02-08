@@ -67,6 +67,7 @@ struct StatEditorResources
     u16 inputMode;
     u8 newEVs[6];
     u8 newIVs[6];
+    bool8 monAnimPlayed;
 };
 
 #define INPUT_SELECT_STAT 0
@@ -121,8 +122,9 @@ static void PrintMonStats(void);
 static void SelectorCallback(struct Sprite *sprite);
 static inline struct Pokemon *ReturnPartyMon();
 static void ChangeAndUpdateStats(void);
-static u8 CreateSelector();
-static void DestroySelector();
+static u8 CreateSelector(void);
+static void DestroySelector(void);
+static void SpriteCB_Pokemon(struct Sprite *);
 
 //==========CONST=DATA==========//
 static const struct BgTemplate sStatEditorBgTemplates[] =
@@ -420,11 +422,14 @@ static bool8 StatEditor_DoGfxSetup(void)
         Free(*ptr__);                  \
 })
 
+#define POKEMON_SPRITE sStatEditorDataPtr->monIconSpriteId
+#define SHADOW_SPRITE sStatEditorDataPtr->monIconShadowId
+
 static void StatEditor_FreeResources(void)
 {
     DestroySelector();
-    FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconSpriteId], sStatEditorDataPtr->monIconSpriteId);
-    FreeResourcesAndDestroySprite(&gSprites[sStatEditorDataPtr->monIconShadowId], sStatEditorDataPtr->monIconShadowId);
+    FreeResourcesAndDestroySprite(&gSprites[POKEMON_SPRITE], POKEMON_SPRITE);
+    FreeResourcesAndDestroySprite(&gSprites[SHADOW_SPRITE], SHADOW_SPRITE);
     try_free(sStatEditorDataPtr);
     FreeAllWindowBuffers();
 }
@@ -542,6 +547,11 @@ static void Task_StatEditorTurnOff(u8 taskId)
 //       Stat Editor Code
 //  End of UI setup code, beginning of stat editor specific code
 //
+#define sSpecies data[0]
+#define sDontFlip data[1]
+#define sDelayAnim data[2]
+#define sIsShadow data[3]
+
 static inline struct Pokemon *ReturnPartyMon()
 {
     return &gPlayerParty[sStatEditorDataPtr->partyid];
@@ -554,19 +564,33 @@ static void SampleUi_DrawMonIcon(u16 dexNum)
 {
     u8 shadowPalette = 0;
     u16 speciesId = dexNum;
-    sStatEditorDataPtr->monIconSpriteId = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X, MON_ICON_Y, 0, TAG_NONE);
-    sStatEditorDataPtr->monIconShadowId = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X + 5, MON_ICON_Y - 2, 0, TAG_NONE);
 
-    gSprites[sStatEditorDataPtr->monIconSpriteId].oam.priority = 0;
-    gSprites[sStatEditorDataPtr->monIconShadowId].oam.priority = 1;
+    POKEMON_SPRITE = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X, MON_ICON_Y, 0, TAG_NONE);
+
+    gSprites[POKEMON_SPRITE].oam.priority = 0;
+    gSprites[POKEMON_SPRITE].sSpecies = sStatEditorDataPtr->speciesID;
+    gSprites[POKEMON_SPRITE].callback = SpriteCB_Pokemon;
+    gSprites[POKEMON_SPRITE].sIsShadow = FALSE;
+    gSprites[POKEMON_SPRITE].sDelayAnim = 0;
+
+    SHADOW_SPRITE = CreateMonPicSprite_Affine(speciesId, 0, 0x8000, TRUE, MON_ICON_X + 5, MON_ICON_Y - 2, 0, TAG_NONE);
+
+    gSprites[SHADOW_SPRITE].oam.priority = 1;
+    gSprites[SHADOW_SPRITE].sSpecies = sStatEditorDataPtr->speciesID;
+    gSprites[SHADOW_SPRITE].callback = SpriteCB_Pokemon;
+    gSprites[SHADOW_SPRITE].sIsShadow = TRUE;
+    gSprites[SHADOW_SPRITE].sDelayAnim = 0;
 
     FreeSpritePaletteByTag(TAG_MON_SHADOW); // reload the palette entirely because some sprite anims modify it
     shadowPalette = LoadSpritePalette(&sSpritePal_MonShadow);
-    gSprites[sStatEditorDataPtr->monIconShadowId].oam.paletteNum = shadowPalette;
-    gSprites[sStatEditorDataPtr->monIconShadowId].oam.objMode = ST_OAM_OBJ_BLEND;
+    gSprites[SHADOW_SPRITE].oam.paletteNum = shadowPalette;
+    gSprites[SHADOW_SPRITE].oam.objMode = ST_OAM_OBJ_BLEND;
 }
 
-static u8 CreateSelector()
+#undef POKEMON_SPRITE
+#undef SHADOW_SPRITE
+
+static u8 CreateSelector(void)
 {
     if (sStatEditorDataPtr->selectorSpriteId == 0xFF)
         sStatEditorDataPtr->selectorSpriteId = CreateSprite(&sSpriteTemplate_Selector, 188, 30, 0);
@@ -577,7 +601,7 @@ static u8 CreateSelector()
     return sStatEditorDataPtr->selectorSpriteId;
 }
 
-static void DestroySelector()
+static void DestroySelector(void)
 {
     if (sStatEditorDataPtr->selectorSpriteId != 0xFF)
         DestroySprite(&gSprites[sStatEditorDataPtr->selectorSpriteId]);
@@ -1134,4 +1158,31 @@ static void Task_MenuEditingStat(u8 taskId) // This function should be refactore
 
 }
 
+static void PlayMonCry(void)
+{
+    bool8 isEgg = sStatEditorDataPtr->speciesID == SPECIES_EGG ? TRUE : FALSE;
 
+    if (!isEgg)
+        PlayCry_ByMode(sStatEditorDataPtr->speciesID, 0, CRY_MODE_NORMAL);
+}
+
+static void SpriteCB_Pokemon(struct Sprite *sprite)
+{
+    bool8 isEgg = sStatEditorDataPtr->speciesID == SPECIES_EGG ? TRUE : FALSE;
+
+    if (!gPaletteFade.active && sprite->sDelayAnim != 1)
+    {
+        sprite->sDontFlip = TRUE;
+
+        if (!sStatEditorDataPtr->monAnimPlayed) // only play cry on the first time mon is animated
+            PlayMonCry();
+
+        PokemonSummaryDoMonAnimation(sprite, sprite->sSpecies, isEgg, sprite->sIsShadow);
+        sStatEditorDataPtr->monAnimPlayed = TRUE;
+    }
+}
+
+#undef sSpecies
+#undef sDontFlip
+#undef sDelayAnim
+#undef sIsShadow
