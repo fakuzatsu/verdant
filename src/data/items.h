@@ -8427,7 +8427,7 @@ const struct Item gItemsInfo[] =
 #else
         .description = COMPOUND_STRING(
             "Extends the length\n"
-            "of Ice-type weathers\n"
+            "of icy weather if\n"
             "used by the holder."),
 #endif
         .pocket = POCKET_ITEMS,
