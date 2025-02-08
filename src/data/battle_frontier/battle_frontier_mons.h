@@ -1947,15 +1947,6 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(0, 0, 0, 252, 0, 252),
         .nature = NATURE_BOLD
     },
-    /*
-    [FRONTIER_MON_DRAGALGE_2] = {
-        .species = SPECIES_DRAGALGE,
-        .moves = {MOVE_DRAGON_PULSE, MOVE_VENOSHOCK, MOVE_DRAGON_TAIL, MOVE_TOXIC_SPIKES},
-        .heldItem = ITEM_DRAGON_FANG,
-        .ev = TRAINER_PARTY_EVS(0, 0, 170, 170, 170, 0),
-        .nature = 
-    },
-    */
     [FRONTIER_MON_IVYSAUR_1] = {
         .species = SPECIES_IVYSAUR,
         .moves = {MOVE_PETAL_DANCE, MOVE_GROWTH, MOVE_SWEET_SCENT, MOVE_FURY_CUTTER},
@@ -2732,6 +2723,13 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .heldItem = ITEM_ICY_ROCK,
         .ev = TRAINER_PARTY_EVS(170, 0, 170, 170, 0, 0),
         .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_MUSHARNA_1] = {
+        .species = SPECIES_MUSHARNA,
+        .moves = {MOVE_PSYCHIC, MOVE_FUTURE_SIGHT, MOVE_SNORE, MOVE_REST},
+        .heldItem = ITEM_ORAN_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 0, 170, 170, 0, 0),
+        .nature = NATURE_DOCILE
     },
     [FRONTIER_MON_QUILLADIN_1] = {
         .species = SPECIES_QUILLADIN,
@@ -3601,6 +3599,29 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(0, 0, 252, 0, 252, 0),
         .nature = NATURE_MODEST
     },
+    /*
+    [FRONTIER_MON_MUSHARNA_2] = {
+        .species = SPECIES_MUSHARNA,
+        .moves = {MOVE_FUTURE_SIGHT, MOVE_SLEEP_TALK, MOVE_REST, MOVE_HEAL_BELL},
+        .heldItem = ITEM_SITRUS_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 0, 170, 0, 170, 0),
+        .nature = NATURE_RELAXED
+    },
+    [FRONTIER_MON_DRAGALGE_2] = {
+        .species = SPECIES_DRAGALGE,
+        .moves = {MOVE_DRAGON_PULSE, MOVE_VENOSHOCK, MOVE_DRAGON_TAIL, MOVE_TOXIC_SPIKES},
+        .heldItem = ITEM_DRAGON_FANG,
+        .ev = TRAINER_PARTY_EVS(0, 0, 170, 170, 170, 0),
+        .nature = NATURE_SASSY
+    },
+    [FRONTIER_MON_KOMALA_2] = {
+        .species = SPECIES_KOMALA,
+        .moves = {MOVE_SLEEP_TALK, MOVE_BODY_SLAM, MOVE_EARTHQUAKE, MOVE_PROTECT},
+        .heldItem = ITEM_CHOICE_SCARF,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_JOLLY
+    },
+    */
     [FRONTIER_MON_CLOYSTER_2] = {
         .species = SPECIES_CLOYSTER,
         .moves = {MOVE_DIVE, MOVE_TOXIC, MOVE_DOUBLE_TEAM, MOVE_PROTECT},
