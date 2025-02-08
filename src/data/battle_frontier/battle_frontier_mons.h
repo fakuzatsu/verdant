@@ -1673,7 +1673,7 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .ev = TRAINER_PARTY_EVS(170, 0, 170, 0, 0, 170),
         .nature = NATURE_CAREFUL
     },
-    [FRONTIER_MON_DOUBLADE] = {
+    [FRONTIER_MON_DOUBLADE_1] = {
         .species = SPECIES_DOUBLADE,
         .moves = {MOVE_SACRED_SWORD, MOVE_NIGHT_SLASH, MOVE_FURY_CUTTER, MOVE_POWER_TRICK},
         .heldItem = ITEM_RAWST_BERRY,
@@ -2732,6 +2732,139 @@ const struct TrainerMon gBattleFrontierMons[NUM_FRONTIER_MONS] =
         .heldItem = ITEM_ICY_ROCK,
         .ev = TRAINER_PARTY_EVS(170, 0, 170, 170, 0, 0),
         .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_QUILLADIN_1] = {
+        .species = SPECIES_QUILLADIN,
+        .moves = {MOVE_GRASSY_GLIDE, MOVE_LOW_SWEEP, MOVE_TRAILBLAZE, MOVE_SPIKES},
+        .heldItem = ITEM_ROCKY_HELMET,
+        .ev = TRAINER_PARTY_EVS(170, 170, 170, 0, 0, 0),
+        .nature = NATURE_IMPISH
+    },
+    [FRONTIER_MON_BRAIXEN_1] = {
+        .species = SPECIES_BRAIXEN,
+        .moves = {MOVE_PSYCHIC, MOVE_BURNING_JEALOUSY, MOVE_WILL_O_WISP, MOVE_TRICK},
+        .heldItem = ITEM_TWISTED_SPOON,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 170, 170, 170),
+        .nature = NATURE_MODEST
+    },
+    [FRONTIER_MON_FROGADIER_1] = {
+        .species = SPECIES_FROGADIER,
+        .moves = {MOVE_LIQUIDATION, MOVE_ACROBATICS, MOVE_U_TURN, MOVE_SMOKESCREEN},
+        .heldItem = ITEM_SALAC_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_PYROAR_1] = {
+        .species = SPECIES_PYROAR,
+        .moves = {MOVE_FIRE_FANG, MOVE_PSYCHIC_FANGS, MOVE_CRUNCH, MOVE_NOBLE_ROAR},
+        .heldItem = ITEM_RAZOR_FANG,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_FLOETTE_1] = {
+        .species = SPECIES_FLOETTE,
+        .moves = {MOVE_DAZZLING_GLEAM, MOVE_ENERGY_BALL, MOVE_POLLEN_PUFF, MOVE_GRASSY_TERRAIN},
+        .heldItem = ITEM_TERRAIN_EXTENDER,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 170, 170, 170),
+        .nature = NATURE_GENTLE
+    },
+    [FRONTIER_MON_DOUBLADE_2] = {
+        .species = SPECIES_DOUBLADE,
+        .moves = {MOVE_SACRED_SWORD, MOVE_NIGHT_SLASH, MOVE_FURY_CUTTER, MOVE_POWER_TRICK},
+        .heldItem = ITEM_IRON_BALL,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 252, 0),
+        .nature = NATURE_RELAXED
+    },
+    [FRONTIER_MON_CLAWITZER_1] = {
+        .species = SPECIES_CLAWITZER,
+        .moves = {MOVE_SURF, MOVE_DRAGON_PULSE, MOVE_TERRAIN_PULSE, MOVE_LASER_FOCUS},
+        .heldItem = ITEM_NONE,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 0, 170),
+        .nature = NATURE_HARDY
+    },
+    [FRONTIER_MON_AVALUGG_1] = {
+        .species = SPECIES_AVALUGG,
+        .moves = {MOVE_AVALANCHE, MOVE_BODY_SLAM, MOVE_RAPID_SPIN, MOVE_HAIL},
+        .heldItem = ITEM_TOXIC_ORB,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 252, 0),
+        .nature = NATURE_RELAXED
+    },
+    [FRONTIER_MON_DARTRIX_1] = {
+        .species = SPECIES_DARTRIX,
+        .moves = {MOVE_AERIAL_ACE, MOVE_SHADOW_CLAW, MOVE_RAZOR_LEAF, MOVE_SHADOW_SNEAK},
+        .heldItem = ITEM_SPELL_TAG,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_ADAMANT
+    },
+    [FRONTIER_MON_TORRACAT_1] = {
+        .species = SPECIES_TORRACAT,
+        .moves = {MOVE_FIRE_FANG, MOVE_CRUNCH, MOVE_LICK, MOVE_U_TURN},
+        .heldItem = ITEM_CHESTO_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 252, 0, 0, 0, 252),
+        .nature = NATURE_BASHFUL
+    },
+    [FRONTIER_MON_BRIONNE_1] = {
+        .species = SPECIES_BRIONNE,
+        .moves = {MOVE_BUBBLE_BEAM, MOVE_MOONBLAST, MOVE_HYPER_VOICE, MOVE_PERISH_SONG},
+        .heldItem = ITEM_PECHA_BERRY,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 170, 0),
+        .nature = NATURE_SASSY
+    },
+    [FRONTIER_MON_VIKAVOLT_1] = {
+        .species = SPECIES_VIKAVOLT,
+        .moves = {MOVE_BUG_BITE, MOVE_SPARK, MOVE_ACROBATICS, MOVE_CHARGE},
+        .heldItem = ITEM_LUM_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 170, 0),
+        .nature = NATURE_HARDY
+    },
+    [FRONTIER_MON_RIBOMBEE_1] = {
+        .species = SPECIES_RIBOMBEE,
+        .moves = {MOVE_POLLEN_PUFF, MOVE_DAZZLING_GLEAM, MOVE_BATON_PASS, MOVE_STUN_SPORE},
+        .heldItem = ITEM_PETAYA_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 0, 170, 170, 0, 170),
+        .nature = NATURE_CALM
+    },
+    [FRONTIER_MON_LYCANROC_M] = {
+        .species = SPECIES_LYCANROC_MIDNIGHT,
+        .moves = {MOVE_STONE_EDGE, MOVE_ROCK_TOMB, MOVE_REVERSAL, MOVE_LASH_OUT},
+        .heldItem = ITEM_BRIGHT_POWDER,
+        .ev = TRAINER_PARTY_EVS(170, 170, 0, 0, 0, 170),
+        .nature = NATURE_SERIOUS
+    },
+    [FRONTIER_MON_LURANTIS_1] = {
+        .species = SPECIES_LURANTIS,
+        .moves = {MOVE_LEAF_BLADE, MOVE_X_SCISSOR, MOVE_NIGHT_SLASH, MOVE_SOLAR_BLADE},
+        .heldItem = ITEM_SILVER_POWDER,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 170, 0),
+        .nature = NATURE_IMPISH
+    },
+    [FRONTIER_MON_SHIINOTIC_1] = {
+        .species = SPECIES_SHIINOTIC,
+        .moves = {MOVE_MEGA_DRAIN, MOVE_DAZZLING_GLEAM, MOVE_LEECH_SEED, MOVE_STRENGTH_SAP},
+        .heldItem = ITEM_TOXIC_ORB,
+        .ev = TRAINER_PARTY_EVS(170, 0, 0, 170, 170, 0),
+        .nature = NATURE_CALM
+    },
+    [FRONTIER_MON_ORANGURU_1] = {
+        .species = SPECIES_ORANGURU,
+        .moves = {MOVE_PSYSHOCK, MOVE_ENERGY_BALL, MOVE_GRAVITY, MOVE_YAWN},
+        .heldItem = ITEM_PECHA_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 0, 0, 170, 170, 170),
+        .nature = NATURE_HARDY
+    },
+    [FRONTIER_MON_PASSIMIAN_1] = {
+        .species = SPECIES_PASSIMIAN,
+        .moves = {MOVE_BRICK_BREAK, MOVE_SEED_BOMB, MOVE_SMACK_DOWN, MOVE_SUBSTITUTE},
+        .heldItem = ITEM_PECHA_BERRY,
+        .ev = TRAINER_PARTY_EVS(0, 170, 170, 0, 0, 170),
+        .nature = NATURE_HARDY
+    },
+    [FRONTIER_MON_MINIOR_1] = {
+        .species = SPECIES_MINIOR,
+        .moves = {MOVE_DAZZLING_GLEAM, MOVE_ROCK_BLAST, MOVE_EXPLOSION, MOVE_SHELL_SMASH},
+        .heldItem = ITEM_WHITE_HERB,
+        .ev = TRAINER_PARTY_EVS(252, 0, 0, 0, 0, 252),
+        .nature = NATURE_QUIRKY
     },
     [FRONTIER_MON_CLOYSTER_1] = {
         .species = SPECIES_CLOYSTER,
