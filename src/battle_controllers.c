@@ -3117,7 +3117,7 @@ u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
 
 bool32 BattleDialogIsActive(void)
 {
-    if (gMain.inBattle && !gBattleStruct->hasBattleInputStarted)
+    if (gMain.inBattle && !gBattleStruct->hasBattleInputStarted && !InBattleChoosingMoves())
         return TRUE;
     return FALSE;
 }
