@@ -17,7 +17,7 @@
 #define MAX_TRAINER_AI_FLAGS 32
 #define MAX_TRAINER_ITEMS 4
 #define MAX_POOL_SIZE 32 // arbitrary
-#define MAX_MON_TAGS 8
+#define MAX_MON_TAGS 32
 #define PARTY_SIZE MAX_POOL_SIZE
 #define MAX_MON_MOVES 4
 
@@ -132,6 +132,15 @@ struct Trainer
 
     int party_size;
     int party_size_line;
+
+    struct String pool_rules;
+    int pool_rules_line;
+
+    struct String pool_pick_functions;
+    int pool_pick_functions_line;
+    
+    struct String pool_prune;
+    int pool_prune_line;
 };
 
 static bool is_empty_string(struct String s)
@@ -1204,9 +1213,30 @@ static bool parse_trainer(struct Parser *p, const struct Parsed *parsed, struct 
             if (!token_int(p, &value, &trainer->party_size))
                 any_error = !show_parse_error(p);
         }
+        else if (is_literal_token(&key, "Pool Rules"))
+        {
+            if (trainer->pool_rules_line)
+                any_error = !set_show_parse_error(p, key.location, "duplicate 'Pool Rules'");
+            trainer->pool_rules_line = value.location.line;
+            trainer->pool_rules = token_string(&value);
+        }
+        else if (is_literal_token(&key, "Pool Pick Functions"))
+        {
+            if (trainer->pool_pick_functions_line)
+                any_error = !set_show_parse_error(p, key.location, "duplicate 'Pool Pick Function'");
+            trainer->pool_pick_functions_line = value.location.line;
+            trainer->pool_pick_functions = token_string(&value);
+        }
+        else if (is_literal_token(&key, "Pool Prune"))
+        {
+            if (trainer->pool_prune_line)
+                any_error = !set_show_parse_error(p, key.location, "duplicate 'Pool Prune'");
+            trainer->pool_prune_line = value.location.line;
+            trainer->pool_prune = token_string(&value);
+        }
         else
         {
-            any_error = !set_show_parse_error(p, key.location, "expected one of 'Name', 'Class', 'Pic', 'Gender', 'Music', 'Items', 'Double Battle', or 'AI'");
+            any_error = !set_show_parse_error(p, key.location, "expected one of 'Name', 'Class', 'Pic', 'Gender', 'Music', 'Items', 'Double Battle', 'Difficulty', 'Party Size', 'Pool Rules', 'Pool Pick Functions', 'Pool Prune' or 'AI'");
         }
     }
     if (!trainer->pic_line)
@@ -1740,6 +1770,27 @@ static void fprint_trainers(const char *output_path, FILE *f, struct Parsed *par
             fprintf(f, ",\n");
         }
 
+        if (!is_empty_string(trainer->pool_rules))
+        {
+            fprintf(f, "#line %d\n", trainer->pool_rules_line);
+            fprintf(f, "        .poolRuleIndex = ");
+            fprint_constant(f, "POOL_RULESET", trainer->pool_rules);
+            fprintf(f, ",\n");
+        }
+        if (!is_empty_string(trainer->pool_pick_functions))
+        {
+            fprintf(f, "#line %d\n", trainer->pool_pick_functions_line);
+            fprintf(f, "        .poolPickIndex = ");
+            fprint_constant(f, "POOL_PICK", trainer->pool_pick_functions);
+            fprintf(f, ",\n");
+        }
+        if (!is_empty_string(trainer->pool_prune))
+        {
+            fprintf(f, "#line %d\n", trainer->pool_prune_line);
+            fprintf(f, "        .poolPruneIndex = ");
+            fprint_constant(f, "POOL_PRUNE", trainer->pool_prune);
+            fprintf(f, ",\n");
+        }
         if (trainer->party_size_line)
         {
             fprintf(f, "#line %d\n", trainer->party_size_line);
@@ -1897,7 +1948,7 @@ static void fprint_trainers(const char *output_path, FILE *f, struct Parsed *par
                 {
                     if (i > 0)
                         fprintf(f, " | ");
-                    fprint_constant(f, "POOL_TAG", pokemon->tags[i]);
+                    fprint_constant(f, "MON_POOL_TAG", pokemon->tags[i]);
                 }
                 fprintf(f, ",\n");
             }

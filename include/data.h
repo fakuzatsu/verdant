@@ -94,6 +94,9 @@ struct Trainer
     /*0x1F*/ u8 mugshotColor;
     /*0x20*/ u8 partySize;
     /*0x21*/ u8 poolSize;
+    /*0x22*/ u8 poolRuleIndex;
+    /*0x23*/ u8 poolPickIndex;
+    /*0x24*/ u8 poolPruneIndex;
 };
 
 struct TrainerClass
