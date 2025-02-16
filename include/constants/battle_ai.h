@@ -29,7 +29,7 @@
 #define AI_FLAG_CHECK_BAD_MOVE              (1 << 0)  // AI will avoid using moves that are likely to fail or be ineffective in the current situation.
 #define AI_FLAG_TRY_TO_FAINT                (1 << 1)  // AI will prioritize KOing the player's mon if able.
 #define AI_FLAG_CHECK_VIABILITY             (1 << 2)  // AI damaging moves and move effects to determine the best available move in the current situation.
-#define AI_FLAG_FORCE_SETUP_FIRST_TURN      (1 << 3) // AI will prioritize using setup moves on the first turn at the expensve of all else. AI_FLAG_CHECK_VIABILITY will instead do this when the AI determines it makes sense.
+#define AI_FLAG_FORCE_SETUP_FIRST_TURN      (1 << 3)  // AI will prioritize using setup moves on the first turn at the expensve of all else. AI_FLAG_CHECK_VIABILITY will instead do this when the AI determines it makes sense.
 #define AI_FLAG_RISKY                       (1 << 4)  // AI will generally behave more recklessly, prioritizing damage over accuracy, explosions, etc.
 #define AI_FLAG_PREFER_STRONGEST_MOVE       (1 << 5)  // AI adds score bonus to any move the AI has that either OHKOs or 2HKOs the player.
 #define AI_FLAG_PREFER_BATON_PASS           (1 << 6)  // AI prefers raising its own stats and setting for / using Baton Pass.
@@ -52,9 +52,10 @@
 
 #define AI_FLAG_COUNT                       21
 
-// The following options are enough to have a basic/smart trainer. Any other addtion could make the trainer worse/better depending on the flag
+// The following options are enough to have a idiot/basic/smart trainer. Any other addtion could make the trainer worse/better depending on the flag
+#define AI_FLAG_IDIOT_TRAINER         (AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_NEGATE_UNAWARE | AI_FLAG_WILL_SUICIDE)
 #define AI_FLAG_BASIC_TRAINER         (AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY)
-#define AI_FLAG_SMART_TRAINER         (AI_FLAG_BASIC_TRAINER | AI_FLAG_OMNISCIENT | AI_FLAG_SMART_SWITCHING | AI_FLAG_SMART_MON_CHOICES | AI_FLAG_WEIGH_ABILITY_PREDICTION)
+#define AI_FLAG_SMART_TRAINER         (AI_FLAG_BASIC_TRAINER | AI_FLAG_SMART_SWITCHING | AI_FLAG_SMART_MON_CHOICES | AI_FLAG_WEIGH_ABILITY_PREDICTION)
 
 // 'other' ai logic flags
 #define AI_FLAG_DYNAMIC_FUNC          (1 << 28)  // Create custom AI functions for specific battles via "setdynamicaifunc" cmd
