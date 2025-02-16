@@ -110,7 +110,7 @@ static const u8 sFeintDescription[] = _(
     "An attack that hits foes\n"
     "using moves like Protect.");
 
-const struct MoveInfo gMovesInfo[MOVES_COUNT_DYNAMAX] =
+const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
 {
     [MOVE_NONE] =
     {
@@ -22057,4 +22057,43 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_DYNAMAX] =
         .battleAnimScript = gBattleAnimMove_GMaxRapidFlow,
     },
 
+    [MOVE_TERA_STAR] =
+    {
+        .name = COMPOUND_STRING("Tera Star"),
+        .description = COMPOUND_STRING(
+            "Terapagos strikes a foe with\n"
+            "a single terastal star."),
+        .effect = EFFECT_TERA_BLAST,
+        .power = 80,
+        .type = TYPE_NORMAL,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .forcePressure = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_TERA_BLAST,
+            .self = TRUE,
+        }),
+        .battleAnimScript = gBattleAnimMove_TeraBlast,
+    },
+
+    [MOVE_CLANGING_BLADE] = 
+    {
+        .name = COMPOUND_STRING("Clanging Blade"),
+        .description = COMPOUND_STRING(
+            "Kommo-o strikes with the\n"
+            "clanging edge of its tail."),
+        .effect = EFFECT_TERA_BLAST,
+        .power = 100,
+        .type = TYPE_NORMAL,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .forcePressure = TRUE,
+        .battleAnimScript = gBattleAnimMove_ClangingBlade,
+    },
 };

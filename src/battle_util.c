@@ -219,6 +219,12 @@ void HandleAction_UseMove(void)
         gBattleStruct->categoryOverride = gMovesInfo[gCurrentMove].category;
         gCurrentMove = gChosenMove = GetMaxMove(gBattlerAttacker, gCurrentMove);
     }
+    // check Tera Move used
+    else if (GetActiveGimmick(gBattlerAttacker) == GIMMICK_TERA)
+    {
+        gBattleStruct->categoryOverride = gMovesInfo[gCurrentMove].category;
+        gCurrentMove = gChosenMove = GetTeraMove(gBattlerAttacker, gCurrentMove);
+    }
 
     moveTarget = GetBattlerMoveTargetType(gBattlerAttacker, gCurrentMove);
 

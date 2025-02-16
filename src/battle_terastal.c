@@ -17,6 +17,18 @@
 #include "constants/hold_effects.h"
 #include "constants/rgb.h"
 
+struct TeraFormMove
+{
+    u16 species;
+    u16 teraFormMove;
+};
+
+static const struct TeraFormMove sTeraFormMoveTable[] =
+{
+    {SPECIES_TERAPAGOS_TERASTAL,    MOVE_TERA_STAR},
+    {SPECIES_KOMMO_O_TERA,          MOVE_CLANGING_BLADE},
+};
+
 // Sets flags and variables upon a battler's Terastallization.
 void ActivateTera(u32 battler)
 {
@@ -180,4 +192,56 @@ uq4_12_t GetTeraMultiplier(u32 battler, u32 type)
 u16 GetTeraTypeRGB(u32 type)
 {
     return gTypesInfo[type].teraTypeRGBValue;
+}
+
+static u16 GetTeraBlastFormMove(u32 battler)
+{
+    u32 i;
+    u32 species = gBattleMons[battler].species;
+    u32 targetSpecies = SPECIES_NONE;
+
+    if (!gSpeciesInfo[species].isTeraForm)
+        targetSpecies = GetBattleFormChangeTargetSpecies(battler, FORM_CHANGE_BATTLE_TERASTALLIZATION);
+
+    if (targetSpecies != SPECIES_NONE)
+        species = targetSpecies;
+
+    if (gSpeciesInfo[species].isTeraForm)
+    {
+        for (i = 0; i < ARRAY_COUNT(sTeraFormMoveTable); i++)
+        {
+            if (sTeraFormMoveTable[i].species == species)
+                return sTeraFormMoveTable[i].teraFormMove;
+        }
+    }
+
+    return MOVE_TERA_BLAST;
+}
+
+// Returns the appropriate Tera Form Move. 
+// Set up to be expandable. Currently only Tera Blast is changed.
+u16 GetTeraMove(u32 battler, u32 baseMove)
+{
+    u32 move = baseMove;
+
+    if (baseMove == MOVE_NONE) // for move display
+    {
+        return MOVE_NONE;
+    }
+    else if (baseMove == MOVE_STRUGGLE)
+    {
+        return MOVE_STRUGGLE;
+    }
+    else if (baseMove == MOVE_TERA_BLAST)
+    {
+        move = GetTeraBlastFormMove(battler);
+    }
+
+    return move;
+}
+
+// Returns whether a move is a Tera Move or not.
+bool32 IsTeraMove(u32 move)
+{
+    return move >= FIRST_TERA_MOVE && move <= LAST_TERA_MOVE;
 }

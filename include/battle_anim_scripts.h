@@ -1014,5 +1014,7 @@ extern const u8 gBattleAnimSpecial_SubstituteToMon[];
 extern const u8 gBattleAnimSpecial_MonToSubstitute[];
 extern const u8 gBattleAnimSpecial_CriticalCaptureBallThrow[];
 
+// Tera move animations
+extern const u8 gBattleAnimMove_ClangingBlade[];
 
 #endif // GUARD_BATTLE_ANIM_SCRIPTS_H

@@ -1012,12 +1012,20 @@
 #define MOVE_G_MAX_ONE_BLOW     (FIRST_MAX_MOVE + 50)
 #define MOVE_G_MAX_RAPID_FLOW   (FIRST_MAX_MOVE + 51)
 
-#define FIRST_MAX_MOVE        MOVES_COUNT_Z
-#define LAST_MAX_MOVE         MOVE_G_MAX_RAPID_FLOW
+#define FIRST_MAX_MOVE          MOVES_COUNT_Z
+#define LAST_MAX_MOVE           MOVE_G_MAX_RAPID_FLOW
 
-#define MOVES_COUNT_DYNAMAX       (LAST_MAX_MOVE + 1)
+#define MOVES_COUNT_DYNAMAX     (LAST_MAX_MOVE + 1)
 
-#define MOVES_COUNT_ALL         MOVES_COUNT_DYNAMAX
+#define MOVE_TERA_STAR          (FIRST_TERA_MOVE + 0)
+#define MOVE_CLANGING_BLADE     (FIRST_TERA_MOVE + 1)
+
+#define FIRST_TERA_MOVE         MOVES_COUNT_DYNAMAX
+#define LAST_TERA_MOVE          MOVE_CLANGING_BLADE
+
+#define MOVES_COUNT_TERA        (LAST_TERA_MOVE + 1)
+
+#define MOVES_COUNT_ALL         MOVES_COUNT_TERA
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

@@ -5194,7 +5194,6 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .baseSpAttack  = 100,
         .baseSpDefense = 105,
         .types = MON_TYPES(TYPE_DRAGON, TYPE_FIGHTING),
-        .forceTeraType = TYPE_STEEL,
         .catchRate = 45,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 300 : 270,
         .evYield_Defense = 3,
@@ -5257,6 +5256,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .baseSpAttack  = 100,
         .baseSpDefense = 105,
         .types = MON_TYPES(TYPE_DRAGON, TYPE_FIGHTING),
+        .forceTeraType = TYPE_STEEL,
         .catchRate = 45,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 300 : 270,
         .evYield_Defense = 3,
@@ -5306,6 +5306,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .teachableLearnset = sKommoOTeachableLearnset,
         .formSpeciesIdTable = sKommoOFormSpeciesIdTable,
         .formChangeTable = sKommoOFormChangeTable,
+        .isTeraForm = TRUE,
     },
 #endif //P_FAMILY_JANGMO_O
 

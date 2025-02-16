@@ -5584,8 +5584,6 @@ u8 CanLearnTeachableMove(u16 species, u16 move)
             {
                 if (!gSpeciesInfo[species].tmIlliterate)
                 {
-                    if (move == MOVE_TERA_BLAST && GET_BASE_SPECIES_ID(species) == SPECIES_TERAPAGOS)
-                        return FALSE;
                     if (GET_BASE_SPECIES_ID(species) == SPECIES_PYUKUMUKU && (move == MOVE_HIDDEN_POWER || move == MOVE_RETURN || move == MOVE_FRUSTRATION))
                         return FALSE;
                     return TRUE;
