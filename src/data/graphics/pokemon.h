@@ -17625,6 +17625,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_KommoO[] = INCBIN_U32("graphics/pokemon/kommo_o/back.4bpp.lz");
     const u32 gMonShinyPalette_KommoO[] = INCBIN_U32("graphics/pokemon/kommo_o/shiny.gbapal.lz");
     const u8 gMonIcon_KommoO[] = INCBIN_U8("graphics/pokemon/kommo_o/icon.4bpp");
+
+    const u32 gMonFrontPic_KommoOTera[] = INCBIN_U32("graphics/pokemon/kommo_o/tera/anim_front.4bpp.lz");
+    const u32 gMonPalette_KommoOTera[] = INCBIN_U32("graphics/pokemon/kommo_o/tera/normal.gbapal.lz");
+    const u32 gMonBackPic_KommoOTera[] = INCBIN_U32("graphics/pokemon/kommo_o/back.4bpp.lz");
+    const u32 gMonShinyPalette_KommoOTera[] = INCBIN_U32("graphics/pokemon/kommo_o/shiny.gbapal.lz");
+    const u8 gMonIcon_KommoOTera[] = INCBIN_U8("graphics/pokemon/kommo_o/icon.4bpp");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_KommoO[] = INCBIN_U8("graphics/pokemon/kommo_o/footprint.1bpp");
 #endif //P_FOOTPRINTS

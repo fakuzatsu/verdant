@@ -1310,5 +1310,14 @@ static const struct FormChange sTerapagosFormChangeTable[] = {
 };
 #endif //P_FAMILY_TERAPAGOS
 
+#if P_FAMILY_JANGMO_O
+static const struct FormChange sKommoOFormChangeTable[] = {
+#if P_TERA_FORMS
+    {FORM_CHANGE_BATTLE_TERASTALLIZATION, SPECIES_KOMMO_O_TERA, TYPE_STEEL},
+#endif
+    {FORM_CHANGE_TERMINATOR},
+};
+#endif //P_FAMILY_JANGMO_O
+
 #undef WHEN_LEARNED
 #undef WHEN_FORGOTTEN

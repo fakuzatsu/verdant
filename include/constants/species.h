@@ -1642,7 +1642,10 @@
 #define SPECIES_MIMIKYU_BUSTED_TOTEM                    1523
 #define SPECIES_MIMIKYU_TOTEM_BUSTED                    SPECIES_MIMIKYU_BUSTED_TOTEM
 
-#define SPECIES_EGG                                     (SPECIES_MIMIKYU_BUSTED_TOTEM + 1)
+// Tera forms
+#define SPECIES_KOMMO_O_TERA                            1524
+
+#define SPECIES_EGG                                     (SPECIES_KOMMO_O_TERA + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

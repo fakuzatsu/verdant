@@ -1728,6 +1728,9 @@ static const u16 sMimikyuFormSpeciesIdTable[] = {
 static const u16 sKommoOFormSpeciesIdTable[] = {
     SPECIES_KOMMO_O,
     SPECIES_KOMMO_O_TOTEM,
+    #if P_TERA_FORMS
+    SPECIES_KOMMO_O_TERA,
+#endif
     FORM_SPECIES_END,
 };
 #endif //P_FAMILY_JANGMO_O

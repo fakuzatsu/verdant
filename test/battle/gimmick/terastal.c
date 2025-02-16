@@ -807,6 +807,20 @@ SINGLE_BATTLE_TEST("(TERA) Pokemon with Tera forms change upon Terastallizing")
     }
 }
 
+SINGLE_BATTLE_TEST("(TERA) Pokemon with Type-Specific Tera forms change upon Terastallizing")
+{
+    u32 species, targetSpecies, type;
+    PARAMETRIZE { species = SPECIES_KOMMO_O; targetSpecies = SPECIES_KOMMO_O_TERA; type = TYPE_STEEL;}
+    GIVEN {
+        PLAYER(species) { TeraType(type); }
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_CELEBRATE, gimmick: GIMMICK_TERA); }
+    } THEN {
+        EXPECT_EQ(player->species, targetSpecies);
+    }
+}
+
 SINGLE_BATTLE_TEST("(TERA) All type indicators function correctly")
 {
     u32 type;
