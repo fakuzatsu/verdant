@@ -22061,8 +22061,8 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Tera Star"),
         .description = COMPOUND_STRING(
-            "Terapagos strikes a foe with\n"
-            "a single terastal star."),
+            "Terapagos calls down a terastal\n"
+            "star of its Tera-type."),
         .effect = EFFECT_TERA_BLAST,
         .power = 80,
         .type = TYPE_NORMAL,
@@ -22083,17 +22083,25 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Clanging Blade"),
         .description = COMPOUND_STRING(
-            "Kommo-o strikes with the\n"
-            "clanging edge of its tail."),
+            "Kommo-o sharpens it's tail and\n"
+            "strikes, increasing it's Speed."),
         .effect = EFFECT_TERA_BLAST,
-        .power = 100,
-        .type = TYPE_NORMAL,
+        .power = 80,
+        .type = TYPE_STEEL,
         .accuracy = 100,
         .pp = 10,
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
         .category = DAMAGE_CATEGORY_SPECIAL,
-        .forcePressure = TRUE,
+        .assistBanned = TRUE,
+        .copycatBanned = TRUE,
+        .mimicBanned = TRUE,
+        .sketchBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SPD_PLUS_1,
+            .self = TRUE,
+            .chance = 100,
+        }),
         .battleAnimScript = gBattleAnimMove_ClangingBlade,
     },
 };

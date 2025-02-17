@@ -6043,7 +6043,7 @@ u32 GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, u8 *ateBoost)
         }
         break;
     case EFFECT_TERA_BLAST:
-        if (GetActiveGimmick(battler) == GIMMICK_TERA)
+        if (GetActiveGimmick(battler) == GIMMICK_TERA && moveType == TYPE_NORMAL)
             return GetMonData(mon, MON_DATA_TERA_TYPE);
         break;
     case EFFECT_TERA_STARSTORM:

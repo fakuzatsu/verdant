@@ -5157,7 +5157,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .trainerScale = 296,
         .trainerOffset = 1,
         .frontPic = gMonFrontPic_KommoO,
-        .frontPicSize = MON_COORDS_SIZE(63, 63),
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
         .frontPicYOffset = 0,
         .frontAnimFrames = sAnims_Kommo_O,
         .frontAnimId = ANIM_SHRINK_GROW_VIBRATE_FAST,
@@ -5217,7 +5217,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .trainerScale = 296,
         .trainerOffset = 1,
         .frontPic = gMonFrontPic_KommoO,
-        .frontPicSize = MON_COORDS_SIZE(63, 63),
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
         .frontPicYOffset = 0,
         .frontAnimFrames = sAnims_Kommo_O,
         .frontAnimId = ANIM_SHRINK_GROW_VIBRATE_FAST,
@@ -5251,9 +5251,9 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
     {
         .baseHP        = 75,
         .baseAttack    = 110,
-        .baseDefense   = 125,
+        .baseDefense   = 135,
         .baseSpeed     = 85,
-        .baseSpAttack  = 100,
+        .baseSpAttack  = 115,
         .baseSpDefense = 105,
         .types = MON_TYPES(TYPE_DRAGON, TYPE_FIGHTING),
         .forceTeraType = TYPE_STEEL,
@@ -5280,7 +5280,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .trainerScale = 296,
         .trainerOffset = 1,
         .frontPic = gMonFrontPic_KommoOTera,
-        .frontPicSize = MON_COORDS_SIZE(63, 63),
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
         .frontPicYOffset = 0,
         .frontAnimFrames = sAnims_Kommo_O,
         .frontAnimId = ANIM_SHRINK_GROW_VIBRATE_FAST,
@@ -5294,19 +5294,11 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .iconPalIndex = 2,
         SHADOW(0, 13, SHADOW_SIZE_L)
         FOOTPRINT(KommoO)
-        OVERWORLD(
-            sPicTable_KommoO,
-            SIZE_32x32,
-            SHADOW_SIZE_M,
-            TRACKS_FOOT,
-            gOverworldPalette_KommoO,
-            gShinyOverworldPalette_KommoO
-        )
+        .isTeraForm = TRUE,
         .levelUpLearnset = sKommoOLevelUpLearnset,
         .teachableLearnset = sKommoOTeachableLearnset,
         .formSpeciesIdTable = sKommoOFormSpeciesIdTable,
         .formChangeTable = sKommoOFormChangeTable,
-        .isTeraForm = TRUE,
     },
 #endif //P_FAMILY_JANGMO_O
 
