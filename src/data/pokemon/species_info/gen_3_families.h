@@ -255,6 +255,69 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .formChangeTable = sSceptileFormChangeTable,
     },
 #endif //P_MEGA_EVOLUTIONS
+
+#if P_TERA_FORMS
+    [SPECIES_SCEPTILE_TERA] =
+    {
+        .baseHP        = 70,
+        .baseAttack    = 85,
+        .baseDefense   = 65,
+        .baseSpeed     = 120,
+        .baseSpAttack  = 105,
+        .baseSpDefense = 85,
+        .types = MON_TYPES(TYPE_GRASS),
+        .catchRate = 45,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 265,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 239,
+    #else
+        .expYield = 208,
+    #endif
+        .evYield_Speed = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_UNBURDEN },
+        .bodyColor = BODY_COLOR_GREEN,
+        .speciesName = _("Sceptile"),
+        .cryId = CRY_SCEPTILE,
+        .natDexNum = NATIONAL_DEX_SCEPTILE,
+        .categoryName = _("Forest"),
+        .height = 17,
+        .weight = 522,
+        .description = COMPOUND_STRING(
+            "In the jungle, its power is without equal.\n"
+            "This Pokémon carefully grows trees and\n"
+            "plants. It regulates its body temperature\n"
+            "by basking in sunlight."),
+        .pokemonScale = 256,
+        .pokemonOffset = -1,
+        .trainerScale = 275,
+        .trainerOffset = 2,
+        .frontPic = gMonFrontPic_Sceptile,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_Sceptile,
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPic = gMonBackPic_Sceptile,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_V_SHAKE,
+        .palette = gMonPalette_Sceptile,
+        .shinyPalette = gMonShinyPalette_Sceptile,
+        .iconSprite = gMonIcon_Sceptile,
+        .iconPalIndex = 1,
+        SHADOW(2, 11, SHADOW_SIZE_L)
+        FOOTPRINT(Sceptile)
+        .levelUpLearnset = sSceptileLevelUpLearnset,
+        .teachableLearnset = sSceptileTeachableLearnset,
+        .formSpeciesIdTable = sSceptileFormSpeciesIdTable,
+        .formChangeTable = sSceptileFormChangeTable,
+    },
+#endif //P_TERA_FORMS
 #endif //P_FAMILY_TREECKO
 
 #if P_FAMILY_TORCHIC
@@ -538,6 +601,73 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .formChangeTable = sBlazikenFormChangeTable,
     },
 #endif //P_MEGA_EVOLUTIONS
+
+#if P_TERA_FORMS
+    [SPECIES_BLAZIKEN_TERA] =
+    {
+        .baseHP        = 80,
+        .baseAttack    = 120,
+        .baseDefense   = 70,
+        .baseSpeed     = 80,
+        .baseSpAttack  = 110,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_FIRE, TYPE_FIGHTING),
+        .catchRate = 45,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 265,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 239,
+    #else
+        .expYield = 209,
+    #endif
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_SPEED_BOOST },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Blaziken"),
+        .cryId = CRY_BLAZIKEN,
+        .natDexNum = NATIONAL_DEX_BLAZIKEN,
+        .categoryName = _("Blaze"),
+        .height = 19,
+        .weight = 520,
+        .description = COMPOUND_STRING(
+            "It learns martial arts that use punches\n"
+            "and kicks. Every several years, its old\n"
+            "feathers burn off, and new, supple\n"
+            "feathers grow back in their place."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 301,
+        .trainerOffset = 4,
+        .frontPic = gMonFrontPic_Blaziken,
+        .frontPicFemale = gMonFrontPic_BlazikenF,
+        .frontPicSize = MON_COORDS_SIZE(56, 64),
+        .frontPicSizeFemale = MON_COORDS_SIZE(56, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_Blaziken,
+        .frontAnimId = ANIM_H_SHAKE,
+        .backPic = gMonBackPic_Blaziken,
+        .backPicFemale = gMonBackPic_BlazikenF,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicSizeFemale = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 0,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
+        .palette = gMonPalette_Blaziken,
+        .shinyPalette = gMonShinyPalette_Blaziken,
+        .iconSprite = gMonIcon_Blaziken,
+        .iconPalIndex = 0,
+        SHADOW(4, 8, SHADOW_SIZE_M)
+        FOOTPRINT(Blaziken)
+        .levelUpLearnset = sBlazikenLevelUpLearnset,
+        .teachableLearnset = sBlazikenTeachableLearnset,
+        .formSpeciesIdTable = sBlazikenFormSpeciesIdTable,
+        .formChangeTable = sBlazikenFormChangeTable,
+    },
+#endif //P_TERA_FORMS
 #endif //P_FAMILY_TORCHIC
 
 #if P_FAMILY_MUDKIP
@@ -792,6 +922,69 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .formChangeTable = sSwampertFormChangeTable,
     },
 #endif //P_MEGA_EVOLUTIONS
+
+#if P_TERA_FORMS
+    [SPECIES_SWAMPERT_TERA] =
+    {
+        .baseHP        = 100,
+        .baseAttack    = 110,
+        .baseDefense   = 90,
+        .baseSpeed     = 60,
+        .baseSpAttack  = 85,
+        .baseSpDefense = 90,
+        .types = MON_TYPES(TYPE_WATER, TYPE_GROUND),
+        .catchRate = 45,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 268,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 241,
+    #else
+        .expYield = 210,
+    #endif
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(12.5),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_WATER_1),
+        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_DAMP },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Swampert"),
+        .cryId = CRY_SWAMPERT,
+        .natDexNum = NATIONAL_DEX_SWAMPERT,
+        .categoryName = _("Mud Fish"),
+        .height = 15,
+        .weight = 819,
+        .description = COMPOUND_STRING(
+            "If it senses the approach of a storm and\n"
+            "a tidal wave, it protects its seaside nest\n"
+            "by piling up boulders. It swims as fast as\n"
+            "a jet ski."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Swampert,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 6,
+        .frontAnimFrames = sAnims_Swampert,
+        .frontAnimId = ANIM_H_SHAKE,
+        .backPic = gMonBackPic_Swampert,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_BLUE,
+        .palette = gMonPalette_Swampert,
+        .shinyPalette = gMonShinyPalette_Swampert,
+        .iconSprite = gMonIcon_Swampert,
+        .iconPalIndex = 0,
+        SHADOW(5, 7, SHADOW_SIZE_L)
+        FOOTPRINT(Swampert)
+        .levelUpLearnset = sSwampertLevelUpLearnset,
+        .teachableLearnset = sSwampertTeachableLearnset,
+        .formSpeciesIdTable = sSwampertFormSpeciesIdTable,
+        .formChangeTable = sSwampertFormChangeTable,
+    },
+#endif // P_TERA_FORMS
 #endif //P_FAMILY_MUDKIP
 
 #if P_FAMILY_POOCHYENA

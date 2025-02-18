@@ -727,6 +727,9 @@ static const u16 sSceptileFormSpeciesIdTable[] = {
 #if P_MEGA_EVOLUTIONS
     SPECIES_SCEPTILE_MEGA,
 #endif
+#if P_TERA_FORMS
+    SPECIES_SCEPTILE_TERA,
+#endif
     FORM_SPECIES_END,
 };
 #endif //P_FAMILY_TREECKO
@@ -737,6 +740,9 @@ static const u16 sBlazikenFormSpeciesIdTable[] = {
 #if P_MEGA_EVOLUTIONS
     SPECIES_BLAZIKEN_MEGA,
 #endif
+#if P_TERA_FORMS
+    SPECIES_BLAZIKEN_TERA,
+#endif
     FORM_SPECIES_END,
 };
 #endif //P_FAMILY_TORCHIC
@@ -746,6 +752,9 @@ static const u16 sSwampertFormSpeciesIdTable[] = {
     SPECIES_SWAMPERT,
 #if P_MEGA_EVOLUTIONS
     SPECIES_SWAMPERT_MEGA,
+#endif
+#if P_TERA_FORMS
+    SPECIES_SWAMPERT_TERA,
 #endif
     FORM_SPECIES_END,
 };

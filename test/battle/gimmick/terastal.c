@@ -811,6 +811,9 @@ SINGLE_BATTLE_TEST("(TERA) Pokemon with Type-Specific Tera forms change upon Ter
 {
     u32 species, targetSpecies, type;
     PARAMETRIZE { species = SPECIES_KOMMO_O; targetSpecies = SPECIES_KOMMO_O_TERA; type = TYPE_STEEL;}
+    PARAMETRIZE { species = SPECIES_SCEPTILE; targetSpecies = SPECIES_SCEPTILE_TERA; type = TYPE_WATER;}
+    PARAMETRIZE { species = SPECIES_BLAZIKEN; targetSpecies = SPECIES_BLAZIKEN_TERA; type = TYPE_GRASS;}
+    PARAMETRIZE { species = SPECIES_SWAMPERT; targetSpecies = SPECIES_SWAMPERT_TERA; type = TYPE_FIRE;}
     GIVEN {
         PLAYER(species) { TeraType(type); }
         OPPONENT(SPECIES_WOBBUFFET);

@@ -27,6 +27,9 @@ static const struct TeraFormMove sTeraFormMoveTable[] =
 {
     {SPECIES_TERAPAGOS_TERASTAL,    MOVE_TERA_STAR},
     {SPECIES_KOMMO_O_TERA,          MOVE_CLANGING_BLADE},
+    {SPECIES_SCEPTILE_TERA,         MOVE_TERA_BLAST},
+    {SPECIES_BLAZIKEN_TERA,         MOVE_TERA_BLAST},
+    {SPECIES_SWAMPERT_TERA,         MOVE_TERA_BLAST},
 };
 
 // Sets flags and variables upon a battler's Terastallization.

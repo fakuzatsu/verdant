@@ -5247,6 +5247,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .formChangeTable = sKommoOFormChangeTable,
     },
 
+#if P_TERA_FORMS
     [SPECIES_KOMMO_O_TERA] =
     {
         .baseHP        = 75,
@@ -5300,6 +5301,7 @@ const struct SpeciesInfo gSpeciesInfoGen7[] =
         .formSpeciesIdTable = sKommoOFormSpeciesIdTable,
         .formChangeTable = sKommoOFormChangeTable,
     },
+#endif //P_TERA_FORMS
 #endif //P_FAMILY_JANGMO_O
 
 #if P_FAMILY_TAPU_KOKO
