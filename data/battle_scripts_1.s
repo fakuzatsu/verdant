@@ -44,6 +44,18 @@ BattleScript_FickleBeamDoubled::
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_HitFromCritCalc
 
+BattleScript_EffectSolarKick::
+	setphotongeysercategory
+	trysolarkickboost
+	goto BattleScript_EffectHit
+BattleScript_SolarKickBoost::
+	fireboost
+	playanimation BS_ATTACKER, B_ANIM_SOLAR_KICK_CHARGE, NULL
+	waitanimation
+	printstring STRINGID_PKMNTOOKSUNLIGHT
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_EffectHit
+
 BattleScript_Terastallization::
 	@ TODO: no string prints in S/V, but right now this helps with clarity
 	printstring STRINGID_PKMNSTORINGENERGY

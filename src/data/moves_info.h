@@ -22104,4 +22104,25 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         }),
         .battleAnimScript = gBattleAnimMove_ClangingBlade,
     },
+
+    [MOVE_SOLAR_KICK] =
+    {
+        .name = COMPOUND_STRING("Solar Kick"),
+        .description = COMPOUND_STRING(
+            "Charges in the sun, dealing extra\n"
+            "damage and empowering fire."),
+        .effect = EFFECT_SOLAR_KICK,
+        .power = 80,
+        .type = TYPE_GRASS,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .assistBanned = TRUE,
+        .copycatBanned = TRUE,
+        .mimicBanned = TRUE,
+        .sketchBanned = TRUE,
+        .battleAnimScript = gBattleAnimMove_SolarKick,
+    },
 };

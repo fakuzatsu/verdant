@@ -6673,6 +6673,8 @@ static void Cmd_moveend(void)
                 SetActiveGimmick(gBattlerAttacker, GIMMICK_NONE);
             if (B_CHARGE <= GEN_8 || moveType == TYPE_ELECTRIC)
                 gStatuses3[gBattlerAttacker] &= ~(STATUS3_CHARGED_UP);
+            if (moveType == TYPE_FIRE)
+                gStatuses4[gBattlerAttacker] &= ~(STATUS4_FIRE_BOOST);
             memset(gQueuedStatBoosts, 0, sizeof(gQueuedStatBoosts));
 
             for (i = 0; i < gBattlersCount; i++)
@@ -17566,6 +17568,22 @@ void BS_FickleBeamDamageCalculation(void)
     {
         gBattlescriptCurrInstr = cmd->nextInstr;
     }
+}
+
+void BS_TrySolarKickBoost(void)
+{
+    NATIVE_ARGS();
+    if (IsBattlerWeatherAffected(gBattlerAttacker, B_WEATHER_SUN))
+        gBattlescriptCurrInstr = BattleScript_SolarKickBoost;
+    else
+        gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_FireBoost(void)
+{
+    NATIVE_ARGS();
+    gStatuses4[gBattlerAttacker] |= STATUS4_FIRE_BOOST;
+    gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
 void BS_TryTarShot(void)

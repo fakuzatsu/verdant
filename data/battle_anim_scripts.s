@@ -23113,6 +23113,7 @@ gBattleAnimMove_SolarBeam::
 SolarBeamEnd:
 	waitforvisualfinish
 	end
+gBattleAnimMove_SolarKickCharge::
 SolarBeamSetUp:
 	monbg ANIM_ATK_PARTNER
 	setalpha 12, 8
@@ -34843,4 +34844,35 @@ gBattleAnimMove_ClangingBlade::
 	createvisualtask AnimTask_BlendBattleAnimPal, 0xa, (F_PAL_BG | F_PAL_BATTLERS_2), 0x1, 0x10, 0x0, 0x7FFF @;From White
 	unloadspritegfx ANIM_TAG_CROSS_IMPACT
 	waitforvisualfinish
+	end
+
+gBattleAnimMove_SolarKick::
+	loadspritegfx ANIM_TAG_SWORD @swords dance
+	loadspritegfx ANIM_TAG_CLAW_SLASH @blade hit
+	loadspritegfx ANIM_TAG_SPARK_2 @yellow color
+	loadspritegfx ANIM_TAG_SUNLIGHT @sun rays
+	monbg ANIM_ATTACKER
+	setalpha 13, 3
+	createvisualtask AnimTask_BlendBattleAnimPal 10, (F_PAL_BG | F_PAL_BATTLERS_2), 1, 0, 6, 0x7fff
+	waitforvisualfinish
+	playsewithpan SE_M_SWORDS_DANCE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 16, 6, 1, 4
+	createsprite gSwordsDanceBladeSpriteTemplate, ANIM_ATTACKER, 2, 0x0, 0x0
+	call SolarBladeSunRays
+	call SolarBladeSunRays
+	call SolarBladeSunRays
+	call SolarBladeSunRays
+	createvisualtask AnimTask_FlashAnimTagWithColor, 0x2, 0x2715, 0x2, 0x2, 0x7ff2, 0x10, 0x0, 0x0
+	waitforvisualfinish
+	call SetSolarBeamBg
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	createsprite gSolarBladeImpactTemplate, ANIM_TARGET, 2, 0x0, 0x0, 0x1
+	delay 0x2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 12, 1
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal 10, (F_PAL_BG | F_PAL_BATTLERS_2), 1, 6, 0, 0x7fff
+	waitforvisualfinish
+	call UnsetPsychicBg
+	clearmonbg ANIM_ATTACKER
+	blendoff
 	end

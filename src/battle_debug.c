@@ -191,6 +191,7 @@ enum
     LIST_STATUS4_SALT_CURE,
     LIST_STATUS4_SYRUP_BOMB,
     LIST_STATUS4_GLAIVE_RUSH,
+    LIST_STATUS4_FIRE_BOOST,
 };
 
 enum
@@ -363,6 +364,7 @@ static const u8 sText_InfiniteConfusion[] = _("Infinite Confusion");
 static const u8 sText_SaltCure[] = _("Salt Cure");
 static const u8 sText_SyrupBomb[] = _("Syrup Bomb");
 static const u8 sText_GlaiveRush[] = _("Glaive Rush");
+static const u8 sText_FireBoost[] = _("Fire Boost");
 static const u8 sText_Reflect[] = _("Reflect");
 static const u8 sText_LightScreen[] = _("Light Screen");
 static const u8 sText_StickyWeb[] = _("Sticky Web");
@@ -599,6 +601,7 @@ static const struct ListMenuItem sStatus4ListItems[] =
     {sText_SaltCure, LIST_STATUS4_SALT_CURE},
     {sText_SyrupBomb, LIST_STATUS4_SYRUP_BOMB},
     {sText_GlaiveRush, LIST_STATUS4_GLAIVE_RUSH},
+    {sText_FireBoost, LIST_STATUS4_FIRE_BOOST},
 };
 
 static const struct ListMenuItem sSideStatusListItems[] =

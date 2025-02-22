@@ -5815,6 +5815,7 @@ bool32 TrySetAteType(u32 move, u32 battlerAtk, u32 attackerAbility)
     switch (gMovesInfo[move].effect)
     {
     case EFFECT_TERA_BLAST:
+    case EFFECT_SOLAR_KICK:
         if (GetActiveGimmick(battlerAtk) == GIMMICK_TERA)
             return FALSE;
         break;
@@ -6043,6 +6044,7 @@ u32 GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, u8 *ateBoost)
         }
         break;
     case EFFECT_TERA_BLAST:
+    case EFFECT_SOLAR_KICK:
         if (GetActiveGimmick(battler) == GIMMICK_TERA && moveType == TYPE_NORMAL)
             return GetMonData(mon, MON_DATA_TERA_TYPE);
         break;

@@ -1678,6 +1678,14 @@
 	callnative BS_FickleBeamDamageCalculation
 	.endm
 
+	.macro trysolarkickboost
+	callnative BS_TrySolarKickBoost
+	.endm
+
+	.macro fireboost
+	callnative BS_FireBoost
+	.endm
+
 	.macro trytarshot failInstr:req
 	callnative BS_TryTarShot
 	.4byte \failInstr
