@@ -146,7 +146,7 @@ static const u16 sVoltorbFlipPalettes[][16] =
 };
 
 static const u32 sVoltorbFlipTilemap[] = INCBIN_U32("graphics/voltorb_flip/gameboard.bin.lz");
-static const u32 sVoltorbFlipTiles[] = INCBIN_U32("graphics/voltorb_flip/gameboard.4bpp.lz");
+static const u32 sVoltorbFlipTiles[] = INCBIN_U32("graphics/voltorb_flip/gameboard.4bpp.smol");
 
 static const u8 sVoltorbFlipSpriteSheetData[] = INCBIN_U8("graphics/voltorb_flip/sprites.4bpp");
 static const u16 sVoltorbFlipPaletteSpriteData[] = INCBIN_U16("graphics/voltorb_flip/sprites.gbapal");

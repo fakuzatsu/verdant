@@ -125,7 +125,7 @@ static const u8 sMenuWindowFontColors[][3] =
     [FONT_BLUE]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_BLUE,       TEXT_COLOR_LIGHT_GRAY},
 };
 
-const u32 sBO3InfoCard_Gfx[] = INCBIN_U32("graphics/best_of_three/infocard.4bpp.lz");
+const u32 sBO3InfoCard_Gfx[] = INCBIN_U32("graphics/best_of_three/infocard.4bpp.smol");
 const u32 sBO3InfoCard_Tilemap[] = INCBIN_U32("graphics/best_of_three/infocard_tilemap.bin.lz");
 const u32 sBO3InfoCard_Pal[] = INCBIN_U32("graphics/best_of_three/infocard.gbapal");
 

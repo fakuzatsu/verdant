@@ -153,7 +153,7 @@ static EWRAM_DATA u8 sSaveDialogTimer = 0;
 static EWRAM_DATA u8 sSaveInfoWindowId = 0;
 
 // --BG-GFX--
-static const u32 sStartMenuTiles[] = INCBIN_U32("graphics/heat_start_menu/bg.4bpp.lz");
+static const u32 sStartMenuTiles[] = INCBIN_U32("graphics/heat_start_menu/bg.4bpp.smol");
 static const u32 sStartMenuTilemap[] = INCBIN_U32("graphics/heat_start_menu/bg.bin.lz");
 static const u32 sStartMenuTilemapDexNav[] = INCBIN_U32("graphics/heat_start_menu/bg_dexnav.bin.lz");
 static const u32 sStartMenuTilemapSafari[] = INCBIN_U32("graphics/heat_start_menu/bg_safari.bin.lz");
@@ -174,7 +174,7 @@ const u16 gStandardMenuPalette[] = INCBIN_U16("graphics/interface/std_menu.gbapa
 #define ICON_POS_6 130
 #define ICON_POS_7 150
 
-static const u32 sIconGfx[] = INCBIN_U32("graphics/heat_start_menu/icons.4bpp.lz");
+static const u32 sIconGfx[] = INCBIN_U32("graphics/heat_start_menu/icons.4bpp.fastSmol");
 static const u16 sIconPal[] = INCBIN_U16("graphics/heat_start_menu/icons.gbapal");
 
 static const struct WindowTemplate sSaveInfoWindowTemplate = 
