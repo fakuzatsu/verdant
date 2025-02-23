@@ -17289,8 +17289,14 @@ void BS_AllySwitchFailChance(void)
 void BS_SetPhotonGeyserCategory(void)
 {
     NATIVE_ARGS();
-    if (!((gMovesInfo[gCurrentMove].effect == EFFECT_TERA_BLAST && GetActiveGimmick(gBattlerAttacker) != GIMMICK_TERA)
-            || (gMovesInfo[gCurrentMove].effect == EFFECT_TERA_STARSTORM && GetActiveGimmick(gBattlerAttacker) != GIMMICK_TERA && gBattleMons[gBattlerAttacker].species == SPECIES_TERAPAGOS_STELLAR)))
+    gBattleStruct->swapDamageCategory = (GetCategoryBasedOnStats(gBattlerAttacker) != gMovesInfo[gCurrentMove].category);
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+void BS_SetTeraMoveCategory(void)
+{
+    NATIVE_ARGS();
+    if ((gCurrentMove == MOVE_TERA_BLAST || gCurrentMove == MOVE_TERA_STARSTORM || IsTeraFormMove(gCurrentMove)) && GetActiveGimmick(gBattlerAttacker == GIMMICK_TERA))
         gBattleStruct->swapDamageCategory = (GetCategoryBasedOnStats(gBattlerAttacker) != gMovesInfo[gCurrentMove].category);
     gBattlescriptCurrInstr = cmd->nextInstr;
 }

@@ -45,7 +45,7 @@ BattleScript_FickleBeamDoubled::
 	goto BattleScript_HitFromCritCalc
 
 BattleScript_EffectSolarKick::
-	setphotongeysercategory
+	setteramovecategory
 	trysolarkickboost
 	goto BattleScript_EffectHit
 BattleScript_SolarKickBoost::
@@ -851,6 +851,10 @@ BattleScript_FlingMissed:
 BattleScript_EffectPhotonGeyser::
 	setphotongeysercategory
 	goto BattleScript_EffectHit
+
+BattleScript_EffectTeraMoveCategory::
+    setteramovecategory
+    goto BattleScript_EffectHit
 
 BattleScript_EffectAuraWheel:: @ Aura Wheel can only be used by Morpeko
 	jumpifspecies BS_ATTACKER, SPECIES_MORPEKO_FULL_BELLY, BattleScript_EffectHit

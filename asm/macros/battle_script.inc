@@ -1618,6 +1618,10 @@
 	callnative BS_SetPhotonGeyserCategory
 	.endm
 
+    .macro setteramovecategory
+    callnative BS_SetTeraMoveCategory
+    .endm
+
 	.macro tryupperhand failInstr:req
 	callnative BS_TryUpperHand
 	.4byte \failInstr

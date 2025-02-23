@@ -9,7 +9,7 @@ void ExpendTypeStellarBoost(u32 battler, u32 type);
 bool32 IsTypeStellarBoosted(u32 battler, u32 type);
 uq4_12_t GetTeraMultiplier(u32 battler, u32 type);
 u16 GetTeraMove(u32 battler, u32 baseMove);
-bool32 IsTeraMove(u32 move);
+bool32 IsTeraFormMove(u32 move);
 
 u16 GetTeraTypeRGB(u32 type);
 

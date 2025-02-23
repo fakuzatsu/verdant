@@ -244,7 +244,7 @@ u16 GetTeraMove(u32 battler, u32 baseMove)
 }
 
 // Returns whether a move is a Tera Move or not.
-bool32 IsTeraMove(u32 move)
+bool32 IsTeraFormMove(u32 move)
 {
     return move >= FIRST_TERA_MOVE && move <= LAST_TERA_MOVE;
 }

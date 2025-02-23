@@ -6784,6 +6784,12 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
     const u32 gMonBackPic_Blaziken[] = INCBIN_U32("graphics/pokemon/blaziken/back.4bpp.lz");
     const u32 gMonShinyPalette_Blaziken[] = INCBIN_U32("graphics/pokemon/blaziken/shiny.gbapal.lz");
     const u8 gMonIcon_Blaziken[] = INCBIN_U8("graphics/pokemon/blaziken/icon.4bpp");
+
+    const u32 gMonFrontPic_BlazikenTera[] = INCBIN_U32("graphics/pokemon/blaziken/tera/anim_front.4bpp.lz");
+    const u32 gMonPalette_BlazikenTera[] = INCBIN_U32("graphics/pokemon/blaziken/tera/normal.gbapal.lz");
+    const u32 gMonBackPic_BlazikenTera[] = INCBIN_U32("graphics/pokemon/blaziken/back.4bpp.lz");
+    const u32 gMonShinyPalette_BlazikenTera[] = INCBIN_U32("graphics/pokemon/blaziken/shiny.gbapal.lz");
+    const u8 gMonIcon_BlazikenTera[] = INCBIN_U8("graphics/pokemon/blaziken/icon.4bpp");
 #if P_FOOTPRINTS
     const u8 gMonFootprint_Blaziken[] = INCBIN_U8("graphics/pokemon/blaziken/footprint.1bpp");
 #endif //P_FOOTPRINTS
