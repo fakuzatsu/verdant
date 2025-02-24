@@ -3652,4 +3652,46 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
     },
+
+    [ABILITY_CULTIVATE] =
+    {
+        .name = _("Cultivate"),
+#if BW_SUMMARY_SCREEN == TRUE
+        .description = COMPOUND_STRING("Powers ups Grass and Water moves\nwhen Pokémon's HP is low."),
+#else
+        .description = COMPOUND_STRING("Overgrow and Blaze."),
+#endif
+        .aiRating = 5,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
+
+    [ABILITY_LUMINOUS] =
+    {
+        .name = _("Luminous"),
+#if BW_SUMMARY_SCREEN == TRUE
+        .description = COMPOUND_STRING("Powers ups Fire and Grass moves\nwhen Pokémon's HP is low."),
+#else
+        .description = COMPOUND_STRING("Blaze and Torrent."),
+#endif
+        .aiRating = 5,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
+
+    [ABILITY_PYROCLAST] =
+    {
+        .name = _("Pyroclast"),
+#if BW_SUMMARY_SCREEN == TRUE
+        .description = COMPOUND_STRING("Powers ups Water and Fire moves\nwhen Pokémon's HP is low."),
+#else
+        .description = COMPOUND_STRING("Torrent and Overgrow."),
+#endif
+        .aiRating = 5,
+        .cantBeCopied = TRUE,
+        .cantBeSwapped = TRUE,
+        .cantBeTraced = TRUE,
+    },
 };
