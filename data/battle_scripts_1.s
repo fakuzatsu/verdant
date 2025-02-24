@@ -44,6 +44,11 @@ BattleScript_FickleBeamDoubled::
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_HitFromCritCalc
 
+BattleScript_EffectBoostHealing::
+	printstring STRINGID_MONSHEALINGWASBOOSTED
+	waitmessage B_WAIT_TIME_LONG
+	return
+
 BattleScript_EffectSolarKick::
 	setteramovecategory
 	trysolarkickboost

@@ -22105,12 +22105,37 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_ClangingBlade,
     },
 
+    [MOVE_AQUATIC_BLOOM] =
+    {
+        .name = COMPOUND_STRING("Aquatic Bloom"),
+        .description = COMPOUND_STRING(
+            "Hits with lotus petals, boosting\n"
+            "the next healing on Sceptile."),
+        .effect = EFFECT_TERA_BLAST,
+        .power = 80,
+        .type = TYPE_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .assistBanned = TRUE,
+        .copycatBanned = TRUE,
+        .mimicBanned = TRUE,
+        .sketchBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BOOST_HEALING,
+            .self = TRUE,
+        }),
+        .battleAnimScript = gBattleAnimMove_MagicalLeaf,
+    },
+
     [MOVE_SOLAR_KICK] =
     {
         .name = COMPOUND_STRING("Solar Kick"),
         .description = COMPOUND_STRING(
-            "Charges in the sun, dealing extra\n"
-            "damage and empowering fire."),
+            "Deals extra damage in sun and\n"
+            "boosts Blaziken's fire power."),
         .effect = EFFECT_SOLAR_KICK,
         .power = 80,
         .type = TYPE_GRASS,
@@ -22124,5 +22149,30 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .mimicBanned = TRUE,
         .sketchBanned = TRUE,
         .battleAnimScript = gBattleAnimMove_SolarKick,
+    },
+
+    [MOVE_MAGMA_SPIN] =
+    {
+        .name = COMPOUND_STRING("Magma Spin"),
+        .description = COMPOUND_STRING(
+            "Swampert twists it's body and\n"
+            "spews magma, destroying traps."),
+        .effect = EFFECT_TERA_BLAST,
+        .power = 80,
+        .type = TYPE_FIRE,
+        .accuracy = 100,
+        .pp = 10,
+        .target = MOVE_TARGET_BOTH,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .assistBanned = TRUE,
+        .copycatBanned = TRUE,
+        .mimicBanned = TRUE,
+        .sketchBanned = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_RAPID_SPIN,
+            .self = TRUE,
+        }),
+        .battleAnimScript = gBattleAnimMove_MagmaStorm,
     },
 };

@@ -858,6 +858,7 @@ extern const u8 BattleScript_DamageToQuarterTargetHP[];
 extern const u8 BattleScript_EffectFickleBeam[];
 extern const u8 BattleScript_FickleBeamDoubled[];
 extern const u8 BattleScript_EffectTeraMoveCategory[];
+extern const u8 BattleScript_EffectBoostHealing[];
 extern const u8 BattleScript_EffectSolarKick[];
 extern const u8 BattleScript_SolarKickBoost[];
 
