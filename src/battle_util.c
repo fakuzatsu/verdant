@@ -2308,6 +2308,7 @@ enum
     ENDTURN_GMAX_MOVE_RESIDUAL_DAMAGE,
     ENDTURN_SEA_OF_FIRE_DAMAGE,
     ENDTURN_ITEMS3,
+    ENDTURN_HEAL_BOOST,
     ENDTURN_BATTLER_COUNT
 };
 
@@ -3000,6 +3001,16 @@ u8 DoBattlerEndTurnEffects(void)
                 BtlController_EmitStatusAnimation(battler, BUFFER_A, FALSE, STATUS1_BURN);
                 MarkBattlerForControllerExec(battler);
                 BattleScriptExecute(BattleScript_HurtByTheSeaOfFire);
+                effect++;
+            }
+            gBattleStruct->turnEffectsTracker++;
+            break;
+        case ENDTURN_HEAL_BOOST:
+            if (gDisableStructs[battler].healBoostShouldEnd == TRUE)
+            {
+                gStatuses4[battler] &= ~STATUS4_HEAL_BOOST;
+                gDisableStructs[battler].healBoostShouldEnd = FALSE;
+                BattleScriptExecute(BattleScript_EffectHealBoostEnd);
                 effect++;
             }
             gBattleStruct->turnEffectsTracker++;

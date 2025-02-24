@@ -49,6 +49,11 @@ BattleScript_EffectBoostHealing::
 	waitmessage B_WAIT_TIME_LONG
 	return
 
+BattleScript_EffectHealBoostEnd::
+	printstring STRINGID_MONSHEALBOOSTENDED
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
 BattleScript_EffectSolarKick::
 	setteramovecategory
 	trysolarkickboost

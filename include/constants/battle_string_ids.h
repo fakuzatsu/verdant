@@ -724,8 +724,9 @@
 #define STRINGID_SENDCAUGHTMONPARTYORBOX              (STRINGID_EXPANSION_END + 2)
 #define STRINGID_PKMNSENTTOPCAFTERCATCH               (STRINGID_EXPANSION_END + 3)
 #define STRINGID_MONSHEALINGWASBOOSTED                (STRINGID_EXPANSION_END + 4)
+#define STRINGID_MONSHEALBOOSTENDED                   (STRINGID_EXPANSION_END + 5)
 
-#define BATTLESTRINGS_COUNT                           (STRINGID_MONSHEALINGWASBOOSTED + 1)
+#define BATTLESTRINGS_COUNT                           (STRINGID_MONSHEALBOOSTENDED + 1)
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,

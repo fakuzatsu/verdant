@@ -2424,7 +2424,7 @@ static void Cmd_healthbarupdate(void)
             if (healthValue < 0 && (gStatuses4[battler] & STATUS4_HEAL_BOOST))
             {
                 // Health is going up, apply heal boost if applicable
-                gStatuses4[battler] &= ~STATUS4_HEAL_BOOST;
+                gDisableStructs[battler].healBoostShouldEnd = TRUE;
                 healthValue = uq4_12_multiply(healthValue, UQ_4_12(1.5));
             }
 
