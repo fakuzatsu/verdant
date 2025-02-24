@@ -46,7 +46,7 @@ SINGLE_BATTLE_TEST("Aquatic Bloom boosts the next instance of healing by 50 perc
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ABSORB, player);
         HP_BAR(player, captureDamage: &healing2);
         MESSAGE("Sceptile's healing is no longer boosted!");
-    } FINALLY {
+    } THEN {
         EXPECT_MUL_EQ(healing1, UQ_4_12(1.5), healing2);
     }
 }
