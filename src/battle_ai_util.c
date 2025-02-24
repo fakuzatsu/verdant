@@ -3194,6 +3194,9 @@ bool32 ShouldAbsorb(u32 battlerAtk, u32 battlerDef, u32 move, s32 damage)
         u32 healPercent = (gMovesInfo[move].argument == 0) ? 50 : gMovesInfo[move].argument;
         s32 healDmg = (healPercent * damage) / 100;
 
+        if (gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
+            healDmg = uq4_12_multiply(healDmg, UQ_4_12(1.5));
+
         if (gStatuses3[battlerAtk] & STATUS3_HEAL_BLOCK)
             healDmg = 0;
 
@@ -3220,6 +3223,10 @@ bool32 ShouldRecover(u32 battlerAtk, u32 battlerDef, u32 move, u32 healPercent)
         // using item or user going first
         s32 damage = AI_DATA->simulatedDmg[battlerAtk][battlerDef][AI_THINKING_STRUCT->movesetIndex].expected;
         s32 healAmount = (healPercent * damage) / 100;
+
+        if (gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
+            healAmount = uq4_12_multiply(healAmount, UQ_4_12(1.5));
+
         if (gStatuses3[battlerAtk] & STATUS3_HEAL_BLOCK)
             healAmount = 0;
 

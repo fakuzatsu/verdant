@@ -3226,7 +3226,11 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         IncreaseSleepScore(battlerAtk, battlerDef, move, &score);
         break;
     case EFFECT_ABSORB:
-        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && effectiveness >= AI_EFFECTIVENESS_x1)
+        if (effectiveness < AI_EFFECTIVENESS_x1)
+            break;
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
+            ADJUST_SCORE(GOOD_EFFECT);
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT || gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_EXPLOSION:
