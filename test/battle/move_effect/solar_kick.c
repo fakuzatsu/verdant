@@ -3,6 +3,7 @@
 
 ASSUMPTIONS
 {
+    ASSUME(gMovesInfo[MOVE_SOLAR_KICK].effect == EFFECT_SOLAR_KICK);
     ASSUME(gMovesInfo[MOVE_FLAMETHROWER].power != 0);
     ASSUME(gMovesInfo[MOVE_FLAMETHROWER].type == TYPE_FIRE);
 }
@@ -31,7 +32,6 @@ SINGLE_BATTLE_TEST("Solar Kick used in the sun deals extra damage")
 {
     s16 normalDamage = 0;
     s16 chargedUpDamage = 0;
-
     GIVEN {
         PLAYER(SPECIES_BLAZIKEN_TERA);
         OPPONENT(SPECIES_WOBBUFFET) { HP(1000); MaxHP(1000); }; // pls don't die
@@ -54,7 +54,6 @@ SINGLE_BATTLE_TEST("Solar Kick used in the sun doubles the damage of the next Fi
 {
     s16 normalDamage = 0;
     s16 chargedUpDamage = 0;
-
     GIVEN {
         PLAYER(SPECIES_BLAZIKEN_TERA);
         OPPONENT(SPECIES_WOBBUFFET) { HP(1000); MaxHP(1000); }; // pls don't die

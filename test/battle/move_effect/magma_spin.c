@@ -4,7 +4,6 @@
 ASSUMPTIONS
 {
     ASSUME(gMovesInfo[MOVE_MAGMA_SPIN].effect == EFFECT_TERA_BLAST);
-    ASSUME(MoveHasAdditionalEffectSelf(MOVE_MAGMA_SPIN, MOVE_EFFECT_RAPID_SPIN) == TRUE);
 }
 
 SINGLE_BATTLE_TEST("Magma Spin becomes a physical move if the user has a higher Attack stat", s16 damage)
@@ -30,6 +29,7 @@ SINGLE_BATTLE_TEST("Magma Spin becomes a physical move if the user has a higher 
 SINGLE_BATTLE_TEST("Magma Spin blows away Wrap, hazards, etc.")
 {
     GIVEN {
+        ASSUME(MoveHasAdditionalEffectSelf(MOVE_MAGMA_SPIN, MOVE_EFFECT_RAPID_SPIN) == TRUE);
         PLAYER(SPECIES_SWAMPERT_TERA);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

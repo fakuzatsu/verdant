@@ -4,7 +4,6 @@
 ASSUMPTIONS
 {
     ASSUME(gMovesInfo[MOVE_AQUATIC_BLOOM].effect == EFFECT_TERA_BLAST);
-    ASSUME(MoveHasAdditionalEffectSelf(MOVE_AQUATIC_BLOOM, MOVE_EFFECT_BOOST_HEALING) == TRUE);
 }
 
 SINGLE_BATTLE_TEST("Aquatic Bloom becomes a physical move if the user has a higher Attack stat", s16 damage)
@@ -31,8 +30,8 @@ SINGLE_BATTLE_TEST("Aquatic Bloom boosts the next instance of healing by 50 perc
 {
     s16 healing1;
     s16 healing2;
-
     GIVEN {
+        ASSUME(MoveHasAdditionalEffectSelf(MOVE_AQUATIC_BLOOM, MOVE_EFFECT_BOOST_HEALING) == TRUE);
         PLAYER(SPECIES_SCEPTILE_TERA);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

@@ -22110,7 +22110,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .name = COMPOUND_STRING("Aquatic Bloom"),
         .description = COMPOUND_STRING(
             "Hits with lotus petals, boosting\n"
-            "the next healing on Sceptile."),
+            "next healing effect on Sceptile."),
         .effect = EFFECT_TERA_BLAST,
         .power = 80,
         .type = TYPE_WATER,
