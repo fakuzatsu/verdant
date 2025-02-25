@@ -2421,6 +2421,13 @@ static void Cmd_healthbarupdate(void)
         {
             s16 healthValue = min(gBattleMoveDamage, 10000); // Max damage (10000) not present in R/S, ensures that huge damage values don't change sign
 
+            if (healthValue < 0 && (gStatuses4[battler] & STATUS4_HEAL_BOOST))
+            {
+                // Health is going up, apply heal boost if applicable
+                gDisableStructs[battler].healBoostShouldEnd = TRUE;
+                healthValue = uq4_12_multiply(healthValue, UQ_4_12(1.5));
+            }
+
             BtlController_EmitHealthBarUpdate(battler, BUFFER_A, healthValue);
             MarkBattlerForControllerExec(battler);
 
@@ -4028,6 +4035,15 @@ void SetMoveEffect(bool32 primary, bool32 certain)
                         BattleScriptPush(gBattlescriptCurrInstr + 1);
                         gBattlescriptCurrInstr = BattleScript_StatUp;
                     }
+                }
+                break;
+            case MOVE_EFFECT_BOOST_HEALING:
+                if (!(gStatuses4[gEffectBattler] & STATUS4_HEAL_BOOST)
+                    && !NoAliveMonsForEitherParty())
+                {
+                    gStatuses4[gEffectBattler] |= STATUS4_HEAL_BOOST;
+                    BattleScriptPush(gBattlescriptCurrInstr + 1);
+                    gBattlescriptCurrInstr = BattleScript_EffectBoostHealing;
                 }
                 break;
             }

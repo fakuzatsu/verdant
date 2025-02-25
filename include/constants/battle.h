@@ -196,6 +196,7 @@
 #define STATUS4_SYRUP_BOMB              (1 << 5)
 #define STATUS4_GLAIVE_RUSH             (1 << 6)
 #define STATUS4_FIRE_BOOST              (1 << 7)
+#define STATUS4_HEAL_BOOST              (1 << 8)
 
 #define HITMARKER_WAKE_UP_CLEAR         (1 << 4) // Cleared when waking up. Never set or checked.
 #define HITMARKER_IGNORE_BIDE           (1 << 5)
@@ -406,8 +407,9 @@
 #define MOVE_EFFECT_PSYCHIC_NOISE       78
 #define MOVE_EFFECT_TERA_BLAST          79
 #define MOVE_EFFECT_ORDER_UP            80
+#define MOVE_EFFECT_BOOST_HEALING       81
 
-#define NUM_MOVE_EFFECTS                81
+#define NUM_MOVE_EFFECTS                82
 
 #define MOVE_EFFECT_AFFECTS_USER        0x2000
 #define MOVE_EFFECT_CERTAIN             0x4000

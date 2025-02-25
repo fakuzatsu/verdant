@@ -561,6 +561,7 @@ extern const u8 BattleScript_EffectHealOneSixthAllies[];
 extern const u8 BattleScript_EffectCureStatusAllies[];
 extern const u8 BattleScript_EffectRecycleBerriesAllies[];
 extern const u8 BattleScript_RemoveGenericType[];
+extern const u8 BattleScript_EffectHealBoostEnd[];
 
 // dynamax and max raids
 extern const u8 BattleScript_DynamaxBegins[];
@@ -858,6 +859,7 @@ extern const u8 BattleScript_DamageToQuarterTargetHP[];
 extern const u8 BattleScript_EffectFickleBeam[];
 extern const u8 BattleScript_FickleBeamDoubled[];
 extern const u8 BattleScript_EffectTeraMoveCategory[];
+extern const u8 BattleScript_EffectBoostHealing[];
 extern const u8 BattleScript_EffectSolarKick[];
 extern const u8 BattleScript_SolarKickBoost[];
 

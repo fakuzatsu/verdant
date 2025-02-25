@@ -3226,7 +3226,11 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         IncreaseSleepScore(battlerAtk, battlerDef, move, &score);
         break;
     case EFFECT_ABSORB:
-        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && effectiveness >= AI_EFFECTIVENESS_x1)
+        if (effectiveness < AI_EFFECTIVENESS_x1)
+            break;
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT && gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
+            ADJUST_SCORE(GOOD_EFFECT);
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT || gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_EXPLOSION:
@@ -3450,7 +3454,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
     case EFFECT_MOONLIGHT:
         if (ShouldRecover(battlerAtk, battlerDef, move, 50))
             ADJUST_SCORE(GOOD_EFFECT);
-        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT)
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT || gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST)
             ADJUST_SCORE(DECENT_EFFECT);
         break;
     case EFFECT_TOXIC:
@@ -3527,7 +3531,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
             break;
         ADJUST_SCORE(GOOD_EFFECT);
         if (!HasDamagingMove(battlerDef) || IsBattlerTrapped(battlerDef, FALSE))
-            ADJUST_SCORE(DECENT_EFFECT);
+            ADJUST_SCORE(DECENT_EFFECT + HasMoveWithAdditionalEffect(battlerAtk, MOVE_EFFECT_BOOST_HEALING));
         break;
     case EFFECT_DO_NOTHING:
         //todo - check z splash, z celebrate, z happy hour (lol)
@@ -4032,7 +4036,8 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         break;
     case EFFECT_INGRAIN:
         ADJUST_SCORE(WEAK_EFFECT);
-        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT)
+        if (aiData->holdEffects[battlerAtk] == HOLD_EFFECT_BIG_ROOT || gStatuses4[battlerAtk] & STATUS4_HEAL_BOOST
+            || HasMoveWithAdditionalEffect(battlerAtk, MOVE_EFFECT_BOOST_HEALING))
             ADJUST_SCORE(GOOD_EFFECT);
         break;
     case EFFECT_MAGIC_COAT:

@@ -2308,6 +2308,7 @@ enum
     ENDTURN_GMAX_MOVE_RESIDUAL_DAMAGE,
     ENDTURN_SEA_OF_FIRE_DAMAGE,
     ENDTURN_ITEMS3,
+    ENDTURN_HEAL_BOOST,
     ENDTURN_BATTLER_COUNT
 };
 
@@ -3000,6 +3001,16 @@ u8 DoBattlerEndTurnEffects(void)
                 BtlController_EmitStatusAnimation(battler, BUFFER_A, FALSE, STATUS1_BURN);
                 MarkBattlerForControllerExec(battler);
                 BattleScriptExecute(BattleScript_HurtByTheSeaOfFire);
+                effect++;
+            }
+            gBattleStruct->turnEffectsTracker++;
+            break;
+        case ENDTURN_HEAL_BOOST:
+            if (gDisableStructs[battler].healBoostShouldEnd == TRUE)
+            {
+                gStatuses4[battler] &= ~STATUS4_HEAL_BOOST;
+                gDisableStructs[battler].healBoostShouldEnd = FALSE;
+                BattleScriptExecute(BattleScript_EffectHealBoostEnd);
                 effect++;
             }
             gBattleStruct->turnEffectsTracker++;
@@ -9675,6 +9686,21 @@ static inline u32 CalcAttackStat(u32 move, u32 battlerAtk, u32 battlerDef, u32 m
         break;
     case ABILITY_OVERGROW:
         if (moveType == TYPE_GRASS && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_CULTIVATE:
+        if ((moveType == TYPE_GRASS || moveType == TYPE_WATER) 
+            && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+    case ABILITY_LUMINOUS:
+        if ((moveType == TYPE_FIRE || moveType == TYPE_GRASS) 
+            && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;
+        case ABILITY_PYROCLAST:
+        if ((moveType == TYPE_WATER || moveType == TYPE_FIRE) 
+            && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case ABILITY_PLUS:
