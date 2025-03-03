@@ -1460,7 +1460,7 @@ void BravoTrainerPokemonProfile_BeforeInterview2(u8 contestStandingPlace)
         show->bravoTrainer.species = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_SPECIES, NULL);
         GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_NICKNAME10, show->bravoTrainer.pokemonNickname);
         StripExtCtrlCodes(show->bravoTrainer.pokemonNickname);
-        show->bravoTrainer.pokemonNameLanguage = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_LANGUAGE);
+        show->bravoTrainer.pokemonNameLanguage = LANGUAGE_ENGLISH;
     }
 }
 
@@ -1543,7 +1543,7 @@ void PutNameRaterShowOnTheAir(void)
             StripExtCtrlCodes(show->nameRaterShow.pokemonName);
             StorePlayerIdInNormalShow(show);
             show->nameRaterShow.language = gGameLanguage;
-            show->nameRaterShow.pokemonNameLanguage = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_LANGUAGE);
+            show->nameRaterShow.pokemonNameLanguage = LANGUAGE_ENGLISH;
         }
     }
 }
@@ -1620,10 +1620,7 @@ static void InterviewAfter_PkmnFanClubOpinions(void)
     show->fanclubOpinions.species = GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES, NULL);
     StorePlayerIdInNormalShow(show);
     show->fanclubOpinions.language = gGameLanguage;
-    if (gGameLanguage == LANGUAGE_JAPANESE || GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE)
-        show->fanclubOpinions.pokemonNameLanguage = LANGUAGE_JAPANESE;
-    else
-        show->fanclubOpinions.pokemonNameLanguage = GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_LANGUAGE);
+    show->fanclubOpinions.pokemonNameLanguage = LANGUAGE_ENGLISH;
 }
 
 static void TryStartRandomMassOutbreak(void)
@@ -2238,10 +2235,7 @@ void TryPutSpotTheCutiesOnAir(struct Pokemon *pokemon, u8 ribbonMonDataIdx)
         show->cuties.selectedRibbon = MonDataIdxToRibbon(ribbonMonDataIdx);
         StorePlayerIdInRecordMixShow(show);
         show->cuties.language = gGameLanguage;
-        if (show->cuties.language == LANGUAGE_JAPANESE || GetMonData(pokemon, MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE)
-            show->cuties.pokemonNameLanguage = LANGUAGE_JAPANESE;
-        else
-            show->cuties.pokemonNameLanguage = GetMonData(pokemon, MON_DATA_LANGUAGE);
+        show->cuties.pokemonNameLanguage = LANGUAGE_ENGLISH;
     }
 }
 
@@ -2981,12 +2975,10 @@ static void InterviewBefore_FanClubSpecial(void)
 static bool8 IsPartyMonNicknamedOrNotEnglish(u8 monIdx)
 {
     struct Pokemon *pokemon;
-    u8 language;
 
     pokemon = &gPlayerParty[monIdx];
     GetMonData(pokemon, MON_DATA_NICKNAME, gStringVar1);
-    language = GetMonData(pokemon, MON_DATA_LANGUAGE, &language);
-    if (language == GAME_LANGUAGE && !StringCompare(GetSpeciesName(GetMonData(pokemon, MON_DATA_SPECIES, NULL)), gStringVar1))
+    if (!StringCompare(GetSpeciesName(GetMonData(pokemon, MON_DATA_SPECIES, NULL)), gStringVar1))
         return FALSE;
 
     return TRUE;
