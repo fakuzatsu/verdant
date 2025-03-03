@@ -83,7 +83,6 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void);
 static void CB2_HandleStartMultiPartnerBattle(void);
 static void CB2_HandleStartMultiBattle(void);
 static void CB2_HandleStartBattle(void);
-static void TryCorrectShedinjaLanguage(struct Pokemon *mon);
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer);
 static void BattleMainCB1(void);
 static void CB2_EndLinkBattle(void);
@@ -945,13 +944,6 @@ static void CB2_HandleStartBattle(void)
             // Recv Pokémon 5-6
             ResetBlockReceivedFlags();
             memcpy(&gEnemyParty[4], gBlockRecvBuffer[enemyMultiplayerId], sizeof(struct Pokemon) * 2);
-
-            TryCorrectShedinjaLanguage(&gEnemyParty[0]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[1]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[2]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[3]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[4]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[5]);
             gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
@@ -1212,19 +1204,6 @@ static void CB2_HandleStartMultiPartnerBattle(void)
             ResetBlockReceivedFlags();
             if (GetMultiplayerId() != 0)
                 memcpy(&gEnemyParty[4], gBlockRecvBuffer[0], sizeof(struct Pokemon) * 2);
-
-            TryCorrectShedinjaLanguage(&gPlayerParty[0]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[1]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[2]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[3]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[4]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[5]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[0]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[1]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[2]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[3]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[4]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[5]);
             gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
@@ -1640,20 +1619,6 @@ static void CB2_HandleStartMultiBattle(void)
                     }
                 }
             }
-            TryCorrectShedinjaLanguage(&gPlayerParty[0]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[1]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[2]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[3]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[4]);
-            TryCorrectShedinjaLanguage(&gPlayerParty[5]);
-
-            TryCorrectShedinjaLanguage(&gEnemyParty[0]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[1]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[2]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[3]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[4]);
-            TryCorrectShedinjaLanguage(&gEnemyParty[5]);
-
             gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;
@@ -2628,10 +2593,6 @@ static void AskRecordBattle(void)
         }
         break;
     }
-}
-
-static void TryCorrectShedinjaLanguage(struct Pokemon *mon)
-{
 }
 
 u32 GetBattleWindowTemplatePixelWidth(u32 windowsType, u32 tableId)
