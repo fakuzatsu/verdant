@@ -1090,7 +1090,6 @@ void CreateEgg(struct Pokemon *mon, u16 species, u8 specialLocation)
 {
     u8 metLevel;
     u16 ball;
-    u8 language;
     u8 isEgg;
 
     CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
@@ -1114,7 +1113,6 @@ static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *
     u32 personality;
     u16 ball;
     u8 metLevel;
-    u8 language;
 
     personality = daycare->offspringPersonality;
     CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, TRUE, personality, OT_ID_PLAYER_ID, 0);
