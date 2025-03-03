@@ -431,14 +431,13 @@ static void Task_LearnNextMoveOrClosePartyMenu(u8);
 static void Task_TryLearningNextMove(u8);
 static void Task_HandleReplaceMoveYesNoInput(u8);
 static void Task_ShowSummaryScreenToForgetMove(u8);
-static void StopLearningMovePrompt(u8);
+static void StopLearningMove(u8);
 static void CB2_ShowSummaryScreenToForgetMove(void);
 static void CB2_ReturnToPartyMenuWhileLearningMove(void);
 static void Task_ReturnToPartyMenuWhileLearningMove(u8);
 static void DisplayPartyMenuForgotMoveMessage(u8);
 static void Task_PartyMenuReplaceMove(u8);
-static void Task_StopLearningMoveYesNo(u8);
-static void Task_HandleStopLearningMoveYesNoInput(u8);
+static void Task_HandleStopLearningMove(u8);
 static void Task_TryLearningNextMoveAfterText(u8);
 static void BufferMonStatsToTaskData(struct Pokemon *, s16 *);
 static void UpdateMonDisplayInfoAfterRareCandy(u8, struct Pokemon *);
@@ -5898,7 +5897,7 @@ static void Task_HandleReplaceMoveYesNoInput(u8 taskId)
         PlaySE(SE_SELECT);
         // fallthrough
     case 1:
-        StopLearningMovePrompt(taskId);
+        StopLearningMove(taskId);
         break;
     }
 }
@@ -5937,7 +5936,7 @@ static void Task_ReturnToPartyMenuWhileLearningMove(u8 taskId)
         if (GetMoveSlotToReplace() != MAX_MON_MOVES)
             DisplayPartyMenuForgotMoveMessage(taskId);
         else
-            StopLearningMovePrompt(taskId);
+            StopLearningMove(taskId);
     }
 }
 
@@ -5967,55 +5966,26 @@ static void Task_PartyMenuReplaceMove(u8 taskId)
     }
 }
 
-static void StopLearningMovePrompt(u8 taskId)
-{
-    StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
-    StringExpandPlaceholders(gStringVar4, gText_StopLearningMove2);
-    DisplayPartyMenuMessage(gStringVar4, TRUE);
-    ScheduleBgCopyTilemapToVram(2);
-    gTasks[taskId].func = Task_StopLearningMoveYesNo;
-}
-
-static void Task_StopLearningMoveYesNo(u8 taskId)
-{
-    if (IsPartyMenuTextPrinterActive() != TRUE)
-    {
-        PartyMenuDisplayYesNoMenu();
-        gTasks[taskId].func = Task_HandleStopLearningMoveYesNoInput;
-    }
-}
-
-static void Task_HandleStopLearningMoveYesNoInput(u8 taskId)
+static void StopLearningMove(u8 taskId)
 {
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
 
-    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
+    StringExpandPlaceholders(gStringVar4, gText_MoveNotLearned);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_HandleStopLearningMove;
+}
+
+static void Task_HandleStopLearningMove(u8 taskId)
+{
+    if (IsPartyMenuTextPrinterActive() != TRUE)
     {
-    case 0:
-        GetMonNickname(mon, gStringVar1);
-        StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
-        DisplayLearnMoveMessage(gText_PkmnNeedsToReplaceMove);
-        gTasks[taskId].func = Task_ReplaceMoveYesNo;
-        break;
-    case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
-        // fallthrough
-    case 1:
-        GetMonNickname(mon, gStringVar1);
-        StringCopy(gStringVar2, GetMoveName(gPartyMenu.data1));
-        StringExpandPlaceholders(gStringVar4, gText_MoveNotLearned);
-        DisplayPartyMenuMessage(gStringVar4, TRUE);
         if (gPartyMenu.learnMoveState == 1)
-        {
             gTasks[taskId].func = Task_TryLearningNextMoveAfterText;
-        }
         else
-        {
-            if (gPartyMenu.learnMoveState == 2) // never occurs
-                gSpecialVar_Result = FALSE;
             gTasks[taskId].func = Task_ClosePartyMenuAfterText;
-        }
-        break;
     }
 }
 

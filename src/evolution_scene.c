@@ -555,7 +555,6 @@ static void CreateShedinja(u16 preEvoSpecies, struct Pokemon *mon)
     if (evolutions[0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < PARTY_SIZE && (P_SHEDINJA_BALL < GEN_4 || CheckBagHasItem(ball, 1)))
     {
         s32 i;
-        struct Pokemon *shedinja = &gPlayerParty[gPlayerPartyCount];
 
         CopyMon(&gPlayerParty[gPlayerPartyCount], mon, sizeof(struct Pokemon));
         SetMonData(&gPlayerParty[gPlayerPartyCount], MON_DATA_SPECIES, &evolutions[1].targetSpecies);
@@ -624,7 +623,6 @@ enum {
     MVSTATE_FORGET_MSG_1,
     MVSTATE_FORGET_MSG_2,
     MVSTATE_LEARNED_MOVE,
-    MVSTATE_ASK_CANCEL,
     MVSTATE_CANCEL,
     MVSTATE_RETRY_AFTER_HM,
 };
@@ -897,7 +895,7 @@ static void Task_EvolutionScene(u8 taskId)
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_TABLE_START]);
                 BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MSG);
                 gTasks[taskId].tLearnMoveYesState = MVSTATE_SHOW_MOVE_SELECT;
-                gTasks[taskId].tLearnMoveNoState = MVSTATE_ASK_CANCEL;
+                gTasks[taskId].tLearnMoveNoState = MVSTATE_CANCEL;
                 gTasks[taskId].tLearnMoveState++;
             }
         case MVSTATE_PRINT_YES_NO:
@@ -982,7 +980,7 @@ static void Task_EvolutionScene(u8 taskId)
                 if (var == MAX_MON_MOVES)
                 {
                     // Didn't select move slot
-                    gTasks[taskId].tLearnMoveState = MVSTATE_ASK_CANCEL;
+                    gTasks[taskId].tLearnMoveState = MVSTATE_CANCEL;
                 }
                 else
                 {
@@ -1027,13 +1025,6 @@ static void Task_EvolutionScene(u8 taskId)
                 BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MSG);
                 gTasks[taskId].tState = EVOSTATE_LEARNED_MOVE;
             }
-            break;
-        case MVSTATE_ASK_CANCEL:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_TABLE_START]);
-            BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MSG);
-            gTasks[taskId].tLearnMoveYesState = MVSTATE_INTRO_MSG_1;
-            gTasks[taskId].tLearnMoveNoState = MVSTATE_CANCEL;
-            gTasks[taskId].tLearnMoveState = MVSTATE_PRINT_YES_NO;
             break;
         case MVSTATE_CANCEL:
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_TABLE_START]);
@@ -1085,7 +1076,6 @@ enum {
     T_MVSTATE_HANDLE_MOVE_SELECT,
     T_MVSTATE_FORGET_MSG,
     T_MVSTATE_LEARNED_MOVE,
-    T_MVSTATE_ASK_CANCEL,
     T_MVSTATE_CANCEL,
     T_MVSTATE_RETRY_AFTER_HM,
 };
@@ -1309,7 +1299,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_TRYTOLEARNMOVE3 - BATTLESTRINGS_TABLE_START]);
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskId].tLearnMoveYesState = T_MVSTATE_SHOW_MOVE_SELECT;
-                gTasks[taskId].tLearnMoveNoState = T_MVSTATE_ASK_CANCEL;
+                gTasks[taskId].tLearnMoveNoState = T_MVSTATE_CANCEL;
                 gTasks[taskId].tLearnMoveState++;
             }
         case T_MVSTATE_PRINT_YES_NO:
@@ -1375,7 +1365,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
                 if (var == MAX_MON_MOVES)
                 {
                     // Didn't select move slot
-                    gTasks[taskId].tLearnMoveState = T_MVSTATE_ASK_CANCEL;
+                    gTasks[taskId].tLearnMoveState = T_MVSTATE_CANCEL;
                 }
                 else
                 {
@@ -1417,13 +1407,6 @@ static void Task_TradeEvolutionScene(u8 taskId)
                 DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                 gTasks[taskId].tState = T_EVOSTATE_LEARNED_MOVE;
             }
-            break;
-        case T_MVSTATE_ASK_CANCEL:
-            BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_STOPLEARNINGMOVE - BATTLESTRINGS_TABLE_START]);
-            DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
-            gTasks[taskId].tLearnMoveYesState = T_MVSTATE_CANCEL;
-            gTasks[taskId].tLearnMoveNoState = T_MVSTATE_INTRO_MSG_1;
-            gTasks[taskId].tLearnMoveState = T_MVSTATE_PRINT_YES_NO;
             break;
         case T_MVSTATE_CANCEL:
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_DIDNOTLEARNMOVE - BATTLESTRINGS_TABLE_START]);
