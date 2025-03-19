@@ -56,6 +56,65 @@
 #include "event_object_movement.h"
 #include "gba/isagbprint.h"
 
+/* ENUMs */
+enum MenuOption 
+{
+    MENU_POKEDEX,
+    MENU_PARTY,
+    MENU_BAG,
+    MENU_POKETCH,
+    MENU_TRAINER_CARD,
+    MENU_SAVE,
+    MENU_OPTIONS,
+    MENU_FLAG,
+    MENU_COUNT,
+};
+
+enum PlayerLocation {
+    LOCATION_OVERWORLD,
+    LOCATION_SAFARI,
+    LOCATION_PYRAMID
+};
+
+static const u8 sOverworldMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_OPTIONS };
+static const u8 sSafariMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_OPTIONS, MENU_FLAG };
+static const u8 sPyramidMenu[] = { MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_FLAG, MENU_OPTIONS };
+
+enum FLAG_VALUES 
+{
+    FLAG_VALUE_NOT_SET,
+    FLAG_VALUE_SET,
+};
+
+enum SAVE_STATES 
+{
+    SAVE_IN_PROGRESS,
+    SAVE_SUCCESS,
+    SAVE_CANCELED,
+    SAVE_ERROR
+};
+
+/* STRUCTs */
+struct HeatStartMenu 
+{
+    MainCallback savedCallback;
+    u32 loadState;
+    u32 sStartClockWindowId;
+    u32 sMenuNameWindowId;
+    u32 sTopLeftWindowId;
+    u32 flag; // some u32 holding values for controlling the sprite anims and lifetime
+    u32 lightLevel;
+
+    u32 spriteIdPoketch;
+    u32 spriteIdPokedex;
+    u32 spriteIdParty;
+    u32 spriteIdBag;
+    u32 spriteIdTrainerCard;
+    u32 spriteIdSave;
+    u32 spriteIdOptions;
+    u32 spriteIdFlag;
+};
+
 /* CALLBACKS */
 static void SpriteCB_IconPoketch(struct Sprite* sprite);
 static void SpriteCB_IconPokedex(struct Sprite* sprite);
@@ -93,58 +152,9 @@ static u8 SaveConfirmInputCallback(void);
 static u8 SaveYesNoCallback(void);
 static void ShowSaveInfoWindow(void);
 static u8 SaveConfirmSaveCallback(void);
-static void HeatStartMenu_Overworld_HandleInput(u8 taskId);
-static void HeatStartMenu_SafariZone_HandleInput(u8 taskId);
-static void HeatStartMenu_BattlePyramid_HandleInput(u8 taskId);
+static void Task_HeatStartMenu_HandleInput(u8 taskId);
+static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation location);
 static void InitSave(void);
-
-/* ENUMs */
-enum MENU 
-{
-    MENU_POKEDEX,
-    MENU_PARTY,
-    MENU_BAG,
-    MENU_POKETCH,
-    MENU_TRAINER_CARD,
-    MENU_SAVE,
-    MENU_OPTIONS,
-    MENU_FLAG,
-};
-
-enum FLAG_VALUES 
-{
-    FLAG_VALUE_NOT_SET,
-    FLAG_VALUE_SET,
-};
-
-enum SAVE_STATES 
-{
-    SAVE_IN_PROGRESS,
-    SAVE_SUCCESS,
-    SAVE_CANCELED,
-    SAVE_ERROR
-};
-
-/* STRUCTs */
-struct HeatStartMenu 
-{
-    MainCallback savedCallback;
-    u32 loadState;
-    u32 sStartClockWindowId;
-    u32 sMenuNameWindowId;
-    u32 sTopLeftWindowId;
-    u32 flag; // some u32 holding values for controlling the sprite anims and lifetime
-    u32 lightLevel;
-
-    u32 spriteIdPoketch;
-    u32 spriteIdPokedex;
-    u32 spriteIdParty;
-    u32 spriteIdBag;
-    u32 spriteIdTrainerCard;
-    u32 spriteIdSave;
-    u32 spriteIdOptions;
-    u32 spriteIdFlag;
-};
 
 static EWRAM_DATA struct HeatStartMenu *sHeatStartMenu = NULL;
 static EWRAM_DATA u8 menuSelected = 0;
@@ -1531,360 +1541,123 @@ static void HeatStartMenu_OpenMenu(void)
     case MENU_OPTIONS:
         DoCleanUpAndChangeCallback(CB2_InitOptionMenu);
         break;
+    case MENU_SAVE:
+        DoCleanUpAndStartSaveMenu();
+        break;
+    case MENU_FLAG:
+        if (InBattlePyramid())
+            DoCleanUpAndStartBattlePyramidRetire();
+        else
+            DoCleanUpAndStartSafariZoneRetire();
+        break;
     }
-}
-
-void GoToHandleInput(void) 
-{
-    CreateTask(Task_HeatStartMenu_HandleInput, 80);
 }
 
 static void Task_HeatStartMenu_HandleInput(u8 taskId)
 {
-    if (InBattlePyramid())
-        HeatStartMenu_BattlePyramid_HandleInput(taskId);
-    else if (GetSafariZoneFlag() == TRUE)
-        HeatStartMenu_SafariZone_HandleInput(taskId);
-    else
-        HeatStartMenu_Overworld_HandleInput(taskId);
-}
-
-static void HeatStartMenu_HandleInput_DPADDOWN(void) 
-{
-    // Needs to be set to 0 so that the selected icons change in the frontend
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
-    {
-    case MENU_OPTIONS:
-        if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE) 
-        {
-            menuSelected = MENU_POKEDEX;
-        } 
-        else if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE) 
-        {
-            menuSelected = MENU_PARTY;
-        } 
-        else 
-        {
-            menuSelected = MENU_BAG;
-        }
-        break;
-    default:
-        menuSelected++;
-        PlaySE(SE_SELECT);
-        if (FlagGet(FLAG_SYS_POKENAV_GET) == FALSE && menuSelected == MENU_POKETCH) 
-        {
-            menuSelected++;
-        } 
-        else if (FlagGet(FLAG_SYS_POKEMON_GET) == FALSE && menuSelected == MENU_PARTY) 
-        {
-            menuSelected++;
-        }
-        break;
-    }
-    HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_HandleInput_DPADUP(void) 
-{
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
-    {
-    case MENU_POKEDEX:
-        menuSelected = MENU_OPTIONS;
-        break;
-    default:
-        PlaySE(SE_SELECT);
-        if (FlagGet(FLAG_SYS_POKENAV_GET) == FALSE && menuSelected == MENU_TRAINER_CARD) 
-        {
-            menuSelected -= 2;
-        } 
-        else if ((FlagGet(FLAG_SYS_POKEMON_GET) == FALSE && menuSelected == MENU_BAG) || (FlagGet(FLAG_SYS_POKEDEX_GET) == FALSE && menuSelected == MENU_PARTY)) 
-        {
-            menuSelected = MENU_OPTIONS;
-            break;
-        } 
-        else 
-        {
-            menuSelected--;
-        }
-        break;
-    }
-    HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_Overworld_HandleInput(u8 taskId) 
-{
-    u32 index;
-    if (sHeatStartMenu->loadState == 0 && FadingComplete()) 
-    {
-        index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
-        LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
-    }
-
+    enum PlayerLocation location;
     HeatStartMenu_UpdateClockDisplay();
-    if (JOY_NEW(A_BUTTON)) 
+    
+    if (InBattlePyramid())
+        location = LOCATION_PYRAMID;
+    else if (GetSafariZoneFlag() == TRUE)
+        location = LOCATION_SAFARI;
+    else
+        location = LOCATION_OVERWORLD;
+
+    if (sHeatStartMenu->loadState == 0 && FadingComplete())
     {
-        if (sHeatStartMenu->loadState == 0) 
+        u32 index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
+        LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP);
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        if (sHeatStartMenu->loadState == 0)
         {
-            if (menuSelected != MENU_SAVE) 
+            if (menuSelected != MENU_FLAG && menuSelected != MENU_SAVE)
             {
                 FadeScreen(FADE_TO_BLACK, 0);
             }
             sHeatStartMenu->loadState = 1;
         }
-    } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
+    }
+    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0)
     {
         PlaySE(SE_SELECT);
-        HeatStartMenu_ExitAndClearTilemap();  
+        HeatStartMenu_ExitAndClearTilemap();
         DestroyTask(taskId);
     }
-    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0
-     && GetDexNavFlag() && !InBattlePyramid() && !GetSafariZoneFlag())
+    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0 
+        && GetDexNavFlag() && location == LOCATION_OVERWORLD)
     {
         FadeScreen(FADE_TO_BLACK, 0);
         sHeatStartMenu->loadState = 2;
     }
-    else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0) 
+    else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0)
     {
-        HeatStartMenu_HandleInput_DPADDOWN();
-    } 
-    else if (gMain.newKeys & DPAD_UP && sHeatStartMenu->loadState == 0) 
+        HeatStartMenu_HandleInput_Move(1, location);
+    }
+    else if (gMain.newKeys & DPAD_UP && sHeatStartMenu->loadState == 0)
     {
-        HeatStartMenu_HandleInput_DPADUP();
-    } 
-    else if (sHeatStartMenu->loadState >= 1) 
+        HeatStartMenu_HandleInput_Move(-1, location);
+    }
+    
+    if (sHeatStartMenu->loadState == 1)
     {
-        if (sHeatStartMenu->loadState == 2)
-        {
-            DoCleanUpAndOpenDexNav();
-        }
-        else if (menuSelected != MENU_SAVE)
-        {
-            HeatStartMenu_OpenMenu();
-        } 
+        HeatStartMenu_OpenMenu();
+    }
+    else if (sHeatStartMenu->loadState == 2)
+    {
+        DoCleanUpAndOpenDexNav();
+    }
+}
+
+static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation location)
+{
+    const u8 *menu;
+    int menuSize;
+    int index;
+
+    sHeatStartMenu->flag = 0;
+    switch (location)
+    {
+        case LOCATION_SAFARI:
+            menu = sSafariMenu;
+            menuSize = sizeof(sSafariMenu);
+            break;
+        case LOCATION_PYRAMID:
+            menu = sPyramidMenu;
+            menuSize = sizeof(sPyramidMenu);
+            break;
+        default:
+            menu = sOverworldMenu;
+            menuSize = sizeof(sOverworldMenu);
+            break;
+    }
+
+    for (index = 0; index < menuSize; index++)
+    {
+        if (menu[index] == menuSelected)
+            break;
+    }
+
+    if (direction == 1) // Moving down
+    {
+        if (index < menuSize - 1)
+            menuSelected = menu[index + 1];
         else
-        {
-            DoCleanUpAndStartSaveMenu();
-        }
-    }
-}
-
-static void HeatStartMenu_SafariZone_HandleInput_DPADDOWN(void) 
-{
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
-    {
-    case MENU_OPTIONS:
-        menuSelected = MENU_FLAG;
-        break;
-    default:
+            menuSelected = menu[0];
         PlaySE(SE_SELECT);
-        if (menuSelected == MENU_FLAG) 
-        {
-            menuSelected = MENU_POKEDEX;
-        } 
-        else if (menuSelected == MENU_BAG) 
-        {
-            menuSelected = MENU_TRAINER_CARD;
-        } 
-        else if (menuSelected == MENU_TRAINER_CARD) 
-        {
-            menuSelected = MENU_OPTIONS;
-        } 
-        else 
-        {
-        menuSelected++;
-        }
-        break;
     }
-    HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_SafariZone_HandleInput_DPADUP(void) 
-{
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
+    else if (direction == -1) // Moving up
     {
-    case MENU_FLAG:
-        menuSelected = MENU_OPTIONS;
-        break;
-    default:
-        PlaySE(SE_SELECT);
-        if (menuSelected == MENU_POKEDEX) 
-        {
-            menuSelected = MENU_FLAG;
-        } 
-        else if (menuSelected == MENU_OPTIONS) 
-        {
-            menuSelected = MENU_TRAINER_CARD;
-        } 
-        else if (menuSelected == MENU_TRAINER_CARD) 
-        {
-            menuSelected = MENU_BAG;
-        } 
-        else 
-        {
-            menuSelected--;
-        }
-        break;
-    }
-    HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_SafariZone_HandleInput(u8 taskId) 
-{
-    u32 index;
-    if (sHeatStartMenu->loadState == 0 && FadingComplete())
-    {
-        index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
-        LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
-    }
-
-    HeatStartMenu_UpdateClockDisplay();
-    if (JOY_NEW(A_BUTTON)) 
-    {
-        if (sHeatStartMenu->loadState == 0) 
-        {
-            if (menuSelected != MENU_FLAG) 
-            {
-                FadeScreen(FADE_TO_BLACK, 0);
-            }
-            sHeatStartMenu->loadState = 1;
-        }
-    } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
-    {
-        PlaySE(SE_SELECT);
-        HeatStartMenu_ExitAndClearTilemap();  
-        DestroyTask(taskId);
-    } 
-    else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0) 
-    {
-        HeatStartMenu_SafariZone_HandleInput_DPADDOWN();
-    } 
-    else if (gMain.newKeys & DPAD_UP && sHeatStartMenu->loadState == 0) 
-    {
-        HeatStartMenu_SafariZone_HandleInput_DPADUP();
-    } 
-    else if (sHeatStartMenu->loadState == 1) 
-    {
-        if (menuSelected != MENU_FLAG)
-            HeatStartMenu_OpenMenu();
+        if (index > 0)
+            menuSelected = menu[index - 1];
         else
-            DoCleanUpAndStartSafariZoneRetire();
-    }
-}
-
-static void HeatStartMenu_BattlePyramid_HandleInput_DPADDOWN(void) 
-{
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
-    {
-    case MENU_OPTIONS:
-        menuSelected = MENU_PARTY;
-        break;
-    default:
+            menuSelected = menu[menuSize - 1];
         PlaySE(SE_SELECT);
-        if (menuSelected == MENU_BAG) 
-        {
-            menuSelected = MENU_TRAINER_CARD;
-        } 
-        else if (menuSelected == MENU_SAVE) 
-        {
-            menuSelected = MENU_FLAG;
-        }
-        else if (menuSelected == MENU_FLAG)
-        {
-            menuSelected = MENU_OPTIONS;
-        }
-        else 
-        {
-        menuSelected++;
-        }
-        break;
     }
+    
     HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_BattlePyramid_HandleInput_DPADUP(void) 
-{
-    sHeatStartMenu->flag = 0;
-
-    switch (menuSelected) 
-    {
-    case MENU_PARTY:
-        menuSelected = MENU_OPTIONS;
-        break;
-    default:
-        PlaySE(SE_SELECT);
-        if (menuSelected == MENU_OPTIONS) 
-        {
-            menuSelected = MENU_FLAG;
-        } 
-        else if (menuSelected == MENU_FLAG) 
-        {
-            menuSelected = MENU_SAVE;
-        } 
-        else if (menuSelected == MENU_TRAINER_CARD) 
-        {
-            menuSelected = MENU_BAG;
-        } 
-        else 
-        {
-            menuSelected--;
-        }
-        break;
-    }
-    HeatStartMenu_UpdateMenuName();
-}
-
-static void HeatStartMenu_BattlePyramid_HandleInput(u8 taskId) 
-{
-    u32 index;
-    if (sHeatStartMenu->loadState == 0 && FadingComplete())
-    {
-        index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
-        LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
-    }
-
-    HeatStartMenu_UpdateClockDisplay();
-    if (JOY_NEW(A_BUTTON)) 
-    {
-        if (sHeatStartMenu->loadState == 0) 
-        {
-            if (menuSelected != MENU_FLAG) 
-            {
-                FadeScreen(FADE_TO_BLACK, 0);
-            }
-            sHeatStartMenu->loadState = 1;
-        }
-    } 
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0) 
-    {
-        PlaySE(SE_SELECT);
-        HeatStartMenu_ExitAndClearTilemap();  
-        DestroyTask(taskId);
-    } 
-    else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0) 
-    {
-        HeatStartMenu_BattlePyramid_HandleInput_DPADDOWN();
-    } 
-    else if (gMain.newKeys & DPAD_UP && sHeatStartMenu->loadState == 0) 
-    {
-        HeatStartMenu_BattlePyramid_HandleInput_DPADUP();
-    } 
-    else if (sHeatStartMenu->loadState == 1) 
-    {
-        if (menuSelected != MENU_FLAG)
-            HeatStartMenu_OpenMenu();
-        else
-            DoCleanUpAndStartBattlePyramidRetire();
-    }
 }
