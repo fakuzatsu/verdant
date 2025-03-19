@@ -564,8 +564,8 @@ static bool8 FieldCB_ReturnToFieldStartMenu(void)
     if (InitHeatMenuStep() == FALSE)
         return FALSE;
 
-    HeatStartMenu_Init();
     FadeInFromBlack();
+    CreateTask(Task_HeatStartMenu_Init, 0);
     return TRUE;
 }
 

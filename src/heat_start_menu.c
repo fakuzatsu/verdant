@@ -737,9 +737,16 @@ bool8 InitHeatMenuStep(void)
     return TRUE;
 }
 
+inline bool8 FadingComplete(void)
+{
+    if (!gPaletteFade.active && IsWeatherNotFadingIn())
+        return TRUE;
+    return FALSE;
+}
+
 void Task_HeatStartMenu_Init(u8 taskId)
 {
-    if (!gPaletteFade.active)
+    if (FadingComplete())
     {
         HeatStartMenu_Init();
         DestroyTask(taskId);
@@ -1611,7 +1618,7 @@ static void HeatStartMenu_HandleInput_DPADUP(void)
 static void HeatStartMenu_Overworld_HandleInput(u8 taskId) 
 {
     u32 index;
-    if (sHeatStartMenu->loadState == 0 && !gPaletteFade.active) 
+    if (sHeatStartMenu->loadState == 0 && FadingComplete()) 
     {
         index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
         LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
@@ -1733,7 +1740,7 @@ static void HeatStartMenu_SafariZone_HandleInput_DPADUP(void)
 static void HeatStartMenu_SafariZone_HandleInput(u8 taskId) 
 {
     u32 index;
-    if (sHeatStartMenu->loadState == 0 && !gPaletteFade.active)
+    if (sHeatStartMenu->loadState == 0 && FadingComplete())
     {
         index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
         LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
@@ -1841,7 +1848,7 @@ static void HeatStartMenu_BattlePyramid_HandleInput_DPADUP(void)
 static void HeatStartMenu_BattlePyramid_HandleInput(u8 taskId) 
 {
     u32 index;
-    if (sHeatStartMenu->loadState == 0 && !gPaletteFade.active)
+    if (sHeatStartMenu->loadState == 0 && FadingComplete())
     {
         index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
         LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP); 
