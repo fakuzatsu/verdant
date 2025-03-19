@@ -73,25 +73,34 @@ enum MenuOption
 enum PlayerLocation {
     LOCATION_OVERWORLD,
     LOCATION_SAFARI,
-    LOCATION_PYRAMID
+    LOCATION_PYRAMID,
 };
 
-static const u8 sOverworldMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_OPTIONS };
-static const u8 sSafariMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_OPTIONS, MENU_FLAG };
-static const u8 sPyramidMenu[] = { MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_FLAG, MENU_OPTIONS };
-
-enum FLAG_VALUES 
+enum FlagValues 
 {
     FLAG_VALUE_NOT_SET,
     FLAG_VALUE_SET,
 };
 
-enum SAVE_STATES 
+enum SaveStates 
 {
     SAVE_IN_PROGRESS,
     SAVE_SUCCESS,
     SAVE_CANCELED,
-    SAVE_ERROR
+    SAVE_ERROR,
+};
+
+enum LoadStates
+{
+    LOAD_STATE_NONE,
+    LOAD_STATE_OPEN_MENU,
+    LOAD_STATE_OPEN_DEXNAV,
+};
+
+enum NavigationDirection
+{
+    DIRECTION_UP,
+    DIRECTION_DOWN,
 };
 
 /* STRUCTs */
@@ -152,9 +161,15 @@ static u8 SaveConfirmInputCallback(void);
 static u8 SaveYesNoCallback(void);
 static void ShowSaveInfoWindow(void);
 static u8 SaveConfirmSaveCallback(void);
-static void Task_HeatStartMenu_HandleInput(u8 taskId);
-static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation location);
 static void InitSave(void);
+static void Task_HeatStartMenu_HandleInput(u8 taskId);
+static void HeatStartMenu_HandleInput_Button(enum PlayerLocation location, u8 taskId);
+static void HeatStartMenu_HandleInput_Move(enum NavigationDirection direction, enum PlayerLocation location);
+
+/* MENU DEFINITIONS */
+static const u8 sOverworldMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_OPTIONS };
+static const u8 sSafariMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_OPTIONS, MENU_FLAG };
+static const u8 sPyramidMenu[] = { MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_FLAG, MENU_OPTIONS };
 
 static EWRAM_DATA struct HeatStartMenu *sHeatStartMenu = NULL;
 static EWRAM_DATA u8 menuSelected = 0;
@@ -730,7 +745,7 @@ bool8 InitHeatMenuStep(void)
     {
         sHeatStartMenu = AllocZeroed(sizeof(struct HeatStartMenu));
         sHeatStartMenu->savedCallback = CB2_ReturnToFieldWithOpenMenu;
-        sHeatStartMenu->loadState = 0;
+        sHeatStartMenu->loadState = LOAD_STATE_NONE;
         sHeatStartMenu->sStartClockWindowId = 0;
         sHeatStartMenu->flag = 0;
         sHeatStartMenu->lightLevel = GetFlashLevel() || gSaveBlock2Ptr->frontier.pyramidLightRadius;
@@ -1565,55 +1580,58 @@ static void Task_HeatStartMenu_HandleInput(u8 taskId)
     else
         location = LOCATION_OVERWORLD;
 
-    if (sHeatStartMenu->loadState == 0 && FadingComplete())
+    switch (sHeatStartMenu->loadState)
     {
-        u32 index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
-        LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP);
+    case LOAD_STATE_OPEN_MENU:
+        HeatStartMenu_OpenMenu();
+        break;
+    case LOAD_STATE_OPEN_DEXNAV:
+        DoCleanUpAndOpenDexNav();
+        break;
+    case LOAD_STATE_NONE:
+    default:
+        if (FadingComplete())
+        {
+            u32 index = IndexOfSpritePaletteTag(TAG_ICON_PAL);
+            LoadPalette(sIconPal, OBJ_PLTT_ID(index), PLTT_SIZE_4BPP);
+        }
+        HeatStartMenu_HandleInput_Button(location, taskId);
+        break;
     }
+}
 
+static void HeatStartMenu_HandleInput_Button(enum PlayerLocation location, u8 taskId)
+{
     if (JOY_NEW(A_BUTTON))
     {
-        if (sHeatStartMenu->loadState == 0)
+        if (menuSelected != MENU_FLAG && menuSelected != MENU_SAVE)
         {
-            if (menuSelected != MENU_FLAG && menuSelected != MENU_SAVE)
-            {
-                FadeScreen(FADE_TO_BLACK, 0);
-            }
-            sHeatStartMenu->loadState = 1;
+            FadeScreen(FADE_TO_BLACK, 0);
         }
+        sHeatStartMenu->loadState = LOAD_STATE_OPEN_MENU;
     }
-    else if (JOY_NEW(B_BUTTON) && sHeatStartMenu->loadState == 0)
+    else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
         HeatStartMenu_ExitAndClearTilemap();
         DestroyTask(taskId);
     }
-    else if (JOY_NEW(L_BUTTON) && sHeatStartMenu->loadState == 0 
-        && GetDexNavFlag() && location == LOCATION_OVERWORLD)
+    else if (JOY_NEW(L_BUTTON) && GetDexNavFlag() && location == LOCATION_OVERWORLD)
     {
         FadeScreen(FADE_TO_BLACK, 0);
-        sHeatStartMenu->loadState = 2;
+        sHeatStartMenu->loadState = LOAD_STATE_OPEN_DEXNAV;
     }
-    else if (gMain.newKeys & DPAD_DOWN && sHeatStartMenu->loadState == 0)
+    else if (gMain.newKeys & DPAD_DOWN)
     {
-        HeatStartMenu_HandleInput_Move(1, location);
+        HeatStartMenu_HandleInput_Move(DIRECTION_DOWN, location);
     }
-    else if (gMain.newKeys & DPAD_UP && sHeatStartMenu->loadState == 0)
+    else if (gMain.newKeys & DPAD_UP)
     {
-        HeatStartMenu_HandleInput_Move(-1, location);
-    }
-    
-    if (sHeatStartMenu->loadState == 1)
-    {
-        HeatStartMenu_OpenMenu();
-    }
-    else if (sHeatStartMenu->loadState == 2)
-    {
-        DoCleanUpAndOpenDexNav();
+        HeatStartMenu_HandleInput_Move(DIRECTION_UP, location);
     }
 }
 
-static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation location)
+static void HeatStartMenu_HandleInput_Move(enum NavigationDirection direction, enum PlayerLocation location)
 {
     const u8 *menu;
     int menuSize;
@@ -1642,7 +1660,7 @@ static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation lo
             break;
     }
 
-    if (direction == 1) // Moving down
+    if (direction == DIRECTION_DOWN)
     {
         if (index < menuSize - 1)
             menuSelected = menu[index + 1];
@@ -1650,7 +1668,7 @@ static void HeatStartMenu_HandleInput_Move(int direction, enum PlayerLocation lo
             menuSelected = menu[0];
         PlaySE(SE_SELECT);
     }
-    else if (direction == -1) // Moving up
+    else if (direction == DIRECTION_UP)
     {
         if (index > 0)
             menuSelected = menu[index - 1];
