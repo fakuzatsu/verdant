@@ -1148,7 +1148,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         {
             isShiny = TRUE;
         }
-        else if (gDexnavBattle)
+        else if (gDexNavSpecies)
         {
             isShiny = DexNavTryMakeShinyMon();
         }

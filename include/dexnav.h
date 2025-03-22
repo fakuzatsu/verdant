@@ -69,7 +69,7 @@ bool32 GetDexNavFlag(void);
 void EndDexNavSearch(u8 taskId);
 void Task_OpenDexNavFromStartMenu(u8 taskId);
 bool8 TryStartDexnavSearch(void);
-void TryIncrementSpeciesSearchLevel(u16 dexNum);
+void TryIncrementSpeciesSearchLevel(void);
 void ResetDexNavSearch(void);
 bool8 TryFindHiddenPokemon(void);
 bool8 DexNavTryMakeShinyMon(void);
@@ -78,6 +78,6 @@ void DexNavInit_ReturnToField(void);
 void DexNavInit_ReturnToBag(void);
 
 //ewram
-extern bool8 gDexnavBattle;
+extern u16 gDexNavSpecies;
 
 #endif //GUARD_DEXNAV_H
