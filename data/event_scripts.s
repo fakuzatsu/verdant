@@ -1210,3 +1210,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Route119_North/scripts.inc"
 
 	.include "data/maps/MythicStone/scripts.inc"
+
+	.include "data/maps/LilycoveCity_LilycoveMuseum_Garden/scripts.inc"

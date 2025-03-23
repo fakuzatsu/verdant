@@ -229,6 +229,7 @@
 #define MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP  (21 | (13 << 8))
 #define MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR (22 | (13 << 8))
 #define MAP_LILYCOVE_CITY_POKEMON_CENTER_B1F        (23 | (13 << 8))
+#define MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_GARDEN    (24 | (13 << 8))
 
 // gMapGroup_IndoorMossdeep
 #define MAP_MOSSDEEP_CITY_GYM                (0 | (14 << 8))

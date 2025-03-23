@@ -4590,6 +4590,16 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/MythicStone/border.bin",
       "blockdata_filepath": "data/layouts/MythicStone/map.bin"
+    },
+    {
+      "id": "LAYOUT_LILYCOVE_CITY_LILYCOVE_MUSEUM_GARDEN",
+      "name": "LilycoveCity_LilycoveMuseum_Garden_Layout",
+      "width": 20,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lilycove",
+      "border_filepath": "data/layouts/LilycoveCity_LilycoveMuseum_Garden/border.bin",
+      "blockdata_filepath": "data/layouts/LilycoveCity_LilycoveMuseum_Garden/map.bin"
     }
   ]
 }
