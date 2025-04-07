@@ -14,7 +14,7 @@
     {
       "id": "LAYOUT_SLATEPORT_CITY",
       "name": "SlateportCity_Layout",
-      "width": 40,
+      "width": 58,
       "height": 60,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Slateport",
