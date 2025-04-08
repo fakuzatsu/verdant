@@ -4600,6 +4600,16 @@
       "secondary_tileset": "gTileset_Lilycove",
       "border_filepath": "data/layouts/LilycoveCity_LilycoveMuseum_Garden/border.bin",
       "blockdata_filepath": "data/layouts/LilycoveCity_LilycoveMuseum_Garden/map.bin"
+    },
+    {
+      "id": "LAYOUT_SLATEPORT_CITY_POWDER_HOUSE",
+      "name": "SlateportCity_PowderHouse_Layout",
+      "width": 12,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/SlateportCity_PowderHouse/border.bin",
+      "blockdata_filepath": "data/layouts/SlateportCity_PowderHouse/map.bin"
     }
   ]
 }

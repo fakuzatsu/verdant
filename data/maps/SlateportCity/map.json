@@ -589,6 +589,13 @@
       "elevation": 0,
       "dest_map": "MAP_SLATEPORT_CITY_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 10,
+      "y": 36,
+      "elevation": 0,
+      "dest_map": "MAP_SLATEPORT_CITY_POWDER_HOUSE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [

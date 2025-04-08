@@ -1212,3 +1212,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/MythicStone/scripts.inc"
 
 	.include "data/maps/LilycoveCity_LilycoveMuseum_Garden/scripts.inc"
+
+	.include "data/maps/SlateportCity_PowderHouse/scripts.inc"
