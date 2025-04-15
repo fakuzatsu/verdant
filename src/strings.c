@@ -786,6 +786,15 @@ const u8 gText_SkyPillar[] = _("Sky Pillar");
 const u8 gText_DontRemember[] = _("Don't remember");
 const u8 gText_Exit[] = _("Exit");
 const u8 gText_ExitFromBox[] = _("Exit from the Box?");
+const u8 gText_RareCandy[] = _("RARE CANDY{CLEAR_TO 0x48}4,000 COINS");
+const u8 gText_WStone[] = _("WATER STONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_FStone[] = _("FIRE STONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_LStone[] = _("LEAF STONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_TStone[] = _("THUNDERSTONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_MStone[] = _("MOON STONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_SStone[] = _("SUN STONE{CLEAR_TO 0x48}2,000 COINS");
+const u8 gText_ChoiceB[] = _("CHOICE BAND{CLEAR_TO 0x48}4,500 COINS");
+const u8 gText_BrightP[] = _("BRIGHTPOWDER{CLEAR_TO 0x48}4,500 COINS");
 const u8 gText_WhatDoYouWantToDo[] = _("What do you want to do?");
 const u8 gText_PleasePickATheme[] = _("Please pick a theme.");
 const u8 gText_PickTheWallpaper[] = _("Pick the wallpaper.");
@@ -1168,6 +1177,8 @@ const u8 gText_PlayerScurriedToCenter[] = _("{PLAYER} scurried to a Pokémon Cen
 const u8 gText_PlayerScurriedBackHome[] = _("{PLAYER} scurried back home, protecting\nthe exhausted and fainted Pokémon from\nfurther harm…\p");
 const u8 gText_HatchedFromEgg[] = _("{STR_VAR_1} hatched from the Egg!");
 const u8 gText_NicknameHatchPrompt[] = _("Would you like to nickname the newly\nhatched {STR_VAR_1}?");
+const u8 gText_FromGacha[] = _("You got {STR_VAR_1}!");
+const u8 gText_NicknameGacha[] = _("Would you like to give {STR_VAR_1}\na nickname?");
 ALIGNED(4) const u8 gText_ReadyPickBerry[] = _("Are you ready to Berry-Crush?\nPlease pick a Berry for use.\p");
 ALIGNED(4) const u8 gText_WaitForAllChooseBerry[] = _("Please wait while each member\nchooses a Berry.");
 ALIGNED(4) const u8 gText_EndedWithXUnitsPowder[] = _("{PAUSE_MUSIC}{PLAY_BGM MUS_LEVEL_UP}You ended up with {STR_VAR_1} units of\nsilky-smooth Berry POWDER.{RESUME_MUSIC}\pYour total amount of Berry POWDER\nis {STR_VAR_2}.\p");
@@ -1526,6 +1537,16 @@ const u8 gText_F700Players[] = _("{DYNAMIC 0} players");
 const u8 gText_F701Players[] = _("{DYNAMIC 1} players");
 const u8 gText_F702Players[] = _("{DYNAMIC 2} players");
 const u8 gText_F703Players[] = _("{DYNAMIC 3} players");
+//BlackJack
+const u8 gText_Bust[] = _("BUST!");
+const u8 gText_YouLose[] = _("You lose!");
+const u8 gText_YouWin[] = _("You win!");
+const u8 gText_Push[] = _("PUSH!");
+const u8 gText_BlackJack[] = _("BLACKJACK!");
+
+const u8 gText_Betting[] = _("Your current\nbet is ¥{STR_VAR_1}.");
+const u8 gText_NoBetting[] = _("Your current\nbet is ¥0.");
+const u8 gText_NoMoney[] = _("You do not have\nenough COINS.");
 
 const u8 *const gTextTable_Players[] = {
     gText_F700Players,

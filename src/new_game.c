@@ -1,5 +1,6 @@
 #include "global.h"
 #include "new_game.h"
+#include "derby.h"
 #include "random.h"
 #include "pokemon.h"
 #include "roamer.h"
@@ -195,6 +196,7 @@ void NewGameInitData(void)
     ClearBerryTrees();
     SetMoney(&gSaveBlock1Ptr->money, 200);
     SetCoins(0);
+    GetNewDerby();
     ResetLinkContestBoolean();
     ResetGameStats();
     ClearAllContestWinnerPics();

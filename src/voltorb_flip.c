@@ -2,6 +2,7 @@
 #include "constants/songs.h"
 
 #include "palette.h"
+#include "coins.h"
 #include "main.h"
 #include "gpu_regs.h"
 #include "scanline_effect.h"
@@ -19,6 +20,8 @@
 #include "menu.h"
 #include "pokedex.h"
 #include "constants/rgb.h"
+#include "constants/coins.h"
+#include "constants/vars.h"
 #include "random.h"
 
 #include "voltorb_flip.h"
@@ -34,6 +37,28 @@
 
 #define MAX_VOLTORB_FLIP_LEVEL 8
 #define MAX_VOLTORB_LEVEL_VARIANTS 5
+
+enum {
+    SPR_CREDIT_DIG_1,
+    SPR_CREDIT_DIG_10,
+    SPR_CREDIT_DIG_100,
+    SPR_CREDIT_DIG_1000,
+};
+
+#define SPR_CREDIT_DIGITS SPR_CREDIT_DIG_1
+#define MAX_SPRITES_CREDIT 4
+
+struct Vflip
+{
+	u8 CreditSpriteId1;
+	u8 CreditSpriteId2;
+	u8 CreditSpriteId3;
+	u8 CreditSpriteId4;
+	u8 CoinsSpriteId;
+	u32 winnings;
+	u32 prevWinnings;
+	u32 curWinnings;
+};	
 
 enum
 {
@@ -105,6 +130,8 @@ struct VoltorbFlipState
     u8 cursorWriteValue;
 };
 
+EWRAM_DATA static struct Vflip *sVflip = NULL;
+
 extern const u8 gText_DexNational[];
 extern const u8 gText_DexHoenn[];
 extern const u8 gText_PokedexDiploma[];
@@ -150,6 +177,12 @@ static const u32 sVoltorbFlipTiles[] = INCBIN_U32("graphics/voltorb_flip/gameboa
 
 static const u8 sVoltorbFlipSpriteSheetData[] = INCBIN_U8("graphics/voltorb_flip/sprites.4bpp");
 static const u16 sVoltorbFlipPaletteSpriteData[] = INCBIN_U16("graphics/voltorb_flip/sprites.gbapal");
+
+static const u32 sCoinsGFX[] = INCBIN_U32("graphics/voltorb_flip/coins.4bpp.fastSmol");
+static const u16 sCoinsPAL[] = INCBIN_U16("graphics/voltorb_flip/coins.gbapal");
+
+static const u32 gCredits_Gfx[] = INCBIN_U32("graphics/voltorb_flip/digits.4bpp.fastSmol");
+static const u16 sCredit_Pal[] = INCBIN_U16("graphics/voltorb_flip/digits.gbapal");
 
 
 static const struct VoltorbSpawnCounts sVoltorbSpawnCounts[MAX_VOLTORB_FLIP_LEVEL][MAX_VOLTORB_LEVEL_VARIANTS] = 
@@ -377,6 +410,22 @@ static const struct WindowTemplate sVoltorbFlipWinTemplates[WIN_COUNT + 1] =
 
 #define SPRITE_SHEET_TILE_TAG 5525
 #define SPRITE_SHEET_PAL_TAG 5526
+#define GFXTAG_CREDIT_DIGIT 1
+#define PALTAG_INTERFACE 1
+#define GFX_COINS 2
+#define PAL_COINS 2
+
+static const struct SpritePalette sCoinPalette =
+{
+    .data = sCoinsPAL,
+    .tag = PAL_COINS
+};
+
+static const struct SpritePalette sSpritePalettes2[] =
+{
+	{ .data = sCredit_Pal,      	   .tag = PALTAG_INTERFACE },	
+	{}
+};
 
 // TODO - Move to CompressedSpriteSheet
 static const struct SpriteSheet sVoltorbFlipSpriteSheet =
@@ -386,10 +435,69 @@ static const struct SpriteSheet sVoltorbFlipSpriteSheet =
     .tag = SPRITE_SHEET_TILE_TAG
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_Coins =
+{
+    .data = sCoinsGFX,
+    .size = 0x100,
+    .tag = GFX_COINS,
+};
+
+static const struct OamData sOamData_Coins =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+	.tileNum = 0,
+    .priority = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Coins =
+{
+    .tileTag = GFX_COINS,
+    .paletteTag = PAL_COINS,
+    .oam = &sOamData_Coins,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
 static const struct SpritePalette sVoltorbFlipPalette =
 {
     .data = sVoltorbFlipPaletteSpriteData,
     .tag = SPRITE_SHEET_PAL_TAG
+};
+
+static const struct CompressedSpriteSheet sSpriteSheets_Interface[] =
+{
+    {
+        .data = gCredits_Gfx,
+        .size = 0x280,
+        .tag = GFXTAG_CREDIT_DIGIT,
+    },
+    {}
+};
+
+static const struct OamData sOam_CreditDigit =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(8x16),
+    .size = SPRITE_SIZE(8x16),
+	.tileNum = 0,
+    .priority = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_CreditDigit =
+{
+    .tileTag = GFXTAG_CREDIT_DIGIT,
+    .paletteTag = PALTAG_INTERFACE,
+    .oam = &sOam_CreditDigit,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
 };
 
 static const struct OamData sPointerSpriteOamData =
@@ -478,10 +586,122 @@ static const struct SpriteTemplate sPointerSprite =
 //    .affineParam = 0,
 //};
 
+static void SetCreditDigits(u16 num)
+{
+    int i;
+    u16 d = 1000;
+    u8 digit;
+
+    for (i = 0; i < 4; i++) // Always show 4 digits
+    {
+        digit = num / d;
+
+        if (i == 0)
+        {
+            gSprites[sVflip->CreditSpriteId1].invisible = FALSE;
+
+            // Set tileNum for CreditSpriteId1
+            gSprites[sVflip->CreditSpriteId1].oam.tileNum = digit * 2;
+
+            gSprites[sVflip->CreditSpriteId1].oam.priority = 0;
+        }
+        else if (i == 1)
+        {
+            gSprites[sVflip->CreditSpriteId2].invisible = FALSE;
+
+            // Set tileNum for CreditSpriteId2
+            gSprites[sVflip->CreditSpriteId2].oam.tileNum = digit * 2;
+
+            gSprites[sVflip->CreditSpriteId2].oam.priority = 0;
+        }
+        else if (i == 2)
+        {
+            gSprites[sVflip->CreditSpriteId3].invisible = FALSE;
+
+            // Set tileNum for CreditSpriteId3
+            gSprites[sVflip->CreditSpriteId3].oam.tileNum = digit * 2;
+
+            gSprites[sVflip->CreditSpriteId3].oam.priority = 0;
+        }
+        else if (i == 3)
+        {
+            gSprites[sVflip->CreditSpriteId4].invisible = FALSE;
+
+            // Set tileNum for CreditSpriteId4
+            gSprites[sVflip->CreditSpriteId4].oam.tileNum = digit * 2;
+
+            gSprites[sVflip->CreditSpriteId4].oam.priority = 0;
+        }
+
+        // Reduce num for the next digit
+        num = num % d;
+        d = d / 10;
+    }
+
+    // Build the OAM buffer after updating all sprites
+    BuildOamBuffer();
+}
+
+static void CreateCreditSprites(void)
+{
+    int i;
+
+	for (i = 0; i < ARRAY_COUNT(sSpriteSheets_Interface) - 1; i++)  
+		{
+			struct SpriteSheet s;
+			LZ77UnCompWram(sSpriteSheets_Interface[i].data, gDecompressionBuffer);
+			s.data = gDecompressionBuffer;
+			s.size = sSpriteSheets_Interface[i].size;
+			s.tag = sSpriteSheets_Interface[i].tag;
+			LoadSpriteSheet(&s);
+		}
+
+    for (i = 0; i < 4; i++)
+    {
+		if (i == 0)
+		{
+			sVflip->CreditSpriteId1 = CreateSprite(&sSpriteTemplate_CreditDigit, 185, 146, 0);
+			gSprites[sVflip->CreditSpriteId1].oam.priority = 0;
+			gSprites[sVflip->CreditSpriteId1].invisible = FALSE;
+		}
+		else if (i == 1)
+		{
+			sVflip->CreditSpriteId2 = CreateSprite(&sSpriteTemplate_CreditDigit, (8 + 185), 146, 0);
+			gSprites[sVflip->CreditSpriteId2].oam.priority = 0;
+			gSprites[sVflip->CreditSpriteId2].invisible = FALSE;
+		}
+		else if (i == 2)
+		{
+			sVflip->CreditSpriteId3 = CreateSprite(&sSpriteTemplate_CreditDigit, (16 + 185), 146, 0);
+			gSprites[sVflip->CreditSpriteId3].oam.priority = 0;
+			gSprites[sVflip->CreditSpriteId3].invisible = FALSE;
+		}
+		else if (i == 3)
+		{
+			sVflip->CreditSpriteId4 = CreateSprite(&sSpriteTemplate_CreditDigit, (24 + 185), 146, 0);
+			gSprites[sVflip->CreditSpriteId4].oam.priority = 0;
+			gSprites[sVflip->CreditSpriteId4].invisible = FALSE;
+		}
+    }
+}
+
+static void CreateCoins(void)
+{
+	struct SpriteSheet s;
+        LZ77UnCompWram(sSpriteSheet_Coins.data, gDecompressionBuffer);
+		s.data = gDecompressionBuffer;
+		s.size = sSpriteSheet_Coins.size;
+		s.tag = GFX_COINS;
+		LoadSpriteSheet(&s);
+	
+	sVflip->CoinsSpriteId = CreateSprite(&sSpriteTemplate_Coins, 198, 132, 0);
+}
+
 void CB2_ShowVoltorbFlip(void)
 {
     AGB_ASSERT(sVoltorbFlipTilemapPtr == NULL);
     AGB_ASSERT(sVoltorbFlipState == NULL);
+	sVflip = Alloc(sizeof(struct Vflip));
 
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0);
@@ -506,6 +726,18 @@ void CB2_ShowVoltorbFlip(void)
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();
+	
+	LoadSpritePalettes(sSpritePalettes2);
+	CreateCreditSprites();
+	SetCreditDigits(VarGet(VAR_FLIP_WINNINGS));
+	//SetCreditDigits(9876);
+	sVflip->prevWinnings = VarGet(VAR_FLIP_WINNINGS);
+	sVflip->curWinnings = 0;
+	sVflip->winnings = 0;
+	SetCreditDigits(VarGet(VAR_FLIP_WINNINGS));
+	LoadSpritePalette(&sCoinPalette);
+	CreateCoins();
+	
     LoadPalette(sVoltorbFlipPalettes, 0, ARRAY_COUNT(sVoltorbFlipPalettes) * 32);
     sVoltorbFlipTilemapPtr = Alloc(0x1000);
     sVoltorbFlipState = AllocZeroed(sizeof(struct VoltorbFlipState));
@@ -517,19 +749,22 @@ void CB2_ShowVoltorbFlip(void)
     InitVoltorbFlipBg();
     InitVoltorbFlipSprites();
     InitVoltorbFlipWindow();
+	
     ResetTempTileDataBuffers();
     DecompressAndCopyTileDataToVram(1, &sVoltorbFlipTiles, 0, 0, 0);
     while (FreeTempTileDataBuffersIfPossible())
         ;
+	
     DecompressDataWithHeaderWram(sVoltorbFlipTilemap, sVoltorbFlipTilemapPtr);
     CopyBgTilemapBufferToVram(1);
     BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     EnableInterrupts(1);
+	
     SetVBlankCallback(VBlankCB);
     SetMainCallback2(MainCB2);
 
-    ResetVoltorbFlipCards(VarGet(VAR_0x8004));
+    ResetVoltorbFlipCards(VarGet(VAR_FLIP_LEVEL));
 
     CreateTask(Task_VoltorbFlipFadeIn, 0);
 }
@@ -553,10 +788,12 @@ static void Task_VoltorbFlipWaitForKeyPress(u8 taskId)
 {
     u8 gameState = CalculateBoardState();
     AGB_ASSERT(sVoltorbFlipState != NULL);
+	//SetCreditDigits(VarGet(VAR_FLIP_WINNINGS));
 
     if (JOY_NEW(B_BUTTON))
     {
         VarSet(VAR_RESULT, FALSE);
+		VarSet(VAR_FLIP_LEVEL, 0);
 
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_VoltorbFlipFadeOut;
@@ -566,6 +803,7 @@ static void Task_VoltorbFlipWaitForKeyPress(u8 taskId)
     if(gameState == GAME_STATE_LOSE)
     {
         VarSet(VAR_RESULT, FALSE);
+		VarSet(VAR_FLIP_LEVEL, 0);
 
         gSprites[sVoltorbFlipState->outlineSprite].invisible = TRUE;
         gSprites[sVoltorbFlipState->pointerSprite].invisible = TRUE;
@@ -576,6 +814,7 @@ static void Task_VoltorbFlipWaitForKeyPress(u8 taskId)
     {
         ShowAllCards();
         VarSet(VAR_RESULT, TRUE);
+		VarSet(VAR_FLIP_LEVEL, VAR_FLIP_LEVEL + 1);
 
         gSprites[sVoltorbFlipState->outlineSprite].invisible = TRUE;
         gSprites[sVoltorbFlipState->pointerSprite].invisible = TRUE;
@@ -647,9 +886,67 @@ static void Task_VoltorbFlipWaitForKeyPress(u8 taskId)
             {
             case 0:
                 if(sVoltorbFlipState->cardStates[cardIdx].value == CARD_VALUE_VOLTORB)
+				{
                     PlaySE(SE_M_EXPLOSION);
+					sVflip->winnings = 0;
+					sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+					SetCreditDigits(sVflip->curWinnings);
+				}
                 else
+				{
                     PlaySE(SE_PIN);
+						if (sVoltorbFlipState->cardStates[cardIdx].value == CARD_VALUE_1)
+					{
+						if (sVflip->winnings == 0)
+						{
+							sVflip->winnings = 1;
+							sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+							SetCreditDigits(sVflip->curWinnings);
+						}
+						else
+						{
+							
+						}
+					}
+					else if (sVoltorbFlipState->cardStates[cardIdx].value == CARD_VALUE_2)
+					{
+						if (sVflip->winnings == 0)
+						{
+							sVflip->winnings = 2;
+							sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+							SetCreditDigits(sVflip->curWinnings);
+						}
+						else
+						{
+							sVflip->winnings = sVflip->winnings * 2;
+							sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+							if (sVflip->curWinnings >= 9999)
+							{
+								sVflip->curWinnings = 9999;
+							}
+							SetCreditDigits(sVflip->curWinnings);
+						}
+					}
+					else
+					{
+						if (sVflip->winnings == 0)
+						{
+							sVflip->winnings = 3;
+							sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+							SetCreditDigits(sVflip->curWinnings);
+						}
+						else
+						{
+							sVflip->winnings = sVflip->winnings * 3;
+							sVflip->curWinnings = sVflip->prevWinnings + sVflip->winnings;
+							if (sVflip->curWinnings >= 9999)
+							{
+								sVflip->curWinnings = 9999;
+							}
+							SetCreditDigits(sVflip->curWinnings);
+						}
+					}
+				}
 
                 sVoltorbFlipState->cardStates[cardIdx].isShown = TRUE;
                 break;
@@ -681,6 +978,7 @@ static void Task_VoltorbFlipWaitForKeyPress(u8 taskId)
     }
 
     UpdateVoltorbFlipSprites();
+	//AnimateSprites;
 }
 
 static void Task_VoltorbFlipVictory(u8 taskId)
@@ -694,6 +992,7 @@ static void Task_VoltorbFlipVictory(u8 taskId)
     {
         if(WaitFanfare(FALSE))
         {
+			VarSet(VAR_FLIP_WINNINGS, sVflip->curWinnings);
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
             gTasks[taskId].func = Task_VoltorbFlipFadeOut;
         }
@@ -704,6 +1003,7 @@ static void Task_VoltorbFlipLoss(u8 taskId)
 {
     if(!IsSEPlaying())
     {
+		VarSet(VAR_FLIP_WINNINGS, 0);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_VoltorbFlipFadeOut;
     }
@@ -713,6 +1013,7 @@ static void Task_VoltorbFlipFadeOut(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
+		FREE_AND_SET_NULL(sVflip);
         Free(sVoltorbFlipTilemapPtr);
         Free(sVoltorbFlipState);
         sVoltorbFlipTilemapPtr = NULL;
