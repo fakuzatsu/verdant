@@ -1964,11 +1964,7 @@ static void CreateCreditSprites(void)
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_Interface) - 1; i++)  
     {
         struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheets_Interface[i].data, gDecompressionBuffer);
-        s.data = gDecompressionBuffer;
-        s.size = sSpriteSheets_Interface[i].size;
-        s.tag = sSpriteSheets_Interface[i].tag;
-        LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheets_Interface[i]);
     }
 
     for (i = 0; i < MAX_COIN_DIGITS; i++)
@@ -1999,11 +1995,7 @@ static void CreatePlayerSprites(void)
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PlayerInterface) - 1; i++)  
     {
         struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheets_PlayerInterface[i].data, gDecompressionBuffer);
-        s.data = gDecompressionBuffer;
-        s.size = sSpriteSheets_PlayerInterface[i].size;
-        s.tag = sSpriteSheets_PlayerInterface[i].tag;
-        LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheets_PlayerInterface[i]);
     }
 
     for (i = 0; i < 4; i++)
@@ -2016,11 +2008,7 @@ static void CreatePlayerSprites(void)
 static void CreateCTA(void)
 {
 		struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Press_A.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Press_A.size;
-		s.tag = GFXTAG_PRESS_A;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Press_A);
 	
 	sGacha->CTAspriteId = CreateSprite(&sSpriteTemplate_Press_A, 152, 116, 0);
 	gSprites[sGacha->CTAspriteId].animNum = 0; // Off
@@ -2029,11 +2017,7 @@ static void CreateCTA(void)
 static void CreateArrows(void)
 {
 		struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Arrows.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Arrows.size;
-		s.tag = GFXTAG_ARROWS;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Arrows);
 	
 	sGacha->ArrowsSpriteId = CreateSprite(&sSpriteTemplate_Arrows, 207 + 24, 120, 0);
 	gSprites[sGacha->ArrowsSpriteId].animNum = 1; // Only Up
@@ -2042,11 +2026,7 @@ static void CreateArrows(void)
 static void CreateLotteryJPN(void)
 {
 		struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Lottery_JPN.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Lottery_JPN.size;
-		s.tag = LOTTERY_JPN_GFX;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Lottery_JPN);
 	
 	sGacha->LotteryJPNspriteId = CreateSprite(&sSpriteTemplate_Lottery_JPN, 176, 32, 0);
 }
@@ -2059,11 +2039,7 @@ static void CreateHoppip(void)
 	s16 x3 = x + 68;
 	
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Hoppip.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Hoppip.size;
-		s.tag = GFXTAG_HOPPIP;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Hoppip);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Hoppip, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Hoppip, x2, y, 0);	
@@ -2078,11 +2054,7 @@ static void CreateElekid(void)
 	s16 x3 = x + 68;
 	
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Elekid.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Elekid.size;
-		s.tag = GFXTAG_ELEKID;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Elekid);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Elekid, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Elekid, x2, y, 0);
@@ -2097,11 +2069,7 @@ static void CreateTeddiursa(void)
 	s16 x3 = x + 68;
 	
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Teddiursa.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Teddiursa.size;
-		s.tag = GFXTAG_TEDDIURSA;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Teddiursa);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Teddiursa, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Teddiursa, x2, y, 0);	
@@ -2116,11 +2084,7 @@ static void CreatePhanpy(void)
 	s16 x3 = x + 68;
 	
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Phanpy.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Phanpy.size;
-		s.tag = GFXTAG_PHANPY;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Phanpy);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Phanpy, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Phanpy, x2, y, 0);
@@ -2135,11 +2099,7 @@ static void CreateBelossom(void)
 	s16 x3 = x + 68;
 	
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Belossom.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Belossom.size;
-		s.tag = GFXTAG_BELOSSOM;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Belossom);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Belossom, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Belossom, x2, y, 0);	
@@ -2150,11 +2110,7 @@ static void CreateBelossom(void)
 static void CreateDigitalText(void)
 {
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Digital_Text.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Digital_Text.size;
-		s.tag = DIGITAL_TEXT_GFX;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Digital_Text);
 	
 	sGacha->DigitalTextSpriteId = CreateSprite(&sSpriteTemplate_Digital_Text, 64, 25, 0);
 }
@@ -2169,11 +2125,7 @@ static void CreateCreditMenu(void)
 	if (sGacha->GachaId == 1) // Basic
 	{
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Menu_1.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_1.size;
-		s.tag = GFXTAG_MENU_1;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
 	
 	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Basic, x, y, priority);
 	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
@@ -2181,11 +2133,7 @@ static void CreateCreditMenu(void)
 	else if (sGacha->GachaId == 2) // Great
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_1.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_1.size;
-		s.tag = GFXTAG_MENU_1;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
 	
 	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Great, x, y, priority);
 	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
@@ -2193,11 +2141,7 @@ static void CreateCreditMenu(void)
 	else if (sGacha->GachaId == 3) // Ultra
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_1.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_1.size;
-		s.tag = GFXTAG_MENU_1;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
 	
 	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Ultra, x, y, priority);
 	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
@@ -2205,11 +2149,7 @@ static void CreateCreditMenu(void)
 	else // Master
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_1.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_1.size;
-		s.tag = GFXTAG_MENU_1;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
 	
 	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Master, x, y, priority);
 	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
@@ -2226,11 +2166,7 @@ static void CreatePlayerMenu(void)
 	if (sGacha->GachaId == 1) // Basic
 	{
 	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Menu_2.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_2.size;
-		s.tag = GFXTAG_MENU_2;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
 	
 	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Basic, x2, y, priority);
 	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
@@ -2238,11 +2174,7 @@ static void CreatePlayerMenu(void)
 	else if (sGacha->GachaId == 2) // Great
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_2.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_2.size;
-		s.tag = GFXTAG_MENU_2;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
 	
 	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Great, x2, y, priority);
 	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
@@ -2250,11 +2182,7 @@ static void CreatePlayerMenu(void)
 	else if (sGacha->GachaId == 3) // Ultra
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_2.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_2.size;
-		s.tag = GFXTAG_MENU_2;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
 	
 	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Ultra, x2, y, priority);
 	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
@@ -2262,11 +2190,7 @@ static void CreatePlayerMenu(void)
 	else // Master
 	{
 	struct SpriteSheet s;	
-        LZ77UnCompWram(sSpriteSheet_Menu_2.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Menu_2.size;
-		s.tag = GFXTAG_MENU_2;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
 	
 	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Master, x2, y, priority);
 	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
@@ -2276,11 +2200,7 @@ static void CreatePlayerMenu(void)
 static void CreateKnob(void)
 {
 		struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Knob.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Knob.size;
-		s.tag = KNOB_GFX;
-		LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Knob);
 	
 	sGacha->KnobSpriteId = CreateSprite(&sSpriteTemplate_Knob, 76, 128, 0);
 	gSprites[sGacha->KnobSpriteId].animNum = 0; // No Rotation

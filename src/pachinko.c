@@ -591,8 +591,6 @@ static const u32 sBallPokeballGfx[] = INCBIN_U32("graphics/pinball/ball_pokeball
 static const u16 sBallPokeballPalette[] = INCBIN_U16("graphics/pinball/ball_pokeball.gbapal");
 static const u32 sFlipperGfx[] = INCBIN_U32("graphics/pinball/flipper.4bpp.lz");
 static const u16 sFlipperPalette[] = INCBIN_U16("graphics/pinball/flipper.gbapal");
-static const u8 sFlipperLeftMinigameCollisionMasks[][0x80] = INCBIN_U8("graphics/pinball/flipper_left_masks_minigame.1bpp");
-static const u8 sFlipperRightMinigameCollisionMasks[][0x80] = INCBIN_U8("graphics/pinball/flipper_right_masks_minigame.1bpp");
 static const u32 sTimerDigitsGfx[] = INCBIN_U32("graphics/pinball/timer_digits.4bpp.lz");
 static const u16 sTimerDigitsPalette[] = INCBIN_U16("graphics/pinball/timer_digits.gbapal");
 
@@ -2760,12 +2758,7 @@ static void CreatePlayerSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PlayerInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheets_PlayerInterface[i].data, gDecompressionBuffer);
-        s.data = gDecompressionBuffer;
-        s.size = sSpriteSheets_PlayerInterface[i].size;
-        s.tag = sSpriteSheets_PlayerInterface[i].tag;
-        LoadSpriteSheet(&s);
+        LoadCompressedSpriteSheet(&sSpriteSheets_PlayerInterface[i]);
     }
 
     for (i = 0; i < 4; i++)
@@ -3289,14 +3282,8 @@ static void DestroyNewLevel(void)
 
 static void CreateNewLevel(void)
 {
-	struct SpriteSheet s;
-	
 	LoadSpritePalettes(sSpritePalettes2);
-        LZ77UnCompWram(sSpriteSheet_NewLevel.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_NewLevel.size;
-		s.tag = GFXTAG_NEWLEVEL;
-		LoadSpriteSheet(&s);
+    LoadCompressedSpriteSheet(&sSpriteSheet_NewLevel);
 	
 	sScore->NewLevelSpriteId = CreateSprite(&sSpriteTemplate_NewLevel, 92, 82, 0);
 	//gSprites[sScore->WinSpriteId].invisible = TRUE;
@@ -3304,14 +3291,8 @@ static void CreateNewLevel(void)
 
 static void CreateWin(void)
 {
-	struct SpriteSheet s;
-	
 	LoadSpritePalettes(sSpritePalettes2);
-        LZ77UnCompWram(sSpriteSheet_Win.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Win.size;
-		s.tag = GFXTAG_WIN;
-		LoadSpriteSheet(&s);
+    LoadCompressedSpriteSheet(&sSpriteSheet_Win);
 	
 	sScore->WinSpriteId = CreateSprite(&sSpriteTemplate_Win, 92, 82, 0);
 	//gSprites[sScore->WinSpriteId].invisible = TRUE;
@@ -3319,14 +3300,8 @@ static void CreateWin(void)
 
 static void CreateGameOver(void)
 {
-	struct SpriteSheet s;
-	
 	LoadSpritePalettes(sSpritePalettes2);
-        LZ77UnCompWram(sSpriteSheet_GameOver.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_GameOver.size;
-		s.tag = GFXTAG_GAMEOVER;
-		LoadSpriteSheet(&s);
+    LoadCompressedSpriteSheet(&sSpriteSheet_GameOver);
 	
 	sScore->GameOverSpriteId = CreateSprite(&sSpriteTemplate_GameOver, 92, 82, 0);
 	//gSprites[sScore->GameOverSpriteId].invisible = TRUE;
@@ -3334,45 +3309,27 @@ static void CreateGameOver(void)
 
 static void CreateTitle(void)
 {
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Title.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Title.size;
-		s.tag = GFXTAG_TITLE;
-		LoadSpriteSheet(&s);
-	
+    LoadCompressedSpriteSheet(&sSpriteSheet_Title);
 	sScore->TitleSpriteId = CreateSprite(&sSpriteTemplate_Title, 92, 82, 0);
 }
 
 static void CreateArrow(void)
 {
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Arrow.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Arrow.size;
-		s.tag = GFXTAG_ARROW;
-		LoadSpriteSheet(&s);
-	
+    LoadCompressedSpriteSheet(&sSpriteSheet_Arrow);
 	sScore->ArrowSpriteId = CreateSprite(&sSpriteTemplate_Arrow, 36, 20, 0);
 }
 
 static void CreateLives(void)
 {
-	
 	s16 x = 4;
 	s16 y = 156;
 	s16 x2 = x + 8;
 	s16 x3 = x + 16;
 	s16 x4 = x + 24;
 	s16 x5 = x + 32;
-	
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Lives.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Lives.size;
-		s.tag = GFXTAG_LIVES;
-		LoadSpriteSheet(&s);
-	
+
+    LoadCompressedSpriteSheet(&sSpriteSheet_Lives);
+
 	sScore->Live1SpriteId = CreateSprite(&sSpriteTemplate_Lives, x, y, 0);
 	sScore->Live2SpriteId = CreateSprite(&sSpriteTemplate_Lives, x2, y, 0);
 	sScore->Live3SpriteId = CreateSprite(&sSpriteTemplate_Lives, x3, y, 0);
@@ -3434,37 +3391,19 @@ static void UpdateLives(void)
 
 static void CreateSpinarak(void)
 {
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Spinarak.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Spinarak.size;
-		s.tag = GFXTAG_SPINARAK;
-		LoadSpriteSheet(&s);
-	
+    LoadCompressedSpriteSheet(&sSpriteSheet_Spinarak);
 	sScore->SpinarakSpriteId = CreateSprite(&sSpriteTemplate_Spinarak, 208, 48, 0);
 }
 
 static void CreateSpeed(void)
 {
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Speed.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Speed.size;
-		s.tag = GFXTAG_SPEED;
-		LoadSpriteSheet(&s);
-	
+    LoadCompressedSpriteSheet(&sSpriteSheet_Speed);
 	sScore->SpeedSpriteId = CreateSprite(&sSpriteTemplate_Speed, 208, 160, 0);
 }
 
 static void CreateMultiplier(void)
 {
-	struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheet_Multiplier.data, gDecompressionBuffer);
-		s.data = gDecompressionBuffer;
-		s.size = sSpriteSheet_Multiplier.size;
-		s.tag = GFXTAG_MULTIPLIER;
-		LoadSpriteSheet(&s);
-	
+    LoadCompressedSpriteSheet(&sSpriteSheet_Multiplier);
 	sScore->MultiplierSpriteId = CreateSprite(&sSpriteTemplate_Multiplier, 208, 96, 0);
 }
 
@@ -4487,13 +4426,11 @@ static void DrawSeelScoreJewels(struct Seel *seel)
 
 static void HandleBallPhysics(void)
 {
-    bool32 isFlipperColliding;
-    bool32 isStaticColliding;
+    bool32 isStaticColliding = FALSE;
     bool32 isObjectColliding = FALSE;
-    u8 flipperCollisionNormal;
-    u8 objectCollisionNormal;
-    u8 staticCollisionNormal;
-    u8 collisionNormal;
+    u8 objectCollisionNormal = 0;
+    u8 staticCollisionNormal = 0;
+    u8 collisionNormal = 0;
     u16 artificialYForce = 0;
     int collisionAmplification = 0;
     struct Ball *ball = &sPinballGame->ball;
@@ -4506,14 +4443,10 @@ static void HandleBallPhysics(void)
 
     LimitVelocity(ball);
     HandleTilts(ball);
-    //isFlipperColliding = HandleFlippers(ball, &artificialYForce, &flipperCollisionNormal, &collisionAmplification);
-    //if (!isFlipperColliding)
-        //isObjectColliding = CheckObjectsCollision(sPinballGame->gameType, ball, sPinballGame->timer.ticks, &objectCollisionNormal, &collisionAmplification);
 
     isStaticColliding = CheckStaticCollision(sPinballGame->gameType, ball, sPinballGame->ballIsEntering, sPinballGame->stageTileWidth, sPinballGame->stageTileHeight, &staticCollisionNormal, &artificialYForce);
-    if (isFlipperColliding)
-        collisionNormal = flipperCollisionNormal;
-    else if (isObjectColliding)
+    
+    if (isObjectColliding)
         collisionNormal = objectCollisionNormal;
     else
         collisionNormal = staticCollisionNormal;
@@ -4535,7 +4468,7 @@ static void HandleBallPhysics(void)
 
     if ((ball->yPos >> 8) > 168)
     {
-        ball->yPos == 170 << 8;
+        ball->yPos = 170 << 8;
         LoseBall();
     }
 }
@@ -4751,6 +4684,7 @@ static bool32 HandleFlippers(struct Ball *ball, u16 *outYForce, u8 *outCollision
     //    collided = CheckFlipperCollision(ball, &sPinballGame->leftFlipper, outYForce, outCollisionNormal, outCollisionAmplification);
 
     //return collided;
+    return FALSE;
 }
 
 #define FLIPPER_STATE_DELTA 0x0333
@@ -4839,7 +4773,7 @@ static bool32 CheckFlipperCollision(struct Ball *ball, struct Flipper *flipper, 
     //    *outCollisionAmplification = 0;
     //}
     //
-    //return TRUE;
+    return TRUE;
 }
 
 #define MAX_POS_UPDATE 0x04FF
@@ -4994,8 +4928,8 @@ static bool32 CheckStaticCollision(u8 gameType, struct Ball *ball, bool32 ballIs
 
 static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index)
 {
-    const u8 *entranceCollisionMap;
-    const u8 *collisionMap;
+    const u8 *entranceCollisionMap = NULL;
+    const u8 *collisionMap = NULL;
 
     switch (gameType)
     {
@@ -5026,14 +4960,14 @@ static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index)
 static u8 GetCollisionMaskRow(u8 gameType, int collisionAttribute, int row)
 {
     struct Flipper *flipper;
-    int state;
-    int offset;
+    int state = 0;
+    int offset = 0;
     const u8 *flipperStateMasks;
-    u8 mask;
+    u8 mask = 0;
 
     if (collisionAttribute < 0xE0)
     {
-        const u8 *masks;
+        const u8 *masks = NULL;
         switch (gameType)
         {
         case GAME_TYPE_MEOWTH:
@@ -5967,8 +5901,8 @@ static bool32 UpdateDiglett(struct Diglett *diglett)
     //    //}
     //}
     //
-    //return FALSE;
-}   //
+    return FALSE;
+}
 
 static void UpdateDiglettTiles(u16 *tilemap, int index, struct Diglett *diglett)
 {
@@ -6602,7 +6536,7 @@ static void UpdateGengarGhost(struct Gengar *gengar)
 
 static void UpdateGhost(struct Gengar *gengar, struct GraveyardGhost *ghost, u8 *numGhostHits, u8 nextState, int numGhosts)
 {
-	u8 multiplier;
+	u8 multiplier = 1;
     struct Sprite *sprite = &gSprites[ghost->spriteId];
 	
 	if (numGhostHits == &gengar->numGastlyHits)

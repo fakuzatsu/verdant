@@ -523,8 +523,8 @@ static const u32 sBallPokeballGfx[] = INCBIN_U32("graphics/pinball/ball_pokeball
 static const u16 sBallPokeballPalette[] = INCBIN_U16("graphics/pinball/ball_pokeball.gbapal");
 static const u32 sFlipperGfx[] = INCBIN_U32("graphics/pinball/flipper.4bpp.lz");
 static const u16 sFlipperPalette[] = INCBIN_U16("graphics/pinball/flipper.gbapal");
-static const u8 sFlipperLeftMinigameCollisionMasks[][0x80] = INCBIN_U8("graphics/pinball/flipper_left_masks_minigame.1bpp");
-static const u8 sFlipperRightMinigameCollisionMasks[][0x80] = INCBIN_U8("graphics/pinball/flipper_right_masks_minigame.1bpp");
+static const u8 sFlipperLeftMinigameCollisionMasks[][0x200] = {INCBIN_U8("graphics/pinball/flipper_left_masks_minigame.1bpp")};
+static const u8 sFlipperRightMinigameCollisionMasks[][0x200] = {INCBIN_U8("graphics/pinball/flipper_right_masks_minigame.1bpp")};
 static const u32 sTimerDigitsGfx[] = INCBIN_U32("graphics/pinball/timer_digits.4bpp.lz");
 static const u16 sTimerDigitsPalette[] = INCBIN_U16("graphics/pinball/timer_digits.gbapal");
 
@@ -2206,12 +2206,7 @@ static void CreatePlayerSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PlayerInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
-        LZ77UnCompWram(sSpriteSheets_PlayerInterface[i].data, gDecompressionBuffer);
-        s.data = gDecompressionBuffer;
-        s.size = sSpriteSheets_PlayerInterface[i].size;
-        s.tag = sSpriteSheets_PlayerInterface[i].tag;
-        LoadSpriteSheet(&s);
+		LoadCompressedSpriteSheet(&sSpriteSheets_PlayerInterface[i]);
     }
 
     for (i = 0; i < 4; i++)
@@ -2842,13 +2837,13 @@ static void DrawSeelScoreJewels(struct Seel *seel)
 
 static void HandleBallPhysics(void)
 {
-    bool32 isFlipperColliding;
-    bool32 isStaticColliding;
+    bool32 isFlipperColliding = FALSE;
+    bool32 isStaticColliding = FALSE;
     bool32 isObjectColliding = FALSE;
-    u8 flipperCollisionNormal;
-    u8 objectCollisionNormal;
-    u8 staticCollisionNormal;
-    u8 collisionNormal;
+    u8 flipperCollisionNormal = 0;
+    u8 objectCollisionNormal = 0;
+    u8 staticCollisionNormal = 0;
+    u8 collisionNormal = 0;
     u16 artificialYForce = 0;
     int collisionAmplification = 0;
     struct Ball *ball = &sPinballGame->ball;
@@ -2890,7 +2885,7 @@ static void HandleBallPhysics(void)
 
     if ((ball->yPos >> 8) > 168)
     {
-        ball->yPos == 170 << 8;
+        ball->yPos = 170 << 8;
         LoseBall();
     }
 }
@@ -3322,8 +3317,8 @@ static bool32 CheckStaticCollision(u8 gameType, struct Ball *ball, bool32 ballIs
 
 static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index)
 {
-    const u8 *entranceCollisionMap;
-    const u8 *collisionMap;
+    const u8 *entranceCollisionMap = NULL;
+    const u8 *collisionMap = NULL;
 
     switch (gameType)
     {
@@ -3354,14 +3349,14 @@ static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index)
 static u8 GetCollisionMaskRow(u8 gameType, int collisionAttribute, int row)
 {
     struct Flipper *flipper;
-    int state;
-    int offset;
-    const u8 *flipperStateMasks;
-    u8 mask;
+    int state = 0;
+    int offset = 0;
+    const u8 *flipperStateMasks = NULL;
+    u8 mask = 0;
 
     if (collisionAttribute < 0xE0)
     {
-        const u8 *masks;
+        const u8 *masks = NULL;
         switch (gameType)
         {
         case GAME_TYPE_MEOWTH:
@@ -4913,7 +4908,7 @@ static void UpdateGengarGhost(struct Gengar *gengar)
 
 static void UpdateGhost(struct Gengar *gengar, struct GraveyardGhost *ghost, u8 *numGhostHits, u8 nextState, int numGhosts)
 {
-	u8 multiplier;
+	u8 multiplier = 1;
     struct Sprite *sprite = &gSprites[ghost->spriteId];
 	
 	if (numGhostHits == &gengar->numGastlyHits)
