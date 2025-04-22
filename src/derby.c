@@ -206,19 +206,19 @@ static const u16 Derby_Race_Pal[] = INCBIN_U16("graphics/derby/racetrack_bg.gbap
 
 // Betting Menu Pokemon Sprites and Palettes
 
-static const u32 PonytaGFX[] = INCBIN_U32("graphics/pokemon/ponyta/front.4bpp.lz");
+static const u32 PonytaGFX[] = INCBIN_U32("graphics/pokemon/ponyta/anim_front.4bpp.lz");
 static const u16 PonytaNormalPAL[] = INCBIN_U16("graphics/pokemon/ponyta/normal.gbapal");
 static const u16 PonytaShinyPAL[] = INCBIN_U16("graphics/pokemon/ponyta/shiny.gbapal");
 
-static const u32 RapidashGFX[] = INCBIN_U32("graphics/pokemon/rapidash/front.4bpp.lz");
+static const u32 RapidashGFX[] = INCBIN_U32("graphics/pokemon/rapidash/anim_front.4bpp.lz");
 static const u16 RapidashNormalPAL[] = INCBIN_U16("graphics/pokemon/rapidash/normal.gbapal");
 static const u16 RapidashShinyPAL[] = INCBIN_U16("graphics/pokemon/rapidash/shiny.gbapal");
 
-static const u32 RattataGFX[] = INCBIN_U32("graphics/pokemon/rattata/front.4bpp.lz");
+static const u32 RattataGFX[] = INCBIN_U32("graphics/pokemon/rattata/anim_front.4bpp.lz");
 static const u16 RattataNormalPAL[] = INCBIN_U16("graphics/pokemon/rattata/normal.gbapal");
 static const u16 RattataShinyPAL[] = INCBIN_U16("graphics/pokemon/rattata/shiny.gbapal");
 
-static const u32 FeebasGFX[] = INCBIN_U32("graphics/pokemon/feebas/front.4bpp.lz");
+static const u32 FeebasGFX[] = INCBIN_U32("graphics/pokemon/feebas/anim_front.4bpp.lz");
 static const u16 FeebasNormalPAL[] = INCBIN_U16("graphics/pokemon/feebas/normal.gbapal");
 static const u16 FeebasShinyPAL[] = INCBIN_U16("graphics/pokemon/feebas/shiny.gbapal");
 
@@ -1514,9 +1514,8 @@ static const struct SpriteTemplate sSpriteTemplate_FeebasShiny =
 
 void StartDerby(void)
 {
-	u8 taskId = 0;
     sDerby = AllocZeroed(sizeof(struct Derby));
-    taskId = CreateTask(FadeToDerbyScreen, 0);
+    CreateTask(FadeToDerbyScreen, 0);
 }
 
 typedef struct  {
@@ -2045,8 +2044,6 @@ void GetNewDerby(void)
 	u32 sOdds;
 	
 	int i;
-	int j;
-	int temp;
 	u8 conditions[6];
 	int condition4Index;
 	int condition3Index;
@@ -2577,7 +2574,6 @@ static void CreatePokemonSprites(void)
 {
 	s16 x;
 	s16 y;
-	struct SpriteSheet s;
 	
 	x = 64;
 	y = 96;
@@ -3027,8 +3023,7 @@ static void UpdatePokemonSprites(void)
 
 static void CreateMenuData(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Name_Ponyta);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Name_Ponyta);
 	
 	sDerby->SpeciesNameSpriteId = CreateSprite(&sSpriteTemplate_Name_Ponyta, 164, 60, 0);
 	
@@ -3047,8 +3042,7 @@ static void CreateMenuData(void)
 
 static void UpdatePokemonSpeciesNames(void)
 {
-	u8 species;
-	struct SpriteSheet s;
+	u8 species = SPECIES_PONYTA;
 	
 	if (sDerby->MenuPosition == 0)
 	{
@@ -3106,8 +3100,7 @@ static void UpdatePokemonSpeciesNames(void)
 
 static void UpdateCondition(void)
 {
-	u8 stars;
-	struct SpriteSheet s;
+	u8 stars = 0;
 	
 	if (sDerby->MenuPosition == 0)
 	{
@@ -3171,11 +3164,8 @@ static void UpdateCondition(void)
 
 static void UpdatePayout(void)
 {
-	u8 multi;
-	s16 y;
-	struct SpriteSheet s;
-	
-	y = 124;
+	u8 multi = 0;
+	s16 y = 124;
 	
 	if (sDerby->MenuPosition == 0)
 	{
@@ -3252,7 +3242,6 @@ static void UpdatePayout(void)
 
 static void UpdateUI(void)
 {
-	struct SpriteSheet s;
 	
 	DestroySpriteAndFreeResources(&gSprites[sDerby->uiSpriteId]);
 	LoadSpritePalettes(sSpritePalettes);
@@ -3297,7 +3286,6 @@ static void UpdateUI(void)
 
 static void CreateP10(void)
 {
-	struct SpriteSheet s;
 	LoadSpritePalettes(sSpritePalettes);
 	LoadCompressedSpriteSheet(&sSpriteSheet_P10);	
 	sDerby->P10SpriteId = CreateSprite(&sSpriteTemplate_P10, 172, 80, 0);
@@ -3305,7 +3293,6 @@ static void CreateP10(void)
 
 static void CreateCreditIcon(void)
 {
-	struct SpriteSheet s;
 	LoadSpritePalettes(sSpritePalettes);
 	LoadCompressedSpriteSheet(&sSpriteSheet_Credit_Icon);	
 	sDerby->CreditIconSpriteId = CreateSprite(&sSpriteTemplate_Credit_Icon, 28, 126, 0);
@@ -3313,7 +3300,6 @@ static void CreateCreditIcon(void)
 
 static void CreateCreditIconRed(void)
 {
-	struct SpriteSheet s;
 	LoadSpritePalettes(sSpritePalettes);
 	LoadCompressedSpriteSheet(&sSpriteSheet_Credit_Icon_Red);	
 	sDerby->CreditIconSpriteId = CreateSprite(&sSpriteTemplate_Credit_Icon_Red, 28, 126, 0);
@@ -3323,7 +3309,6 @@ static void CreateArrows(void)
 {
 	s16 x;
 	s16 y;
-	struct SpriteSheet s;
 	
 	x = 32;
 	y = 88;
@@ -3671,7 +3656,6 @@ static void CreateBetSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_BetInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_BetInterface[i]);
     }
 
@@ -3720,7 +3704,6 @@ static void CreatePotentialSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PotentialInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_PotentialInterface[i]);
     }
 
@@ -3769,7 +3752,6 @@ static void CreateCreditSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_CreditsInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_CreditsInterface[i]);
     }
 
@@ -3942,7 +3924,7 @@ static void HideBetSprites(void)
 
 static void AddBet(void)
 {
-	u8 PayoutId;
+	u8 PayoutId = 0;
 	
 	if (sDerby->MenuPosition == 0)
 	{
@@ -4018,7 +4000,7 @@ static void AddBet(void)
 
 static void SubBet(void)
 {
-	u8 PayoutId;
+	u8 PayoutId = 0;
 	
 	if (sDerby->MenuPosition == 0)
 	{
@@ -4216,7 +4198,6 @@ static void CreateRacers(void)
 	u8 horseAdd;
 	u8 ratfishAdd;
 	u8 position;
-	struct SpriteSheet s;
 	
 	horseY = 48;
 	ratfishY = 56;
@@ -4229,21 +4210,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_1 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4252,21 +4225,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_1 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4275,21 +4240,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_1 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4298,21 +4255,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_1 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite1 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4326,21 +4275,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_2 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4349,21 +4290,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_2 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4372,21 +4305,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_2 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4395,21 +4320,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_2 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite2 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4423,21 +4340,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_3 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4446,21 +4355,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_3 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4469,21 +4370,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_3 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4492,21 +4385,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_3 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite3 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4520,21 +4405,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_4 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4543,21 +4420,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_4 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4566,21 +4435,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_4 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4589,21 +4450,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_4 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite4 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4617,21 +4470,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_5 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4640,21 +4485,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_5 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4663,21 +4500,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_5 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4686,21 +4515,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_5 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite5 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4714,21 +4535,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_6 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Ponyta_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Ponyta_OW.size;
-			s.tag = GFX_PONYTA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Ponyta_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Ponyta_OW_Shiny, 224, horseY, position);
 		}
@@ -4737,21 +4550,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_6 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Rattata_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rattata_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rattata_OW.size;
-			s.tag = GFX_RATTATA_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rattata_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Rattata_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4760,21 +4565,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_6 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Normal, 224, horseY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Rapidash_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Rapidash_OW.size;
-			s.tag = GFX_RAPIDASH_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Rapidash_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Rapidash_OW_Shiny, 224, horseY, position);
 		}
@@ -4783,21 +4580,13 @@ static void CreateRacers(void)
 	{
 		if (sDerby->Shiny_6 == 0)
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Feebas_OW_Normal, 224, ratfishY, position);
 		}
 		else
 		{
-			LZ77UnCompWram(sSpriteSheet_Feebas_OW.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Feebas_OW.size;
-			s.tag = GFX_FEEBAS_OW;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Feebas_OW);
 			
 			sDerby->RacerSprite6 = CreateSprite(&sSpriteTemplate_Feebas_OW_Shiny, 224, ratfishY, position);
 		}
@@ -4806,9 +4595,8 @@ static void CreateRacers(void)
 
 static void CreateCursor(void)
 {
-	u8 y;
-	u8 position;
-	struct SpriteSheet s;
+	u8 y = 0;
+	u8 position = 0;
 	
 	LoadSpritePalettes(sSpritePalettes);
 	
@@ -4933,11 +4721,6 @@ void AssignRacerPlacements(void) {
 
 static void DerbyMain(u8 taskId)
 {
-	s16 finalX;
-	struct SpriteSheet s;
-	
-	finalX = 16;
-	
     switch (sDerby->state)
     {
     case DERBY_STATE_INIT:
@@ -5001,11 +4784,7 @@ static void DerbyMain(u8 taskId)
 			PlaySE(SE_CONTEST_PLACE); // 3
 			
 				LoadSpritePalettes(sSpritePalettes);
-				LZ77UnCompWram(sSpriteSheet_Countdown_3.data, gDecompressionBuffer);
-				s.data = gDecompressionBuffer;
-				s.size = sSpriteSheet_Countdown_3.size;
-				s.tag = GFX_COUNTDOWN_3;
-				LoadSpriteSheet(&s);
+				LoadCompressedSpriteSheet(&sSpriteSheet_Countdown_3);
 				
 				sDerby->CountdownSpriteId = CreateSprite(&sSpriteTemplate_Countdown_3, sDerby->CountdownX, sDerby->CountdownY, 0);
 				
@@ -5031,11 +4810,7 @@ static void DerbyMain(u8 taskId)
 			
 				DestroySpriteAndFreeResources(&gSprites[sDerby->CountdownSpriteId]);
 				LoadSpritePalettes(sSpritePalettes);
-				LZ77UnCompWram(sSpriteSheet_Countdown_2.data, gDecompressionBuffer);
-				s.data = gDecompressionBuffer;
-				s.size = sSpriteSheet_Countdown_2.size;
-				s.tag = GFX_COUNTDOWN_2;
-				LoadSpriteSheet(&s);
+				LoadCompressedSpriteSheet(&sSpriteSheet_Countdown_2);
 				
 				sDerby->CountdownSpriteId = CreateSprite(&sSpriteTemplate_Countdown_2, sDerby->CountdownX, sDerby->CountdownY, 0);
 				
@@ -5061,11 +4836,7 @@ static void DerbyMain(u8 taskId)
 			
 				DestroySpriteAndFreeResources(&gSprites[sDerby->CountdownSpriteId]);
 				LoadSpritePalettes(sSpritePalettes);
-				LZ77UnCompWram(sSpriteSheet_Countdown_1.data, gDecompressionBuffer);
-				s.data = gDecompressionBuffer;
-				s.size = sSpriteSheet_Countdown_1.size;
-				s.tag = GFX_COUNTDOWN_1;
-				LoadSpriteSheet(&s);
+				LoadCompressedSpriteSheet(&sSpriteSheet_Countdown_1);
 				
 				sDerby->CountdownSpriteId = CreateSprite(&sSpriteTemplate_Countdown_1, sDerby->CountdownX, sDerby->CountdownY, 0);
 			
@@ -5093,11 +4864,7 @@ static void DerbyMain(u8 taskId)
 				
 				DestroySpriteAndFreeResources(&gSprites[sDerby->CountdownSpriteId]);
 				LoadSpritePalettes(sSpritePalettes);
-				LZ77UnCompWram(sSpriteSheet_Go.data, gDecompressionBuffer);
-				s.data = gDecompressionBuffer;
-				s.size = sSpriteSheet_Go.size;
-				s.tag = GFX_GO;
-				LoadSpriteSheet(&s);
+				LoadCompressedSpriteSheet(&sSpriteSheet_Go);
 				
 				sDerby->CountdownSpriteId = CreateSprite(&sSpriteTemplate_Go, sDerby->CountdownX, sDerby->CountdownY, 0);
 				
@@ -5365,11 +5132,7 @@ static void DerbyMain(u8 taskId)
 				PlaySE(SE_APPLAUSE);
 				
 				LoadSpritePalettes(sSpritePalettes2);
-				LZ77UnCompWram(sSpriteSheet_Clefairy.data, gDecompressionBuffer);
-				s.data = gDecompressionBuffer;
-				s.size = sSpriteSheet_Clefairy.size;
-				s.tag = GFX_CLEFAIRY;
-				LoadSpriteSheet(&s);
+				LoadCompressedSpriteSheet(&sSpriteSheet_Clefairy);
 				
 				sDerby->ClefSpriteId = CreateSprite(&sSpriteTemplate_Clefairy, sDerby->CountdownX, sDerby->CountdownY, 0);
 				VarSet(VAR_NEW_DERBY, 0);

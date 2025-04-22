@@ -62,7 +62,6 @@ const IntrFunc gIntrTableTemplate[] =
 
 #define INTR_COUNT ((int)(sizeof(gIntrTableTemplate)/sizeof(IntrFunc)))
 
-<<<<<<< HEAD
 u16 gKeyRepeatStartDelay;
 bool8 gLinkTransferringData;
 struct Main gMain;
@@ -72,19 +71,6 @@ IntrFunc gIntrTable[INTR_COUNT];
 u8 gLinkVSyncDisabled;
 s8 gPcmDmaCounter;
 void *gAgbMainLoop_sp;
-=======
-static u16 sUnusedVar; // Never read
-
-COMMON_DATA u16 gKeyRepeatStartDelay = 0;
-COMMON_DATA bool8 gLinkTransferringData = 0;
-COMMON_DATA struct Main gMain = {0};
-COMMON_DATA u16 gKeyRepeatContinueDelay = 0;
-COMMON_DATA bool8 gSoftResetDisabled = 0;
-COMMON_DATA IntrFunc gIntrTable[INTR_COUNT] = {0};
-COMMON_DATA u8 gLinkVSyncDisabled = 0;
-COMMON_DATA u32 IntrMain_Buffer[0x200] = {0};
-COMMON_DATA s8 gPcmDmaCounter = 0;
->>>>>>> 7c76e518755895bb07ef7bf0ec71e767f75d5af5
 
 static EWRAM_DATA u16 sTrainerId = 0;
 

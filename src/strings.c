@@ -1537,6 +1537,7 @@ const u8 gText_F700Players[] = _("{DYNAMIC 0} players");
 const u8 gText_F701Players[] = _("{DYNAMIC 1} players");
 const u8 gText_F702Players[] = _("{DYNAMIC 2} players");
 const u8 gText_F703Players[] = _("{DYNAMIC 3} players");
+
 //BlackJack
 const u8 gText_Bust[] = _("BUST!");
 const u8 gText_YouLose[] = _("You lose!");
@@ -1546,7 +1547,7 @@ const u8 gText_BlackJack[] = _("BLACKJACK!");
 
 const u8 gText_Betting[] = _("Your current\nbet is ¥{STR_VAR_1}.");
 const u8 gText_NoBetting[] = _("Your current\nbet is ¥0.");
-const u8 gText_NoMoney[] = _("You do not have\nenough COINS.");
+const u8 gText_NoMoney[] = _("You do not have\nenough coins.");
 
 const u8 *const gTextTable_Players[] = {
     gText_F700Players,

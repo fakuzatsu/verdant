@@ -132,23 +132,23 @@
 #define VAR_ROUTE117_STATE                               0x4070 // Unused Var
 #define VAR_ROUTE118_STATE                               0x4071
 #define VAR_ROUTE119_STATE                               0x4072
-#define VAR_ROUTE120_STATE                               0x4073 // Unused Var
-#define VAR_ROUTE121_STATE                               0x4074
+#define VAR_ROUTE121_STATE                               0x4073
+#define VAR_ROUTE128_STATE                               0x4074
 #define VAR_RACER_1		                                 0x4075 // Race Values (Species, Shiny, Condition)
 #define VAR_RACER_2 	                                 0x4076 // Race Var
 #define VAR_RACER_3        	   	                         0x4077 // Race Var
 #define VAR_RACER_4     	                             0x4078 // Race Var
 #define VAR_RACER_5        		                         0x4079 // Race Var
 #define VAR_RACER_6            		                     0x407A // Race Var
-#define VAR_ROUTE128_STATE                               0x407B
-#define VAR_NEW_DERBY	                                 0x407C // Check for Derby Reset
-#define VAR_ROUTE130_STATE                               0x407D // Unused Var
-#define VAR_ROUTE131_STATE                               0x407E // Unused Var
-#define VAR_ROUTE132_STATE                               0x407F // Unused Var
-#define VAR_ROUTE133_STATE                               0x4080 // Unused Var
-#define VAR_ROUTE134_STATE                               0x4081 // Unused Var
-#define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4082
-#define VAR_UNUSED_0x4083                                0x4083 // Unused Var
+#define VAR_NEW_DERBY                                    0x407B // Check for Derby Reset
+#define VAR_OPTIONS_BJ	                                 0x407C // Blackjack Var
+#define VAR_OPTION1_TILENUM                              0x407D // Blackjack Var
+#define VAR_OPTION2_TILENUM                              0x407E // Blackjack Var
+#define VAR_OPTION3_TILENUM                              0x407F // Blackjack Var
+#define VAR_PLAYER_BJ                                    0x4080 // Blackjack Var
+#define VAR_DEALER_BJ                                    0x4081 // Blackjack Var
+#define VAR_BET_BJ                                       0x4082 // Blackjack Var
+#define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4083
 #define VAR_BIRCH_LAB_STATE                              0x4084
 #define VAR_PETALBURG_GYM_STATE                          0x4085 // 0-1: Wally tutorial, 2-6: 0-4 badges, 7: Defeated Norman, 8: Rematch Norman
 #define VAR_CONTEST_HALL_STATE                           0x4086
@@ -257,8 +257,8 @@
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40ED
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40EE
 #define VAR_DEPOSIT_SPECIES                              0x40EF // Species of pokemon deposited to GTS, for detecting Shelmet/Karrablast evolution
-#define VAR_UNUSED_0x40F0                                0x40F0 // Unused Var
-#define VAR_UNUSED_0x40F1                                0x40F1 // Unused Var
+#define VAR_FLIP_WINNINGS                                0x40F0 // Casino Var
+#define VAR_FLIP_LEVEL                                   0x40F1 // Casino Var
 #define VAR_UNUSED_0x40F2                                0x40F2 // Unused Var
 #define VAR_LAST_REPEL                                   0x40F3
 #define VAR_LEVEL_CAP                                    0x40F4

@@ -2509,3 +2509,10 @@
 	.2byte \partyIndex
 	.endm
 
+	@ Starts a pinball game.
+	@ Optionally accepts a species to use those graphics instead of random.
+	.macro startpinball species=0
+	callnative Scrcmd_StartPinball
+	.2byte \species
+	.endm
+

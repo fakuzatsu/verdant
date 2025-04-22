@@ -355,7 +355,6 @@ static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToSnakeScreen(u8 taskId);
 static void InitSnakeScreen(void);
-static void DerbyVBlankCallback(void);
 
 static const u8 sTestText[] = _("TEST");
 
@@ -891,9 +890,8 @@ static const SnakeTiles SnakeTilesArray[] = {
 
 void StartSnake(void)
 {
-	u8 taskId = 0;
     sSnake = AllocZeroed(sizeof(struct Snake));
-    taskId = CreateTask(FadeToSnakeScreen, 0);
+    CreateTask(FadeToSnakeScreen, 0);
 }
 
 static void FadeToSnakeScreen(u8 taskId)
@@ -930,7 +928,7 @@ static void SnakeMainCallback(void)
     UpdatePaletteFade();
 }
 
-static void HandleInput(void)
+static UNUSED void HandleInput(void)
 {
 	if (sSnake->ToggleButtons == 1) 
 	{
@@ -962,16 +960,14 @@ static void StartExitSnake(void)
 
 static void CreateOnix(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Onix);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Onix);
 	
 	sSnake->OnixSpriteId = CreateSprite(&sSpriteTemplate_Onix, 120, 64, 0); // 5, 4
 }
 
-static void CreateBody(s16 x, s16 y)
+static UNUSED void CreateBody(s16 x, s16 y)
 {
 	u8 Body;
-	struct SpriteSheet s;
 	
 	Body = Random() % 4;
 	
@@ -1006,7 +1002,6 @@ static void CreateBody1(void)
 	s16 x = 120;
 	s16 y = 48;
 	u8 Body;
-	struct SpriteSheet s;
 	
 	Body = 3;
 	
@@ -1041,7 +1036,6 @@ static void CreateBody2(void)
 	s16 x = 120;
 	s16 y = 32;
 	u8 Body;
-	struct SpriteSheet s;
 	
 	Body = Random() % 4;
 	
@@ -1078,8 +1072,8 @@ static void HandleMovement(void)
 {
 	
 	u8 Count = sSnake->BodyCount - 3;
-	int j;
-	int i;
+	int j = 0;
+	int i = 0;
 	
 	if (sSnake->Direction == DOWN)
 	{
@@ -1225,8 +1219,8 @@ static void HandleMovementMinus(u8 num)
 {
 	
 	u8 Count = sSnake->BodyCount - 3;
-	int j;
-	int i;
+	int j = 0;
+	int i = 0;
 	
 	if (sSnake->Direction == DOWN)
 	{
@@ -1363,8 +1357,8 @@ static void UpdateDirections(void)
 static int CheckBoundaries(void)
 {
 	u8 Count = sSnake->BodyCount - 3;
-	int j;
-	int i;
+	int j = 0;
+	int i = 0;
 	
 	if ((sSnake->Direction == RIGHT) && (sSnake->OnixTileX == MAX_X))
 	{
@@ -1444,13 +1438,11 @@ static int CheckBoundaries(void)
 
 static void CreateBerry(void)
 {
-	s16 xf;
-	s16 yf;
-	u8 Berry;
+	s16 xf = 0;
+	s16 yf = 0;
+	u8 Berry = 0;
 	u8 Count = sSnake->BodyCount - 3;
-	int i;
-	int j;
-	struct SpriteSheet s;
+	int i, j;
 
     while (1)
 	{
@@ -1580,7 +1572,6 @@ static void CreateCreditSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_CreditsInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_CreditsInterface[i]);
     }
 
@@ -1597,7 +1588,6 @@ static void CreateNumberSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_CreditsInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_CreditsInterface[i]);
     }
 
@@ -1610,14 +1600,10 @@ static void CreateNumberSprites(void)
 
 static void CheckBerry(void)
 {
-	u8 NewDirection;
+	u8 NewDirection = 0;
 	u8 Count = sSnake->BodyCount - 3;
 	u8 index = Count; 
-	u8 Body;
-	s16 xf;
-	s16 yf;
-	int i;
-	struct SpriteSheet s;
+	u8 Body = 0;
 	
 	if ((sSnake->OnixTileX == sSnake->BerryX) && (sSnake->OnixTileY == sSnake->BerryY))
 	{
@@ -1651,41 +1637,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y + 16, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y + 16, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y + 16, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y + 16, sSnake->BodyCount);
 					}
@@ -1696,41 +1666,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y - 16, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y - 16, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y - 16, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySprite2Id].x, gSprites[sSnake->BodySprite2Id].y - 16, sSnake->BodyCount);
 					}
@@ -1741,41 +1695,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySprite2Id].x + 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySprite2Id].x + 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySprite2Id].x + 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySprite2Id].x + 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
@@ -1786,41 +1724,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySprite2Id].x - 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySprite2Id].x - 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySprite2Id].x - 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySprite2Id].x - 16, gSprites[sSnake->BodySprite2Id].y, sSnake->BodyCount);
 					}
@@ -1841,41 +1763,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y + 16, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y + 16, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y + 16, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y + 16, sSnake->BodyCount);
 					}
@@ -1886,41 +1792,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y - 16, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y - 16, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y - 16, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySpriteIds[index - 1]].x, gSprites[sSnake->BodySpriteIds[index - 1]].y - 16, sSnake->BodyCount);
 					}
@@ -1931,41 +1821,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySpriteIds[index - 1]].x + 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySpriteIds[index - 1]].x + 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySpriteIds[index - 1]].x + 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySpriteIds[index - 1]].x + 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
@@ -1976,41 +1850,25 @@ static void CheckBerry(void)
 	
 					if (Body == 0)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body.size;
-						s.tag = GFX_BODY_1;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body, gSprites[sSnake->BodySpriteIds[index - 1]].x - 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else if (Body == 1)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_2.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_2.size;
-						s.tag = GFX_BODY_2;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_2);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_2, gSprites[sSnake->BodySpriteIds[index - 1]].x - 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else if (Body == 2)
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_3.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_3.size;
-						s.tag = GFX_BODY_3;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_3);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_3, gSprites[sSnake->BodySpriteIds[index - 1]].x - 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
 					else
 					{
-						LZ77UnCompWram(sSpriteSheet_Onix_Body_4.data, gDecompressionBuffer);
-						s.data = gDecompressionBuffer;
-						s.size = sSpriteSheet_Onix_Body_4.size;
-						s.tag = GFX_BODY_4;
-						LoadSpriteSheet(&s);
+						LoadCompressedSpriteSheet(&sSpriteSheet_Onix_Body_4);
 					
 						sSnake->BodySpriteIds[index] = CreateSprite(&sSpriteTemplate_Onix_Body_4, gSprites[sSnake->BodySpriteIds[index - 1]].x - 16, gSprites[sSnake->BodySpriteIds[index - 1]].y, sSnake->BodyCount);
 					}
@@ -2030,7 +1888,6 @@ static void CheckBerry(void)
 
 static void CreateStartMenu(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Start);
@@ -2040,7 +1897,6 @@ static void CreateStartMenu(void)
 
 static void CreateGameOver(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_GameOver);
@@ -2050,7 +1906,6 @@ static void CreateGameOver(void)
 
 static void CreateMenu(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu);

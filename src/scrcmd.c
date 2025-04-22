@@ -33,6 +33,7 @@
 #include "mystery_event_script.h"
 #include "palette.h"
 #include "party_menu.h"
+#include "pinball.h"
 #include "pokedex.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
@@ -2598,5 +2599,12 @@ bool8 Scrcmd_startmenustateditor(struct ScriptContext *ctx)
         return FALSE;
 
     StatEditor_Init(CB2_ReturnToField, partyIndex);
+    return TRUE;
+}
+
+bool8 Scrcmd_StartPinball(struct ScriptContext *ctx)
+{
+    u16 species = ScriptReadHalfword(ctx);
+    PlaySpeciesPinballGame(species);
     return TRUE;
 }

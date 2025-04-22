@@ -2770,13 +2770,11 @@ static void CreatePlayerSprites(void)
 
 static void PlayPinballGame(u8 gameType)
 {
-    u8 taskId;
-
     ScriptContext_Stop();
     sPinballGame = AllocZeroed(sizeof(*sPinballGame));
     sPinballGame->gameType = gameType;
     sPinballGame->returnMainCallback = CB2_ReturnToFieldContinueScriptPlayMapMusic;
-    taskId = CreateTask(FadeToPinballScreen, 0);
+    CreateTask(FadeToPinballScreen, 0);
 }
 
 static void FadeToPinballScreen(u8 taskId)
@@ -4959,12 +4957,6 @@ static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index)
 
 static u8 GetCollisionMaskRow(u8 gameType, int collisionAttribute, int row)
 {
-    struct Flipper *flipper;
-    int state = 0;
-    int offset = 0;
-    const u8 *flipperStateMasks;
-    u8 mask = 0;
-
     if (collisionAttribute < 0xE0)
     {
         const u8 *masks = NULL;
@@ -4988,30 +4980,7 @@ static u8 GetCollisionMaskRow(u8 gameType, int collisionAttribute, int row)
         return ReverseBits(masks[(collisionAttribute * 0x8) + row]);
     }
 
-    // Collision attribute from 0xE0 - 0xFF are special
-    // static flipper collision masks.
-    //if (collisionAttribute < 0xF0)
-    //    flipper = &sPinballGame->leftFlipper;
-    //else
-    //    flipper = &sPinballGame->rightFlipper;
-
-    //state = flipper->state >> 8;
-    //if (state < 7)
-    //    offset = 0;
-    //else if (state < 14)
-    //    offset = 1;
-    //else
-    //    offset = 2;
-
-    //if (collisionAttribute < 0xF0)
-    //    flipperStateMasks = sFlipperLeftMinigameCollisionMasks[offset];
-    //else
-    //    flipperStateMasks = sFlipperRightMinigameCollisionMasks[offset];
-
-   // mask = flipperStateMasks[(collisionAttribute % 0x10) * 0x8 + row];
-
-    // Reverse the bits because my tooling is backwards.
-    return ReverseBits(mask);
+    return ReverseBits(0);
 }
 
 static u8 ReverseBits(u8 b)
@@ -5526,7 +5495,7 @@ static bool32 CheckMeowthJewelsCollision(struct Ball *ball, struct Meowth *meowt
 
 static int GetNumActiveJewels(struct Meowth *meowth)
 {
-    int i, count;
+    int i, count = 0;
     for (i = 0; i < MAX_MEOWTH_JEWELS; i++)
     {
         if (meowth->jewels[i].state != JEWEL_STATE_HIDDEN)
@@ -5537,7 +5506,7 @@ static int GetNumActiveJewels(struct Meowth *meowth)
 
 static struct MeowthJewel *TryCreateNewJewel(struct Meowth *meowth, int ballXPos)
 {
-    int i, count;
+    int i;
     for (i = 0; i < MAX_MEOWTH_JEWELS; i++)
     {
         if (meowth->jewels[i].state == JEWEL_STATE_HIDDEN)

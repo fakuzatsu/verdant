@@ -256,8 +256,6 @@ static void InitGachaScreen(void);
 static void GachaVBlankCallback(void);
 static void SpriteCB_BouncingPokeball(struct Sprite *);
 static void SpriteCB_BouncingPokeballArrive(struct Sprite *);
-static void InitTradeScreen(void);
-static void Process_A(void);
 static void EggHatchPrintMessage(u8, u8 *, u8, u8, u8);
 
 static const u8 sMessageText[] = _("NEW POKéMON : {STR_VAR_1}%");
@@ -265,423 +263,6 @@ static const u8 sMessageText[] = _("NEW POKéMON : {STR_VAR_1}%");
 static void SpriteCB_Null(struct Sprite *sprite)
 {
 }
-
-#define SPECIES_TO_NATIONAL(name)   [SPECIES_##name - 1] = NATIONAL_DEX_##name
-
-static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
-{
-    SPECIES_TO_NATIONAL(BULBASAUR),
-    SPECIES_TO_NATIONAL(IVYSAUR),
-    SPECIES_TO_NATIONAL(VENUSAUR),
-    SPECIES_TO_NATIONAL(CHARMANDER),
-    SPECIES_TO_NATIONAL(CHARMELEON),
-    SPECIES_TO_NATIONAL(CHARIZARD),
-    SPECIES_TO_NATIONAL(SQUIRTLE),
-    SPECIES_TO_NATIONAL(WARTORTLE),
-    SPECIES_TO_NATIONAL(BLASTOISE),
-    SPECIES_TO_NATIONAL(CATERPIE),
-    SPECIES_TO_NATIONAL(METAPOD),
-    SPECIES_TO_NATIONAL(BUTTERFREE),
-    SPECIES_TO_NATIONAL(WEEDLE),
-    SPECIES_TO_NATIONAL(KAKUNA),
-    SPECIES_TO_NATIONAL(BEEDRILL),
-    SPECIES_TO_NATIONAL(PIDGEY),
-    SPECIES_TO_NATIONAL(PIDGEOTTO),
-    SPECIES_TO_NATIONAL(PIDGEOT),
-    SPECIES_TO_NATIONAL(RATTATA),
-    SPECIES_TO_NATIONAL(RATICATE),
-    SPECIES_TO_NATIONAL(SPEAROW),
-    SPECIES_TO_NATIONAL(FEAROW),
-    SPECIES_TO_NATIONAL(EKANS),
-    SPECIES_TO_NATIONAL(ARBOK),
-    SPECIES_TO_NATIONAL(PIKACHU),
-    SPECIES_TO_NATIONAL(RAICHU),
-    SPECIES_TO_NATIONAL(SANDSHREW),
-    SPECIES_TO_NATIONAL(SANDSLASH),
-    SPECIES_TO_NATIONAL(NIDORAN_F),
-    SPECIES_TO_NATIONAL(NIDORINA),
-    SPECIES_TO_NATIONAL(NIDOQUEEN),
-    SPECIES_TO_NATIONAL(NIDORAN_M),
-    SPECIES_TO_NATIONAL(NIDORINO),
-    SPECIES_TO_NATIONAL(NIDOKING),
-    SPECIES_TO_NATIONAL(CLEFAIRY),
-    SPECIES_TO_NATIONAL(CLEFABLE),
-    SPECIES_TO_NATIONAL(VULPIX),
-    SPECIES_TO_NATIONAL(NINETALES),
-    SPECIES_TO_NATIONAL(JIGGLYPUFF),
-    SPECIES_TO_NATIONAL(WIGGLYTUFF),
-    SPECIES_TO_NATIONAL(ZUBAT),
-    SPECIES_TO_NATIONAL(GOLBAT),
-    SPECIES_TO_NATIONAL(ODDISH),
-    SPECIES_TO_NATIONAL(GLOOM),
-    SPECIES_TO_NATIONAL(VILEPLUME),
-    SPECIES_TO_NATIONAL(PARAS),
-    SPECIES_TO_NATIONAL(PARASECT),
-    SPECIES_TO_NATIONAL(VENONAT),
-    SPECIES_TO_NATIONAL(VENOMOTH),
-    SPECIES_TO_NATIONAL(DIGLETT),
-    SPECIES_TO_NATIONAL(DUGTRIO),
-    SPECIES_TO_NATIONAL(MEOWTH),
-    SPECIES_TO_NATIONAL(PERSIAN),
-    SPECIES_TO_NATIONAL(PSYDUCK),
-    SPECIES_TO_NATIONAL(GOLDUCK),
-    SPECIES_TO_NATIONAL(MANKEY),
-    SPECIES_TO_NATIONAL(PRIMEAPE),
-    SPECIES_TO_NATIONAL(GROWLITHE),
-    SPECIES_TO_NATIONAL(ARCANINE),
-    SPECIES_TO_NATIONAL(POLIWAG),
-    SPECIES_TO_NATIONAL(POLIWHIRL),
-    SPECIES_TO_NATIONAL(POLIWRATH),
-    SPECIES_TO_NATIONAL(ABRA),
-    SPECIES_TO_NATIONAL(KADABRA),
-    SPECIES_TO_NATIONAL(ALAKAZAM),
-    SPECIES_TO_NATIONAL(MACHOP),
-    SPECIES_TO_NATIONAL(MACHOKE),
-    SPECIES_TO_NATIONAL(MACHAMP),
-    SPECIES_TO_NATIONAL(BELLSPROUT),
-    SPECIES_TO_NATIONAL(WEEPINBELL),
-    SPECIES_TO_NATIONAL(VICTREEBEL),
-    SPECIES_TO_NATIONAL(TENTACOOL),
-    SPECIES_TO_NATIONAL(TENTACRUEL),
-    SPECIES_TO_NATIONAL(GEODUDE),
-    SPECIES_TO_NATIONAL(GRAVELER),
-    SPECIES_TO_NATIONAL(GOLEM),
-    SPECIES_TO_NATIONAL(PONYTA),
-    SPECIES_TO_NATIONAL(RAPIDASH),
-    SPECIES_TO_NATIONAL(SLOWPOKE),
-    SPECIES_TO_NATIONAL(SLOWBRO),
-    SPECIES_TO_NATIONAL(MAGNEMITE),
-    SPECIES_TO_NATIONAL(MAGNETON),
-    SPECIES_TO_NATIONAL(FARFETCHD),
-    SPECIES_TO_NATIONAL(DODUO),
-    SPECIES_TO_NATIONAL(DODRIO),
-    SPECIES_TO_NATIONAL(SEEL),
-    SPECIES_TO_NATIONAL(DEWGONG),
-    SPECIES_TO_NATIONAL(GRIMER),
-    SPECIES_TO_NATIONAL(MUK),
-    SPECIES_TO_NATIONAL(SHELLDER),
-    SPECIES_TO_NATIONAL(CLOYSTER),
-    SPECIES_TO_NATIONAL(GASTLY),
-    SPECIES_TO_NATIONAL(HAUNTER),
-    SPECIES_TO_NATIONAL(GENGAR),
-    SPECIES_TO_NATIONAL(ONIX),
-    SPECIES_TO_NATIONAL(DROWZEE),
-    SPECIES_TO_NATIONAL(HYPNO),
-    SPECIES_TO_NATIONAL(KRABBY),
-    SPECIES_TO_NATIONAL(KINGLER),
-    SPECIES_TO_NATIONAL(VOLTORB),
-    SPECIES_TO_NATIONAL(ELECTRODE),
-    SPECIES_TO_NATIONAL(EXEGGCUTE),
-    SPECIES_TO_NATIONAL(EXEGGUTOR),
-    SPECIES_TO_NATIONAL(CUBONE),
-    SPECIES_TO_NATIONAL(MAROWAK),
-    SPECIES_TO_NATIONAL(HITMONLEE),
-    SPECIES_TO_NATIONAL(HITMONCHAN),
-    SPECIES_TO_NATIONAL(LICKITUNG),
-    SPECIES_TO_NATIONAL(KOFFING),
-    SPECIES_TO_NATIONAL(WEEZING),
-    SPECIES_TO_NATIONAL(RHYHORN),
-    SPECIES_TO_NATIONAL(RHYDON),
-    SPECIES_TO_NATIONAL(CHANSEY),
-    SPECIES_TO_NATIONAL(TANGELA),
-    SPECIES_TO_NATIONAL(KANGASKHAN),
-    SPECIES_TO_NATIONAL(HORSEA),
-    SPECIES_TO_NATIONAL(SEADRA),
-    SPECIES_TO_NATIONAL(GOLDEEN),
-    SPECIES_TO_NATIONAL(SEAKING),
-    SPECIES_TO_NATIONAL(STARYU),
-    SPECIES_TO_NATIONAL(STARMIE),
-    SPECIES_TO_NATIONAL(MR_MIME),
-    SPECIES_TO_NATIONAL(SCYTHER),
-    SPECIES_TO_NATIONAL(JYNX),
-    SPECIES_TO_NATIONAL(ELECTABUZZ),
-    SPECIES_TO_NATIONAL(MAGMAR),
-    SPECIES_TO_NATIONAL(PINSIR),
-    SPECIES_TO_NATIONAL(TAUROS),
-    SPECIES_TO_NATIONAL(MAGIKARP),
-    SPECIES_TO_NATIONAL(GYARADOS),
-    SPECIES_TO_NATIONAL(LAPRAS),
-    SPECIES_TO_NATIONAL(DITTO),
-    SPECIES_TO_NATIONAL(EEVEE),
-    SPECIES_TO_NATIONAL(VAPOREON),
-    SPECIES_TO_NATIONAL(JOLTEON),
-    SPECIES_TO_NATIONAL(FLAREON),
-    SPECIES_TO_NATIONAL(PORYGON),
-    SPECIES_TO_NATIONAL(OMANYTE),
-    SPECIES_TO_NATIONAL(OMASTAR),
-    SPECIES_TO_NATIONAL(KABUTO),
-    SPECIES_TO_NATIONAL(KABUTOPS),
-    SPECIES_TO_NATIONAL(AERODACTYL),
-    SPECIES_TO_NATIONAL(SNORLAX),
-    SPECIES_TO_NATIONAL(ARTICUNO),
-    SPECIES_TO_NATIONAL(ZAPDOS),
-    SPECIES_TO_NATIONAL(MOLTRES),
-    SPECIES_TO_NATIONAL(DRATINI),
-    SPECIES_TO_NATIONAL(DRAGONAIR),
-    SPECIES_TO_NATIONAL(DRAGONITE),
-    SPECIES_TO_NATIONAL(MEWTWO),
-    SPECIES_TO_NATIONAL(MEW),
-    SPECIES_TO_NATIONAL(CHIKORITA),
-    SPECIES_TO_NATIONAL(BAYLEEF),
-    SPECIES_TO_NATIONAL(MEGANIUM),
-    SPECIES_TO_NATIONAL(CYNDAQUIL),
-    SPECIES_TO_NATIONAL(QUILAVA),
-    SPECIES_TO_NATIONAL(TYPHLOSION),
-    SPECIES_TO_NATIONAL(TOTODILE),
-    SPECIES_TO_NATIONAL(CROCONAW),
-    SPECIES_TO_NATIONAL(FERALIGATR),
-    SPECIES_TO_NATIONAL(SENTRET),
-    SPECIES_TO_NATIONAL(FURRET),
-    SPECIES_TO_NATIONAL(HOOTHOOT),
-    SPECIES_TO_NATIONAL(NOCTOWL),
-    SPECIES_TO_NATIONAL(LEDYBA),
-    SPECIES_TO_NATIONAL(LEDIAN),
-    SPECIES_TO_NATIONAL(SPINARAK),
-    SPECIES_TO_NATIONAL(ARIADOS),
-    SPECIES_TO_NATIONAL(CROBAT),
-    SPECIES_TO_NATIONAL(CHINCHOU),
-    SPECIES_TO_NATIONAL(LANTURN),
-    SPECIES_TO_NATIONAL(PICHU),
-    SPECIES_TO_NATIONAL(CLEFFA),
-    SPECIES_TO_NATIONAL(IGGLYBUFF),
-    SPECIES_TO_NATIONAL(TOGEPI),
-    SPECIES_TO_NATIONAL(TOGETIC),
-    SPECIES_TO_NATIONAL(NATU),
-    SPECIES_TO_NATIONAL(XATU),
-    SPECIES_TO_NATIONAL(MAREEP),
-    SPECIES_TO_NATIONAL(FLAAFFY),
-    SPECIES_TO_NATIONAL(AMPHAROS),
-    SPECIES_TO_NATIONAL(BELLOSSOM),
-    SPECIES_TO_NATIONAL(MARILL),
-    SPECIES_TO_NATIONAL(AZUMARILL),
-    SPECIES_TO_NATIONAL(SUDOWOODO),
-    SPECIES_TO_NATIONAL(POLITOED),
-    SPECIES_TO_NATIONAL(HOPPIP),
-    SPECIES_TO_NATIONAL(SKIPLOOM),
-    SPECIES_TO_NATIONAL(JUMPLUFF),
-    SPECIES_TO_NATIONAL(AIPOM),
-    SPECIES_TO_NATIONAL(SUNKERN),
-    SPECIES_TO_NATIONAL(SUNFLORA),
-    SPECIES_TO_NATIONAL(YANMA),
-    SPECIES_TO_NATIONAL(WOOPER),
-    SPECIES_TO_NATIONAL(QUAGSIRE),
-    SPECIES_TO_NATIONAL(ESPEON),
-    SPECIES_TO_NATIONAL(UMBREON),
-    SPECIES_TO_NATIONAL(MURKROW),
-    SPECIES_TO_NATIONAL(SLOWKING),
-    SPECIES_TO_NATIONAL(MISDREAVUS),
-    SPECIES_TO_NATIONAL(UNOWN),
-    SPECIES_TO_NATIONAL(WOBBUFFET),
-    SPECIES_TO_NATIONAL(GIRAFARIG),
-    SPECIES_TO_NATIONAL(PINECO),
-    SPECIES_TO_NATIONAL(FORRETRESS),
-    SPECIES_TO_NATIONAL(DUNSPARCE),
-    SPECIES_TO_NATIONAL(GLIGAR),
-    SPECIES_TO_NATIONAL(STEELIX),
-    SPECIES_TO_NATIONAL(SNUBBULL),
-    SPECIES_TO_NATIONAL(GRANBULL),
-    SPECIES_TO_NATIONAL(QWILFISH),
-    SPECIES_TO_NATIONAL(SCIZOR),
-    SPECIES_TO_NATIONAL(SHUCKLE),
-    SPECIES_TO_NATIONAL(HERACROSS),
-    SPECIES_TO_NATIONAL(SNEASEL),
-    SPECIES_TO_NATIONAL(TEDDIURSA),
-    SPECIES_TO_NATIONAL(URSARING),
-    SPECIES_TO_NATIONAL(SLUGMA),
-    SPECIES_TO_NATIONAL(MAGCARGO),
-    SPECIES_TO_NATIONAL(SWINUB),
-    SPECIES_TO_NATIONAL(PILOSWINE),
-    SPECIES_TO_NATIONAL(CORSOLA),
-    SPECIES_TO_NATIONAL(REMORAID),
-    SPECIES_TO_NATIONAL(OCTILLERY),
-    SPECIES_TO_NATIONAL(DELIBIRD),
-    SPECIES_TO_NATIONAL(MANTINE),
-    SPECIES_TO_NATIONAL(SKARMORY),
-    SPECIES_TO_NATIONAL(HOUNDOUR),
-    SPECIES_TO_NATIONAL(HOUNDOOM),
-    SPECIES_TO_NATIONAL(KINGDRA),
-    SPECIES_TO_NATIONAL(PHANPY),
-    SPECIES_TO_NATIONAL(DONPHAN),
-    SPECIES_TO_NATIONAL(PORYGON2),
-    SPECIES_TO_NATIONAL(STANTLER),
-    SPECIES_TO_NATIONAL(SMEARGLE),
-    SPECIES_TO_NATIONAL(TYROGUE),
-    SPECIES_TO_NATIONAL(HITMONTOP),
-    SPECIES_TO_NATIONAL(SMOOCHUM),
-    SPECIES_TO_NATIONAL(ELEKID),
-    SPECIES_TO_NATIONAL(MAGBY),
-    SPECIES_TO_NATIONAL(MILTANK),
-    SPECIES_TO_NATIONAL(BLISSEY),
-    SPECIES_TO_NATIONAL(RAIKOU),
-    SPECIES_TO_NATIONAL(ENTEI),
-    SPECIES_TO_NATIONAL(SUICUNE),
-    SPECIES_TO_NATIONAL(LARVITAR),
-    SPECIES_TO_NATIONAL(PUPITAR),
-    SPECIES_TO_NATIONAL(TYRANITAR),
-    SPECIES_TO_NATIONAL(LUGIA),
-    SPECIES_TO_NATIONAL(HO_OH),
-    SPECIES_TO_NATIONAL(CELEBI),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_B),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_C),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_D),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_E),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_F),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_G),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_H),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_I),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_J),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_K),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_L),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_M),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_N),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_O),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_P),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_Q),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_R),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_S),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_T),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_U),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_V),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_W),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_X),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_Y),
-    SPECIES_TO_NATIONAL(OLD_UNOWN_Z),
-    SPECIES_TO_NATIONAL(TREECKO),
-    SPECIES_TO_NATIONAL(GROVYLE),
-    SPECIES_TO_NATIONAL(SCEPTILE),
-    SPECIES_TO_NATIONAL(TORCHIC),
-    SPECIES_TO_NATIONAL(COMBUSKEN),
-    SPECIES_TO_NATIONAL(BLAZIKEN),
-    SPECIES_TO_NATIONAL(MUDKIP),
-    SPECIES_TO_NATIONAL(MARSHTOMP),
-    SPECIES_TO_NATIONAL(SWAMPERT),
-    SPECIES_TO_NATIONAL(POOCHYENA),
-    SPECIES_TO_NATIONAL(MIGHTYENA),
-    SPECIES_TO_NATIONAL(ZIGZAGOON),
-    SPECIES_TO_NATIONAL(LINOONE),
-    SPECIES_TO_NATIONAL(WURMPLE),
-    SPECIES_TO_NATIONAL(SILCOON),
-    SPECIES_TO_NATIONAL(BEAUTIFLY),
-    SPECIES_TO_NATIONAL(CASCOON),
-    SPECIES_TO_NATIONAL(DUSTOX),
-    SPECIES_TO_NATIONAL(LOTAD),
-    SPECIES_TO_NATIONAL(LOMBRE),
-    SPECIES_TO_NATIONAL(LUDICOLO),
-    SPECIES_TO_NATIONAL(SEEDOT),
-    SPECIES_TO_NATIONAL(NUZLEAF),
-    SPECIES_TO_NATIONAL(SHIFTRY),
-    SPECIES_TO_NATIONAL(NINCADA),
-    SPECIES_TO_NATIONAL(NINJASK),
-    SPECIES_TO_NATIONAL(SHEDINJA),
-    SPECIES_TO_NATIONAL(TAILLOW),
-    SPECIES_TO_NATIONAL(SWELLOW),
-    SPECIES_TO_NATIONAL(SHROOMISH),
-    SPECIES_TO_NATIONAL(BRELOOM),
-    SPECIES_TO_NATIONAL(SPINDA),
-    SPECIES_TO_NATIONAL(WINGULL),
-    SPECIES_TO_NATIONAL(PELIPPER),
-    SPECIES_TO_NATIONAL(SURSKIT),
-    SPECIES_TO_NATIONAL(MASQUERAIN),
-    SPECIES_TO_NATIONAL(WAILMER),
-    SPECIES_TO_NATIONAL(WAILORD),
-    SPECIES_TO_NATIONAL(SKITTY),
-    SPECIES_TO_NATIONAL(DELCATTY),
-    SPECIES_TO_NATIONAL(KECLEON),
-    SPECIES_TO_NATIONAL(BALTOY),
-    SPECIES_TO_NATIONAL(CLAYDOL),
-    SPECIES_TO_NATIONAL(NOSEPASS),
-    SPECIES_TO_NATIONAL(TORKOAL),
-    SPECIES_TO_NATIONAL(SABLEYE),
-    SPECIES_TO_NATIONAL(BARBOACH),
-    SPECIES_TO_NATIONAL(WHISCASH),
-    SPECIES_TO_NATIONAL(LUVDISC),
-    SPECIES_TO_NATIONAL(CORPHISH),
-    SPECIES_TO_NATIONAL(CRAWDAUNT),
-    SPECIES_TO_NATIONAL(FEEBAS),
-    SPECIES_TO_NATIONAL(MILOTIC),
-    SPECIES_TO_NATIONAL(CARVANHA),
-    SPECIES_TO_NATIONAL(SHARPEDO),
-    SPECIES_TO_NATIONAL(TRAPINCH),
-    SPECIES_TO_NATIONAL(VIBRAVA),
-    SPECIES_TO_NATIONAL(FLYGON),
-    SPECIES_TO_NATIONAL(MAKUHITA),
-    SPECIES_TO_NATIONAL(HARIYAMA),
-    SPECIES_TO_NATIONAL(ELECTRIKE),
-    SPECIES_TO_NATIONAL(MANECTRIC),
-    SPECIES_TO_NATIONAL(NUMEL),
-    SPECIES_TO_NATIONAL(CAMERUPT),
-    SPECIES_TO_NATIONAL(SPHEAL),
-    SPECIES_TO_NATIONAL(SEALEO),
-    SPECIES_TO_NATIONAL(WALREIN),
-    SPECIES_TO_NATIONAL(CACNEA),
-    SPECIES_TO_NATIONAL(CACTURNE),
-    SPECIES_TO_NATIONAL(SNORUNT),
-    SPECIES_TO_NATIONAL(GLALIE),
-    SPECIES_TO_NATIONAL(LUNATONE),
-    SPECIES_TO_NATIONAL(SOLROCK),
-    SPECIES_TO_NATIONAL(AZURILL),
-    SPECIES_TO_NATIONAL(SPOINK),
-    SPECIES_TO_NATIONAL(GRUMPIG),
-    SPECIES_TO_NATIONAL(PLUSLE),
-    SPECIES_TO_NATIONAL(MINUN),
-    SPECIES_TO_NATIONAL(MAWILE),
-    SPECIES_TO_NATIONAL(MEDITITE),
-    SPECIES_TO_NATIONAL(MEDICHAM),
-    SPECIES_TO_NATIONAL(SWABLU),
-    SPECIES_TO_NATIONAL(ALTARIA),
-    SPECIES_TO_NATIONAL(WYNAUT),
-    SPECIES_TO_NATIONAL(DUSKULL),
-    SPECIES_TO_NATIONAL(DUSCLOPS),
-    SPECIES_TO_NATIONAL(ROSELIA),
-    SPECIES_TO_NATIONAL(SLAKOTH),
-    SPECIES_TO_NATIONAL(VIGOROTH),
-    SPECIES_TO_NATIONAL(SLAKING),
-    SPECIES_TO_NATIONAL(GULPIN),
-    SPECIES_TO_NATIONAL(SWALOT),
-    SPECIES_TO_NATIONAL(TROPIUS),
-    SPECIES_TO_NATIONAL(WHISMUR),
-    SPECIES_TO_NATIONAL(LOUDRED),
-    SPECIES_TO_NATIONAL(EXPLOUD),
-    SPECIES_TO_NATIONAL(CLAMPERL),
-    SPECIES_TO_NATIONAL(HUNTAIL),
-    SPECIES_TO_NATIONAL(GOREBYSS),
-    SPECIES_TO_NATIONAL(ABSOL),
-    SPECIES_TO_NATIONAL(SHUPPET),
-    SPECIES_TO_NATIONAL(BANETTE),
-    SPECIES_TO_NATIONAL(SEVIPER),
-    SPECIES_TO_NATIONAL(ZANGOOSE),
-    SPECIES_TO_NATIONAL(RELICANTH),
-    SPECIES_TO_NATIONAL(ARON),
-    SPECIES_TO_NATIONAL(LAIRON),
-    SPECIES_TO_NATIONAL(AGGRON),
-    SPECIES_TO_NATIONAL(CASTFORM),
-    SPECIES_TO_NATIONAL(VOLBEAT),
-    SPECIES_TO_NATIONAL(ILLUMISE),
-    SPECIES_TO_NATIONAL(LILEEP),
-    SPECIES_TO_NATIONAL(CRADILY),
-    SPECIES_TO_NATIONAL(ANORITH),
-    SPECIES_TO_NATIONAL(ARMALDO),
-    SPECIES_TO_NATIONAL(RALTS),
-    SPECIES_TO_NATIONAL(KIRLIA),
-    SPECIES_TO_NATIONAL(GARDEVOIR),
-    SPECIES_TO_NATIONAL(BAGON),
-    SPECIES_TO_NATIONAL(SHELGON),
-    SPECIES_TO_NATIONAL(SALAMENCE),
-    SPECIES_TO_NATIONAL(BELDUM),
-    SPECIES_TO_NATIONAL(METANG),
-    SPECIES_TO_NATIONAL(METAGROSS),
-    SPECIES_TO_NATIONAL(REGIROCK),
-    SPECIES_TO_NATIONAL(REGICE),
-    SPECIES_TO_NATIONAL(REGISTEEL),
-    SPECIES_TO_NATIONAL(KYOGRE),
-    SPECIES_TO_NATIONAL(GROUDON),
-    SPECIES_TO_NATIONAL(RAYQUAZA),
-    SPECIES_TO_NATIONAL(LATIAS),
-    SPECIES_TO_NATIONAL(LATIOS),
-    SPECIES_TO_NATIONAL(JIRACHI),
-    SPECIES_TO_NATIONAL(DEOXYS),
-    SPECIES_TO_NATIONAL(CHIMECHO),
-};
 
 // BG Images/Tilemaps
 
@@ -694,7 +275,6 @@ static const u8 Gacha_BG_Left_Tilemap[] = INCBIN_U8("graphics/gacha/bg_left.bin.
 // Right shake
 static const u32 Gacha_BG_Right[] = INCBIN_U32("graphics/gacha/bg_right.4bpp.lz");
 static const u8 Gacha_BG_Right_Tilemap[] = INCBIN_U8("graphics/gacha/bg_right.bin.lz");
-
 // Trade
 static const u32 Gacha_BG_Red[] = INCBIN_U32("graphics/gacha/bg_mon.4bpp.lz");
 static const u8 Gacha_BG_Red_Tilemap[] = INCBIN_U8("graphics/gacha/bg_mon.bin.lz");
@@ -709,14 +289,13 @@ static const u16 Gacha_BG_Great_Pal[] = INCBIN_U16("graphics/gacha/bg_great.gbap
 static const u16 Gacha_BG_Ultra_Pal[] = INCBIN_U16("graphics/gacha/bg_ultra.gbapal");
 // Master
 static const u16 Gacha_BG_Master_Pal[] = INCBIN_U16("graphics/gacha/bg_master.gbapal");
-
+// Red
 static const u16 Gacha_BG_Red_Pal[] = INCBIN_U16("graphics/gacha/bg_mon.gbapal");
 
 // Knob Sprite Image
 static const u32 Gacha_Knob[] = INCBIN_U32("graphics/gacha/knob.4bpp.lz");
 
 // Knob Sprite Palettes
-
 static const u16 Gacha_Knob_Pal[] = INCBIN_U16("graphics/gacha/knob.gbapal");
 static const u16 Gacha_Digital_Text_Pal[] = INCBIN_U16("graphics/gacha/digital_text.gbapal");
 static const u16 Gacha_Lottery_Pal[] = INCBIN_U16("graphics/gacha/lottery.gbapal");
@@ -729,17 +308,14 @@ static const u32 Gacha_Digital_Text[] = INCBIN_U32("graphics/gacha/digital_text.
 static const u32 Gacha_Lottery_JPN[] = INCBIN_U32("graphics/gacha/lottery_japan.4bpp.lz");
 
 //Numbers
-
 static const u32 gCredits_Gfx[] = INCBIN_U32("graphics/gacha/numbers.4bpp.lz");
 static const u16 sCredit_Pal[] = INCBIN_U16("graphics/gacha/numbers.gbapal");
-
 static const u32 gPlayer_Gfx[] = INCBIN_U32("graphics/gacha/input_numbers.4bpp.lz");
 static const u16 sPlayer_Pal[] = INCBIN_U16("graphics/gacha/input_numbers.gbapal");
 
 // Credits Menu
 
 // Images
-
 static const u32 Gacha_Menu_1[] = INCBIN_U32("graphics/gacha/menu_1.4bpp.lz");
 static const u32 Gacha_Menu_2[] = INCBIN_U32("graphics/gacha/menu_2.4bpp.lz");
 
@@ -768,34 +344,26 @@ static const u16 Gacha_Menu2_Master_Pal[] = INCBIN_U16("graphics/gacha/menu2_mas
 // Belossom
 static const u32 BelossomGFX[] = INCBIN_U32("graphics/gacha/belossom.4bpp.lz");
 static const u16 BelossomPAL[] = INCBIN_U16("graphics/gacha/belossom.gbapal");
-
 // Phanpy
 static const u32 PhanpyGFX[] = INCBIN_U32("graphics/gacha/phanpy.4bpp.lz");
 static const u16 PhanpyPal[] = INCBIN_U16("graphics/gacha/phanpy.gbapal");
-
 // Teddiursa
 static const u32 TeddiursaGFX[] = INCBIN_U32("graphics/gacha/teddiursa.4bpp.lz");
 static const u16 TeddiursaPAL[] = INCBIN_U16("graphics/gacha/teddiursa.gbapal");
-
 // Elekid
 static const u32 ElekidGFX[] = INCBIN_U32("graphics/gacha/elekid.4bpp.lz");
 static const u16 ElekidPAL[] = INCBIN_U16("graphics/gacha/elekid.gbapal");
-
 // Hoppip
 static const u32 HoppipGFX[] = INCBIN_U32("graphics/gacha/hoppip.4bpp.lz");
 static const u16 HoppipPAL[] = INCBIN_U16("graphics/gacha/hoppip.gbapal");
 
 // Arrows
-
 static const u32 Gacha_Arrows_GFX[] = INCBIN_U32("graphics/gacha/arrows.4bpp.lz");
 
 // Press "A"
-
 static const u32 Gacha_Press_A_GFX[] = INCBIN_U32("graphics/gacha/pressA.4bpp.lz");
-
 static const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/pokeball.gbapal");
 static const u8 sPokeball_Gfx[] = INCBIN_U8("graphics/trade/pokeball.4bpp");
-
 const u16 gTrade_Tilemap[] = INCBIN_U16("graphics/trade/platform.bin");
 
 #define GACHA_BG_BASE 1
@@ -1672,9 +1240,8 @@ static const struct SpriteTemplate sSpriteTemplate_Knob =
 
 void StartGacha(void)
 {
-	u8 taskId = 0;
     sGacha = AllocZeroed(sizeof(struct Gacha));
-    taskId = CreateTask(FadeToGachaScreen, 0);
+    CreateTask(FadeToGachaScreen, 0);
 }
 
 static void SpriteCB_BouncingPokeball(struct Sprite *sprite)
@@ -1963,7 +1530,6 @@ static void CreateCreditSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_Interface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_Interface[i]);
     }
 
@@ -1994,7 +1560,6 @@ static void CreatePlayerSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PlayerInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_PlayerInterface[i]);
     }
 
@@ -2007,8 +1572,7 @@ static void CreatePlayerSprites(void)
 
 static void CreateCTA(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Press_A);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Press_A);
 	
 	sGacha->CTAspriteId = CreateSprite(&sSpriteTemplate_Press_A, 152, 116, 0);
 	gSprites[sGacha->CTAspriteId].animNum = 0; // Off
@@ -2016,8 +1580,7 @@ static void CreateCTA(void)
 
 static void CreateArrows(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Arrows);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Arrows);
 	
 	sGacha->ArrowsSpriteId = CreateSprite(&sSpriteTemplate_Arrows, 207 + 24, 120, 0);
 	gSprites[sGacha->ArrowsSpriteId].animNum = 1; // Only Up
@@ -2025,8 +1588,7 @@ static void CreateArrows(void)
 
 static void CreateLotteryJPN(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Lottery_JPN);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Lottery_JPN);
 	
 	sGacha->LotteryJPNspriteId = CreateSprite(&sSpriteTemplate_Lottery_JPN, 176, 32, 0);
 }
@@ -2038,23 +1600,21 @@ static void CreateHoppip(void)
 	s16 x2 = x + 34;
 	s16 x3 = x + 68;
 	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Hoppip);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Hoppip);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Hoppip, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Hoppip, x2, y, 0);	
 	sGacha->PokemonThreeSpriteId = CreateSprite(&sSpriteTemplate_Hoppip, x3, y, 0);	
 }
 
-static void CreateElekid(void)
+static UNUSED void CreateElekid(void)
 {
 	s16 x = 142;
 	s16 y = 56 + 2;
 	s16 x2 = x + 34;
 	s16 x3 = x + 68;
 	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Elekid);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Elekid);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Elekid, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Elekid, x2, y, 0);
@@ -2068,8 +1628,7 @@ static void CreateTeddiursa(void)
 	s16 x2 = x + 34;
 	s16 x3 = x + 68;
 	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Teddiursa);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Teddiursa);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Teddiursa, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Teddiursa, x2, y, 0);	
@@ -2083,8 +1642,7 @@ static void CreatePhanpy(void)
 	s16 x2 = x + 34;
 	s16 x3 = x + 68;
 	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Phanpy);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Phanpy);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Phanpy, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Phanpy, x2, y, 0);
@@ -2098,8 +1656,7 @@ static void CreateBelossom(void)
 	s16 x2 = x + 34;
 	s16 x3 = x + 68;
 	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Belossom);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Belossom);
 	
 	sGacha->PokemonOneSpriteId = CreateSprite(&sSpriteTemplate_Belossom, x, y, 0);
 	sGacha->PokemonTwoSpriteId = CreateSprite(&sSpriteTemplate_Belossom, x2, y, 0);	
@@ -2109,8 +1666,7 @@ static void CreateBelossom(void)
 
 static void CreateDigitalText(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Digital_Text);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Digital_Text);
 	
 	sGacha->DigitalTextSpriteId = CreateSprite(&sSpriteTemplate_Digital_Text, 64, 25, 0);
 }
@@ -2124,35 +1680,27 @@ static void CreateCreditMenu(void)
 	
 	if (sGacha->GachaId == 1) // Basic
 	{
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
-	
-	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Basic, x, y, priority);
-	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
+	    LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
+	    sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Basic, x, y, priority);
+	    gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
 	}
 	else if (sGacha->GachaId == 2) // Great
 	{
-	struct SpriteSheet s;	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
-	
-	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Great, x, y, priority);
-	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
+	    sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Great, x, y, priority);
+	    gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
 	}
 	else if (sGacha->GachaId == 3) // Ultra
-	{
-	struct SpriteSheet s;	
+	{	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
-	
-	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Ultra, x, y, priority);
-	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
+	    sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Ultra, x, y, priority);
+	    gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
 	}
 	else // Master
-	{
-	struct SpriteSheet s;	
+	{	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_1);
-	
-	sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Master, x, y, priority);
-	gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
+	    sGacha->CreditMenu1Id = CreateSprite(&sSpriteTemplate_Menu_1_Master, x, y, priority);
+	    gSprites[sGacha->CreditMenu1Id].oam.priority = 1;
 	}
 }
 
@@ -2165,42 +1713,33 @@ static void CreatePlayerMenu(void)
 	
 	if (sGacha->GachaId == 1) // Basic
 	{
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
-	
-	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Basic, x2, y, priority);
-	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
+	    LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
+	    sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Basic, x2, y, priority);
+	    gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
 	}
 	else if (sGacha->GachaId == 2) // Great
 	{
-	struct SpriteSheet s;	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
-	
-	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Great, x2, y, priority);
-	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
+        sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Great, x2, y, priority);
+        gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
 	}
 	else if (sGacha->GachaId == 3) // Ultra
-	{
-	struct SpriteSheet s;	
+	{	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
-	
-	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Ultra, x2, y, priority);
-	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
+	    sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Ultra, x2, y, priority);
+	    gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
 	}
 	else // Master
 	{
-	struct SpriteSheet s;	
         LoadCompressedSpriteSheet(&sSpriteSheet_Menu_2);
-	
-	sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Master, x2, y, priority);
-	gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
+	    sGacha->CreditMenu2Id = CreateSprite(&sSpriteTemplate_Menu_2_Master, x2, y, priority);
+	    gSprites[sGacha->CreditMenu2Id].oam.priority = 1;
 	}
 }
 
 static void CreateKnob(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Knob);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Knob);
 	
 	sGacha->KnobSpriteId = CreateSprite(&sSpriteTemplate_Knob, 76, 128, 0);
 	gSprites[sGacha->KnobSpriteId].animNum = 0; // No Rotation
@@ -3804,7 +3343,6 @@ static void MoveCursor(int direction)
     struct Sprite *cursorSprite = &gSprites[sGacha->ArrowsSpriteId];
     int curX = cursorSprite->x;
     int destX = curX;
-    u16 num = sGacha->wager;
     
     // Move cursor left or right (X axis)
     if (direction == 1 || direction == 3) { // Right or Left
@@ -3836,7 +3374,7 @@ static void ExitGacha(void)
     }
 }
 
-static void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed)
+static UNUSED void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed)
 {
     FillWindowPixelBuffer(windowId, PIXEL_FILL(15));
     sGacha->textColor[0] = 0;
@@ -3894,12 +3432,6 @@ u8 GenerateRandomIV(void) {
     return (Random() % 17) + 15;  // Random value between 15 and 31
 }
 
-static void Fade(void)
-{
-	BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
-	sGacha->state = STATE_POKEBALL_INIT;
-}
-
 static void RemoveGarbage(void)
 {
 	DestroySpriteAndFreeResources(&gSprites[sGacha->CreditSpriteIds[0]]);
@@ -3942,13 +3474,6 @@ static void RemoveGarbage(void)
     SetVBlankCallback(GachaVBlankCallback);
 }
 
-static void GachaSetMonNickname(void)
-{
-    SetMonData(&sGacha->GachaMon, MON_DATA_NICKNAME, gStringVar3);
-    FreeMonSpritesGfx();
-    sGacha->state = GACHA_STATE_START_EXIT;
-}
-
 void ShowFinalMessage(void)
 {
 	struct WindowTemplate template;
@@ -3960,7 +3485,7 @@ void ShowFinalMessage(void)
     PutWindowTilemap(sTextWindowId);
     LoadUserWindowBorderGfx(sTextWindowId, 0x214, BG_PLTT_ID(14));
 	DrawStdWindowFrame(sTextWindowId, FALSE); 
-	StringCopy(gStringVar1, gSpeciesNames[sGacha->CalculatedSpecies]);
+	StringCopy(gStringVar1, GetSpeciesName(sGacha->CalculatedSpecies));
     StringExpandPlaceholders(gStringVar4, gText_FromGacha);
     AddTextPrinterParameterized(sTextWindowId, FONT_NORMAL, gStringVar4, 0, 1, 0, 0);
 	CopyWindowToVram(sTextWindowId, 3);
@@ -3969,27 +3494,14 @@ void ShowFinalMessage(void)
 
 static void GachaMain(u8 taskId)
 {
-    u16 species;
-    u8 fixedIV;
-    u8 hasFixedPersonality = TRUE;
-    u32 fixedPersonality;
     u8 trainerId[TRAINER_ID_LENGTH] = {0};  // Assuming this is set elsewhere
     u32 playerId = GetTrainerId(trainerId);
-    u8 otIdType = OT_ID_PLAYER_ID;
-    u32 fixedOtId = playerId;
-	u16 level;
-	u8 check;
-	u8 gender;
-    u32 personality;
-	u8 party;
+	u16 level = 1;
 	int pos = 0;
 	//struct Pokemon *mon = NULL;
 	struct Pokemon mon;
 	
 	pos = B_POSITION_OPPONENT_RIGHT;
-	//struct SpriteSheet s;
-	
-	check = 0;
 	
 	if (FlagGet(FLAG_IS_CHAMPION) == TRUE)
 	{
@@ -4183,27 +3695,24 @@ static void GachaMain(u8 taskId)
 		break;
 	case STATE_POKEBALL_ARRIVE_WAIT:		
 		if (gSprites[sGacha->bouncingPokeballSpriteId].callback == SpriteCallbackDummy)
-			{	CreateMon(&mon, sGacha->CalculatedSpecies, level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
-				party = GiveMonToPlayer(&mon);
+			{
+                CreateMon(&mon, sGacha->CalculatedSpecies, level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
 				GetSetPokedexFlag(sGacha->CalculatedSpecies, FLAG_SET_SEEN);
 				HandleSetPokedexFlag(sGacha->CalculatedSpecies, FLAG_SET_CAUGHT, GetMonData(&mon, MON_DATA_PERSONALITY));
-				LoadCompressedSpritePalette(GetMonSpritePalStruct(&mon));
+				LoadCompressedSpritePaletteWithTag(GetMonSpritePalFromSpeciesAndPersonality(sGacha->CalculatedSpecies, FALSE, GetMonData(&mon, MON_DATA_PERSONALITY)), sGacha->CalculatedSpecies);
 				SetMultiuseSpriteTemplateToPokemon(sGacha->CalculatedSpecies, pos);
 				sGacha->monSpriteId = CreateMonPicSprite_Affine(sGacha->CalculatedSpecies, SHINY_ODDS, 0, MON_PIC_AFFINE_FRONT, 120, 60, 14, TAG_NONE);
 				gSprites[sGacha->monSpriteId].callback = SpriteCB_Null;
 				gSprites[sGacha->monSpriteId].oam.priority = 0;
 				gSprites[sGacha->monSpriteId].invisible = TRUE;
-				HandleLoadSpecialPokePic_2(&gMonFrontPicTable[sGacha->CalculatedSpecies],
-											gMonSpritesGfxPtr->sprites.ptr[pos],
-											sGacha->CalculatedSpecies,
-											GetMonData(&mon, MON_DATA_PERSONALITY));
+				HandleLoadSpecialPokePic(TRUE, gMonSpritesGfxPtr->spritesGfx[pos], sGacha->CalculatedSpecies, GetMonData(&mon, MON_DATA_PERSONALITY));
 				sGacha->state++;
 			}
 		break;
 	case STATE_SHOW_NEW_MON:
 		
 		gSprites[sGacha->monSpriteId].x = 120;
-        gSprites[sGacha->monSpriteId].y = gMonFrontPicCoords[sGacha->CalculatedSpecies].y_offset + 56;
+        gSprites[sGacha->monSpriteId].y = gSpeciesInfo[sGacha->CalculatedSpecies].frontPicYOffset + 56;
         gSprites[sGacha->monSpriteId].x2 = 0;
         gSprites[sGacha->monSpriteId].y2 = 0;
         StartSpriteAnim(&gSprites[sGacha->monSpriteId], 0);
@@ -4242,15 +3751,6 @@ static void GachaMain(u8 taskId)
 		sGacha->state = GACHA_STATE_START_EXIT;
         break;
     }
-}
-
-static void InitTradeScreen(void)
-{
-	//SetVBlankCallback(NULL);
-    //ResetAllBgsCoordinates();
-    //ResetVramOamAndBgCntRegs();
-    //ResetBgsAndClearDma3BusyFlags(0);
-    //ResetTempTileDataBuffers();
 }
 
 static void InitGachaScreen(void)

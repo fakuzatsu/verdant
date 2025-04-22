@@ -860,7 +860,6 @@ static void CreateCreditSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_CreditsInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_CreditsInterface[i]);
     }
 
@@ -908,7 +907,6 @@ static void CreateHiScoreSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_CreditsInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_CreditsInterface[i]);
     }
 
@@ -921,7 +919,6 @@ static void CreateHiScoreSprites(void)
 
 static void CreateScore(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Score);
@@ -931,7 +928,6 @@ static void CreateScore(void)
 
 static void CreateScore2(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Score2);
@@ -941,7 +937,6 @@ static void CreateScore2(void)
 
 static void CreateFlap(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Flap);
@@ -951,7 +946,6 @@ static void CreateFlap(void)
 
 static void CreateOne(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_One);
@@ -961,7 +955,6 @@ static void CreateOne(void)
 
 static void CreateTwo(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Two);
@@ -971,7 +964,6 @@ static void CreateTwo(void)
 
 static void CreateThree(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Three);
@@ -981,7 +973,6 @@ static void CreateThree(void)
 
 static void CreateStart(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Start);
@@ -991,7 +982,6 @@ static void CreateStart(void)
 
 static void CreateHiScore(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_HiScore);
@@ -1001,7 +991,6 @@ static void CreateHiScore(void)
 
 static void CreateGameOver(void)
 {
-	struct SpriteSheet s;
 	
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_GameOver);
@@ -1011,40 +1000,35 @@ static void CreateGameOver(void)
 
 static void CreateHitbox(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Butterfree_Hitbox);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Butterfree_Hitbox);
 	
 	sFlappy->ButterfreeHitboxSpriteId = CreateSprite(&sSpriteTemplate_Butterfree_Hitbox, 40, 64, 0);
 }
 
 static void CreateBorder(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Border);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Border);
 	
 	sFlappy->BorderSpriteId = CreateSprite(&sSpriteTemplate_Border, 32, 16, 0);
 }
 
 static void CreateBorder2(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Border_2);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Border_2);
 	
 	sFlappy->BorderSprite2Id = CreateSprite(&sSpriteTemplate_Border_2, 32, 16 + 128, 0);
 }
 
 static void CreateButterfree(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Butterfree);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Butterfree);
 	
 	sFlappy->ButterfreeSpriteId = CreateSprite(&sSpriteTemplate_Butterfree, gSprites[sFlappy->ButterfreeHitboxSpriteId].x - 5, gSprites[sFlappy->ButterfreeHitboxSpriteId].y - 6, 1);
 }
 
 static void CreateDamage(void)
 {
-	struct SpriteSheet s;
-		LoadSpritePalettes(sSpritePalettes);
+	LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Damage);
 	
 	sFlappy->DamageSpriteId = CreateSprite(&sSpriteTemplate_Damage, gSprites[sFlappy->ButterfreeHitboxSpriteId].x - 5, gSprites[sFlappy->ButterfreeHitboxSpriteId].y - 6, 1);
@@ -1052,8 +1036,7 @@ static void CreateDamage(void)
 
 static void CreateTrail(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Trail);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Trail);
 	
 	sFlappy->TrailSpriteId = CreateSprite(&sSpriteTemplate_Trail, gSprites[sFlappy->ButterfreeHitboxSpriteId].x - 16, gSprites[sFlappy->ButterfreeHitboxSpriteId].y, 3);
 }

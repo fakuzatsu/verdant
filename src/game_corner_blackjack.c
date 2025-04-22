@@ -207,7 +207,7 @@ struct BlackJack {
 };
 
 static EWRAM_DATA struct BlackJack *sBlackJack = NULL;
-static EWRAM_DATA u8 sTextWindowId = 1;
+static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToBJScreen(u8 taskId);
 static void InitBJScreen(void);
@@ -216,10 +216,6 @@ static void CreateCursorSprite(void);
 static void CreateOptions(void);
 static void AdjustCards(void);
 static void CreateFacedown(void);
-static void LoadHeartsSpriteSheet(void);
-static void LoadDiamondsSpriteSheet(void);
-static void LoadClubsSpriteSheet(void);
-static void LoadSpadesSpriteSheet(void);
 static void ShuffleCards(void);
 static void UpdateCards(void);
 static void SetCardSprite(u8 cardId, u8 cardNum, u8 cardIndex, u8 isPlayerCard);
@@ -314,13 +310,6 @@ static const u16 sCursorTiles_Pal[] = INCBIN_U16("graphics/blackjack/cursor.gbap
 static const u32 sPopup_Gfx[] = INCBIN_U32("graphics/blackjack/popup.4bpp.lz");
 
 static void ShowHelpBar(const u8 *str);
-static void ShowHit(const u8 *str);
-static void ShowStand(const u8 *str);
-static void ShowDouble(const u8 *str);
-static void ShowInsurance(const u8 *str);
-static void ShowPlus(const u8 *str);
-static void ShowMinus(const u8 *str);
-static void ShowBet(const u8 *str);
 static void SetCreditDigits(u16);
 static void SetPlayerDigits(u16);
 static void SetDealerDigits(u16);
@@ -1646,9 +1635,8 @@ static const struct SpriteTemplate sSpriteTemplate_Option3 =
 
 void StartBlackJack(void)
 {
-	u8 taskId = 0;
     sBlackJack = AllocZeroed(sizeof(struct BlackJack));
-    taskId = CreateTask(FadeToBJScreen, 0);
+    CreateTask(FadeToBJScreen, 0);
 }
 
 static void FadeToBJScreen(u8 taskId)
@@ -1857,7 +1845,6 @@ static void CreateCreditSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_Interface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_Interface[i]);
     }
 
@@ -1884,7 +1871,6 @@ static void CreatePlayerSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_PlayerInterface) - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_PlayerInterface[i]);
     }
 
@@ -1900,7 +1886,6 @@ static void CreateDealerSprites(void)
 
     for (i = 0; i < ARRAY_COUNT(sSpriteSheets_DealerInterface)  - 1; i++)  
     {
-        struct SpriteSheet s;
         LoadCompressedSpriteSheet(&sSpriteSheets_DealerInterface[i]);
     }
 
@@ -2854,13 +2839,11 @@ static void Hit(void)
 
 static void AButton(void)
 {
-	u32 bet;
-	u8 num;
-	u8 playerCard1Points;
-	u8 playerCard2Points;
-	u8 dealerCard1Points;
-	u8 taskId1;
-	u8 taskId2;
+	u32 bet = 0;
+	u8 num = 0;
+	u8 playerCard1Points = 0;
+	u8 playerCard2Points = 0;
+	u8 dealerCard1Points = 0;
 	
 	if (VarGet(VAR_OPTIONS_BJ) != 4)
 	{
@@ -3078,9 +3061,8 @@ static void AButton(void)
 
 static void MoveCursor(int direction)
 {
-    struct Sprite *cursorSprite = &gSprites[sBlackJack->cursorSpriteId];
-    int curY;
-    int destY;
+    int curY = 0;
+    int destY = 0;
 	curY = gSprites[sBlackJack->cursorSpriteId].y;
 	destY = curY;
 	
@@ -3155,14 +3137,12 @@ static void UpdateCards(void)
 
 static void SetCardSprite(u8 cardId, u8 cardNum, u8 cardIndex, u8 isPlayerCard)
 {
-    unsigned int tileNum = cardNum % 13;
     s16 x = cardPositions[cardIndex].x;
     s16 y = cardPositions[cardIndex].y;
     u8 subpriority = cardPositions[cardIndex].priority;
 
     const struct CompressedSpriteSheet* sheet = NULL;
     const struct SpriteTemplate* template = NULL;
-	struct SpriteSheet spriteSheet;
 
     switch (cardNum)
     {
@@ -3221,11 +3201,7 @@ static void SetCardSprite(u8 cardId, u8 cardNum, u8 cardIndex, u8 isPlayerCard)
         default: return; // Invalid card number
     }
 
-    LZ77UnCompWram(sheet->data, gDecompressionBuffer);
-	spriteSheet.data = gDecompressionBuffer;
-	spriteSheet.size = sheet->size;
-	spriteSheet.tag = sheet->tag;
-    LoadSpriteSheet(&spriteSheet);
+    LoadCompressedSpriteSheet(sheet);
 
     cardId = CreateSprite(template, x, y, subpriority);
 	gSprites[cardId].oam.priority = 1;
@@ -3240,20 +3216,9 @@ static void SetCardSprite(u8 cardId, u8 cardNum, u8 cardIndex, u8 isPlayerCard)
     }
 }
 
-static void LoadHeartsSpriteSheet(void)
-{
-    struct SpriteSheet s;
-    LZ77UnCompWram(sSpriteSheet_Cards_Hearts_A.data, gDecompressionBuffer);
-    s.data = gDecompressionBuffer;
-    s.size = sSpriteSheet_Cards_Hearts_A.size;
-    s.tag = GFXTAG_CARDS_HEARTS_A;
-    LoadSpriteSheet(&s);
-}
-
 static void CreateFacedown(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Facedown);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Facedown);
 	
 	sBlackJack->DealerFaceDownId = CreateSprite(&sSpriteTemplate_Facedown, 48, 56, 0);
     gSprites[sBlackJack->DealerFaceDownId].oam.priority = 0;
@@ -3262,8 +3227,7 @@ static void CreateFacedown(void)
 
 static void CreateCursorSprite(void)
 {	
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Cursor);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Cursor);
 	
 	sBlackJack->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, 173, 57, 9);
     gSprites[sBlackJack->cursorSpriteId].oam.priority = 3;
@@ -3271,8 +3235,7 @@ static void CreateCursorSprite(void)
 
 static void CreatePopUpSprite(void)
 {
-	struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Popup);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Popup);
 	
 	sBlackJack->LogoId = CreateSprite(&sSpriteTemplate_Popup, 80, 72, 1);
     gSprites[sBlackJack->LogoId].oam.priority = 3;
@@ -3280,8 +3243,7 @@ static void CreatePopUpSprite(void)
 
 static void CreateOptions(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Option1);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Option1);
 	
 	sBlackJack->option1SpriteId = CreateSprite(&sSpriteTemplate_Option1, 219, 58, 9);
     gSprites[sBlackJack->option1SpriteId].oam.priority = 2;

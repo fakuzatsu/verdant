@@ -682,7 +682,7 @@ static void CreateCreditSprites(void)
 
 static void CreateCoins(void)
 {
-	LoadCompressedSpriteSheet(&sSpriteSheet_Coins[i]);
+	LoadCompressedSpriteSheet(&sSpriteSheet_Coins);
 	sVflip->CoinsSpriteId = CreateSprite(&sSpriteTemplate_Coins, 198, 132, 0);
 }
 

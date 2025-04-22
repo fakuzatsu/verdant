@@ -878,13 +878,8 @@ static void CreateHighlight(u8 num, u8 row)
 {
 	if ((sBlockStacker->HighlightSpriteIds[num] == 0) && (sBlockStacker->HighlightRow != 8))
 	{	
-			struct SpriteSheet s;
 			LoadSpritePalettes(sSpritePalettes);
-			LZ77UnCompWram(sSpriteSheet_Highlight.data, gDecompressionBuffer);
-			s.data = gDecompressionBuffer;
-			s.size = sSpriteSheet_Highlight.size;
-			s.tag = HIGHLIGHT_GFXTAG;
-			LoadSpriteSheet(&s);
+			LoadCompressedSpriteSheet(&sSpriteSheet_Highlight);
 		if (num < 7)
 		{
 			sBlockStacker->HighlightSpriteIds[num] = CreateSprite(&sSpriteTemplate_Highlight, 32 + (16 * num), 136 - (16 * row), 1);
@@ -932,7 +927,6 @@ static void DestroyHighlights(void)
 
 static void SwapFromBlock(void)
 {
-		struct SpriteSheet s;
 		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->Rhydon2SpriteId]);
 		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->RhydonBlockSpriteId]);
 		LoadSpritePalettes(sSpritePalettes);
@@ -943,7 +937,6 @@ static void SwapFromBlock(void)
 
 static void SwapToBlock(void)
 {
-		struct SpriteSheet s;
 		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->RhydonSpriteId]);
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon2);
@@ -957,15 +950,13 @@ static void SwapToBlock(void)
 
 static void CreateRhydon(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon);
 	
 	sBlockStacker->RhydonSpriteId = CreateSprite(&sSpriteTemplate_Rhydon, 183, 112, 0);
 }
 
 static void CreateArrow(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Arrow);
 	
@@ -974,7 +965,6 @@ static void CreateArrow(void)
 
 static void CreateCommands(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Commands);
 	
@@ -983,7 +973,6 @@ static void CreateCommands(void)
 
 static void CreateX1(s16 x, s16 y)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_X);
 	
@@ -992,7 +981,6 @@ static void CreateX1(s16 x, s16 y)
 
 static void CreateX2(s16 x, s16 y)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_X);
 	
@@ -1001,7 +989,6 @@ static void CreateX2(s16 x, s16 y)
 
 static void CreateX3(s16 x, s16 y)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_X);
 	
@@ -1010,7 +997,6 @@ static void CreateX3(s16 x, s16 y)
 
 static void CreateYesNo(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Yes);
 	
@@ -1043,7 +1029,6 @@ static void UpdateLives(void)
 
 static void CreateLives(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Lives);
 	
@@ -1053,7 +1038,6 @@ static void CreateLives(void)
 
 static void CreateKeepGoing(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_KeepGoing);
 	
@@ -1062,7 +1046,6 @@ static void CreateKeepGoing(void)
 
 static void CreateGameOver(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_GameOver);
 	
@@ -1071,7 +1054,6 @@ static void CreateGameOver(void)
 
 static void CreateStart(void)
 {
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Start);
 	
@@ -1098,16 +1080,14 @@ static void DestroyLives(void)
 
 static void CreateWinner(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Winner);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Winner);
 	
 	sBlockStacker->WinnerSpriteId = CreateSprite(&sSpriteTemplate_Winner, 80, 80, 0);
 }
 
 static void CreateTitle(void)
 {
-		struct SpriteSheet s;
-        LoadCompressedSpriteSheet(&sSpriteSheet_Title);
+		LoadCompressedSpriteSheet(&sSpriteSheet_Title);
 	
 	sBlockStacker->TitleSpriteId = CreateSprite(&sSpriteTemplate_Title, 80, 80, 0);
 }
@@ -1121,7 +1101,6 @@ static void CreateLevel_1(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1154,7 +1133,6 @@ static void CreateLevel_2(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1222,7 +1200,6 @@ static void CreateLevel_3(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1271,7 +1248,6 @@ static void CreateLevel_4(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1320,7 +1296,6 @@ static void CreateLevel_5(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1349,7 +1324,6 @@ static void CreateLevel_6(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1378,7 +1352,6 @@ static void CreateLevel_7(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
@@ -1407,7 +1380,6 @@ static void CreateLevel_8(void)
 {
 	u8 LR;
 	
-		struct SpriteSheet s;
 		LoadSpritePalettes(sSpritePalettes);
         LoadCompressedSpriteSheet(&sSpriteSheet_Block);
 	
