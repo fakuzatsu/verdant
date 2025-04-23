@@ -435,7 +435,6 @@ static u32 GetTimerTicks(u8 gameType);
 static void LoadBgGfx(u8 gameType);
 static void LoadSpriteGfx(u8 gameType);
 static void InitBallSprite(void);
-static void InitFlipperSprites(void);
 static void InitTimerSprites(void);
 static bool32 GameTypeUsesTimer(u8 gameType);
 static void GetTimerScreenCoords(u8 gameType, int *outX, int *outY);
@@ -456,23 +455,11 @@ static void LostBallSeel(struct Seel *seel);
 static void LostBallGengar(struct Gengar *gengar);
 static void DrawMeowthScoreJewels(struct Meowth *meowth);
 static void DrawSeelScoreJewels(struct Seel *seel);
-static void OpenEntrance(u8 gameType);
-static void OpenEntranceMeowth(void);
-static void OpenEntranceDiglett(void);
-static void OpenEntranceSeel(void);
-static void OpenEntranceGengar(void);
-static void CloseEntranceMeowth(void);
-static void CloseEntranceDiglett(void);
-static void CloseEntranceSeel(void);
-static void CloseEntranceGengar(void);
 static void HandleBallPhysics(void);
 static void ApplyGravity(struct Ball *ball);
 static void LimitVelocity(struct Ball *ball);
 static void HandleTilts(struct Ball *ball);
 static void HandleTilt(struct Ball *ball, struct Tilt *tilt, int xDelta, int yDelta, u32 buttonMask, bool8 artificalEnabled);
-static bool32 HandleFlippers(struct Ball *ball, u16 *outYForce, u8 *outCollisionNormal, int *outCollisionAmplification);
-static void UpdateFlipperState(struct Flipper *flipper);
-static bool32 CheckFlipperCollision(struct Ball *ball, struct Flipper *flipper, u16 *outYForce, u8 *outCollisionNormal, int *outCollisionAmplification);
 static void UpdatePosition(struct Ball *ball);
 static bool32 CheckStaticCollision(u8 gameType, struct Ball *ball, bool32 ballIsEntering, int stageTileWidth, int stageTileHeight, u8 *outCollisionNormal, u16 *outYForce);
 static u8 GetCollisionAttribute(u8 gameType, bool32 ballIsEntering, int index);
@@ -495,13 +482,7 @@ static void UpdateFlipperSprite(struct Sprite *sprite);
 static void UpdateTimerDigitSprite(struct Sprite *sprite);
 static bool32 UpdateGameType(u8 gameType);
 static bool32 UpdateMeowth(struct Meowth *meowth);
-static bool32 CheckObjectsCollision(u8 gameType, struct Ball *ball, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification);
-static bool32 CheckMeowthCollision(struct Ball *ball, struct Meowth *meowth, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification);
-static bool32 CheckJewelCollision(struct Ball *ball, struct MeowthJewel *jewel, u8 *outCollisionNormal);
 static bool32 IsJewelSpaceOccupied(u16 xPos, u16 destYPos, struct MeowthJewel *jewels);
-static bool32 CheckMeowthJewelsCollision(struct Ball *ball, struct Meowth *meowth, u8 *outCollisionNormal);
-static int GetNumActiveJewels(struct Meowth *meowth);
-static struct MeowthJewel *TryCreateNewJewel(struct Meowth *meowth, int ballXPos);
 static void UpdateJewels(struct MeowthJewel *jewels);
 static void UpdateMeowthSprite(struct Sprite *sprite);
 static void UpdateMeowthJewelSprite(struct Sprite *sprite);
@@ -509,10 +490,6 @@ static void UpdateMeowthJewelMultiplierSprite(struct Sprite *sprite);
 static void ResetMeowthJewels(struct Meowth *meowth);
 static void UpdateMeowthJewelSparkleSprite(struct Sprite *sprite);
 static bool32 UpdateDiglett(struct Diglett *diglett);
-static void UpdateDiglettTiles(u16 *tilemap, int index, struct Diglett *diglett);
-static void UpdateDiglettCollision(u8 *collisionMap, int index, bool32 solidCollision);
-static void UpdateDugtrioSprite(struct Sprite *sprite);
-static bool32 CheckSeelCollision(struct Ball *ball, struct Seel *seel, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification);
 static bool32 UpdateSeel(struct Seel *seel);
 static void ResetSeels(struct Seel *seel);
 static void ChooseNextEmergingSeel(int curSeelIndex, struct Seel *seel);
@@ -520,8 +497,6 @@ static u32 GetSeelVisibleTicks(int curStreak);
 static void UpdateSeelSprite(struct Sprite *sprite);
 static void UpdateSeelSparkleSprite(struct Sprite *sprite);
 static void UpdateSeelMultiplierSprite(struct Sprite *sprite);
-static bool32 CheckGhostsCollision(struct Ball *ball, u32 ticks, struct GraveyardGhost *ghosts, int numGhosts, const u8 *angles, int width, int height, u8 *outCollisionNormal, int *outCollisionAmplification);
-static bool32 CheckGengarCollision(struct Ball *ball, struct Gengar *gengar, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification);
 static bool32 UpdateGengar(struct Gengar *gengar);
 static void UpdateGengarGhost(struct Gengar *gengar);
 static void UpdateGhost(struct Gengar *gengar, struct GraveyardGhost *ghost, u8 *numGhostHits, u8 nextState, int numGhosts);
@@ -536,7 +511,6 @@ static const u8 sJackpotText[] = _("JACKPOT!\nYou won {STR_VAR_1} COINS!");
 static const u8 sWinText[] = _("You won {STR_VAR_1} COINS!");
 static const u8 sLoseText[] = _("Game over!");
 
-static EWRAM_DATA u8 sTextWindowId = 0;
 static EWRAM_DATA struct PinballGame *sPinballGame = NULL;
 static EWRAM_DATA struct Credits *sScore = NULL;
 
@@ -1778,7 +1752,7 @@ static const struct SpriteTemplate sDugtrioSpriteTemplate = {
     .anims = sDugtrioAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = UpdateDugtrioSprite,
+    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sSeelOamData = {
@@ -3405,70 +3379,6 @@ static void CreateMultiplier(void)
 	sScore->MultiplierSpriteId = CreateSprite(&sSpriteTemplate_Multiplier, 208, 96, 0);
 }
 
-static void ShowJackpot(void)
-{
-	u16 bet;
-	struct WindowTemplate template;
-		
-		
-	SetWindowTemplateFields(&template, 3, 17, 10, 10, 2, 0xF, 0x194);
-	
-    sTextWindowId = AddWindow(&template);
-    FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(0));
-    PutWindowTilemap(sTextWindowId);
-    LoadUserWindowBorderGfx(sTextWindowId, 0x214, BG_PLTT_ID(14));
-	DrawStdWindowFrame(sTextWindowId, FALSE); 
-	bet = 50 * sScore->Multiplier;
-	ConvertUIntToDecimalStringN(gStringVar1, bet, STR_CONV_MODE_LEADING_ZEROS, 3);
-	//gStringVar4[0] = '\0';
-	StringExpandPlaceholders(gStringVar4, sJackpotText);
-    AddTextPrinterParameterized(sTextWindowId, FONT_NARROW, gStringVar4, 0, 1, 0, 0);
-	CopyWindowToVram(sTextWindowId, 3);
-}
-
-static void ShowWin(void)
-{
-	u16 bet;
-	struct WindowTemplate template;
-		
-		
-	SetWindowTemplateFields(&template, 3, 17, 10, 10, 2, 0xF, 0x194);
-	
-    sTextWindowId = AddWindow(&template);
-    FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(0));
-    PutWindowTilemap(sTextWindowId);
-    LoadUserWindowBorderGfx(sTextWindowId, 0x214, BG_PLTT_ID(14));
-	DrawStdWindowFrame(sTextWindowId, FALSE); 
-	bet = 50 * sScore->Multiplier;
-	ConvertUIntToDecimalStringN(gStringVar1, bet, STR_CONV_MODE_LEADING_ZEROS, 3);
-	//gStringVar4[0] = '\0';
-	StringExpandPlaceholders(gStringVar4, sWinText);
-    AddTextPrinterParameterized(sTextWindowId, FONT_NARROW, gStringVar4, 0, 1, 0, 0);
-	CopyWindowToVram(sTextWindowId, 3);
-}
-
-static void ShowLose(void)
-{
-	struct WindowTemplate template;
-		
-		
-	SetWindowTemplateFields(&template, 3, 17, 10, 10, 2, 0xF, 0x194);
-	
-    sTextWindowId = AddWindow(&template);
-    FillWindowPixelBuffer(sTextWindowId, PIXEL_FILL(0));
-    PutWindowTilemap(sTextWindowId);
-    LoadUserWindowBorderGfx(sTextWindowId, 0x214, BG_PLTT_ID(14));
-	DrawStdWindowFrame(sTextWindowId, FALSE); 
-    AddTextPrinterParameterized(sTextWindowId, FONT_NARROW, sLoseText, 0, 1, 0, 0);
-	CopyWindowToVram(sTextWindowId, 3);
-}
-
-static void ResetMessage(void)
-{
-	ClearStdWindowAndFrame(sTextWindowId, TRUE);
-    RemoveWindow(sTextWindowId);
-}
-
 static void InitPinballScreen(void)
 {
     switch (gMain.state)
@@ -3541,7 +3451,6 @@ static void InitPinballScreen(void)
         LoadSpriteGfx(sPinballGame->gameType);
         InitPinballGame();
         InitBallSprite();
-        //InitFlipperSprites();
         InitTimerSprites();
         InitGameType(sPinballGame->gameType);
         //StartNewBall();
@@ -3660,16 +3569,6 @@ static void InitBallSprite(void)
     sPinballGame->ball.spriteId = CreateSprite(&sBallPokeballSpriteTemplate, 0, 0, 3);
     StartSpriteAnim(&gSprites[sPinballGame->ball.spriteId], 3);
 	gSprites[sPinballGame->ball.spriteId].invisible = TRUE;
-}
-
-static void InitFlipperSprites(void)
-{
-    //sPinballGame->rightFlipper.spriteId = CreateSprite(&sFlipperSpriteTemplate, 0, 0, 4);
-    //sPinballGame->leftFlipper.spriteId = CreateSprite(&sFlipperSpriteTemplate, 0, 0, 4);
-    //gSprites[sPinballGame->leftFlipper.spriteId].data[0] = FLIPPER_LEFT;
-    //gSprites[sPinballGame->rightFlipper.spriteId].data[0] = FLIPPER_RIGHT;
-    //StartSpriteAnim(&gSprites[sPinballGame->leftFlipper.spriteId], 0);
-    //StartSpriteAnim(&gSprites[sPinballGame->rightFlipper.spriteId], 3);
 }
 
 static void InitTimerSprites(void)
@@ -4086,7 +3985,6 @@ static void PinballMain(u8 taskId)
 		{
 			gSprites[sPinballGame->ball.spriteId].invisible = TRUE;
 			BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITE);
-			//ShowJackpot();
 			PlayFanfare(MUS_OBTAIN_BADGE);
 			CreateWin();
 			sPinballGame->state = PACHINKO_JACKPOT;
@@ -4095,7 +3993,6 @@ static void PinballMain(u8 taskId)
 	case PACHINKO_JACKPOT:
 			if (IsFanfareTaskInactive())
 			{
-				//ResetMessage();
 				PlaySE(SE_SHOP);
 				AddCoins(50 * sScore->Multiplier);
 				sScore->Winnings = (sScore->Winnings + (50 * sScore->Multiplier));
@@ -4117,7 +4014,6 @@ static void PinballMain(u8 taskId)
 		{
 			gSprites[sPinballGame->ball.spriteId].invisible = TRUE;
 			BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITE);
-			//ShowWin();
 			PlayFanfare(MUS_LEVEL_UP);
 			CreateWin();
 			sPinballGame->state = PACHINKO_WIN;
@@ -4126,7 +4022,6 @@ static void PinballMain(u8 taskId)
 	case PACHINKO_WIN:
 			if (IsFanfareTaskInactive())
 			{
-				//ResetMessage();
 				PlaySE(SE_SHOP);
 				AddCoins(6 * sScore->Multiplier);
 				sScore->Winnings = (sScore->Winnings + (6 * sScore->Multiplier));
@@ -4188,11 +4083,7 @@ static void PinballMain(u8 taskId)
 		break;
     case PINBALL_STATE_DELAY_START_EXIT:
         if (--sPinballGame->exitTimer == 0)
-		{
-			//ShowLose();
-		//gSprites[sScore->GameOverSpriteId].invisible = FALSE;
             sPinballGame->state = PINBALL_STATE_START_EXIT;
-		}
         break;
     case PINBALL_STATE_START_EXIT:
         StartExitPinballGame();
@@ -4226,156 +4117,6 @@ static void StartNewBall(void)
     sPinballGame->ball.xVelocity = randomvel;
     sPinballGame->ball.yVelocity = (sScore->StartSpeed * 20);
     sPinballGame->ball.spin = 0;
-    //OpenEntrance(sPinballGame->gameType);
-}
-
-static void OpenEntrance(u8 gameType)
-{
-    sPinballGame->ballIsEntering = TRUE;
-    switch (gameType)
-    {
-    case GAME_TYPE_MEOWTH:
-        OpenEntranceMeowth();
-        break;
-    case GAME_TYPE_DIGLETT:
-        //OpenEntranceDiglett();
-        break;
-    case GAME_TYPE_SEEL:
-        OpenEntranceSeel();
-        break;
-    case GAME_TYPE_GENGAR:
-        OpenEntranceGengar();
-        break;
-    }
-}
-
-static void OpenEntranceMeowth(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x415;
-    //tilemap[0x114] = 0x414;
-    tilemap[0x133] = 0x413;
-    tilemap[0x173] = 0x408; // 0x412 og
-    tilemap[0x152] = 0x413; // 0x400 og
-    tilemap[0x153] = 0x410;
-    tilemap[0x154] = 0x011;
-    tilemap[0x172] = 0x409;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void OpenEntranceDiglett(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x55;
-    tilemap[0x114] = 0x56;
-    tilemap[0x133] = 0x0;
-    tilemap[0x134] = 0x54;
-    tilemap[0x152] = 0x0;
-    tilemap[0x153] = 0x52;
-    tilemap[0x154] = 0x53;
-    tilemap[0x172] = 0x50;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void OpenEntranceSeel(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x41E;
-    tilemap[0x114] = 0x41D;
-    tilemap[0x133] = 0x41B;
-    tilemap[0x134] = 0x41A;
-    tilemap[0x152] = 0x400;
-    tilemap[0x153] = 0x418;
-    tilemap[0x154] = 0x417;
-    tilemap[0x172] = 0x414;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void OpenEntranceGengar(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x0;
-    tilemap[0x132] = 0x1;
-    tilemap[0x133] = 0x2;
-    tilemap[0x152] = 0x5;
-    tilemap[0x153] = 0x3;
-    tilemap[0x172] = 0x4;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void CloseEntrance(u8 gameType)
-{
-    sPinballGame->ballIsEntering = FALSE;
-    switch (gameType)
-    {
-    case GAME_TYPE_MEOWTH:
-        CloseEntranceMeowth();
-        break;
-    case GAME_TYPE_DIGLETT:
-        //CloseEntranceDiglett();
-        break;
-    case GAME_TYPE_SEEL:
-        CloseEntranceSeel();
-        break;
-    case GAME_TYPE_GENGAR:
-        CloseEntranceGengar();
-        break;
-    }
-}
-
-static void CloseEntranceMeowth(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x403;
-    tilemap[0x173] = 0x40D;
-    tilemap[0x133] = 0x403;
-    //tilemap[0x134] = 0x401;
-    tilemap[0x152] = 0x40F;
-    tilemap[0x153] = 0x40E;
-    tilemap[0x154] = 0x002;
-    tilemap[0x172] = 0x40C;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void CloseEntranceDiglett(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x24;
-    tilemap[0x114] = 0x2;
-    tilemap[0x133] = 0x22;
-    tilemap[0x134] = 0x1;
-    tilemap[0x152] = 0x1F;
-    tilemap[0x153] = 0x20;
-    tilemap[0x154] = 0x2;
-    tilemap[0x172] = 0x1B;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void CloseEntranceSeel(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x41C;
-    tilemap[0x114] = 0x401;
-    tilemap[0x133] = 0x419;
-    tilemap[0x134] = 0x408;
-    tilemap[0x152] = 0x416;
-    tilemap[0x153] = 0x415;
-    tilemap[0x154] = 0x405;
-    tilemap[0x172] = 0x411;
-    tilemap[0x173] = 0x401;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-}
-
-static void CloseEntranceGengar(void)
-{
-    u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-    tilemap[0x113] = 0x4D;
-    tilemap[0x132] = 0x41;
-    tilemap[0x133] = 0x42;
-    tilemap[0x152] = 0x36;
-    tilemap[0x153] = 0x37;
-    tilemap[0x172] = 0x2F;
-    CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
 }
 
 static void DrawMeowthScoreJewels(struct Meowth *meowth)
@@ -4432,9 +4173,6 @@ static void HandleBallPhysics(void)
     u16 artificialYForce = 0;
     int collisionAmplification = 0;
     struct Ball *ball = &sPinballGame->ball;
-
-    //if (sPinballGame->ballIsEntering && (ball->xPos >> 8) < 144)
-        //CloseEntrance(sPinballGame->gameType);
 
     if (sPinballGame->gravityEnabled)
         ApplyGravity(ball);
@@ -4669,111 +4407,7 @@ static void HandleTilt(struct Ball *ball, struct Tilt *tilt, int xDelta, int yDe
     }
 }
 
-static bool32 HandleFlippers(struct Ball *ball, u16 *outYForce, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    //bool32 collided;
-    //struct Flipper *flipper;
-
-    //UpdateFlipperState(&sPinballGame->rightFlipper);
-    //UpdateFlipperState(&sPinballGame->leftFlipper);
-    
-    //collided = CheckFlipperCollision(ball, &sPinballGame->rightFlipper, outYForce, outCollisionNormal, outCollisionAmplification);
-    //if (!collided)
-    //    collided = CheckFlipperCollision(ball, &sPinballGame->leftFlipper, outYForce, outCollisionNormal, outCollisionAmplification);
-
-    //return collided;
-    return FALSE;
-}
-
 #define FLIPPER_STATE_DELTA 0x0333
-
-static void UpdateFlipperState(struct Flipper *flipper)
-{
-    //int stateDelta;
-
-    //flipper->prevState = flipper->state;
-	
-	//if (!sPinballGame->flippersDisabled && (gMain.newKeys & A_BUTTON)) // A button rising edge
-    //{
-    //    PlaySE(SE_VEND); // Play sound effect
-    //}
-	//else if (!sPinballGame->flippersDisabled && (gMain.newKeys & B_BUTTON)) // A button rising edge
-    //{
-    //    PlaySE(SE_VEND); // Play sound effect
-    //}
-	//
-    //if (!sPinballGame->flippersDisabled && (gMain.heldKeys & (A_BUTTON | B_BUTTON)))
-    //{
-    //    if (flipper->state == 0x0FFF)
-    //        stateDelta = 0;
-    //    else
-    //        stateDelta = FLIPPER_STATE_DELTA;
-    //}
-    //else
-    //{
-    //    if (flipper->state == 0)
-    //        stateDelta = 0;
-    //    else
-    //        stateDelta = -FLIPPER_STATE_DELTA;
-    //}
-
-    //flipper->stateDelta = stateDelta;
-    //flipper->state += stateDelta;
-}
-
-static bool32 CheckFlipperCollision(struct Ball *ball, struct Flipper *flipper, u16 *outYForce, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    //int curState, stateDelta;
-    //int offset;
-    //u32 collisionRadius, magnitude;
-    //u8 collisionNormal;
-    //int ballXPos = (ball->xPos >> 8);
-    //int ballYPos = (ball->yPos >> 8);
-    //int xOffset = ballXPos - flipper->xPos + 24;
-    //int yOffset = ballYPos - flipper->yPos + 16;
-    //
-    //if (xOffset < 0 || xOffset >= 48 || yOffset < 0 || yOffset >= 32)
-    //    return FALSE;
-    //
-    //*outYForce = 0;
-    //*outCollisionAmplification = 0;
-    //
-    //if (flipper->type == FLIPPER_RIGHT)
-    //    xOffset = 48 - xOffset;
-    //
-    //offset = xOffset * 32 + yOffset;
-    //collisionRadius = 0;
-    //
-    //stateDelta = flipper->prevState < flipper->state ? 1 : -1;
-    //curState = flipper->prevState >> 8;
-    //while (1)
-    ////{
-    ////    collisionRadius = sFlipperCollisionRadii[curState * 0x600 + offset];
-    //    if (collisionRadius != 0)
-    //        break;
-    //
-    //    if (curState == (flipper->state >> 8))
-    //        return FALSE;
-    //
-    //    curState += stateDelta;
-    //}
-    //
-    //collisionNormal = sFlipperCollisionNormalAngles[curState * 0x600 + offset];
-    //magnitude = sFlipperRadiusMagnitudes[collisionRadius];
-    //*outYForce = ((flipper->stateDelta * 4) * magnitude) >> 8;
-    //*outCollisionNormal = flipper->type == FLIPPER_LEFT ? collisionNormal : -collisionNormal;
-    //*outCollisionAmplification = 1;
-    //
-    //// Don't apply any y force if the ball is being forced downwards into the flipper
-    //if ((*outYForce) & 0x8000)
-    //{
-    //    *outYForce = 0;
-    //    *outCollisionAmplification = 0;
-    //}
-    //
-    return TRUE;
-}
-
 #define MAX_POS_UPDATE 0x04FF
 
 static void UpdatePosition(struct Ball *ball)
@@ -5153,25 +4787,7 @@ static void ApplyCollisionForces(struct Ball *ball, u16 flipperYForce, int colli
 
 static void UpdateCamera(void)
 {
-    int scrollX, scrollY;
-    int stagePixelWidth = sPinballGame->stageTileWidth * 8;
-    int stagePixelHeight = sPinballGame->stageTileHeight * 8;
-    struct Ball *ball = &sPinballGame->ball;
-
-    // scrollX = (ball->xPos >> 8) - (DISPLAY_WIDTH / 2);
-    // if (scrollX < 0)
-    //     scrollX = 0;
-    // if (scrollX > stagePixelWidth - DISPLAY_WIDTH)
-    //     scrollX = stagePixelWidth - DISPLAY_WIDTH;
-
-    // scrollY = (ball->yPos >> 8) - (DISPLAY_HEIGHT / 2);
-    // if (scrollY < 0)
-    //     scrollY = 0;
-    // if (scrollY > stagePixelHeight - DISPLAY_HEIGHT)
-    //     scrollY = stagePixelHeight - DISPLAY_HEIGHT;
-
-    scrollX = 0; // Center the game in the middle of the screen
-    scrollY = 0;
+    int scrollX = 0, scrollY = 0;
 
     scrollX += sPinballGame->leftTilt.counter;
     scrollX -= sPinballGame->rightTilt.counter;
@@ -5369,169 +4985,6 @@ static bool32 UpdateMeowth(struct Meowth *meowth)
     return meowth->completed;
 }
 
-static bool32 CheckObjectsCollision(u8 gameType, struct Ball *ball, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    bool32 isColliding = FALSE;
-
-    switch (gameType)
-    {
-    case GAME_TYPE_MEOWTH:
-        isColliding = CheckMeowthCollision(ball, &sPinballGame->meowth, ticks, outCollisionNormal, outCollisionAmplification);
-        if (!isColliding)
-            isColliding = CheckMeowthJewelsCollision(ball, &sPinballGame->meowth, outCollisionNormal);
-        break;
-    case GAME_TYPE_SEEL:
-        isColliding = CheckSeelCollision(ball, &sPinballGame->seel, ticks, outCollisionNormal, outCollisionAmplification);
-        break;
-    case GAME_TYPE_GENGAR:
-        switch (sPinballGame->gengar.graveyardState)
-        {
-        case GRAVEYARD_STATE_GASTLY:
-            isColliding = CheckGhostsCollision(
-                ball,
-                ticks,
-                sPinballGame->gengar.gastlyGhosts,
-                NUM_GASTLY,
-                sGastlyCollisionNormalAngles,
-                32,
-                32,
-                outCollisionNormal,
-                outCollisionAmplification);
-            break;
-        case GRAVEYARD_STATE_HAUNTER:
-            isColliding = CheckGhostsCollision(
-                ball,
-                ticks,
-                sPinballGame->gengar.haunterGhosts,
-                NUM_HAUNTER,
-                sHaunterCollisionNormalAngles,
-                32,
-                40,
-                outCollisionNormal,
-                outCollisionAmplification);
-            break;
-        case GRAVEYARD_STATE_GENGAR:
-            isColliding = CheckGengarCollision(ball, &sPinballGame->gengar, ticks, outCollisionNormal, outCollisionAmplification);
-            break;
-        }
-        break;
-    }
-
-    return isColliding;
-}
-
-static bool32 CheckMeowthCollision(struct Ball *ball, struct Meowth *meowth, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    int x, y;
-    u8 collisionNormal;
-    int ballXPos = (ball->xPos >> 8);
-    int ballYPos = (ball->yPos >> 8);
-
-    if (ticks <= 0)
-        return FALSE;
-
-    if (ballXPos < meowth->xPos - 24 || ballXPos >= meowth->xPos + 24
-     || ballYPos < meowth->yPos - 20 || ballYPos >= meowth->yPos + 20)
-        return FALSE;
-
-    x = ballXPos - meowth->xPos + 24;
-    y = ballYPos - meowth->yPos + 20;
-    collisionNormal = sMeowthCollisionNormalAngles[y * 48 + x];
-    if (collisionNormal == 0xFF)
-        return FALSE;
-
-    // Multiply normal by two because the original data is stored halved.
-    *outCollisionNormal = collisionNormal * 2;
-    //*outCollisionAmplification = 1;
-
-    if (meowth->state == MEOWTH_STATE_WALK)
-    {
-        meowth->state = MEOWTH_STATE_HIT;
-        meowth->hitDuration = 30;
-        TryCreateNewJewel(meowth, ballXPos);
-		PlaySE(SE_EFFECTIVE);
-    }
-
-    return TRUE;
-}
-
-static bool32 CheckMeowthJewelsCollision(struct Ball *ball, struct Meowth *meowth, u8 *outCollisionNormal)
-{
-    int i;
-    struct Sprite *sparkleSprite = &gSprites[meowth->sparkleSpriteId];
-
-    for (i = 0; i < MAX_MEOWTH_JEWELS; i++)
-    {
-        struct MeowthJewel *jewel = &meowth->jewels[i];
-        if (jewel->state == JEWEL_STATE_LANDED)
-        {
-            if (CheckJewelCollision(ball, jewel, outCollisionNormal))
-            {
-                if (++meowth->jewelStreak > 6)
-                    meowth->jewelStreak = 6;
-
-                meowth->score += meowth->jewelStreak;
-                if (!meowth->completed && meowth->score >= 20)
-                    meowth->completed = TRUE;
-
-                sparkleSprite->data[0] = JEWEL_SPARKLE_DURATION;
-                sparkleSprite->data[1] = min(20, meowth->score);
-                DrawMeowthScoreJewels(meowth);
-                if (meowth->jewelStreak > 1)
-                {
-                    int y = (jewel->yPos >> 8) - 8;
-                    u8 spriteId = CreateSprite(&sMeowthJewelMultiplierSpriteTemplate, jewel->xPos, y, 4);
-                    gSprites[spriteId].data[2] = y;
-                    StartSpriteAnim(&gSprites[spriteId], meowth->jewelStreak - 2);
-                }
-				PlaySE(SE_M_PAY_DAY);
-                return TRUE;
-            }
-        }
-    }
-
-    return FALSE;
-}
-
-static int GetNumActiveJewels(struct Meowth *meowth)
-{
-    int i, count = 0;
-    for (i = 0; i < MAX_MEOWTH_JEWELS; i++)
-    {
-        if (meowth->jewels[i].state != JEWEL_STATE_HIDDEN)
-            count++;
-    }
-    return count;
-}
-
-static struct MeowthJewel *TryCreateNewJewel(struct Meowth *meowth, int ballXPos)
-{
-    int i;
-    for (i = 0; i < MAX_MEOWTH_JEWELS; i++)
-    {
-        if (meowth->jewels[i].state == JEWEL_STATE_HIDDEN)
-            break;
-    }
-
-    if (i == MAX_MEOWTH_JEWELS)
-        return NULL;
-
-    meowth->jewelStreak = 0;
-
-    meowth->jewels[i].state = JEWEL_STATE_FALLING;
-    meowth->jewels[i].xPos = meowth->xPos;
-    meowth->jewels[i].yPos = (meowth->yPos - 12) << 8;
-    meowth->jewels[i].spriteId = CreateSprite(&sMeowthJewelSpriteTemplate, meowth->jewels[i].xPos, meowth->jewels[i].yPos, 4);
-    meowth->jewels[i].xVelocity = ballXPos < meowth->xPos ? 2 : -2;
-    meowth->jewels[i].yVelocity = -2 << 8;
-    meowth->jewels[i].destYPos = meowth->yPos < 40 ? 72 : 88;
-    gSprites[meowth->jewels[i].spriteId].data[0] = i;
-    gSprites[meowth->jewels[i].spriteId].data[1] = JEWEL_STATE_HIDDEN;
-
-	PlaySE(SE_M_PAY_DAY);
-    return &meowth->jewels[i];
-}
-
 static void UpdateJewels(struct MeowthJewel *jewels)
 {
     int i;
@@ -5582,30 +5035,6 @@ static bool32 IsJewelSpaceOccupied(u16 xPos, u16 destYPos, struct MeowthJewel *j
     }
 
     return FALSE;
-}
-
-static bool32 CheckJewelCollision(struct Ball *ball, struct MeowthJewel *jewel, u8 *outCollisionNormal)
-{
-    int x, y;
-    u8 collisionNormal;
-    int ballXPos = (ball->xPos >> 8);
-    int ballYPos = (ball->yPos >> 8);
-    int jewelXPos = jewel->xPos;
-    int jewelYPos = jewel->yPos >> 8;
-    if (ballXPos < jewelXPos - 12 || ballXPos >= jewelXPos + 12
-     || ballYPos < jewelYPos - 12 || ballYPos >= jewelYPos + 12)
-        return FALSE;
-
-    x = ballXPos - jewelXPos + 12;
-    y = ballYPos - jewelYPos + 12;
-    collisionNormal = sMeowthJewelCollisionNormalAngles[y * 24 + x];
-    if (collisionNormal == 0xFF)
-        return FALSE;
-
-    // Multiply normal by two because the original data is stored halved.
-    *outCollisionNormal = collisionNormal * 2;
-    jewel->state = JEWEL_STATE_CONSUMED;
-    return TRUE;
 }
 
 static void UpdateMeowthSprite(struct Sprite *sprite)
@@ -5756,262 +5185,7 @@ static void UpdateMeowthJewelSparkleSprite(struct Sprite *sprite)
 
 static bool32 UpdateDiglett(struct Diglett *diglett)
 {
-    u16 *tilemap;
-
-   // if (!diglett->initialized)
-   // {
-   //     if (gMain.vblankCounter1 & 1)
-   //     {
-   //         int index = sDiglettInitOrder[diglett->curInitIndex];
-   //         diglett->states[index] = DIGLETT_STATE_IDLE_0 + (Random() % 4);
-
-   //         tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-   //         UpdateDiglettTiles(tilemap, index, diglett);
-   //         CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-   //         UpdateDiglettCollision(diglett->collisionMap, index, TRUE);
-   //
-   //         if (++diglett->curInitIndex == NUM_DIGLETTS)
-   //             diglett->initialized = TRUE;
-   //     }
-   // }
-   // else if (diglett->numDiglettsHit < NUM_DIGLETTS)
-   // {
-   //     // Update 4 digletts each frame.
-   //     int i;
-   //     for (i = 0; i < 4; i++)
-   //     {
-   //         int index = (diglett->curUpdateIndex + i) % NUM_DIGLETTS;
-   //         switch (diglett->states[index])
-   //         {
-   //         case DIGLETT_STATE_INIT:
-   //         case DIGLETT_STATE_HIDDEN:
-   //             break;
-   //         case DIGLETT_STATE_IDLE_0:
-   //             diglett->states[index] = DIGLETT_STATE_IDLE_1;
-   //             break;
-   //         case DIGLETT_STATE_IDLE_1:
-   //             diglett->states[index] = DIGLETT_STATE_IDLE_2;
-   //             break;
-   //         case DIGLETT_STATE_IDLE_2:
-   //             diglett->states[index] = DIGLETT_STATE_IDLE_3;
-   //             break;
-   //         case DIGLETT_STATE_IDLE_3:
-   //             diglett->states[index] = DIGLETT_STATE_IDLE_0;
-   //             break;
-   //         case DIGLETT_STATE_HIT_0:
-   //             diglett->states[index] = DIGLETT_STATE_HIT_1;
-	//			PlaySE(SE_BALLOON_YELLOW);
-   //             break;
-   //         case DIGLETT_STATE_HIT_1:
-   //             diglett->states[index] = DIGLETT_STATE_HIT_2;
-	//			//PlaySE(SE_BALLOON_YELLOW);
-   //             break;
-   //         case DIGLETT_STATE_HIT_2:
-   //             diglett->states[index] = DIGLETT_STATE_HIDDEN;
-   //             UpdateDiglettCollision(diglett->collisionMap, index, FALSE);
-   //             if (++diglett->numDiglettsHit == NUM_DIGLETTS)
-   //             {
-   //                 diglett->dugtrioState = DUGTRIO_STATE_3ALIVE;
-   //
-   //                 // Update the colision tilemap for the Dugtrio-occupied tiles.
-   //                 tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-   //                 diglett->collisionMap[0x48] = 0x14;
-   //                 diglett->collisionMap[0x49] = 0x14;
-   //                 diglett->collisionMap[0x4A] = 0x14;
-   //                 diglett->collisionMap[0x4B] = 0x14;
-   //                 diglett->collisionMap[0x68] = 0x15;
-   //                 diglett->collisionMap[0x69] = 0x16;
-   //                 diglett->collisionMap[0x6A] = 0x17;
-   //                 diglett->collisionMap[0x6B] = 0x18;
-   //             }
-	//			VarSet(VAR_FLIP_WINNINGS, (diglett->numDiglettsHit * 3));
-	//			SetPlayerDigits(VarGet(VAR_FLIP_WINNINGS));
-   //             break;
-   //         }
-   //
-   //         // Update bg tilemap for the new diglett states.
-   //         tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-   //         UpdateDiglettTiles(tilemap, index, diglett);
-   //     }
-   //
-   //     CopyBgTilemapBufferToVram(PINBALL_BG_BASE);
-   //     diglett->curUpdateIndex = (diglett->curUpdateIndex + 4) % NUM_DIGLETTS;
-   // }
-   // else
-   // {
-   //     // At this point, all the Digletts are hidden and Dugtrio is visible.
-   //     //struct Sprite *dugtrioSprite = &gSprites[diglett->dugtrioSpriteId];
-	//	//VarSet(VAR_FLIP_WINNINGS, 100);
-	//	//SetPlayerDigits(VarGet(VAR_FLIP_WINNINGS));
-   //     //switch (diglett->dugtrioState)
-   //     //{
-   //     //case DUGTRIO_STATE_3ALIVE_HIT:
-   //     //    if (dugtrioSprite->animEnded)
-   //     //        diglett->dugtrioState = DUGTRIO_STATE_2ALIVE;
-   //     //    break;
-        //case DUGTRIO_STATE_2ALIVE_HIT:
-        //    if (dugtrioSprite->animEnded)
-        //        diglett->dugtrioState = DUGTRIO_STATE_1ALIVE;
-        //    break;
-        //case DUGTRIO_STATE_1ALIVE_HIT:
-        //    if (dugtrioSprite->animEnded)
-        //    {
-        //        diglett->dugtrioState = DUGTRIO_STATE_0ALIVE;
-        //        StartSpriteAnim(dugtrioSprite, 7);
-    //    //        DisableFlippers();
-    //    //        diglett->completed = TRUE;
-    //    //        return TRUE;
-    //    //    }
-    //    //    break;
-    //    //case DUGTRIO_STATE_0ALIVE:
-    //    //    if (dugtrioSprite->animEnded)
-    //    //        diglett->dugtrioState = DUGTRIO_STATE_COMPLETE;
-    //    //    return TRUE;
-    //    //}
-    //}
-    //
     return FALSE;
-}
-
-static void UpdateDiglettTiles(u16 *tilemap, int index, struct Diglett *diglett)
-{
-    //int tileIndex = sDiglettCoords[index][0] + sDiglettCoords[index][1] * 32;
-    //tilemap[tileIndex]      = sDiglettStateTiles[diglett->states[index]][0];
-    //tilemap[tileIndex + 1]  = sDiglettStateTiles[diglett->states[index]][1];
-    //tilemap[tileIndex + 32] = sDiglettStateTiles[diglett->states[index]][2];
-    //tilemap[tileIndex + 33] = sDiglettStateTiles[diglett->states[index]][3];
-}   
-
-static void UpdateDiglettCollision(u8 *collisionMap, int index, bool32 solidCollision)
-{
-    int tileIndex = sDiglettCoords[index][0] + sDiglettCoords[index][1] * 32;
-    if (solidCollision)
-    {
-        collisionMap[tileIndex]      = 0x19;
-        collisionMap[tileIndex + 1]  = 0x19;
-        collisionMap[tileIndex + 32] = 0x1A;
-        collisionMap[tileIndex + 33] = 0x1B;
-    }
-    else
-    {
-        collisionMap[tileIndex]      = 0x2;
-        collisionMap[tileIndex + 1]  = 0x2;
-        collisionMap[tileIndex + 32] = 0x2;
-        collisionMap[tileIndex + 33] = 0x2;
-    }
-}
-
-static void UpdateDugtrioSprite(struct Sprite *sprite)
-{
-    //// data[0] = previous state
-    //struct Diglett *diglett = &sPinballGame->diglett;
-    //int prevState = sprite->data[0];
-    //int curState = diglett->dugtrioState;
-    //
-    //sprite->x2 = -sPinballGame->cameraScrollX;
-    //sprite->y2 = -sPinballGame->cameraScrollY;
-    //
-    //// Check if Dugtrio's state changed, and start the appropriate
-    //// sprite animation.
-    //if (prevState != curState)
-    //{
-    //    sprite->data[0] = curState;
-    //    switch (curState)
-    //    {
-    //    case DUGTRIO_STATE_HIDDEN:
-    //        StartSpriteAnim(sprite, 0);
-    //        break;
-    //    case DUGTRIO_STATE_3ALIVE:
-    //        StartSpriteAnim(sprite, 1);
-	//		PlayBGM(MUS_RG_ROCKET_HIDEOUT);
-	//		PlayCry_Normal(SPECIES_DUGTRIO, 0);
-    //        break;
-    //    case DUGTRIO_STATE_3ALIVE_HIT:
-    //        StartSpriteAnim(sprite, 2);
-	//		PlaySE(SE_EFFECTIVE);
-    //        break;
-    //    case DUGTRIO_STATE_2ALIVE:
-    //        StartSpriteAnim(sprite, 3);
-    //        break;
-    //    case DUGTRIO_STATE_2ALIVE_HIT:
-    //        StartSpriteAnim(sprite, 4);
-	//		PlaySE(SE_EFFECTIVE);
-    //        break;
-    //    case DUGTRIO_STATE_1ALIVE:
-    //        StartSpriteAnim(sprite, 5);
-    //        break;
-    //    case DUGTRIO_STATE_1ALIVE_HIT:
-    //        StartSpriteAnim(sprite, 6);
-	//		PlayBGM(MUS_NONE);
-	//		VarSet(VAR_FLIP_WINNINGS, 200);
-	//		SetPlayerDigits(VarGet(VAR_FLIP_WINNINGS));
-	//		PlaySE(SE_SUPER_EFFECTIVE);
-    //        break;
-    //    case DUGTRIO_STATE_0ALIVE:
-    //        StartSpriteAnim(sprite, 7);
-    //        break;
-    //    case DUGTRIO_STATE_COMPLETE:
-    //        StartSpriteAnim(sprite, 0);
-    //        break;
-    //    }
-    //}
-}
-
-static bool32 CheckSeelCollision(struct Ball *ball, struct Seel *seel, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    int x, y;
-    u8 collisionNormal;
-    struct Sprite *sparkleSprite = &gSprites[seel->sparkleSpriteId];
-    struct SeelSwimmer *swimmer = &seel->swimmers[seel->emergingSwimmerIndex];
-    int ballXPos = (ball->xPos >> 8);
-    int ballYPos = (ball->yPos >> 8);
-    int swimmerXPos = (swimmer->xPos >> 8);
-    int swimmerYPos = (swimmer->yPos >> 8);
-
-    if (ticks <= 0)
-        return FALSE;
-
-    if (swimmer->state != SEEL_STATE_VISIBLE_RIGHT && swimmer->state != SEEL_STATE_VISIBLE_LEFT)
-        return FALSE;
-
-    if (ballXPos < swimmerXPos - 16 || ballXPos >= swimmerXPos + 16
-     || ballYPos < swimmerYPos - 16 || ballYPos >= swimmerYPos + 16)
-        return FALSE;
-
-    x = ballXPos - swimmerXPos + 16;
-    y = ballYPos - swimmerYPos + 16;
-    collisionNormal = sSeelCollisionNormalAngles[y * 32 + x];
-    if (collisionNormal == 0xFF)
-        return FALSE;
-
-    // Multiply normal by two because the original data is stored halved.
-    *outCollisionNormal = collisionNormal * 2;
-    //*outCollisionAmplification = 1;
-
-    if (swimmer->state == SEEL_STATE_VISIBLE_RIGHT)
-        swimmer->state = SEEL_STATE_HIT_RIGHT;
-    else
-        swimmer->state = SEEL_STATE_HIT_LEFT;
-
-    seel->score += seel->streak + 1;
-    if (!seel->completed && seel->score >= 20)
-        seel->completed = TRUE;
-
-    if (++seel->streak >= 9)
-        seel->streak = 0;
-
-    sparkleSprite->data[0] = SEEL_SPARKLE_DURATION;
-    sparkleSprite->data[1] = min(20, seel->score);
-    DrawSeelScoreJewels(seel);
-    if (seel->streak > 1)
-    {
-        int y = swimmerYPos - 16;
-        u8 spriteId = CreateSprite(&sSeelMultiplierSpriteTemplate, swimmerXPos, y, 4);
-        gSprites[spriteId].data[2] = y;
-        StartSpriteAnim(&gSprites[spriteId], seel->streak - 2);
-    }
-
-    return TRUE;
 }
 
 #define SEEL_SWIMMER_SPEED 0x34
@@ -6285,93 +5459,9 @@ static void UpdateSeelMultiplierSprite(struct Sprite *sprite)
     }
 }
 
-static bool32 CheckGhostsCollision(struct Ball *ball, u32 ticks, struct GraveyardGhost *ghosts, int numGhosts, const u8 *angles, int width, int height, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    int i;
-    int x, y;
-    u8 collisionNormal;
-    int ballXPos = (ball->xPos >> 8);
-    int ballYPos = (ball->yPos >> 8);
-
-    if (ticks <= 0)
-        return FALSE;
-
-    for (i = 0; i < numGhosts; i++)
-    {
-        struct GraveyardGhost *ghost = &ghosts[i];
-        int ghostXPos = (ghost->xPos >> 8);
-        int ghostYPos = (ghost->yPos >> 8);
-
-        if (ghost->state != GHOST_STATE_VISIBLE)
-            continue;
-
-        if (ballXPos < ghostXPos - (width / 2) || ballXPos >= ghostXPos + (width / 2)
-         || ballYPos < ghostYPos - (height / 2) || ballYPos >= ghostYPos + (height / 2))
-            continue;
-
-        x = ballXPos - ghostXPos + (width / 2);
-        y = ballYPos - ghostYPos + (height / 2);
-        collisionNormal = angles[y * width + x];
-        if (collisionNormal == 0xFF)
-            continue;
-        
-        // Multiply normal by two because the original data is stored halved.
-        *outCollisionNormal = collisionNormal * 2;
-        ghost->state = GHOST_STATE_HIT;
-		PlaySE(SE_M_COMET_PUNCH);
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
 #define GHOST_SPEED 0x35
 #define REQUIRED_GHOST_HITS 10
 #define REQUIRED_GENGAR_HITS 5
-
-static bool32 CheckGengarCollision(struct Ball *ball, struct Gengar *gengar, u32 ticks, u8 *outCollisionNormal, int *outCollisionAmplification)
-{
-    int x, y;
-    u8 collisionNormal;
-    struct GengarGhost *gengarGhost = &gengar->gengarGhost;
-    int gengarXPos = (gengarGhost->xPos >> 8);
-    int gengarYPos = (gengarGhost->yPos >> 8);
-    int ballXPos = (ball->xPos >> 8);
-    int ballYPos = (ball->yPos >> 8);
-
-    if (ticks <= 0)
-        return FALSE;
-
-    if (ballXPos < gengarXPos - 24 || ballXPos >= gengarXPos + 24
-     || ballYPos < gengarYPos - 32 || ballYPos >= gengarYPos + 32)
-        return FALSE;
-
-    x = ballXPos - gengarXPos + 24;
-    y = ballYPos - gengarYPos + 32;
-    collisionNormal = sGengarCollisionNormalAngles[y * 48 + x];
-    if (collisionNormal == 0xFF)
-        return FALSE;
-
-    // Multiply normal by two because the original data is stored halved.
-    *outCollisionNormal = collisionNormal * 2;
-
-    if (gengarGhost->state == GENGAR_STATE_STANDING || gengarGhost->state == GENGAR_STATE_STEP_LEFT ||
-        gengarGhost->state == GENGAR_STATE_STEP_RIGHT)
-    {
-        gengarGhost->state = GENGAR_STATE_HIT;
-        gengarGhost->counter = 0;
-        gengar->numGengarHits++;
-        if (gengar->numGengarHits >= REQUIRED_GENGAR_HITS)
-        {
-            gengar->completed = TRUE;
-            DisableFlippers();
-            gengarGhost->state = GENGAR_STATE_LEAVING;
-            sPinballGame->waitExitScene = TRUE;
-        }
-    }
-
-    return TRUE;
-}
 
 static bool32 UpdateGengar(struct Gengar *gengar)
 {

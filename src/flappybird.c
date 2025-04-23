@@ -129,7 +129,6 @@ struct FlappyBird {
 };	
 
 static EWRAM_DATA struct FlappyBird *sFlappy = NULL;
-static EWRAM_DATA u8 sTextWindowId = 0;
 
 #define MAX_Y_POSITION 10  // The highest point the bird can reach (lower is higher on the screen)
 #define MIN_Y_POSITION 140 // The ground level (Y position of the ground)
@@ -737,9 +736,8 @@ static const struct SpriteTemplate sSpriteTemplate_Butterfree_Hitbox =
 
 void StartFlappyBird(void)
 {
-	u8 taskId = 0;
     sFlappy = AllocZeroed(sizeof(struct FlappyBird));
-    taskId = CreateTask(FadeToFlappyBirdScreen, 0);
+    CreateTask(FadeToFlappyBirdScreen, 0);
 }
 
 static void FadeToFlappyBirdScreen(u8 taskId)
@@ -1043,8 +1041,6 @@ static void CreateTrail(void)
 
 static void SpriteCB_FlappyDamage(struct Sprite *sprite)
 {
-    s16 sine;
-    s16 cosine;
     s16 rotation;
     struct ObjAffineSrcData affine;
     struct OamMatrix matrix;
@@ -1054,9 +1050,6 @@ static void SpriteCB_FlappyDamage(struct Sprite *sprite)
 	sFlappy->DamageSpriteRotation %= 360;
 
     rotation = sFlappy->DamageSpriteRotation;  
-
-    sine = Sin2(rotation);  
-    cosine = Cos2(rotation); 
 
     affine.xScale = 256;  
     affine.yScale = 256;  

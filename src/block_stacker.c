@@ -161,7 +161,6 @@ struct BlockStacker {
 };	
 
 static EWRAM_DATA struct BlockStacker *sBlockStacker = NULL;
-static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToBlockStackerScreen(u8 taskId);
 static void InitBlockStackerScreen(void);
@@ -835,9 +834,8 @@ static const struct SpriteTemplate sSpriteTemplate_Rhydon =
 
 void StartBlockStacker(void)
 {
-	u8 taskId = 0;
     sBlockStacker = AllocZeroed(sizeof(struct BlockStacker));
-    taskId = CreateTask(FadeToBlockStackerScreen, 0);
+    CreateTask(FadeToBlockStackerScreen, 0);
 }
 
 static void FadeToBlockStackerScreen(u8 taskId)
@@ -923,29 +921,6 @@ static void DestroyHighlights(void)
 			sBlockStacker->DestroyedHighlights++;
 		}
 	}
-}
-
-static void SwapFromBlock(void)
-{
-		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->Rhydon2SpriteId]);
-		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->RhydonBlockSpriteId]);
-		LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon);
-	
-	sBlockStacker->RhydonSpriteId = CreateSprite(&sSpriteTemplate_Rhydon, 183, 112, 0);
-}
-
-static void SwapToBlock(void)
-{
-		DestroySpriteAndFreeResources(&gSprites[sBlockStacker->RhydonSpriteId]);
-		LoadSpritePalettes(sSpritePalettes);
-        LoadCompressedSpriteSheet(&sSpriteSheet_Rhydon2);
-	
-	sBlockStacker->Rhydon2SpriteId = CreateSprite(&sSpriteTemplate_Rhydon2, 183, 112, 0);
-	
-		LoadCompressedSpriteSheet(&sSpriteSheet_RhydonBlock);
-		
-	sBlockStacker->RhydonBlockSpriteId = CreateSprite(&sSpriteTemplate_RhydonBlock, 177, 122, 0);
 }
 
 static void CreateRhydon(void)
@@ -1673,7 +1648,6 @@ static void UpdateBlockPosition(void)
 static void AButton(void)
 {
 	PlaySE(SE_M_STRENGTH);
-	//SwapFromBlock();
 	sBlockStacker->ToggleButtons = 0;
 	
 	if ((sBlockStacker->CurrentRow == 1) && (sBlockStacker->BlocksLeft == 3)) // Level 1, 3 Lives
@@ -1795,22 +1769,14 @@ static void CheckLevel_2(void)
 
 static void CheckLevel_3(void)
 {
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+	s16 curX1 = gSprites[sBlockStacker->Row3Block1SpriteId].x;
+	s16 curX2 = gSprites[sBlockStacker->Row3Block2SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row3Block1SpriteId].x;
-	curX2 = gSprites[sBlockStacker->Row3Block2SpriteId].x;
+	s16 preX1 = gSprites[sBlockStacker->Row2Block1SpriteId].x;
+	s16 preX2 = gSprites[sBlockStacker->Row2Block2SpriteId].x;
+	s16 preX3 = gSprites[sBlockStacker->Row2Block3SpriteId].x;
 	
-	preX1 = gSprites[sBlockStacker->Row2Block1SpriteId].x;
-	preX2 = gSprites[sBlockStacker->Row2Block2SpriteId].x;
-	preX3 = gSprites[sBlockStacker->Row2Block3SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
+	u8 Lives = sBlockStacker->BlocksLeft;
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1) && (curX1 != preX2) && (curX1 != preX3)) // Block 1 Off
@@ -1839,22 +1805,14 @@ static void CheckLevel_3(void)
 }
 
 static void CheckLevel_4(void)
-{
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+{	
+	s16 curX1 = gSprites[sBlockStacker->Row4Block1SpriteId].x;
+	s16 curX2 = gSprites[sBlockStacker->Row4Block2SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row4Block1SpriteId].x;
-	curX2 = gSprites[sBlockStacker->Row4Block2SpriteId].x;
+	s16 preX1 = gSprites[sBlockStacker->Row3Block1SpriteId].x;
+	s16 preX2 = gSprites[sBlockStacker->Row3Block2SpriteId].x;
 	
-	preX1 = gSprites[sBlockStacker->Row3Block1SpriteId].x;
-	preX2 = gSprites[sBlockStacker->Row3Block2SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
+	u8 Lives = sBlockStacker->BlocksLeft;
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1) && (curX1 != preX2)) // Block 1 Off
@@ -1884,20 +1842,11 @@ static void CheckLevel_4(void)
 
 static void CheckLevel_5(void)
 {
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+	s16 curX1 = gSprites[sBlockStacker->Row5Block1SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row5Block1SpriteId].x;
-	
-	preX1 = gSprites[sBlockStacker->Row4Block1SpriteId].x;
-	preX2 = gSprites[sBlockStacker->Row4Block2SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
+	s16 preX1 = gSprites[sBlockStacker->Row4Block1SpriteId].x;
+	s16 preX2 = gSprites[sBlockStacker->Row4Block2SpriteId].x;
+
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1) && (curX1 != preX2)) // Block 1 Off
@@ -1913,20 +1862,11 @@ static void CheckLevel_5(void)
 }
 
 static void CheckLevel_6(void)
-{
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+{	
+	s16 curX1 = gSprites[sBlockStacker->Row6Block1SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row6Block1SpriteId].x;
-	
-	preX1 = gSprites[sBlockStacker->Row5Block1SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
+	s16 preX1 = gSprites[sBlockStacker->Row5Block1SpriteId].x;
+
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1)) // Block 1 Off
@@ -1943,19 +1883,10 @@ static void CheckLevel_6(void)
 
 static void CheckLevel_7(void)
 {
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+	s16 curX1 = gSprites[sBlockStacker->Row7Block1SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row7Block1SpriteId].x;
+	s16 preX1 = gSprites[sBlockStacker->Row6Block1SpriteId].x;
 	
-	preX1 = gSprites[sBlockStacker->Row6Block1SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1)) // Block 1 Off
@@ -1972,19 +1903,10 @@ static void CheckLevel_7(void)
 
 static void CheckLevel_8(void)
 {
-	s16 curX1;
-	s16 curX2;
-	s16 curX3;
-	s16 preX1;
-	s16 preX2;
-	s16 preX3;
-	u8 Lives;
+	s16 curX1 = gSprites[sBlockStacker->Row8Block1SpriteId].x;
 	
-	curX1 = gSprites[sBlockStacker->Row8Block1SpriteId].x;
-	
-	preX1 = gSprites[sBlockStacker->Row7Block1SpriteId].x;
-	
-	Lives = sBlockStacker->BlocksLeft;
+	s16 preX1 = gSprites[sBlockStacker->Row7Block1SpriteId].x;
+
 	sBlockStacker->LastLives = sBlockStacker->BlocksLeft;
 	
 	if ((curX1 != preX1)) // Block 1 Off
@@ -2137,7 +2059,6 @@ static void BlockStackerMain(u8 taskId)
 				CreateCommands();
 				CreateArrow();
 				CreateLives();
-				//SwapToBlock();
 				sBlockStacker->state = STACKER_LEVEL_SETUP;
 			}
 			break;
@@ -2255,7 +2176,6 @@ static void BlockStackerMain(u8 taskId)
 					//sBlockStacker->ToggleButtons = 1;
 					sBlockStacker->CurrentRow++;
 					PlaySE(SE_EGG_HATCH);
-					//SwapToBlock();
 					sBlockStacker->state = STACKER_LEVEL_SETUP;
 				}
 				else if (sBlockStacker->BlocksLeft == 0)
@@ -2310,7 +2230,6 @@ static void BlockStackerMain(u8 taskId)
 				else
 				{
 					PlaySE(SE_EGG_HATCH);
-					//SwapToBlock();
 					sBlockStacker->state = STACKER_LEVEL_SETUP;
 				}
 			}

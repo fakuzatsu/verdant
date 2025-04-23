@@ -179,7 +179,6 @@ struct Derby {
 };	
 
 static EWRAM_DATA struct Derby *sDerby = NULL;
-static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToDerbyScreen(u8 taskId);
 static void InitDerbyScreen(void);

@@ -1675,7 +1675,7 @@ static void CreateCreditMenu(void)
 {
 	s16 x = 144;
 	s16 y = 128;
-	s16 x2 = x + 64;
+	// s16 x2 = x + 64;
 	u8 priority = 1;
 	
 	if (sGacha->GachaId == 1) // Basic
@@ -2833,18 +2833,16 @@ void DeterminePokemonRarityAndNewStatus(void)
     u16 totalNotOwned;
     u8 totalOwned;
     u16 totalMax;
-    u8 commonChance;
-    u8 uncommonChance;
-    u8 rareChance;
-    u8 ultraRareChance;
 	u16 newPokemonChance;
 	u16 randomValue;
 	u32 attempts = 1000;
-	
-	commonChance = sGacha->commonChance;
-    uncommonChance = sGacha->uncommonChance;
-    rareChance = sGacha->rareChance;
-    ultraRareChance = sGacha->ultraRareChance;
+
+    /*
+	u8 commonChance = sGacha->commonChance;
+    u8 uncommonChance = sGacha->uncommonChance;
+    u8 rareChance = sGacha->rareChance;
+    u8 ultraRareChance = sGacha->ultraRareChance;
+    */
 
     while (1) {
 		randomValue = (Random() % 100);  // Generate random value between 0 and 100
@@ -3494,11 +3492,8 @@ void ShowFinalMessage(void)
 
 static void GachaMain(u8 taskId)
 {
-    u8 trainerId[TRAINER_ID_LENGTH] = {0};  // Assuming this is set elsewhere
-    u32 playerId = GetTrainerId(trainerId);
 	u16 level = 1;
 	int pos = 0;
-	//struct Pokemon *mon = NULL;
 	struct Pokemon mon;
 	
 	pos = B_POSITION_OPPONENT_RIGHT;
