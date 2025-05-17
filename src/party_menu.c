@@ -978,6 +978,8 @@ static void FreePartyPointers(void)
         Free(sPartyBgGfxTilemap);
     if (sPartyMenuBoxes)
         Free(sPartyMenuBoxes);
+    if (sPartyScrollBgTilemapBuffer)
+        Free(sPartyScrollBgTilemapBuffer);
     FreeAllWindowBuffers();
 }
 
