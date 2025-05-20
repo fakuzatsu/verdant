@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: devkitpro/devkitarm
     env:
       GAME_VERSION: EMERALD
       GAME_REVISION: 0
@@ -24,10 +23,8 @@ jobs:
       - name: Install binutils
         run: |
           sudo apt update
-          sudo apt install -y build-essential libpng-dev libelf-dev
-        # build-essential, git, and libpng-dev are already installed
-        # gcc-arm-none-eabi is only needed for the modern build
-        # as an alternative to dkP
+          sudo apt install -y binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+        # build-essential and git are already installed
 
       - name: ROM
         env:
@@ -37,7 +34,5 @@ jobs:
       - name: Test
         env:
           TEST: 1
-          UNUSED_ERROR: 0
         run: |
-          make -j${nproc} -O pokeemerald-test.elf
           make -j${nproc} check
