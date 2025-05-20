@@ -351,7 +351,6 @@ struct Snake {
 };	
 
 static EWRAM_DATA struct Snake *sSnake = NULL;
-static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToSnakeScreen(u8 taskId);
 static void InitSnakeScreen(void);
