@@ -362,6 +362,7 @@ struct PinballGame
     bool8 completed;
     u8 exitTimer;
     bool8 waitExitScene;
+    bool8 musChanged;
     MainCallback returnMainCallback;
 };
 
@@ -3635,6 +3636,12 @@ static void DisableFlippers(void)
     gPlttBufferFaded[0x100 + flipperPaletteIndex * 0x10 + 3] = RGB(12, 12, 12);
 }
 
+static void PinBallPlayBGM(u16 songNum)
+{
+    sPinballGame->musChanged = TRUE;
+    PlayBGM(songNum);
+}
+
 static void StartExitPinballGame(void)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
@@ -3649,6 +3656,8 @@ static void ExitPinballGame(void)
         if (sPinballGame->gameType == GAME_TYPE_DIGLETT)
             FREE_AND_SET_NULL(sPinballGame->diglett.collisionMap);
 
+        if (sPinballGame->musChanged)
+            FadeInNewBGM(MUS_GAME_CORNER, 4);
         SetMainCallback2(sPinballGame->returnMainCallback);
         FREE_AND_SET_NULL(sPinballGame);
 		FREE_AND_SET_NULL(sScore);
@@ -4333,7 +4342,7 @@ static void UpdateDugtrioSprite(struct Sprite *sprite)
             break;
         case DUGTRIO_STATE_3ALIVE:
             StartSpriteAnim(sprite, 1);
-			PlayBGM(MUS_RG_ROCKET_HIDEOUT);
+			PinBallPlayBGM(MUS_RG_ROCKET_HIDEOUT);
 			PlayCry_Normal(SPECIES_DUGTRIO, 0);
             break;
         case DUGTRIO_STATE_3ALIVE_HIT:
@@ -4352,7 +4361,7 @@ static void UpdateDugtrioSprite(struct Sprite *sprite)
             break;
         case DUGTRIO_STATE_1ALIVE_HIT:
             StartSpriteAnim(sprite, 6);
-			PlayBGM(MUS_NONE);
+			PinBallPlayBGM(MUS_NONE);
 			VarSet(VAR_FLIP_WINNINGS, 150);
 			SetPlayerDigits(VarGet(VAR_FLIP_WINNINGS));
 			PlaySE(SE_SUPER_EFFECTIVE);
@@ -4797,7 +4806,7 @@ static bool32 UpdateGengar(struct Gengar *gengar)
         if (--gengar->counter == 0)
         {
             gengar->graveyardState = GRAVEYARD_STATE_HAUNTER;
-			PlayBGM(MUS_RG_POKE_MANSION);
+			PinBallPlayBGM(MUS_RG_POKE_MANSION);
             for (i = 0; i < NUM_HAUNTER; i++)
                 InitGhost(&gengar->haunterGhosts[i], sInitialHaunterData[i], &sHaunterSpriteTemplate, i);
         }
@@ -5098,7 +5107,7 @@ static void UpdateGengarSprite(struct Sprite *sprite)
             break;
         case GENGAR_STATE_LEAVING:
             StartSpriteAnim(sprite, 4);
-			PlayBGM(MUS_NONE);
+			PinBallPlayBGM(MUS_NONE);
 			VarSet(VAR_FLIP_WINNINGS, 250);
 			SetPlayerDigits(VarGet(VAR_FLIP_WINNINGS));
 			PlaySE(SE_SUPER_EFFECTIVE);
@@ -5113,7 +5122,7 @@ static void CrumbleGravestones(struct Gengar *gengar)
 
     // Draw the 4 crumbled gravestone tiles to the background tilemap.
     u16 *tilemap = GetBgTilemapBuffer(PINBALL_BG_BASE);
-	PlayBGM(MUS_RG_SILPH);
+	PinBallPlayBGM(MUS_RG_SILPH);
 	PlaySE(SE_M_ROCK_THROW);
     tilemap[0x67] = 0x5;
     tilemap[0x68] = 0x5;

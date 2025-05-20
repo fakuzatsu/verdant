@@ -574,3 +574,4 @@ gSpecials::
 	def_special GetNewDerby
 	def_special StartSnake
 	def_special StartFlappyBird
+	def_special PlayPachinko

@@ -626,6 +626,102 @@ MauvilleCity_GameCorner_EventScript_NoCoinCase::
 	releaseall
 	end
 
+MauvilleCity_GameCorner_EventScript_GameBoyKid::
+	msgbox MauvilleCity_GameCorner_Text_TheGamesHereAreBoring, MSGBOX_NPC
+	end
+
+MauvilleCity_GameCorner_EventScript_NerdyKid::
+	msgbox MauvilleCity_GameCorner_Text_ItTakesALotOfCoins, MSGBOX_NPC
+	end
+
+MauvilleCity_GameCorner_EventScript_BlackjackSeat0::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartBlackJack
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_BlackjackSeat1::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartBlackJack
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_BlackjackSeat2::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartBlackJack
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_PinBallMachine0::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	startpinball SPECIES_DIGLETT
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_PinBallMachine1::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	startpinball SPECIES_GENGAR
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_Pachinko0::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special PlayPachinko
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_Pachinko1::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special PlayPachinko
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_ClawMachine0::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartGacha
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_ClawMachine1::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartGacha
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_ClawMachine2::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartGacha
+	releaseall
+	end
+
+MauvilleCity_GameCorner_EventScript_ClawMachine3::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	special StartGacha
+	releaseall
+	end
+
 MauvilleCity_GameCorner_Text_ThisIsMauvilleGameCorner:
 	.string "This is Mauville Game Corner.$"
 
@@ -776,3 +872,10 @@ MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase:
 	.string "You can't play if you don't have\n"
 	.string "a Coin Case.$"
 
+MauvilleCity_GameCorner_Text_TheGamesHereAreBoring:
+	.string "All of the games here are boring\n"
+	.string "compared to my Game Boy.$"
+
+MauvilleCity_GameCorner_Text_ItTakesALotOfCoins:
+	.string "It costs a lot of coins to get a\n"
+	.string "good Pokemon from this machine.$"
