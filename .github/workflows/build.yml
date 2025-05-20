@@ -34,5 +34,6 @@ jobs:
       - name: Test
         env:
           TEST: 1
+          UNUSED_ERROR: 0
         run: |
           make -j${nproc} check
