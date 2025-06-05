@@ -141,13 +141,13 @@
 #define VAR_RACER_5        		                         0x4079 // Race Var
 #define VAR_RACER_6            		                     0x407A // Race Var
 #define VAR_NEW_DERBY                                    0x407B // Check for Derby Reset
-#define VAR_OPTIONS_BJ	                                 0x407C // Blackjack Var
-#define VAR_OPTION1_TILENUM                              0x407D // Blackjack Var
-#define VAR_OPTION2_TILENUM                              0x407E // Blackjack Var
-#define VAR_OPTION3_TILENUM                              0x407F // Blackjack Var
-#define VAR_PLAYER_BJ                                    0x4080 // Blackjack Var
-#define VAR_DEALER_BJ                                    0x4081 // Blackjack Var
-#define VAR_BET_BJ                                       0x4082 // Blackjack Var
+#define VAR_UNUSED_0x407C	                             0x407C // Unused Var
+#define VAR_UNUSED_0x407D                                0x407D // Unused Var
+#define VAR_UNUSED_0x407E                                0x407E // Unused Var
+#define VAR_UNUSED_0x407F                                0x407F // Unused Var
+#define VAR_UNUSED_0x4080                                0x4080 // Unused Var
+#define VAR_UNUSED_0x4081                                0x4081 // Unused Var
+#define VAR_UNUSED_0x4082                                0x4082 // Unused Var
 #define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4083
 #define VAR_BIRCH_LAB_STATE                              0x4084
 #define VAR_PETALBURG_GYM_STATE                          0x4085 // 0-1: Wally tutorial, 2-6: 0-4 badges, 7: Defeated Norman, 8: Rematch Norman

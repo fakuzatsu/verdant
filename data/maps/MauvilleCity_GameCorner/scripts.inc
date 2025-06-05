@@ -674,6 +674,14 @@ MauvilleCity_GameCorner_EventScript_PinBallMachine1::
 	releaseall
 	end
 
+MauvilleCity_GameCorner_EventScript_PinBallMachine2::
+	lockall
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	startpinball SPECIES_SEEL
+	releaseall
+	end
+
 MauvilleCity_GameCorner_EventScript_Pachinko0::
 	lockall
 	checkitem ITEM_COIN_CASE
@@ -694,6 +702,7 @@ MauvilleCity_GameCorner_EventScript_ClawMachine0::
 	lockall
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	setvar VAR_0x8004, GACHA_GREAT
 	special StartGacha
 	releaseall
 	end
@@ -702,6 +711,7 @@ MauvilleCity_GameCorner_EventScript_ClawMachine1::
 	lockall
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
+	setvar VAR_0x8004, GACHA_ULTRA
 	special StartGacha
 	releaseall
 	end
@@ -711,6 +721,7 @@ MauvilleCity_GameCorner_EventScript_ClawMachine2::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	special StartGacha
+	setvar VAR_0x8004, GACHA_BASIC
 	releaseall
 	end
 
@@ -719,6 +730,7 @@ MauvilleCity_GameCorner_EventScript_ClawMachine3::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_NoCoinCase
 	special StartGacha
+	setvar VAR_0x8004, GACHA_BASIC
 	releaseall
 	end
 

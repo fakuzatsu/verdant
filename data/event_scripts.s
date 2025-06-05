@@ -30,6 +30,7 @@
 #include "constants/field_weather.h"
 #include "constants/flags.h"
 #include "constants/frontier_util.h"
+#include "constants/game_corner_gacha.h"
 #include "constants/game_stat.h"
 #include "constants/item.h"
 #include "constants/items.h"
