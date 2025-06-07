@@ -271,7 +271,7 @@ struct BlackJack {
 };
 
 static EWRAM_DATA struct BlackJack *sBlackJack = NULL;
-static EWRAM_INIT u8 sTextWindowId = 1;
+static EWRAM_DATA u8 sTextWindowId = 0;
 
 static void FadeToBJScreen(u8 taskId);
 static void InitBJScreen(void);
