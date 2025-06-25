@@ -40,6 +40,19 @@ as noted below:
 Below is a brief tour of the key areas so Codex can understand where to look
 when modifying or referencing different systems.
 
+## Building and Testing
+There are two ways to run the build. Either a regular build, or a full test.
+Here are the situations in which you may wish to run one or the other:
+
+- Regular Build: Preformed with `make`. Verifies the game builds. Required for
+  any code changes.
+- Full Test: Preformed with `make check`. Runs the test suite that checks the
+  state of the battle engine. Only necessary when making changes to the battle
+  engine. Do not run otherwise.
+
+Only one of the above builds needs to be ran to verify changes. Do not run both.
+Additional threads can be used with the `-j` flag.
+
 
 ## src
 
