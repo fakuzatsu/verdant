@@ -1556,13 +1556,13 @@ void SetDayOrNightFlag(void)
 
     if (hours > 6 && hours < 18)
     {
-        FlagSet(FLAG_HIDE_OBJECT_AT_NIGHTTIME);
-        FlagClear(FLAG_HIDE_OBJECT_AT_DAYTIME);
+        FlagSet(FLAG_IS_DAYTIME);
+        FlagClear(FLAG_IS_NIGHTTIME);
     }
     else
     {
-        FlagSet(FLAG_HIDE_OBJECT_AT_DAYTIME);
-        FlagClear(FLAG_HIDE_OBJECT_AT_NIGHTTIME);
+        FlagSet(FLAG_IS_NIGHTTIME);
+        FlagClear(FLAG_IS_DAYTIME);
     }
 }
 

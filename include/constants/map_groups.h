@@ -160,6 +160,7 @@
 #define MAP_SLATEPORT_CITY_MART                    (13 | (9 << 8))
 #define MAP_SLATEPORT_CITY_POKEMON_CENTER_B1F      (14 | (9 << 8))
 #define MAP_SLATEPORT_CITY_POWDER_HOUSE            (15 | (9 << 8))
+#define MAP_SLATEPORT_CITY_CONTEST_LOBBY           (16 | (9 << 8))
 
 // gMapGroup_IndoorMauville
 #define MAP_MAUVILLE_CITY_GYM                (0 | (10 << 8))

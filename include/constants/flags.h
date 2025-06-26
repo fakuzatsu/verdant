@@ -114,8 +114,8 @@
 #define FLAG_MET_TEAM_AQUA_HARBOR            0x61
 #define FLAG_TV_EXPLAINED                    0x62
 #define FLAG_MAUVILLE_GYM_BARRIERS_STATE     0x63
-#define FLAG_HIDE_OBJECT_AT_DAYTIME          0x64 // Reused
-#define FLAG_HIDE_OBJECT_AT_NIGHTTIME        0x65 // Reused
+#define FLAG_IS_NIGHTTIME                    0x64 // Reused
+#define FLAG_IS_DAYTIME                      0x65 // Reused
 #define FLAG_UNUSED_0x66                     0x66 //
 #define FLAG_UNUSED_0x67                     0x67 //
 
@@ -492,7 +492,7 @@
 #define FLAG_CAUGHT_LATIAS_OR_LATIOS         0x1C9
 #define FLAG_CAUGHT_MEW                      0x1CA
 #define FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE 0x1CB
-#define FLAG_CONTEST_IS_VERDANTURF           0x1CC // Custom. Changed from Vanilla
+#define FLAG_UNLOCK_ALL_CONTESTS             0x1CC // Reused
 #define FLAG_MET_SCOTT_IN_FALLARBOR          0x1CD
 #define FLAG_MET_SCOTT_IN_LILYCOVE           0x1CE
 #define FLAG_MET_SCOTT_IN_EVERGRANDE         0x1CF
@@ -1656,5 +1656,9 @@
 #define FLAG_TEMP_REGIELEKI_PUZZLE_FAILED       FLAG_TEMP_3
 #define FLAG_TEMP_HIDE_FOLLOWER                 FLAG_TEMP_10
 #define FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE FLAG_TEMP_11
+
+// Permanent flag alias
+#define FLAG_HIDE_OBJECT_AT_DAYTIME     FLAG_IS_NIGHTTIME
+#define FLAG_HIDE_OBJECT_AT_NIGHTTIME   FLAG_IS_DAYTIME
 
 #endif // GUARD_CONSTANTS_FLAGS_H

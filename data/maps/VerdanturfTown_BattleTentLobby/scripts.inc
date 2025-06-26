@@ -6,7 +6,7 @@ VerdanturfTown_BattleTentLobby_MapScripts::
 	.byte 0
 
 VerdanturfTown_BattleTentLobby_SetContestAsVerdanturf:
-	setflag FLAG_CONTEST_IS_VERDANTURF
+	setvar VAR_CONTEST_LOCATION, VERDANTURF_CONTEST
 	end
 
 VerdanturfTown_BattleTentLobby_EventScript_AttractGiver::

@@ -6,6 +6,9 @@
 .set LOCALID_POKEFAN_F, 15
 .set LOCALID_EXPERT_M, 16
 .set LOCALID_GIRL, 17
+.set LOCALID_POKEFAN_M, 4
+.set LOCALID_SAILOR1, 5
+.set LOCALID_SAILOR2, 6
 
 .set NUM_OPPONENTS, VAR_0x8009
 
@@ -17,6 +20,14 @@ BerryBlender_Text_OhYouWantToMakePokeblocks:
 	.string "Oh? You want to make {POKEBLOCK}S\n"
 	.string "together?$"
 
+BerryBlender_Text_ImFanaticalAboutPokeblocks:
+	.string "I'm absolutely fanatical about {POKEBLOCK}S\n"
+	.string "Want to make {POKEBLOCK}S together?$"
+
+BerryBlender_Text_WeAreSailorsMakingPokeblocks:
+	.string "We're resting at port and decided to come\n"
+	.string "make {POKEBLOCK}S. Want to join?$"
+
 BerryBlender_Text_Excellent:
 	.string "Excellent!$"
 
@@ -27,6 +38,13 @@ BerryBlender_Text_MadeOldTimerSad:
 BerryBlender_Text_OhThatsAShame:
 	.string "Oh… uh…\n"
 	.string "That's a shame…$"
+
+BerryBlender_Text_MorePokeblocksForMe:
+	.string "Well… more {POKEBLOCK}S for me!$"
+
+BerryBlender_Text_SuitYourself:
+	.string "Suit yourself… we'll be pulling out of\n"
+	.string "port shortly anyways.$"
 
 BerryBlender_Text_KnowHowToMakePokeblocks:
 	.string "Do you know how to make a {POKEBLOCK}?$"
@@ -272,6 +290,27 @@ BerryBlender_EventScript_BerryBlenderVerdanturf::
 	goto BerryBlender_EventScript_DeclineBlenderVerdanturf
 	end
 
+BerryBlender_EventScript_BerryBlenderSlateport1::
+	lockall
+	setvar NUM_OPPONENTS, 1
+	applymovement LOCALID_POKEFAN_M, BerryBlender_Movement_BlendLeaderSlateportWalkInPlace
+	waitmovement 0
+	msgbox BerryBlender_Text_ImFanaticalAboutPokeblocks, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, BerryBlender_EventScript_TryUseBerryBlenderSlateport1
+	goto BerryBlender_EventScript_DeclineBlenderSlateport1
+	end
+
+BerryBlender_EventScript_BerryBlenderSlateport2::
+	lockall
+	setvar NUM_OPPONENTS, 2
+	applymovement LOCALID_SAILOR1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SAILOR2, BerryBlender_Movement_BlendLeaderSlateportWalkInPlace
+	waitmovement 0
+	msgbox BerryBlender_Text_WeAreSailorsMakingPokeblocks, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, BerryBlender_EventScript_TryUseBerryBlenderSlateport2
+	goto BerryBlender_EventScript_DeclineBlenderSlateport2
+	end
+
 BerryBlender_EventScript_DeclineBlender1:
 	msgbox BerryBlender_Text_MadeOldTimerSad, MSGBOX_DEFAULT
 	releaseall
@@ -282,11 +321,26 @@ BerryBlender_EventScript_DeclineBlenderVerdanturf:
 	releaseall
 	end
 
+BerryBlender_EventScript_DeclineBlenderSlateport1:
+	msgbox BerryBlender_Text_MorePokeblocksForMe, MSGBOX_DEFAULT
+	releaseall
+	end
+
+BerryBlender_EventScript_DeclineBlenderSlateport2:
+	msgbox BerryBlender_Text_SuitYourself, MSGBOX_DEFAULT
+	releaseall
+	end
+
 BerryBlender_EventScript_Blender1NoBerries:
 	msgbox BerryBlender_Text_DontHaveAnyBerries, MSGBOX_DEFAULT
 	dotimebasedevents
 	goto_if_set FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY, BerryBlender_EventScript_Blender1NoSpareBerries
 	goto BerryBlender_EventScript_Blender1GiveSpareBerry
+	end
+
+BerryBlender_EventScript_BlenderSlateportNoBerries:
+	msgbox BerryBlender_Text_DontHaveAnyBerries, MSGBOX_DEFAULT
+	releaseall
 	end
 
 BerryBlender_EventScript_Blender1NoSpareBerries:
@@ -326,6 +380,28 @@ BerryBlender_EventScript_TryUseBerryBlender1:
 	goto_if_eq VAR_RESULT, FALSE, BerryBlender_EventScript_Blender1NoBerries
 	msgbox BerryBlender_Text_Excellent, MSGBOX_DEFAULT
 	goto BerryBlender_EventScript_UseBerryBlender1
+	end
+
+BerryBlender_EventScript_TryUseBerryBlenderSlateport1:
+	checkitem ITEM_POKEBLOCK_CASE
+	goto_if_eq VAR_RESULT, FALSE, BerryBlender_EventScript_Blender1NoCase
+	specialvar VAR_RESULT, GetFirstFreePokeblockSlot
+	goto_if_eq VAR_RESULT, 65535, BerryBlender_EventScript_Blender1CaseFull
+	specialvar VAR_RESULT, PlayerHasBerries
+	goto_if_eq VAR_RESULT, FALSE, BerryBlender_EventScript_BlenderSlateportNoBerries
+	msgbox BerryBlender_Text_Excellent, MSGBOX_DEFAULT
+	goto BerryBlender_EventScript_UseBerryBlender1
+	end
+
+BerryBlender_EventScript_TryUseBerryBlenderSlateport2:
+	checkitem ITEM_POKEBLOCK_CASE
+	goto_if_eq VAR_RESULT, FALSE, BerryBlender_EventScript_Blender3NoCase
+	specialvar VAR_RESULT, GetFirstFreePokeblockSlot
+	goto_if_eq VAR_RESULT, 65535, BerryBlender_EventScript_Blender3CaseFull
+	specialvar VAR_RESULT, PlayerHasBerries
+	goto_if_eq VAR_RESULT, FALSE, BerryBlender_EventScript_Blender2NoBerries
+	msgbox BerryBlender_Text_Excellent, MSGBOX_DEFAULT
+	goto BerryBlender_EventScript_UseBerryBlender2
 	end
 
 BerryBlender_EventScript_DoBerryBlending:
@@ -565,6 +641,10 @@ BerryBlender_EventScript_ExpertMGiveBerry:
 
 BerryBlender_Movement_BlendLeaderWalkInPlace:
 	walk_in_place_faster_right
+	step_end
+
+BerryBlender_Movement_BlendLeaderSlateportWalkInPlace:
+	walk_in_place_faster_left
 	step_end
 
 BerryBlender_EventScript_BerryBlenderLink::

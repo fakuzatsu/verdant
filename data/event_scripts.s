@@ -18,6 +18,7 @@
 #include "constants/cable_club.h"
 #include "constants/coins.h"
 #include "constants/contest.h"
+#include "constants/contest_location.h"
 #include "constants/daycare.h"
 #include "constants/decorations.h"
 #include "constants/easy_chat.h"
@@ -1215,3 +1216,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/LilycoveCity_LilycoveMuseum_Garden/scripts.inc"
 
 	.include "data/maps/SlateportCity_PowderHouse/scripts.inc"
+
+	.include "data/maps/SlateportCity_ContestLobby/scripts.inc"

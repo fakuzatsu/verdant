@@ -34,6 +34,7 @@
 #include "new_game.h"
 #include "save.h"
 #include "strings.h"
+#include "constants/contest_location.h"
 #include "constants/game_stat.h"
 #include "constants/items.h"
 #include "constants/rgb.h"
@@ -74,7 +75,9 @@ enum {
     BLENDER_MASTER,
     BLENDER_DUDE,
     BLENDER_MISS,
-    BLENDER_LADY
+    BLENDER_LADY,
+    BLENDER_POKEFAN,
+    BLENDER_SAILOR,
 };
 
 #define BLENDER_MAX_PLAYERS MAX_LINK_PLAYERS
@@ -259,23 +262,18 @@ static const u16 sEmpty_Pal[16 * 14] = {0};
 static const u8 sText_BerryBlenderStart[] = _("Starting up the Berry Blender.\pPlease select a BERRY from your Bag\nto put in the Berry Blender.\p");
 static const u8 sText_NewParagraph[] = _("\p");
 static const u8 sText_WasMade[] = _(" was made!");
-static const u8 sText_Mister[] = _("MISTER");
-static const u8 sText_Laddie[] = _("LADDIE");
-static const u8 sText_Lassie[] = _("LASSIE");
-static const u8 sText_Master[] = _("MASTER");
-static const u8 sText_Dude[] = _("DUDE");
-static const u8 sText_Miss[] = _("MISS");
-static const u8 sText_Lady[] = _("LADY");
 
 static const u8 *const sBlenderOpponentsNames[] =
 {
-    [BLENDER_MISTER] = COMPOUND_STRING("MISTER"),
-    [BLENDER_LADDIE] = COMPOUND_STRING("LADDIE"),
-    [BLENDER_LASSIE] = COMPOUND_STRING("LASSIE"),
-    [BLENDER_MASTER] = COMPOUND_STRING("MASTER"),
-    [BLENDER_DUDE]   = COMPOUND_STRING("DUDE"),
-    [BLENDER_MISS]   = COMPOUND_STRING("MISS"),
-    [BLENDER_LADY]   = COMPOUND_STRING("LADY"),
+    [BLENDER_MISTER]  = COMPOUND_STRING("MISTER"),
+    [BLENDER_LADDIE]  = COMPOUND_STRING("LADDIE"),
+    [BLENDER_LASSIE]  = COMPOUND_STRING("LASSIE"),
+    [BLENDER_MASTER]  = COMPOUND_STRING("MASTER"),
+    [BLENDER_DUDE]    = COMPOUND_STRING("DUDE"),
+    [BLENDER_MISS]    = COMPOUND_STRING("MISS"),
+    [BLENDER_LADY]    = COMPOUND_STRING("LADY"),
+    [BLENDER_POKEFAN] = COMPOUND_STRING("POKEFAN"),
+    [BLENDER_SAILOR]  = COMPOUND_STRING("SAILOR"),
 };
 
 static const u8 sText_CommunicationStandby[] = _("Communication standby…");
@@ -1238,8 +1236,10 @@ static void InitLocalPlayers(u8 opponentsNum)
         sBerryBlender->numPlayers = 2;
         StringCopy(gLinkPlayers[0].name, gSaveBlock2Ptr->playerName);
 
-        if (FlagGet(FLAG_CONTEST_IS_VERDANTURF))
+        if (VarGet(VAR_CONTEST_LOCATION) == VERDANTURF_CONTEST)
             StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_LADY]);
+        else if (VarGet(VAR_CONTEST_LOCATION) == SLATEPORT_CONTEST)
+            StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_POKEFAN]);
         else if (!FlagGet(FLAG_HIDE_LILYCOVE_CONTEST_HALL_BLEND_MASTER))
             StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_MASTER]);
         else
@@ -1252,8 +1252,16 @@ static void InitLocalPlayers(u8 opponentsNum)
         gInGameOpponentsNo = 2;
         sBerryBlender->numPlayers = 3;
         StringCopy(gLinkPlayers[0].name, gSaveBlock2Ptr->playerName);
-        StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_DUDE]);
-        StringCopy(gLinkPlayers[2].name, sBlenderOpponentsNames[BLENDER_LASSIE]);
+        if (VarGet(VAR_CONTEST_LOCATION) == SLATEPORT_CONTEST)
+        {
+            StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_SAILOR]);
+            StringCopy(gLinkPlayers[2].name, sBlenderOpponentsNames[BLENDER_SAILOR]);
+        }
+        else
+        {
+            StringCopy(gLinkPlayers[1].name, sBlenderOpponentsNames[BLENDER_DUDE]);
+            StringCopy(gLinkPlayers[2].name, sBlenderOpponentsNames[BLENDER_LASSIE]);
+        }
 
         gLinkPlayers[0].language = GAME_LANGUAGE;
         gLinkPlayers[1].language = GAME_LANGUAGE;

@@ -4610,6 +4610,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/SlateportCity_PowderHouse/border.bin",
       "blockdata_filepath": "data/layouts/SlateportCity_PowderHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_SLATEPORT_CITY_CONTEST_LOBBY",
+      "name": "SlateportCity_ContestLobby_Layout",
+      "width": 25,
+      "height": 12,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Contest",
+      "border_filepath": "data/layouts/SlateportCity_ContestLobby/border.bin",
+      "blockdata_filepath": "data/layouts/SlateportCity_ContestLobby/map.bin"
     }
   ]
 }

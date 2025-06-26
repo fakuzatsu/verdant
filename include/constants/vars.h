@@ -141,7 +141,7 @@
 #define VAR_RACER_5        		                         0x4079 // Race Var
 #define VAR_RACER_6            		                     0x407A // Race Var
 #define VAR_NEW_DERBY                                    0x407B // Check for Derby Reset
-#define VAR_UNUSED_0x407C	                             0x407C // Unused Var
+#define VAR_CONTEST_LOCATION	                         0x407C // Reused Var
 #define VAR_UNUSED_0x407D                                0x407D // Unused Var
 #define VAR_UNUSED_0x407E                                0x407E // Unused Var
 #define VAR_UNUSED_0x407F                                0x407F // Unused Var

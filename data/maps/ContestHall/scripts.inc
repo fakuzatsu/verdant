@@ -410,32 +410,47 @@ ContestHall_EventScript_SetExitWarp::
 	return
 
 ContestHall_EventScript_SetExitWarpNormalContest::
-	goto_if_set FLAG_CONTEST_IS_VERDANTURF, ContestHall_EventScript_SetExitWarpVerdanturf
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 12, 4
-	waitstate
-	end
+	switch VAR_CONTEST_LOCATION
+	case LILYCOVE_CONTEST, ContestHall_EventScript_SetExitWarpLilycove
+	case VERDANTURF_CONTEST, ContestHall_EventScript_SetExitWarpVerdanturf
+	case SLATEPORT_CONTEST, ContestHall_EventScript_SetExitWarpSlateport
+	return
 
 ContestHall_EventScript_SetExitWarpSuperContest::
-	goto_if_set FLAG_CONTEST_IS_VERDANTURF, ContestHall_EventScript_SetExitWarpVerdanturf
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 12, 4
-	waitstate
-	end
+	switch VAR_CONTEST_LOCATION
+	case LILYCOVE_CONTEST, ContestHall_EventScript_SetExitWarpLilycove
+	case VERDANTURF_CONTEST, ContestHall_EventScript_SetExitWarpVerdanturf
+	case SLATEPORT_CONTEST, ContestHall_EventScript_SetExitWarpSlateport
+	return
 
 ContestHall_EventScript_SetExitWarpHyperContest::
-	goto_if_set FLAG_CONTEST_IS_VERDANTURF, ContestHall_EventScript_SetExitWarpVerdanturf
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 12, 4
-	waitstate
-	end
+	switch VAR_CONTEST_LOCATION
+	case LILYCOVE_CONTEST, ContestHall_EventScript_SetExitWarpLilycove
+	case VERDANTURF_CONTEST, ContestHall_EventScript_SetExitWarpVerdanturf
+	case SLATEPORT_CONTEST, ContestHall_EventScript_SetExitWarpSlateport
+	return
 
 ContestHall_EventScript_SetExitWarpMasterContest::
-	goto_if_set FLAG_CONTEST_IS_VERDANTURF, ContestHall_EventScript_SetExitWarpVerdanturf
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 12, 4
+	switch VAR_CONTEST_LOCATION
+	case LILYCOVE_CONTEST, ContestHall_EventScript_SetExitWarpLilycove
+	case VERDANTURF_CONTEST, ContestHall_EventScript_SetExitWarpVerdanturf
+	case SLATEPORT_CONTEST, ContestHall_EventScript_SetExitWarpSlateport
+	return
+
+ContestHall_EventScript_SetExitWarpLinkContest::
+	switch VAR_CONTEST_LOCATION
+	case LILYCOVE_CONTEST, ContestHall_EventScript_SetExitWarpLilycoveLink
+	case VERDANTURF_CONTEST, ContestHall_EventScript_SetExitWarpVerdanturfLink
+	case SLATEPORT_CONTEST, ContestHall_EventScript_SetExitWarpSlateportLink
+	return
+
+ContestHall_EventScript_SetExitWarpLilycove::
+	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 14, 4
 	waitstate
 	end
 
-ContestHall_EventScript_SetExitWarpLinkContest::
-	goto_if_set FLAG_CONTEST_IS_VERDANTURF, ContestHall_EventScript_SetExitWarpVerdanturfLink
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 13, 4
+ContestHall_EventScript_SetExitWarpLilycoveLink::
+	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 15, 4
 	waitstate
 	end
 
@@ -446,6 +461,16 @@ ContestHall_EventScript_SetExitWarpVerdanturf::
 
 ContestHall_EventScript_SetExitWarpVerdanturfLink::
 	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, 8, 4
+	waitstate
+	end
+
+ContestHall_EventScript_SetExitWarpSlateport::
+	warp MAP_SLATEPORT_CITY_CONTEST_LOBBY, 12, 4
+	waitstate
+	end
+
+ContestHall_EventScript_SetExitWarpSlateportLink::
+	warp MAP_SLATEPORT_CITY_CONTEST_LOBBY, 13, 4
 	waitstate
 	end
 
