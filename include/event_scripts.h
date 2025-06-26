@@ -668,5 +668,12 @@ extern const u8 EventScript_MovedTooFast[];
 
 // Best of Three
 extern const u8 EventScript_RoxanneBestOfThreeStart[];
+extern const u8 EventScript_BrawlyBestOfThreeStart[];
+extern const u8 EventScript_WattsonBestOfThreeStart[];
+extern const u8 EventScript_FlanneryBestOfThreeStart[];
+extern const u8 EventScript_NormanBestOfThreeStart[];
+extern const u8 EventScript_WinonaBestOfThreeStart[];
+extern const u8 EventScript_TateAndLizaBestOfThreeStart[];
+extern const u8 EventScript_JuanBestOfThreeStart[];
 
 #endif // GUARD_EVENT_SCRIPTS_H

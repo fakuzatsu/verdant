@@ -4,9 +4,11 @@ MossdeepCity_Gym_MapScripts::
 
 MossdeepCity_Gym_OnTransition:
 	setflag FLAG_TEMP_HIDE_FOLLOWER @ Hide follower since it can collide with moving statues
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 MossdeepCity_Gym_EventScript_TateAndLiza::
+    trybestofthree TRAINER_TATE_AND_LIZA_1
 	trainerbattle_double TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, MossdeepCity_Gym_EventScript_TateAndLizaRematch
@@ -432,6 +434,14 @@ MossdeepCity_Gym_Text_TateAndLizaIntro:
 	.string "Liza: All in our minds!\p"
 	.string "Tate: This combination of ours…\n"
 	.string "Liza: Can you beat it?$"
+
+MossdeepCity_Gym_Text_TateAndLizaMatchDefeat::
+    .string "Tate: But…\p"
+    .string "Liza: How?$"
+
+MossdeepCity_Gym_Text_TateAndLizaContinue::
+    .string "Tate: Ready to go again?\n"
+    .string "Liza: Ready to go again?$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
 	.string "Tate: What?! Our combination…\n"

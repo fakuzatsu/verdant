@@ -43,6 +43,7 @@ PetalburgCity_Gym_OnTransition:
 	call_if_eq VAR_PETALBURG_GYM_STATE, 1, PetalburgCity_Gym_EventScript_MoveWallyToEntrance
 	call_if_lt VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_MoveNormanToEntrance
 	call_if_set FLAG_SYS_GAME_CLEAR, PetalburgCity_Gym_EventScript_CheckNormanForRematch
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 PetalburgCity_Gym_EventScript_MoveWallyToEntrance::
@@ -374,7 +375,9 @@ PetalburgCity_Gym_EventScript_GiveEnigmaBerry::
 
 PetalburgCity_Gym_EventScript_NormanBattle::
 	msgbox PetalburgCity_Gym_Text_NormanIntro, MSGBOX_DEFAULT
+    trybestofthree TRAINER_NORMAN_1
 	trainerbattle_no_intro TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanDefeat
+PetalburgCity_Gym_EventScript_NormanDefeated::
 	message PetalburgCity_Gym_Text_ReceivedBalanceBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
@@ -1273,8 +1276,14 @@ PetalburgCity_Gym_Text_NormanIntro:
 	.string "{PLAYER}, you'd better give it your\n"
 	.string "best shot, too!$"
 
+PetalburgCity_Gym_Text_NormanMatchDefeat::
+    .string "Dad: Impressive…$"
+
+PetalburgCity_Gym_Text_NormanContinue::
+    .string "Dad: Shall we continue our duel?$"
+
 PetalburgCity_Gym_Text_NormanDefeat:
-	.string "…\p"
+	.string "Dad: …\p"
 	.string "I… I can't…\p"
 	.string "I can't believe it. {PLAYER}…\p"
 	.string "I lost to {PLAYER}?\p"
@@ -1572,7 +1581,7 @@ PetalburgCity_Gym_Text_NormanPreRematch:
 	.string "we can. Isn't that right, {PLAYER}?$"
 
 PetalburgCity_Gym_Text_NormanRematchDefeat:
-	.string "Uh… Haha…\n"
+	.string "Dad: Uh… Haha…\n"
 	.string "Maybe that was going too hard…$"
 
 PetalburgCity_Gym_Text_NormanPostRematch:

@@ -2079,6 +2079,27 @@ void TryBestOfThree(struct ScriptContext *ctx)
     case TRAINER_ROXANNE_1:
         script = EventScript_RoxanneBestOfThreeStart;
         break;
+    case TRAINER_BRAWLY_1:
+        script = EventScript_BrawlyBestOfThreeStart;
+        break;
+    case TRAINER_WATTSON_1:
+        script = EventScript_WattsonBestOfThreeStart;
+        break;
+    case TRAINER_FLANNERY_1:
+        script = EventScript_FlanneryBestOfThreeStart;
+        break;
+    case TRAINER_NORMAN_1:
+        script = EventScript_NormanBestOfThreeStart;
+        break;
+    case TRAINER_WINONA_1:
+        script = EventScript_WinonaBestOfThreeStart;
+        break;
+    case TRAINER_TATE_AND_LIZA_1:
+        script = EventScript_TateAndLizaBestOfThreeStart;
+        break;
+    case TRAINER_JUAN_1:
+        script = EventScript_JuanBestOfThreeStart;
+        break;
     default:
         return;
     }

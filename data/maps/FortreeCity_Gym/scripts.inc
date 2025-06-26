@@ -6,6 +6,7 @@ FortreeCity_Gym_MapScripts::
 FortreeCity_Gym_OnTransition:
 	special RotatingGate_InitPuzzle
 	setflag FLAG_TEMP_HIDE_FOLLOWER @ Hide follower bc of rotating gates
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 FortreeCity_Gym_OnWarp:
@@ -18,6 +19,7 @@ FortreeCity_Gym_EventScript_InitRotatingGates::
 	end
 
 FortreeCity_Gym_EventScript_Winona::
+    trybestofthree TRAINER_WINONA_1
 	trainerbattle_single TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaIntro, FortreeCity_Gym_Text_WinonaDefeat, FortreeCity_Gym_EventScript_WinonaDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, FortreeCity_Gym_EventScript_WinonaRematch
@@ -244,6 +246,12 @@ FortreeCity_Gym_Text_WinonaIntro:
 	.string "triumphed with grace…\p"
 	.string "Witness the elegant choreography\n"
 	.string "of Bird Pokémon and I!$"
+
+FortreeCity_Gym_Text_WinonaMatchDefeat::
+    .string "An unexpected wind, to be sure!$"
+
+FortreeCity_Gym_Text_WinonaContinue::
+    .string "Fly even higher with me!$"
 
 FortreeCity_Gym_Text_WinonaDefeat:
 	.string "Never before have I seen a Trainer\n"

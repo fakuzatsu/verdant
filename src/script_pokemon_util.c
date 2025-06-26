@@ -200,6 +200,12 @@ void ChoosePartyForBattleFrontier(void)
     InitChooseHalfPartyForBattle(gSpecialVar_0x8004 + 1);
 }
 
+void ChoosePartyForBestOfThree(void)
+{
+    gMain.savedCallback = CB2_ReturnFromChooseBattleFrontierParty;
+    InitChooseHalfPartyForBattle(gSpecialVar_0x8005);
+}
+
 static void CB2_ReturnFromChooseBattleFrontierParty(void)
 {
     switch (gSelectedOrderFromParty[0])
