@@ -4,6 +4,7 @@ DewfordTown_Gym_MapScripts::
 
 DewfordTown_Gym_OnTransition:
 	call DewfordTown_Gym_EventScript_SetFlashLevel
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 DewfordTown_Gym_EventScript_SetFlashLevel::
@@ -133,6 +134,7 @@ DewfordTown_Gym_EventScript_StopCountingTrainers::
 	return
 
 DewfordTown_Gym_EventScript_Brawly::
+    trybestofthree TRAINER_BRAWLY_1
 	trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
@@ -390,6 +392,12 @@ DewfordTown_Gym_Text_BrawlyIntro:
 	.string "in the pitch-black cave!\p"
 	.string "So you wanted to challenge me?\n"
 	.string "Let me see what you're made of!$"
+
+DewfordTown_Gym_Text_BrawlyMatchDefeat::
+	.string "Whoah! What a wave!$"
+
+DewfordTown_Gym_Text_BrawlyContinue::
+    .string "Ready for another round?$"
 
 DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "Whoah, wow! You made a much bigger\n"

@@ -7,6 +7,7 @@ SootopolisCity_Gym_1F_MapScripts::
 
 SootopolisCity_Gym_1F_OnTransition:
 	setvar VAR_ICE_STEP_COUNT, 1
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 SootopolisCity_Gym_1F_OnResume:
@@ -80,6 +81,7 @@ SootopolisCity_Gym_1F_Movement_FallThroughIce:
 	step_end
 
 SootopolisCity_Gym_1F_EventScript_Juan::
+    trybestofthree TRAINER_JUAN_1
 	trainerbattle_single TRAINER_JUAN_1, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanDefeat, SootopolisCity_Gym_1F_EventScript_JuanDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, SootopolisCity_Gym_1F_EventScript_JuanRematch
@@ -216,6 +218,12 @@ SootopolisCity_Gym_1F_Text_JuanIntro:
 	.string "A grand illusion of water sculpted\n"
 	.string "by Pokémon and myself!$"
 
+SootopolisCity_Gym_1F_Text_JuanMatchDefeat::
+    .string "What a fierce display of talent!$"
+
+SootopolisCity_Gym_1F_Text_JuanContinue::
+    .string "Let us continue our elegant duel.$"
+
 @ NOTE: This defeat text actually causes a buffer overflow. It's about 50 bytes too long for
 @ the gDisplayedStringBattle buffer that it's put into, and it stomps all over the gBattleTextBuffs
 @ after, as well as the otherwise unused array after that. One wonders if that's the reason for
@@ -229,7 +237,6 @@ SootopolisCity_Gym_1F_Text_JuanDefeat:
 	.string "Wallace, you are lacking in elegance.\p"
 	.string "Perhaps I should make you a loan\n"
 	.string "of my outfit?\p"
-	.string "… … … … … …\n"
 	.string "… … … … … …\p"
 	.string "Hahaha, I merely jest!\p"
 	.string "Rather than my clothes, I shall reward\n"

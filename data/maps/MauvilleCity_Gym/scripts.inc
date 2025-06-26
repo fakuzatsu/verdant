@@ -1,4 +1,5 @@
 MauvilleCity_Gym_MapScripts::
+    map_script MAP_SCRIPT_ON_TRANSITION, EventScript_OnTransition_ClearBestOfThreeVars
 	map_script MAP_SCRIPT_ON_LOAD, MauvilleCity_Gym_OnLoad
 	.byte 0
 
@@ -74,6 +75,7 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle::
 	end
 
 MauvilleCity_Gym_EventScript_Wattson::
+    trybestofthree TRAINER_WATTSON_1
 	trainerbattle_single TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_Gym_EventScript_WattsonRematch
@@ -347,6 +349,13 @@ MauvilleCity_Gym_Text_WattsonIntro:
 	.string "Now, that is amusing!\p"
 	.string "Then, I, Wattson, the Leader of\n"
 	.string "Mauville Gym, shall electrify you!$"
+
+MauvilleCity_Gym_Text_WattsonMatchDefeat::
+    .string "What a shock!$"
+
+MauvilleCity_Gym_Text_WattsonContinue::
+    .string "Heh heh, keep that power rolling!\n"
+    .string "Ready to go again?$"
 
 MauvilleCity_Gym_Text_WattsonDefeat:
 	.string "Wahahahah!\n"

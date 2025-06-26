@@ -10,6 +10,7 @@ LavaridgeTown_Gym_1F_MapScripts::
 LavaridgeTown_Gym_1F_OnTransition:
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
 	call LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers
+    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 @ Unclear where/if these temp vars are getting checked
@@ -49,6 +50,7 @@ LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers::
 	return
 
 LavaridgeTown_Gym_1F_EventScript_Flannery::
+    trybestofthree TRAINER_FLANNERY_1
 	trainerbattle_single TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
@@ -320,6 +322,14 @@ LavaridgeTown_Gym_1F_Text_FlanneryIntro:
 	.string "With skills inherited from my grand-\n"
 	.string "father, I shall, uh…demonstrate the\l"
 	.string "hot moves we have honed on this land!$"
+
+LavaridgeTown_Gym_1F_Text_FlanneryMatchDefeat::
+    .string "How… uh…\n"
+    .string "I got burnt out…$"
+
+LavaridgeTown_Gym_1F_Text_FlanneryContinue::
+    .string "You did well challenger…\n"
+    .string "Think you can handle the heat again?$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
 	.string "Oh…\n"
