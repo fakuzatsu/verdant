@@ -14,6 +14,7 @@
 #include "list_menu.h"
 #include "item_icon.h"
 #include "item_use.h"
+#include "pokemon_icon.h"
 #include "international_string_util.h"
 #include "main.h"
 #include "malloc.h"
@@ -34,6 +35,7 @@
 #include "constants/field_weather.h"
 #include "constants/songs.h"
 #include "constants/rgb.h"
+#include "constants/opponents.h"
 
 /*
  * 
@@ -44,6 +46,10 @@ struct MenuResources
 {
     MainCallback savedCallback;     // determines callback to run when we exit. e.g. where do we want to go after closing the menu
     u8 gfxLoadState;
+    const struct TrainerMon *opponentTeam;
+    u8 opponentTeamSize;
+    u8 playerSpriteIds[PARTY_SIZE];
+    u8 opponentSpriteIds[PARTY_SIZE];
 };
 
 enum WindowIds
@@ -65,6 +71,8 @@ static void Menu_InitWindows(void);
 static void PrintToWindow(u8 windowId, u8 colorIdx);
 static void Task_MenuWaitFadeIn(u8 taskId);
 static void Task_MenuMain(u8 taskId);
+static void DrawTeamMonIcons(void);
+static void DestroyTeamMonIcons(void);
 
 //==========CONST=DATA==========//
 static const struct BgTemplate sMenuBgTemplates[] =
@@ -117,7 +125,7 @@ enum Colors
     FONT_RED,
     FONT_BLUE,
 };
-static const u8 sMenuWindowFontColors[][3] = 
+static const u8 sMenuWindowFontColors[][3] =
 {
     [FONT_BLACK]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY},
     [FONT_WHITE]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_WHITE,  TEXT_COLOR_DARK_GRAY},
@@ -125,9 +133,23 @@ static const u8 sMenuWindowFontColors[][3] =
     [FONT_BLUE]  = {TEXT_COLOR_TRANSPARENT,  TEXT_COLOR_BLUE,       TEXT_COLOR_LIGHT_GRAY},
 };
 
+#define PLAYER_ICON_START_X 16
+#define OPPONENT_ICON_START_X 160
+#define ICON_START_Y 40
+#define ICON_X_SPACING 32
+#define ICON_Y_SPACING 32
+
 const u32 sBO3InfoCard_Gfx[] = INCBIN_U32("graphics/best_of_three/infocard.4bpp.smol");
 const u32 sBO3InfoCard_Tilemap[] = INCBIN_U32("graphics/best_of_three/infocard_tilemap.bin.lz");
 const u32 sBO3InfoCard_Pal[] = INCBIN_U32("graphics/best_of_three/infocard.gbapal");
+
+#define sMonIconStill data[3]
+static void SpriteCb_MonIcon(struct Sprite *sprite)
+{
+    if (!sprite->sMonIconStill)
+        UpdateMonIconFrame(sprite);
+}
+#undef sMonIconStill
 
 //==========FUNCTIONS==========//
 // UI loader template
@@ -136,13 +158,15 @@ void Task_OpenBO3MenuFromStartMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        Menu_Init(CB2_ReturnToFieldWithOpenMenu);
+        const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_ROXANNE_1);
+        u8 size = GetTrainerPartySizeFromId(TRAINER_ROXANNE_1);
+        BO3Menu_Init(party, size, CB2_ReturnToFieldWithOpenMenu);
         DestroyTask(taskId);
     }
 }
 
-// This is our main initialization function if you want to call the menu from elsewhere
-void Menu_Init(MainCallback callback)
+// Initialize the Best of Three menu with the provided opponent team
+void BO3Menu_Init(const struct TrainerMon *opponentTeam, u8 opponentTeamSize, MainCallback callback)
 {
     if ((sMenuDataPtr = AllocZeroed(sizeof(struct MenuResources))) == NULL)
     {
@@ -153,7 +177,11 @@ void Menu_Init(MainCallback callback)
     // initialize stuff
     sMenuDataPtr->gfxLoadState = 0;
     sMenuDataPtr->savedCallback = callback;
-    
+    sMenuDataPtr->opponentTeam = opponentTeam;
+    sMenuDataPtr->opponentTeamSize = opponentTeamSize;
+    memset(sMenuDataPtr->playerSpriteIds, SPRITE_NONE, sizeof(sMenuDataPtr->playerSpriteIds));
+    memset(sMenuDataPtr->opponentSpriteIds, SPRITE_NONE, sizeof(sMenuDataPtr->opponentSpriteIds));
+
     SetMainCallback2(Menu_RunSetup);
 }
 
@@ -224,6 +252,7 @@ static bool8 Menu_DoGfxSetup(void)
         break;
     case 5:
         PrintToWindow(WINDOW_1, FONT_WHITE);
+        DrawTeamMonIcons();
         CreateTask(Task_MenuWaitFadeIn, 0);
         BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
         gMain.state++;
@@ -248,6 +277,7 @@ static bool8 Menu_DoGfxSetup(void)
 
 static void Menu_FreeResources(void)
 {
+    DestroyTeamMonIcons();
     try_free(sMenuDataPtr);
     try_free(sBg2TilemapBuffer);
     FreeAllWindowBuffers();
@@ -372,4 +402,52 @@ static void Task_MenuMain(u8 taskId)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_MenuTurnOff;
     }
+}
+
+static void DrawTeamMonIcons(void)
+{
+    u8 i, row, col;
+    u16 species;
+
+    LoadMonIconPalettes();
+
+    for (i = 0; i < gPlayerPartyCount && i < PARTY_SIZE; i++)
+    {
+        row = i / 3;
+        col = i % 3;
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        sMenuDataPtr->playerSpriteIds[i] = CreateMonIcon(species, SpriteCb_MonIcon,
+            PLAYER_ICON_START_X + ICON_X_SPACING * col,
+            ICON_START_Y + ICON_Y_SPACING * row,
+            1, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+        gSprites[sMenuDataPtr->playerSpriteIds[i]].oam.priority = 0;
+        StartSpriteAnim(&gSprites[sMenuDataPtr->playerSpriteIds[i]], 4);
+    }
+
+    for (i = 0; i < sMenuDataPtr->opponentTeamSize && i < PARTY_SIZE; i++)
+    {
+        row = i / 3;
+        col = i % 3;
+        species = sMenuDataPtr->opponentTeam[i].species;
+        sMenuDataPtr->opponentSpriteIds[i] = CreateMonIconNoPersonality(
+            GetIconSpeciesNoPersonality(species), SpriteCb_MonIcon,
+            OPPONENT_ICON_START_X + ICON_X_SPACING * col,
+            ICON_START_Y + ICON_Y_SPACING * row,
+            1);
+        gSprites[sMenuDataPtr->opponentSpriteIds[i]].oam.priority = 0;
+        StartSpriteAnim(&gSprites[sMenuDataPtr->opponentSpriteIds[i]], 4);
+    }
+}
+
+static void DestroyTeamMonIcons(void)
+{
+    u8 i;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sMenuDataPtr->playerSpriteIds[i] != SPRITE_NONE)
+            FreeAndDestroyMonIconSprite(&gSprites[sMenuDataPtr->playerSpriteIds[i]]);
+        if (sMenuDataPtr->opponentSpriteIds[i] != SPRITE_NONE)
+            FreeAndDestroyMonIconSprite(&gSprites[sMenuDataPtr->opponentSpriteIds[i]]);
+    }
+    FreeMonIconPalettes();
 }
