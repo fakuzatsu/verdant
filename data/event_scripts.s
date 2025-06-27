@@ -1218,3 +1218,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SlateportCity_PowderHouse/scripts.inc"
 
 	.include "data/maps/SlateportCity_ContestLobby/scripts.inc"
+
+	.include "data/maps/SlateportCity_ColdStorage/scripts.inc"

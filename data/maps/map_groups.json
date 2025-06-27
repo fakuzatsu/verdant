@@ -190,7 +190,8 @@
     "SlateportCity_Mart",
     "SlateportCity_PokemonCenter_B1F",
     "SlateportCity_PowderHouse",
-    "SlateportCity_ContestLobby"
+    "SlateportCity_ContestLobby",
+    "SlateportCity_ColdStorage"
   ],
   "gMapGroup_IndoorMauville": [
     "MauvilleCity_Gym",

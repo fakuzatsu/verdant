@@ -734,6 +734,10 @@ SlateportCity_EventScript_Man3::
 	msgbox SlateportCity_Text_WonderIfLighthouseStartlesPokemon, MSGBOX_NPC
 	end
 
+SlateportCity_EventScript_BerryPowderGirl::
+    msgbox SlateportCity_Text_MommyMakesTheBestBerryPowder, MSGBOX_NPC
+    end
+
 SlateportCity_EventScript_BerryPowderClerk::
 	lock
 	faceplayer
@@ -914,6 +918,13 @@ SlateportCity_EventScript_ScottBattleTentScene::
 	addvar VAR_SCOTT_STATE, 1
 	setvar VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 3
 	releaseall
+	end
+
+SlateportCity_EventScript_StartSoloBerryCrush::
+    lockall
+    fadescreenswapbuffers FADE_TO_BLACK
+    special StartBerryCrushSolo
+	release
 	end
 
 SlateportCity_Movement_PushPlayerDown:
@@ -1283,6 +1294,10 @@ SlateportCity_Text_NameRatersHouseSign:
 	.string "Memory Reader's House\n"
 	.string "“Learn more about your Pokémon.”$"
 
+SlateportCity_Text_MommyMakesTheBestBerryPowder:
+    .string "Mommy makes the best berry powder!\n"
+    .string "It's tasty for Pokémon and people!$"
+
 SlateportCity_Text_ExplainBerries:
 	.string "If a wild Pokémon gets hurt, it heals\n"
 	.string "itself by chewing on Berries.\p"
@@ -1300,7 +1315,7 @@ SlateportCity_Text_ExplainBerries:
 
 SlateportCity_Text_ExplainBerryPowder:
 	.string "I recently had machines installed at\n"
-	.string "Pokémon CenterS for crushing Berries.\p"
+	.string "Pokémon Centers for crushing Berries.\p"
 	.string "The Berry Crush machines are at\n"
 	.string "the Direct Corner upstairs.\p"
 	.string "Did you know?\p"

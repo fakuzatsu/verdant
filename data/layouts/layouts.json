@@ -4620,6 +4620,16 @@
       "secondary_tileset": "gTileset_Contest",
       "border_filepath": "data/layouts/SlateportCity_ContestLobby/border.bin",
       "blockdata_filepath": "data/layouts/SlateportCity_ContestLobby/map.bin"
+    },
+    {
+      "id": "LAYOUT_SLATEPORT_CITY_COLD_STORAGE",
+      "name": "SlateportCity_ColdStorage_Layout",
+      "width": 19,
+      "height": 16,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/SlateportCity_ColdStorage/border.bin",
+      "blockdata_filepath": "data/layouts/SlateportCity_ColdStorage/map.bin"
     }
   ]
 }
