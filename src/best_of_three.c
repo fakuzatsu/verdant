@@ -101,6 +101,14 @@ static const struct BgTemplate sMenuBgTemplates[] =
         .paletteMode = 0,
         .priority = 1,
     },
+    {
+        .bg = 3,    // Put Scrolling Bg here
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+    }
 };
 
 static const struct WindowTemplate sMenuWindowTemplates[] = 
@@ -139,6 +147,64 @@ static const u8 sMenuWindowFontColors[][3] =
 #define ICON_X_SPACING 32
 #define ICON_Y_SPACING 32
 
+enum Bo3Sprites
+{
+    SPRITE_1 = 0,
+    SPRITE_2,
+    SPRITE_3,
+    SPRITE_4,
+    SPRITE_5,
+    SPRITE_6,
+};
+
+struct Bo3SpriteLocations
+{
+    u8 x;
+    u8 y;
+};
+
+static const struct Bo3SpriteLocations sPlayerSpriteLocations[] =
+{
+    [SPRITE_1]
+    { .x = 97, .y = 38 },
+
+    [SPRITE_2]
+    { .x = 97, .y = 72 },
+
+    [SPRITE_3]
+    { .x = 97, .y = 102 },
+
+    [SPRITE_4]
+    { .x = 97, .y = 135 },
+
+    [SPRITE_5]
+    { .x = 60, .y = 135 },
+
+    [SPRITE_6]
+    { .x = 23, .y = 135 },
+};
+
+static const struct Bo3SpriteLocations sOpponentSpriteLocations[] =
+{
+    [SPRITE_1]
+    { .x = 143, .y = 38 },
+
+    [SPRITE_2]
+    { .x = 143, .y = 72 },
+
+    [SPRITE_3]
+    { .x = 143, .y = 102 },
+
+    [SPRITE_4]
+    { .x = 143, .y = 135 },
+
+    [SPRITE_5]
+    { .x = 179, .y = 135 },
+
+    [SPRITE_6]
+    { .x = 220, .y = 135 },
+};
+
 const u32 sBO3InfoCard_Gfx[] = INCBIN_U32("graphics/best_of_three/infocard.4bpp.smol");
 const u32 sBO3InfoCard_Tilemap[] = INCBIN_U32("graphics/best_of_three/infocard_tilemap.bin.lz");
 const u32 sBO3InfoCard_Pal[] = INCBIN_U32("graphics/best_of_three/infocard.gbapal");
@@ -158,8 +224,8 @@ void Task_OpenBO3MenuFromStartMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_ROXANNE_1);
-        u8 size = GetTrainerPartySizeFromId(TRAINER_ROXANNE_1);
+        const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_JUAN_1);
+        u8 size = GetTrainerPartySizeFromId(TRAINER_JUAN_1);
         BO3Menu_Init(party, size, CB2_ReturnToFieldWithOpenMenu);
         DestroyTask(taskId);
     }
@@ -208,6 +274,8 @@ static void Menu_VBlankCB(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+    ChangeBgX(3, 64, BG_COORD_ADD);
+    ChangeBgY(3, 64, BG_COORD_ADD);
 }
 
 static bool8 Menu_DoGfxSetup(void)
@@ -247,12 +315,14 @@ static bool8 Menu_DoGfxSetup(void)
         break;
     case 4:
         LoadMessageBoxAndBorderGfx();
+        FreeMonIconPalettes();
+        LoadMonIconPalettes();
         Menu_InitWindows();
+        DrawTeamMonIcons();
         gMain.state++;
         break;
     case 5:
         PrintToWindow(WINDOW_1, FONT_WHITE);
-        DrawTeamMonIcons();
         CreateTask(Task_MenuWaitFadeIn, 0);
         BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
         gMain.state++;
@@ -315,6 +385,7 @@ static bool8 Menu_InitBgs(void)
     SetBgTilemapBuffer(2, sBg2TilemapBuffer);
     ScheduleBgCopyTilemapToVram(2);
 
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
@@ -363,7 +434,7 @@ static void Menu_InitWindows(void)
     ScheduleBgCopyTilemapToVram(1);
 }
 
-static const u8 sText_MyMenu[] = _("My Menu");
+static const u8 sText_MyMenu[] = _("May");
 static void PrintToWindow(u8 windowId, u8 colorIdx)
 {
     const u8 *str = sText_MyMenu;
@@ -406,34 +477,21 @@ static void Task_MenuMain(u8 taskId)
 
 static void DrawTeamMonIcons(void)
 {
-    u8 i, row, col;
+    u8 i;
     u16 species;
-
-    LoadMonIconPalettes();
 
     for (i = 0; i < gPlayerPartyCount && i < PARTY_SIZE; i++)
     {
-        row = i / 3;
-        col = i % 3;
         species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
-        sMenuDataPtr->playerSpriteIds[i] = CreateMonIcon(species, SpriteCb_MonIcon,
-            PLAYER_ICON_START_X + ICON_X_SPACING * col,
-            ICON_START_Y + ICON_Y_SPACING * row,
-            1, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+        sMenuDataPtr->playerSpriteIds[i] = CreateMonIcon(species, SpriteCb_MonIcon, sPlayerSpriteLocations[i].x, sPlayerSpriteLocations[i].y, 1, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
         gSprites[sMenuDataPtr->playerSpriteIds[i]].oam.priority = 0;
         StartSpriteAnim(&gSprites[sMenuDataPtr->playerSpriteIds[i]], 4);
     }
 
     for (i = 0; i < sMenuDataPtr->opponentTeamSize && i < PARTY_SIZE; i++)
     {
-        row = i / 3;
-        col = i % 3;
         species = sMenuDataPtr->opponentTeam[i].species;
-        sMenuDataPtr->opponentSpriteIds[i] = CreateMonIconNoPersonality(
-            GetIconSpeciesNoPersonality(species), SpriteCb_MonIcon,
-            OPPONENT_ICON_START_X + ICON_X_SPACING * col,
-            ICON_START_Y + ICON_Y_SPACING * row,
-            1);
+        sMenuDataPtr->opponentSpriteIds[i] = CreateMonIconNoPersonality(GetIconSpeciesNoPersonality(species), SpriteCb_MonIcon, sOpponentSpriteLocations[i].x, sOpponentSpriteLocations[i].y, 1);
         gSprites[sMenuDataPtr->opponentSpriteIds[i]].oam.priority = 0;
         StartSpriteAnim(&gSprites[sMenuDataPtr->opponentSpriteIds[i]], 4);
     }
