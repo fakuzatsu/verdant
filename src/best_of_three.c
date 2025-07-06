@@ -50,6 +50,7 @@ struct MenuResources
     u32 opponentTrainerPicId;
     const struct TrainerMon *opponentTeam;
     u8 opponentTeamSize;
+    const u8 *opponentName;
     u8 playerSpriteIds[PARTY_SIZE];
     u8 opponentSpriteIds[PARTY_SIZE];
     u8 playerTrainerSprite;
@@ -59,6 +60,8 @@ struct MenuResources
 enum WindowIds
 {
     WINDOW_1,
+    WINDOW_2,
+    WINDOW_3,
 };
 
 //==========EWRAM==========//
@@ -72,7 +75,8 @@ static bool8 Menu_InitBgs(void);
 static void Menu_FadeAndBail(void);
 static bool8 Menu_LoadGraphics(void);
 static void Menu_InitWindows(void);
-static void PrintToWindow(u8 windowId, u8 colorIdx);
+static void PrintTitle(u8 windowId, u8 colorIdx);
+static void PrintNames(u8 windowId, u8 colorIdx);
 static void Task_MenuWaitFadeIn(u8 taskId);
 static void Task_MenuMain(u8 taskId);
 static void DrawTeamMonIcons(void);
@@ -122,12 +126,22 @@ static const struct WindowTemplate sMenuWindowTemplates[] =
     [WINDOW_1] = 
     {
         .bg = 0,            // which bg to print text on
-        .tilemapLeft = 4,   // position from left (per 8 pixels)
-        .tilemapTop = 3,    // position from top (per 8 pixels)
-        .width = 10,        // width (per 8 pixels)
-        .height = 3,        // height (per 8 pixels)
+        .tilemapLeft = 3,   // position from left (per 8 pixels)
+        .tilemapTop = 1,    // position from top (per 8 pixels)
+        .width = 24,        // width (per 8 pixels)
+        .height = 2,        // height (per 8 pixels)
         .paletteNum = 15,   // palette index to use for text
         .baseBlock = 1,     // tile start in VRAM
+    },
+    [WINDOW_2] =
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 3,
+        .width = 24,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 71,
     },
     DUMMY_WIN_TEMPLATE,
 };
@@ -234,13 +248,14 @@ void Task_OpenBO3MenuFromStartMenu(u8 taskId)
         const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_JUAN_1);
         u32 trainerPicId = GetTrainerPicFromId(TRAINER_JUAN_1);
         u8 size = GetTrainerPartySizeFromId(TRAINER_JUAN_1);
-        BO3Menu_Init(trainerPicId, party, size, CB2_ReturnToFieldWithOpenMenu);
+        const u8 *name = GetTrainerNameFromId(TRAINER_JUAN_1);
+        BO3Menu_Init(trainerPicId, party, size, name, CB2_ReturnToFieldWithOpenMenu);
         DestroyTask(taskId);
     }
 }
 
 // Initialize the Best of Three menu with the provided opponent team
-void BO3Menu_Init(u32 trainerPicId, const struct TrainerMon *opponentTeam, u8 opponentTeamSize, MainCallback callback)
+void BO3Menu_Init(u32 trainerPicId, const struct TrainerMon *opponentTeam, u8 opponentTeamSize, const u8 *opponentName, MainCallback callback)
 {
     if ((sMenuDataPtr = AllocZeroed(sizeof(struct MenuResources))) == NULL)
     {
@@ -254,6 +269,7 @@ void BO3Menu_Init(u32 trainerPicId, const struct TrainerMon *opponentTeam, u8 op
     sMenuDataPtr->opponentTrainerPicId = trainerPicId;
     sMenuDataPtr->opponentTeam = opponentTeam;
     sMenuDataPtr->opponentTeamSize = opponentTeamSize;
+    sMenuDataPtr->opponentName = opponentName;
     memset(sMenuDataPtr->playerSpriteIds, SPRITE_NONE, sizeof(sMenuDataPtr->playerSpriteIds));
     memset(sMenuDataPtr->opponentSpriteIds, SPRITE_NONE, sizeof(sMenuDataPtr->opponentSpriteIds));
 
@@ -332,7 +348,8 @@ static bool8 Menu_DoGfxSetup(void)
         gMain.state++;
         break;
     case 5:
-        PrintToWindow(WINDOW_1, FONT_WHITE);
+        PrintTitle(WINDOW_1, FONT_WHITE);
+        PrintNames(WINDOW_2, FONT_WHITE);
         CreateTask(Task_MenuWaitFadeIn, 0);
         BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
         gMain.state++;
@@ -438,22 +455,39 @@ static void Menu_InitWindows(void)
     ScheduleBgCopyTilemapToVram(0);
     
     FillWindowPixelBuffer(WINDOW_1, 0);
-    LoadUserWindowBorderGfx(WINDOW_1, 720, 14 * 16);
     PutWindowTilemap(WINDOW_1);
     CopyWindowToVram(WINDOW_1, 3);
+
+    FillWindowPixelBuffer(WINDOW_2, 0);
+    PutWindowTilemap(WINDOW_2);
+    CopyWindowToVram(WINDOW_2, 3);
     
     ScheduleBgCopyTilemapToVram(1);
 }
 
-static const u8 sText_MyMenu[] = _("May");
-static void PrintToWindow(u8 windowId, u8 colorIdx)
+static const u8 PrintTitlesText_TeamPreview[] = _("Team Preview");
+static void PrintTitle(u8 windowId, u8 colorIdx)
 {
-    const u8 *str = sText_MyMenu;
-    u8 x = 1;
-    u8 y = 1;
-    
+    u8 x = 61, y = 1;
+
     FillWindowPixelBuffer(windowId, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
-    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, sMenuWindowFontColors[colorIdx], 0xFF, str);
+    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, sMenuWindowFontColors[colorIdx], 0xFF, PrintTitlesText_TeamPreview);
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, 3);
+}
+
+static void PrintNames(u8 windowId, u8 colorIdx)
+{
+    u8 x = 47, y = 2;
+    u32 width;
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
+    width = GetStringWidth(FONT_NORMAL, gSaveBlock2Ptr->playerName, -1);
+    AddTextPrinterParameterized4(windowId, 1, x - width, y, 0, 0, sMenuWindowFontColors[colorIdx], 0xFF, gSaveBlock2Ptr->playerName);
+
+    x = 145;
+    AddTextPrinterParameterized4(windowId, 1, x, y, 0, 0, sMenuWindowFontColors[colorIdx], 0xFF, sMenuDataPtr->opponentName);
+
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, 3);
 }
