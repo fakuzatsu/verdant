@@ -5,6 +5,7 @@
 #include "data.h"
 #include "decompress.h"
 #include "event_data.h"
+#include "field_effect.h"
 #include "field_weather.h"
 #include "gpu_regs.h"
 #include "graphics.h"
@@ -46,10 +47,13 @@ struct MenuResources
 {
     MainCallback savedCallback;     // determines callback to run when we exit. e.g. where do we want to go after closing the menu
     u8 gfxLoadState;
+    u32 opponentTrainerPicId;
     const struct TrainerMon *opponentTeam;
     u8 opponentTeamSize;
     u8 playerSpriteIds[PARTY_SIZE];
     u8 opponentSpriteIds[PARTY_SIZE];
+    u8 playerTrainerSprite;
+    u8 opponentTrainerSprite;
 };
 
 enum WindowIds
@@ -72,7 +76,9 @@ static void PrintToWindow(u8 windowId, u8 colorIdx);
 static void Task_MenuWaitFadeIn(u8 taskId);
 static void Task_MenuMain(u8 taskId);
 static void DrawTeamMonIcons(void);
+static void DrawTrainerPics(void);
 static void DestroyTeamMonIcons(void);
+static void DestroyTrainerPics(void);
 
 //==========CONST=DATA==========//
 static const struct BgTemplate sMenuBgTemplates[] =
@@ -223,16 +229,18 @@ void Task_OpenBO3MenuFromStartMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
+        
         CleanupOverworldWindowsAndTilemaps();
         const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_JUAN_1);
+        u32 trainerPicId = GetTrainerPicFromId(TRAINER_JUAN_1);
         u8 size = GetTrainerPartySizeFromId(TRAINER_JUAN_1);
-        BO3Menu_Init(party, size, CB2_ReturnToFieldWithOpenMenu);
+        BO3Menu_Init(trainerPicId, party, size, CB2_ReturnToFieldWithOpenMenu);
         DestroyTask(taskId);
     }
 }
 
 // Initialize the Best of Three menu with the provided opponent team
-void BO3Menu_Init(const struct TrainerMon *opponentTeam, u8 opponentTeamSize, MainCallback callback)
+void BO3Menu_Init(u32 trainerPicId, const struct TrainerMon *opponentTeam, u8 opponentTeamSize, MainCallback callback)
 {
     if ((sMenuDataPtr = AllocZeroed(sizeof(struct MenuResources))) == NULL)
     {
@@ -243,6 +251,7 @@ void BO3Menu_Init(const struct TrainerMon *opponentTeam, u8 opponentTeamSize, Ma
     // initialize stuff
     sMenuDataPtr->gfxLoadState = 0;
     sMenuDataPtr->savedCallback = callback;
+    sMenuDataPtr->opponentTrainerPicId = trainerPicId;
     sMenuDataPtr->opponentTeam = opponentTeam;
     sMenuDataPtr->opponentTeamSize = opponentTeamSize;
     memset(sMenuDataPtr->playerSpriteIds, SPRITE_NONE, sizeof(sMenuDataPtr->playerSpriteIds));
@@ -319,6 +328,7 @@ static bool8 Menu_DoGfxSetup(void)
         LoadMonIconPalettes();
         Menu_InitWindows();
         DrawTeamMonIcons();
+        DrawTrainerPics();
         gMain.state++;
         break;
     case 5:
@@ -348,6 +358,7 @@ static bool8 Menu_DoGfxSetup(void)
 static void Menu_FreeResources(void)
 {
     DestroyTeamMonIcons();
+    DestroyTrainerPics();
     try_free(sMenuDataPtr);
     try_free(sBg2TilemapBuffer);
     FreeAllWindowBuffers();
@@ -497,6 +508,18 @@ static void DrawTeamMonIcons(void)
     }
 }
 
+static void DrawTrainerPics(void)
+{
+    u32 trainerPicId = sMenuDataPtr->opponentTrainerPicId;
+
+    sMenuDataPtr->opponentTrainerSprite = CreateTrainerSprite(trainerPicId,
+        200, 86, 0, NULL);
+
+    sMenuDataPtr->playerTrainerSprite = CreateTrainerSprite(
+        PlayerGenderToFrontTrainerPicId(gSaveBlock2Ptr->playerGender), 
+        44, 86, 0, NULL);
+}
+
 static void DestroyTeamMonIcons(void)
 {
     u8 i;
@@ -508,4 +531,12 @@ static void DestroyTeamMonIcons(void)
             FreeAndDestroyMonIconSprite(&gSprites[sMenuDataPtr->opponentSpriteIds[i]]);
     }
     FreeMonIconPalettes();
+}
+
+static void DestroyTrainerPics(void)
+{
+    if (sMenuDataPtr->opponentTrainerSprite != SPRITE_NONE)
+        DestroySpriteAndFreeResources(&gSprites[sMenuDataPtr->opponentTrainerSprite]);
+    if (sMenuDataPtr->playerTrainerSprite != SPRITE_NONE)
+        DestroySpriteAndFreeResources(&gSprites[sMenuDataPtr->playerTrainerSprite]);
 }
