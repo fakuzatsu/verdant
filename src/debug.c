@@ -511,7 +511,7 @@ static const u8 sDebugText_Cancel[] =        _("Cancel");
 // Script menu
 static const u8 sDebugText_Util_DayNight[]      = _("Toggle Day Night");
 static const u8 sDebugText_Util_CheckMemory[]   = _("Check Mon Memory");
-static const u8 sDebugText_Util_Script_3[]      = _("Show BO3 Menu");
+static const u8 sDebugText_Util_ShowBo3[]      = _("Show BO3 Menu");
 static const u8 sDebugText_Util_Script_4[]      = _("Start Berry Crush");
 static const u8 sDebugText_Util_Script_5[]      = _("Script 5");
 static const u8 sDebugText_Util_Script_6[]      = _("Script 6");
@@ -765,7 +765,7 @@ static const struct ListMenuItem sDebugMenu_Items_Scripts[] =
 {
     [DEBUG_UTIL_MENU_ITEM_SCRIPT_1] = {sDebugText_Util_DayNight,    DEBUG_UTIL_MENU_ITEM_SCRIPT_1},
     [DEBUG_UTIL_MENU_ITEM_SCRIPT_2] = {sDebugText_Util_CheckMemory, DEBUG_UTIL_MENU_ITEM_SCRIPT_2},
-    [DEBUG_UTIL_MENU_ITEM_SCRIPT_3] = {sDebugText_Util_Script_3,    DEBUG_UTIL_MENU_ITEM_SCRIPT_3},
+    [DEBUG_UTIL_MENU_ITEM_SCRIPT_3] = {sDebugText_Util_ShowBo3,     DEBUG_UTIL_MENU_ITEM_SCRIPT_3},
     [DEBUG_UTIL_MENU_ITEM_SCRIPT_4] = {sDebugText_Util_Script_4,    DEBUG_UTIL_MENU_ITEM_SCRIPT_4},
     [DEBUG_UTIL_MENU_ITEM_SCRIPT_5] = {sDebugText_Util_Script_5,    DEBUG_UTIL_MENU_ITEM_SCRIPT_5},
     [DEBUG_UTIL_MENU_ITEM_SCRIPT_6] = {sDebugText_Util_Script_6,    DEBUG_UTIL_MENU_ITEM_SCRIPT_6},
