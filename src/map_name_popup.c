@@ -80,7 +80,7 @@ static const u16 sMapPopUp_PaletteTable[][16] =
 
 static const u16 sMapPopUp_Palette_Underwater[16] = INCBIN_U16("graphics/map_popup/underwater.gbapal");
 
-static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping[] =
+static const u8 sMapSectionToThemeId[MAPSEC_COUNT - KANTO_MAPSEC_COUNT - 1] =
 {
     [MAPSEC_LITTLEROOT_TOWN] = MAPPOPUP_THEME_WOOD,
     [MAPSEC_OLDALE_TOWN] = MAPPOPUP_THEME_WOOD,
@@ -204,7 +204,7 @@ static const u16 sMapPopUpTilesPalette_BW_Black[] = {0};
 static const u16 sMapPopUpTilesPalette_BW_White[] = {0};
 #endif
 
-static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping_BW[] =
+static const u8 sMapSectionToThemeId_BW[MAPSEC_COUNT - KANTO_MAPSEC_COUNT - 1] =
 {
     [MAPSEC_LITTLEROOT_TOWN] = MAPPOPUP_THEME_BW_DEFAULT,
     [MAPSEC_OLDALE_TOWN] = MAPPOPUP_THEME_BW_DEFAULT,
@@ -627,7 +627,7 @@ static void LoadMapNamePopUpWindowBg(void)
 
     if (OW_POPUP_GENERATION == GEN_5)
     {
-        popUpThemeId = sRegionMapSectionId_To_PopUpThemeIdMapping_BW[regionMapSectionId];
+        popUpThemeId = sMapSectionToThemeId_BW[regionMapSectionId];
         switch (popUpThemeId)
         {
             // add additional gen 5-style pop-up themes as cases here
@@ -647,7 +647,7 @@ static void LoadMapNamePopUpWindowBg(void)
     }
     else
     {
-        popUpThemeId = sRegionMapSectionId_To_PopUpThemeIdMapping[regionMapSectionId];
+        popUpThemeId = sMapSectionToThemeId[regionMapSectionId];
         LoadBgTiles(GetWindowAttribute(popupWindowId, WINDOW_BG), sMapPopUp_OutlineTable[popUpThemeId], 0x400, 0x21D);
         CallWindowFunction(popupWindowId, DrawMapNamePopUpFrame);
         PutWindowTilemap(popupWindowId);
