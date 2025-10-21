@@ -70,8 +70,8 @@ static void DoBrailleRegidragoEffect(void);
 bool8 ShouldDoBrailleDigEffect(void)
 {
     if (!FlagGet(FLAG_SYS_BRAILLE_DIG)
-     && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SEALED_CHAMBER_OUTER_ROOM)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(SEALED_CHAMBER_OUTER_ROOM)))
+     && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SEALED_CHAMBER_OUTER_ROOM)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SEALED_CHAMBER_OUTER_ROOM)))
     {
         if (gSaveBlock1Ptr->pos.x == 10 && gSaveBlock1Ptr->pos.y == 3)
             return TRUE;
@@ -174,8 +174,8 @@ static void Task_SealedChamberShakingEffect(u8 taskId)
 bool8 ShouldDoBrailleRegirockEffect(void)
 {
     if (!FlagGet(FLAG_SYS_REGIROCK_PUZZLE_COMPLETED)
-        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(DESERT_RUINS)
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(DESERT_RUINS))
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_DESERT_RUINS)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_DESERT_RUINS))
     {
         if (gSaveBlock1Ptr->pos.x == 6 && gSaveBlock1Ptr->pos.y == 23)
         {
@@ -227,8 +227,8 @@ static void DoBrailleRegirockEffect(void)
 bool8 ShouldDoBrailleRegisteelEffect(void)
 {
     if (!FlagGet(FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED) 
-        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ANCIENT_TOMB) 
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ANCIENT_TOMB)))
+        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ANCIENT_TOMB) 
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ANCIENT_TOMB)))
     {
         if (gSaveBlock1Ptr->pos.x == 8 && gSaveBlock1Ptr->pos.y == 25)
         {
@@ -269,8 +269,8 @@ static void DoBrailleRegisteelEffect(void)
 bool8 ShouldDoBrailleRegidragoEffect(void)
 {
     if (!FlagGet(FLAG_SYS_REGIDRAGO_PUZZLE_COMPLETED) 
-        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MYTHIC_STONE) 
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MYTHIC_STONE)))
+        && (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MYTHIC_STONE) 
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MYTHIC_STONE)))
     {
         if (gSaveBlock1Ptr->pos.x == 7 && gSaveBlock1Ptr->pos.y == 21)
         {
@@ -352,8 +352,8 @@ bool8 ShouldDoBrailleRegicePuzzle(void)
 {
     u8 i;
 
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ISLAND_CAVE)
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ISLAND_CAVE))
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ISLAND_CAVE)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ISLAND_CAVE))
     {
         if (FlagGet(FLAG_SYS_BRAILLE_REGICE_COMPLETED))
             return FALSE;
@@ -414,8 +414,8 @@ bool8 ShouldDoBrailleRegicePuzzle(void)
 // then form a bolt shape by moving down and left three times consecutively. Also allows moving left then down.
 bool8 ShouldDoBrailleRegielekiPuzzle(void)
 {
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(THUNDER_ROCK)
-        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(THUNDER_ROCK))
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_THUNDER_ROCK)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_THUNDER_ROCK))
     {
         if (FlagGet(FLAG_SYS_BRAILLE_REGIELEKI_COMPLETED))
             return FALSE;

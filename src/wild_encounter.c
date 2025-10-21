@@ -129,8 +129,8 @@ static bool8 CheckFeebas(void)
     u8 route119Section = 0;
     u16 spotId;
 
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119))
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE119)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE119))
     {
         GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
         x -= MAP_OFFSET;
@@ -365,14 +365,14 @@ u16 GetCurrentMapWildMonHeaderId(void)
     for (i = 0; ; i++)
     {
         const struct WildPokemonHeader *wildHeader = &gWildMonHeaders[i];
-        if (wildHeader->mapGroup == MAP_GROUP(UNDEFINED))
+        if (wildHeader->mapGroup == MAP_GROUP(MAP_UNDEFINED))
             break;
 
         if (gWildMonHeaders[i].mapGroup == gSaveBlock1Ptr->location.mapGroup &&
             gWildMonHeaders[i].mapNum == gSaveBlock1Ptr->location.mapNum)
         {
-            if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ALTERING_CAVE) &&
-                gSaveBlock1Ptr->location.mapNum == MAP_NUM(ALTERING_CAVE))
+            if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ALTERING_CAVE) &&
+                gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ALTERING_CAVE))
             {
                 u16 alteringCaveId = VarGet(VAR_ALTERING_CAVE_WILD_SET);
                 if (alteringCaveId >= NUM_ALTERING_CAVE_TABLES)
@@ -380,10 +380,10 @@ u16 GetCurrentMapWildMonHeaderId(void)
 
                 i += alteringCaveId;
             }
-            else if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119) &&
-                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119)) ||
-                    (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE120) &&
-                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE120)))
+            else if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE119) &&
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE119)) ||
+                    (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE120) &&
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE120)))
             {
                 u8 isRaining = 0;
                 if (gWeatherPtr->currWeather == WEATHER_RAIN_THUNDERSTORM ||
@@ -634,8 +634,8 @@ static bool8 AllowWildCheckOnNewMetatile(void)
 
 static bool8 AreLegendariesInSootopolisPreventingEncounters(void)
 {
-    if (gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(SOOTOPOLIS_CITY)
-     || gSaveBlock1Ptr->location.mapNum != MAP_NUM(SOOTOPOLIS_CITY))
+    if (gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(MAP_SOOTOPOLIS_CITY)
+     || gSaveBlock1Ptr->location.mapNum != MAP_NUM(MAP_SOOTOPOLIS_CITY))
     {
         return FALSE;
     }
