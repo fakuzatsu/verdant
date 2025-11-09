@@ -55,6 +55,7 @@ static const u8 sFiller2[0x140] = {};
 static const u8 sDoorAnimTiles_UnusedBottoms[] = INCBIN_U8("graphics/door_anims/unused_bottom.4bpp");
 static const u16 sDoorNullPalette11[16] = {};
 static const u8 sDoorAnimTiles_Mauville[] = INCBIN_U8("graphics/door_anims/mauville.4bpp");
+static const u8 sDoorAnimTiles_Mauville_Dark[] = INCBIN_U8("graphics/door_anims/mauville_dark.4bpp");
 static const u16 sDoorNullPalette12[16] = {};
 static const u8 sDoorAnimTiles_Verdanturf[] = INCBIN_U8("graphics/door_anims/verdanturf.4bpp");
 static const u16 sDoorNullPalette13[16] = {};
@@ -277,6 +278,7 @@ static const struct DoorGraphics sDoorAnimGraphicsTable[] =
     {METATILE_BattleTent_Door,                              DOOR_SOUND_SLIDING, 1, sDoorAnimTiles_BattleTentInterior, sDoorAnimPalettes_BattleTentInterior},
     {METATILE_TrainerHill_Door_Elevator_Lobby,              DOOR_SOUND_SLIDING, 1, sDoorAnimTiles_TrainerHillLobbyElevator, sDoorAnimPalettes_TrainerHillLobbyElevator},
     {METATILE_TrainerHill_Door_Elevator_Roof,               DOOR_SOUND_SLIDING, 1, sDoorAnimTiles_TrainerHillRoofElevator, sDoorAnimPalettes_TrainerHillRoofElevator},
+    {METATILE_Mauville_Door_Dark,                           DOOR_SOUND_NORMAL,  1, sDoorAnimTiles_Mauville_Dark, sDoorAnimPalettes_Mauville},
     {},
 };
 

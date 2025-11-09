@@ -9118,7 +9118,14 @@ static const union AnimCmd sAnim_Araquanid_1[] =
 
 #if P_FAMILY_FOMANTIS
 PLACEHOLDER_ANIM_SINGLE_FRAME(Fomantis);
-PLACEHOLDER_ANIM_SINGLE_FRAME(Lurantis);
+
+static const union AnimCmd sAnim_Lurantis_1[] =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(1, 35),
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
 #endif //P_FAMILY_FOMANTIS
 
 #if P_FAMILY_MORELULL
