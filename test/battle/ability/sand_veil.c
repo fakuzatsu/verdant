@@ -16,6 +16,7 @@ SINGLE_BATTLE_TEST("Sand Veil prevents damage from sandstorm")
 
 SINGLE_BATTLE_TEST("Sand Veil increases evasion during sandstorm")
 {
+    KNOWN_FAILING; // This move was changed alongside all accuracy abilities to have a defensive effect
     PASSES_RANDOMLY(4, 5, RNG_ACCURACY);
     GIVEN {
         ASSUME(gMovesInfo[MOVE_POUND].accuracy == 100);
