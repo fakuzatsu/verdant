@@ -187,7 +187,7 @@ SINGLE_BATTLE_TEST("Pickup doesn't grant an used item if its user already restor
     GIVEN {
         ASSUME(gMovesInfo[MOVE_RECYCLE].effect == EFFECT_RECYCLE);
         PLAYER(SPECIES_ZIGZAGOON) { Ability(ABILITY_PICKUP); }
-        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(100); HP(51); Item(ITEM_SITRUS_BERRY); }
+        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(100); HP(60); Item(ITEM_SITRUS_BERRY); }
     } WHEN {
         TURN { MOVE(player, MOVE_TACKLE); MOVE(opponent, MOVE_RECYCLE); }
     } SCENE {

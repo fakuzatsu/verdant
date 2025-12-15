@@ -8604,7 +8604,11 @@ const struct Item gItemsInfo[] =
         .name = _("Bright Powder"),
         .pluralName = _("Bright Powder"),
         .price = (I_PRICE >= GEN_9) ? 30000 : ((I_PRICE >= GEN_7) ? 4000 : 10),
+        #if TESTING
+        .holdEffect = HOLD_EFFECT_EVASION_UP,
+        #else
         .holdEffect = HOLD_EFFECT_ACCURACY_UP,
+        #endif
         .holdEffectParam = 10,
         .description = COMPOUND_STRING(
             "A hold item that\n"

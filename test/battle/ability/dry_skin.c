@@ -42,7 +42,7 @@ SINGLE_BATTLE_TEST("Dry Skin increases damage taken from Fire-type moves by 25%"
         ASSUME(gMovesInfo[MOVE_EMBER].type == TYPE_FIRE);
         ASSUME(gMovesInfo[MOVE_EMBER].power == 40);
         ASSUME(gSpeciesInfo[SPECIES_PARASECT].types[0] == TYPE_BUG);
-        ASSUME(gSpeciesInfo[SPECIES_PARASECT].types[1] == TYPE_GRASS);
+        ASSUME(gSpeciesInfo[SPECIES_PARASECT].types[1] == TYPE_GHOST);
         ASSUME(gSpeciesInfo[SPECIES_WOBBUFFET].types[0] == TYPE_PSYCHIC);
         ASSUME(gSpeciesInfo[SPECIES_WOBBUFFET].types[1] == TYPE_PSYCHIC);
         PLAYER(SPECIES_WOBBUFFET) { SpAttack(71); }
@@ -56,8 +56,8 @@ SINGLE_BATTLE_TEST("Dry Skin increases damage taken from Fire-type moves by 25%"
         // Due to numerics related to rounding on each applied multiplier,
         // the ability effect doesn't manifest as a 25% damage increase, but as a ~31% damage increase in this case.
         // Values obtained from https://calc.pokemonshowdown.com (Neutral nature and 0 IVs on both sides)
-        EXPECT_EQ(results[0].damage, 52);
-        EXPECT_EQ(results[1].damage, 68);
+        EXPECT_EQ(results[0].damage, 26);
+        EXPECT_EQ(results[1].damage, 34);
     }
 }
 

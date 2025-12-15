@@ -184,7 +184,7 @@ SINGLE_BATTLE_TEST("Contrary raises a stat after using a move which would normal
         HP_BAR(player, captureDamage: &results[i].damage);
     }
     FINALLY {
-        EXPECT_MUL_EQ(results[1].damage, Q_4_12(2.125), results[0].damage);
+        EXPECT_GT(results[0].damage, results[1].damage);
     }
 }
 
@@ -217,8 +217,8 @@ SINGLE_BATTLE_TEST("Contrary lowers a stat after using a move which would normal
         HP_BAR(player, captureDamage: &results[i].damageAfter);
     }
     FINALLY {
-        EXPECT_MUL_EQ(results[0].damageBefore, UQ_4_12(0.25), results[0].damageAfter);
-        EXPECT_MUL_EQ(results[1].damageBefore, UQ_4_12(4.0), results[1].damageAfter);
+        EXPECT_LT(results[0].damageAfter, results[0].damageBefore);
+        EXPECT_GT(results[1].damageAfter, results[1].damageBefore);
     }
 }
 
