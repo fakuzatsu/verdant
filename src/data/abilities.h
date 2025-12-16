@@ -94,7 +94,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Sand Veil"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Boosts the Pokémon's evasiveness\nin a sandstorm."),
+        .description = COMPOUND_STRING("Reduces physical damage\ntaken in a sandstorm."),
 #else
         .description = COMPOUND_STRING("Ups evasion in a sandstorm."),
 #endif
@@ -407,7 +407,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Illuminate"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Illuminates its surroundings.\nIts acccuracy cannot be lowered."),
+        .description = COMPOUND_STRING("Illuminates its surroundings.\nIts acccuracy is increased."),
 #else
         .description = COMPOUND_STRING("Encounter rate increases."),
 #endif
@@ -887,7 +887,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Tangled Feet"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Boosts the Pokémon's evasiveness\nif it is confused."),
+        .description = COMPOUND_STRING("Reduces damage taken\nif confused."),
 #else
         .description = COMPOUND_STRING("Ups evasion if confused."),
 #endif
@@ -933,7 +933,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Snow Cloak"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Boosts the Pokémon's\nevasiveness in snow."),
+        .description = COMPOUND_STRING("Reduces special damage\ntaken in snow."),
 #else
         .description = COMPOUND_STRING("Ups evasion in Hail or Snow."),
 #endif
@@ -1692,7 +1692,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Wonder Skin"),
 #if BW_SUMMARY_SCREEN == TRUE
-        .description = COMPOUND_STRING("Makes status moves more likely\nto miss the Pokémon."),
+        .description = COMPOUND_STRING("Prevents status conditions."),
 #else
         .description = COMPOUND_STRING("May avoid status problems."),
 #endif

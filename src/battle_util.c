@@ -2797,7 +2797,7 @@ u8 DoBattlerEndTurnEffects(void)
                 if (!(gStatuses3[battler] & STATUS3_YAWN) && !(gBattleMons[battler].status1 & STATUS1_ANY)
                  && battlerAbility != ABILITY_VITAL_SPIRIT
                  && battlerAbility != ABILITY_INSOMNIA && !UproarWakeUpCheck(battler)
-                 && !IsLeafGuardProtected(battler))
+                 && !IsLeafGuardProtected(battler) && !IsWonderSkinProtected(battler))
                 {
                     CancelMultiTurnMoves(battler);
                     gEffectBattler = gBattlerTarget = battler;
@@ -10159,6 +10159,20 @@ static inline uq4_12_t GetDefenderAbilitiesModifier(u32 move, u32 moveType, u32 
     case ABILITY_PUNK_ROCK:
         if (gMovesInfo[move].soundMove)
             return UQ_4_12(0.5);
+        break;
+    case ABILITY_SAND_VEIL:
+        if (WEATHER_HAS_EFFECT && gBattleWeather & B_WEATHER_SANDSTORM
+            && IS_MOVE_PHYSICAL(move))
+            return UQ_4_12(0.75);
+        break;
+    case ABILITY_SNOW_CLOAK:
+        if (WEATHER_HAS_EFFECT && (gBattleWeather & (B_WEATHER_HAIL | B_WEATHER_SNOW))
+            && IS_MOVE_SPECIAL(move))
+            return UQ_4_12(0.75);
+        break;
+    case ABILITY_TANGLED_FEET:
+        if (gBattleMons[battlerDef].status2 & STATUS2_CONFUSION)
+            return UQ_4_12(0.75);
         break;
     case ABILITY_ICE_SCALES:
         if (IS_MOVE_SPECIAL(move))

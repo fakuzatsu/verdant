@@ -226,6 +226,7 @@
 #define VARIOUS_SET_BEAK_BLAST                       134
 #define VARIOUS_SWAP_SIDE_STATUSES                   135
 #define VARIOUS_SWAP_STATS                           136
+#define VARIOUS_JUMP_IF_WONDER_SKIN_PROTECTED       137
 
 // Cmd_manipulatedamage
 #define DMG_CHANGE_SIGN            0

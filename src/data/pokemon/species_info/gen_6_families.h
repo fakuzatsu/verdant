@@ -21,14 +21,14 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_BULLETPROOF },
+        .abilities = { ABILITY_OVERGROW, ABILITY_BULLETPROOF, ABILITY_STEELY_SPIRIT },
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Chespin"),
         .cryId = CRY_CHESPIN,
         .natDexNum = NATIONAL_DEX_CHESPIN,
         .categoryName = _("Spiny Nut"),
         .height = 4,
-        .weight = 90,
+        .weight = 150,
         .description = COMPOUND_STRING(
             "The quills on its head are usually soft.\n"
             "When it flexes them, the points become\n"
@@ -84,14 +84,14 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_BULLETPROOF },
+        .abilities = { ABILITY_OVERGROW, ABILITY_BULLETPROOF, ABILITY_STEELY_SPIRIT },
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Quilladin"),
         .cryId = CRY_QUILLADIN,
         .natDexNum = NATIONAL_DEX_QUILLADIN,
         .categoryName = _("Spiny Armor"),
         .height = 7,
-        .weight = 290,
+        .weight = 590,
         .description = COMPOUND_STRING(
             "They strengthen the sturdy shell covering\n"
             "their bodies by running into one another.\n"
@@ -146,14 +146,14 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_BULLETPROOF },
+        .abilities = { ABILITY_OVERGROW, ABILITY_BULLETPROOF, ABILITY_STEELY_SPIRIT },
         .bodyColor = BODY_COLOR_GREEN,
         .speciesName = _("Chesnaught"),
         .cryId = CRY_CHESNAUGHT,
         .natDexNum = NATIONAL_DEX_CHESNAUGHT,
         .categoryName = _("Spiny Armor"),
         .height = 16,
-        .weight = 900,
+        .weight = 1500,
         .description = COMPOUND_STRING(
             "It shields its allies from danger with\n"
             "its own body. When it takes a defensive\n"
@@ -209,7 +209,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_MAGICIAN },
+        .abilities = { ABILITY_BLAZE, ABILITY_MAGICIAN, ABILITY_MAGIC_GUARD },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Fennekin"),
         .cryId = CRY_FENNEKIN,
@@ -272,7 +272,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_MAGICIAN },
+        .abilities = { ABILITY_BLAZE, ABILITY_MAGICIAN, ABILITY_MAGIC_GUARD },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Braixen"),
         .cryId = CRY_BRAIXEN,
@@ -322,7 +322,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseHP        = 75,
         .baseAttack    = 69,
         .baseDefense   = 72,
-        .baseSpeed     = 104,
+        .baseSpeed     = 105,
         .baseSpAttack  = 114,
         .baseSpDefense = 100,
         .types = MON_TYPES(TYPE_FIRE, TYPE_PSYCHIC),
@@ -334,7 +334,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_MAGICIAN },
+        .abilities = { ABILITY_BLAZE, ABILITY_MAGICIAN, ABILITY_MAGIC_GUARD },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Delphox"),
         .cryId = CRY_DELPHOX,
@@ -509,7 +509,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     {
         .baseHP        = 72,
         .baseAttack    = 95,
-        .baseDefense   = 67,
+        .baseDefense   = 72,
         .baseSpeed     = 122,
         .baseSpAttack  = 103,
         .baseSpDefense = 71,
@@ -1001,7 +1001,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseDefense   = 40,                                                                \
         .baseSpeed     = 35,                                                                \
         .baseSpAttack  = 27,                                                                \
-        .baseSpDefense = 25,                                                                \
+        .baseSpDefense = 35,                                                                \
         .types = MON_TYPES(TYPE_BUG),                                                       \
         .catchRate = 255,                                                                   \
         .expYield = 40,                                                                     \
@@ -1011,7 +1011,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,                                                  \
         .growthRate = GROWTH_MEDIUM_FAST,                                                   \
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),                                         \
-        .abilities = { ABILITY_SHIELD_DUST, ABILITY_COMPOUND_EYES, ABILITY_FRIEND_GUARD },  \
+        .abilities = { ABILITY_NATURAL_CURE, ABILITY_REGENERATOR, ABILITY_FRIEND_GUARD },   \
         .bodyColor = BODY_COLOR_BLACK,                                                      \
         .speciesName = _("Scatterbug"),                                                     \
         .cryId = CRY_SCATTERBUG,                                                            \
@@ -1076,64 +1076,64 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_SCATTERBUG_FANCY]       = SCATTERBUG_SPECIES_INFO(FANCY),
     [SPECIES_SCATTERBUG_POKEBALL]   = SCATTERBUG_SPECIES_INFO(POKEBALL),
 
-#define SPEWPA_SPECIES_INFO(evolution)                                          \
-    {                                                                           \
-        .baseHP        = 45,                                                    \
-        .baseAttack    = 22,                                                    \
-        .baseDefense   = 60,                                                    \
-        .baseSpeed     = 29,                                                    \
-        .baseSpAttack  = 27,                                                    \
-        .baseSpDefense = 30,                                                    \
-        .types = MON_TYPES(TYPE_BUG),                                           \
-        .catchRate = 120,                                                       \
-        .expYield = 75,                                                         \
-        .evYield_Defense = 2,                                                   \
-        .genderRatio = PERCENT_FEMALE(50),                                      \
-        .eggCycles = 15,                                                        \
-        .friendship = STANDARD_FRIENDSHIP,                                      \
-        .growthRate = GROWTH_MEDIUM_FAST,                                       \
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),                             \
-        .abilities = { ABILITY_SHED_SKIN, ABILITY_NONE, ABILITY_FRIEND_GUARD }, \
-        .bodyColor = BODY_COLOR_BLACK,                                          \
-        .speciesName = _("Spewpa"),                                             \
-        .cryId = CRY_SPEWPA,                                                    \
-        .natDexNum = NATIONAL_DEX_SPEWPA,                                       \
-        .categoryName = _("Scatterdust"),                                       \
-        .height = 3,                                                            \
-        .weight = 84,                                                           \
-        .description = gSpewpaPokedexText,                                      \
-        .pokemonScale = 530,                                                    \
-        .pokemonOffset = 13,                                                    \
-        .trainerScale = 256,                                                    \
-        .trainerOffset = 0,                                                     \
-        .frontPic = gMonFrontPic_Spewpa,                                        \
-        .frontPicSize = MON_COORDS_SIZE(40, 48),                                \
-        .frontPicYOffset = 11,                                                  \
-        .frontAnimFrames = sAnims_Spewpa,                                       \
-        .frontAnimId = ANIM_V_SHAKE,                                            \
-        .backPic = gMonBackPic_Spewpa,                                          \
-        .backPicSize = MON_COORDS_SIZE(48, 48),                                 \
-        .backPicYOffset = 12,                                                   \
-        .backAnimId = BACK_ANIM_H_VIBRATE,                                      \
-        .palette = gMonPalette_Spewpa,                                          \
-        .shinyPalette = gMonShinyPalette_Spewpa,                                \
-        .iconSprite = gMonIcon_Spewpa,                                          \
-        .iconPalIndex = 1,                                                      \
-        SHADOW(0, 2, SHADOW_SIZE_M)                                         \
-        FOOTPRINT(Spewpa)                                                       \
-        OVERWORLD(                                                              \
-            sPicTable_Spewpa,                                                   \
-            SIZE_32x32,                                                         \
-            SHADOW_SIZE_M,                                                      \
-            TRACKS_FOOT,                                                        \
-            gOverworldPalette_Spewpa,                                           \
-            gShinyOverworldPalette_Spewpa                                       \
-        )                                                                       \
-        .tmIlliterate = TRUE,                                                   \
-        .levelUpLearnset = sSpewpaLevelUpLearnset,                              \
-        .teachableLearnset = sSpewpaTeachableLearnset,                          \
-        .formSpeciesIdTable = sSpewpaFormSpeciesIdTable,                        \
-        .evolutions = EVOLUTION({EVO_LEVEL, 12, SPECIES_VIVILLON_##evolution}), \
+#define SPEWPA_SPECIES_INFO(evolution)                                                  \
+    {                                                                                   \
+        .baseHP        = 45,                                                            \
+        .baseAttack    = 22,                                                            \
+        .baseDefense   = 60,                                                            \
+        .baseSpeed     = 29,                                                            \
+        .baseSpAttack  = 27,                                                            \
+        .baseSpDefense = 60,                                                            \
+        .types = MON_TYPES(TYPE_BUG),                                                   \
+        .catchRate = 120,                                                               \
+        .expYield = 75,                                                                 \
+        .evYield_Defense = 2,                                                           \
+        .genderRatio = PERCENT_FEMALE(50),                                              \
+        .eggCycles = 15,                                                                \
+        .friendship = STANDARD_FRIENDSHIP,                                              \
+        .growthRate = GROWTH_MEDIUM_FAST,                                               \
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),                                     \
+        .abilities = { ABILITY_SHED_SKIN, ABILITY_FRIEND_GUARD, ABILITY_REGENERATOR },  \
+        .bodyColor = BODY_COLOR_BLACK,                                                  \
+        .speciesName = _("Spewpa"),                                                     \
+        .cryId = CRY_SPEWPA,                                                            \
+        .natDexNum = NATIONAL_DEX_SPEWPA,                                               \
+        .categoryName = _("Scatterdust"),                                               \
+        .height = 3,                                                                    \
+        .weight = 84,                                                                   \
+        .description = gSpewpaPokedexText,                                              \
+        .pokemonScale = 530,                                                            \
+        .pokemonOffset = 13,                                                            \
+        .trainerScale = 256,                                                            \
+        .trainerOffset = 0,                                                             \
+        .frontPic = gMonFrontPic_Spewpa,                                                \
+        .frontPicSize = MON_COORDS_SIZE(40, 48),                                        \
+        .frontPicYOffset = 11,                                                          \
+        .frontAnimFrames = sAnims_Spewpa,                                               \
+        .frontAnimId = ANIM_V_SHAKE,                                                    \
+        .backPic = gMonBackPic_Spewpa,                                                  \
+        .backPicSize = MON_COORDS_SIZE(48, 48),                                         \
+        .backPicYOffset = 12,                                                           \
+        .backAnimId = BACK_ANIM_H_VIBRATE,                                              \
+        .palette = gMonPalette_Spewpa,                                                  \
+        .shinyPalette = gMonShinyPalette_Spewpa,                                        \
+        .iconSprite = gMonIcon_Spewpa,                                                  \
+        .iconPalIndex = 1,                                                              \
+        SHADOW(0, 2, SHADOW_SIZE_M)                                                     \
+        FOOTPRINT(Spewpa)                                                               \
+        OVERWORLD(                                                                      \
+            sPicTable_Spewpa,                                                           \
+            SIZE_32x32,                                                                 \
+            SHADOW_SIZE_M,                                                              \
+            TRACKS_FOOT,                                                                \
+            gOverworldPalette_Spewpa,                                                   \
+            gShinyOverworldPalette_Spewpa                                               \
+        )                                                                               \
+        .tmIlliterate = TRUE,                                                           \
+        .levelUpLearnset = sSpewpaLevelUpLearnset,                                      \
+        .teachableLearnset = sSpewpaTeachableLearnset,                                  \
+        .formSpeciesIdTable = sSpewpaFormSpeciesIdTable,                                \
+        .evolutions = EVOLUTION({EVO_LEVEL, 12, SPECIES_VIVILLON_##evolution}),         \
     }
 
     [SPECIES_SPEWPA_ICY_SNOW]    = SPEWPA_SPECIES_INFO(ICY_SNOW),
@@ -1159,11 +1159,11 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
 
 #define VIVILLON_MISC_INFO(form, color, iconPal)                                            \
         .baseHP        = 80,                                                                \
-        .baseAttack    = 52,                                                                \
-        .baseDefense   = 50,                                                                \
+        .baseAttack    = 32,                                                                \
+        .baseDefense   = 91,                                                                \
         .baseSpeed     = 89,                                                                \
-        .baseSpAttack  = 90,                                                                \
-        .baseSpDefense = 50,                                                                \
+        .baseSpAttack  = 70,                                                                \
+        .baseSpDefense = 90,                                                                \
         .types = MON_TYPES(TYPE_BUG, TYPE_FLYING),                                          \
         .catchRate = 45,                                                                    \
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 206 : 185,                            \
@@ -1175,7 +1175,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,                                                  \
         .growthRate = GROWTH_MEDIUM_FAST,                                                   \
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_BUG),                                         \
-        .abilities = { ABILITY_SHIELD_DUST, ABILITY_COMPOUND_EYES, ABILITY_FRIEND_GUARD },  \
+        .abilities = { ABILITY_NATURAL_CURE, ABILITY_REGENERATOR, ABILITY_FRIEND_GUARD },   \
         .bodyColor = color,                                                                 \
         .speciesName = _("Vivillon"),                                                       \
         .cryId = CRY_VIVILLON,                                                              \
@@ -1415,7 +1415,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_RIVALRY, ABILITY_UNNERVE, ABILITY_MOXIE },
+        .abilities = { ABILITY_RIVALRY, ABILITY_UNNERVE, ABILITY_COMPETITIVE},
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Litleo"),
         .cryId = CRY_LITLEO,
@@ -1478,7 +1478,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_RIVALRY, ABILITY_UNNERVE, ABILITY_MOXIE },
+        .abilities = { ABILITY_RIVALRY, ABILITY_UNNERVE, ABILITY_COMPETITIVE },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Pyroar"),
         .cryId = CRY_PYROAR,
@@ -1536,62 +1536,62 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
 #endif //P_FAMILY_LITLEO
 
 #if P_FAMILY_FLABEBE
-#define FLABEBE_MISC_INFO(Form, FORM, iconPal)                                  \
-        .baseHP        = 44,                                                    \
-        .baseAttack    = 38,                                                    \
-        .baseDefense   = 39,                                                    \
-        .baseSpeed     = 42,                                                    \
-        .baseSpAttack  = 61,                                                    \
-        .baseSpDefense = 79,                                                    \
-        .types = MON_TYPES(TYPE_FAIRY),                                         \
-        .catchRate = 225,                                                       \
-        .expYield = 61,                                                         \
-        .evYield_SpDefense = 1,                                                 \
-        .genderRatio = MON_FEMALE,                                              \
-        .eggCycles = 20,                                                        \
-        .friendship = STANDARD_FRIENDSHIP,                                      \
-        .growthRate = GROWTH_MEDIUM_FAST,                                       \
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),                           \
-        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_NONE, ABILITY_SYMBIOSIS },  \
-        .bodyColor = BODY_COLOR_WHITE,                                          \
-        .speciesName = _("Flabébé"),                                            \
-        .cryId = CRY_FLABEBE,                                                   \
-        .natDexNum = NATIONAL_DEX_FLABEBE,                                      \
-        .categoryName = _("Single Bloom"),                                      \
-        .height = 1,                                                            \
-        .weight = 1,                                                            \
-        .pokemonScale = 682,                                                    \
-        .pokemonOffset = 24,                                                    \
-        .trainerScale = 256,                                                    \
-        .trainerOffset = 0,                                                     \
-        .frontPic = gMonFrontPic_Flabebe,                                       \
-        .frontPicSize = MON_COORDS_SIZE(48, 56),                                \
-        .frontPicYOffset = 6,                                                   \
-        .frontAnimFrames = sAnims_Flabebe,                                      \
-        .frontAnimId = ANIM_H_SLIDE_SLOW,                                       \
-        .enemyMonElevation = 6,                                                 \
-        .backPic = gMonBackPic_Flabebe,                                         \
-        .backPicSize = MON_COORDS_SIZE(64, 40),                                 \
-        .backPicYOffset = 12,                                                   \
-        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,                              \
-        .palette = gMonPalette_Flabebe##Form##Flower,                           \
-        .shinyPalette = gMonShinyPalette_Flabebe##Form##Flower,                 \
-        .iconSprite = gMonIcon_Flabebe##Form##Flower,                           \
-        .iconPalIndex = iconPal,                                                \
-        SHADOW(0, 11, SHADOW_SIZE_S)                                        \
-        FOOTPRINT(Flabebe)                                                      \
-        OVERWORLD(                                                              \
-            sPicTable_Flabebe##Form##Flower,                                    \
-            SIZE_32x32,                                                         \
-            SHADOW_SIZE_M,                                                      \
-            TRACKS_FOOT,                                                        \
-            gOverworldPalette_Flabebe##Form##Flower,                            \
-            gShinyOverworldPalette_Flabebe##Form##Flower                        \
-        )                                                                       \
-        .levelUpLearnset = sFlabebeLevelUpLearnset,                             \
-        .teachableLearnset = sFlabebeTeachableLearnset,                         \
-        .eggMoveLearnset = sFlabebeEggMoveLearnset,                             \
-        .formSpeciesIdTable = sFlabebeFormSpeciesIdTable,                       \
+#define FLABEBE_MISC_INFO(Form, FORM, iconPal)                                          \
+        .baseHP        = 44,                                                            \
+        .baseAttack    = 38,                                                            \
+        .baseDefense   = 39,                                                            \
+        .baseSpeed     = 42,                                                            \
+        .baseSpAttack  = 61,                                                            \
+        .baseSpDefense = 79,                                                            \
+        .types = MON_TYPES(TYPE_FAIRY),                                                 \
+        .catchRate = 225,                                                               \
+        .expYield = 61,                                                                 \
+        .evYield_SpDefense = 1,                                                         \
+        .genderRatio = MON_FEMALE,                                                      \
+        .eggCycles = 20,                                                                \
+        .friendship = STANDARD_FRIENDSHIP,                                              \
+        .growthRate = GROWTH_MEDIUM_FAST,                                               \
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),                                   \
+        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_SYMBIOSIS, ABILITY_SERENE_GRACE },  \
+        .bodyColor = BODY_COLOR_WHITE,                                                  \
+        .speciesName = _("Flabébé"),                                                    \
+        .cryId = CRY_FLABEBE,                                                           \
+        .natDexNum = NATIONAL_DEX_FLABEBE,                                              \
+        .categoryName = _("Single Bloom"),                                              \
+        .height = 1,                                                                    \
+        .weight = 1,                                                                    \
+        .pokemonScale = 682,                                                            \
+        .pokemonOffset = 24,                                                            \
+        .trainerScale = 256,                                                            \
+        .trainerOffset = 0,                                                             \
+        .frontPic = gMonFrontPic_Flabebe,                                               \
+        .frontPicSize = MON_COORDS_SIZE(48, 56),                                        \
+        .frontPicYOffset = 6,                                                           \
+        .frontAnimFrames = sAnims_Flabebe,                                              \
+        .frontAnimId = ANIM_H_SLIDE_SLOW,                                               \
+        .enemyMonElevation = 6,                                                         \
+        .backPic = gMonBackPic_Flabebe,                                                 \
+        .backPicSize = MON_COORDS_SIZE(64, 40),                                         \
+        .backPicYOffset = 12,                                                           \
+        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,                                      \
+        .palette = gMonPalette_Flabebe##Form##Flower,                                   \
+        .shinyPalette = gMonShinyPalette_Flabebe##Form##Flower,                         \
+        .iconSprite = gMonIcon_Flabebe##Form##Flower,                                   \
+        .iconPalIndex = iconPal,                                                        \
+        SHADOW(0, 11, SHADOW_SIZE_S)                                                    \
+        FOOTPRINT(Flabebe)                                                              \
+        OVERWORLD(                                                                      \
+            sPicTable_Flabebe##Form##Flower,                                            \
+            SIZE_32x32,                                                                 \
+            SHADOW_SIZE_M,                                                              \
+            TRACKS_FOOT,                                                                \
+            gOverworldPalette_Flabebe##Form##Flower,                                    \
+            gShinyOverworldPalette_Flabebe##Form##Flower                                \
+        )                                                                               \
+        .levelUpLearnset = sFlabebeLevelUpLearnset,                                     \
+        .teachableLearnset = sFlabebeTeachableLearnset,                                 \
+        .eggMoveLearnset = sFlabebeEggMoveLearnset,                                     \
+        .formSpeciesIdTable = sFlabebeFormSpeciesIdTable,                               \
         .evolutions = EVOLUTION({EVO_LEVEL, 19, SPECIES_FLOETTE_ ##FORM})
 
     [SPECIES_FLABEBE_RED] =
@@ -1640,42 +1640,42 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
             "then it goes to sleep."),
     },
 
-#define FLOETTE_MISC_INFO(form, FORM, iconPal)                                  \
-        .types = MON_TYPES(TYPE_FAIRY),                                         \
-        .catchRate = 120,                                                       \
-        .evYield_SpDefense = 2,                                                 \
-        .genderRatio = MON_FEMALE,                                              \
-        .eggCycles = 20,                                                        \
-        .friendship = STANDARD_FRIENDSHIP,                                      \
-        .growthRate = GROWTH_MEDIUM_FAST,                                       \
-        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_NONE, ABILITY_SYMBIOSIS },  \
-        .bodyColor = BODY_COLOR_WHITE,                                          \
-        .speciesName = _("Floette"),                                            \
-        .natDexNum = NATIONAL_DEX_FLOETTE,                                      \
-        .categoryName = _("Single Bloom"),                                      \
-        .height = 2,                                                            \
-        .weight = 9,                                                            \
-        .pokemonScale = 682,                                                    \
-        .pokemonOffset = 24,                                                    \
-        .trainerScale = 256,                                                    \
-        .trainerOffset = 0,                                                     \
-        .frontAnimFrames = sAnims_Floette,                                      \
-        .frontAnimId = ANIM_V_SLIDE_WOBBLE,                                     \
-        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,                              \
-        .palette = gMonPalette_Floette ##form##Flower,                          \
-        .shinyPalette = gMonShinyPalette_Floette ##form##Flower,                \
-        .iconSprite = gMonIcon_Floette##form##Flower,                           \
-        .iconPalIndex = iconPal,                                                \
-        SHADOW(-3, 12, SHADOW_SIZE_S)                                       \
-        FOOTPRINT(Floette)                                                      \
-        OVERWORLD(                                                              \
-            sPicTable_Floette ##form##Flower,                                   \
-            SIZE_32x32,                                                         \
-            SHADOW_SIZE_M,                                                      \
-            TRACKS_FOOT,                                                        \
-            gOverworldPalette_Floette ##form##Flower,                           \
-            gShinyOverworldPalette_Floette ##form##Flower                       \
-        )                                                                       \
+#define FLOETTE_MISC_INFO(form, FORM, iconPal)                                          \
+        .types = MON_TYPES(TYPE_FAIRY),                                                 \
+        .catchRate = 120,                                                               \
+        .evYield_SpDefense = 2,                                                         \
+        .genderRatio = MON_FEMALE,                                                      \
+        .eggCycles = 20,                                                                \
+        .friendship = STANDARD_FRIENDSHIP,                                              \
+        .growthRate = GROWTH_MEDIUM_FAST,                                               \
+        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_SYMBIOSIS, ABILITY_SERENE_GRACE },  \
+        .bodyColor = BODY_COLOR_WHITE,                                                  \
+        .speciesName = _("Floette"),                                                    \
+        .natDexNum = NATIONAL_DEX_FLOETTE,                                              \
+        .categoryName = _("Single Bloom"),                                              \
+        .height = 2,                                                                    \
+        .weight = 9,                                                                    \
+        .pokemonScale = 682,                                                            \
+        .pokemonOffset = 24,                                                            \
+        .trainerScale = 256,                                                            \
+        .trainerOffset = 0,                                                             \
+        .frontAnimFrames = sAnims_Floette,                                              \
+        .frontAnimId = ANIM_V_SLIDE_WOBBLE,                                             \
+        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,                                      \
+        .palette = gMonPalette_Floette ##form##Flower,                                  \
+        .shinyPalette = gMonShinyPalette_Floette ##form##Flower,                        \
+        .iconSprite = gMonIcon_Floette##form##Flower,                                   \
+        .iconPalIndex = iconPal,                                                        \
+        SHADOW(-3, 12, SHADOW_SIZE_S)                                                   \
+        FOOTPRINT(Floette)                                                              \
+        OVERWORLD(                                                                      \
+            sPicTable_Floette ##form##Flower,                                           \
+            SIZE_32x32,                                                                 \
+            SHADOW_SIZE_M,                                                              \
+            TRACKS_FOOT,                                                                \
+            gOverworldPalette_Floette ##form##Flower,                                   \
+            gShinyOverworldPalette_Floette ##form##Flower                               \
+        )                                                                               \
         .formSpeciesIdTable = sFloetteFormSpeciesIdTable
 
 #define FLOETTE_NORMAL_INFO(form, FORM, iconPal)                                                \
@@ -1773,59 +1773,59 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .teachableLearnset = sFloetteEternalFlowerTeachableLearnset,
     },
 
-#define FLORGES_MISC_INFO(Form, iconPal)                                        \
-        .baseHP        = 78,                                                    \
-        .baseAttack    = 65,                                                    \
-        .baseDefense   = 68,                                                    \
-        .baseSpeed     = 75,                                                    \
-        .baseSpAttack  = 112,                                                   \
-        .baseSpDefense = 154,                                                   \
-        .types = MON_TYPES(TYPE_FAIRY),                                         \
-        .catchRate = 45,                                                        \
-        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 276 : 248,                \
-        .evYield_SpDefense = 3,                                                 \
-        .genderRatio = MON_FEMALE,                                              \
-        .eggCycles = 20,                                                        \
-        .friendship = STANDARD_FRIENDSHIP,                                      \
-        .growthRate = GROWTH_MEDIUM_FAST,                                       \
-        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),                           \
-        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_NONE, ABILITY_SYMBIOSIS },  \
-        .bodyColor = BODY_COLOR_WHITE,                                          \
-        .speciesName = _("Florges"),                                            \
-        .cryId = CRY_FLORGES,                                                   \
-        .natDexNum = NATIONAL_DEX_FLORGES,                                      \
-        .categoryName = _("Garden"),                                            \
-        .height = 11,                                                           \
-        .weight = 100,                                                          \
-        .pokemonScale = 320,                                                    \
-        .pokemonOffset = 7,                                                     \
-        .trainerScale = 256,                                                    \
-        .trainerOffset = 0,                                                     \
-        .frontPic = gMonFrontPic_Florges,                                       \
-        .frontPicSize = MON_COORDS_SIZE(64, 64),                                \
-        .frontPicYOffset = 0,                                                   \
-        .frontAnimFrames = sAnims_Florges,                                      \
-        .frontAnimId = ANIM_V_SLIDE_SLOW,                                       \
-        .backPic = gMonBackPic_Florges,                                         \
-        .backPicSize = MON_COORDS_SIZE(64, 48),                                 \
-        .backPicYOffset = 9,                                                    \
-        .backAnimId = BACK_ANIM_SHRINK_GROW_VIBRATE,                            \
-        .palette = gMonPalette_Florges##Form##Flower,                           \
-        .shinyPalette = gMonShinyPalette_Florges##Form##Flower,                 \
-        .iconSprite = gMonIcon_Florges##Form##Flower,                           \
-        .iconPalIndex = iconPal,                                                \
-        SHADOW(-5, 15, SHADOW_SIZE_M)                                       \
-        FOOTPRINT(Florges)                                                      \
-        OVERWORLD(                                                              \
-            sPicTable_Florges ##Form##Flower,                                   \
-            SIZE_32x32,                                                         \
-            SHADOW_SIZE_M,                                                      \
-            TRACKS_FOOT,                                                        \
-            gOverworldPalette_Florges ##Form##Flower,                           \
-            gShinyOverworldPalette_Florges ##Form##Flower                       \
-        )                                                                       \
-        .levelUpLearnset = sFlorgesLevelUpLearnset,                             \
-        .teachableLearnset = sFlorgesTeachableLearnset,                         \
+#define FLORGES_MISC_INFO(Form, iconPal)                                                \
+        .baseHP        = 78,                                                            \
+        .baseAttack    = 65,                                                            \
+        .baseDefense   = 68,                                                            \
+        .baseSpeed     = 75,                                                            \
+        .baseSpAttack  = 112,                                                           \
+        .baseSpDefense = 154,                                                           \
+        .types = MON_TYPES(TYPE_FAIRY),                                                 \
+        .catchRate = 45,                                                                \
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 276 : 248,                        \
+        .evYield_SpDefense = 3,                                                         \
+        .genderRatio = MON_FEMALE,                                                      \
+        .eggCycles = 20,                                                                \
+        .friendship = STANDARD_FRIENDSHIP,                                              \
+        .growthRate = GROWTH_MEDIUM_FAST,                                               \
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),                                   \
+        .abilities = { ABILITY_FLOWER_VEIL, ABILITY_SYMBIOSIS, ABILITY_SERENE_GRACE },  \
+        .bodyColor = BODY_COLOR_WHITE,                                                  \
+        .speciesName = _("Florges"),                                                    \
+        .cryId = CRY_FLORGES,                                                           \
+        .natDexNum = NATIONAL_DEX_FLORGES,                                              \
+        .categoryName = _("Garden"),                                                    \
+        .height = 11,                                                                   \
+        .weight = 100,                                                                  \
+        .pokemonScale = 320,                                                            \
+        .pokemonOffset = 7,                                                             \
+        .trainerScale = 256,                                                            \
+        .trainerOffset = 0,                                                             \
+        .frontPic = gMonFrontPic_Florges,                                               \
+        .frontPicSize = MON_COORDS_SIZE(64, 64),                                        \
+        .frontPicYOffset = 0,                                                           \
+        .frontAnimFrames = sAnims_Florges,                                              \
+        .frontAnimId = ANIM_V_SLIDE_SLOW,                                               \
+        .backPic = gMonBackPic_Florges,                                                 \
+        .backPicSize = MON_COORDS_SIZE(64, 48),                                         \
+        .backPicYOffset = 9,                                                            \
+        .backAnimId = BACK_ANIM_SHRINK_GROW_VIBRATE,                                    \
+        .palette = gMonPalette_Florges##Form##Flower,                                   \
+        .shinyPalette = gMonShinyPalette_Florges##Form##Flower,                         \
+        .iconSprite = gMonIcon_Florges##Form##Flower,                                   \
+        .iconPalIndex = iconPal,                                                        \
+        SHADOW(-5, 15, SHADOW_SIZE_M)                                                   \
+        FOOTPRINT(Florges)                                                              \
+        OVERWORLD(                                                                      \
+            sPicTable_Florges ##Form##Flower,                                           \
+            SIZE_32x32,                                                                 \
+            SHADOW_SIZE_M,                                                              \
+            TRACKS_FOOT,                                                                \
+            gOverworldPalette_Florges ##Form##Flower,                                   \
+            gShinyOverworldPalette_Florges ##Form##Flower                               \
+        )                                                                               \
+        .levelUpLearnset = sFlorgesLevelUpLearnset,                                     \
+        .teachableLearnset = sFlorgesTeachableLearnset,                                 \
         .formSpeciesIdTable = sFlorgesFormSpeciesIdTable
 
     [SPECIES_FLORGES_RED] =
@@ -1892,7 +1892,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_SAP_SIPPER, ABILITY_NONE, ABILITY_GRASS_PELT },
+        .abilities = { ABILITY_SAP_SIPPER, ABILITY_ROCK_HEAD, ABILITY_GRASS_PELT },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Skiddo"),
         .cryId = CRY_SKIDDO,
@@ -1955,7 +1955,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
-        .abilities = { ABILITY_SAP_SIPPER, ABILITY_NONE, ABILITY_GRASS_PELT },
+        .abilities = { ABILITY_SAP_SIPPER, ABILITY_ROCK_HEAD, ABILITY_GRASS_PELT },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Gogoat"),
         .cryId = CRY_GOGOAT,
@@ -2132,11 +2132,11 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
 #define FURFROU_MISC_INFO(_form, _noFlip, frontWidth, frontYOffset, backWidth, backYOffset, _iconIdx)   \
     {                                                                                                   \
         .baseHP        = 75,                                                                            \
-        .baseAttack    = 80,                                                                            \
-        .baseDefense   = 60,                                                                            \
-        .baseSpeed     = 102,                                                                           \
+        .baseAttack    = 100,                                                                            \
+        .baseDefense   = 75,                                                                            \
+        .baseSpeed     = 60,                                                                           \
         .baseSpAttack  = 65,                                                                            \
-        .baseSpDefense = 90,                                                                            \
+        .baseSpDefense = 100,                                                                            \
         .types = MON_TYPES(TYPE_NORMAL),                                                                \
         .catchRate = 160,                                                                               \
         .expYield = 165,                                                                                \
@@ -2271,10 +2271,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     {
         .baseHP        = 74,
         .baseAttack    = 48,
-        .baseDefense   = 76,
-        .baseSpeed     = 104,
+        .baseDefense   = 96,
+        .baseSpeed     = 64,
         .baseSpAttack  = 83,
-        .baseSpDefense = 81,
+        .baseSpDefense = 101,
         .types = MON_TYPES(TYPE_PSYCHIC),
         .catchRate = 75,
         .expYield = 163,
@@ -2333,10 +2333,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     {
         .baseHP        = 74,
         .baseAttack    = 48,
-        .baseDefense   = 76,
+        .baseDefense   = 61,
         .baseSpeed     = 104,
-        .baseSpAttack  = 83,
-        .baseSpDefense = 81,
+        .baseSpAttack  = 113,
+        .baseSpDefense = 66,
         .types = MON_TYPES(TYPE_PSYCHIC),
         .catchRate = 75,
         .expYield = 163,
@@ -2659,7 +2659,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseSpeed     = 23,
         .baseSpAttack  = 63,
         .baseSpDefense = 65,
-        .types = MON_TYPES(TYPE_FAIRY),
+        .types = MON_TYPES(TYPE_FAIRY, TYPE_POISON),
         .catchRate = 200,
         .expYield = 68,
         .evYield_HP = 1,
@@ -2668,7 +2668,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),
-        .abilities = { ABILITY_HEALER, ABILITY_NONE, ABILITY_AROMA_VEIL },
+        .abilities = { ABILITY_HEALER, ABILITY_AROMA_VEIL, ABILITY_NATURAL_CURE },
         .bodyColor = BODY_COLOR_PINK,
         .speciesName = _("Spritzee"),
         .cryId = CRY_SPRITZEE,
@@ -2724,7 +2724,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseSpeed     = 29,
         .baseSpAttack  = 99,
         .baseSpDefense = 89,
-        .types = MON_TYPES(TYPE_FAIRY),
+        .types = MON_TYPES(TYPE_FAIRY, TYPE_POISON),
         .catchRate = 140,
         .expYield = 162,
         .evYield_HP = 2,
@@ -2733,7 +2733,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),
-        .abilities = { ABILITY_HEALER, ABILITY_NONE, ABILITY_AROMA_VEIL },
+        .abilities = { ABILITY_HEALER, ABILITY_AROMA_VEIL, ABILITY_NATURAL_CURE },
         .bodyColor = BODY_COLOR_PINK,
         .speciesName = _("Aromatisse"),
         .cryId = CRY_AROMATISSE,
@@ -2796,7 +2796,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),
-        .abilities = { ABILITY_SWEET_VEIL, ABILITY_NONE, ABILITY_UNBURDEN },
+        .abilities = { ABILITY_SWEET_VEIL, ABILITY_FLUFFY, ABILITY_UNBURDEN },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Swirlix"),
         .cryId = CRY_SWIRLIX,
@@ -2860,7 +2860,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY),
-        .abilities = { ABILITY_SWEET_VEIL, ABILITY_NONE, ABILITY_UNBURDEN },
+        .abilities = { ABILITY_SWEET_VEIL, ABILITY_FLUFFY, ABILITY_UNBURDEN },
         .bodyColor = BODY_COLOR_WHITE,
         .speciesName = _("Slurpuff"),
         .cryId = CRY_SLURPUFF,
@@ -2923,7 +2923,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_WATER_2),
-        .abilities = { ABILITY_CONTRARY, ABILITY_SUCTION_CUPS, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_CONTRARY, ABILITY_SUCTION_CUPS, ABILITY_REGENERATOR },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Inkay"),
         .cryId = CRY_INKAY,
@@ -2976,8 +2976,8 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseAttack    = 92,
         .baseDefense   = 88,
         .baseSpeed     = 73,
-        .baseSpAttack  = 68,
-        .baseSpDefense = 75,
+        .baseSpAttack  = 78,
+        .baseSpDefense = 95,
         .types = MON_TYPES(TYPE_DARK, TYPE_PSYCHIC),
         .catchRate = 80,
         .expYield = 169,
@@ -2987,7 +2987,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_WATER_2),
-        .abilities = { ABILITY_CONTRARY, ABILITY_SUCTION_CUPS, ABILITY_INFILTRATOR },
+        .abilities = { ABILITY_CONTRARY, ABILITY_SUCTION_CUPS, ABILITY_REGENERATOR },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Malamar"),
         .cryId = CRY_MALAMAR,
@@ -3177,7 +3177,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_POISON_POINT, ABILITY_POISON_TOUCH, ABILITY_ADAPTABILITY },
+        .abilities = { ABILITY_POISON_TOUCH, ABILITY_CORROSION , ABILITY_ADAPTABILITY },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Skrelp"),
         .cryId = CRY_SKRELP,
@@ -3240,7 +3240,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_POISON_POINT, ABILITY_POISON_TOUCH, ABILITY_ADAPTABILITY },
+        .abilities = { ABILITY_POISON_TOUCH, ABILITY_CORROSION, ABILITY_ADAPTABILITY },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Dragalge"),
         .cryId = CRY_DRAGALGE,
@@ -3353,9 +3353,9 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_CLAWITZER] =
     {
         .baseHP        = 71,
-        .baseAttack    = 73,
+        .baseAttack    = 53,
         .baseDefense   = 88,
-        .baseSpeed     = 59,
+        .baseSpeed     = 79,
         .baseSpAttack  = 120,
         .baseSpDefense = 89,
         .types = MON_TYPES(TYPE_WATER),
@@ -3431,7 +3431,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_DRY_SKIN, ABILITY_SAND_VEIL, ABILITY_SOLAR_POWER },
+        .abilities = { ABILITY_DRY_SKIN, ABILITY_SAND_FORCE, ABILITY_SOLAR_POWER },
         .bodyColor = BODY_COLOR_YELLOW,
         .speciesName = _("Helioptile"),
         .cryId = CRY_HELIOPTILE,
@@ -3495,7 +3495,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_DRY_SKIN, ABILITY_SAND_VEIL, ABILITY_SOLAR_POWER },
+        .abilities = { ABILITY_DRY_SKIN, ABILITY_SAND_FORCE, ABILITY_SOLAR_POWER },
         .bodyColor = BODY_COLOR_YELLOW,
         .speciesName = _("Heliolisk"),
         .cryId = CRY_HELIOLISK,
@@ -3558,7 +3558,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_STRONG_JAW, ABILITY_NONE, ABILITY_STURDY },
+        .abilities = { ABILITY_STRONG_JAW, ABILITY_RECKLESS, ABILITY_STURDY },
         .bodyColor = BODY_COLOR_BROWN,
         .speciesName = _("Tyrunt"),
         .cryId = CRY_TYRUNT,
@@ -3621,7 +3621,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER, EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_STRONG_JAW, ABILITY_NONE, ABILITY_ROCK_HEAD },
+        .abilities = { ABILITY_STRONG_JAW, ABILITY_RECKLESS, ABILITY_ROCK_HEAD },
         .bodyColor = BODY_COLOR_RED,
         .speciesName = _("Tyrantrum"),
         .cryId = CRY_TYRANTRUM,
@@ -3684,7 +3684,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER),
-        .abilities = { ABILITY_REFRIGERATE, ABILITY_NONE, ABILITY_SNOW_WARNING },
+        .abilities = { ABILITY_REFRIGERATE, ABILITY_SOLID_ROCK, ABILITY_SNOW_WARNING },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Amaura"),
         .cryId = CRY_AMAURA,
@@ -3733,10 +3733,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_AURORUS] =
     {
         .baseHP        = 123,
-        .baseAttack    = 77,
+        .baseAttack    = 62,
         .baseDefense   = 72,
-        .baseSpeed     = 58,
-        .baseSpAttack  = 99,
+        .baseSpeed     = 54,
+        .baseSpAttack  = 102,
         .baseSpDefense = 92,
         .types = MON_TYPES(TYPE_ROCK, TYPE_ICE),
         .catchRate = 45,
@@ -3747,7 +3747,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_MONSTER),
-        .abilities = { ABILITY_REFRIGERATE, ABILITY_NONE, ABILITY_SNOW_WARNING },
+        .abilities = { ABILITY_REFRIGERATE, ABILITY_SOLID_ROCK, ABILITY_SNOW_WARNING },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Aurorus"),
         .cryId = CRY_AURORUS,
@@ -3865,10 +3865,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_DEDENNE] =
     {
         .baseHP        = 67,
-        .baseAttack    = 58,
+        .baseAttack    = 101,
         .baseDefense   = 57,
         .baseSpeed     = 101,
-        .baseSpAttack  = 81,
+        .baseSpAttack  = 58,
         .baseSpDefense = 67,
         .types = MON_TYPES(TYPE_ELECTRIC, TYPE_FAIRY),
         .catchRate = 180,
@@ -3944,7 +3944,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FAIRY, EGG_GROUP_MINERAL),
-        .abilities = { ABILITY_CLEAR_BODY, ABILITY_NONE, ABILITY_STURDY },
+        .abilities = { ABILITY_CLEAR_BODY, ABILITY_FILTER, ABILITY_STURDY },
         .bodyColor = BODY_COLOR_GRAY,
         .speciesName = _("Carbink"),
         .cryId = CRY_CARBINK,
@@ -3999,7 +3999,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseSpeed     = 40,
         .baseSpAttack  = 55,
         .baseSpDefense = 75,
-        .types = MON_TYPES(TYPE_DRAGON),
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_POISON),
         .catchRate = 45,
         .expYield = 60,
         .evYield_SpDefense = 1,
@@ -4009,7 +4009,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_SAP_SIPPER, ABILITY_HYDRATION, ABILITY_GOOEY },
+        .abilities = { ABILITY_REGENERATOR, ABILITY_HYDRATION, ABILITY_GOOEY },
         .bodyColor = BODY_COLOR_PURPLE,
         .speciesName = _("Goomy"),
         .cryId = CRY_GOOMY,
@@ -4064,7 +4064,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseSpeed     = 60,
         .baseSpAttack  = 83,
         .baseSpDefense = 113,
-        .types = MON_TYPES(TYPE_DRAGON),
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_POISON),
         .catchRate = 45,
         .expYield = 158,
         .evYield_SpDefense = 2,
@@ -4074,7 +4074,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_SAP_SIPPER, ABILITY_HYDRATION, ABILITY_GOOEY },
+        .abilities = { ABILITY_REGENERATOR, ABILITY_HYDRATION, ABILITY_GOOEY },
         .bodyColor = BODY_COLOR_PURPLE,
         .speciesName = _("Sliggoo"),
         .cryId = CRY_SLIGGOO,
@@ -4124,12 +4124,12 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_GOODRA] =
     {
         .baseHP        = 90,
-        .baseAttack    = 100,
-        .baseDefense   = 70,
+        .baseAttack    = 110,
+        .baseDefense   = 80,
         .baseSpeed     = 80,
-        .baseSpAttack  = 110,
+        .baseSpAttack  = 90,
         .baseSpDefense = 150,
-        .types = MON_TYPES(TYPE_DRAGON),
+        .types = MON_TYPES(TYPE_DRAGON, TYPE_POISON),
         .catchRate = 45,
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_8) ? 300 : 270,
         .evYield_SpDefense = 3,
@@ -4138,7 +4138,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = 35,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_DRAGON),
-        .abilities = { ABILITY_SAP_SIPPER, ABILITY_HYDRATION, ABILITY_GOOEY },
+        .abilities = { ABILITY_REGENERATOR, ABILITY_HYDRATION, ABILITY_GOOEY },
         .bodyColor = BODY_COLOR_PURPLE,
         .speciesName = _("Goodra"),
         .cryId = CRY_GOODRA,
@@ -4451,10 +4451,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     {
         .baseHP        = 85,
         .baseAttack    = 110,
-        .baseDefense   = 76,
+        .baseDefense   = 86,
         .baseSpeed     = 56,
         .baseSpAttack  = 65,
-        .baseSpDefense = 82,
+        .baseSpDefense = 92,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 60,
         .expYield = 166,
@@ -4513,10 +4513,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_PUMPKABOO_AVERAGE] =
     {
         .baseHP        = 49,
-        .baseAttack    = 66,
+        .baseAttack    = 44,
         .baseDefense   = 70,
         .baseSpeed     = 51,
-        .baseSpAttack  = 44,
+        .baseSpAttack  = 66,
         .baseSpDefense = 55,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 120,
@@ -4578,10 +4578,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_PUMPKABOO_SMALL] =
     {
         .baseHP        = 44,
-        .baseAttack    = 66,
+        .baseAttack    = 44,
         .baseDefense   = 70,
         .baseSpeed     = 56,
-        .baseSpAttack  = 44,
+        .baseSpAttack  = 66,
         .baseSpDefense = 55,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 120,
@@ -4642,10 +4642,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_PUMPKABOO_LARGE] =
     {
         .baseHP        = 54,
-        .baseAttack    = 66,
+        .baseAttack    = 44,
         .baseDefense   = 70,
         .baseSpeed     = 46,
-        .baseSpAttack  = 44,
+        .baseSpAttack  = 66,
         .baseSpDefense = 55,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 120,
@@ -4706,10 +4706,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_PUMPKABOO_SUPER] =
     {
         .baseHP        = 59,
-        .baseAttack    = 66,
+        .baseAttack    = 44,
         .baseDefense   = 70,
         .baseSpeed     = 41,
-        .baseSpAttack  = 44,
+        .baseSpAttack  = 66,
         .baseSpDefense = 55,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 120,
@@ -4772,10 +4772,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_GOURGEIST_AVERAGE] =
     {
         .baseHP        = 65,
-        .baseAttack    = 90,
+        .baseAttack    = 58,
         .baseDefense   = 122,
         .baseSpeed     = 84,
-        .baseSpAttack  = 58,
+        .baseSpAttack  = 90,
         .baseSpDefense = 75,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 60,
@@ -4834,10 +4834,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_GOURGEIST_SMALL] =
     {
         .baseHP        = 55,
-        .baseAttack    = 85,
+        .baseAttack    = 58,
         .baseDefense   = 122,
         .baseSpeed     = 99,
-        .baseSpAttack  = 58,
+        .baseSpAttack  = 85,
         .baseSpDefense = 75,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 60,
@@ -4896,10 +4896,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_GOURGEIST_LARGE] =
     {
         .baseHP        = 75,
-        .baseAttack    = 95,
+        .baseAttack    = 58,
         .baseDefense   = 122,
         .baseSpeed     = 69,
-        .baseSpAttack  = 58,
+        .baseSpAttack  = 95,
         .baseSpDefense = 75,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 60,
@@ -4958,10 +4958,10 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     [SPECIES_GOURGEIST_SUPER] =
     {
         .baseHP        = 85,
-        .baseAttack    = 100,
+        .baseAttack    = 58,
         .baseDefense   = 122,
         .baseSpeed     = 54,
-        .baseSpAttack  = 58,
+        .baseSpAttack  = 100,
         .baseSpDefense = 75,
         .types = MON_TYPES(TYPE_GHOST, TYPE_GRASS),
         .catchRate = 60,
@@ -5044,7 +5044,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = BERGMITE_EGG_GROUPS,
-        .abilities = { ABILITY_OWN_TEMPO, ABILITY_ICE_BODY, ABILITY_STURDY },
+        .abilities = { ABILITY_ICE_BODY, ABILITY_BULLETPROOF, ABILITY_STURDY },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Bergmite"),
         .cryId = CRY_BERGMITE,
@@ -5108,7 +5108,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = BERGMITE_EGG_GROUPS,
-        .abilities = { ABILITY_OWN_TEMPO, ABILITY_ICE_BODY, ABILITY_STURDY },
+        .abilities = { ABILITY_ICE_BODY, ABILITY_STURDY, ABILITY_BULLETPROOF },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Avalugg"),
         .cryId = CRY_AVALUGG,
@@ -5171,7 +5171,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = STANDARD_FRIENDSHIP,
         .growthRate = GROWTH_MEDIUM_FAST,
         .eggGroups = BERGMITE_EGG_GROUPS,
-        .abilities = { ABILITY_STRONG_JAW, ABILITY_ICE_BODY, ABILITY_STURDY },
+        .abilities = { ABILITY_STRONG_JAW, ABILITY_STURDY, ABILITY_TECHNICIAN },
         .bodyColor = BODY_COLOR_BLUE,
         .speciesName = _("Avalugg"),
         .cryId = CRY_AVALUGG,
@@ -5293,7 +5293,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .baseAttack    = 70,
         .baseDefense   = 80,
         .baseSpeed     = 123,
-        .baseSpAttack  = 97,
+        .baseSpAttack  = 107,
         .baseSpDefense = 80,
         .types = MON_TYPES(TYPE_FLYING, TYPE_DRAGON),
         .catchRate = 45,
@@ -6014,7 +6014,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = 100,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
-        .abilities = { ABILITY_MAGICIAN, ABILITY_NONE, ABILITY_NONE },
+        .abilities = { ABILITY_MAGICIAN, ABILITY_NONE, ABILITY_PRANKSTER },
         .bodyColor = BODY_COLOR_PURPLE,
         .speciesName = _("Hoopa"),
         .cryId = CRY_HOOPA_CONFINED,
@@ -6068,8 +6068,8 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
     {
         .baseHP        = 80,
         .baseAttack    = 160,
-        .baseDefense   = 60,
-        .baseSpeed     = 80,
+        .baseDefense   = 90,
+        .baseSpeed     = 50,
         .baseSpAttack  = 170,
         .baseSpDefense = 130,
         .types = MON_TYPES(TYPE_PSYCHIC, TYPE_DARK),
@@ -6081,7 +6081,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
         .friendship = P_UPDATED_FRIENDSHIP >= GEN_8 ? STANDARD_FRIENDSHIP : 100,
         .growthRate = GROWTH_SLOW,
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
-        .abilities = { ABILITY_MAGICIAN, ABILITY_NONE, ABILITY_NONE },
+        .abilities = { ABILITY_MAGICIAN, ABILITY_NONE, ABILITY_MAGIC_GUARD },
         .bodyColor = BODY_COLOR_PURPLE,
         .speciesName = _("Hoopa"),
         .cryId = CRY_HOOPA_UNBOUND,

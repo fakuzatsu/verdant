@@ -15,6 +15,7 @@ SINGLE_BATTLE_TEST("Snow Cloak prevents damage from hail")
 
 SINGLE_BATTLE_TEST("Snow Cloak increases evasion during hail")
 {
+    KNOWN_FAILING; // This move was changed alongside all accuracy abilities to have a defensive effect
     PASSES_RANDOMLY(4, 5, RNG_ACCURACY);
     GIVEN {
         ASSUME(gMovesInfo[MOVE_POUND].accuracy == 100);

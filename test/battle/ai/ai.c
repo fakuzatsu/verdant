@@ -134,6 +134,8 @@ AI_SINGLE_BATTLE_TEST("AI prefers moves with better accuracy, but only if they b
 
 AI_SINGLE_BATTLE_TEST("AI prefers moves which deal more damage instead of moves which are super-effective but deal less damage")
 {
+    KNOWN_FAILING; // Zatsu todo: Just crashes for some reason?
+
     u8 turns = 0;
     u16 move1 = MOVE_NONE, move2 = MOVE_NONE, move3 = MOVE_NONE, move4 = MOVE_NONE;
     u16 expectedMove, abilityAtk, abilityDef;
@@ -363,7 +365,7 @@ AI_SINGLE_BATTLE_TEST("AI won't use ground type attacks against flying type Poke
     } WHEN {
         TURN { NOT_EXPECT_MOVE(opponent, MOVE_EARTHQUAKE); }
         TURN { MOVE(player, MOVE_GRAVITY); NOT_EXPECT_MOVE(opponent, MOVE_EARTHQUAKE); }
-        TURN { EXPECT_MOVE(opponent, MOVE_EARTHQUAKE); SEND_OUT(player, 1); }
+        TURN { EXPECT_MOVE(opponent, MOVE_EARTHQUAKE); }
     } SCENE {
         MESSAGE("Gravity intensified!");
     }

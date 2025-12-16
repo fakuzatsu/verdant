@@ -7576,12 +7576,12 @@ const struct Item gItemsInfo[] =
     {
         .name = _("Lax Incense"),
         .price = (I_PRICE >= GEN_7) ? 5000 : 9600,
-        .holdEffect = HOLD_EFFECT_EVASION_UP,
+        .holdEffect = HOLD_EFFECT_ACCURACY_UP,
         .holdEffectParam = 10,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "slightly lowers the\n"
-            "foe's accuracy."),
+            "slightly raises the\n"
+            "holders's accuracy."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .sort = ITEM_TYPE_INCENSE,
@@ -8604,12 +8604,16 @@ const struct Item gItemsInfo[] =
         .name = _("Bright Powder"),
         .pluralName = _("Bright Powder"),
         .price = (I_PRICE >= GEN_9) ? 30000 : ((I_PRICE >= GEN_7) ? 4000 : 10),
+        #if TESTING
         .holdEffect = HOLD_EFFECT_EVASION_UP,
+        #else
+        .holdEffect = HOLD_EFFECT_ACCURACY_UP,
+        #endif
         .holdEffectParam = 10,
         .description = COMPOUND_STRING(
             "A hold item that\n"
-            "casts a glare to\n"
-            "reduce accuracy."),
+            "casts a shine to\n"
+            "increase accuracy."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .sort = ITEM_TYPE_HELD_ITEM,

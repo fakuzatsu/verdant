@@ -11,7 +11,7 @@ DOUBLE_BATTLE_TEST("Moxie/Chilling Neigh raises Attack by one stage after direct
         ASSUME(gMovesInfo[MOVE_EARTHQUAKE].target == MOVE_TARGET_FOES_AND_ALLY);
         PLAYER(species) { Ability(ability); }
         PLAYER(SPECIES_SNORUNT) { HP(1); }
-        OPPONENT(SPECIES_GLALIE) { HP(1); }
+        OPPONENT(SPECIES_GLALIE) { HP(1); Ability(ABILITY_ICE_BODY); }
         OPPONENT(SPECIES_ABRA) { HP(1); }
         OPPONENT(SPECIES_ABRA);
     } WHEN {
