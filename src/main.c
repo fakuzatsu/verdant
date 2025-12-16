@@ -205,6 +205,8 @@ void SetMainCallback2(MainCallback callback)
 {
     gMain.callback2 = callback;
     gMain.state = 0;
+    if (callback != CB2_Overworld)
+        gMain.activeOverworldDialog = FALSE;
 }
 
 void StartTimer1(void)
