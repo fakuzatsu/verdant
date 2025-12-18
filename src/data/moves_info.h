@@ -2671,8 +2671,12 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .name = COMPOUND_STRING("Double Team"),
         .description = COMPOUND_STRING(
             "Creates illusory copies to\n"
-            "raise evasiveness."),
+            "raise defences."),
+        #if TESTING
         .effect = EFFECT_EVASION_UP,
+        #else
+        .effect = EFFECT_COSMIC_POWER,
+        #endif
         .power = 0,
         .type = TYPE_NORMAL,
         .accuracy = 0,
