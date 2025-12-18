@@ -9501,7 +9501,7 @@ static void Cmd_various(void)
     {
         VARIOUS_ARGS(const u8 *failInstr);
         bits = 0;
-        for (i = STAT_ATK; i < NUM_BATTLE_STATS; i++)
+        for (i = STAT_ATK; i < NUM_BATTLE_STATS - 1; i++) // Excludes Evasion
         {
             if (CompareStat(battler, i, MAX_STAT_STAGE, CMP_LESS_THAN))
                 bits |= 1u << i;
@@ -9511,7 +9511,7 @@ static void Cmd_various(void)
             u32 statId;
             do
             {
-                statId = (Random() % (NUM_BATTLE_STATS - 1)) + 1;
+                statId = (Random() % (NUM_BATTLE_STATS - 2)) + 1;
             } while (!(bits & (1u << statId)));
 
             SET_STATCHANGER(statId, 2, FALSE);
