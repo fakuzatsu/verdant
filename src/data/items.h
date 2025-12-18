@@ -12191,7 +12191,7 @@ const struct Item gItemsInfo[] =
         .secondaryId = MOVE_GRASSY_GLIDE,
     },
 
-    [ITEM_TM_MISTY_EXPLOSION] =
+    [ITEM_TM_TERA_BLAST] =
     {
         .name = _("TM99"),
         .price = 3000,
@@ -12200,7 +12200,7 @@ const struct Item gItemsInfo[] =
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
-        .secondaryId = MOVE_MISTY_EXPLOSION,
+        .secondaryId = MOVE_TERA_BLAST,
     },
 
     [ITEM_TM_EXPANDING_FORCE] =
