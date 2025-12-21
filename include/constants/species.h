@@ -1647,8 +1647,9 @@
 #define SPECIES_SCEPTILE_TERA                           1525
 #define SPECIES_BLAZIKEN_TERA                           1526
 #define SPECIES_SWAMPERT_TERA                           1527
+#define SPECIES_NINETALES_TERA                          1528
 
-#define SPECIES_EGG                                     (SPECIES_SWAMPERT_TERA + 1)
+#define SPECIES_EGG                                     (SPECIES_NINETALES_TERA + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

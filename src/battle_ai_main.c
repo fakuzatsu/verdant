@@ -3423,6 +3423,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
     case EFFECT_MULTI_HIT:
     case EFFECT_TRIPLE_KICK:
     case EFFECT_POPULATION_BOMB:
+    case EFFECT_SPIRIT_CHRONICLE:
         if (AI_MoveMakesContact(aiData->abilities[battlerAtk], aiData->holdEffects[battlerAtk], move)
           && aiData->abilities[battlerAtk] != ABILITY_MAGIC_GUARD
           && aiData->holdEffects[battlerDef] == HOLD_EFFECT_ROCKY_HELMET)

@@ -2267,4 +2267,9 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .battleScript = BattleScript_EffectSolarKick,
         .battleTvScore = 0, // TODO: Assign points
     }, 
+    [EFFECT_SPIRIT_CHRONICLE] =
+    {
+        .battleScript = BattleScript_EffectHit,
+        .battleTvScore = 0, // TODO: Assign points
+    },
 };

@@ -4697,7 +4697,77 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sNinetalesLevelUpLearnset,
         .teachableLearnset = sNinetalesTeachableLearnset,
         .formSpeciesIdTable = sNinetalesFormSpeciesIdTable,
+        .formChangeTable = sNinetalesFormChangeTable,
     },
+
+#if P_TERA_FORMS
+    [SPECIES_NINETALES_TERA] =
+    {
+        .baseHP        = 73,
+        .baseAttack    = 76,
+        .baseDefense   = 75,
+        .baseSpeed     = 100,
+        .baseSpAttack  = 81,
+        .baseSpDefense = 100,
+        .types = MON_TYPES(TYPE_FIRE),
+        .forceTeraType = TYPE_PSYCHIC,
+        .catchRate = 75,
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 177 : 178,
+        .evYield_Speed = 1,
+        .evYield_SpDefense = 1,
+        .itemRare = ITEM_CHARCOAL,
+        .genderRatio = PERCENT_FEMALE(75),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_FLASH_FIRE, ABILITY_NONE, ABILITY_DROUGHT },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Ninetales"),
+        .cryId = CRY_NINETALES,
+        .natDexNum = NATIONAL_DEX_NINETALES,
+        .categoryName = _("Fox"),
+        .height = 11,
+        .weight = 199,
+        .description = COMPOUND_STRING(
+            "It has long been said that each of the\n"
+            "nine tails embody an enchanted power.\n"
+            "A long-lived Ninetales will have fur that\n"
+            "shines like gold."),
+        .pokemonScale = 339,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_NinetalesTera,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 3,
+        .frontAnimFrames = sAnims_Ninetales,
+        .frontAnimId = ANIM_GROW_VIBRATE,
+        .backPic = gMonBackPic_NinetalesTera,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 5,
+        .backAnimId = BACK_ANIM_H_VIBRATE,
+        .palette = gMonPalette_NinetalesTera,
+        .shinyPalette = gMonShinyPalette_NinetalesTera,
+        .iconSprite = gMonIcon_NinetalesTera,
+        .iconPalIndex = 0,
+        SHADOW(1, 7, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Ninetales)
+        OVERWORLD(
+            sPicTable_Ninetales,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            gOverworldPalette_Ninetales,
+            gShinyOverworldPalette_Ninetales
+        )
+        .isTeraForm = TRUE,
+        .levelUpLearnset = sNinetalesLevelUpLearnset,
+        .teachableLearnset = sNinetalesTeachableLearnset,
+        .formSpeciesIdTable = sNinetalesFormSpeciesIdTable,
+        .formChangeTable = sNinetalesFormChangeTable,
+    },
+#endif //P_TERA_FORMS
 
 #if P_ALOLAN_FORMS
     [SPECIES_VULPIX_ALOLA] =

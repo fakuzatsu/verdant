@@ -22087,7 +22087,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Clanging Blade"),
         .description = COMPOUND_STRING(
-            "Kommo-o sharpens it's tail and\n"
+            "Kommo-o sharpens its tail and\n"
             "strikes, increasing it's Speed."),
         .effect = EFFECT_TERA_BLAST,
         .power = 80,
@@ -22159,7 +22159,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Magma Spin"),
         .description = COMPOUND_STRING(
-            "Swampert twists it's body and\n"
+            "Swampert twists its body and\n"
             "spews magma, destroying traps."),
         .effect = EFFECT_TERA_BLAST,
         .power = 80,
@@ -22179,4 +22179,26 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         }),
         .battleAnimScript = gBattleAnimMove_MagmaStorm,
     },
+
+    [MOVE_SPIRIT_CHRONICLE] =
+    {
+        .name = COMPOUND_STRING("Spirit Chronicle"),
+        .description = COMPOUND_STRING(
+            "Ninetales strikes its foe with\n"
+            "spirit orbs from each tail."),
+        .effect = EFFECT_SPIRIT_CHRONICLE,
+        .power = 15,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 90,
+        .pp = 10,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .assistBanned = TRUE,
+        .copycatBanned = TRUE,
+        .mimicBanned = TRUE,
+        .sketchBanned = TRUE,
+        .strikeCount = 9,
+        .battleAnimScript = gBattleAnimMove_PopulationBomb,
+    }
 };

@@ -3690,6 +3690,10 @@ u8 AtkCanceller_UnableToUseMove(u32 moveType)
                 {
                     gMultiHitCounter = RandomUniform(RNG_LOADED_DICE, 4, 10);
                 }
+                else if (gMovesInfo[gCurrentMove].effect == EFFECT_SPIRIT_CHRONICLE && GetBattlerHoldEffect(gBattlerAttacker, TRUE) == HOLD_EFFECT_LOADED_DICE)
+                {
+                    gMultiHitCounter = RandomUniform(RNG_LOADED_DICE, 4, 9);
+                }
                 else
                 {
                     gMultiHitCounter = gMovesInfo[gCurrentMove].strikeCount;

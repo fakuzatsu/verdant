@@ -1083,6 +1083,14 @@ const u32 gObjectEventPic_Substitute[] = INCBIN_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS
 
+#if P_TERA_FORMS
+    const u32 gMonFrontPic_NinetalesTera[] = INCBIN_U32("graphics/pokemon/ninetales/tera/anim_front.4bpp.lz");
+    const u32 gMonPalette_NinetalesTera[] = INCBIN_U32("graphics/pokemon/ninetales/tera/normal.gbapal.lz");
+    const u32 gMonBackPic_NinetalesTera[] = INCBIN_U32("graphics/pokemon/ninetales/tera/back.4bpp.lz");
+    const u32 gMonShinyPalette_NinetalesTera[] = INCBIN_U32("graphics/pokemon/ninetales/tera/normal.gbapal.lz");
+    const u8 gMonIcon_NinetalesTera[] = INCBIN_U8("graphics/pokemon/ninetales/tera/icon.4bpp");
+#endif
+
 #if P_ALOLAN_FORMS
     const u32 gMonFrontPic_VulpixAlolan[] = INCBIN_U32("graphics/pokemon/vulpix/alolan/front.4bpp.lz");
     const u32 gMonPalette_VulpixAlolan[] = INCBIN_U32("graphics/pokemon/vulpix/alolan/normal.gbapal.lz");

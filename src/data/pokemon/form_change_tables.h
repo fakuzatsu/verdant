@@ -73,6 +73,16 @@ static const struct FormChange sPikachuFormChangeTable[] =
 };
 #endif //P_FAMILY_PIKACHU
 
+#if P_FAMILY_VULPIX
+static const struct FormChange sNinetalesFormChangeTable[] =
+{
+#if P_TERA_FORMS
+    {FORM_CHANGE_BATTLE_TERASTALLIZATION, SPECIES_NINETALES_TERA, TYPE_PSYCHIC},
+#endif
+    {FORM_CHANGE_TERMINATOR},
+};
+#endif // P_FAMILY_VULPIX
+
 #if P_FAMILY_MEOWTH
 static const struct FormChange sMeowthFormChangeTable[] =
 {

@@ -161,6 +161,9 @@ static const u16 sVulpixFormSpeciesIdTable[] = {
 
 static const u16 sNinetalesFormSpeciesIdTable[] = {
     SPECIES_NINETALES,
+#if P_TERA_FORMS
+    SPECIES_NINETALES_TERA,
+#endif
 #if P_ALOLAN_FORMS
     SPECIES_NINETALES_ALOLA,
 #endif
@@ -1737,7 +1740,7 @@ static const u16 sMimikyuFormSpeciesIdTable[] = {
 static const u16 sKommoOFormSpeciesIdTable[] = {
     SPECIES_KOMMO_O,
     SPECIES_KOMMO_O_TOTEM,
-    #if P_TERA_FORMS
+#if P_TERA_FORMS
     SPECIES_KOMMO_O_TERA,
 #endif
     FORM_SPECIES_END,

@@ -30,6 +30,7 @@ static const struct TeraFormMove sTeraFormMoveTable[] =
     {SPECIES_SCEPTILE_TERA,         MOVE_AQUATIC_BLOOM},
     {SPECIES_BLAZIKEN_TERA,         MOVE_SOLAR_KICK},
     {SPECIES_SWAMPERT_TERA,         MOVE_MAGMA_SPIN},
+    {SPECIES_NINETALES_TERA,        MOVE_SPIRIT_CHRONICLE},
 };
 
 // Sets flags and variables upon a battler's Terastallization.
@@ -63,14 +64,18 @@ void ApplyBattlerVisualsForTeraAnim(u32 battler)
 {
     struct Pokemon *party = GetBattlerParty(battler);
     u32 index = gBattlerPartyIndexes[battler];
+    u32 species = GetMonData(&party[index], MON_DATA_SPECIES);
 
-    // Show indicator and do palette blend.
-    UpdateHealthboxAttribute(gHealthboxSpriteIds[battler], &party[index], HEALTHBOX_ALL);
-    BlendPalette(OBJ_PLTT_ID(battler), 16, 8, GetTeraTypeRGB(GetBattlerTeraType(battler)));
-    CpuCopy32(gPlttBufferFaded + OBJ_PLTT_ID(battler), gPlttBufferUnfaded + OBJ_PLTT_ID(battler), PLTT_SIZEOF(16));
+    if (!gSpeciesInfo[species].isTeraForm)
+    {
+        // Show indicator and do palette blend.
+        UpdateHealthboxAttribute(gHealthboxSpriteIds[battler], &party[index], HEALTHBOX_ALL);
+        BlendPalette(OBJ_PLTT_ID(battler), 16, 8, GetTeraTypeRGB(GetBattlerTeraType(battler)));
+        CpuCopy32(gPlttBufferFaded + OBJ_PLTT_ID(battler), gPlttBufferUnfaded + OBJ_PLTT_ID(battler), PLTT_SIZEOF(16));
 
-    // We apply the animation behind a white screen, so restore the blended color here to avoid a pop
-    BlendPalette(OBJ_PLTT_ID(battler), 16, 16, RGB_WHITEALPHA);
+        // We apply the animation behind a white screen, so restore the blended color here to avoid a pop
+        BlendPalette(OBJ_PLTT_ID(battler), 16, 16, RGB_WHITEALPHA);
+    }
 }
 
 // Returns whether a battler can Terastallize.

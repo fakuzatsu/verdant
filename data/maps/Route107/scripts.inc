@@ -1,5 +1,23 @@
 Route107_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, Route107_OnLoad
 	.byte 0
+
+Route107_OnLoad::
+	call_if_unset FLAG_OPEN_LIGHTHOUSE_DIVE_SPOT, Route107_EventScript_HideLighthouseDiveSpot
+	end
+
+Route107_EventScript_HideLighthouseDiveSpot::
+	setmetatile 16, 3, METATILE_General_CalmWater, TRUE
+	setmetatile 17, 3, METATILE_General_CalmWater, TRUE
+	setmetatile 18, 3, METATILE_General_CalmWater, TRUE
+	setmetatile 16, 4, METATILE_General_CalmWater, TRUE
+	setmetatile 17, 4, METATILE_General_CalmWater, TRUE
+	setmetatile 18, 4, METATILE_General_CalmWater, TRUE
+	setmetatile 19, 4, METATILE_General_CalmWater, TRUE
+	setmetatile 17, 5, METATILE_General_CalmWater, TRUE
+	setmetatile 18, 5, METATILE_General_CalmWater, TRUE
+	setmetatile 19, 5, METATILE_General_CalmWater, TRUE
+	return
 
 Route107_EventScript_Darrin::
 	trainerbattle_single TRAINER_DARRIN, Route107_Text_DarrinIntro, Route107_Text_DarrinDefeated
