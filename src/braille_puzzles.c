@@ -6,6 +6,7 @@
 #include "script.h"
 #include "sound.h"
 #include "task.h"
+#include "constants/event_objects.h"
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
@@ -94,6 +95,7 @@ void DoBrailleDigEffect(void)
     MapGridSetMetatileIdAt(11 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_Cave_SealedChamberEntrance_BottomRight | MAPGRID_COLLISION_MASK);
     DrawWholeMapView();
     PlaySE(SE_BANG);
+    RemoveObjectEventByLocalIdAndMap(LOCALID_BRAILLE_CRUMBLED_WALL, MAP_NUM(SEALED_CHAMBER_OUTER_ROOM), MAP_GROUP(SEALED_CHAMBER_OUTER_ROOM));
     FlagSet(FLAG_SYS_BRAILLE_DIG);
 }
 
@@ -452,6 +454,47 @@ bool8 ShouldDoBrailleRegielekiPuzzle(void)
             && gSaveBlock1Ptr->pos.y == 24 && steps == 7)
             return TRUE;
     }
+
+    return FALSE;
+}
+
+bool8 CheckAllRegis(void)
+{
+    bool8 hasRegirock = FALSE;
+    bool8 hasRegice   = FALSE;
+    bool8 hasRegisteel = FALSE;
+    bool8 hasRegieleki = FALSE;
+    bool8 hasRegidrago = FALSE;
+
+    CalculatePlayerPartyCount();
+
+    for (u32 i = 0; i < gPlayerPartyCount; i++)
+    {
+        switch (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL))
+        {
+        case SPECIES_REGIROCK:
+            hasRegirock = TRUE;
+            break;
+        case SPECIES_REGICE:
+            hasRegice = TRUE;
+            break;
+        case SPECIES_REGISTEEL:
+            hasRegisteel = TRUE;
+            break;
+        case SPECIES_REGIELEKI:
+            hasRegieleki = TRUE;
+            break;
+        case SPECIES_REGIDRAGO:
+            hasRegidrago = TRUE;
+            break;
+        case SPECIES_REGIGIGAS:
+            return TRUE;
+        }
+    }
+
+    if (hasRegirock && hasRegice && hasRegisteel &&
+        hasRegieleki && hasRegidrago)
+        return TRUE;
 
     return FALSE;
 }

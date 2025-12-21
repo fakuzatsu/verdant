@@ -11,10 +11,23 @@
   "allow_escaping": true,
   "allow_running": true,
   "show_map_name": true,
-  "has_night_table": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
-  "object_events": [],
+  "connections": 0,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
+      "x": 10,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SealedChamber_OuterRoom_EventScript_InnerRoomEntranceWall",
+      "flag": "FLAG_SYS_BRAILLE_DIG"
+    }
+  ],
   "warp_events": [
     {
       "x": 10,
@@ -24,7 +37,9 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+
+  ],
   "bg_events": [
     {
       "type": "sign",
@@ -105,14 +120,6 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "SealedChamber_OuterRoom_EventScript_BrailleComma"
-    },
-    {
-      "type": "sign",
-      "x": 10,
-      "y": 2,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SealedChamber_OuterRoom_EventScript_InnerRoomEntranceWall"
     },
     {
       "type": "sign",
@@ -258,5 +265,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "SealedChamber_OuterRoom_EventScript_BrailleDigHere"
     }
-  ]
+  ],
+  "has_night_table": false
 }

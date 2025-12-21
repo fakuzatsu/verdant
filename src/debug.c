@@ -511,12 +511,12 @@ static const u8 sDebugText_Cancel[] =        _("Cancel");
 // Script menu
 static const u8 sDebugText_Util_DayNight[]      = _("Toggle Day Night");
 static const u8 sDebugText_Util_CheckMemory[]   = _("Check Mon Memory");
-static const u8 sDebugText_Util_ShowBo3[]      = _("Show BO3 Menu");
+static const u8 sDebugText_Util_ShowBo3[]       = _("Show BO3 Menu");
 static const u8 sDebugText_Util_Script_4[]      = _("Start Berry Crush");
 static const u8 sDebugText_Util_Script_5[]      = _("Script 5");
 static const u8 sDebugText_Util_Script_6[]      = _("Script 6");
-static const u8 sDebugText_Util_Script_7[]      = _("Script 7");
-static const u8 sDebugText_Util_Script_8[]      = _("Script 8");
+static const u8 sDebugText_Util_Script_7[]      = _("Give All Regis");
+static const u8 sDebugText_Util_Script_8[]      = _("Open EV IV Editor");
 // Util Menu
 static const u8 sDebugText_Util_FlyToMap[] =                 _("Fly to map…{CLEAR_TO 110}{RIGHT_ARROW}");
 static const u8 sDebugText_Util_WarpToMap[] =                _("Warp to map warp…{CLEAR_TO 110}{RIGHT_ARROW}");

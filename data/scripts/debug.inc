@@ -159,6 +159,11 @@ Debug_EventScript_Script_6::
 	end
 
 Debug_EventScript_Script_7::
+    givemon SPECIES_REGIROCK, 50
+    givemon SPECIES_REGISTEEL, 50
+    givemon SPECIES_REGICE, 50
+    givemon SPECIES_REGIELEKI, 50
+    givemon SPECIES_REGIDRAGO, 50
 	release
 	end
 

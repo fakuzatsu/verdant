@@ -11,8 +11,8 @@ Route115_OnLoad:
 	end
 
 Route115_EventScript_CloseMythicStone::
-	setmetatile 31, 42, METATILE_Fallarbor_BrownRockWall, TRUE
-	setmetatile 31, 41, METATILE_Fallarbor_BrownRockWall, TRUE
+	setmetatile 31, 72, METATILE_Fallarbor_BrownRockWall, TRUE
+	setmetatile 31, 71, METATILE_Fallarbor_BrownRockWall, TRUE
 	return
 
 Route115_OnTransition:

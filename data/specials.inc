@@ -576,3 +576,4 @@ gSpecials::
 	def_special StartSnake
 	def_special StartFlappyBird
 	def_special PlayPachinko
+    def_special CheckAllRegis
