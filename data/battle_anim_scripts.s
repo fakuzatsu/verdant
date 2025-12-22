@@ -25034,6 +25034,17 @@ gBattleAnimMove_ShadowBall::
 	waitbgfadein
 	end
 
+gBattleAnimMove_SpiritChronicle::
+	loadspritegfx ANIM_TAG_SPIRIT_CHRONICLE
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_MIST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 5, 5, 0, 5
+	createsprite gSpiritChronicleSpriteTemplate, ANIM_TARGET, 2, 16, 16, 8
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 1, 0, 10, 1
+	waitforvisualfinish
+	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 8, 1
+	waitforvisualfinish
+	end
+
 gBattleAnimMove_Lick::
 	loadspritegfx ANIM_TAG_LICK
 	delay 15

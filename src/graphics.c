@@ -1213,6 +1213,9 @@ const u32 gBattleAnimSpritePal_Meteor[] = INCBIN_U32("graphics/battle_anims/spri
 const u32 gBattleAnimSpriteGfx_FlatRock[] = INCBIN_U32("graphics/battle_anims/sprites/flat_rock.4bpp.lz");
 const u32 gBattleAnimSpritePal_FlatRock[] = INCBIN_U32("graphics/battle_anims/sprites/flat_rock.gbapal.lz");
 
+const u32 gBattleAnimSpriteGfx_SpiritChronicle[] = INCBIN_U32("graphics/battle_anims/sprites/spirit_chronicle.4bpp.lz");
+const u32 gBattleAnimSpritePal_SpiritChronicle[] = INCBIN_U32("graphics/battle_anims/sprites/spirit_chronicle.gbapal.lz");
+
 #include "data/graphics/trainers.h"
 
 const u32 gBattleVSFrame_Gfx[] = INCBIN_U32("graphics/battle_transitions/vs_frame.4bpp.smol");

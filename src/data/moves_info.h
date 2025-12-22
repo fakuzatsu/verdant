@@ -22199,6 +22199,6 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .mimicBanned = TRUE,
         .sketchBanned = TRUE,
         .strikeCount = 9,
-        .battleAnimScript = gBattleAnimMove_PopulationBomb,
+        .battleAnimScript = gBattleAnimMove_SpiritChronicle,
     }
 };
