@@ -1,7 +1,8 @@
 MemoryGirl_EventScript_BeginConversation::
 	lock
 	faceplayer
-	msgbox MemoryGirl_Text_ICanReadMonMemory, MSGBOX_YESNO
+	msgbox MemoryGirl_Text_ICanReadMonMemory, MSGBOX_DEFAULT
+	msgbox MemoryGirl_Text_ReadMonMemoryNow, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, MemoryGirl_EventScript_ChooseMonToRead
 	goto_if_eq VAR_RESULT, NO, MemoryGirl_EventScript_DeclineNameRead
 	end

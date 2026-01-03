@@ -141,8 +141,12 @@ Debug_EventScript_ToggleDayNight::
 
 Debug_EventScript_StartSoloBerryCrush::
     lockall
+	getpartysize
+	goto_if_eq VAR_RESULT, 0, Debug_NoPokemon
+	special ChoosePartyMon
+	waitstate
     fadescreenswapbuffers FADE_TO_BLACK
-    special StartBerryCrushSolo
+    special StartPokemonJumpSolo
 	release
 	end
 

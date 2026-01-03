@@ -33,6 +33,7 @@
 #include "pokeblock.h"
 #include "pokedex.h"
 #include "pokemon.h"
+#include "pokemon_jump.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "rayquaza_scene.h"
@@ -4409,6 +4410,11 @@ void SetRoofBirds(void)
 void StartBerryCrushSolo(void)
 {
     StartBerryCrush(CB2_LoadMap, TRUE);
+}
+
+void StartPokemonJumpSolo(void)
+{
+    StartPokemonJump(GetCursorSelectionMonId(), CB2_LoadMap, TRUE);
 }
 
 static const u16 sRandomSpeciesForEgg[] =

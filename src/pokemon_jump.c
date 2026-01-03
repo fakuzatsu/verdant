@@ -280,7 +280,7 @@ struct PokemonJumpMons
     u16 jumpType;
 };
 
-static void InitGame(struct PokemonJump *);
+static void InitGame(struct PokemonJump *, bool8 singlePlayer);
 static void ResetForNewGame(struct PokemonJump *);
 static void InitPlayerAndJumpTypes(void);
 static void ResetPlayersForNewGame(void);
@@ -804,23 +804,24 @@ static const struct PokemonJumpMons sPokeJumpMons[] =
     { .species = SPECIES_KUBFU,                             .jumpType = JUMP_TYPE_FAST, },
 };
 
-void StartPokemonJump(u16 partyId, MainCallback exitCallback)
+void StartPokemonJump(u16 partyId, MainCallback exitCallback, bool8 singlePlayer)
 {
     u8 taskId;
 
-    if (gReceivedRemoteLinkPlayers)
+    if (gReceivedRemoteLinkPlayers || singlePlayer)
     {
         sPokemonJump = Alloc(sizeof(*sPokemonJump));
         if (sPokemonJump)
         {
             ResetTasks();
+            sPokemonJump->numPlayers = singlePlayer;
             taskId = CreateTask(Task_StartPokemonJump, 1);
             sPokemonJump->mainState = 0;
             sPokemonJump->exitCallback = exitCallback;
             sPokemonJump->taskId = taskId;
-            sPokemonJump->multiplayerId = GetMultiplayerId();
+            sPokemonJump->multiplayerId = singlePlayer ? 0 : GetMultiplayerId();
             InitJumpMonInfo(&sPokemonJump->monInfo[sPokemonJump->multiplayerId], &gPlayerParty[partyId]);
-            InitGame(sPokemonJump);
+            InitGame(sPokemonJump, singlePlayer);
             SetWordTaskArg(taskId, 2, (u32)sPokemonJump);
             SetMainCallback2(CB2_PokemonJump);
             return;
@@ -837,9 +838,9 @@ static void FreePokemonJump(void)
     Free(sPokemonJump);
 }
 
-static void InitGame(struct PokemonJump *jump)
+static void InitGame(struct PokemonJump *jump, bool8 singlePlayer)
 {
-    jump->numPlayers = GetLinkPlayerCount();
+    jump->numPlayers = singlePlayer ? 1 : GetLinkPlayerCount();
     jump->comm.funcId = FUNC_RESET_GAME;
     jump->comm.data = 0;
     InitPlayerAndJumpTypes();
@@ -857,7 +858,7 @@ static void ResetForNewGame(struct PokemonJump *jump)
     jump->vineTimer = 0;
     jump->vineSpeed = 0;
     jump->updateScore = FALSE;
-    jump->isLeader = GetMultiplayerId() == 0;
+    jump->isLeader = jump->numPlayers == 1 ? TRUE : GetMultiplayerId() == 0;
     jump->mainState = 0;
     jump->helperState = 0;
     jump->excellentsInRow = 0;
@@ -966,7 +967,10 @@ static void Task_StartPokemonJump(u8 taskId)
         SetVBlankCallback(NULL);
         ResetSpriteData();
         FreeAllSpritePalettes();
-        SetTaskWithPokeJumpStruct(Task_CommunicateMonInfo, 5);
+        if (sPokemonJump->numPlayers == 1)
+            StringCopy(sPokemonJump->players[0].name, gSaveBlock2Ptr->playerName);
+        else
+            SetTaskWithPokeJumpStruct(Task_CommunicateMonInfo, 5);
         FadeOutMapMusic(4);
         sPokemonJump->mainState++;
         break;
@@ -974,8 +978,11 @@ static void Task_StartPokemonJump(u8 taskId)
         if (!FuncIsActiveTask(Task_CommunicateMonInfo))
         {
             StartPokeJumpGfx(&sPokemonJump->jumpGfx);
-            LoadWirelessStatusIndicatorSpriteGfx();
-            CreateWirelessStatusIndicatorSprite(0, 0);
+            if (sPokemonJump->numPlayers != 1)
+            {
+                LoadWirelessStatusIndicatorSpriteGfx();
+                CreateWirelessStatusIndicatorSprite(0, 0);
+            }
             sPokemonJump->mainState++;
         }
         break;
@@ -987,7 +994,7 @@ static void Task_StartPokemonJump(u8 taskId)
         }
         break;
     case 3:
-        if (IsLinkTaskFinished())
+        if (sPokemonJump->numPlayers == 1 || IsLinkTaskFinished())
         {
             BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
             BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
@@ -1039,13 +1046,14 @@ static void SetLinkTimeInterval(int intervalId)
 static void SetFunc_Leader(u8 funcId)
 {
     int i;
+    u32 numPlayers = sPokemonJump->numPlayers;
 
     sPokemonJump->comm.funcId = funcId;
     sPokemonJump->mainState = 0;
     sPokemonJump->helperState = 0;
     sPokemonJump->funcActive = TRUE;
-    sPokemonJump->allPlayersReady = FALSE;
-    for (i = 1; i < sPokemonJump->numPlayers; i++)
+    sPokemonJump->allPlayersReady = numPlayers == 1 ? TRUE : FALSE;
+    for (i = 1; i < numPlayers; i++)
         sPokemonJump->players[i].funcFinished = FALSE;
 }
 
@@ -1091,12 +1099,18 @@ static bool32 (* const sPokeJumpLeaderFuncs[])(void) =
 
 static void Task_PokemonJump_Leader(u8 taskId)
 {
-    RecvLinkData_Leader();
+    if (sPokemonJump->numPlayers == 1
+        && sPokemonJump->players[0].funcFinished
+        && sPokemonJump->memberFuncIds[0] == sPokemonJump->comm.funcId)
+        sPokemonJump->allPlayersReady = TRUE;
+    else
+        RecvLinkData_Leader();
     TryUpdateScore();
     if (!sPokemonJump->funcActive && sPokemonJump->allPlayersReady)
     {
         SetFunc_Leader(sPokemonJump->nextFuncId);
-        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
     }
 
     if (sPokemonJump->funcActive == TRUE)
@@ -1109,7 +1123,8 @@ static void Task_PokemonJump_Leader(u8 taskId)
     }
 
     UpdateGame();
-    SendLinkData_Leader();
+    if (sPokemonJump->numPlayers != 1)
+        SendLinkData_Leader();
 }
 
 static void SendLinkData_Leader(void)
@@ -1222,7 +1237,8 @@ static bool32 GameIntro_Leader(void)
     switch (sPokemonJump->mainState)
     {
     case 0:
-        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         sPokemonJump->mainState++;
         // fall through
     case 1:
@@ -1260,7 +1276,8 @@ static bool32 WaitRound_Leader(void)
     {
     case 0:
         ResetPlayersJumpStates();
-        SetLinkTimeInterval(LINK_INTERVAL_LONG);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_LONG);
         sPokemonJump->mainState++;
         break;
     case 1:
@@ -1395,7 +1412,8 @@ static bool32 AskPlayAgain_Leader(void)
     switch (sPokemonJump->mainState)
     {
     case 0:
-        SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
         sPokemonJump->mainState++;
         // fall through
     case 1:
@@ -1495,7 +1513,8 @@ static bool32 ExitGame(void)
         sPokemonJump->mainState = 1;
         break;
     case 1:
-        SetLinkTimeInterval(LINK_INTERVAL_NONE);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_NONE);
         sPokemonJump->mainState++;
         break;
     case 2:
@@ -1515,7 +1534,8 @@ static bool32 GivePrize_Leader(void)
     switch (sPokemonJump->mainState)
     {
     case 0:
-        SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
         sPokemonJump->mainState++;
         break;
     case 1:
@@ -1552,14 +1572,16 @@ static bool32 SavePokeJump(void)
     case 1:
         if (!IsPokeJumpGfxFuncFinished())
         {
-            SetLinkTimeInterval(LINK_INTERVAL_NONE);
+            if (sPokemonJump->numPlayers != 1)
+                SetLinkTimeInterval(LINK_INTERVAL_NONE);
             sPokemonJump->mainState++;
         }
         break;
     case 2:
-        if (AreLinkQueuesEmpty())
+        if (AreLinkQueuesEmpty() || sPokemonJump->numPlayers == 1)
         {
-            CreateTask(Task_LinkFullSave, 6);
+            if (sPokemonJump->numPlayers != 1)
+                CreateTask(Task_LinkFullSave, 6);
             sPokemonJump->mainState++;
         }
         break;
@@ -1662,7 +1684,8 @@ static bool32 HandleSwingRound(void)
         if (JOY_NEW(A_BUTTON))
         {
             SetMonStateJump();
-            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+            if (sPokemonJump->numPlayers != 1)
+                SetLinkTimeInterval(LINK_INTERVAL_SHORT);
             sPokemonJump->helperState++;
         }
         break;
@@ -1877,12 +1900,13 @@ static bool32 ClosePokeJumpLink(void)
     case 4:
         if (!gPaletteFade.active)
         {
-            SetCloseLinkCallback();
+            if (sPokemonJump->numPlayers != 1)
+                SetCloseLinkCallback();
             sPokemonJump->helperState++;
         }
         break;
     case 5:
-        if (!gReceivedRemoteLinkPlayers)
+        if (!gReceivedRemoteLinkPlayers || sPokemonJump->numPlayers == 1)
             return FALSE;
         break;
     }
@@ -2341,8 +2365,10 @@ static void TryUpdateScore(void)
             if (sPokemonJump->comm.jumpsInRow < MAX_JUMPS)
                 sPokemonJump->comm.jumpsInRow++;
 
-            AddJumpScore(10);
-            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+            int baseScore = sPokemonJump->numPlayers != 1 ? 10 : min(500, 5 * sPokemonJump->comm.jumpsInRow);
+            AddJumpScore(baseScore);
+            if (sPokemonJump->numPlayers != 1)
+                SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         }
     }
 
@@ -2350,7 +2376,8 @@ static void TryUpdateScore(void)
     {
         int numPlayers = GetNumPlayersForBonus(sPokemonJump->atJumpPeak3);
         AddJumpScore(GetScoreBonus(numPlayers));
-        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         sPokemonJump->giveBonus = FALSE;
     }
 
@@ -2383,7 +2410,8 @@ static bool32 UpdateVineHitStates(void)
         {
             // Hit vine
             SetMonStateHit();
-            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+            if (sPokemonJump->numPlayers != 1)
+                SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         }
     }
 
@@ -2392,7 +2420,8 @@ static bool32 UpdateVineHitStates(void)
      && sPokemonJump->player->monState != MONSTATE_HIT)
     {
         sPokemonJump->player->jumpState = JUMPSTATE_SUCCESS;
-        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        if (sPokemonJump->numPlayers != 1)
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
     }
 
     for (i = 0; i < sPokemonJump->numPlayers; i++)
@@ -2549,7 +2578,9 @@ struct {
 
 static bool32 HasEnoughScoreForPrize(void)
 {
-    if (sPokemonJump->comm.jumpScore >= sPrizeQuantityData[0].score)
+    int jumpScore = sPokemonJump->comm.jumpScore;
+    int effectiveScore = sPokemonJump->numPlayers != 1 ? jumpScore : jumpScore * 3;
+    if (effectiveScore >= sPrizeQuantityData[0].score)
         return TRUE;
     else
         return FALSE;
@@ -2600,6 +2631,8 @@ static u16 GetQuantityLimitedByBag(u16 item, u16 quantity)
 
 static u16 GetNumPokeJumpPlayers(void)
 {
+    if (sPokemonJump->numPlayers == 1)
+        return 1;
     return GetLinkPlayerCount();
 }
 
@@ -3939,6 +3972,10 @@ static const u8 sVenusaurStates[] = {
 static const struct CompressedSpriteSheet sSpriteSheet_Digits = {gMinigameDigits_Gfx, 0, TAG_DIGITS};
 static const struct SpritePalette sSpritePalette_Digits = {gMinigameDigits_Pal, TAG_DIGITS};
 
+static const u16 sPlayerNameWindowCoords_1Players[] = {
+    11, 6,
+};
+
 static const u16 sPlayerNameWindowCoords_2Players[] = {
      6, 8,
     16, 8
@@ -3962,21 +3999,24 @@ static const u16 sPlayerNameWindowCoords_5Players[] = {
     20, 6
 };
 
-static const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1] =
+static const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS] =
 {
+    sPlayerNameWindowCoords_1Players,
     sPlayerNameWindowCoords_2Players,
     sPlayerNameWindowCoords_3Players,
     sPlayerNameWindowCoords_4Players,
     sPlayerNameWindowCoords_5Players,
 };
 
+static const s16 sMonXCoords_1Players[] = {120};
 static const s16 sMonXCoords_2Players[] = {88, 152};
 static const s16 sMonXCoords_3Players[] = {88, 120, 152};
 static const s16 sMonXCoords_4Players[] = {56, 88, 152, 184};
 static const s16 sMonXCoords_5Players[] = {56, 88, 120, 152, 184};
 
-static const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1] =
+static const s16 *const sMonXCoords[MAX_RFU_PLAYERS] =
 {
+    sMonXCoords_1Players,
     sMonXCoords_2Players,
     sMonXCoords_3Players,
     sMonXCoords_4Players,
@@ -3986,7 +4026,7 @@ static const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1] =
 static void CreateJumpMonSprites(void)
 {
     int i, y, playersCount = GetNumPokeJumpPlayers();
-    const s16 *xCoords = sMonXCoords[playersCount - 2];
+    const s16 *xCoords = sMonXCoords[playersCount - 1];
 
     for (i = 0; i < playersCount; i++)
     {
@@ -4103,7 +4143,7 @@ static void AddPlayerNameWindows(void)
 {
     struct WindowTemplate window;
     int i, playersCount = GetNumPokeJumpPlayers();
-    const u16 *winCoords = sPlayerNameWindowCoords[playersCount - 2];
+    const u16 *winCoords = sPlayerNameWindowCoords[playersCount - 1];
 
     window.bg = BG_INTERFACE;
     window.width = 8;

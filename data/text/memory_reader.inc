@@ -1,8 +1,14 @@
 MemoryGirl_Text_ICanReadMonMemory::
-	.string "Hi, hi! I'm the Memory Girl!\n"
-	.string "I can read Pokémon memories.\p"
-	.string "Do you want to know the\n"
-	.string "memory of your Pokémon?$"
+	.string "Hi, hi! I'm the Memory Girl!\p"
+	.string "I know what you are thinking:\n"
+	.string "“What does that mean?”\p"
+	.string "It means I can read the\n"
+	.string "memories of your Pokémon!\p"
+	.string "Cool, huh?$"
+
+MemoryGirl_Text_ReadMonMemoryNow::
+	.string "Should I read a Pokémon's\n"
+	.string "memories now?$"
 
 MemoryGirl_Text_ReadWhichMonMemory::
 	.string "OK! Which Pokémon's memory\n"

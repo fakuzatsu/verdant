@@ -1728,7 +1728,7 @@ static void Task_StartActivity(u8 taskId)
         break;
     case ACTIVITY_POKEMON_JUMP:
         WarpForWirelessMinigame(USING_MINIGAME, 5, 1);
-        StartPokemonJump(GetCursorSelectionMonId(), CB2_LoadMap);
+        StartPokemonJump(GetCursorSelectionMonId(), CB2_LoadMap, FALSE);
         break;
     case ACTIVITY_BERRY_CRUSH:
         WarpForWirelessMinigame(USING_BERRY_CRUSH, 9, 1);

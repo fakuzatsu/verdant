@@ -577,3 +577,4 @@ gSpecials::
 	def_special StartFlappyBird
 	def_special PlayPachinko
     def_special CheckAllRegis
+	def_special StartPokemonJumpSolo
