@@ -1,0 +1,1037 @@
+[
+  {
+    "species": "SPECIES_TAPU_FINI",
+    "level": 70,
+    "map": "MAP_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS",
+    "script": "AbandonedShip_HiddenFloorRooms_EventScript_TapuFini::",
+    "explanation": "Abandonded Ship. Requires Dive"
+  },
+  {
+    "species": "SPECIES_REGISTEEL",
+    "level": 70,
+    "map": "MAP_ANCIENT_TOMB",
+    "script": "AncientTomb_EventScript_Registeel::",
+    "explanation": "After 6th badge, enter Ancient Tomb, Route 120"
+  },
+  {
+    "species": "SPECIES_ELECTRODE",
+    "level": 30,
+    "map": "MAP_AQUA_HIDEOUT_B1F",
+    "script": "AquaHideout_B1F_EventScript_Electrode1::",
+    "explanation": "Speak to Pokéball"
+  },
+  {
+    "species": "SPECIES_ELECTRODE",
+    "level": 30,
+    "map": "MAP_AQUA_HIDEOUT_B1F",
+    "script": "AquaHideout_B1F_EventScript_Electrode2::",
+    "explanation": "Speak to Pokéball"
+  },
+  {
+    "species": "SPECIES_SUDOWOODO",
+    "level": 40,
+    "map": "MAP_BATTLE_FRONTIER_OUTSIDE_EAST",
+    "script": "BattleFrontier_OutsideEast_EventScript_WaterSudowoodo::",
+    "explanation": "Battle Frontier, water the suspicious berry tree"
+  },
+  {
+    "species": "SPECIES_REGIROCK",
+    "level": 70,
+    "map": "MAP_DESERT_RUINS",
+    "script": "DesertRuins_EventScript_Regirock::",
+    "explanation": "After 6th badge, enter Desert Ruins, Route 111"
+  },
+  {
+    "species": "SPECIES_HEATRAN",
+    "level": 70,
+    "map": "MAP_FIERY_PATH_BACK_ROOM",
+    "script": "FieryPath_BackRoom_EventScript_Heatran::",
+    "explanation": "Inside Fiery Path, Route 112"
+  },
+  {
+    "species": "SPECIES_MESPRIT",
+    "level": 70,
+    "map": "MAP_FLOATING_SLAB",
+    "script": "FloatingSlab_EventScript_Mesprit::",
+    "explanation": "After 6th badge, Surf to Floating Slab, Route 103"
+  },
+  {
+    "species": "SPECIES_MOLTRES_GALAR",
+    "level": 70,
+    "map": "MAP_GRANITE_CAVE_B2F",
+    "script": "GraniteCave_B2F_EventScript_MoltresGalar::",
+    "explanation": "After 8th badge, challenge in Granite Cave 2F"
+  },
+  {
+    "species": "SPECIES_REGIDRAGO",
+    "level": 70,
+    "map": "MAP_GRASSY_SLAB",
+    "script": "GrassySlab_EventScript_Regidrago::",
+    "explanation": "After 6th badge, enter Grassy Slab, Route 114"
+  },
+  {
+    "species": "SPECIES_REGICE",
+    "level": 70,
+    "map": "MAP_ISLAND_CAVE",
+    "script": "IslandCave_EventScript_Regice::",
+    "explanation": "After 6th badge, enter Island Cave, Route 105"
+  },
+  {
+    "species": "SPECIES_KYOGRE",
+    "level": 70,
+    "map": "MAP_MARINE_CAVE_END",
+    "script": "MarineCave_End_EventScript_Kyogre::",
+    "explanation": "After Elite Four, find Marine Cave, Route 105, Route 125, Route 127, or Route 129"
+  },
+  {
+    "species": "SPECIES_REGIELEKI",
+    "level": 70,
+    "map": "MAP_NEW_MAUVILLE_INSIDE",
+    "script": "NewMauville_Inside_EventScript_Regieleki::",
+    "explanation": "Inside New Mauville. Requires Basement Key from Wattson"
+  },
+  {
+    "species": "SPECIES_VOLTORB",
+    "level": 25,
+    "map": "MAP_NEW_MAUVILLE_INSIDE",
+    "script": "NewMauville_Inside_EventScript_Voltorb1::",
+    "explanation": "Speak to Pokéball"
+  },
+  {
+    "species": "SPECIES_VOLTORB",
+    "level": 25,
+    "map": "MAP_NEW_MAUVILLE_INSIDE",
+    "script": "NewMauville_Inside_EventScript_Voltorb2::",
+    "explanation": "Speak to Pokéball"
+  },
+  {
+    "species": "SPECIES_VOLTORB",
+    "level": 25,
+    "map": "MAP_NEW_MAUVILLE_INSIDE",
+    "script": "NewMauville_Inside_EventScript_Voltorb3::",
+    "explanation": "Speak to Pokéball"
+  },
+  {
+    "species": "SPECIES_UXIE",
+    "level": 70,
+    "map": "MAP_ROCKY_SLAB",
+    "script": "RockySlab_EventScript_Uxie::",
+    "explanation": "After 6th badge, Surf to Rocky Slab."
+  },
+  {
+    "species": "SPECIES_ARTICUNO_GALAR",
+    "level": 70,
+    "map": "MAP_ROUTE114",
+    "script": "Route114_EventScript_ArticunoGalar::",
+    "explanation": "Speak to Articuno-Galar"
+  },
+  {
+    "species": "SPECIES_TAPU_BULU",
+    "level": 70,
+    "map": "MAP_ROUTE116",
+    "script": "Route116_EventScript_TapuBulu::",
+    "explanation": "Accessible via Rusturf Tunnel after 8th badge"
+  },
+  {
+    "species": "SPECIES_ZAPDOS_GALAR",
+    "level": 70,
+    "map": "MAP_ROUTE119",
+    "script": "Route119_EventScript_ZapdosGalar::",
+    "explanation": "Requires Waterfall and Acro Bike to reach"
+  },
+  {
+    "species": "SPECIES_KECLEON",
+    "level": 50,
+    "map": "MAP_ROUTE120",
+    "script": "Route120_EventScript_StevenBattleKecleon::",
+    "explanation": "use Devon Scope to find Kecleon"
+  },
+  {
+    "species": "SPECIES_TAPU_LELE",
+    "level": 70,
+    "map": "MAP_ROUTE124",
+    "script": "Route124_EventScript_TapuLele::",
+    "explanation": "Use Dive to enter the lagoon encompassing Tapu Lele"
+  },
+  {
+    "species": "SPECIES_TAPU_KOKO",
+    "level": 70,
+    "map": "MAP_ROUTE126",
+    "script": "Route126_EventScript_TapuKoko::",
+    "explanation": "Use Dive to reach top-left corner of Route 126"
+  },
+  {
+    "species": "SPECIES_AZELF",
+    "level": 70,
+    "map": "MAP_SCORCHED_SLAB",
+    "script": "ScorchedSlab_EventScript_Azelf::",
+    "explanation": "After receiving Badge 6, Surf to Scorched Slab, Route 120"
+  },
+  {
+    "species": "SPECIES_KYUREM",
+    "level": 70,
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_ICE_ROOM",
+    "script": "ShoalCave_LowTideIceRoom_EventScript_Kyurem::",
+    "explanation": "Shoal Cave Ice Room, wait for low tide to access"
+  },
+  {
+    "species": "SPECIES_RAYQUAZA",
+    "level": 70,
+    "map": "MAP_SKY_PILLAR_TOP",
+    "script": "SkyPillar_Top_EventScript_Rayquaza::",
+    "explanation": "After Elite Four, challenge Rayquaza at top of Sky Pillar"
+  },
+  {
+    "species": "SPECIES_GROUDON",
+    "level": 70,
+    "map": "MAP_TERRA_CAVE_END",
+    "script": "TerraCave_End_EventScript_Groudon::",
+    "explanation": "After Elite Four, find Terra Cave, Route 114, Route 115, Route 116, or Route 118"
+  },
+  {
+    "species": "SPECIES_REGIGIGAS",
+    "level": 70,
+    "map": "MAP_VICTORY_ROAD_B1F",
+    "script": "VictoryRoad_B1F_EventScript_Regigigas::",
+    "explanation": "After defeating all other Regis, find in Victory Road"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_KUBFU",
+        "level": 40,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_EVER_GRANDE_CITY",
+    "explanation": "Say goodbye to your rival"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_ZERAORA",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_EVER_GRANDE_CITY",
+    "explanation": "Gift from Volkner"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_CHARMANDER",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_CYNDAQUIL",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TORCHIC",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_CHIMCHAR",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TEPIG",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_FENNEKIN",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_LITTEN",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SCORBUNNY",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_FUECOCO",
+        "level": 0
+      }
+    ],
+    "map": "MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE",
+    "explanation": "Trade for Red Shard (random species)"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_SQUIRTLE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TOTODILE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_MUDKIP",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_PIPLUP",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_OSHAWOTT",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_FROAKIE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_POPPLIO",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SOBBLE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_QUAXLY",
+        "level": 0
+      }
+    ],
+    "map": "MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE",
+    "explanation": "Trade for Blue Shard (random species)"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_BULBASAUR",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_CHIKORITA",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TREECKO",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TURTWIG",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SNIVY",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_CHESPIN",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_ROWLET",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_GROOKEY",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SPRIGATITO",
+        "level": 0
+      }
+    ],
+    "map": "MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE",
+    "explanation": "Trade for Green Shard (random egg)"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_TAUROS",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_DELIBIRD",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_TROPIUS",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SPIRITOMB",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_HEATMOR",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_DEDENNE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_BRUXISH",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_FALINKS",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_KLAWF",
+        "level": 0
+      }
+    ],
+    "map": "MAP_LAVARIDGE_TOWN",
+    "explanation": "Give lady a Yellow Shard"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_CYNDAQUIL",
+        "level": 5
+      },
+      {
+        "species": "SPECIES_TOTODILE",
+        "level": 5
+      },
+      {
+        "species": "SPECIES_CHIKORITA",
+        "level": 5
+      }
+    ],
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "explanation": "Reward for completing Hoenn Dex (choose one!)"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_PIKACHU_COSPLAY",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_ROCK_STAR",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_BELLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_POP_STAR",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_PHD",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_LIBRE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_SURFING",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PIKACHU_FLYING",
+        "level": 1
+      }
+    ],
+    "map": "MAP_MAUVILLE_CITY_POKEMON_CENTER_1F",
+    "explanation": "PikachuMan (1st Floor of Pokemon Center)."
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_CELEBI",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_MOSSDEEP_CITY_BETA_TESTER_HOUSE",
+    "explanation": "Defeat Sunbird"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_DARKRAI",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_MOSSDEEP_CITY_BETA_TESTER_HOUSE",
+    "explanation": "Defeat Suneal"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_VICTINI",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_MOSSDEEP_CITY_BETA_TESTER_HOUSE",
+    "explanation": "Defeat DollaMike"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_MELTAN",
+        "level": 5,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_MOSSDEEP_CITY_STEVENS_HOUSE",
+    "explanation": "Gift from Steven"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_SENTRET",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_JIGGLYPUFF",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_KRICKETOT",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_CUBONE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_PANCHAM",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_YAMPER",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_ROCKRUFF",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SNORUNT",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_SPOINK",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_VAROOM",
+        "level": 0
+      }
+    ],
+    "map": "MAP_OLDALE_TOWN_POKEMON_CENTER_1F",
+    "explanation": "Speak to egg man for a random egg!"
+  },
+  {
+    "eggs": [
+      {
+        "species": "SPECIES_DRATINI",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_LARVITAR",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_BAGON",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_BELDUM",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_GIBLE",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_DEINO",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_GOOMY",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_JANGMO_O",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_DREEPY",
+        "level": 0
+      },
+      {
+        "species": "SPECIES_FRIGIBAX",
+        "level": 0
+      }
+    ],
+    "map": "MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F",
+    "explanation": "Speak to egg man in Pokémon Center. Species is random."
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_TYROGUE",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_PANSAGE",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_PANPOUR",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_PANSEAR",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_MISDREAVUS",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_PINSIR",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_HERACROSS",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_SCYTHER",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_EEVEE",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_MAGBY",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_ELEKID",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_SMOOCHUM",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_RIOLU",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_TOGEPI",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_TYPE_NULL",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_CHARCADET",
+        "level": 25,
+        "isRandom": true
+      },
+      {
+        "species": "SPECIES_AERODACTYL",
+        "level": 25,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_ROUTE109_SEASHORE_HOUSE",
+    "explanation": "Defeat trainers in Seashore House (difficulty dictates species)"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_JIRACHI",
+        "level": 30,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_ROUTE121",
+    "explanation": "Defeat Byron outside Lilycove City"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_LILEEP",
+        "level": 20,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_RUSTBORO_CITY_DEVON_CORP_2F",
+    "explanation": "Give researcher Root Fossil"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_ANORITH",
+        "level": 20,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_RUSTBORO_CITY_DEVON_CORP_2F",
+    "explanation": "Give researcher Claw Fossil"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_GREAT_TUSK",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SCREAM_TAIL",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BRUTE_BONNET",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_FLUTTER_MANE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SLITHER_WING",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SANDY_SHOCKS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_ROARING_MOON",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_WALKING_WAKE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_GOUGING_FIRE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_RAGING_BOLT",
+        "level": 1
+      }
+    ],
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM",
+    "explanation": "Choose a powerful Pokémon to summon"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_IRON_TREADS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_BUNDLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_HANDS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_JUGULIS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_MOTH",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_THORNS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_VALIANT",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_LEAVES",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_BOULDER",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_CROWN",
+        "level": 1
+      }
+    ],
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM",
+    "explanation": "Choose a Paradox Pokémon to summon"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_NIHILEGO",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_GUZZLORD",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_XURKITREE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BUZZWOLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BLACEPHALON",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_STAKATAKA",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_POIPOLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PHEROMOSA",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_CELESTEELA",
+        "level": 1
+      }
+    ],
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM",
+    "explanation": "Select an Ultra Beast to fight"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_GENESECT",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_CHAMP_HOUSE",
+    "explanation": "Defeat Danni in the Champ's house"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_DITTO",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_CHAMP_HOUSE",
+    "explanation": "Defeat Masta Janes in the Champ's house"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_HOOPA_CONFINED",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_CHAMP_HOUSE",
+    "explanation": "Defeat Befools"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_VOLCANION",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_CHAMP_HOUSE",
+    "explanation": "Defeat Burak"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_MELOETTA_ARIA",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_HOUSE5",
+    "explanation": "Defeat Natn"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_MARSHADOW",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_HOUSE5",
+    "explanation": "Defeat Master Poucine"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_ZARUDE",
+        "level": 50,
+        "isRandom": true
+      }
+    ],
+    "map": "MAP_SOOTOPOLIS_CITY_HOUSE5",
+    "explanation": "Defeat Oblivion Wing in House %"
+  },
+  {
+    "species": [
+      {
+        "species": "SPECIES_GREAT_TUSK",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SCREAM_TAIL",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BRUTE_BONNET",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_FLUTTER_MANE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SLITHER_WING",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_SANDY_SHOCKS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_ROARING_MOON",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_WALKING_WAKE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_GOUGING_FIRE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_RAGING_BOLT",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_TREADS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_BUNDLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_HANDS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_JUGULIS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_MOTH",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_THORNS",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_VALIANT",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_LEAVES",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_BOULDER",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_IRON_CROWN",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_NIHILEGO",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_GUZZLORD",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_XURKITREE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BUZZWOLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_BLACEPHALON",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_STAKATAKA",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_POIPOLE",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_PHEROMOSA",
+        "level": 1
+      },
+      {
+        "species": "SPECIES_CELESTEELA",
+        "level": 1
+      }
+    ],
+    "map": "MAP_VICTORY_ROAD_1F",
+    "explanation": "Select a Paradox Pokémon to fight"
+  }
+]

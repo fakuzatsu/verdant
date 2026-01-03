@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
+@import "tailwindcss";
+
+/* PixelOperator font faces */
+@font-face {
+  font-family: 'PixelOperator';
+  src: url('/fonts/PixelOperator/PixelOperator.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperator';
+  src: url('/fonts/PixelOperator/PixelOperator-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperator8';
+  src: url('/fonts/PixelOperator/PixelOperator8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperator8';
+  src: url('/fonts/PixelOperator/PixelOperator8-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorHB';
+  src: url('/fonts/PixelOperator/PixelOperatorHB.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorHB8';
+  src: url('/fonts/PixelOperator/PixelOperatorHB8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorHBSC';
+  src: url('/fonts/PixelOperator/PixelOperatorHBSC.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMono';
+  src: url('/fonts/PixelOperator/PixelOperatorMono.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMono';
+  src: url('/fonts/PixelOperator/PixelOperatorMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMono8';
+  src: url('/fonts/PixelOperator/PixelOperatorMono8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMono8';
+  src: url('/fonts/PixelOperator/PixelOperatorMono8-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMonoHB';
+  src: url('/fonts/PixelOperator/PixelOperatorMonoHB.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorMonoHB8';
+  src: url('/fonts/PixelOperator/PixelOperatorMonoHB8.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorSC';
+  src: url('/fonts/PixelOperator/PixelOperatorSC.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PixelOperatorSC';
+  src: url('/fonts/PixelOperator/PixelOperatorSC-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@theme {
+  --font-pixelify: "Pixelify Sans", sans-serif;
+  --font-jersey: "Jersey 10", sans-serif;
+  --font-caveat: "Caveat", cursive;
+  --font-pixeloperator: "PixelOperator", monospace;
+  --font-pixeloperator8: "PixelOperator8", monospace;
+  --font-pixeloperatorhb: "PixelOperatorHB", monospace;
+  --font-pixeloperatorhb8: "PixelOperatorHB8", monospace;
+  --font-pixeloperatorhbsc: "PixelOperatorHBSC", monospace;
+  --font-pixeloperatormono: "PixelOperatorMono", monospace;
+  --font-pixeloperatormono8: "PixelOperatorMono8", monospace;
+  --font-pixeloperatormonohb: "PixelOperatorMonoHB", monospace;
+  --font-pixeloperatormonohb8: "PixelOperatorMonoHB8", monospace;
+  --font-pixeloperatorsc: "PixelOperatorSC", monospace;
+}
+
+@page {
+  size: A4;
+  margin: 5mm 0mm 8mm 0mm;
+  @bottom-center {
+    font-size: .75rem;
+    content: counter(page);
+  }
+}
+
+/* Cover page styling */
+@layer utilities {
+  .cover {
+    page: cover;
+  }
+
+  .toc {
+    page: toc;
+  }
+}
+
+@page cover {
+  margin: 0;
+  @bottom-center { content: none; }
+}
+
+@page toc {
+  margin: 10mm 10mm 10mm 10mm;
+}

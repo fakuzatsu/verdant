@@ -1,0 +1,100 @@
+@media print{
+
+    #toc-title {
+        font-family: var(--font-pixeloperatorsc), monospace;
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 0 0 1.5rem 0;
+        padding: 0.75rem 0;
+        color: #111827;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 2px solid #6366f1;
+        break-after: avoid;
+    }
+
+    #list-toc-generated{ list-style: none;}
+
+    #list-toc-generated .toc-element a::after{
+        content: target-counter(attr(href), page);
+        font-weight: 700;
+        color: #111827;
+        font-size: 0.85em;
+        float: right;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 3px;
+        padding: 0.15rem 0.4rem;
+        min-width: 30px;
+    }
+
+    #list-toc-generated .toc-element-level-1{
+        margin-top: 25px;
+        font-weight: bold;
+    }
+
+    #list-toc-generated .toc-element-level-2{
+        margin-left: 25px;
+    }
+
+
+    /* target-text(attr(href), before) doesn't work for now, replace with counters (see below)*/
+    /* #list-toc-generated .toc-element a::before{
+        content: target-text(attr(href), before);
+    } */
+
+    /* counters */
+
+    #list-toc-generated{ 
+        counter-reset: counterTocLevel1; 
+    }
+
+    #list-toc-generated .toc-element-level-1{ 
+        counter-increment: counterTocLevel1; 
+        counter-reset: counterTocLevel2; 
+        color: dimgray;
+    }
+
+    #list-toc-generated .toc-element {
+        padding: 0.4rem 0;
+        border-bottom: 1px solid #f1f5f9;
+        margin: 0;
+    }
+
+    #list-toc-generated .toc-element:last-child {
+        border-bottom: none;
+    }
+
+    #list-toc-generated .toc-element-level-1::before{ 
+        content: counter(counterTocLevel1) ". ";
+        color: #6366f1;
+        font-weight: 600;
+        margin-right: 1rem;
+        min-width: 1.8rem;
+        font-size: 0.9em;
+    }
+
+    #list-toc-generated .toc-element-level-2{ 
+        counter-increment: counterTocLevel2; 
+    }
+
+    #list-toc-generated .toc-element-level-2::before{ 
+        content: counter(counterTocLevel1) ". " counter(counterTocLevel2) ". ";
+        padding-right: 5px;
+    }
+
+    /*  leader() doesn't work for now, replace with the hack bellow */
+    /* #list-toc-generated .toc-element a::after{
+        content: leader('.') " p. " target-counter(attr(href), page);
+        float: right;
+    } */
+
+    /* hack for leaders */
+
+} 
+
+.toc-ignore {
+  background: orange;
+}

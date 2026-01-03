@@ -1,0 +1,12 @@
+---
+import mapLocations from '../utils/generateMapLocations'
+import EncounterTable from './EncounterTable.astro'
+
+const mapIds = mapLocations.map((mapLocation) => mapLocation[0])
+---
+
+<div class="flex flex-col">
+  {mapIds.filter((locationId => !locationId.includes("UNUSED_RUBY_SAPPHIRE"))).map(locationId =>
+    <EncounterTable locationId={locationId as keyof typeof mapLocations}/>
+  )}
+</div>

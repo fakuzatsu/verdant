@@ -1,0 +1,46 @@
+---
+import { getSingleEncounters } from '../utils/encounterUtils/staticProcessor'
+import { getSpeciesName } from '../utils/speciesData'
+import { getMapName } from '../utils/generateMapLocations'
+import { getSpeciesIdFromLabel } from '../utils/encounterUtils/pokemonEncounterProcessor'
+import PokemonSprite from './PokemonSprite.astro'
+
+const singleEncounters = getSingleEncounters();
+---
+
+<div class="flex flex-col gap-1 print:break-before-page mx-5">
+  <span class="h-[10mm] flex justify-center items-center text-center group-even:hidden"></span>
+  <span class="text-center font-pixeloperator text-lg">Static/Gift Pokémon</span>
+  <span class="text-center font-pixeloperator text-xs text-gray-600 mb-2">The following Pokémon are found as static encounters or recieved as gifts.</span>
+  
+  {singleEncounters.length > 0 && (
+    <div class="mx-3 rounded border border-gray-300 bg-zinc-100 p-1">
+      <table class="w-full table-auto px-1 font-pixeloperator text-xs print:break-before-all">
+        <thead>
+          <tr class="bg-zinc-400">
+            <th class="px-2 py-1 text-left">Pokémon</th>
+            <th class="px-2 py-1 text-left">Level</th>
+            <th class="px-2 py-1 text-left">Location</th>
+            <th class="px-2 py-1 text-left">How to Obtain</th>
+          </tr>
+        </thead>
+        <tbody class="break-after-auto">
+          {singleEncounters.map((entry) => (
+            <tr class="even:bg-zinc-100 print:break-after-auto break-inside-avoid">
+              <td class="px-2 py-1">
+                <div class="flex gap-1 items-center">
+                      <PokemonSprite speciesId={getSpeciesIdFromLabel(entry.species)} size={20} />
+                      <span class="font-bold">{getSpeciesName(getSpeciesIdFromLabel(entry.species))}</span>
+                </div>
+              </td>
+              <td class="px-2 py-1 text-gray-600">{entry.level}</td>
+              <td class="px-2 py-1 text-gray-700">{getMapName(entry.map)}</td>
+              <td class="px-2 py-1 text-gray-700 text-xs">{entry.explanation}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</div>
+

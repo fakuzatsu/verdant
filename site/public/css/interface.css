@@ -1,0 +1,36 @@
+
+
+/* To define how the book look on the screen: */
+@media screen {
+    body {
+        background-color:whitesmoke;
+    }
+    .pagedjs_pages {
+        display: flex;
+        width: var(--pagedjs-width);
+        flex: 0;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+    .pagedjs_page {
+        background-color: white;
+        box-shadow: 0 0 0 2px #888;
+        margin: 0;
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin-top: 10mm;
+    }
+    
+
+   #pagedjs_interface_header{
+        position: fixed;
+       background-color: #888;
+       width: 100vw;
+       height: 30px;
+       top: 0;
+       left: 0;
+       
+   }
+ 
+
+}

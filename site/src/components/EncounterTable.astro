@@ -1,0 +1,54 @@
+---
+import mapLocations from '../utils/generateMapLocations'
+import { processEncounters } from '../utils/encounterUtils/encounterProcessor'
+
+import EncounterTableSection from './EncounterTableSection.astro'
+import FishingEncounterTableSection from './FishingEncounterTableSection.astro';
+
+export interface Props {
+  locationId: keyof typeof mapLocations
+}
+
+const { locationId } = Astro.props;
+
+const [id, name] = mapLocations.find(location => location[0] === locationId) ?? 'MAP_NONE';
+const currentMap: { name: string; id: string } = { id, name };
+
+const encounters = processEncounters(currentMap.id).encounters
+---
+<div class="group break-inside-avoid-page mb-2">
+<div class="flex peer flex-col gap-1 justify-center break-inside-avoid-page self-center w-full px-8">
+	<div class="bg-zinc-200 border-gray-800 border-2 rounded-md break-inside-avoid">
+		<header class="flex flex-col items-center">
+			<span class="font-pixeloperator8 text-center w-full bg-gray-800 py-2 text-white break-after-avoid-page" >
+				<section><h2 id=`id-${currentMap.id}` class=".tocElement">{currentMap.name}</h2></section>
+			</span>
+		</header>
+		<div class="flex gap-2 justify-center w-full bg-zinc-200 px-5 py-2">
+			<EncounterTableSection
+				encounters={encounters}
+				method="land_mons"
+				title="Land"
+				headerClass="bg-amber-800 text-white"
+			/>
+			<EncounterTableSection
+				encounters={encounters}
+				method="water_mons"
+				title="Surf"
+				headerClass="bg-sky-800 text-white"
+			/>
+			<FishingEncounterTableSection
+				encounters={encounters}
+				title="Fishing"
+				headerClass="bg-indigo-800 text-white"
+			/>
+			<EncounterTableSection
+				encounters={encounters}
+				method="rock_smash_mons"
+				title="Rock Smash"
+				headerClass="bg-red-700 text-white"
+			/>
+		</div>
+	</div>
+</div>
+</div>
