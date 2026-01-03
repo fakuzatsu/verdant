@@ -1,0 +1,107 @@
+---
+import PokemonSprite from './PokemonSprite.astro'
+import { getSpeciesIdFromLabel } from '../utils/encounterUtils/pokemonEncounterProcessor'
+import { getSpeciesName } from '../utils/speciesData'
+import type { EncounterData } from '../types/encounterTypes'
+
+export interface Props {
+  encounters: EncounterData[]
+  title: string
+  headerClass?: string
+}
+
+const { encounters, title, headerClass = '' } = Astro.props
+const filtered = encounters.filter(
+  (encounter) => encounter.method === 'fishing_mons'
+)
+
+const getlevelRange = (minLevel: number, maxLevel: number) =>
+  `${minLevel} – ${maxLevel}`
+
+const formatEncounterRate = (encounterRate?: number) => {
+  return encounterRate ? `${encounterRate}%` : ''
+}
+---
+
+<div class="relative min-w-[25%] overflow-hidden rounded-md border-2">
+  <table class="w-full table-auto">
+    <thead>
+      <tr class={headerClass}>
+        <th class="px-4 py-1 text-center font-pixeloperator8 text-xs"
+          >{title}</th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      {
+        filtered.length !== 0 &&
+          filtered.map((encounter, index) => {
+            const speciesName = getSpeciesName(
+              getSpeciesIdFromLabel(encounter.species)
+            )
+            const levelRange = getlevelRange(
+              encounter.min_level,
+              encounter.max_level
+            )
+            const encounterRate = formatEncounterRate(encounter.encounterRate)
+
+            // Determine background color based on index (fishing rod types)
+            let bgColor = ''
+            let barColor = ''
+            if (index < 3) {
+              // Old Rod - alternating teal shades
+              bgColor = index % 2 === 0 ? 'bg-teal-100' : 'bg-teal-50'
+              barColor = 'bg-teal-500'
+            } else if (index < 6) {
+              // Good Rod - alternating blue shades
+              bgColor = index % 2 === 0 ? 'bg-blue-100' : 'bg-blue-50'
+              barColor = 'bg-blue-500'
+            } else {
+              // Super Rod - alternating purple shades
+              bgColor = index % 2 === 0 ? 'bg-purple-100' : 'bg-purple-50'
+              barColor = 'bg-purple-500'
+            }
+
+            return (
+              <tr class={`${bgColor} last:border-0`}>
+                <td class="relative items-center gap-1 py-0.5 pl-1">
+                  <div
+                    class={`absolute top-1 bottom-1 left-1 w-1 rounded-xs ${barColor}`}
+                  />
+                  <div class="ml-3 flex gap-1">
+                    <PokemonSprite
+                      speciesId={getSpeciesIdFromLabel(encounter.species)}
+                    />
+                    <span class="flex flex-col">
+                      <span class="font-pixeloperator text-xs font-bold">
+                        {speciesName}
+                      </span>
+                      <span class="flex gap-2">
+                        <span class="flex items-center justify-center rounded-full font-pixeloperatormono text-xs text-neutral-900">
+                          {levelRange}
+                        </span>
+                        <span class="flex items-center justify-center rounded-full text-xs font-bold text-green-600 italic">
+                          {encounterRate}
+                        </span>
+                      </span>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            )
+          })
+      }
+      {
+        filtered.length === 0 && (
+          <tr class="h-full">
+            <div class="absolute top-1/2 flex w-full -translate-y-1/2 justify-center px-1 py-2 text-center text-sm text-gray-500">
+              <span class="margin-x-auto font-pixelify text-lg text-wrap italic">
+                Not avaialble in this area
+              </span>
+            </div>
+          </tr>
+        )
+      }
+    </tbody>
+  </table>
+</div>

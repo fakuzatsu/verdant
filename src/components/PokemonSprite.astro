@@ -1,0 +1,12 @@
+---
+import { getSpeciesData, getSpriteById } from "../utils/speciesData";
+
+const { speciesId } = Astro.props;
+const spriteUrl = getSpriteById ? getSpriteById(speciesId) : undefined;
+---
+
+<img
+  src={spriteUrl}
+  alt={speciesId ? `Sprite for species ${speciesId}` : "Pokemon Sprite"}
+  class="size-8 object-contain"
+/>

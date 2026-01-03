@@ -1,0 +1,48 @@
+---
+import '../styles/global.css'
+const isProd = import.meta.env.MODE === 'production'
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+
+{        isProd && (
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="css/table-of-content.css"
+        />
+        <script
+            is:inline
+            src="https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js"
+        ></script>
+        <script type="text/javascript" src="js/createToc.js"></script>
+        <script is:inline>
+            class handlers extends Paged.Handler {
+                constructor(chunker, polisher, caller) {
+                    super(chunker, polisher, caller)
+                }
+
+                beforeParsed(content) {
+                    createToc({
+                        content: content,
+                        tocElement: '#my-toc-content',
+                        titleElements: ['h2']
+                    })
+                }
+            }
+            Paged.registerHandlers(handlers)
+        </script>
+        )}
+
+        <title>EI Encounters</title>
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
