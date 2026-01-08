@@ -45,3 +45,4 @@ tools/trainerproc/trainerproc
 tools/compresSmol/compresSmol
 dex_files
 __pycache__
+.venv/
