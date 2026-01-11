@@ -48,11 +48,11 @@ const formatEncounterRate = (encounterRate?: number) => {
             // Determine background color based on index (fishing rod types)
             let bgColor = ''
             let barColor = ''
-            if (index < 3) {
+            if (index < 2) {
               // Old Rod - alternating teal shades
               bgColor = index % 2 === 0 ? 'bg-teal-100' : 'bg-teal-50'
               barColor = 'bg-teal-500'
-            } else if (index < 6) {
+            } else if (index < 5) {
               // Good Rod - alternating blue shades
               bgColor = index % 2 === 0 ? 'bg-blue-100' : 'bg-blue-50'
               barColor = 'bg-blue-500'

@@ -4,105 +4,105 @@
 /* PixelOperator font faces */
 @font-face {
   font-family: 'PixelOperator';
-  src: url('/fonts/PixelOperator/PixelOperator.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperator.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperator';
-  src: url('/fonts/PixelOperator/PixelOperator-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperator-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperator8';
-  src: url('/fonts/PixelOperator/PixelOperator8.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperator8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperator8';
-  src: url('/fonts/PixelOperator/PixelOperator8-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperator8-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorHB';
-  src: url('/fonts/PixelOperator/PixelOperatorHB.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorHB.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorHB8';
-  src: url('/fonts/PixelOperator/PixelOperatorHB8.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorHB8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorHBSC';
-  src: url('/fonts/PixelOperator/PixelOperatorHBSC.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorHBSC.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMono';
-  src: url('/fonts/PixelOperator/PixelOperatorMono.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMono.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMono';
-  src: url('/fonts/PixelOperator/PixelOperatorMono-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMono-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMono8';
-  src: url('/fonts/PixelOperator/PixelOperatorMono8.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMono8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMono8';
-  src: url('/fonts/PixelOperator/PixelOperatorMono8-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMono8-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMonoHB';
-  src: url('/fonts/PixelOperator/PixelOperatorMonoHB.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMonoHB.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorMonoHB8';
-  src: url('/fonts/PixelOperator/PixelOperatorMonoHB8.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorMonoHB8.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorSC';
-  src: url('/fonts/PixelOperator/PixelOperatorSC.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorSC.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'PixelOperatorSC';
-  src: url('/fonts/PixelOperator/PixelOperatorSC-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/PixelOperator/PixelOperatorSC-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;

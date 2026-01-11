@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css'
+import faviconUrl from '../assets/sprites/favicon.svg?url'
+import createTocUrl from '../assets/js/createToc.js?url'
+import tocCssUrl from '../styles/table-of-content.css?url'
 const isProd = import.meta.env.MODE === 'production'
 ---
 
@@ -8,20 +11,20 @@ const isProd = import.meta.env.MODE === 'production'
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href={faviconUrl} />
         <meta name="generator" content={Astro.generator} />
 
 {        isProd && (
         <link
             rel="stylesheet"
             type="text/css"
-            href="css/table-of-content.css"
+            href={tocCssUrl}
         />
         <script
             is:inline
             src="https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js"
         ></script>
-        <script type="text/javascript" src="/js/createToc.js"></script>
+        <script type="text/javascript" src={createTocUrl}></script>
         <script is:inline>
             class handlers extends Paged.Handler {
                 constructor(chunker, polisher, caller) {

@@ -136,9 +136,9 @@ export const groupPokemonEncountersByMethod = (
       const slot = location.slot || 0;
       if (slot >= 0 && slot <= 2) {
         grouped.fishing_old_rod.push(location);
-      } else if (slot >= 3 && slot <= 5) {
+      } else if (slot >= 3 && slot <= 4) {
         grouped.fishing_good_rod.push(location);
-      } else if (slot >= 6 && slot <= 10) {
+      } else if (slot >= 5 && slot <= 10) {
         grouped.fishing_super_rod.push(location);
       }
     }

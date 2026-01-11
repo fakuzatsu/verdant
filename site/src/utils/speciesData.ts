@@ -27,5 +27,7 @@ export function hasForms(pokemon: Pokemon): boolean {
 }
 
 export const getSpriteById = (speciesId: number): string => {
-  return `sprites/front/${speciesId}.png`;
-};
+  const spriteMap = import.meta.glob('../assets/sprites/front/*.png', { query: '?url', import: 'default', eager: true }) as Record<string, string>
+  const key = `../assets/sprites/front/${speciesId}.png`
+  return spriteMap[key] ?? new URL(`../assets/sprites/front/${speciesId}.png`, import.meta.url).href
+}
