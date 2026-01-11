@@ -5,7 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
 site: 'https://fakuzatsu.github.io/verdant/',
-base: '/verdant/',
 output: 'static',
 vite: {
     plugins: [tailwindcss()],
