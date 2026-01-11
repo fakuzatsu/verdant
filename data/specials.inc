@@ -257,7 +257,7 @@ gSpecials::
 	def_special CallFallarborTentFunction
 	def_special CallSlateportTentFunction
 	def_special ChoosePartyForBattleFrontier
-    def_special ChoosePartyForBestOfThree
+    def_special ChoosePartyForDraft
 	def_special ValidateEReaderTrainer
 	def_special GetBattleTowerSinglesStreak
 	def_special ReducePlayerPartyToSelectedMons

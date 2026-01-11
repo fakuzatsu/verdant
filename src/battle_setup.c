@@ -2064,41 +2064,59 @@ bool8 IsValidBestOfThreeTrainer(u8 trainer)
     return TRUE;
 }
 
+#define DRAFT_OR_BEST_OF_THREE(trainer) draftOrFull == DRAFT ? EventScript_##trainer##DraftStart : EventScript_##trainer##BestOfThreeStart
+
 void TryBestOfThree(struct ScriptContext *ctx)
 {
     u16 trainer = ScriptReadHalfword(ctx);
     const u8 *script;
+    enum DraftOrFull {
+        DRAFT,
+        FULL,
+    }; enum DraftOrFull draftOrFull;
 
-    if (gSaveBlock2Ptr->optionsVGCDraft != OPTIONS_DRAFT_ON_PLUS_BO3
-     || !IsValidBestOfThreeTrainer(trainer)
+    if (!IsValidBestOfThreeTrainer(trainer)
      || HasTrainerBeenFought(trainer))
         return;
+    
+    switch (gSaveBlock2Ptr->optionsVGCDraft)
+    {
+    case OPTIONS_DRAFT_ONLY_DRAFT:
+        draftOrFull = DRAFT;
+        break;
+    case OPTIONS_DRAFT_ON_PLUS_BO3:
+        draftOrFull = FULL;
+        break;
+    case OPTIONS_DRAFT_ALL_OFF:
+    default:
+        return;
+    }
 
     switch (trainer)
     {
     case TRAINER_ROXANNE_1:
-        script = EventScript_RoxanneBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Roxanne);
         break;
     case TRAINER_BRAWLY_1:
-        script = EventScript_BrawlyBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Brawly);
         break;
     case TRAINER_WATTSON_1:
-        script = EventScript_WattsonBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Wattson);
         break;
     case TRAINER_FLANNERY_1:
-        script = EventScript_FlanneryBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Flannery);
         break;
     case TRAINER_NORMAN_1:
-        script = EventScript_NormanBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Norman);
         break;
     case TRAINER_WINONA_1:
-        script = EventScript_WinonaBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Winona);
         break;
     case TRAINER_TATE_AND_LIZA_1:
-        script = EventScript_TateAndLizaBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(TateAndLiza);
         break;
     case TRAINER_JUAN_1:
-        script = EventScript_JuanBestOfThreeStart;
+        script = DRAFT_OR_BEST_OF_THREE(Juan);
         break;
     default:
         return;

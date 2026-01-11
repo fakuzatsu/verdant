@@ -666,6 +666,16 @@ extern const u8 EventScript_LostSignal[];
 extern const u8 EventScript_TooDark[];
 extern const u8 EventScript_MovedTooFast[];
 
+// Draft
+extern const u8 EventScript_RoxanneDraftStart[];
+extern const u8 EventScript_BrawlyDraftStart[];
+extern const u8 EventScript_WattsonDraftStart[];
+extern const u8 EventScript_FlanneryDraftStart[];
+extern const u8 EventScript_NormanDraftStart[];
+extern const u8 EventScript_WinonaDraftStart[];
+extern const u8 EventScript_TateAndLizaDraftStart[];
+extern const u8 EventScript_JuanDraftStart[];
+
 // Best of Three
 extern const u8 EventScript_RoxanneBestOfThreeStart[];
 extern const u8 EventScript_BrawlyBestOfThreeStart[];

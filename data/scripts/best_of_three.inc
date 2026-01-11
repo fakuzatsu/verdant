@@ -3,7 +3,7 @@ EventScript_RoxanneBestOfThreeStart::
     msgbox RustboroCity_Gym_Text_RoxanneIntro, MSGBOX_DEFAULT
 EventScript_RoxanneBestOfThreeContinue:
     setvar VAR_0x8005, 3
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -14,12 +14,12 @@ EventScript_RoxanneBestOfThreeContinue:
 
 EventScript_RoxanneAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedRoxanne
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_RoxanneReturnToContinueQ:
     msgbox RustboroCity_Gym_Text_RoxanneContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -36,7 +36,7 @@ EventScript_BrawlyBestOfThreeStart::
     msgbox DewfordTown_Gym_Text_BrawlyIntro, MSGBOX_DEFAULT
 EventScript_BrawlyBestOfThreeContinue:
     setvar VAR_0x8005, 3
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -47,12 +47,12 @@ EventScript_BrawlyBestOfThreeContinue:
 
 EventScript_BrawlyAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedBrawly
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_BrawlyReturnToContinueQ:
     msgbox DewfordTown_Gym_Text_BrawlyContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -69,7 +69,7 @@ EventScript_WattsonBestOfThreeStart::
     msgbox MauvilleCity_Gym_Text_WattsonIntro, MSGBOX_DEFAULT
 EventScript_WattsonBestOfThreeContinue:
     setvar VAR_0x8005, 4
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -80,12 +80,12 @@ EventScript_WattsonBestOfThreeContinue:
 
 EventScript_WattsonAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedWattson
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_WattsonReturnToContinueQ:
     msgbox MauvilleCity_Gym_Text_WattsonContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -102,7 +102,7 @@ EventScript_FlanneryBestOfThreeStart::
     msgbox LavaridgeTown_Gym_1F_Text_FlanneryIntro, MSGBOX_DEFAULT
 EventScript_FlanneryBestOfThreeContinue:
     setvar VAR_0x8005, 4
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -113,12 +113,12 @@ EventScript_FlanneryBestOfThreeContinue:
 
 EventScript_FlanneryAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedFlannery
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_FlanneryReturnToContinueQ:
     msgbox LavaridgeTown_Gym_1F_Text_FlanneryContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -135,7 +135,7 @@ EventScript_NormanBestOfThreeStart::
     msgbox PetalburgCity_Gym_Text_NormanIntro, MSGBOX_DEFAULT
 EventScript_NormanBestOfThreeContinue:
     setvar VAR_0x8005, 4
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -146,12 +146,12 @@ EventScript_NormanBestOfThreeContinue:
 
 EventScript_NormanAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedNorman
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_NormanReturnToContinueQ:
     msgbox PetalburgCity_Gym_Text_NormanContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -167,8 +167,8 @@ EventScript_WinonaBestOfThreeStart::
     goto_if_ge VAR_MATCHES_PLAYED, 1, EventScript_WinonaReturnToContinueQ
     msgbox FortreeCity_Gym_Text_WinonaIntro, MSGBOX_DEFAULT
 EventScript_WinonaBestOfThreeContinue:
-    setvar VAR_0x8005, 5
-    special ChoosePartyForBestOfThree
+    setvar VAR_0x8005, 4
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -179,12 +179,12 @@ EventScript_WinonaBestOfThreeContinue:
 
 EventScript_WinonaAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedWinona
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_WinonaReturnToContinueQ:
     msgbox FortreeCity_Gym_Text_WinonaContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -201,7 +201,7 @@ EventScript_TateAndLizaBestOfThreeStart::
     msgbox MossdeepCity_Gym_Text_TateAndLizaIntro, MSGBOX_DEFAULT
 EventScript_TateAndLizaBestOfThreeContinue:
     setvar VAR_0x8005, 4
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -212,12 +212,12 @@ EventScript_TateAndLizaBestOfThreeContinue:
 
 EventScript_TateAndLizaAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedTateAndLiza
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_TateAndLizaReturnToContinueQ:
     msgbox MossdeepCity_Gym_Text_TateAndLizaContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -234,7 +234,7 @@ EventScript_JuanBestOfThreeStart::
     msgbox SootopolisCity_Gym_1F_Text_JuanIntro, MSGBOX_DEFAULT
 EventScript_JuanBestOfThreeContinue:
     setvar VAR_0x8005, 4
-    special ChoosePartyForBestOfThree
+    special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
@@ -245,12 +245,12 @@ EventScript_JuanBestOfThreeContinue:
 
 EventScript_JuanAfterBattle:
     special LoadPlayerParty
-    special HealPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
     goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedJuan
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
+    special HealPlayerParty
 EventScript_JuanReturnToContinueQ:
     msgbox SootopolisCity_Gym_1F_Text_JuanContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
@@ -269,7 +269,7 @@ EventScript_AbortBattleFallback:
     setvar VAR_MATCHES_PLAYED, 0
     setvar VAR_MATCHES_WON, 0
     setvar VAR_MATCHES_LOST, 0
-EventScript_AbortChallenge:
+EventScript_AbortChallenge::
     release
     end
 
