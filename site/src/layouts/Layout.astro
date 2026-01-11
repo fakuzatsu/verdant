@@ -21,7 +21,7 @@ const isProd = import.meta.env.MODE === 'production'
             is:inline
             src="https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js"
         ></script>
-        <script type="text/javascript" src="js/createToc.js"></script>
+        <script type="text/javascript" src="/js/createToc.js"></script>
         <script is:inline>
             class handlers extends Paged.Handler {
                 constructor(chunker, polisher, caller) {
