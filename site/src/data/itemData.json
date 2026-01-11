@@ -1,0 +1,4212 @@
+[
+  {
+    "itemId": 1,
+    "Name": "Poké Ball",
+    "Description": "A tool used for catching wild Pokémon."
+  },
+  {
+    "itemId": 2,
+    "Name": "Great Ball",
+    "Description": "A good Ball with a higher catch rate than a Poké Ball."
+  },
+  {
+    "itemId": 3,
+    "Name": "Ultra Ball",
+    "Description": "A better Ball with a higher catch rate than a Great Ball."
+  },
+  {
+    "itemId": 4,
+    "Name": "Master Ball",
+    "Description": "The best Ball that catches a Pokémon without fail."
+  },
+  {
+    "itemId": 5,
+    "Name": "Premier Ball",
+    "Description": "A rare Ball made in commemoration of some event."
+  },
+  {
+    "itemId": 6,
+    "Name": "Heal Ball",
+    "Description": "A remedial Ball that restores caught Pokémon."
+  },
+  {
+    "itemId": 7,
+    "Name": "Net Ball",
+    "Description": "A Ball that works well on Water- and Bug-type Pokémon."
+  },
+  {
+    "itemId": 8,
+    "Name": "Nest Ball",
+    "Description": "A Ball that works better on weaker Pokémon."
+  },
+  {
+    "itemId": 9,
+    "Name": "Dive Ball",
+    "Description": "A Ball that works better on Pokémon on the ocean floor."
+  },
+  {
+    "itemId": 10,
+    "Name": "Dusk Ball",
+    "Description": "Works well if used in a dark place."
+  },
+  {
+    "itemId": 11,
+    "Name": "Timer Ball",
+    "Description": "A Ball that gains power in battles taking many turns."
+  },
+  {
+    "itemId": 12,
+    "Name": "Quick Ball",
+    "Description": "Works well if used on the first turn."
+  },
+  {
+    "itemId": 13,
+    "Name": "Repeat Ball",
+    "Description": "A Ball that works better on Pokémon caught before."
+  },
+  {
+    "itemId": 14,
+    "Name": "Luxury Ball",
+    "Description": "A cozy Ball that makes Pokémon more friendly."
+  },
+  {
+    "itemId": 15,
+    "Name": "Level Ball",
+    "Description": "A Ball that works well on lower level Pokémon."
+  },
+  {
+    "itemId": 16,
+    "Name": "Lure Ball",
+    "Description": "A Ball that works well on fished up Pokémon."
+  },
+  {
+    "itemId": 17,
+    "Name": "Moon Ball",
+    "Description": "A Ball that works well on Moon Stone users."
+  },
+  {
+    "itemId": 18,
+    "Name": "Friend Ball",
+    "Description": "A Ball that makes a Pokémon friendly when caught."
+  },
+  {
+    "itemId": 19,
+    "Name": "Love Ball",
+    "Description": "Works well on Pokémon of the opposite gender."
+  },
+  {
+    "itemId": 20,
+    "Name": "Fast Ball",
+    "Description": "Works well on very fast Pokémon."
+  },
+  {
+    "itemId": 21,
+    "Name": "Heavy Ball",
+    "Description": "Works well on very heavy Pokémon."
+  },
+  {
+    "itemId": 22,
+    "Name": "Dream Ball",
+    "Description": "A Ball that works well on sleeping Pokémon."
+  },
+  {
+    "itemId": 23,
+    "Name": "Safari Ball",
+    "Description": "A special Ball that is used only in the Safari Zone."
+  },
+  {
+    "itemId": 24,
+    "Name": "Sport Ball",
+    "Description": "A special Ball used in the Bug- Catching Contest."
+  },
+  {
+    "itemId": 25,
+    "Name": "Park Ball",
+    "Description": "A special Ball for the Pal Park."
+  },
+  {
+    "itemId": 26,
+    "Name": "Beast Ball",
+    "Description": "A Ball designed to catch Ultra Beasts."
+  },
+  {
+    "itemId": 27,
+    "Name": "Cherish Ball",
+    "Description": "A rare Ball made in commemoration of some event."
+  },
+  {
+    "itemId": 28,
+    "Name": "Potion",
+    "Description": "Restores the HP of a Pokémon by 20 points."
+  },
+  {
+    "itemId": 29,
+    "Name": "Super Potion",
+    "Description": "Restores the HP of a Pokémon by 60 points."
+  },
+  {
+    "itemId": 30,
+    "Name": "Hyper Potion",
+    "Description": "Restores the HP of a Pokémon by 120 points."
+  },
+  {
+    "itemId": 31,
+    "Name": "Max Potion",
+    "Description": "Fully restores the HP of a Pokémon."
+  },
+  {
+    "itemId": 32,
+    "Name": "Full Restore",
+    "Description": "Fully restores the HP and status of a Pokémon."
+  },
+  {
+    "itemId": 33,
+    "Name": "Revive",
+    "Description": "Revives a fainted Pokémon with half its HP."
+  },
+  {
+    "itemId": 34,
+    "Name": "Max Revive",
+    "Description": "Revives a fainted Pokémon with all its HP."
+  },
+  {
+    "itemId": 35,
+    "Name": "Fresh Water",
+    "Description": "A mineral water that restores HP by 30 points."
+  },
+  {
+    "itemId": 36,
+    "Name": "Soda Pop",
+    "Description": "A fizzy soda drink that restores HP by 50 points."
+  },
+  {
+    "itemId": 37,
+    "Name": "Lemonade",
+    "Description": "A very sweet drink that restores HP by 70 points."
+  },
+  {
+    "itemId": 38,
+    "Name": "Moomoo Milk",
+    "Description": "A nutritious milk that restores HP by 100 points."
+  },
+  {
+    "itemId": 39,
+    "Name": "Energy Powder",
+    "Description": "A bitter powder that restores HP by 60 points."
+  },
+  {
+    "itemId": 40,
+    "Name": "Energy Root",
+    "Description": "A bitter root that restores HP by 120 points."
+  },
+  {
+    "itemId": 41,
+    "Name": "Heal Powder",
+    "Description": "A bitter powder that heals all status problems."
+  },
+  {
+    "itemId": 42,
+    "Name": "Revival Herb",
+    "Description": "A very bitter herb that revives a fainted Pokémon."
+  },
+  {
+    "itemId": 43,
+    "Name": "Antidote",
+    "Description": "Heals a poisoned Pokémon."
+  },
+  {
+    "itemId": 44,
+    "Name": "Paralyze Heal",
+    "Description": "Heals a paralyzed Pokémon."
+  },
+  {
+    "itemId": 45,
+    "Name": "Burn Heal",
+    "Description": "Heals Pokémon of a burn."
+  },
+  {
+    "itemId": 46,
+    "Name": "Ice Heal",
+    "Description": "Defrosts a frozen Pokémon."
+  },
+  {
+    "itemId": 47,
+    "Name": "Awakening",
+    "Description": "Awakens a sleeping Pokémon."
+  },
+  {
+    "itemId": 48,
+    "Name": "Full Heal",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 49,
+    "Name": "Ether",
+    "Description": "Restores the PP of a selected move by 10."
+  },
+  {
+    "itemId": 50,
+    "Name": "Max Ether",
+    "Description": "Fully restores the PP of a selected move."
+  },
+  {
+    "itemId": 51,
+    "Name": "Elixir",
+    "Description": "Restores the PP of all moves by 10."
+  },
+  {
+    "itemId": 52,
+    "Name": "Max Elixir",
+    "Description": "Fully restores the PP of a Pokémon's moves."
+  },
+  {
+    "itemId": 53,
+    "Name": "Berry Juice",
+    "Description": "A 100% pure juice that restores HP by 20 points."
+  },
+  {
+    "itemId": 54,
+    "Name": "Sacred Ash",
+    "Description": "Fully revives and restores all fainted Pokémon."
+  },
+  {
+    "itemId": 55,
+    "Name": "Sweet Heart",
+    "Description": "A sweet chocolate that restores HP by 20 points."
+  },
+  {
+    "itemId": 56,
+    "Name": "Max Honey",
+    "Description": "Revives a fainted Pokémon with all its HP."
+  },
+  {
+    "itemId": 57,
+    "Name": "Pewter Crunchies",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 58,
+    "Name": "Rage Candy Bar",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 59,
+    "Name": "Lava Cookie",
+    "Description": "A local specialty that heals all status problems."
+  },
+  {
+    "itemId": 60,
+    "Name": "Old Gateau",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 61,
+    "Name": "Casteliacone",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 62,
+    "Name": "Lumiose Galette",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 63,
+    "Name": "Shalour Sable",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 64,
+    "Name": "Big Malasada",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 65,
+    "Name": "HP Up",
+    "Description": "Raises the base HP of one Pokémon."
+  },
+  {
+    "itemId": 66,
+    "Name": "Protein",
+    "Description": "Raises the base Attack stat of one Pokémon."
+  },
+  {
+    "itemId": 67,
+    "Name": "Iron",
+    "Description": "Raises the base Defense stat of one Pokémon."
+  },
+  {
+    "itemId": 68,
+    "Name": "Calcium",
+    "Description": "Raises the base Sp. Atk stat of one Pokémon."
+  },
+  {
+    "itemId": 69,
+    "Name": "Zinc",
+    "Description": "Raises the base Sp. Def stat of one Pokémon."
+  },
+  {
+    "itemId": 70,
+    "Name": "Carbos",
+    "Description": "Raises the base Speed stat of one Pokémon."
+  },
+  {
+    "itemId": 71,
+    "Name": "PP Up",
+    "Description": "Raises the maximum PP of a selected move."
+  },
+  {
+    "itemId": 72,
+    "Name": "PP Max",
+    "Description": "Raises the PP of a move to its maximum points."
+  },
+  {
+    "itemId": 73,
+    "Name": "Health Feather",
+    "Description": "An item that raises the base HP of a Pokémon."
+  },
+  {
+    "itemId": 74,
+    "Name": "Muscle Feather",
+    "Description": "An item that raises the base Attack of a Pokémon."
+  },
+  {
+    "itemId": 75,
+    "Name": "Resist Feather",
+    "Description": "An item that raises the base Defense of a Pokémon."
+  },
+  {
+    "itemId": 76,
+    "Name": "Genius Feather",
+    "Description": "An item that raises the base Sp. Atk. of a Pokémon."
+  },
+  {
+    "itemId": 77,
+    "Name": "Clever Feather",
+    "Description": "An item that raises the base Sp. Def. of a Pokémon."
+  },
+  {
+    "itemId": 78,
+    "Name": "Swift Feather",
+    "Description": "An item that raises the base Speed of a Pokémon."
+  },
+  {
+    "itemId": 79,
+    "Name": "Ability Capsule",
+    "Description": "Switches a Poké- mon's ability."
+  },
+  {
+    "itemId": 80,
+    "Name": "Ability Patch",
+    "Description": "Turns the ability of a Pokémon into a rare ability."
+  },
+  {
+    "itemId": 81,
+    "Name": "Lonely Mint",
+    "Description": "Can be smelled. It ups Attack, but reduces Defense."
+  },
+  {
+    "itemId": 82,
+    "Name": "Adamant Mint",
+    "Description": "Can be smelled. It ups Attack, but reduces Sp. Atk."
+  },
+  {
+    "itemId": 83,
+    "Name": "Naughty Mint",
+    "Description": "Can be smelled. It ups Attack, but reduces Sp. Def."
+  },
+  {
+    "itemId": 84,
+    "Name": "Brave Mint",
+    "Description": "Can be smelled. It ups Attack, but reduces Speed."
+  },
+  {
+    "itemId": 85,
+    "Name": "Bold Mint",
+    "Description": "Can be smelled. It ups Defense, but reduces Attack."
+  },
+  {
+    "itemId": 86,
+    "Name": "Impish Mint",
+    "Description": "Can be smelled. It ups Defense, but reduces Sp. Atk."
+  },
+  {
+    "itemId": 87,
+    "Name": "Lax Mint",
+    "Description": "Can be smelled. It ups Defense, but reduces Sp. Def."
+  },
+  {
+    "itemId": 88,
+    "Name": "Relaxed Mint",
+    "Description": "Can be smelled. It ups Defense, but reduces Speed."
+  },
+  {
+    "itemId": 89,
+    "Name": "Modest Mint",
+    "Description": "Can be smelled. It ups Sp. Atk, but reduces Attack."
+  },
+  {
+    "itemId": 90,
+    "Name": "Mild Mint",
+    "Description": "Can be smelled. It ups Sp. Atk, but reduces Defense."
+  },
+  {
+    "itemId": 91,
+    "Name": "Rash Mint",
+    "Description": "Can be smelled. It ups Sp. Atk, but reduces Sp. Def."
+  },
+  {
+    "itemId": 92,
+    "Name": "Quiet Mint",
+    "Description": "Can be smelled. It ups Sp. Atk, but reduces Speed."
+  },
+  {
+    "itemId": 93,
+    "Name": "Calm Mint",
+    "Description": "Can be smelled. It ups Sp. Def, but reduces Attack."
+  },
+  {
+    "itemId": 94,
+    "Name": "Gentle Mint",
+    "Description": "Can be smelled. It ups Sp. Def, but reduces Defense."
+  },
+  {
+    "itemId": 95,
+    "Name": "Careful Mint",
+    "Description": "Can be smelled. It ups Sp. Def, but reduces Sp. Atk."
+  },
+  {
+    "itemId": 96,
+    "Name": "Sassy Mint",
+    "Description": "Can be smelled. It ups Sp. Def, but reduces Speed."
+  },
+  {
+    "itemId": 97,
+    "Name": "Timid Mint",
+    "Description": "Can be smelled. It ups Speed, but reduces Attack."
+  },
+  {
+    "itemId": 98,
+    "Name": "Hasty Mint",
+    "Description": "Can be smelled. It ups Speed, but reduces Defense."
+  },
+  {
+    "itemId": 99,
+    "Name": "Jolly Mint",
+    "Description": "Can be smelled. It ups Speed, but reduces Sp. Atk."
+  },
+  {
+    "itemId": 100,
+    "Name": "Naive Mint",
+    "Description": "Can be smelled. It ups Speed, but reduces Sp. Def."
+  },
+  {
+    "itemId": 101,
+    "Name": "Serious Mint",
+    "Description": "Can be smelled. It makes each stat grow equally."
+  },
+  {
+    "itemId": 102,
+    "Name": "Rare Candy",
+    "Description": "Raises the level of a Pokémon by one."
+  },
+  {
+    "itemId": 103,
+    "Name": "Exp. Candy XS",
+    "Description": "Gives a very small amount of Exp. to a single Pokémon."
+  },
+  {
+    "itemId": 104,
+    "Name": "Exp. Candy S",
+    "Description": "Gives a small amount of Exp. to a single Pokémon."
+  },
+  {
+    "itemId": 105,
+    "Name": "Exp. Candy M",
+    "Description": "Gives a moderate amount of Exp. to a single Pokémon."
+  },
+  {
+    "itemId": 106,
+    "Name": "Exp. Candy L",
+    "Description": "Gives a large amount of Exp. to a single Pokémon."
+  },
+  {
+    "itemId": 107,
+    "Name": "Exp. Candy XL",
+    "Description": "Gives a very large amount of Exp. to a single Pokémon."
+  },
+  {
+    "itemId": 108,
+    "Name": "Dynamax Candy",
+    "Description": "Raises the Dynamax Level of a single Pokémon by one."
+  },
+  {
+    "itemId": 109,
+    "Name": "Blue Flute",
+    "Description": "A glass flute that awakens sleeping Pokémon."
+  },
+  {
+    "itemId": 110,
+    "Name": "Yellow Flute",
+    "Description": "A glass flute that snaps Pokémon out of confusion."
+  },
+  {
+    "itemId": 111,
+    "Name": "Red Flute",
+    "Description": "A glass flute that snaps Pokémon out of attraction."
+  },
+  {
+    "itemId": 112,
+    "Name": "Black Flute",
+    "Description": "A glass flute that keeps away wild Pokémon."
+  },
+  {
+    "itemId": 113,
+    "Name": "White Flute",
+    "Description": "A glass flute that lures wild Pokémon."
+  },
+  {
+    "itemId": 114,
+    "Name": "Repel",
+    "Description": "Repels weak wild Pokémon for 100 steps."
+  },
+  {
+    "itemId": 115,
+    "Name": "Super Repel",
+    "Description": "Repels weak wild Pokémon for 200 steps."
+  },
+  {
+    "itemId": 116,
+    "Name": "Max Repel",
+    "Description": "Repels weak wild Pokémon for 250 steps."
+  },
+  {
+    "itemId": 117,
+    "Name": "Lure",
+    "Description": "Makes Pokémon more likely to appear for 100 steps."
+  },
+  {
+    "itemId": 118,
+    "Name": "Super Lure",
+    "Description": "Makes Pokémon more likely to appear for 200 steps."
+  },
+  {
+    "itemId": 119,
+    "Name": "Max Lure",
+    "Description": "Makes Pokémon more likely to appear for 250 steps."
+  },
+  {
+    "itemId": 120,
+    "Name": "Escape Rope",
+    "Description": "Use to escape instantly from a cave or a dungeon."
+  },
+  {
+    "itemId": 121,
+    "Name": "X Attack",
+    "Description": "Sharply raises stat Attack during one battle."
+  },
+  {
+    "itemId": 122,
+    "Name": "X Defense",
+    "Description": "Sharply raises stat Defense during one battle."
+  },
+  {
+    "itemId": 123,
+    "Name": "X Sp. Atk",
+    "Description": "Sharply raises stat Sp. Atk during one battle."
+  },
+  {
+    "itemId": 124,
+    "Name": "X Sp. Def",
+    "Description": "Sharply raises stat Sp. Def during one battle."
+  },
+  {
+    "itemId": 125,
+    "Name": "X Speed",
+    "Description": "Sharply raises stat Speed during one battle."
+  },
+  {
+    "itemId": 126,
+    "Name": "X Accuracy",
+    "Description": "Sharply raises move accuracy during one battle."
+  },
+  {
+    "itemId": 127,
+    "Name": "Dire Hit",
+    "Description": "Raises the critical-hit ratio during one battle."
+  },
+  {
+    "itemId": 128,
+    "Name": "Guard Spec.",
+    "Description": "Prevents stat reduction when used in battle."
+  },
+  {
+    "itemId": 129,
+    "Name": "Poké Doll",
+    "Description": "Use to flee from any battle with a wild Pokémon."
+  },
+  {
+    "itemId": 130,
+    "Name": "Fluffy Tail",
+    "Description": "Use to flee from any battle with a wild Pokémon."
+  },
+  {
+    "itemId": 131,
+    "Name": "Poké Toy",
+    "Description": "Use to flee from any battle with a wild Pokémon."
+  },
+  {
+    "itemId": 132,
+    "Name": "Max Mushrooms",
+    "Description": "Raises every stat during one battle by one stage."
+  },
+  {
+    "itemId": 133,
+    "Name": "Bottle Cap",
+    "Description": "A beautiful bottle cap that gives off a silver gleam."
+  },
+  {
+    "itemId": 134,
+    "Name": "Gold Bottle Cap",
+    "Description": "A beautiful bottle cap that gives off a golden gleam."
+  },
+  {
+    "itemId": 135,
+    "Name": "Nugget",
+    "Description": "A nugget of pure gold. Can be sold at a high price."
+  },
+  {
+    "itemId": 136,
+    "Name": "Big Nugget",
+    "Description": "A big nugget made of gold, sellable at a high price."
+  },
+  {
+    "itemId": 137,
+    "Name": "Tiny Mushroom",
+    "Description": "A plain mushroom that would sell at a cheap price."
+  },
+  {
+    "itemId": 138,
+    "Name": "Big Mushroom",
+    "Description": "A rare mushroom that would sell at a high price."
+  },
+  {
+    "itemId": 139,
+    "Name": "Balm Mushroom",
+    "Description": "A rare mushroom that would sell at a high price."
+  },
+  {
+    "itemId": 140,
+    "Name": "Pearl",
+    "Description": "A pretty pearl that would sell at a cheap price."
+  },
+  {
+    "itemId": 141,
+    "Name": "Big Pearl",
+    "Description": "A lovely large pearl that would sell at a high price."
+  },
+  {
+    "itemId": 142,
+    "Name": "Pearl String",
+    "Description": "Very large pearls that would sell at a high price."
+  },
+  {
+    "itemId": 143,
+    "Name": "Stardust",
+    "Description": "Beautiful red sand. Can be sold at a high price."
+  },
+  {
+    "itemId": 144,
+    "Name": "Star Piece",
+    "Description": "A red gem shard. It would sell for a very high price."
+  },
+  {
+    "itemId": 145,
+    "Name": "Comet Shard",
+    "Description": "A comet's shard. It would sell for a high price."
+  },
+  {
+    "itemId": 146,
+    "Name": "Shoal Salt",
+    "Description": "Salt obtained from deep inside the Shoal Cave."
+  },
+  {
+    "itemId": 147,
+    "Name": "Shoal Shell",
+    "Description": "A seashell found deep inside the Shoal Cave."
+  },
+  {
+    "itemId": 148,
+    "Name": "Red Shard",
+    "Description": "A shard from an ancient item. Can be sold cheaply."
+  },
+  {
+    "itemId": 149,
+    "Name": "Blue Shard",
+    "Description": "A shard from an ancient item. Can be sold cheaply."
+  },
+  {
+    "itemId": 150,
+    "Name": "Yellow Shard",
+    "Description": "A shard from an ancient item. Can be sold cheaply."
+  },
+  {
+    "itemId": 151,
+    "Name": "Green Shard",
+    "Description": "A shard from an ancient item. Can be sold cheaply."
+  },
+  {
+    "itemId": 152,
+    "Name": "Heart Scale",
+    "Description": "A lovely scale. It is coveted by collectors."
+  },
+  {
+    "itemId": 153,
+    "Name": "Honey",
+    "Description": "Sweet honey that attracts wild Pokémon when used."
+  },
+  {
+    "itemId": 154,
+    "Name": "Rare Bone",
+    "Description": "A very rare bone. It can be sold at a high price."
+  },
+  {
+    "itemId": 155,
+    "Name": "Odd Keystone",
+    "Description": "Voices can be heard from this odd stone occasionally."
+  },
+  {
+    "itemId": 156,
+    "Name": "Pretty Feather",
+    "Description": "A beautiful yet plain feather that does nothing."
+  },
+  {
+    "itemId": 157,
+    "Name": "Relic Copper",
+    "Description": "A copper coin used long ago. It sells at a high price."
+  },
+  {
+    "itemId": 158,
+    "Name": "Relic Silver",
+    "Description": "A silver coin used long ago. It sells at a high price."
+  },
+  {
+    "itemId": 159,
+    "Name": "Relic Gold",
+    "Description": "A gold coin used long ago. It sells at a high price."
+  },
+  {
+    "itemId": 160,
+    "Name": "Relic Vase",
+    "Description": "A vase made long ago. It sells at a high price."
+  },
+  {
+    "itemId": 161,
+    "Name": "Relic Band",
+    "Description": "An old bracelet. It sells at a high price."
+  },
+  {
+    "itemId": 162,
+    "Name": "Relic Statue",
+    "Description": "An old statue. It sells at a high price."
+  },
+  {
+    "itemId": 163,
+    "Name": "Relic Crown",
+    "Description": "An old crown. It sells at a high price."
+  },
+  {
+    "itemId": 164,
+    "Name": "Strange Souvenir",
+    "Description": "An ornament that depicts a Pokémon from Alola."
+  },
+  {
+    "itemId": 165,
+    "Name": "Helix Fossil",
+    "Description": "A piece of an ancient marine Pokémon's seashell."
+  },
+  {
+    "itemId": 166,
+    "Name": "Dome Fossil",
+    "Description": "A piece of an ancient marine Pokémon's shell."
+  },
+  {
+    "itemId": 167,
+    "Name": "Old Amber",
+    "Description": "A stone containing the genes of an ancient Pokémon."
+  },
+  {
+    "itemId": 168,
+    "Name": "Root Fossil",
+    "Description": "A fossil of an ancient, seafloor- dwelling Pokémon."
+  },
+  {
+    "itemId": 169,
+    "Name": "Claw Fossil",
+    "Description": "A fossil of an ancient, seafloor- dwelling Pokémon."
+  },
+  {
+    "itemId": 170,
+    "Name": "Armor Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's head."
+  },
+  {
+    "itemId": 171,
+    "Name": "Skull Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's collar."
+  },
+  {
+    "itemId": 172,
+    "Name": "Cover Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's back."
+  },
+  {
+    "itemId": 173,
+    "Name": "Plume Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's wing."
+  },
+  {
+    "itemId": 174,
+    "Name": "Jaw Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's large jaw."
+  },
+  {
+    "itemId": 175,
+    "Name": "Sail Fossil",
+    "Description": "A piece of a prehistoric Poké- mon's skin sail."
+  },
+  {
+    "itemId": 176,
+    "Name": "Fossilized Bird",
+    "Description": "A fossil of an ancient, sky- soaring Pokémon."
+  },
+  {
+    "itemId": 177,
+    "Name": "Fossilized Fish",
+    "Description": "A fossil of an ancient, sea- dwelling Pokémon."
+  },
+  {
+    "itemId": 178,
+    "Name": "Fossilized Drake",
+    "Description": "A fossil of an ancient, land- roaming Pokémon."
+  },
+  {
+    "itemId": 179,
+    "Name": "Fossilized Dino",
+    "Description": "A fossil of an ancient, sea- dwelling Pokémon."
+  },
+  {
+    "itemId": 180,
+    "Name": "Growth Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 181,
+    "Name": "Damp Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 182,
+    "Name": "Stable Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 183,
+    "Name": "Gooey Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 184,
+    "Name": "Rich Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 185,
+    "Name": "Surprise Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 186,
+    "Name": "Boost Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 187,
+    "Name": "Amaze Mulch",
+    "Description": "A fertilizer that is unsuitable for local soil."
+  },
+  {
+    "itemId": 188,
+    "Name": "Red Apricorn",
+    "Description": "A red apricorn. It assails your nostrils."
+  },
+  {
+    "itemId": 189,
+    "Name": "Blue Apricorn",
+    "Description": "A blue apricorn. It smells a bit like grass."
+  },
+  {
+    "itemId": 190,
+    "Name": "Yellow Apricorn",
+    "Description": "A yellow apricorn. It has an invigor- ating scent."
+  },
+  {
+    "itemId": 191,
+    "Name": "Green Apricorn",
+    "Description": "A green apricorn. It has a strange, aromatic scent."
+  },
+  {
+    "itemId": 192,
+    "Name": "Pink Apricorn",
+    "Description": "A pink apricorn. It has a nice, sweet scent."
+  },
+  {
+    "itemId": 193,
+    "Name": "White Apricorn",
+    "Description": "A white apricorn. It doesn't smell like anything."
+  },
+  {
+    "itemId": 194,
+    "Name": "Black Apricorn",
+    "Description": "A black apricorn. It has an inde- scribable scent."
+  },
+  {
+    "itemId": 195,
+    "Name": "Wishing Piece",
+    "Description": "Throw into a ᴾₖᴹₙ Den to attract Dynamax Pokémon."
+  },
+  {
+    "itemId": 196,
+    "Name": "Galarica Twig",
+    "Description": "A twig from a tree in Galar called Galarica."
+  },
+  {
+    "itemId": 197,
+    "Name": "Armorite Ore",
+    "Description": "A rare ore. Can be found in the Isle of Armor at Galar."
+  },
+  {
+    "itemId": 198,
+    "Name": "Dynite Ore",
+    "Description": "A mysterious ore. It can be found in Galar's Max Lair."
+  },
+  {
+    "itemId": 199,
+    "Name": "Orange Mail",
+    "Description": "A Zigzagoon-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 200,
+    "Name": "Harbor Mail",
+    "Description": "A Wingull-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 201,
+    "Name": "Glitter Mail",
+    "Description": "A Pikachu-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 202,
+    "Name": "Mech Mail",
+    "Description": "A Magnemite-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 203,
+    "Name": "Wood Mail",
+    "Description": "A Slakoth-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 204,
+    "Name": "Wave Mail",
+    "Description": "A Wailmer-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 205,
+    "Name": "Bead Mail",
+    "Description": "Mail featuring a sketch of the holding Pokémon."
+  },
+  {
+    "itemId": 206,
+    "Name": "Shadow Mail",
+    "Description": "A Duskull-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 207,
+    "Name": "Tropic Mail",
+    "Description": "A Bellossom-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 208,
+    "Name": "Dream Mail",
+    "Description": "Mail featuring a sketch of the holding Pokémon."
+  },
+  {
+    "itemId": 209,
+    "Name": "Fab Mail",
+    "Description": "A gorgeous-print Mail to be held by a Pokémon."
+  },
+  {
+    "itemId": 210,
+    "Name": "Retro Mail",
+    "Description": "Mail featuring the drawings of three Pokémon."
+  },
+  {
+    "itemId": 211,
+    "Name": "Fire Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 212,
+    "Name": "Water Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 213,
+    "Name": "Thunder Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 214,
+    "Name": "Leaf Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 215,
+    "Name": "Ice Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 216,
+    "Name": "Sun Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 217,
+    "Name": "Moon Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 218,
+    "Name": "Shiny Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 219,
+    "Name": "Dusk Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 220,
+    "Name": "Dawn Stone",
+    "Description": "Makes certain species of Pokémon evolve."
+  },
+  {
+    "itemId": 221,
+    "Name": "Sweet Apple",
+    "Description": "A very sweet apple that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 222,
+    "Name": "Tart Apple",
+    "Description": "A very tart apple that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 223,
+    "Name": "Cracked Pot",
+    "Description": "A cracked teapot that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 224,
+    "Name": "Chipped Pot",
+    "Description": "A chipped teapot that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 225,
+    "Name": "Galarica Cuff",
+    "Description": "A cuff from Galar that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 226,
+    "Name": "Galarica Wreath",
+    "Description": "A wreath made in Galar. Makes some Pokémon evolve."
+  },
+  {
+    "itemId": 227,
+    "Name": "Dragon Scale",
+    "Description": "A strange scale held by Dragon- type Pokémon."
+  },
+  {
+    "itemId": 228,
+    "Name": "Upgrade",
+    "Description": "A peculiar box made by Silph Co."
+  },
+  {
+    "itemId": 229,
+    "Name": "Protector",
+    "Description": "Loved by a certain Pokémon. It's stiff and heavy."
+  },
+  {
+    "itemId": 230,
+    "Name": "Electirizer",
+    "Description": "Loved by a certain Pokémon. It's full of electric energy."
+  },
+  {
+    "itemId": 231,
+    "Name": "Magmarizer",
+    "Description": "Loved by a certain Pokémon. It's full of magma energy."
+  },
+  {
+    "itemId": 232,
+    "Name": "Dubious Disc",
+    "Description": "A clear device overflowing with dubious data."
+  },
+  {
+    "itemId": 233,
+    "Name": "Reaper Cloth",
+    "Description": "Loved by a certain Pokémon. Imbued with spirit energy."
+  },
+  {
+    "itemId": 234,
+    "Name": "Prism Scale",
+    "Description": "A mysterious scale that evolves a certain Pokémon."
+  },
+  {
+    "itemId": 235,
+    "Name": "Whipped Dream",
+    "Description": "A soft and sweet treat loved by a certain Pokémon."
+  },
+  {
+    "itemId": 236,
+    "Name": "Sachet",
+    "Description": "A sachet of strong perfumes, loved by a certain Pokémon."
+  },
+  {
+    "itemId": 237,
+    "Name": "Oval Stone",
+    "Description": "Peculiar stone that evolves a certain Pokémon."
+  },
+  {
+    "itemId": 238,
+    "Name": "Strawberry Sweet",
+    "Description": "Strawberry-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 239,
+    "Name": "Love Sweet",
+    "Description": "A heart-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 240,
+    "Name": "Berry Sweet",
+    "Description": "A berry-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 241,
+    "Name": "Clover Sweet",
+    "Description": "A clover-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 242,
+    "Name": "Flower Sweet",
+    "Description": "A flower-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 243,
+    "Name": "Star Sweet",
+    "Description": "A star-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 244,
+    "Name": "Ribbon Sweet",
+    "Description": "A ribbon-shaped sweet loved by Milcery."
+  },
+  {
+    "itemId": 245,
+    "Name": "Everstone",
+    "Description": "A wondrous hold item that prevents evolution."
+  },
+  {
+    "itemId": 246,
+    "Name": "Red Nectar",
+    "Description": "Flower nectar that changes the form of certain Pokémon."
+  },
+  {
+    "itemId": 247,
+    "Name": "Yellow Nectar",
+    "Description": "Flower nectar that changes the form of certain Pokémon."
+  },
+  {
+    "itemId": 248,
+    "Name": "Pink Nectar",
+    "Description": "Flower nectar that changes the form of certain Pokémon."
+  },
+  {
+    "itemId": 249,
+    "Name": "Purple Nectar",
+    "Description": "Flower nectar that changes the form of certain Pokémon."
+  },
+  {
+    "itemId": 250,
+    "Name": "Flame Plate",
+    "Description": "A tablet that ups the power of Fire-type moves."
+  },
+  {
+    "itemId": 251,
+    "Name": "Splash Plate",
+    "Description": "A tablet that ups the power of Water-type moves."
+  },
+  {
+    "itemId": 252,
+    "Name": "Zap Plate",
+    "Description": "A tablet that ups the power of Elec- tric-type moves."
+  },
+  {
+    "itemId": 253,
+    "Name": "Meadow Plate",
+    "Description": "A tablet that ups the power of Grass-type moves."
+  },
+  {
+    "itemId": 254,
+    "Name": "Icicle Plate",
+    "Description": "A tablet that ups the power of Ice-type moves."
+  },
+  {
+    "itemId": 255,
+    "Name": "Fist Plate",
+    "Description": "A tablet that ups the power of Fight- ing-type moves."
+  },
+  {
+    "itemId": 256,
+    "Name": "Toxic Plate",
+    "Description": "A tablet that ups the power of Poison-type moves."
+  },
+  {
+    "itemId": 257,
+    "Name": "Earth Plate",
+    "Description": "A tablet that ups the power of Ground-type moves."
+  },
+  {
+    "itemId": 258,
+    "Name": "Sky Plate",
+    "Description": "A tablet that ups the power of Flying-type moves."
+  },
+  {
+    "itemId": 259,
+    "Name": "Mind Plate",
+    "Description": "A tablet that ups the power of Psy chic-type moves."
+  },
+  {
+    "itemId": 260,
+    "Name": "Insect Plate",
+    "Description": "A tablet that ups the power of Bug-type moves."
+  },
+  {
+    "itemId": 261,
+    "Name": "Stone Plate",
+    "Description": "A tablet that ups the power of Rock-type moves."
+  },
+  {
+    "itemId": 262,
+    "Name": "Spooky Plate",
+    "Description": "A tablet that ups the power of Ghost-type moves."
+  },
+  {
+    "itemId": 263,
+    "Name": "Draco Plate",
+    "Description": "A tablet that ups the power of Dragon-type moves."
+  },
+  {
+    "itemId": 264,
+    "Name": "Dread Plate",
+    "Description": "A tablet that ups the power of Dark-type moves."
+  },
+  {
+    "itemId": 265,
+    "Name": "Iron Plate",
+    "Description": "A tablet that ups the power of Steel-type moves."
+  },
+  {
+    "itemId": 266,
+    "Name": "Pixie Plate",
+    "Description": "A tablet that ups the power of Fairy-type moves."
+  },
+  {
+    "itemId": 267,
+    "Name": "Douse Drive",
+    "Description": "Changes Genesect's Techno Blast to Water-type."
+  },
+  {
+    "itemId": 268,
+    "Name": "Shock Drive",
+    "Description": "Changes Genesect's Techno Blast to Electric-type."
+  },
+  {
+    "itemId": 269,
+    "Name": "Burn Drive",
+    "Description": "Changes Genesect's Techno Blast to Fire-type."
+  },
+  {
+    "itemId": 270,
+    "Name": "Chill Drive",
+    "Description": "Changes Genesect's Techno Blast to Ice-type."
+  },
+  {
+    "itemId": 271,
+    "Name": "Fire Memory",
+    "Description": "A disc with Fire type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 272,
+    "Name": "Water Memory",
+    "Description": "A disc with Water type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 273,
+    "Name": "Electric Memory",
+    "Description": "A disc with Electric type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 274,
+    "Name": "Grass Memory",
+    "Description": "A disc with Grass type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 275,
+    "Name": "Ice Memory",
+    "Description": "A disc with Ice type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 276,
+    "Name": "Fighting Memory",
+    "Description": "Disc with Fighting type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 277,
+    "Name": "Poison Memory",
+    "Description": "A disc with Poison type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 278,
+    "Name": "Ground Memory",
+    "Description": "A disc with Ground type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 279,
+    "Name": "Flying Memory",
+    "Description": "A disc with Flying type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 280,
+    "Name": "Psychic Memory",
+    "Description": "A disc with Psychic type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 281,
+    "Name": "Bug Memory",
+    "Description": "A disc with Bug type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 282,
+    "Name": "Rock Memory",
+    "Description": "A disc with Rock type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 283,
+    "Name": "Ghost Memory",
+    "Description": "A disc with Ghost type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 284,
+    "Name": "Dragon Memory",
+    "Description": "A disc with Dragon type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 285,
+    "Name": "Dark Memory",
+    "Description": "A disc with Dark type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 286,
+    "Name": "Steel Memory",
+    "Description": "A disc with Steel type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 287,
+    "Name": "Fairy Memory",
+    "Description": "A disc with Fairy type data. It swaps Silvally's type."
+  },
+  {
+    "itemId": 288,
+    "Name": "Rusted Sword",
+    "Description": "A rusty sword. A hero used it to halt a disaster."
+  },
+  {
+    "itemId": 289,
+    "Name": "Rusted Shield",
+    "Description": "A rusty shield. A hero used it to halt a disaster."
+  },
+  {
+    "itemId": 290,
+    "Name": "Red Orb",
+    "Description": "A red, glowing orb said to contain an ancient power."
+  },
+  {
+    "itemId": 291,
+    "Name": "Blue Orb",
+    "Description": "A blue, glowing orb said to contain an ancient power."
+  },
+  {
+    "itemId": 292,
+    "Name": "Venusaurite",
+    "Description": "This stone enables Venusaur to Mega Evolve in battle."
+  },
+  {
+    "itemId": 293,
+    "Name": "Charizardite X",
+    "Description": "This stone enables Charizard to Mega Evolve in battle."
+  },
+  {
+    "itemId": 294,
+    "Name": "Charizardite Y",
+    "Description": "This stone enables Charizard to Mega Evolve in battle."
+  },
+  {
+    "itemId": 295,
+    "Name": "Blastoisinite",
+    "Description": "This stone enables Blastoise to Mega Evolve in battle."
+  },
+  {
+    "itemId": 296,
+    "Name": "Beedrillite",
+    "Description": "This stone enables Beedrill to Mega Evolve in battle."
+  },
+  {
+    "itemId": 297,
+    "Name": "Pidgeotite",
+    "Description": "This stone enables Pidgeot to Mega Evolve in battle."
+  },
+  {
+    "itemId": 298,
+    "Name": "Alakazite",
+    "Description": "This stone enables Alakazam to Mega Evolve in battle."
+  },
+  {
+    "itemId": 299,
+    "Name": "Slowbronite",
+    "Description": "This stone enables Slowbro to Mega Evolve in battle."
+  },
+  {
+    "itemId": 300,
+    "Name": "Gengarite",
+    "Description": "This stone enables Gengar to Mega Evolve in battle."
+  },
+  {
+    "itemId": 301,
+    "Name": "Kangaskhanite",
+    "Description": "This stone enables Kangaskhan to Mega Evolve in battle."
+  },
+  {
+    "itemId": 302,
+    "Name": "Pinsirite",
+    "Description": "This stone enables Pinsir to Mega Evolve in battle."
+  },
+  {
+    "itemId": 303,
+    "Name": "Gyaradosite",
+    "Description": "This stone enables Gyarados to Mega Evolve in battle."
+  },
+  {
+    "itemId": 304,
+    "Name": "Aerodactylite",
+    "Description": "This stone enables Aerodactyl to Mega Evolve in battle."
+  },
+  {
+    "itemId": 305,
+    "Name": "Mewtwonite X",
+    "Description": "This stone enables Mewtwo to Mega Evolve in battle."
+  },
+  {
+    "itemId": 306,
+    "Name": "Mewtwonite Y",
+    "Description": "This stone enables Mewtwo to Mega Evolve in battle."
+  },
+  {
+    "itemId": 307,
+    "Name": "Ampharosite",
+    "Description": "This stone enables Ampharos to Mega Evolve in battle."
+  },
+  {
+    "itemId": 308,
+    "Name": "Steelixite",
+    "Description": "This stone enables Steelix to Mega Evolve in battle."
+  },
+  {
+    "itemId": 309,
+    "Name": "Scizorite",
+    "Description": "This stone enables Scizor to Mega Evolve in battle."
+  },
+  {
+    "itemId": 310,
+    "Name": "Heracronite",
+    "Description": "This stone enables Heracross to Mega Evolve in battle."
+  },
+  {
+    "itemId": 311,
+    "Name": "Houndoominite",
+    "Description": "This stone enables Houndoom to Mega Evolve in battle."
+  },
+  {
+    "itemId": 312,
+    "Name": "Tyranitarite",
+    "Description": "This stone enables Tyranitar to Mega Evolve in battle."
+  },
+  {
+    "itemId": 313,
+    "Name": "Sceptilite",
+    "Description": "This stone enables Sceptile to Mega Evolve in battle."
+  },
+  {
+    "itemId": 314,
+    "Name": "Blazikenite",
+    "Description": "This stone enables Blaziken to Mega Evolve in battle."
+  },
+  {
+    "itemId": 315,
+    "Name": "Swampertite",
+    "Description": "This stone enables Swampert to Mega Evolve in battle."
+  },
+  {
+    "itemId": 316,
+    "Name": "Gardevoirite",
+    "Description": "This stone enables Gardevoir to Mega Evolve in battle."
+  },
+  {
+    "itemId": 317,
+    "Name": "Sablenite",
+    "Description": "This stone enables Sableye to Mega Evolve in battle."
+  },
+  {
+    "itemId": 318,
+    "Name": "Mawilite",
+    "Description": "This stone enables Mawile to Mega Evolve in battle."
+  },
+  {
+    "itemId": 319,
+    "Name": "Aggronite",
+    "Description": "This stone enables Aggron to Mega Evolve in battle."
+  },
+  {
+    "itemId": 320,
+    "Name": "Medichamite",
+    "Description": "This stone enables Medicham to Mega Evolve in battle."
+  },
+  {
+    "itemId": 321,
+    "Name": "Manectite",
+    "Description": "This stone enables Manectric to Mega Evolve in battle."
+  },
+  {
+    "itemId": 322,
+    "Name": "Sharpedonite",
+    "Description": "This stone enables Sharpedo to Mega Evolve in battle."
+  },
+  {
+    "itemId": 323,
+    "Name": "Cameruptite",
+    "Description": "This stone enables Camerupt to Mega Evolve in battle."
+  },
+  {
+    "itemId": 324,
+    "Name": "Altarianite",
+    "Description": "This stone enables Altaria to Mega Evolve in battle."
+  },
+  {
+    "itemId": 325,
+    "Name": "Banettite",
+    "Description": "This stone enables Banette to Mega Evolve in battle."
+  },
+  {
+    "itemId": 326,
+    "Name": "Absolite",
+    "Description": "This stone enables Absol to Mega Evolve in battle."
+  },
+  {
+    "itemId": 327,
+    "Name": "Glalitite",
+    "Description": "This stone enables Glalie to Mega Evolve in battle."
+  },
+  {
+    "itemId": 328,
+    "Name": "Salamencite",
+    "Description": "This stone enables Salamence to Mega Evolve in battle."
+  },
+  {
+    "itemId": 329,
+    "Name": "Metagrossite",
+    "Description": "This stone enables Metagross to Mega Evolve in battle."
+  },
+  {
+    "itemId": 330,
+    "Name": "Latiasite",
+    "Description": "This stone enables Latias to Mega Evolve in battle."
+  },
+  {
+    "itemId": 331,
+    "Name": "Latiosite",
+    "Description": "This stone enables Latios to Mega Evolve in battle."
+  },
+  {
+    "itemId": 332,
+    "Name": "Lopunnite",
+    "Description": "This stone enables Lopunny to Mega Evolve in battle."
+  },
+  {
+    "itemId": 333,
+    "Name": "Garchompite",
+    "Description": "This stone enables Garchomp to Mega Evolve in battle."
+  },
+  {
+    "itemId": 334,
+    "Name": "Lucarionite",
+    "Description": "This stone enables Lucario to Mega Evolve in battle."
+  },
+  {
+    "itemId": 335,
+    "Name": "Abomasite",
+    "Description": "This stone enables Abomasnow to Mega Evolve in battle."
+  },
+  {
+    "itemId": 336,
+    "Name": "Galladite",
+    "Description": "This stone enables Gallade to Mega Evolve in battle."
+  },
+  {
+    "itemId": 337,
+    "Name": "Audinite",
+    "Description": "This stone enables Audino to Mega Evolve in battle."
+  },
+  {
+    "itemId": 338,
+    "Name": "Diancite",
+    "Description": "This stone enables Diancie to Mega Evolve in battle."
+  },
+  {
+    "itemId": 339,
+    "Name": "Normal Gem",
+    "Description": "Increases the power of Normal Type moves."
+  },
+  {
+    "itemId": 340,
+    "Name": "Fire Gem",
+    "Description": "Increases the power of Fire Type moves."
+  },
+  {
+    "itemId": 341,
+    "Name": "Water Gem",
+    "Description": "Increases the power of Water Type moves."
+  },
+  {
+    "itemId": 342,
+    "Name": "Electric Gem",
+    "Description": "Increases the power of Electric Type moves."
+  },
+  {
+    "itemId": 343,
+    "Name": "Grass Gem",
+    "Description": "Increases the power of Grass Type moves."
+  },
+  {
+    "itemId": 344,
+    "Name": "Ice Gem",
+    "Description": "Increases the power of Ice Type moves."
+  },
+  {
+    "itemId": 345,
+    "Name": "Fighting Gem",
+    "Description": "Increases the power of Fighting Type moves."
+  },
+  {
+    "itemId": 346,
+    "Name": "Poison Gem",
+    "Description": "Increases the power of Poison Type moves."
+  },
+  {
+    "itemId": 347,
+    "Name": "Ground Gem",
+    "Description": "Increases the power of Ground Type moves."
+  },
+  {
+    "itemId": 348,
+    "Name": "Flying Gem",
+    "Description": "Increases the power of Flying Type moves."
+  },
+  {
+    "itemId": 349,
+    "Name": "Psychic Gem",
+    "Description": "Increases the power of Psychic Type moves."
+  },
+  {
+    "itemId": 350,
+    "Name": "Bug Gem",
+    "Description": "Increases the power of Bug Type moves."
+  },
+  {
+    "itemId": 351,
+    "Name": "Rock Gem",
+    "Description": "Increases the power of Rock Type moves."
+  },
+  {
+    "itemId": 352,
+    "Name": "Ghost Gem",
+    "Description": "Increases the power of Ghost Type moves."
+  },
+  {
+    "itemId": 353,
+    "Name": "Dragon Gem",
+    "Description": "Increases the power of Dragon Type moves."
+  },
+  {
+    "itemId": 354,
+    "Name": "Dark Gem",
+    "Description": "Increases the power of Dark Type moves."
+  },
+  {
+    "itemId": 355,
+    "Name": "Steel Gem",
+    "Description": "Increases the power of Steel Type moves."
+  },
+  {
+    "itemId": 356,
+    "Name": "Fairy Gem",
+    "Description": "Increases the power of Fairy Type moves."
+  },
+  {
+    "itemId": 357,
+    "Name": "Normalium Z",
+    "Description": "Upgrade Normal- type moves into Z-Moves."
+  },
+  {
+    "itemId": 358,
+    "Name": "Firium Z",
+    "Description": "Upgrade Fire- type moves into Z-Moves."
+  },
+  {
+    "itemId": 359,
+    "Name": "Waterium Z",
+    "Description": "Upgrade Water- type moves into Z-Moves."
+  },
+  {
+    "itemId": 360,
+    "Name": "Electrium Z",
+    "Description": "Upgrade Electric- type moves into Z-Moves."
+  },
+  {
+    "itemId": 361,
+    "Name": "Grassium Z",
+    "Description": "Upgrade Grass- type moves into Z-Moves."
+  },
+  {
+    "itemId": 362,
+    "Name": "Icium Z",
+    "Description": "Upgrade Ice- type moves into Z-Moves."
+  },
+  {
+    "itemId": 363,
+    "Name": "Fightinium Z",
+    "Description": "Upgrade Fighting- type moves into Z-Moves."
+  },
+  {
+    "itemId": 364,
+    "Name": "Poisonium Z",
+    "Description": "Upgrade Poison- type moves into Z-Moves."
+  },
+  {
+    "itemId": 365,
+    "Name": "Groundium Z",
+    "Description": "Upgrade Ground- type moves into Z-Moves."
+  },
+  {
+    "itemId": 366,
+    "Name": "Flyinium Z",
+    "Description": "Upgrade Flying- type moves into Z-Moves."
+  },
+  {
+    "itemId": 367,
+    "Name": "Psychium Z",
+    "Description": "Upgrade Psychic- type moves into Z-Moves."
+  },
+  {
+    "itemId": 368,
+    "Name": "Buginium Z",
+    "Description": "Upgrade Bug- type moves into Z-Moves."
+  },
+  {
+    "itemId": 369,
+    "Name": "Rockium Z",
+    "Description": "Upgrade Rock- type moves into Z-Moves."
+  },
+  {
+    "itemId": 370,
+    "Name": "Ghostium Z",
+    "Description": "Upgrade Ghost- type moves into Z-Moves."
+  },
+  {
+    "itemId": 371,
+    "Name": "Dragonium Z",
+    "Description": "Upgrade Dragon- type moves into Z-Moves."
+  },
+  {
+    "itemId": 372,
+    "Name": "Darkinium Z",
+    "Description": "Upgrade Dark- type moves into Z-Moves."
+  },
+  {
+    "itemId": 373,
+    "Name": "Steelium Z",
+    "Description": "Upgrade Steel- type moves into Z-Moves."
+  },
+  {
+    "itemId": 374,
+    "Name": "Fairium Z",
+    "Description": "Upgrade Fairy- type moves into Z-Moves."
+  },
+  {
+    "itemId": 375,
+    "Name": "Pikanium Z",
+    "Description": "Upgrade Pikachu's Volt Tackle into a Z-Move."
+  },
+  {
+    "itemId": 376,
+    "Name": "Eevium Z",
+    "Description": "Upgrade Eevee's Last Resort into a Z-Move."
+  },
+  {
+    "itemId": 377,
+    "Name": "Snorlium Z",
+    "Description": "Upgrade Snorlax's Giga Impact into a Z-Move."
+  },
+  {
+    "itemId": 378,
+    "Name": "Mewnium Z",
+    "Description": "Upgrade Mew's Psychic into a Z-Move."
+  },
+  {
+    "itemId": 379,
+    "Name": "Decidium Z",
+    "Description": "Upgrade Decidu- eye's Spirit Sha- ckle into a Z-Move."
+  },
+  {
+    "itemId": 380,
+    "Name": "Incinium Z",
+    "Description": "Upgrade Incine- roar's Darkest La- riat into a Z-Move."
+  },
+  {
+    "itemId": 381,
+    "Name": "Primarium Z",
+    "Description": "Upgrade Primarina's Sparkling Aria into a Z-Move."
+  },
+  {
+    "itemId": 382,
+    "Name": "Lycanium Z",
+    "Description": "Upgrade Lycanroc's Stone Edge into a Z-Move."
+  },
+  {
+    "itemId": 383,
+    "Name": "Mimikium Z",
+    "Description": "Upgrade Mimikyu's Play Rough into a Z-Move."
+  },
+  {
+    "itemId": 384,
+    "Name": "Kommonium Z",
+    "Description": "Upgrade Kommo-o's Clanging Scales into a Z-Move."
+  },
+  {
+    "itemId": 385,
+    "Name": "Tapunium Z",
+    "Description": "Upgrade the tapus' Nature's Madness into a Z-Move."
+  },
+  {
+    "itemId": 386,
+    "Name": "Solganium Z",
+    "Description": "Upgrade Solgaleo's Sunsteel Strike into a Z-Move."
+  },
+  {
+    "itemId": 387,
+    "Name": "Lunalium Z",
+    "Description": "Upgrade Lunala's Moongeist Beam into a Z-Move."
+  },
+  {
+    "itemId": 388,
+    "Name": "Marshadium Z",
+    "Description": "Upgrade Marsha- dow's Spectral Thi- ef into a Z-Move."
+  },
+  {
+    "itemId": 389,
+    "Name": "Aloraichium Z",
+    "Description": "Upgrade Alolan Raichu's Thunder- bolt into a Z-Move."
+  },
+  {
+    "itemId": 390,
+    "Name": "Pikashunium Z",
+    "Description": "Upgrade Pikachu w/ a cap's Thunderbolt into a Z-Move."
+  },
+  {
+    "itemId": 391,
+    "Name": "Ultranecrozium Z",
+    "Description": "A crystal to turn fused Necrozma into a new form."
+  },
+  {
+    "itemId": 392,
+    "Name": "Light Ball",
+    "Description": "A hold item that raises the Atk and Sp. Atk of Pikachu."
+  },
+  {
+    "itemId": 393,
+    "Name": "Leek",
+    "Description": "A hold item that raises Farfetch'd's critical-hit ratio."
+  },
+  {
+    "itemId": 394,
+    "Name": "Thick Club",
+    "Description": "A hold item that  raises Cubone or Marowak's Attack."
+  },
+  {
+    "itemId": 395,
+    "Name": "Lucky Punch",
+    "Description": "A hold item that raises Chansey's critical-hit rate."
+  },
+  {
+    "itemId": 396,
+    "Name": "Metal Powder",
+    "Description": "A hold item that raises Ditto's Defense."
+  },
+  {
+    "itemId": 397,
+    "Name": "Quick Powder",
+    "Description": "A hold item that raises the Speed of Ditto."
+  },
+  {
+    "itemId": 398,
+    "Name": "Deep Sea Scale",
+    "Description": "A hold item that raises the Sp. Def of Clamperl."
+  },
+  {
+    "itemId": 399,
+    "Name": "Deep Sea Tooth",
+    "Description": "A hold item that raises the Sp. Atk of Clamperl."
+  },
+  {
+    "itemId": 400,
+    "Name": "Soul Dew",
+    "Description": "Powers up Latios' & Latias' Psychic and Dragon-type moves."
+  },
+  {
+    "itemId": 401,
+    "Name": "Adamant Orb",
+    "Description": "Powers up Dialga's Dragon and Steel- type moves."
+  },
+  {
+    "itemId": 402,
+    "Name": "Lustrous Orb",
+    "Description": "Powers up Palkia's Dragon and Water- type moves."
+  },
+  {
+    "itemId": 403,
+    "Name": "Griseous Orb",
+    "Description": "Boosts Giratina's Dragon and Ghost- type moves."
+  },
+  {
+    "itemId": 404,
+    "Name": "Sea Incense",
+    "Description": "A hold item that slightly boosts Water-type moves."
+  },
+  {
+    "itemId": 405,
+    "Name": "Lax Incense",
+    "Description": "A hold item that slightly raises the holders's accuracy."
+  },
+  {
+    "itemId": 406,
+    "Name": "Odd Incense",
+    "Description": "A hold item that boosts Psychic- type moves."
+  },
+  {
+    "itemId": 407,
+    "Name": "Rock Incense",
+    "Description": "A hold item that raises the power of Rock-type moves."
+  },
+  {
+    "itemId": 408,
+    "Name": "Full Incense",
+    "Description": "A held item that makes the holder move slower."
+  },
+  {
+    "itemId": 409,
+    "Name": "Wave Incense",
+    "Description": "A hold item that slightly boosts Water-type moves."
+  },
+  {
+    "itemId": 410,
+    "Name": "Rose Incense",
+    "Description": "A hold item that raises the power of Grass-type moves."
+  },
+  {
+    "itemId": 411,
+    "Name": "Luck Incense",
+    "Description": "Doubles money in battle if the holder takes part."
+  },
+  {
+    "itemId": 412,
+    "Name": "Pure Incense",
+    "Description": "A hold item that helps repel wild Pokémon."
+  },
+  {
+    "itemId": 413,
+    "Name": "Red Scarf",
+    "Description": "A hold item that raises Cool in Contests."
+  },
+  {
+    "itemId": 414,
+    "Name": "Blue Scarf",
+    "Description": "A hold item that raises Beauty in Contests."
+  },
+  {
+    "itemId": 415,
+    "Name": "Pink Scarf",
+    "Description": "A hold item that raises Cute in Contests."
+  },
+  {
+    "itemId": 416,
+    "Name": "Green Scarf",
+    "Description": "A hold item that raises Smart in Contests."
+  },
+  {
+    "itemId": 417,
+    "Name": "Yellow Scarf",
+    "Description": "A hold item that raises Tough in Contests."
+  },
+  {
+    "itemId": 418,
+    "Name": "Macho Brace",
+    "Description": "A hold item that promotes growth, but reduces Speed."
+  },
+  {
+    "itemId": 419,
+    "Name": "Power Weight",
+    "Description": "A hold item that promotes HP gain, but reduces Speed."
+  },
+  {
+    "itemId": 420,
+    "Name": "Power Bracer",
+    "Description": "A hold item that promotes Atk gain, but reduces Speed."
+  },
+  {
+    "itemId": 421,
+    "Name": "Power Belt",
+    "Description": "A hold item that promotes Def gain, but reduces Speed."
+  },
+  {
+    "itemId": 422,
+    "Name": "Power Lens",
+    "Description": "Hold item that pro- motes Sp. Atk gain, but reduces Speed."
+  },
+  {
+    "itemId": 423,
+    "Name": "Power Band",
+    "Description": "Hold item that pro- motes Sp. Def gain, but reduces Speed."
+  },
+  {
+    "itemId": 424,
+    "Name": "Power Anklet",
+    "Description": "A hold item that promotes Spd gain, but reduces Speed."
+  },
+  {
+    "itemId": 425,
+    "Name": "Silk Scarf",
+    "Description": "A hold item that raises the power of Normal-type moves."
+  },
+  {
+    "itemId": 426,
+    "Name": "Charcoal",
+    "Description": "A hold item that raises the power of Fire-type moves."
+  },
+  {
+    "itemId": 427,
+    "Name": "Mystic Water",
+    "Description": "A hold item that raises the power of Water-type moves."
+  },
+  {
+    "itemId": 428,
+    "Name": "Magnet",
+    "Description": "A hold item that boosts Electric- type moves."
+  },
+  {
+    "itemId": 429,
+    "Name": "Miracle Seed",
+    "Description": "A hold item that raises the power of Grass-type moves."
+  },
+  {
+    "itemId": 430,
+    "Name": "Never-Melt Ice",
+    "Description": "A hold item that raises the power of Ice-type moves."
+  },
+  {
+    "itemId": 431,
+    "Name": "Black Belt",
+    "Description": "A hold item that boosts Fighting- type moves."
+  },
+  {
+    "itemId": 432,
+    "Name": "Poison Barb",
+    "Description": "A hold item that raises the power of Poison-type moves."
+  },
+  {
+    "itemId": 433,
+    "Name": "Soft Sand",
+    "Description": "A hold item that raises the power of Ground-type moves."
+  },
+  {
+    "itemId": 434,
+    "Name": "Sharp Beak",
+    "Description": "A hold item that raises the power of Flying-type moves."
+  },
+  {
+    "itemId": 435,
+    "Name": "Twisted Spoon",
+    "Description": "A hold item that boosts Psychic- type moves."
+  },
+  {
+    "itemId": 436,
+    "Name": "Silver Powder",
+    "Description": "A hold item that raises the power of Bug-type moves."
+  },
+  {
+    "itemId": 437,
+    "Name": "Hard Stone",
+    "Description": "A hold item that raises the power of Rock-type moves."
+  },
+  {
+    "itemId": 438,
+    "Name": "Spell Tag",
+    "Description": "A hold item that raises the power of Ghost-type moves."
+  },
+  {
+    "itemId": 439,
+    "Name": "Dragon Fang",
+    "Description": "A hold item that raises the power of Dragon-type moves."
+  },
+  {
+    "itemId": 440,
+    "Name": "Black Glasses",
+    "Description": "A hold item that raises the power of Dark-type moves."
+  },
+  {
+    "itemId": 441,
+    "Name": "Metal Coat",
+    "Description": "A hold item that raises the power of Steel-type moves."
+  },
+  {
+    "itemId": 442,
+    "Name": "Choice Band",
+    "Description": "Boosts Attack, but allows the use of only one move."
+  },
+  {
+    "itemId": 443,
+    "Name": "Choice Specs",
+    "Description": "Boosts Sp. Atk, but allows the use of only one move."
+  },
+  {
+    "itemId": 444,
+    "Name": "Choice Scarf",
+    "Description": "Boosts Speed, but allows the use of only one move."
+  },
+  {
+    "itemId": 445,
+    "Name": "Flame Orb",
+    "Description": "A bizarre orb that inflicts a burn on holder in battle."
+  },
+  {
+    "itemId": 446,
+    "Name": "Toxic Orb",
+    "Description": "A bizarre orb that badly poisons the holder in battle."
+  },
+  {
+    "itemId": 447,
+    "Name": "Damp Rock",
+    "Description": "Extends the length of Rain Dance if used by the holder."
+  },
+  {
+    "itemId": 448,
+    "Name": "Heat Rock",
+    "Description": "Extends the length of Sunny Day if used by the holder."
+  },
+  {
+    "itemId": 449,
+    "Name": "Smooth Rock",
+    "Description": "Extends the length of Sandstorm if used by the holder."
+  },
+  {
+    "itemId": 450,
+    "Name": "Icy Rock",
+    "Description": "Extends the length of icy weather if used by the holder."
+  },
+  {
+    "itemId": 451,
+    "Name": "Electric Seed",
+    "Description": "Boosts Defense on Electric Terrain, but only one time."
+  },
+  {
+    "itemId": 452,
+    "Name": "Psychic Seed",
+    "Description": "Boosts Sp. Def. on Psychic Terrain, but only one time."
+  },
+  {
+    "itemId": 453,
+    "Name": "Misty Seed",
+    "Description": "Boosts Sp. Def. on Misty Terrain, but only one time."
+  },
+  {
+    "itemId": 454,
+    "Name": "Grassy Seed",
+    "Description": "Boosts Defense on Grassy Terrain, but only one time."
+  },
+  {
+    "itemId": 455,
+    "Name": "Absorb Bulb",
+    "Description": "Raises Sp. Atk if the holder is hit by a Water-type move."
+  },
+  {
+    "itemId": 456,
+    "Name": "Cell Battery",
+    "Description": "Raises Attack if the holder is hit by an Electric move."
+  },
+  {
+    "itemId": 457,
+    "Name": "Luminous Moss",
+    "Description": "Raises Sp. Def if the holder is hit by a Water-type move."
+  },
+  {
+    "itemId": 458,
+    "Name": "Snowball",
+    "Description": "Raises Atk if its holder is hit by an Ice-type move."
+  },
+  {
+    "itemId": 459,
+    "Name": "Bright Powder",
+    "Description": "A hold item that casts a shine to increase accuracy."
+  },
+  {
+    "itemId": 460,
+    "Name": "White Herb",
+    "Description": "A hold item that restores any lowered stat."
+  },
+  {
+    "itemId": 461,
+    "Name": "Exp. Share",
+    "Description": "This device gives exp. to other party members."
+  },
+  {
+    "itemId": 462,
+    "Name": "Quick Claw",
+    "Description": "A hold item that occasionally allows the first strike."
+  },
+  {
+    "itemId": 463,
+    "Name": "Soothe Bell",
+    "Description": "A hold item that calms spirits and fosters friendship."
+  },
+  {
+    "itemId": 464,
+    "Name": "Mental Herb",
+    "Description": "Snaps Pokémon out of move-binding effects."
+  },
+  {
+    "itemId": 465,
+    "Name": "King's Rock",
+    "Description": "A hold item that may cause flinching when the foe is hit."
+  },
+  {
+    "itemId": 466,
+    "Name": "Amulet Coin",
+    "Description": "Doubles money in battle if the holder takes part."
+  },
+  {
+    "itemId": 467,
+    "Name": "Cleanse Tag",
+    "Description": "A hold item that helps repel wild Pokémon."
+  },
+  {
+    "itemId": 468,
+    "Name": "Smoke Ball",
+    "Description": "A hold item that assures fleeing from wild Pokémon."
+  },
+  {
+    "itemId": 469,
+    "Name": "Focus Band",
+    "Description": "A hold item that occasionally prevents fainting."
+  },
+  {
+    "itemId": 470,
+    "Name": "Lucky Egg",
+    "Description": "A hold item that boosts Exp. points earned in battle."
+  },
+  {
+    "itemId": 471,
+    "Name": "Scope Lens",
+    "Description": "A hold item that improves the critical-hit rate."
+  },
+  {
+    "itemId": 472,
+    "Name": "Leftovers",
+    "Description": "A hold item that gradually restores HP in battle."
+  },
+  {
+    "itemId": 473,
+    "Name": "Shell Bell",
+    "Description": "A hold item that restores HP upon striking the foe."
+  },
+  {
+    "itemId": 474,
+    "Name": "Wide Lens",
+    "Description": "A magnifying lens that boosts the accuracy of moves."
+  },
+  {
+    "itemId": 475,
+    "Name": "Muscle Band",
+    "Description": "A headband that boosts the power of physical moves."
+  },
+  {
+    "itemId": 476,
+    "Name": "Wise Glasses",
+    "Description": "A pair of glasses that ups the power of special moves."
+  },
+  {
+    "itemId": 477,
+    "Name": "Expert Belt",
+    "Description": "A belt that boosts the power of super effective moves."
+  },
+  {
+    "itemId": 478,
+    "Name": "Light Clay",
+    "Description": "Extends the length of barrier moves used by the holder."
+  },
+  {
+    "itemId": 479,
+    "Name": "Life Orb",
+    "Description": "Boosts move power but holder loses HP with each attack."
+  },
+  {
+    "itemId": 480,
+    "Name": "Power Herb",
+    "Description": "Allows immediate use of a move that charges first."
+  },
+  {
+    "itemId": 481,
+    "Name": "Focus Sash",
+    "Description": "If the holder has full HP, it endures KO hits with 1 HP."
+  },
+  {
+    "itemId": 482,
+    "Name": "Zoom Lens",
+    "Description": "If the holder moves after the foe, it'll boost accuracy."
+  },
+  {
+    "itemId": 483,
+    "Name": "Metronome",
+    "Description": "A held item that boosts a move used consecutively."
+  },
+  {
+    "itemId": 484,
+    "Name": "Iron Ball",
+    "Description": "Cuts Speed and becomes vulnerable to Ground moves."
+  },
+  {
+    "itemId": 485,
+    "Name": "Lagging Tail",
+    "Description": "A held item that makes the holder move slower."
+  },
+  {
+    "itemId": 486,
+    "Name": "Destiny Knot",
+    "Description": "If the holder falls in love, the foe does too."
+  },
+  {
+    "itemId": 487,
+    "Name": "Black Sludge",
+    "Description": "Restores HP for Poison-types. Damages all others."
+  },
+  {
+    "itemId": 488,
+    "Name": "Grip Claw",
+    "Description": "A held item that extends binding moves like Wrap."
+  },
+  {
+    "itemId": 489,
+    "Name": "Sticky Barb",
+    "Description": "Damages the holder each turn. May latch on to foes."
+  },
+  {
+    "itemId": 490,
+    "Name": "Shed Shell",
+    "Description": "Allows the holder to switch out without fail."
+  },
+  {
+    "itemId": 491,
+    "Name": "Big Root",
+    "Description": "A held item that ups the power of HP-stealing moves."
+  },
+  {
+    "itemId": 492,
+    "Name": "Razor Claw",
+    "Description": "A hooked claw that ups the holder's critical-hit ratio."
+  },
+  {
+    "itemId": 493,
+    "Name": "Razor Fang",
+    "Description": "A hold item that may cause flinching when the foe is hit."
+  },
+  {
+    "itemId": 494,
+    "Name": "Eviolite",
+    "Description": "Raises the Def and Sp. Def of Pokémon that can evolve."
+  },
+  {
+    "itemId": 495,
+    "Name": "Float Stone",
+    "Description": "It's so light that when held, it halves a Pokémon's weight."
+  },
+  {
+    "itemId": 496,
+    "Name": "Rocky Helmet",
+    "Description": "Hurts the foe if they touch its holder."
+  },
+  {
+    "itemId": 497,
+    "Name": "Air Balloon",
+    "Description": "Makes the holder float but bursts if hit by an attack."
+  },
+  {
+    "itemId": 498,
+    "Name": "Red Card",
+    "Description": "Switches out the foe if they hit the holder."
+  },
+  {
+    "itemId": 499,
+    "Name": "Ring Target",
+    "Description": "Moves that usually have no effect will hit the holder."
+  },
+  {
+    "itemId": 500,
+    "Name": "Binding Band",
+    "Description": "Increases the power of binding moves when held."
+  },
+  {
+    "itemId": 501,
+    "Name": "Eject Button",
+    "Description": "Switches out the user if they're hit by the foe."
+  },
+  {
+    "itemId": 502,
+    "Name": "Weakness Policy",
+    "Description": "If hit by a super- effective move, ups Atk and Sp. Atk."
+  },
+  {
+    "itemId": 503,
+    "Name": "Assault Vest",
+    "Description": "Raises Sp. Def but prevents the use of status moves."
+  },
+  {
+    "itemId": 504,
+    "Name": "Safety Goggles",
+    "Description": "Protect from weather damage and powder moves."
+  },
+  {
+    "itemId": 505,
+    "Name": "Adrenaline Orb",
+    "Description": "This orb boosts Speed if the holder is intimidated."
+  },
+  {
+    "itemId": 506,
+    "Name": "Terrain Extender",
+    "Description": "Extends the length of the active battle terrain."
+  },
+  {
+    "itemId": 507,
+    "Name": "Protective Pads",
+    "Description": "Guard the holder from contact move effects."
+  },
+  {
+    "itemId": 508,
+    "Name": "Throat Spray",
+    "Description": "Raises Sp. Atk. if the holder uses a sound-based move."
+  },
+  {
+    "itemId": 509,
+    "Name": "Eject Pack",
+    "Description": "Forces the user to switch if its stats are lowered."
+  },
+  {
+    "itemId": 510,
+    "Name": "Heavy-Duty Boots",
+    "Description": "Boots that prevent effects of traps set in the field."
+  },
+  {
+    "itemId": 511,
+    "Name": "Blunder Policy",
+    "Description": "Raises Speed if the user misses due to Accuracy."
+  },
+  {
+    "itemId": 512,
+    "Name": "Room Service",
+    "Description": "Lowers Speed if Trick Room is active."
+  },
+  {
+    "itemId": 513,
+    "Name": "Utility Umbrella",
+    "Description": "An umbrella that protects from weather effects."
+  },
+  {
+    "itemId": 514,
+    "Name": "Cheri Berry",
+    "Description": "A hold item that heals paralysis in battle."
+  },
+  {
+    "itemId": 515,
+    "Name": "Chesto Berry",
+    "Description": "A hold item that awakens Pokémon in battle."
+  },
+  {
+    "itemId": 516,
+    "Name": "Pecha Berry",
+    "Description": "A hold item that heals poisoning in battle."
+  },
+  {
+    "itemId": 517,
+    "Name": "Rawst Berry",
+    "Description": "A hold item that heals a burn in battle."
+  },
+  {
+    "itemId": 518,
+    "Name": "Aspear Berry",
+    "Description": "A hold item that defrosts Pokémon in battle."
+  },
+  {
+    "itemId": 519,
+    "Name": "Leppa Berry",
+    "Description": "A hold item that restores 10 PP in battle."
+  },
+  {
+    "itemId": 520,
+    "Name": "Oran Berry",
+    "Description": "A hold item that restores 10 HP in battle."
+  },
+  {
+    "itemId": 521,
+    "Name": "Persim Berry",
+    "Description": "A hold item that heals confusion in battle."
+  },
+  {
+    "itemId": 522,
+    "Name": "Lum Berry",
+    "Description": "A hold item that heals any status problem in battle."
+  },
+  {
+    "itemId": 523,
+    "Name": "Sitrus Berry",
+    "Description": "A hold item that restores the user's HP a little."
+  },
+  {
+    "itemId": 524,
+    "Name": "Figy Berry",
+    "Description": "A hold item that restores HP but may confuse."
+  },
+  {
+    "itemId": 525,
+    "Name": "Wiki Berry",
+    "Description": "A hold item that restores HP but may confuse."
+  },
+  {
+    "itemId": 526,
+    "Name": "Mago Berry",
+    "Description": "A hold item that restores HP but may confuse."
+  },
+  {
+    "itemId": 527,
+    "Name": "Aguav Berry",
+    "Description": "A hold item that restores HP but may confuse."
+  },
+  {
+    "itemId": 528,
+    "Name": "Iapapa Berry",
+    "Description": "A hold item that restores HP but may confuse."
+  },
+  {
+    "itemId": 529,
+    "Name": "Razz Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Razz."
+  },
+  {
+    "itemId": 530,
+    "Name": "Bluk Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Bluk."
+  },
+  {
+    "itemId": 531,
+    "Name": "Nanab Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Nanab."
+  },
+  {
+    "itemId": 532,
+    "Name": "Wepear Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Wepear."
+  },
+  {
+    "itemId": 533,
+    "Name": "Pinap Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Pinap."
+  },
+  {
+    "itemId": 534,
+    "Name": "Pomeg Berry",
+    "Description": "Makes a Pokémon friendly but lowers base HP."
+  },
+  {
+    "itemId": 535,
+    "Name": "Kelpsy Berry",
+    "Description": "Makes a Pokémon friendly but lowers base Attack."
+  },
+  {
+    "itemId": 536,
+    "Name": "Qualot Berry",
+    "Description": "Makes a Pokémon friendly but lowers base Defense."
+  },
+  {
+    "itemId": 537,
+    "Name": "Hondew Berry",
+    "Description": "Makes a Pokémon friendly but lowers base Sp. Atk."
+  },
+  {
+    "itemId": 538,
+    "Name": "Grepa Berry",
+    "Description": "Makes a Pokémon friendly but lowers base Sp. Def."
+  },
+  {
+    "itemId": 539,
+    "Name": "Tamato Berry",
+    "Description": "Makes a Pokémon friendly but lowers base Speed."
+  },
+  {
+    "itemId": 540,
+    "Name": "Cornn Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Cornn."
+  },
+  {
+    "itemId": 541,
+    "Name": "Magost Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Magost."
+  },
+  {
+    "itemId": 542,
+    "Name": "Rabuta Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Rabuta."
+  },
+  {
+    "itemId": 543,
+    "Name": "Nomel Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Nomel."
+  },
+  {
+    "itemId": 544,
+    "Name": "Spelon Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Spelon."
+  },
+  {
+    "itemId": 545,
+    "Name": "Pamtre Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Pamtre."
+  },
+  {
+    "itemId": 546,
+    "Name": "Watmel Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Watmel."
+  },
+  {
+    "itemId": 547,
+    "Name": "Durin Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Durin."
+  },
+  {
+    "itemId": 548,
+    "Name": "Belue Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow Belue."
+  },
+  {
+    "itemId": 549,
+    "Name": "Chilan Berry",
+    "Description": "A hold item that weakens a Normal move."
+  },
+  {
+    "itemId": 550,
+    "Name": "Occa Berry",
+    "Description": "A hold item that weakens a Fire move if weak to it."
+  },
+  {
+    "itemId": 551,
+    "Name": "Passho Berry",
+    "Description": "A hold item that weakens a Water move if weak to it."
+  },
+  {
+    "itemId": 552,
+    "Name": "Wacan Berry",
+    "Description": "A hold item that weakens a Electric move if weak to it."
+  },
+  {
+    "itemId": 553,
+    "Name": "Rindo Berry",
+    "Description": "A hold item that weakens a Grass move if weak to it."
+  },
+  {
+    "itemId": 554,
+    "Name": "Yache Berry",
+    "Description": "A hold item that weakens a Ice move if weak to it."
+  },
+  {
+    "itemId": 555,
+    "Name": "Chople Berry",
+    "Description": "A hold item that weakens a Fighting move if weak to it."
+  },
+  {
+    "itemId": 556,
+    "Name": "Kebia Berry",
+    "Description": "A hold item that weakens a Poison move if weak to it."
+  },
+  {
+    "itemId": 557,
+    "Name": "Shuca Berry",
+    "Description": "A hold item that weakens a Ground move if weak to it."
+  },
+  {
+    "itemId": 558,
+    "Name": "Coba Berry",
+    "Description": "A hold item that weakens a Flying move if weak to it."
+  },
+  {
+    "itemId": 559,
+    "Name": "Payapa Berry",
+    "Description": "A hold item that weakens a Psychic move if weak to it."
+  },
+  {
+    "itemId": 560,
+    "Name": "Tanga Berry",
+    "Description": "A hold item that weakens a Bug move if weak to it."
+  },
+  {
+    "itemId": 561,
+    "Name": "Charti Berry",
+    "Description": "A hold item that weakens a Rock move if weak to it."
+  },
+  {
+    "itemId": 562,
+    "Name": "Kasib Berry",
+    "Description": "A hold item that weakens a Ghost move if weak to it."
+  },
+  {
+    "itemId": 563,
+    "Name": "Haban Berry",
+    "Description": "A hold item that weakens a Dragon move if weak to it."
+  },
+  {
+    "itemId": 564,
+    "Name": "Colbur Berry",
+    "Description": "A hold item that weakens a Dark move if weak to it."
+  },
+  {
+    "itemId": 565,
+    "Name": "Babiri Berry",
+    "Description": "A hold item that weakens a Steel move if weak to it."
+  },
+  {
+    "itemId": 566,
+    "Name": "Roseli Berry",
+    "Description": "A hold item that weakens a Fairy move if weak to it."
+  },
+  {
+    "itemId": 567,
+    "Name": "Liechi Berry",
+    "Description": "A hold item that raises Attack in a pinch."
+  },
+  {
+    "itemId": 568,
+    "Name": "Ganlon Berry",
+    "Description": "A hold item that raises Defense in a pinch."
+  },
+  {
+    "itemId": 569,
+    "Name": "Salac Berry",
+    "Description": "A hold item that raises Speed in a pinch."
+  },
+  {
+    "itemId": 570,
+    "Name": "Petaya Berry",
+    "Description": "A hold item that raises Sp. Atk in a pinch."
+  },
+  {
+    "itemId": 571,
+    "Name": "Apicot Berry",
+    "Description": "A hold item that raises Sp. Def in a pinch."
+  },
+  {
+    "itemId": 572,
+    "Name": "Lansat Berry",
+    "Description": "A hold item that ups the critical- hit rate in a pinch."
+  },
+  {
+    "itemId": 573,
+    "Name": "Starf Berry",
+    "Description": "A hold item that sharply boosts a stat in a pinch."
+  },
+  {
+    "itemId": 574,
+    "Name": "Enigma Berry",
+    "Description": "A hold item that heals from super effective moves."
+  },
+  {
+    "itemId": 575,
+    "Name": "Micle Berry",
+    "Description": "When held, it ups the Accuracy of a move in a pinch."
+  },
+  {
+    "itemId": 576,
+    "Name": "Custap Berry",
+    "Description": "It allows a Pokémon in a pinch to move first just once."
+  },
+  {
+    "itemId": 577,
+    "Name": "Jaboca Berry",
+    "Description": "If hit by a physical move, it will hurt the attacker a bit."
+  },
+  {
+    "itemId": 578,
+    "Name": "Rowap Berry",
+    "Description": "If hit by a special move, it will hurt the attacker a bit."
+  },
+  {
+    "itemId": 579,
+    "Name": "Kee Berry",
+    "Description": "If hit by a physical move, it raises the Defense a bit."
+  },
+  {
+    "itemId": 580,
+    "Name": "Maranga Berry",
+    "Description": "If hit by a special move, it raises the Sp. Def. a bit."
+  },
+  {
+    "itemId": 581,
+    "Name": "Enigma Berry",
+    "Description": "Pokéblock ingredient. Plant in loamy soil to grow a mystery."
+  },
+  {
+    "itemId": 582,
+    "Name": "TM01",
+    "Description": "Powerful, but makes the user flinch if hit by the foe."
+  },
+  {
+    "itemId": 583,
+    "Name": "TM02",
+    "Description": "Hooks and slashes the foe with long, sharp claws."
+  },
+  {
+    "itemId": 584,
+    "Name": "TM03",
+    "Description": "?????"
+  },
+  {
+    "itemId": 585,
+    "Name": "TM04",
+    "Description": "Raises Sp. Atk and Sp. Def by focusing the mind."
+  },
+  {
+    "itemId": 586,
+    "Name": "TM05",
+    "Description": "A savage roar that makes the foe flee  to end the battle."
+  },
+  {
+    "itemId": 587,
+    "Name": "TM06",
+    "Description": "Poisons the foe with a toxin that gradually worsens."
+  },
+  {
+    "itemId": 588,
+    "Name": "TM07",
+    "Description": "?????"
+  },
+  {
+    "itemId": 589,
+    "Name": "TM08",
+    "Description": "Bulks up the body to boost both Attack & Defense."
+  },
+  {
+    "itemId": 590,
+    "Name": "TM09",
+    "Description": "Shoots 2 to 5 seeds in a row to strike the foe."
+  },
+  {
+    "itemId": 591,
+    "Name": "TM10",
+    "Description": "The attack power varies among different Pokémon."
+  },
+  {
+    "itemId": 592,
+    "Name": "TM11",
+    "Description": "?????"
+  },
+  {
+    "itemId": 593,
+    "Name": "TM12",
+    "Description": "Enrages the foe so it can only use attack moves."
+  },
+  {
+    "itemId": 594,
+    "Name": "TM13",
+    "Description": "Fires an icy cold beam that may inflict frostbite."
+  },
+  {
+    "itemId": 595,
+    "Name": "TM14",
+    "Description": "A snow-and-wind attack that may inflict frostbite."
+  },
+  {
+    "itemId": 596,
+    "Name": "TM15",
+    "Description": "Powerful, but needs recharging the next turn."
+  },
+  {
+    "itemId": 597,
+    "Name": "TM16",
+    "Description": "Creates a wall of light that lowers Sp. Atk damage."
+  },
+  {
+    "itemId": 598,
+    "Name": "TM17",
+    "Description": "Negates all damage, but may fail if used in succession."
+  },
+  {
+    "itemId": 599,
+    "Name": "TM18",
+    "Description": "?????"
+  },
+  {
+    "itemId": 600,
+    "Name": "TM19",
+    "Description": "Recovers half the HP of the damage  this move inflicts."
+  },
+  {
+    "itemId": 601,
+    "Name": "TM20",
+    "Description": "The more the user likes you, the more powerful this move."
+  },
+  {
+    "itemId": 602,
+    "Name": "TM21",
+    "Description": "?????"
+  },
+  {
+    "itemId": 603,
+    "Name": "TM22",
+    "Description": "Absorbs sunlight in the 1st turn, then attacks next turn."
+  },
+  {
+    "itemId": 604,
+    "Name": "TM23",
+    "Description": "Slams the foe with a hard tail. It may lower Defense."
+  },
+  {
+    "itemId": 605,
+    "Name": "TM24",
+    "Description": "A powerful electric attack that may cause paralysis."
+  },
+  {
+    "itemId": 606,
+    "Name": "TM25",
+    "Description": "Strikes the foe with a thunderbolt. It may paralyze."
+  },
+  {
+    "itemId": 607,
+    "Name": "TM26",
+    "Description": "Causes a quake that has no effect on flying foes."
+  },
+  {
+    "itemId": 608,
+    "Name": "TM27",
+    "Description": "?????"
+  },
+  {
+    "itemId": 609,
+    "Name": "TM28",
+    "Description": "Digs underground the 1st turn, then strikes next turn."
+  },
+  {
+    "itemId": 610,
+    "Name": "TM29",
+    "Description": "A powerful psychic attack that may lower Sp. Def."
+  },
+  {
+    "itemId": 611,
+    "Name": "TM30",
+    "Description": "Hurls a dark lump at the foe. It may lower Sp. Def."
+  },
+  {
+    "itemId": 612,
+    "Name": "TM31",
+    "Description": "Destroys barriers like Light Screen and causes damage."
+  },
+  {
+    "itemId": 613,
+    "Name": "TM32",
+    "Description": "?????"
+  },
+  {
+    "itemId": 614,
+    "Name": "TM33",
+    "Description": "Creates a wall of light that weakens physical attacks."
+  },
+  {
+    "itemId": 615,
+    "Name": "TM34",
+    "Description": "?????"
+  },
+  {
+    "itemId": 616,
+    "Name": "TM35",
+    "Description": "Looses a stream of fire that may burn the foe."
+  },
+  {
+    "itemId": 617,
+    "Name": "TM36",
+    "Description": "Hurls sludge at the foe. It may poison the foe."
+  },
+  {
+    "itemId": 618,
+    "Name": "TM37",
+    "Description": "?????"
+  },
+  {
+    "itemId": 619,
+    "Name": "TM38",
+    "Description": "A powerful fire attack that may burn the foe."
+  },
+  {
+    "itemId": 620,
+    "Name": "TM39",
+    "Description": "Stops the foe from moving with rocks. May lower Speed."
+  },
+  {
+    "itemId": 621,
+    "Name": "TM40",
+    "Description": "An extremely fast attack that can't be avoided."
+  },
+  {
+    "itemId": 622,
+    "Name": "TM41",
+    "Description": "?????"
+  },
+  {
+    "itemId": 623,
+    "Name": "TM42",
+    "Description": "Raises Attack when poisoned, burned, or paralyzed."
+  },
+  {
+    "itemId": 624,
+    "Name": "TM43",
+    "Description": "?????"
+  },
+  {
+    "itemId": 625,
+    "Name": "TM44",
+    "Description": "The user sleeps for 2 turns to restore health and status."
+  },
+  {
+    "itemId": 626,
+    "Name": "TM45",
+    "Description": "Makes it tough to attack a foe of the opposite gender."
+  },
+  {
+    "itemId": 627,
+    "Name": "TM46",
+    "Description": "While attacking, it may steal the foe's held item."
+  },
+  {
+    "itemId": 628,
+    "Name": "TM47",
+    "Description": "?????"
+  },
+  {
+    "itemId": 629,
+    "Name": "TM48",
+    "Description": "Switches abilities with the foe on the turn this is used."
+  },
+  {
+    "itemId": 630,
+    "Name": "TM49",
+    "Description": "?????"
+  },
+  {
+    "itemId": 631,
+    "Name": "TM50",
+    "Description": "Enables full-power attack, but sharply lowers Sp. Atk."
+  },
+  {
+    "itemId": 632,
+    "Name": "TM51",
+    "Description": "?????"
+  },
+  {
+    "itemId": 633,
+    "Name": "TM52",
+    "Description": "?????"
+  },
+  {
+    "itemId": 634,
+    "Name": "TM53",
+    "Description": "?????"
+  },
+  {
+    "itemId": 635,
+    "Name": "TM54",
+    "Description": "?????"
+  },
+  {
+    "itemId": 636,
+    "Name": "TM55",
+    "Description": "?????"
+  },
+  {
+    "itemId": 637,
+    "Name": "TM56",
+    "Description": "?????"
+  },
+  {
+    "itemId": 638,
+    "Name": "TM57",
+    "Description": "?????"
+  },
+  {
+    "itemId": 639,
+    "Name": "TM58",
+    "Description": "?????"
+  },
+  {
+    "itemId": 640,
+    "Name": "TM59",
+    "Description": "?????"
+  },
+  {
+    "itemId": 641,
+    "Name": "TM60",
+    "Description": "?????"
+  },
+  {
+    "itemId": 642,
+    "Name": "TM61",
+    "Description": "?????"
+  },
+  {
+    "itemId": 643,
+    "Name": "TM62",
+    "Description": "?????"
+  },
+  {
+    "itemId": 644,
+    "Name": "TM63",
+    "Description": "?????"
+  },
+  {
+    "itemId": 645,
+    "Name": "TM64",
+    "Description": "?????"
+  },
+  {
+    "itemId": 646,
+    "Name": "TM65",
+    "Description": "?????"
+  },
+  {
+    "itemId": 647,
+    "Name": "TM66",
+    "Description": "?????"
+  },
+  {
+    "itemId": 648,
+    "Name": "TM67",
+    "Description": "?????"
+  },
+  {
+    "itemId": 649,
+    "Name": "TM68",
+    "Description": "?????"
+  },
+  {
+    "itemId": 650,
+    "Name": "TM69",
+    "Description": "?????"
+  },
+  {
+    "itemId": 651,
+    "Name": "TM70",
+    "Description": "?????"
+  },
+  {
+    "itemId": 652,
+    "Name": "TM71",
+    "Description": "?????"
+  },
+  {
+    "itemId": 653,
+    "Name": "TM72",
+    "Description": "?????"
+  },
+  {
+    "itemId": 654,
+    "Name": "TM73",
+    "Description": "?????"
+  },
+  {
+    "itemId": 655,
+    "Name": "TM74",
+    "Description": "?????"
+  },
+  {
+    "itemId": 656,
+    "Name": "TM75",
+    "Description": "?????"
+  },
+  {
+    "itemId": 657,
+    "Name": "TM76",
+    "Description": "?????"
+  },
+  {
+    "itemId": 658,
+    "Name": "TM77",
+    "Description": "?????"
+  },
+  {
+    "itemId": 659,
+    "Name": "TM78",
+    "Description": "?????"
+  },
+  {
+    "itemId": 660,
+    "Name": "TM79",
+    "Description": "?????"
+  },
+  {
+    "itemId": 661,
+    "Name": "TM80",
+    "Description": "?????"
+  },
+  {
+    "itemId": 662,
+    "Name": "TM81",
+    "Description": "?????"
+  },
+  {
+    "itemId": 663,
+    "Name": "TM82",
+    "Description": "?????"
+  },
+  {
+    "itemId": 664,
+    "Name": "TM83",
+    "Description": "?????"
+  },
+  {
+    "itemId": 665,
+    "Name": "TM84",
+    "Description": "?????"
+  },
+  {
+    "itemId": 666,
+    "Name": "TM85",
+    "Description": "?????"
+  },
+  {
+    "itemId": 667,
+    "Name": "TM86",
+    "Description": "?????"
+  },
+  {
+    "itemId": 668,
+    "Name": "TM87",
+    "Description": "?????"
+  },
+  {
+    "itemId": 669,
+    "Name": "TM88",
+    "Description": "?????"
+  },
+  {
+    "itemId": 670,
+    "Name": "TM89",
+    "Description": "?????"
+  },
+  {
+    "itemId": 671,
+    "Name": "TM90",
+    "Description": "?????"
+  },
+  {
+    "itemId": 672,
+    "Name": "TM91",
+    "Description": "?????"
+  },
+  {
+    "itemId": 673,
+    "Name": "TM92",
+    "Description": "?????"
+  },
+  {
+    "itemId": 674,
+    "Name": "TM93",
+    "Description": "?????"
+  },
+  {
+    "itemId": 675,
+    "Name": "TM94",
+    "Description": "?????"
+  },
+  {
+    "itemId": 676,
+    "Name": "TM95",
+    "Description": "?????"
+  },
+  {
+    "itemId": 677,
+    "Name": "TM96",
+    "Description": "?????"
+  },
+  {
+    "itemId": 678,
+    "Name": "TM97",
+    "Description": "?????"
+  },
+  {
+    "itemId": 679,
+    "Name": "TM98",
+    "Description": "?????"
+  },
+  {
+    "itemId": 680,
+    "Name": "TM99",
+    "Description": "?????"
+  },
+  {
+    "itemId": 681,
+    "Name": "TM100",
+    "Description": "?????"
+  },
+  {
+    "itemId": 682,
+    "Name": "TM101",
+    "Description": "?????"
+  },
+  {
+    "itemId": 683,
+    "Name": "TM102",
+    "Description": "?????"
+  },
+  {
+    "itemId": 684,
+    "Name": "TM103",
+    "Description": "?????"
+  },
+  {
+    "itemId": 685,
+    "Name": "TM104",
+    "Description": "?????"
+  },
+  {
+    "itemId": 686,
+    "Name": "TM105",
+    "Description": "?????"
+  },
+  {
+    "itemId": 687,
+    "Name": "TM106",
+    "Description": "?????"
+  },
+  {
+    "itemId": 688,
+    "Name": "TM107",
+    "Description": "?????"
+  },
+  {
+    "itemId": 689,
+    "Name": "TM108",
+    "Description": "?????"
+  },
+  {
+    "itemId": 690,
+    "Name": "TM109",
+    "Description": "?????"
+  },
+  {
+    "itemId": 691,
+    "Name": "TM110",
+    "Description": "?????"
+  },
+  {
+    "itemId": 692,
+    "Name": "TM111",
+    "Description": "?????"
+  },
+  {
+    "itemId": 693,
+    "Name": "TM112",
+    "Description": "?????"
+  },
+  {
+    "itemId": 694,
+    "Name": "HM01",
+    "Description": "Attacks the foe with sharp blades or claws."
+  },
+  {
+    "itemId": 695,
+    "Name": "HM02",
+    "Description": "Flies up on the first turn, then attacks next turn."
+  },
+  {
+    "itemId": 696,
+    "Name": "HM03",
+    "Description": "Creates a huge wave, then crashes it down on the foe."
+  },
+  {
+    "itemId": 697,
+    "Name": "HM04",
+    "Description": "Builds enormous power, then slams the foe."
+  },
+  {
+    "itemId": 698,
+    "Name": "HM05",
+    "Description": "Looses a powerful blast of light that reduces accuracy."
+  },
+  {
+    "itemId": 699,
+    "Name": "HM06",
+    "Description": "A rock-crushingly tough attack that may lower Defense."
+  },
+  {
+    "itemId": 700,
+    "Name": "HM07",
+    "Description": "Attacks the foe with enough power to climb waterfalls."
+  },
+  {
+    "itemId": 701,
+    "Name": "HM08",
+    "Description": "Dives underwater the 1st turn, then attacks next turn."
+  },
+  {
+    "itemId": 702,
+    "Name": "Oval Charm",
+    "Description": "Raises the chance of finding eggs at the daycare."
+  },
+  {
+    "itemId": 703,
+    "Name": "Shiny Charm",
+    "Description": "A charm that will raise the chance of Shiny Pokémon."
+  },
+  {
+    "itemId": 704,
+    "Name": "Catching Charm",
+    "Description": "A charm that raises the chance of Critical Captures."
+  },
+  {
+    "itemId": 705,
+    "Name": "Exp. Charm",
+    "Description": "A charm that raises the amount of Exp. earned in battle."
+  },
+  {
+    "itemId": 706,
+    "Name": "Rotom Catalog",
+    "Description": "A catalog full of devices liked by Rotom."
+  },
+  {
+    "itemId": 707,
+    "Name": "Gracidea",
+    "Description": "Bouquets made with it are offered as a token of gratitude."
+  },
+  {
+    "itemId": 708,
+    "Name": "Reveal Glass",
+    "Description": "This glass returns a Pokémon back to its original form."
+  },
+  {
+    "itemId": 709,
+    "Name": "DNA Splicers",
+    "Description": "Splicer that fuses Kyurem and a certain Pokémon."
+  },
+  {
+    "itemId": 710,
+    "Name": "Zygarde Cube",
+    "Description": "An item to store Zygarde Cores and Cells."
+  },
+  {
+    "itemId": 711,
+    "Name": "Prison Bottle",
+    "Description": "A bottle used to seal a certain Pokémon long ago."
+  },
+  {
+    "itemId": 712,
+    "Name": "N-Solarizer",
+    "Description": "A device to fuse and split Necrozma using a Solgaleo."
+  },
+  {
+    "itemId": 713,
+    "Name": "N-Lunarizer",
+    "Description": "A device to fuse and split Necrozma using a Lunala."
+  },
+  {
+    "itemId": 714,
+    "Name": "Reins of Unity",
+    "Description": "Reins that unite Calyrex with its beloved steed."
+  },
+  {
+    "itemId": 715,
+    "Name": "Mega Ring",
+    "Description": "Enables ᴾₖᴹₙ holding their Mega Stone to Mega Evolve."
+  },
+  {
+    "itemId": 716,
+    "Name": "Z-Power Ring",
+    "Description": "A strange ring that enables Z-Move usage."
+  },
+  {
+    "itemId": 717,
+    "Name": "Dynamax Band",
+    "Description": "A band carrying a Wishing Star that allows Dynamaxing."
+  },
+  {
+    "itemId": 718,
+    "Name": "Bicycle",
+    "Description": "A folding bicycle that is faster than the Running Shoes."
+  },
+  {
+    "itemId": 719,
+    "Name": "Mach Bike",
+    "Description": "A folding bicycle that doubles your speed or better."
+  },
+  {
+    "itemId": 720,
+    "Name": "Acro Bike",
+    "Description": "A folding bicycle capable of jumps and wheelies."
+  },
+  {
+    "itemId": 721,
+    "Name": "Old Rod",
+    "Description": "Use by any body of water to fish for wild Pokémon."
+  },
+  {
+    "itemId": 722,
+    "Name": "Good Rod",
+    "Description": "A decent fishing rod for catching wild Pokémon."
+  },
+  {
+    "itemId": 723,
+    "Name": "Super Rod",
+    "Description": "The best fishing rod for catching wild Pokémon."
+  },
+  {
+    "itemId": 724,
+    "Name": "Dowsing Machine",
+    "Description": "A device that signals an invisible item by sound."
+  },
+  {
+    "itemId": 725,
+    "Name": "Town Map",
+    "Description": "Can be viewed anytime. Shows your present location."
+  },
+  {
+    "itemId": 726,
+    "Name": "Vs. Seeker",
+    "Description": "A rechargeable unit that flags battle- ready Trainers."
+  },
+  {
+    "itemId": 727,
+    "Name": "TM Case",
+    "Description": "A convenient case that holds TMs and HMs."
+  },
+  {
+    "itemId": 728,
+    "Name": "Berry Pouch",
+    "Description": "A convenient container that holds Berries."
+  },
+  {
+    "itemId": 729,
+    "Name": "ᴾₖᴹₙ Box Link",
+    "Description": "This device grants access to the ᴾₖᴹₙ Storage System."
+  },
+  {
+    "itemId": 730,
+    "Name": "Coin Case",
+    "Description": "A case that holds up to 9,999 Coins."
+  },
+  {
+    "itemId": 731,
+    "Name": "Powder Jar",
+    "Description": "Stores Berry Powder made using a Berry Crusher."
+  },
+  {
+    "itemId": 732,
+    "Name": "Wailmer Pail",
+    "Description": "A tool used for watering Berries and plants."
+  },
+  {
+    "itemId": 733,
+    "Name": "Poké Radar",
+    "Description": "A tool used to search out Pokémon hiding in grass."
+  },
+  {
+    "itemId": 734,
+    "Name": "Pokéblock Case",
+    "Description": "A case for holding Pokéblocks made with a Berry Blender."
+  },
+  {
+    "itemId": 735,
+    "Name": "Soot Sack",
+    "Description": "A sack used to gather and hold volcanic ash."
+  },
+  {
+    "itemId": 736,
+    "Name": "Poké Flute",
+    "Description": "A sweet-sounding flute that awakens Pokémon."
+  },
+  {
+    "itemId": 737,
+    "Name": "Fame Checker",
+    "Description": "Stores information on famous people for instant recall."
+  },
+  {
+    "itemId": 738,
+    "Name": "Teachy TV",
+    "Description": "A TV set tuned to an advice program for Trainers."
+  },
+  {
+    "itemId": 739,
+    "Name": "S.S. Ticket",
+    "Description": "The ticket required for sailing on a ferry."
+  },
+  {
+    "itemId": 740,
+    "Name": "Eon Ticket",
+    "Description": "The ticket for a ferry to a distant southern island."
+  },
+  {
+    "itemId": 741,
+    "Name": "Mystic Ticket",
+    "Description": "A ticket required to board the ship to Navel Rock."
+  },
+  {
+    "itemId": 742,
+    "Name": "Aurora Ticket",
+    "Description": "A ticket required to board the ship to Birth Island."
+  },
+  {
+    "itemId": 743,
+    "Name": "Old Sea Map",
+    "Description": "A faded sea chart that shows the way to a certain island."
+  },
+  {
+    "itemId": 744,
+    "Name": "Letter",
+    "Description": "A letter to Steven from the President of the Devon Corp."
+  },
+  {
+    "itemId": 745,
+    "Name": "Devon Parts",
+    "Description": "A package that contains Devon's machine parts."
+  },
+  {
+    "itemId": 746,
+    "Name": "Go-Goggles",
+    "Description": "Nifty goggles that protect eyes from desert sandstorms."
+  },
+  {
+    "itemId": 747,
+    "Name": "Devon Scope",
+    "Description": "A device by Devon that signals any unseeable Pokémon."
+  },
+  {
+    "itemId": 748,
+    "Name": "Basement Key",
+    "Description": "The key for New Mauville beneath Mauville City."
+  },
+  {
+    "itemId": 749,
+    "Name": "Scanner",
+    "Description": "A device found inside the Abandoned Ship."
+  },
+  {
+    "itemId": 750,
+    "Name": "Storage Key",
+    "Description": "The key to the storage inside the Abandoned Ship."
+  },
+  {
+    "itemId": 751,
+    "Name": "Key to Room 1",
+    "Description": "A key that opens a door inside the Abandoned Ship."
+  },
+  {
+    "itemId": 752,
+    "Name": "Key to Room 2",
+    "Description": "A key that opens a door inside the Abandoned Ship."
+  },
+  {
+    "itemId": 753,
+    "Name": "Key to Room 4",
+    "Description": "A key that opens a door inside the Abandoned Ship."
+  },
+  {
+    "itemId": 754,
+    "Name": "Key to Room 6",
+    "Description": "A key that opens a door inside the Abandoned Ship."
+  },
+  {
+    "itemId": 755,
+    "Name": "Meteorite",
+    "Description": "A meteorite found at Meteor Falls."
+  },
+  {
+    "itemId": 756,
+    "Name": "Magma Emblem",
+    "Description": "A medal-like item in the same shape as Team Magma's mark."
+  },
+  {
+    "itemId": 757,
+    "Name": "Contest Pass",
+    "Description": "The pass required for entering Pokémon Contests."
+  },
+  {
+    "itemId": 758,
+    "Name": "Parcel",
+    "Description": "A parcel for Prof. Oak from a Pokémon Mart's clerk."
+  },
+  {
+    "itemId": 759,
+    "Name": "Secret Key",
+    "Description": "The key to the Cinnabar Island Gym's entrance."
+  },
+  {
+    "itemId": 760,
+    "Name": "Bike Voucher",
+    "Description": "A voucher for obtaining a bicycle from the Bike Shop."
+  },
+  {
+    "itemId": 761,
+    "Name": "Gold Teeth",
+    "Description": "Gold dentures lost by the Safari Zone's Warden."
+  },
+  {
+    "itemId": 762,
+    "Name": "Card Key",
+    "Description": "A card-type door key used in Silph Co's office."
+  },
+  {
+    "itemId": 763,
+    "Name": "Lift Key",
+    "Description": "An elevator key used in Team Rocket's Hideout."
+  },
+  {
+    "itemId": 764,
+    "Name": "Silph Scope",
+    "Description": "Silph Co's scope makes unseeable Pokémon visible."
+  },
+  {
+    "itemId": 765,
+    "Name": "Tri-Pass",
+    "Description": "A pass for ferries between One, Two, and Three Island."
+  },
+  {
+    "itemId": 766,
+    "Name": "Rainbow Pass",
+    "Description": "For ferries serving Vermilion and the Sevii Islands."
+  },
+  {
+    "itemId": 767,
+    "Name": "Tea",
+    "Description": "A thirst-quenching tea prepared by an old lady."
+  },
+  {
+    "itemId": 768,
+    "Name": "Ruby",
+    "Description": "An exquisite, red- glowing gem that symbolizes passion."
+  },
+  {
+    "itemId": 769,
+    "Name": "Sapphire",
+    "Description": "A brilliant blue gem that symbolizes honesty."
+  },
+  {
+    "itemId": 770,
+    "Name": "Ability Shield",
+    "Description": "Ability changes are prevented for this items's holder."
+  },
+  {
+    "itemId": 771,
+    "Name": "Clear Amulet",
+    "Description": "Stat lowering is prevented for this items's holder."
+  },
+  {
+    "itemId": 772,
+    "Name": "Punching Glove",
+    "Description": "Powers up punching moves and removes their contact."
+  },
+  {
+    "itemId": 773,
+    "Name": "Covert Cloak",
+    "Description": "Protects holder from additional effects of moves."
+  },
+  {
+    "itemId": 774,
+    "Name": "Loaded Dice",
+    "Description": "Rolls high numbers. Multihit strikes hit more times."
+  },
+  {
+    "itemId": 775,
+    "Name": "Auspicious Armor",
+    "Description": "Armor inhabited by auspicious wishes. Causes evolution."
+  },
+  {
+    "itemId": 776,
+    "Name": "Booster Energy",
+    "Description": "Encapsuled energy ups Pokémon with certain Abilities."
+  },
+  {
+    "itemId": 777,
+    "Name": "Big Bamboo Shoot",
+    "Description": "A large and rare bamboo shoot. Best sold to gourmands."
+  },
+  {
+    "itemId": 778,
+    "Name": "Gimmighoul Coin",
+    "Description": "Gimmighoul hoard and treasure these curious coins."
+  },
+  {
+    "itemId": 779,
+    "Name": "Leader's Crest",
+    "Description": "A shard of an old blade of some sort. Held by Bisharp."
+  },
+  {
+    "itemId": 780,
+    "Name": "Malicious Armor",
+    "Description": "Armor inhabited by malicious will. Causes evolution."
+  },
+  {
+    "itemId": 781,
+    "Name": "Mirror Herb",
+    "Description": "Mirrors an enemy's stat increases but only once."
+  },
+  {
+    "itemId": 782,
+    "Name": "Scroll of Darkness",
+    "Description": "A peculiar scroll with secrets of the dark path."
+  },
+  {
+    "itemId": 783,
+    "Name": "Scroll of Waters",
+    "Description": "A peculiar scroll with secrets of the water path."
+  },
+  {
+    "itemId": 784,
+    "Name": "Tera Orb",
+    "Description": "Energy charges can be used to cause Terastallization."
+  },
+  {
+    "itemId": 785,
+    "Name": "Tiny Bamboo Shoot",
+    "Description": "A small and rare bamboo shoot. Best sold to gourmands."
+  },
+  {
+    "itemId": 786,
+    "Name": "Bug Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 787,
+    "Name": "Dark Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 788,
+    "Name": "Dragon Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 789,
+    "Name": "Electric Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 790,
+    "Name": "Fairy Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 791,
+    "Name": "Fighting Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 792,
+    "Name": "Fire Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 793,
+    "Name": "Flying Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 794,
+    "Name": "Ghost Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 795,
+    "Name": "Grass Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 796,
+    "Name": "Ground Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 797,
+    "Name": "Ice Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 798,
+    "Name": "Normal Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 799,
+    "Name": "Poison Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 800,
+    "Name": "Psychic Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 801,
+    "Name": "Rock Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 802,
+    "Name": "Steel Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 803,
+    "Name": "Water Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 804,
+    "Name": "Adamant Crystal",
+    "Description": "A large, glowing gem that lets Dialga change form."
+  },
+  {
+    "itemId": 805,
+    "Name": "Griseous Core",
+    "Description": "A large, glowing gem that lets Giratina change form."
+  },
+  {
+    "itemId": 806,
+    "Name": "Lustrous Globe",
+    "Description": "A large, glowing gem that lets Palkia change form."
+  },
+  {
+    "itemId": 807,
+    "Name": "Black Augurite",
+    "Description": "A black stone that makes some Pokémon evolve."
+  },
+  {
+    "itemId": 808,
+    "Name": "Linking Cord",
+    "Description": "A mysterious string that makes some Pokémon evolve."
+  },
+  {
+    "itemId": 809,
+    "Name": "Peat Block",
+    "Description": "A block of material that makes some Pokémon evolve."
+  },
+  {
+    "itemId": 810,
+    "Name": "Berserk Gene",
+    "Description": "Sharply boosts Attack, but causes lasting confusion."
+  },
+  {
+    "itemId": 811,
+    "Name": "Fairy Feather",
+    "Description": "A hold item that raises the power of Fairy-type moves."
+  },
+  {
+    "itemId": 812,
+    "Name": "Syrupy Apple",
+    "Description": "A very syrupy apple that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 813,
+    "Name": "Unremarkable Teacup",
+    "Description": "A cracked teacup that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 814,
+    "Name": "Masterpiece Teacup",
+    "Description": "A chipped teacup that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 815,
+    "Name": "Cornerstone Mask",
+    "Description": "Allows Ogerpon to wield the Rock- type in battle."
+  },
+  {
+    "itemId": 816,
+    "Name": "Wellspring Mask",
+    "Description": "Allows Ogerpon to wield the Water- type in battle."
+  },
+  {
+    "itemId": 817,
+    "Name": "Hearthflame Mask",
+    "Description": "Allows Ogerpon to wield the Fire- type in battle."
+  },
+  {
+    "itemId": 818,
+    "Name": "Health Mochi",
+    "Description": "An item that raises the base HP of a Pokémon."
+  },
+  {
+    "itemId": 819,
+    "Name": "Muscle Mochi",
+    "Description": "An item that raises the base Attack of a Pokémon."
+  },
+  {
+    "itemId": 820,
+    "Name": "Resist Mochi",
+    "Description": "An item that raises the base Defense of a Pokémon."
+  },
+  {
+    "itemId": 821,
+    "Name": "Genius Mochi",
+    "Description": "An item that raises the base Sp. Atk. of a Pokémon."
+  },
+  {
+    "itemId": 822,
+    "Name": "Clever Mochi",
+    "Description": "An item that raises the base Sp. Def. of a Pokémon."
+  },
+  {
+    "itemId": 823,
+    "Name": "Swift Mochi",
+    "Description": "An item that raises the base Speed of a Pokémon."
+  },
+  {
+    "itemId": 824,
+    "Name": "Fresh Start Mochi",
+    "Description": "An item that resets all base points of a Pokémon."
+  },
+  {
+    "itemId": 825,
+    "Name": "Glimmering Charm",
+    "Description": "A charm that will raise the shards from Tera Raids."
+  },
+  {
+    "itemId": 826,
+    "Name": "Metal Alloy",
+    "Description": "A peculiar metal that makes certain Pokémon evolve."
+  },
+  {
+    "itemId": 827,
+    "Name": "Stellar Tera Shard",
+    "Description": "These shards may form when a Tera Pokémon faints."
+  },
+  {
+    "itemId": 828,
+    "Name": "Jubilife Muffin",
+    "Description": "Heals all the status problems of one Pokémon."
+  },
+  {
+    "itemId": 829,
+    "Name": "Remedy",
+    "Description": "A bitter powder that restores HP by 20 points."
+  },
+  {
+    "itemId": 830,
+    "Name": "Fine Remedy",
+    "Description": "A bitter powder that restores HP by 60 points."
+  },
+  {
+    "itemId": 831,
+    "Name": "Superb Remedy",
+    "Description": "A bitter powder that restores HP by 120 points."
+  },
+  {
+    "itemId": 832,
+    "Name": "Aux Evasion",
+    "Description": "Sharply raises evasiveness during one battle."
+  },
+  {
+    "itemId": 833,
+    "Name": "Aux Guard",
+    "Description": "Sharply raises defenses during one battle."
+  },
+  {
+    "itemId": 834,
+    "Name": "Aux Power",
+    "Description": "Sharply raises offenses during one battle."
+  },
+  {
+    "itemId": 835,
+    "Name": "Aux Powerguard",
+    "Description": "Sharply raises offense & defense during one battle."
+  },
+  {
+    "itemId": 836,
+    "Name": "Choice Dumpling",
+    "Description": "?????"
+  },
+  {
+    "itemId": 837,
+    "Name": "Swap Snack",
+    "Description": "?????"
+  },
+  {
+    "itemId": 838,
+    "Name": "Twice-Spiced Radish",
+    "Description": "?????"
+  },
+  {
+    "itemId": 839,
+    "Name": "Pokéshi Doll",
+    "Description": "A wooden toy resembling a Poké- mon. Can be sold."
+  },
+  {
+    "itemId": 840,
+    "Name": "Infinite Candy",
+    "Description": "A unique candy that never seems to run out."
+  },
+  {
+    "itemId": 841,
+    "Name": "DexNav",
+    "Description": "A handy device for keeping track of Pokémon."
+  },
+  {
+    "itemId": 842,
+    "Name": "Daycare Charm",
+    "Description": "Raises the Exp. gained at the daycare."
+  }
+]

@@ -69,8 +69,8 @@ class DefineParser:
         return const_to_num, num_to_const
 
     def dump_json(self, const_to_num, num_to_const):
-        speciesLabelMap = {str(num): name for num, name in num_to_const.items()}
-        labelSpeciesMap = const_to_num
+        labelSpeciesMap = {str(num): name for num, name in num_to_const.items()}
+        speciesLabelMap = const_to_num
         self.output_dir.mkdir(parents=True, exist_ok=True)
         with open(self.output_dir / "speciesLabelMap.json", "w") as f:
             json.dump(speciesLabelMap, f, indent=2)
