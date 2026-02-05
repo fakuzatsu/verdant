@@ -4630,6 +4630,16 @@
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/SlateportCity_ColdStorage/border.bin",
       "blockdata_filepath": "data/layouts/SlateportCity_ColdStorage/map.bin"
+    },
+    {
+      "id": "LAYOUT_MANAPHY_CAVE_INTERIOR",
+      "name": "ManaphyCave_Interior_Layout",
+      "width": 16,
+      "height": 44,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/ManaphyCave_Interior/border.bin",
+      "blockdata_filepath": "data/layouts/ManaphyCave_Interior/map.bin"
     }
   ]
 }

@@ -70,7 +70,7 @@ MythicStone_EventScript_Regidrago::
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, MythicStone_EventScript_DefeatedRegidrago
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, MythicStone_EventScript_RanFromRegidrago
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, MythicStone_EventScript_RanFromRegidrago
-	setflag FLAG_DEFEATED_REGIDRAGO
+    setflag FLAG_CAUGHT_REGIDRAGO
 	release
 	end
 

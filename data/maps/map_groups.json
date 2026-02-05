@@ -456,7 +456,8 @@
     "ShoalCave_HighTidePeak",
     "MtChimney_North",
     "ThunderRock",
-    "MythicStone"
+    "MythicStone",
+    "ManaphyCave_Interior"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

@@ -427,6 +427,7 @@
 #define MAP_MT_CHIMNEY_NORTH                         (110 | (24 << 8))
 #define MAP_THUNDER_ROCK                             (111 | (24 << 8))
 #define MAP_MYTHIC_STONE                             (112 | (24 << 8))
+#define MAP_MANAPHY_CAVE_INTERIOR                    (113 | (24 << 8))
 
 // gMapGroup_IndoorDynamic
 #define MAP_SECRET_BASE_RED_CAVE1    (0 | (25 << 8))

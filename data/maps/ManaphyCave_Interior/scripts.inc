@@ -1,0 +1,64 @@
+ManaphyCave_Interior_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, ManaphyCave_Interior_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, ManaphyCave_Interior_OnResume
+	.byte 0
+
+.set LOCALID_MANAPHY, 1
+
+ManaphyCave_Interior_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, ManaphyCave_Interior_EventScript_TryRemoveManaphy
+	end
+
+ManaphyCave_Interior_EventScript_TryRemoveManaphy::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_MANAPHY
+	removeobject LOCALID_NINJA_1
+	removeobject LOCALID_NINJA_2
+	return
+
+ManaphyCave_Interior_OnTransition:
+	goto_if_set FLAG_CAUGHT_MANAPHY, ManaphyCave_Interior_EventScript_HideManaphy
+	goto_if_set FLAG_DEFEATED_MANAPHY, ManaphyCave_Interior_EventScript_HideManaphy
+	clearflag FLAG_TEMP_9
+	end
+
+ManaphyCave_Interior_EventScript_HideManaphy::
+	setflag FLAG_TEMP_9
+	end
+
+ManaphyCave_Interior_EventScript_Manaphy::
+	lock
+	faceplayer
+	message ManaphyCave_Interior_Text_Manaphy
+	playmoncry SPECIES_MANAPHY, CRY_MODE_ENCOUNTER
+	waitmoncry
+	closemessage
+	seteventmon SPECIES_MANAPHY, 60
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, ManaphyCave_Interior_EventScript_ManaphyDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, ManaphyCave_Interior_EventScript_PlayerOrManaphyRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, ManaphyCave_Interior_EventScript_PlayerOrManaphyRan
+	goto_if_eq VAR_RESULT, B_OUTCOME_MON_TELEPORTED, ManaphyCave_Interior_EventScript_PlayerOrManaphyRan
+	setflag FLAG_CAUGHT_MANAPHY
+	release
+	end
+
+ManaphyCave_Interior_EventScript_ManaphyDefeated::
+	setflag FLAG_DEFEATED_MANAPHY
+	setvar VAR_0x8004, SPECIES_MANAPHY
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+ManaphyCave_Interior_EventScript_PlayerOrManaphyRan::
+	setflag FLAG_TEMP_9
+	setvar VAR_0x8004, SPECIES_MANAPHY
+	goto Common_EventScript_LegendaryFlewAway
+	end
+
+ManaphyCave_Interior_Text_Manaphy:
+	.string "Feeeee$"

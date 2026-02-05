@@ -34,6 +34,13 @@
       "elevation": 3,
       "dest_map": "MAP_UNDERWATER_SEAFLOOR_CAVERN",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 77,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_MANAPHY_CAVE_INTERIOR",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [

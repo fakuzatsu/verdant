@@ -103,7 +103,7 @@ ThunderRock_EventScript_Regieleki::
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, ThunderRock_EventScript_DefeatedRegieleki
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, ThunderRock_EventScript_RanFromRegieleki
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, ThunderRock_EventScript_RanFromRegieleki
-	setflag FLAG_DEFEATED_REGIELEKI
+    setflag FLAG_CAUGHT_REGIELEKI
 	release
 	end
 

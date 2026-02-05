@@ -1,0 +1,47 @@
+{
+  "id": "MAP_MANAPHY_CAVE_INTERIOR",
+  "name": "ManaphyCave_Interior",
+  "layout": "LAYOUT_MANAPHY_CAVE_INTERIOR",
+  "music": "MUS_UNDERWATER",
+  "region_map_section": "MAPSEC_UNDERWATER_MARINE_CAVE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_UNDERWATER",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": 0,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MANAPHY)",
+      "x": 10,
+      "y": 4,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ManaphyCave_Interior_EventScript_Manaphy",
+      "flag": "FLAG_TEMP_9"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 5,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_UNDERWATER_ROUTE128",
+      "dest_warp_id": "1"
+    }
+  ],
+  "coord_events": [
+
+  ],
+  "bg_events": [
+
+  ],
+  "has_night_table": false
+}

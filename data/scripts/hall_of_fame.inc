@@ -38,6 +38,8 @@ EverGrandeCity_HallOfFame_EventScript_ResetDefeatedEventLegendaries::
 	clearflag FLAG_DEFEATED_ZAPDOS
 	clearflag FLAG_DEFEATED_ARTICUNO
 	clearflag FLAG_DEFEATED_REGIELEKI
+    clearflag FLAG_DEFEATED_REGIDRAGO
+    clearflag FLAG_DEFEATED_MANAPHY
 	return
 
 EverGrandeCity_HallOfFame_EventScript_SetDesertUnderpassCommentReady::
