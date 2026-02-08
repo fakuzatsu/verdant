@@ -3,7 +3,7 @@ SealedChamber_InnerRoom_MapScripts::
 	.byte 0
 
 SealedChamber_InnerRoom_OnLoad::
-    goto_if_set FLAG_REGIGIGAS_DOOR_OPENED, SealedChamber_InnerRoom_EventScript_SetCollapsedWall
+    goto_if_unset FLAG_REGIGIGAS_DOOR_OPENED, SealedChamber_InnerRoom_EventScript_SetSolidWall
     end
 
 SealedChamber_InnerRoom_EventScript_BrailleBackWall::
@@ -61,6 +61,15 @@ SealedChamber_InnerRoom_EventScript_CheckForRegis::
     setflag FLAG_REGIGIGAS_DOOR_OPENED
 	releaseall
 	end
+
+SealedChamber_InnerRoom_EventScript_SetSolidWall::
+    setmetatile 9, 3, METATILE_Cave_SealedChamberInterior_Wall, TRUE
+    setmetatile 9, 4, METATILE_Cave_SealedChamberInterior_TextWall, TRUE
+    setmetatile 10, 3, METATILE_Cave_SealedChamberInterior_Wall, TRUE
+    setmetatile 10, 4, METATILE_Cave_SealedChamberInterior_TextWall, TRUE
+    setmetatile 11, 3, METATILE_Cave_SealedChamberInterior_Wall, TRUE
+    setmetatile 11, 4, METATILE_Cave_SealedChamberInterior_TextWall, TRUE
+    return
 
 SealedChamber_InnerRoom_EventScript_SetCollapsedWall::
     setmetatile 9, 3, METATILE_Cave_SealedChamberInterior_TopLeft, TRUE

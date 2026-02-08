@@ -1223,3 +1223,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SlateportCity_ColdStorage/scripts.inc"
 
 	.include "data/maps/ManaphyCave_Interior/scripts.inc"
+
+	.include "data/maps/OriginChamber/scripts.inc"

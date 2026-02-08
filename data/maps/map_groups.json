@@ -457,7 +457,8 @@
     "MtChimney_North",
     "ThunderRock",
     "MythicStone",
-    "ManaphyCave_Interior"
+    "ManaphyCave_Interior",
+    "OriginChamber"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

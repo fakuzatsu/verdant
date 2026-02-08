@@ -4640,6 +4640,16 @@
       "secondary_tileset": "gTileset_Underwater",
       "border_filepath": "data/layouts/ManaphyCave_Interior/border.bin",
       "blockdata_filepath": "data/layouts/ManaphyCave_Interior/map.bin"
+    },
+    {
+      "id": "LAYOUT_ORIGIN_CHAMBER",
+      "name": "OriginChamber_Layout",
+      "width": 17,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/OriginChamber/border.bin",
+      "blockdata_filepath": "data/layouts/OriginChamber/map.bin"
     }
   ]
 }
