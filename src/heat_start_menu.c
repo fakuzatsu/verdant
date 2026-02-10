@@ -167,7 +167,7 @@ static void HeatStartMenu_HandleInput_Button(enum PlayerLocation location, u8 ta
 static void HeatStartMenu_HandleInput_Move(enum NavigationDirection direction, enum PlayerLocation location);
 
 /* MENU DEFINITIONS */
-static const u8 sOverworldMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_OPTIONS };
+static const u8 sOverworldMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_POKETCH, MENU_TRAINER_CARD, MENU_SAVE, MENU_OPTIONS };
 static const u8 sSafariMenu[] = { MENU_POKEDEX, MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_OPTIONS, MENU_FLAG };
 static const u8 sPyramidMenu[] = { MENU_PARTY, MENU_BAG, MENU_TRAINER_CARD, MENU_SAVE, MENU_FLAG, MENU_OPTIONS };
 
@@ -992,7 +992,7 @@ static void HeatStartMenu_UpdateClockDisplay(void)
 	CopyWindowToVram(sHeatStartMenu->sStartClockWindowId, COPYWIN_GFX);
 }
 
-static const u8 gText_Poketch[] = _("  PokeNav");
+static const u8 gText_Poketch[] = _("  PokéNav");
 static const u8 gText_Pokedex[] = _("  Pokédex");
 static const u8 gText_Party[]   = _("    Party ");
 static const u8 gText_Bag[]     = _("      Bag  ");
@@ -1493,6 +1493,31 @@ static void Task_HandleSave(u8 taskId)
 #define STD_WINDOW_BASE_TILE_NUM 0x214
 #define STD_WINDOW_PALETTE_NUM 14
 
+static bool8 IsMenuItemAvailable(u8 menuItem)
+{
+    switch (menuItem)
+    {
+    case MENU_PARTY:
+        return FlagGet(FLAG_SYS_POKEMON_GET);
+    case MENU_POKEDEX:
+        return FlagGet(FLAG_SYS_POKEDEX_GET);
+    case MENU_POKETCH:
+        return FlagGet(FLAG_SYS_POKENAV_GET);
+    default:
+        return TRUE;
+    }
+}
+
+// Find the first available index in menu, or -1 if none available
+static int FindFirstAvailableIndex(const u8 *menu, int menuSize)
+{
+    int i;
+    for (i = 0; i < menuSize; ++i)
+        if (IsMenuItemAvailable(menu[i]))
+            return i;
+    return -1;
+}
+
 static void DoCleanUpAndStartSaveMenu(void) 
 {
     if (!gPaletteFade.active) 
@@ -1642,15 +1667,15 @@ static void HeatStartMenu_HandleInput_Move(enum NavigationDirection direction, e
     {
         case LOCATION_SAFARI:
             menu = sSafariMenu;
-            menuSize = sizeof(sSafariMenu);
+            menuSize = sizeof(sSafariMenu) / sizeof(sSafariMenu[0]);
             break;
         case LOCATION_PYRAMID:
             menu = sPyramidMenu;
-            menuSize = sizeof(sPyramidMenu);
+            menuSize = sizeof(sPyramidMenu) / sizeof(sPyramidMenu[0]);
             break;
         default:
             menu = sOverworldMenu;
-            menuSize = sizeof(sOverworldMenu);
+            menuSize = sizeof(sOverworldMenu) / sizeof(sOverworldMenu[0]);
             break;
     }
 
@@ -1660,21 +1685,45 @@ static void HeatStartMenu_HandleInput_Move(enum NavigationDirection direction, e
             break;
     }
 
+    if (index == menuSize || !IsMenuItemAvailable(menu[index]))
+    {
+        int first = FindFirstAvailableIndex(menu, menuSize);
+        if (first == -1)
+        {
+            HeatStartMenu_UpdateMenuName();
+            return;
+        }
+        index = first;
+        menuSelected = menu[index];
+    }
+
     if (direction == DIRECTION_DOWN)
     {
-        if (index < menuSize - 1)
-            menuSelected = menu[index + 1];
-        else
-            menuSelected = menu[0];
-        PlaySE(SE_SELECT);
+        int i;
+        for (i = 1; i <= menuSize; ++i)
+        {
+            int next = (index + i) % menuSize;
+            if (IsMenuItemAvailable(menu[next]))
+            {
+                menuSelected = menu[next];
+                PlaySE(SE_SELECT);
+                break;
+            }
+        }
     }
     else if (direction == DIRECTION_UP)
     {
-        if (index > 0)
-            menuSelected = menu[index - 1];
-        else
-            menuSelected = menu[menuSize - 1];
-        PlaySE(SE_SELECT);
+        int i;
+        for (i = 1; i <= menuSize; ++i)
+        {
+            int prev = (index - i + menuSize) % menuSize;
+            if (IsMenuItemAvailable(menu[prev]))
+            {
+                menuSelected = menu[prev];
+                PlaySE(SE_SELECT);
+                break;
+            }
+        }
     }
     
     HeatStartMenu_UpdateMenuName();
