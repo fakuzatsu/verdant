@@ -245,10 +245,10 @@ void Task_OpenBO3MenuFromStartMenu(u8 taskId)
     {
         
         CleanupOverworldWindowsAndTilemaps();
-        const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_JUAN_1);
-        u32 trainerPicId = GetTrainerPicFromId(TRAINER_JUAN_1);
-        u8 size = GetTrainerPartySizeFromId(TRAINER_JUAN_1);
-        const u8 *name = GetTrainerNameFromId(TRAINER_JUAN_1);
+        const struct TrainerMon *party = GetTrainerPartyFromId(TRAINER_WALLACE);
+        u32 trainerPicId = GetTrainerPicFromId(TRAINER_WALLACE);
+        u8 size = GetTrainerPartySizeFromId(TRAINER_WALLACE);
+        const u8 *name = GetTrainerNameFromId(TRAINER_WALLACE);
         BO3Menu_Init(trainerPicId, party, size, name, CB2_ReturnToFieldWithOpenMenu);
         DestroyTask(taskId);
     }

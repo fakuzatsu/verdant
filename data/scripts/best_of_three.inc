@@ -239,7 +239,7 @@ EventScript_JuanBestOfThreeContinue:
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
     special ReducePlayerPartyToSelectedMons
-    trainerbattle_no_intro_no_whiteout TRAINER_JUAN_1, SootopolisCity_Gym_1F_Text_JuanMatchDefeat
+    trainerbattle_no_intro_no_whiteout TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanMatchDefeat
     goto EventScript_JuanAfterBattle
     end
 
