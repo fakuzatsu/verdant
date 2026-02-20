@@ -107,7 +107,7 @@ EventScript_JuanDraftStart::
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
     special ReducePlayerPartyToSelectedMons
-	trainerbattle_single TRAINER_JUAN_1, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanDefeat, EventScript_JuanDraftDefeated, NO_MUSIC
+	trainerbattle_single TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanDefeat, EventScript_JuanDraftDefeated, NO_MUSIC
     end
 
 EventScript_JuanDraftDefeated::
