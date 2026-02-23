@@ -21,7 +21,7 @@ SootopolisCity_Gym_1F_OnLoad:
 	end
 
 SootopolisCity_Gym_1F_EventScript_ShowWallaceOrJuan::
-	goto_if_set FLAG_SYS_GAME_CLEAR, SootopolisCity_Gym_1F_EventScript_ShowWallace
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SootopolisCity_Gym_1F_EventScript_ShowWallace
 	end
 
 SootopolisCity_Gym_1F_EventScript_ShowWallace::

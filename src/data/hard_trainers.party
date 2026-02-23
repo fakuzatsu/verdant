@@ -6894,6 +6894,69 @@ Tags: Ace
 - Earthquake
 - Rock Slide
 
+=== TRAINER_WALLACE_CHAMPION ===
+Name: Wallace
+Class: Champion
+Pic: Champion Wallace
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+Mugshot: Yellow
+Party Size: 4
+
+Cloyster
+Level: 88
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Tags: Lead
+- Icicle Spear
+- Ice Shard
+- Waterfall
+- Rain Dance
+
+Lapras
+Level: 88
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Tags: Lead / Weather Setter
+- Ice Beam
+- Sparkling Aria
+- Alluring Voice
+- Snowscape
+
+Dondozo
+Level: 89
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Waterfall
+- Avalanche
+- Earthquake
+- Rock Slide
+
+Walrein
+Level: 89
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Tags: Weather Abuser
+- Ice Beam
+- Brine
+- Roar
+- Super Fang
+
+Gyarados
+Level: 89
+IVs: 32 HP / 32 Atk / 32 Def / 32 SpA / 32 SpD / 32 Spe
+- Waterfall
+- Crunch
+- Ice Fang
+- Stone Edge
+
+Milotic
+Level: 90
+IVs: 32 HP / 32 Atk / 32 Def / 32 SpA / 32 SpD / 32 Spe
+Tags: Ace
+- Ice Beam
+- Scald
+- Tera Blast
+- Recover
+
 === TRAINER_ANDREW ===
 Name: Andrew
 Class: Fisherman

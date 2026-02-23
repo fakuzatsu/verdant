@@ -167,6 +167,8 @@
 #define STDSTRING_BATTLE_PIKE      28
 #define STDSTRING_BATTLE_PYRAMID   29
 #define STDSTRING_TERASHARDS       30
+#define STDSTRING_STEVEN           31
+#define STDSTRING_WALLACE          32
 
 // Dynamic Multichoice Callbacks
 
