@@ -229,37 +229,37 @@ EventScript_DefeatedTateAndLiza:
     goto MossdeepCity_Gym_EventScript_TateAndLizaDefeated
     end
 
-EventScript_JuanBestOfThreeStart::
-    goto_if_ge VAR_MATCHES_PLAYED, 1, EventScript_JuanReturnToContinueQ
-    msgbox SootopolisCity_Gym_1F_Text_JuanIntro, MSGBOX_DEFAULT
-EventScript_JuanBestOfThreeContinue:
+EventScript_WallaceBestOfThreeStart::
+    goto_if_ge VAR_MATCHES_PLAYED, 1, EventScript_WallaceReturnToContinueQ
+    msgbox SootopolisCity_Gym_1F_Text_WallaceIntro, MSGBOX_DEFAULT
+EventScript_WallaceBestOfThreeContinue:
     setvar VAR_0x8005, 4
     special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
     special ReducePlayerPartyToSelectedMons
-    trainerbattle_no_intro_no_whiteout TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanMatchDefeat
-    goto EventScript_JuanAfterBattle
+    trainerbattle_no_intro_no_whiteout TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_WallaceDefeat
+    goto EventScript_WallaceAfterBattle
     end
 
-EventScript_JuanAfterBattle:
+EventScript_WallaceAfterBattle:
     special LoadPlayerParty
     call EventScript_CountMatchesWinsAndLosses
     setvar VAR_0x8001, 250
-    goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedJuan
+    goto_if_ge VAR_MATCHES_WON, 2, EventScript_DefeatedWallace
     goto_if_ge VAR_MATCHES_LOST, 2, EventScript_PlayerDefeated
     goto_if_ge VAR_MATCHES_PLAYED, 3, EventScript_AbortBattleFallback
     special HealPlayerParty
-EventScript_JuanReturnToContinueQ:
-    msgbox SootopolisCity_Gym_1F_Text_JuanContinue, MSGBOX_YESNO
+EventScript_WallaceReturnToContinueQ:
+    msgbox SootopolisCity_Gym_1F_Text_WallaceContinue, MSGBOX_YESNO
     goto_if_eq VAR_RESULT, NO, EventScript_AbortChallenge
-    goto EventScript_JuanBestOfThreeContinue
+    goto EventScript_WallaceBestOfThreeContinue
     end
 
-EventScript_DefeatedJuan:
-    msgbox SootopolisCity_Gym_1F_Text_JuanDefeat, MSGBOX_DEFAULT
-    goto SootopolisCity_Gym_1F_EventScript_JuanDefeated
+EventScript_DefeatedWallace:
+    msgbox SootopolisCity_Gym_1F_Text_WallaceDefeat, MSGBOX_DEFAULT
+    goto SootopolisCity_Gym_1F_EventScript_WallaceOrJuanDefeated
     end
 
 EventScript_PlayerDefeated:

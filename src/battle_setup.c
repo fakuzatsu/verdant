@@ -2116,7 +2116,7 @@ void TryBestOfThree(struct ScriptContext *ctx)
         script = DRAFT_OR_BEST_OF_THREE(TateAndLiza);
         break;
     case TRAINER_WALLACE:
-        script = DRAFT_OR_BEST_OF_THREE(Juan);
+        script = DRAFT_OR_BEST_OF_THREE(Wallace);
         break;
     default:
         return;

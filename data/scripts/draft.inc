@@ -100,17 +100,17 @@ EventScript_TateAndLizaDraftDefeated::
     goto MossdeepCity_Gym_EventScript_TateAndLizaDefeated
     end
 
-EventScript_JuanDraftStart::
+EventScript_WallaceDraftStart::
     setvar VAR_0x8005, 4
     special ChoosePartyForDraft
     waitstate
     goto_if_eq VAR_RESULT, 0, EventScript_AbortChallenge
     special SavePlayerParty
     special ReducePlayerPartyToSelectedMons
-	trainerbattle_single TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanDefeat, EventScript_JuanDraftDefeated, NO_MUSIC
+	trainerbattle_single TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_WallaceIntro, SootopolisCity_Gym_1F_Text_WallaceDefeat, EventScript_WallaceDraftDefeated, NO_MUSIC
     end
 
-EventScript_JuanDraftDefeated::
+EventScript_WallaceDraftDefeated::
     special LoadPlayerParty
-    goto SootopolisCity_Gym_1F_EventScript_JuanDefeated
+    goto SootopolisCity_Gym_1F_EventScript_WallaceOrJuanDefeated
     end

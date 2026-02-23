@@ -978,7 +978,7 @@
 #define FLAG_HIDE_RUSTURF_TUNNEL_ROCK_2                             0x3A4
 #define FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL                      0x3A5
 #define FLAG_HIDE_MOSSDEEP_CITY_HOUSE_2_WINGULL                     0x3A6
-#define FLAG_UNUSED_0x3A7                                           0x3A7 // Previously FLAG_HIDE_REGI flags
+#define FLAG_MET_JUAN                                               0x3A7 // Previously FLAG_HIDE_REGI flags
 #define FLAG_UNUSED_0x3A8                                           0x3A8
 #define FLAG_UNUSED_0x3A9                                           0x3A9
 #define FLAG_HIDE_METEOR_FALLS_TEAM_AQUA                            0x3AA

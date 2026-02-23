@@ -674,7 +674,7 @@ extern const u8 EventScript_FlanneryDraftStart[];
 extern const u8 EventScript_NormanDraftStart[];
 extern const u8 EventScript_WinonaDraftStart[];
 extern const u8 EventScript_TateAndLizaDraftStart[];
-extern const u8 EventScript_JuanDraftStart[];
+extern const u8 EventScript_WallaceDraftStart[];
 
 // Best of Three
 extern const u8 EventScript_RoxanneBestOfThreeStart[];
@@ -684,6 +684,6 @@ extern const u8 EventScript_FlanneryBestOfThreeStart[];
 extern const u8 EventScript_NormanBestOfThreeStart[];
 extern const u8 EventScript_WinonaBestOfThreeStart[];
 extern const u8 EventScript_TateAndLizaBestOfThreeStart[];
-extern const u8 EventScript_JuanBestOfThreeStart[];
+extern const u8 EventScript_WallaceBestOfThreeStart[];
 
 #endif // GUARD_EVENT_SCRIPTS_H
