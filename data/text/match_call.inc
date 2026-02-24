@@ -2226,17 +2226,17 @@ MatchCall_Text_TateLiza4::
 MatchCall_Text_Juan1::
 	.string "Juan: Hmm…\n"
 	.string "{PLAYER}{KUN}… Was it?\p"
+	.string "My young apprentice gave me your\n"
+	.string "Match Call number.\p"
+	.string "I wish to witness your passion in\n"
+	.string "person, so please come by the\l"
+	.string "Sootopolis Gym!$"
+
+MatchCall_Text_Juan2::
+	.string "Juan: Fufu… {PLAYER}{KUN}…\p"
 	.string "Our battle together--it brought\n"
 	.string "to me memories of when I first\l"
 	.string "encountered Wallace.\p"
-	.string "Perhaps you are a genius who may\n"
-	.string "yet surpass Wallace!$"
-
-MatchCall_Text_Juan2::
-	.string "Juan: Fufu… {PLAYER}{KUN}…\n"
-	.string "You've finally achieved your goal.\p"
-	.string "My eye for appraising talent wasn't\n"
-	.string "mistaken…\p"
 	.string "I wish for another chance to meet\n"
 	.string "you, for you have scaled the peak\l"
 	.string "of power and prestige.$"
