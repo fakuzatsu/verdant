@@ -15362,41 +15362,77 @@ Class: Leader
 Pic: Leader Roxanne
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
+Party Size: 6
 
 Golem
-Level: 32
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
+Tags: Lead
 - Rollout
 - Magnitude
 - Explosion
+- Sandstorm
 
-Kabuto @ Sitrus Berry
-Level: 35
+Crustle
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swords Dance
+- Rock Blast
+- Fury Cutter
+- Magnitude
+- Flail
+
+Lycanroc
+Level: 55
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Support
+- Rock Slide
+- Accelerock
+- Crunch
+- Snarl
+
+Garganacl
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Salt Cure
+- Body Press
+- Brick Break
+- Rock Polish
+
+Kabutops @ Soft Sand
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Slash
+- Rock Slide
+- Aqua Jet
+- Hone Claws
+
+Aerodactyl @ Heavy-Duty Boots
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Ancient Power
+- Hyper Beam
+- Air Cutter
+- Supersonic
+
+Omastar @ Mystic Water
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
-- Surf
 - Rock Slide
+- Water Pulse
+- Horn Attack
 
-Onix
-Level: 35
+Probopass @ Sitrus Berry
+Level: 56
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Iron Tail
-- Explosion
-- Roar
+Tags: Ace
 - Rock Slide
-
-Nosepass @ Sitrus Berry
-Level: 37
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Double Team
-- Explosion
-- Protect
-- Rock Slide
+- Magnitude
+- Body Press
+- Body Slam
 
 === TRAINER_ROXANNE_3 ===
 Name: Roxanne
@@ -15404,49 +15440,86 @@ Class: Leader
 Pic: Leader Roxanne
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
-
-Omanyte
-Level: 37
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
-- Ice Beam
-- Rock Slide
-- Surf
+Pool Rules: Guaranteed Support
+Party Size: 6
 
 Golem
-Level: 37
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
+Tags: Lead
 - Rollout
 - Magnitude
 - Explosion
+- Stealth Rock
 
-Kabutops @ Sitrus Berry
-Level: 40
+Sandaconda
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swords Dance
+Tags: Lead
+- Rock Slide
+- Magnitude
+- Sandstorm
+- Glare
+
+Crustle
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rock Blast
+- Fury Cutter
+- Magnitude
+- Flail
+
+Lycanroc
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Support
+- Rock Slide
+- Accelerock
+- Crunch
+- Snarl
+
+Garganacl
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Salt Cure
+- Body Press
+- Brick Break
+- Rock Polish
+
+Kabutops @ Soft Sand
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Slash
+- Rock Slide
+- Aqua Jet
+- Hone Claws
+
+Aerodactyl @ Heavy-Duty Boots
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Ancient Power
+- Hyper Beam
+- Air Cutter
+- Supersonic
+
+Omastar @ Mystic Water
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
-- Surf
 - Rock Slide
+- Water Pulse
+- Horn Attack
 
-Onix
-Level: 40
+Probopass @ Sitrus Berry
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Iron Tail
-- Explosion
-- Roar
+Tags: Ace
 - Rock Slide
-
-Nosepass @ Sitrus Berry
-Level: 42
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Double Team
-- Explosion
-- Protect
-- Rock Slide
+- Magnitude
+- Body Press
+- Body Slam
 
 === TRAINER_ROXANNE_4 ===
 Name: Roxanne
@@ -15454,49 +15527,84 @@ Class: Leader
 Pic: Leader Roxanne
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
-
-Omastar
-Level: 42
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
-- Ice Beam
-- Rock Slide
-- Surf
+Party Size: 6
 
 Golem
-Level: 42
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
-- Rollout
+Tags: Lead
+- Stone Edge
 - Earthquake
 - Explosion
+- Stealth Rock
 
-Kabutops @ Sitrus Berry
-Level: 45
+Sandaconda
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swords Dance
+Tags: Lead
+- Rock Blast
+- Earthquake
+- Stealth Rock
+- Glare
+
+Crustle
+Level: 85
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- X-Scissor
+- Earthquake
+- Flail
+
+Lycanroc
+Level: 85
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Accelerock
+- Psychic Fangs
+- Snarl
+
+Garganacl
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Salt Cure
+- Body Press
+- Hammer Arm
+- Rock Polish
+
+Kabutops @ Life Orb
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Slash
+- Stone Edge
+- Liquidation
+- Flip Turn
+
+Aerodactyl @ Heavy-Duty Boots
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Knock Off
+- Liquidation
+- Flip Turn
+
+Omastar @ Sitrus Berry
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
+- Rock Slide
 - Surf
-- Rock Slide
+- Earth Power
 
-Onix
-Level: 45
+Probopass @ Leftovers
+Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Iron Tail
-- Explosion
-- Roar
-- Rock Slide
-
-Nosepass @ Sitrus Berry
-Level: 47
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Double Team
-- Explosion
-- Protect
-- Rock Slide
+Tags: Ace
+- Power Gem
+- Earth Power
+- Flash Cannon
+- Dazzling Gleam
 
 === TRAINER_ROXANNE_5 ===
 Name: Roxanne
@@ -15504,57 +15612,84 @@ Class: Leader
 Pic: Leader Roxanne
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Party Size: 6
 
-Aerodactyl
-Level: 47
+Golem @ Custap Berry
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rock Slide
-- Hyper Beam
-- Supersonic
-- Protect
-
-Golem
-Level: 47
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Focus Punch
-- Rollout
+Tags: Lead
+- Stone Edge
 - Earthquake
 - Explosion
+- Stealth Rock
 
-Omastar
-Level: 47
+Sandaconda @ Smooth Rock
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Protect
+Tags: Lead
+- Rock Blast
+- Earthquake
+- Stealth Rock
+- Glare
+
+Crustle @ Soft Sand
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- X-Scissor
+- Earthquake
+- Shell Smash
+
+Lycanroc @ Life Orb
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Accelerock
+- Psychic Fangs
+- Close Combat
+
+Garganacl @ Sitrus Berry
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Salt Cure
+- Body Press
+- Hammer Arm
+- Recover
+
+Kabutops @ Choice Scarf
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Knock Off
+- Stone Edge
+- Liquidation
+- Flip Turn
+
+Aerodactyl @ Heavy-Duty Boots
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Stone Edge
+- Knock Off
+- Liquidation
+- Flip Turn
+
+Omastar @ Power Herb
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
-- Rock Slide
-- Surf
+- Meteor Beam
+- Hydro Pump
+- Shell Smash
 
-Kabutops @ Sitrus Berry
-Level: 50
+Probopass @ Leftovers
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swords Dance
-- Ice Beam
-- Surf
-- Rock Slide
-
-Steelix
-Level: 50
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Iron Tail
-- Explosion
-- Roar
-- Rock Slide
-
-Nosepass @ Sitrus Berry
-Level: 52
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Double Team
-- Explosion
-- Protect
-- Rock Slide
+Tags: Ace
+- Power Gem
+- Earth Power
+- Flash Cannon
+- Dazzling Gleam
 
 === TRAINER_BRAWLY_2 ===
 Name: Brawly
