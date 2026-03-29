@@ -284,6 +284,12 @@ const u32 gTrainerFrontPic_Kahili[] = INCBIN_U32("graphics/trainers/front_pics/k
 const u32 gTrainerPalette_Kahili[] = INCBIN_U32("graphics/trainers/front_pics/kahili.gbapal.lz");
 const u32 gTrainerFrontPic_Colress[] = INCBIN_U32("graphics/trainers/front_pics/colress.4bpp.smol");
 const u32 gTrainerPalette_Colress[] = INCBIN_U32("graphics/trainers/front_pics/colress.gbapal.lz");
+const u32 gTrainerFrontPic_Lisia[] = INCBIN_U32("graphics/trainers/front_pics/lisia.4bpp.smol");
+const u32 gTrainerPalette_Lisia[] = INCBIN_U32("graphics/trainers/front_pics/lisia.gbapal.lz");
+const u32 gTrainerFrontPic_Cynthia[] = INCBIN_U32("graphics/trainers/front_pics/cynthia.4bpp.smol");
+const u32 gTrainerPalette_Cynthia[] = INCBIN_U32("graphics/trainers/front_pics/cynthia.gbapal.lz");
+const u32 gTrainerFrontPic_Riley[] = INCBIN_U32("graphics/trainers/front_pics/riley.4bpp.smol");
+const u32 gTrainerPalette_Riley[] = INCBIN_U32("graphics/trainers/front_pics/riley.gbapal.lz");
 
 const u8 gTrainerBackPic_Brendan[] = INCBIN_U8("graphics/trainers/back_pics/brendan.4bpp");
 const u8 gTrainerBackPic_May[] = INCBIN_U8("graphics/trainers/back_pics/may.4bpp");
@@ -296,6 +302,9 @@ const u8 gTrainerBackPic_Steven[] = INCBIN_U8("graphics/trainers/back_pics/steve
 
 const u32 gTrainerBackPicPalette_Red[] = INCBIN_U32("graphics/trainers/back_pics/red.gbapal.lz");
 const u32 gTrainerBackPicPalette_Leaf[] = INCBIN_U32("graphics/trainers/back_pics/leaf.gbapal.lz");
+
+const u8 gTrainerBackPic_Lisia[] = INCBIN_U8("graphics/trainers/back_pics/lisia.4bpp");
+const u32 gTrainerBackPicPalette_Lisia[] = INCBIN_U32("graphics/trainers/back_pics/lisia.gbapal.lz");
 
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_HIKER), and
