@@ -15697,39 +15697,67 @@ Class: Leader
 Pic: Leader Brawly
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Party Size: 6
 
 Machamp @ Sitrus Berry
-Level: 33
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
 - Karate Chop
 - Rock Slide
-- Focus Punch
+- Seismic Toss
 - Bulk Up
 
 Meditite
-Level: 33
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Psychic
+Level: 55
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Psybeam
 - Light Screen
 - Reflect
-- Focus Punch
+- Swift
 
-Hitmontop
-Level: 35
+Mienfoo
+Level: 55
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Force Palm
+- Knock Off
+- U-Turn
+- Fake Out
+
+Grapploct
+Level: 55
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Brick Break
+- Liquidation
+- Feint
+- Bulk Up
+
+Crabrawler
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brick Break
+- Liquidation
+- Reversal
+- Ice Punch
+
+Hitmontop @ Protective Pads
+Level: 56
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Pursuit
-- Counter
-- Protect
+- Rapid Spin
+- Triple Axel
 - Triple Kick
 
 Hariyama @ Sitrus Berry
-Level: 37
+Level: 56
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Fake Out
-- Focus Punch
+Tags: Ace
+- Arm Thrust
+- Vital Throw
 - Belly Drum
 - Earthquake
 
@@ -15739,39 +15767,67 @@ Class: Leader
 Pic: Leader Brawly
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Party Size: 6
 
 Machamp @ Sitrus Berry
-Level: 38
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
 - Karate Chop
 - Rock Slide
-- Focus Punch
+- Seismic Toss
 - Bulk Up
 
-Medicham
-Level: 38
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Psychic
+Medicham @ Light Clay
+Level: 70
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Psybeam
 - Light Screen
 - Reflect
-- Focus Punch
+- Swift
 
-Hitmontop
-Level: 40
+Mienshao @ Life Orb
+Level: 70
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Force Palm
+- Knock Off
+- U-Turn
+- Fake Out
+
+Grapploct
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brick Break
+- Liquidation
+- Feint
+- Bulk Up
+
+Crabominable
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brick Break
+- Liquidation
+- Reversal
+- Ice Punch
+
+Hitmontop @ Protective Pads
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Pursuit
-- Counter
-- Protect
+- Rapid Spin
+- Triple Axel
 - Triple Kick
 
 Hariyama @ Sitrus Berry
-Level: 42
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Fake Out
-- Focus Punch
+Tags: Ace
+- Arm Thrust
+- Vital Throw
 - Belly Drum
 - Earthquake
 
@@ -15781,49 +15837,68 @@ Class: Leader
 Pic: Leader Brawly
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
-
-Hitmonchan
-Level: 40
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Sky Uppercut
-- Protect
-- Fire Punch
-- Ice Punch
+Party Size: 6
 
 Machamp @ Sitrus Berry
-Level: 43
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
 - Karate Chop
 - Rock Slide
-- Focus Punch
+- Bullet Punch
 - Bulk Up
 
-Medicham
-Level: 43
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Focus Punch
+Medicham @ Light Clay
+Level: 85
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Psychic
+- Shadow Ball
 - Light Screen
 - Reflect
-- Psychic
 
-Hitmontop
-Level: 45
+Mienshao @ Life Orb
+Level: 85
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Force Palm
+- Knock Off
+- U-Turn
+- Fake Out
+
+Grapploct @ Black Belt
+Level: 86
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+- Octolock
+- Drain Punch
+- Liquidation
+- Bulk Up
+
+Crabominable @ Black Belt
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Pursuit
-- Counter
-- Protect
+- Drain Punch
+- Liquidation
+- Reversal
+- Ice Punch
+
+Hitmontop @ Protective Pads
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Close Combat
+- Rapid Spin
+- Triple Axel
 - Triple Kick
 
 Hariyama @ Sitrus Berry
-Level: 47
+Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Fake Out
-- Focus Punch
-- Belly Drum
+Tags: Ace
+- Arm Thrust
+- Drain Punch
 - Earthquake
+- Belly Drum
 
 === TRAINER_BRAWLY_5 ===
 Name: Brawly
@@ -15831,57 +15906,69 @@ Class: Leader
 Pic: Leader Brawly
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
-
-Hitmonlee
-Level: 46
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Mega Kick
-- Focus Punch
-- Earthquake
-- Bulk Up
-
-Hitmonchan
-Level: 46
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Sky Uppercut
-- Protect
-- Fire Punch
-- Ice Punch
+Party Size: 6
 
 Machamp @ Sitrus Berry
-Level: 48
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Cross Chop
+Tags: Lead
+- Close Combat
 - Rock Slide
-- Focus Punch
+- Bullet Punch
 - Bulk Up
 
 Medicham
-Level: 48
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Focus Punch
+Level: 95
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Psychic
+- Shadow Ball
 - Light Screen
 - Reflect
-- Psychic
+
+Mienshao
+Level: 95
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+Tags: Support
+- Close Combat
+- Knock Off
+- U-Turn
+- Fake Out
+
+Grapploct
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Octolock
+- Drain Punch
+- Liquidation
+- Bulk Up
+
+Crabominable
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Ice Hammer
+- Liquidation
+- Drain Punch
+- Earthquake
 
 Hitmontop
-Level: 50
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Pursuit
-- Counter
-- Protect
+- Close Combat
+- Rapid Spin
+- Triple Axel
 - Triple Kick
 
 Hariyama @ Sitrus Berry
-Level: 52
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Fake Out
-- Focus Punch
-- Belly Drum
+Tags: Ace
+- Bullet Punch
+- Drain Punch
 - Earthquake
+- Belly Drum
 
 === TRAINER_WATTSON_2 ===
 Name: Wattson
