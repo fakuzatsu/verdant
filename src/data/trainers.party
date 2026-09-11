@@ -5380,7 +5380,7 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 Manectric @ Sitrus Berry
 Level: 31
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-Tags: Lead
+Tags: Ace
 - Quick Attack
 - Thunder Wave
 - Shock Wave
@@ -5396,37 +5396,56 @@ Double Battle: No
 AI: Basic Trainer
 Party Size: 4
 
-Numel
-Level: 24
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Overheat
+Fletchinder
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
+- Flame Charge
+- Aerial Ace
+- Air Slash
+- Tailwind
+
+Growlithe
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
+- Flamethrower
 - Take Down
-- Magnitude
+- Howl
 - Sunny Day
 
-Slugma
-Level: 24
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Overheat
-- Smog
-- Light Screen
-- Sunny Day
+Centiskorch
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Flamethrower
+- Bug Bite
+- Flame Wheel
+- Smokescreen
+
+Houndoom
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Flamethrower
+- Foul Play
+- Snarl
+- Incinerate
 
 Camerupt
-Level: 26
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Overheat
-- Tackle
-- Sunny Day
-- Attract
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Lava Plume
+- Earth Power
+- Take Down
+- Incinerate
 
 Torkoal @ White Herb
-Level: 29
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Overheat
-- Sunny Day
+Level: 43
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Ace
+- Flamethrower
 - Body Slam
-- Attract
+- Scorching Sands
+- Smokescreen
 
 === TRAINER_NORMAN_1 ===
 Name: Norman
@@ -15699,6 +15718,7 @@ Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
 Party Size: 6
 
 Machamp @ Sitrus Berry
@@ -15769,6 +15789,7 @@ Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
 Party Size: 6
 
 Machamp @ Sitrus Berry
@@ -15839,6 +15860,7 @@ Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
 Party Size: 6
 
 Machamp @ Sitrus Berry
@@ -15908,6 +15930,7 @@ Gender: Male
 Music: Male
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
 Party Size: 6
 
 Machamp @ Sitrus Berry
@@ -15919,7 +15942,7 @@ Tags: Lead
 - Bullet Punch
 - Bulk Up
 
-Medicham
+Medicham @ Light Clay
 Level: 95
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 Tags: Support
@@ -15928,7 +15951,7 @@ Tags: Support
 - Light Screen
 - Reflect
 
-Mienshao
+Mienshao @ Life Orb
 Level: 95
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 Tags: Support
@@ -15937,7 +15960,7 @@ Tags: Support
 - U-Turn
 - Fake Out
 
-Grapploct
+Grapploct @ Leftovers
 Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Octolock
@@ -15945,7 +15968,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Liquidation
 - Bulk Up
 
-Crabominable
+Crabominable @ Choice Band
 Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Hammer
@@ -15953,7 +15976,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Drain Punch
 - Earthquake
 
-Hitmontop
+Hitmontop @ Protective Pads
 Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Close Combat
@@ -15976,41 +15999,70 @@ Class: Leader
 Pic: Leader Wattson
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
-
-Mareep
-Level: 36
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Protect
-- Thunder Wave
-- Light Screen
+Pool Rules: Guaranteed Support
+Party Size: 6
 
 Electrode
-Level: 36
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rollout
-- Thunder
-- Explosion
-- Rain Dance
+Level: 55
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+Tags: Lead
+- Electro Ball
+- Signal Beam
+- Self Destruct
+- Shock Wave
 
-Magneton @ Sitrus Berry
-Level: 38
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Supersonic
-- Protect
-- Thunder
-- Rain Dance
+Ampharos
+Level: 55
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Thunderbolt
+- Cotton Spore
+- Volt Switch
+- Thunder Wave
+
+Boltund
+Level: 55
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
+
+Luxray
+Level: 55
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
+
+Raichu
+Level: 56
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Thunder Punch
+- Brick Break
+- Iron Tail
+- Mega Punch
+
+Magneton
+Level: 56
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Thunderbolt
+- Flash Cannon
+- Tri Attack
+- Steel Beam
 
 Manectric @ Sitrus Berry
-Level: 40
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Bite
-- Thunder Wave
-- Thunder
-- Protect
+Level: 56
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+Tags: Ace
+- Thunderbolt
+- Flamethrower
+- Hyper Voice
+- Howl
 
 === TRAINER_WATTSON_3 ===
 Name: Wattson
@@ -16018,49 +16070,68 @@ Class: Leader
 Pic: Leader Wattson
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
+Pool Rules: Guaranteed Support
 AI: Basic Trainer
 
-Pikachu
-Level: 39
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Slam
-- Rain Dance
-- Shock Wave
-
-Flaaffy
-Level: 41
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Protect
-- Thunder Wave
+Electrode @ Light Clay
+Level: 70
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+Tags: Lead
+- Electro Ball
 - Light Screen
+- Reflect
+- Self Destruct
 
-Electrode
-Level: 41
+Ampharos
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rollout
-- Thunder
-- Explosion
-- Rain Dance
+- Thunderbolt
+- Dragon Pulse
+- Volt Switch
+- Thunder Wave
 
-Magneton @ Sitrus Berry
-Level: 43
+Boltund
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Supersonic
-- Protect
-- Thunder
-- Rain Dance
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
+
+Luxray
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
+
+Electivire
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunder Punch
+- Fire Punch
+- Ice Punch
+- Mega Punch
+
+Magnezone
+Level: 71
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Thunderbolt
+- Flash Cannon
+- Tri Attack
+- Steel Beam
 
 Manectric @ Sitrus Berry
-Level: 45
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Bite
-- Thunder Wave
-- Thunder
-- Protect
+Level: 71
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+- Thunderbolt
+- Flamethrower
+- Hyper Voice
+- Volt Switch
 
 === TRAINER_WATTSON_4 ===
 Name: Wattson
@@ -16068,49 +16139,68 @@ Class: Leader
 Pic: Leader Wattson
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
+Pool Rules: Guaranteed Support
 AI: Basic Trainer
 
-Raichu
-Level: 44
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Slam
-- Rain Dance
-- Protect
-
-Ampharos
-Level: 46
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Protect
-- Thunder Wave
+Electrode @ Light Clay
+Level: 85
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+Tags: Lead
+- Taunt
 - Light Screen
+- Reflect
+- Self Destruct
 
-Electrode
-Level: 46
+Ampharos @ Leftovers
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rollout
-- Thunder
-- Explosion
-- Rain Dance
+- Thunderbolt
+- Dragon Pulse
+- Volt Switch
+- Focus Blast
 
-Magneton @ Sitrus Berry
-Level: 48
+Boltund @ Life Orb
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Supersonic
-- Protect
-- Thunder
-- Rain Dance
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
 
-Manectric @ Sitrus Berry
-Level: 50
+Luxray @ Sitrus Berry
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Bite
-- Thunder Wave
-- Thunder
-- Protect
+Tags: Support
+- Thunder Fang
+- Wild Charge
+- Crunch
+- Volt Switch
+
+Electivire @ Sitrus Berry
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Flamethrower
+- Earthquake
+- Darkest Lariat
+
+Magnezone @ Magnet
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Flash Cannon
+- Tri Attack
+- Volt Switch
+
+Manectric @ Choice Scarf
+Level: 86
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Overheat
+- Hyper Voice
+- Volt Switch
 
 === TRAINER_WATTSON_5 ===
 Name: Wattson
@@ -16118,57 +16208,68 @@ Class: Leader
 Pic: Leader Wattson
 Gender: Male
 Music: Male
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
+Pool Rules: Guaranteed Support
 AI: Basic Trainer
 
-Electabuzz
-Level: 50
+Electrode @ Light Clay
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Swift
-- Focus Punch
-- Thunder Punch
+Tags: Lead
+- Taunt
 - Light Screen
+- Reflect
+- Self Destruct
 
-Raichu
-Level: 51
+Ampharos @ Leftovers
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Slam
-- Rain Dance
-- Protect
+- Thunderbolt
+- Dragon Pulse
+- Volt Switch
+- Focus Blast
 
-Ampharos
-Level: 51
+Boltund @ Life Orb
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Thunder
-- Protect
-- Thunder Wave
-- Light Screen
+Tags: Support
+- Thunder Fang
+- Fire Fang
+- Crunch
+- Volt Switch
 
-Electrode
-Level: 53
+Luxray @ Flame Orb
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Rollout
-- Thunder
-- Explosion
-- Rain Dance
+Tags: Support
+- Facade
+- Wild Charge
+- Superpower
+- Volt Switch
 
-Magneton @ Sitrus Berry
-Level: 53
+Electivire @ Choice Scarf
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Supersonic
-- Protect
-- Thunder
-- Rain Dance
+- Thunderbolt
+- Flamethrower
+- Focus Blast
+- Darkest Lariat
 
-Manectric @ Sitrus Berry
-Level: 55
+Magnezone @ Choice Specs
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Bite
-- Thunder Wave
-- Thunder
-- Protect
+- Thunderbolt
+- Flash Cannon
+- Tri Attack
+- Volt Switch
+
+Manectric @ Choice Scarf
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Overheat
+- Switcheroo
+- Volt Switch
 
 === TRAINER_FLANNERY_2 ===
 Name: Flannery
@@ -16176,46 +16277,54 @@ Class: Leader
 Pic: Leader Flannery
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Party Size: 6
 
-Fletchinder
-Level: 41
+Talonflame
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Tags: Lead
-- Flame Charge
+- Flare Blitz
 - Aerial Ace
-- Air Slash
+- Roost
 - Tailwind
 
-Growlithe
-Level: 41
+Arcanine
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Tags: Lead
 - Flamethrower
-- Take Down
+- Teleport
 - Howl
 - Sunny Day
 
 Centiskorch
-Level: 41
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
-- Bug Bite
+- Leech Life
 - Flame Wheel
 - Smokescreen
 
 Houndoom
-Level: 42
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
-- Foul Play
+- Dark Pulse
 - Snarl
 - Incinerate
 
-Camerupt
-Level: 42
+Magmar
+Level: 55
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Punch
+- Cross Chop
+- Mach Punch
+- Will-O-Wisp
+
+Camerupt @ White Herb
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Lava Plume
 - Earth Power
@@ -16223,13 +16332,13 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Incinerate
 
 Torkoal @ White Herb
-Level: 43
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Tags: Ace
 - Flamethrower
 - Body Slam
 - Scorching Sands
-- Smokescreen
+- Will-O-Wisp
 
 === TRAINER_FLANNERY_3 ===
 Name: Flannery
@@ -16237,49 +16346,68 @@ Class: Leader
 Pic: Leader Flannery
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Party Size: 6
 
-Growlithe
-Level: 41
+Talonflame @ Heavy-Duty Boots
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Helping Hand
+Tags: Lead
+- Flare Blitz
+- Brave Bird
+- Roost
+- Tailwind
+
+Arcanine @ Heat Rock
+Level: 70
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
 - Flamethrower
-- Roar
+- Teleport
+- Howl
 - Sunny Day
 
-Magcargo @ White Herb
-Level: 43
+Centiskorch
+Level: 70
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Attract
-- Light Screen
-- Rock Slide
+- Fire Lash
+- Leech Life
+- Flame Wheel
+- Coil
 
-Ponyta
-Level: 41
+Houndoom
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Flamethrower
-- Attract
-- Solar Beam
-- Bounce
+- Fire Blast
+- Dark Pulse
+- Snarl
+- Incinerate
+
+Magmortar @ Magmarizer
+Level: 71
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Blast
+- Thunderbolt
+- Mach Punch
+- Will-O-Wisp
 
 Camerupt @ White Herb
-Level: 43
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Earthquake
-- Attract
+- Lava Plume
+- Earth Power
+- Rock Slide
+- Incinerate
 
 Torkoal @ White Herb
-Level: 45
+Level: 71
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Explosion
-- Attract
+Tags: Ace
+- Lava Plume
+- Body Slam
+- Scorching Sands
+- Will-O-Wisp
 
 === TRAINER_FLANNERY_4 ===
 Name: Flannery
@@ -16287,57 +16415,70 @@ Class: Leader
 Pic: Leader Flannery
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
+Party Size: 6
 
-Houndour
-Level: 46
+Talonflame @ Heavy-Duty Boots
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Roar
-- Solar Beam
-- Taunt
+Tags: Lead
+- Flare Blitz
+- Brave Bird
+- U-Turn
+- Tailwind
+
+Arcanine @ Heat Rock
+Level: 85
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
+- Flamethrower
+- Teleport
+- Howl
 - Sunny Day
 
-Growlithe
-Level: 46
+Centiskorch @ Expert Belt
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Helping Hand
-- Flamethrower
-- Sunny Day
-- Roar
+- Fire Lash
+- Leech Life
+- Knock Off
+- Power Whip
 
-Magcargo @ White Herb
-Level: 48
+Houndoom @ Charcoal
+Level: 85
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Attract
-- Light Screen
-- Rock Slide
+- Fire Blast
+- Dark Pulse
+- Sludge Bomb
+- Nasty Plot
 
-Rapidash
-Level: 46
+Magmortar @ Magmarizer
+Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Flamethrower
-- Attract
-- Solar Beam
-- Bounce
+- Fire Blast
+- Thunderbolt
+- Focus Blast
+- Will-O-Wisp
 
 Camerupt @ White Herb
-Level: 48
+Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Earthquake
-- Attract
+Tags: Support
+- Lava Plume
+- Earth Power
+- Rock Slide
+- Fire Blast
 
 Torkoal @ White Herb
-Level: 50
+Level: 86
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Explosion
-- Attract
+Tags: Ace
+- Lava Plume
+- Body Slam
+- Scorching Sands
+- Will-O-Wisp
 
 === TRAINER_FLANNERY_5 ===
 Name: Flannery
@@ -16345,57 +16486,70 @@ Class: Leader
 Pic: Leader Flannery
 Gender: Female
 Music: Female
-Items: Full Restore / Full Restore / Full Restore
 Double Battle: Yes
 AI: Basic Trainer
+Pool Rules: Guaranteed Support
+Party Size: 6
 
-Arcanine
-Level: 51
+Talonflame @ Heavy-Duty Boots
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Helping Hand
+Tags: Lead
+- Flare Blitz
+- Brave Bird
+- U-Turn
+- Tailwind
+
+Arcanine @ Heat Rock
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Lead
 - Flamethrower
+- Teleport
+- Howl
 - Sunny Day
-- Roar
 
-Magcargo @ White Herb
-Level: 53
+Centiskorch @ Expert Belt
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Attract
-- Light Screen
+- Fire Lash
+- Leech Life
+- Knock Off
+- Power Whip
+
+Houndoom @ Life Orb
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Blast
+- Dark Pulse
+- Sludge Bomb
+- Nasty Plot
+
+Magmortar @ Assault Vest
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fire Blast
+- Thunderbolt
+- Focus Blast
+- Scorching Sands
+
+Camerupt @ Choice Specs
+Level: 95
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+Tags: Support
+- Lava Plume
+- Earth Power
 - Rock Slide
-
-Houndoom
-Level: 51
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Roar
-- Solar Beam
-- Taunt
-- Sunny Day
-
-Rapidash
-Level: 51
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Flamethrower
-- Attract
-- Solar Beam
-- Bounce
-
-Camerupt @ White Herb
-Level: 53
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Earthquake
-- Attract
+- Fire Blast
 
 Torkoal @ White Herb
-Level: 55
+Level: 95
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Overheat
-- Sunny Day
-- Explosion
-- Attract
+Tags: Ace
+- Lava Plume
+- Body Slam
+- Scorching Sands
+- Will-O-Wisp
 
 === TRAINER_NORMAN_2 ===
 Name: Norman
