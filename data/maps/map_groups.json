@@ -93,7 +93,12 @@
     "Underwater_Route129",
     "Underwater_Route105",
     "Underwater_Route125",
-    "Route119_North"
+    "Underwater_Route107",
+    "Underwater_Route108",
+    "Underwater_Route131",
+    "Route119_North",
+    "Route119_East",
+    "Route116_South"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -623,7 +628,8 @@
     "NavelRock_Bottom",
     "TrainerHill_Elevator",
     "BattleFrontier_PokemonCenter_B1F",
-    "SafariZone_Northeaster"
+    "SafariZone_Northeaster",
+    "Underwater_VictiniLighthouse"
   ],
   "gMapGroup_IndoorRoute104Prototype": [
     "Route104_Prototype",

@@ -2900,6 +2900,17 @@ Route119_Text_ChrisPostBattle:
 	.string "Then fish off its back…\p"
 	.string "It's an indescribably luxuriant moment!$"
 
+Route119_Text_PierreIntro:
+	.string "To find bird Pokémon that can't\n"
+	.string "be found…\p"
+	.string "one must first be lost.$"
+
+Route119_Text_PierreDefeat:
+	.string "I'm so lost…$"
+
+Route119_Text_PierrePostBattle:
+	.string "One day I'll find those bird Pokémon.$"
+
 Route119_Text_FabianIntro:
 	.string "Hit me with a power chord!\n"
 	.string "Victory is mine!\l"

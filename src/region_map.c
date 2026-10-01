@@ -161,6 +161,9 @@ static const u16 sRegionMap_SpecialPlaceLocations[][2] =
     {MAPSEC_ALTERING_CAVE,              MAPSEC_ROUTE_103},
     {MAPSEC_ARTISAN_CAVE,               MAPSEC_ROUTE_103},
     {MAPSEC_ABANDONED_SHIP,             MAPSEC_ROUTE_108},
+    {MAPSEC_UNDERWATER_107,             MAPSEC_ROUTE_107},
+    {MAPSEC_UNDERWATER_108,             MAPSEC_ROUTE_108},
+    {MAPSEC_UNDERWATER_131,             MAPSEC_ROUTE_131},
     {MAPSEC_NONE,                       MAPSEC_NONE}
 };
 
@@ -1092,6 +1095,13 @@ static void InitMapBasedOnPlayerLocation(void)
         if (y != 0)
             x = 0;
         break;
+    case MAPSEC_ROUTE_116:
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE116_SOUTH)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE116_SOUTH))
+        {
+            x = (gSaveBlock1Ptr->pos.x * 3) / mapWidth;
+        }
+        break;
     case MAPSEC_ROUTE_119:
         if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119_NORTH)
             && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119_NORTH))
@@ -1100,6 +1110,11 @@ static void InitMapBasedOnPlayerLocation(void)
         {
             x = 0;
             y = 0;
+        }
+        else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119_EAST)
+            && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119_EAST))
+        {
+            y = 1 + (gSaveBlock1Ptr->pos.y * 3) / mapHeight;
         }
         break;
     case MAPSEC_ROUTE_126:

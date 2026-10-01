@@ -87,6 +87,16 @@ FortreeCity_Movement_KecleonFlee:
 	walk_right
 	step_end
 
+FortreeCity_EventScript_Ninja::
+	applymovement VAR_LAST_TALKED, Movement_RevealTrainer
+	waitmovement 0
+	msgbox FortreeCity_Text_NobodyFindsMe, MSGBOX_NPC
+	end
+
+FortreeCity_EventScript_Outlooker::
+	msgbox FortreeCity_Text_OnTopOfTheWorld, MSGBOX_NPC
+	end
+
 FortreeCity_Text_SawGiganticPokemonInSky:
 	.string "No one believes me, but I saw this\n"
 	.string "gigantic Pokémon in the sky.\p"
@@ -154,3 +164,12 @@ FortreeCity_Text_GymSign:
 	.string "“The bird user taking flight into\n"
 	.string "the world.”$"
 
+FortreeCity_Text_NobodyFindsMe:
+	.string "Hiyaaa!\p"
+	.string "Nobody ever finds me out here!\n"
+	.string "Well… except you of course.$"
+
+FortreeCity_Text_OnTopOfTheWorld:
+	.string "I feel like I'm on top of the world!.\p"
+	.string "You can even see the Weather Institute\n"
+	.string "from up here!$"

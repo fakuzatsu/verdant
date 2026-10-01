@@ -217,7 +217,10 @@
 #define MAPSEC_HIDDEN_GROTTO                0xD5
 #define MAPSEC_THUNDER_ROCK                 0xD6
 #define MAPSEC_MYTHIC_STONE                 0xD7
-#define MAPSEC_NONE                         0xD8
+#define MAPSEC_UNDERWATER_107               0xD8
+#define MAPSEC_UNDERWATER_108               0xD9
+#define MAPSEC_UNDERWATER_131               0xDA
+#define MAPSEC_NONE                         0xDB
 
 #define METLOC_DAYCARE_ADOPTION_EGG         0xFC
 #define METLOC_HOTSPRINGS_EGG               0xFD

@@ -351,6 +351,22 @@ Route116_EventScript_Johnson::
 	msgbox Route116_Text_JohnsonPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route116_EventScript_Wulfgar::
+	msgbox Route116_Text_LookingForRockruff, MSGBOX_NPC
+	end
+
+Route116_EventScript_Myria::
+	lock
+	goto_if_set FLAG_RUSTURF_TUNNEL_OPENED, Route116_EventScript_MyriaAfterTunnel
+	msgbox Route116_Text_FarWayFromVerdanturf, MSGBOX_DEFAULT
+	release
+	end
+
+Route116_EventScript_MyriaAfterTunnel::
+	msgbox Route116_Text_MaybeNotYet, MSGBOX_DEFAULT
+	release
+	end
+
 Route116_Text_ScoundrelMadeOffWithPeeko:
 	.string "Ohhh, what am I to do?\p"
 	.string "We were on our walk, Peeko and I, when\n"
@@ -471,3 +487,21 @@ Route116_Text_TrainerTipsBagHasPockets:
 	.string "No Trainer can afford to be without\n"
 	.string "a Bag of their own.$"
 
+Route116_Text_FarWayFromVerdanturf:
+	.string "I want to jump down to Rustboro,\n"
+	.string "but…\p"
+	.string "With Rusturf tunnel still blocked…\p"
+	.string "It would take a long time to get\n"
+	.string "back to Verdanturf.$"
+
+Route116_Text_MaybeNotYet:
+	.string "Now that the tunnel is unblocked…\p"
+	.string "It would be easy to get to Verdanturf\n"
+	.string "if you jumped down\p"
+	.string "but…\p"
+	.string "I'm not ready yet.$"
+
+Route116_Text_LookingForRockruff:
+	.string "I'm looking for a very particular\n"
+	.string "Pokémon.\p"
+	.string "The Nature needs to be perfect.$"

@@ -1734,6 +1734,30 @@
       "y": 2,
       "width": 1,
       "height": 1
+    },
+    {
+      "map_section": "MAPSEC_UNDERWATER_107",
+      "name": "Underwater",
+      "x": 3,
+      "y": 14,
+      "width": 3,
+      "height": 1
+    },
+    {
+      "map_section": "MAPSEC_UNDERWATER_108",
+      "name": "Underwater",
+      "x": 6,
+      "y": 14,
+      "width": 2,
+      "height": 1
+    },
+    {
+      "map_section": "MAPSEC_UNDERWATER_131",
+      "name": "Route 131",
+      "x": 18,
+      "y": 10,
+      "width": 3,
+      "height": 1
     }
   ]
 }

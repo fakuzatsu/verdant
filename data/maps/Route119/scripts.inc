@@ -488,6 +488,19 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 	releaseall
 	end
 
+Route119_EventScript_Pierre::
+	trainerbattle_single TRAINER_PIERRE, Route119_Text_PierreIntro, Route119_Text_PierreDefeat
+	msgbox Route119_Text_PierrePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route119_EventScript_Emaline::
+	msgbox Route119_Text_AmazingFragrances, MSGBOX_NPC
+	end
+
+Route119_EventScript_LedgeNerd::
+	msgbox Route119_Text_LedgesLikeThis, MSGBOX_NPC
+	end
+
 Route119_Text_MayIntro:
 	.string "May: {PLAYER}{KUN}!\n"
 	.string "Where were you? I was looking for you!\p"
@@ -621,3 +634,13 @@ Route119_Text_TrainerTipsDecoration:
 	.string "Pick your favorite items and create\n"
 	.string "your very own Secret Base exactly the\l"
 	.string "way you want.$"
+
+Route119_Text_AmazingFragrances:
+	.string "I heard there were some amazing\n"
+	.string "fragrances out here, but…\p"
+	.string "I don't know how to get back…$"
+
+Route119_Text_LedgesLikeThis:
+	.string "Ledges like this one are a one-way trip\p"
+	.string "Once you go down, the only way back\n"
+	.string "is all the way around.$"

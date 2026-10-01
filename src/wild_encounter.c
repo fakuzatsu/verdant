@@ -90,6 +90,26 @@ void DisableWildEncounters(bool8 disabled)
     sWildEncountersDisabled = disabled;
 }
 
+u8 ApplyWildEncounterLevelModifiers(u8 level)
+{
+    u8 levelIncrease = 0;
+    u16 mapId = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
+
+    switch (mapId)
+    {
+    case MAP_ROUTE116:
+        if (gSaveBlock1Ptr->pos.x > 60)
+            levelIncrease = 8;
+        break;
+    case MAP_ROUTE116_SOUTH:
+        if (gSaveBlock1Ptr->pos.x > 30)
+            levelIncrease = 8;
+        break;
+    }
+
+    return min(level + levelIncrease, MAX_LEVEL);
+}
+
 // Each fishing spot on Route 119 is given a number between 1 and NUM_FISHING_SPOTS inclusive.
 // The number is determined by counting the valid fishing spots left to right top to bottom.
 // The map is divided into three sections, with each section having a pre-counted number of
@@ -381,7 +401,9 @@ u16 GetCurrentMapWildMonHeaderId(void)
                 i += alteringCaveId;
             }
             else if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119) &&
-                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119)) ||
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119)) || 
+                    (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119_EAST) &&
+                    gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119_EAST)) ||
                     (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE120) &&
                     gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE120)))
             {
@@ -527,7 +549,7 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 ar
         break;
     }
 
-    level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, area);
+    level = ApplyWildEncounterLevelModifiers(ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, area));
     if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(level))
         return FALSE;
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
@@ -541,7 +563,7 @@ static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
     u16 wildMonSpecies = PokemonRandomiser(wildMonInfo->wildPokemon[wildMonIndex].species);
-    u8 level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING);
+    u8 level = ApplyWildEncounterLevelModifiers(ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING));
 
     UpdateChainFishingStreak();
     CreateWildMon(wildMonSpecies, level);
@@ -551,11 +573,12 @@ static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 
 static bool8 SetUpMassOutbreakEncounter(u8 flags)
 {
     u16 i;
+    u8 level = ApplyWildEncounterLevelModifiers(gSaveBlock1Ptr->outbreakPokemonLevel);
 
-    if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(gSaveBlock1Ptr->outbreakPokemonLevel))
+    if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(level))
         return FALSE;
 
-    CreateWildMon(PokemonRandomiser(gSaveBlock1Ptr->outbreakPokemonSpecies), gSaveBlock1Ptr->outbreakPokemonLevel);
+    CreateWildMon(PokemonRandomiser(gSaveBlock1Ptr->outbreakPokemonSpecies), level);
     for (i = 0; i < MAX_MON_MOVES; i++)
         SetMonMoveSlot(&gEnemyParty[0], gSaveBlock1Ptr->outbreakPokemonMoves[i], i);
 
@@ -946,7 +969,7 @@ void FishingWildEncounter(u8 rod)
     gIsFishingEncounter = TRUE;
     if (CheckFeebas() == TRUE)
     {
-        u8 level = ChooseWildMonLevel(&sWildFeebas, 0, WILD_AREA_FISHING);
+        u8 level = ApplyWildEncounterLevelModifiers(ChooseWildMonLevel(&sWildFeebas, 0, WILD_AREA_FISHING));
 
         species = sWildFeebas.species;
         CreateWildMon(PokemonRandomiser(species), level);
@@ -1246,4 +1269,3 @@ bool32 MapHasNoEncounterData(void)
 {
     return (GetCurrentMapWildMonHeaderId() == HEADER_NONE);
 }
-

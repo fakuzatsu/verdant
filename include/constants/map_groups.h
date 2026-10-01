@@ -63,7 +63,12 @@
 #define MAP_UNDERWATER_ROUTE129 (54 | (0 << 8))
 #define MAP_UNDERWATER_ROUTE105 (55 | (0 << 8))
 #define MAP_UNDERWATER_ROUTE125 (56 | (0 << 8))
-#define MAP_ROUTE119_NORTH      (57 | (0 << 8))
+#define MAP_UNDERWATER_ROUTE107 (57 | (0 << 8))
+#define MAP_UNDERWATER_ROUTE108 (58 | (0 << 8))
+#define MAP_UNDERWATER_ROUTE131 (59 | (0 << 8))
+#define MAP_ROUTE119_NORTH      (60 | (0 << 8))
+#define MAP_ROUTE119_EAST       (61 | (0 << 8))
+#define MAP_ROUTE116_SOUTH      (62 | (0 << 8))
 
 // gMapGroup_IndoorLittleroot
 #define MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F    (0 | (1 << 8))
@@ -594,6 +599,7 @@
 #define MAP_TRAINER_HILL_ELEVATOR                           (88 | (26 << 8))
 #define MAP_BATTLE_FRONTIER_POKEMON_CENTER_B1F              (89 | (26 << 8))
 #define MAP_SAFARI_ZONE_NORTHEASTER                         (90 | (26 << 8))
+#define MAP_UNDERWATER_VICTINI_LIGHTHOUSE                   (91 | (26 << 8))
 
 // gMapGroup_IndoorRoute104Prototype
 #define MAP_ROUTE104_PROTOTYPE                          (0 | (27 << 8))

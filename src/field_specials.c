@@ -1548,6 +1548,9 @@ void SetRoute119Weather(void)
 {
     if (IsMapTypeOutdoors(GetLastUsedWarpMapType()) != TRUE)
         SetSavedWeather(WEATHER_ROUTE119_CYCLE);
+
+    if (gSaveBlock1Ptr->pos.x > 32 && gSaveBlock1Ptr->pos.y > 12)
+        SetSavedWeather(WEATHER_ROUTE119_CYCLE);
 }
 
 void SetRoute123Weather(void)

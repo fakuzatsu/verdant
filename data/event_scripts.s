@@ -1225,3 +1225,15 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/ManaphyCave_Interior/scripts.inc"
 
 	.include "data/maps/OriginChamber/scripts.inc"
+
+	.include "data/maps/Underwater_Route107/scripts.inc"
+
+	.include "data/maps/Underwater_Route108/scripts.inc"
+
+	.include "data/maps/Underwater_VictiniLighthouse/scripts.inc"
+
+	.include "data/maps/Underwater_Route131/scripts.inc"
+
+	.include "data/maps/Route119_East/scripts.inc"
+
+	.include "data/maps/Route116_South/scripts.inc"

@@ -45,7 +45,7 @@
       "id": "LAYOUT_FORTREE_CITY",
       "name": "FortreeCity_Layout",
       "width": 40,
-      "height": 20,
+      "height": 35,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/FortreeCity/border.bin",
@@ -4650,6 +4650,66 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/OriginChamber/border.bin",
       "blockdata_filepath": "data/layouts/OriginChamber/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERWATER_ROUTE107",
+      "name": "Underwater_Route107_Layout",
+      "width": 60,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Underwater_Route107/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route107/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERWATER_ROUTE108",
+      "name": "Underwater_Route108_Layout",
+      "width": 64,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Underwater_Route108/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route108/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERWATER_VICTINI_LIGHTHOUSE",
+      "name": "Underwater_VictiniLighthouse_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Underwater_VictiniLighthouse/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_VictiniLighthouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERWATER_ROUTE131",
+      "name": "Underwater_Route131_Layout",
+      "width": 60,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Underwater",
+      "border_filepath": "data/layouts/Underwater_Route131/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route131/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE119_EAST",
+      "name": "Route119_East_Layout",
+      "width": 30,
+      "height": 56,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/Route119_East/border.bin",
+      "blockdata_filepath": "data/layouts/Route119_East/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE116_SOUTH",
+      "name": "Route116_South_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/Route116_South/border.bin",
+      "blockdata_filepath": "data/layouts/Route116_South/map.bin"
     }
   ]
 }
