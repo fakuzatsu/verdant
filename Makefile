@@ -142,8 +142,16 @@ FIX := tools/gbafix/gbafix$(EXE)
 MAPJSON := tools/mapjson/mapjson$(EXE)
 JSONPROC := tools/jsonproc/jsonproc$(EXE)
 PATCHELF := tools/patchelf/patchelf$(EXE)
-ROMTEST ?= $(shell { command -v mgba-rom-test || command -v tools/mgba/mgba-rom-test$(EXE); } 2>/dev/null)
+ifeq ($(shell uname),Darwin)
+ROMTEST ?= $(shell command -v mgba-rom-test-mac 2>/dev/null || echo tools/mgba/mgba-rom-test-mac)
+ROMTESTHYDRA := $(shell command -v mgba-rom-test-hydra 2>/dev/null || echo tools/mgba-rom-test-hydra/mgba-rom-test-hydra)
+else ifeq ($(shell uname),Linux)
+ROMTEST ?= $(shell command -v mgba-rom-test 2>/dev/null || echo tools/mgba/mgba-rom-test)
+ROMTESTHYDRA := $(shell command -v mgba-rom-test-hydra 2>/dev/null || echo tools/mgba-rom-test-hydra/mgba-rom-test-hydra)
+else
+ROMTEST ?= tools/mgba/mgba-rom-test$(EXE)
 ROMTESTHYDRA := tools/mgba-rom-test-hydra/mgba-rom-test-hydra$(EXE)
+endif
 TRAINERPROC := tools/trainerproc/trainerproc$(EXE)
 
 PERL := perl
