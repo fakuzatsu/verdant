@@ -1,5 +1,4 @@
 MauvilleCity_Gym_MapScripts::
-    map_script MAP_SCRIPT_ON_TRANSITION, EventScript_OnTransition_ClearBestOfThreeVars
 	map_script MAP_SCRIPT_ON_LOAD, MauvilleCity_Gym_OnLoad
 	.byte 0
 
@@ -75,7 +74,7 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle::
 	end
 
 MauvilleCity_Gym_EventScript_Wattson::
-    trybestofthree TRAINER_WATTSON_1
+    trybestofthree TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated
 	trainerbattle_single TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_Gym_EventScript_WattsonRematch
@@ -136,7 +135,9 @@ MauvilleCity_Gym_EventScript_CompletedNewMauville::
 	end
 
 MauvilleCity_Gym_EventScript_WattsonRematch::
+	trybestofthreerematch TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_EventScript_WattsonRematchDefeated
 	trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
+MauvilleCity_Gym_EventScript_WattsonRematchDefeated::
 	setmemoryall MEMORY_WATTSON_GYM
 	msgbox MauvilleCity_Gym_Text_WattsonPostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -337,7 +338,7 @@ MauvilleCity_Gym_Text_AngeloPostBattle:
 	.string "Mauville Gym's Wattson has a shiny\n"
 	.string "forehead. It makes me happy!$"
 
-MauvilleCity_Gym_Text_WattsonIntro:
+MauvilleCity_Gym_Text_WattsonIntro::
 	.string "I've given up on my plans to convert\n"
 	.string "the city, I have.\p"
 	.string "And so, I put my time into making\n"
@@ -350,14 +351,17 @@ MauvilleCity_Gym_Text_WattsonIntro:
 	.string "Then, I, Wattson, the Leader of\n"
 	.string "Mauville Gym, shall electrify you!$"
 
-MauvilleCity_Gym_Text_WattsonMatchDefeat::
-    .string "What a shock!$"
-
 MauvilleCity_Gym_Text_WattsonContinue::
     .string "Heh heh, keep that power rolling!\n"
     .string "Ready to go again?$"
 
-MauvilleCity_Gym_Text_WattsonDefeat:
+MauvilleCity_Gym_Text_WattsonBo3RoundWon::
+    .string "What a shock!$"
+
+MauvilleCity_Gym_Text_WattsonBo3RoundLost::
+	.string "Heh heh, this is our power!$"
+
+MauvilleCity_Gym_Text_WattsonDefeat::
 	.string "Wahahahah!\n"
 	.string "Fine, I lost!\p"
 	.string "You ended up giving me a thrill!\n"
@@ -401,7 +405,7 @@ MauvilleCity_Gym_Text_GymStatueCertified:
 	.string "Wattson'S Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-MauvilleCity_Gym_Text_WattsonPreRematch:
+MauvilleCity_Gym_Text_WattsonPreRematch::
 	.string "Wattson: Ah-ha! Here at last!\n"
 	.string "I know what you want.\l"
 	.string "You want to battle my Pokémon!\p"
@@ -409,7 +413,7 @@ MauvilleCity_Gym_Text_WattsonPreRematch:
 	.string "I'll make sparks fly from you!\n"
 	.string "Don't say I didn't warn you!$"
 
-MauvilleCity_Gym_Text_WattsonRematchDefeat:
+MauvilleCity_Gym_Text_WattsonRematchDefeat::
 	.string "Oof…\n"
 	.string "Our batteries ran dry…$"
 
@@ -430,4 +434,3 @@ MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
 	.string "You've only one Pokémon with you!\p"
 	.string "Come see me with two or more\n"
 	.string "Pokémon, all right?$"
-

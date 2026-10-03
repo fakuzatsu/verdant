@@ -4,6 +4,7 @@
 #include "battle_controllers.h"
 #include "battle_message.h"
 #include "battle_setup.h"
+#include "best_of_three_controller.h"
 #include "battle_tower.h"
 #include "battle_z_move.h"
 #include "data.h"
@@ -3514,7 +3515,12 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 }
                 break;
             case B_TXT_TRAINER1_WIN_TEXT: // trainerA win text
-                if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
+                if (gBattleTypeFlags & BATTLE_TYPE_BEST_OF_THREE)
+                {
+                    StringExpandPlaceholders(gStringVar4, BestOfThree_GetBattleText(FALSE));
+                    toCpy = gStringVar4;
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
                 {
                     CopyFrontierTrainerText(FRONTIER_PLAYER_LOST_TEXT, gTrainerBattleOpponent_A);
                     toCpy = gStringVar4;

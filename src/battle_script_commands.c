@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_script_commands.h"
 #include "battle_message.h"
 #include "battle_anim.h"
 #include "battle_ai_main.h"
@@ -37,6 +38,7 @@
 #include "task.h"
 #include "naming_screen.h"
 #include "battle_setup.h"
+#include "best_of_three_controller.h"
 #include "overworld.h"
 #include "wild_encounter.h"
 #include "rtc.h"
@@ -4434,11 +4436,19 @@ static bool32 BattleTypeAllowsExp(void)
               | BATTLE_TYPE_FRONTIER
               | BATTLE_TYPE_SAFARI
               | BATTLE_TYPE_BATTLE_TOWER
-              | BATTLE_TYPE_EREADER_TRAINER))
+              | BATTLE_TYPE_EREADER_TRAINER
+              | BATTLE_TYPE_BEST_OF_THREE))
         return FALSE;
     else
         return TRUE;
 }
+
+#if TESTING
+bool32 BattleTypeAllowsExpForTest(void)
+{
+    return BattleTypeAllowsExp();
+}
+#endif
 
 static u32 GetMonHoldEffect(struct Pokemon *mon)
 {
@@ -7968,7 +7978,12 @@ static void Cmd_getmoneyreward(void)
     u32 money;
     u8 sPartyLevel = 1;
 
-    if (gBattleOutcome == B_OUTCOME_WON)
+    if (gBattleTypeFlags & BATTLE_TYPE_BEST_OF_THREE)
+    {
+        money = BestOfThree_ApplyMoneySettlement(gBattleOutcome, gBattleStruct->moneyMultiplier);
+        gBattleMoveDamage = money;
+    }
+    else if (gBattleOutcome == B_OUTCOME_WON)
     {
         money = GetTrainerMoneyToGive(gTrainerBattleOpponent_A);
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
@@ -12439,7 +12454,10 @@ static void Cmd_givepaydaymoney(void)
 {
     CMD_ARGS();
 
-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)) && gPaydayMoney != 0)
+    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+     && (!(gBattleTypeFlags & BATTLE_TYPE_BEST_OF_THREE)
+      || BestOfThree_IsTerminalOutcome(gBattleOutcome))
+     && gPaydayMoney != 0)
     {
         u32 bonusMoney = gPaydayMoney * gBattleStruct->moneyMultiplier;
         AddMoney(&gSaveBlock1Ptr->money, bonusMoney);
@@ -14950,10 +14968,8 @@ static void Cmd_jumpifnotcurrentmoveargtype(void)
         gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static void Cmd_pickup(void)
+void TryGivePickupItemsToParty(void)
 {
-    CMD_ARGS();
-
     u32 i, j;
     u16 species, heldItem, ability;
     u8 lvlDivBy10;
@@ -15019,7 +15035,13 @@ static void Cmd_pickup(void)
             }
         }
     }
+}
 
+static void Cmd_pickup(void)
+{
+    CMD_ARGS();
+
+    TryGivePickupItemsToParty();
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 

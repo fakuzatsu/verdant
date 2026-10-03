@@ -47,6 +47,7 @@ EverGrandeCity_SidneysRoom_EventScript_Sidney::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_SIDNEY, EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
+	trybestofthree TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_IntroSpeech, EverGrandeCity_SidneysRoom_Text_Defeat, EverGrandeCity_SidneysRoom_EventScript_Defeated
 	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
 	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
@@ -64,7 +65,7 @@ EverGrandeCity_SidneysRoom_EventScript_Defeated::
 	release
 	end
 
-EverGrandeCity_SidneysRoom_Text_IntroSpeech:
+EverGrandeCity_SidneysRoom_Text_IntroSpeech::
 	.string "Welcome, challenger!\n"
 	.string "I'm Sidney of the Elite Four.\p"
 	.string "I like that look you're giving me.\n"
@@ -74,7 +75,18 @@ EverGrandeCity_SidneysRoom_Text_IntroSpeech:
 	.string "a battle that can only be staged\l"
 	.string "here in the Pokémon League!$"
 
-EverGrandeCity_SidneysRoom_Text_Defeat:
+EverGrandeCity_SidneysRoom_Text_Bo3Continue::
+	.string "All right! We got another battle\n"
+	.string "lined up, so let's do it!$"
+
+EverGrandeCity_SidneysRoom_Text_Bo3RoundWon::
+	.string "What a stinker!$"
+
+EverGrandeCity_SidneysRoom_Text_Bo3RoundLost::
+	.string "You were kinda tough…\n"
+	.string "But not though enough.$"
+
+EverGrandeCity_SidneysRoom_Text_Defeat::
 	.string "Well, how do you like that? I lost!\n"
 	.string "Eh, it was fun, so it doesn't matter.$"
 
@@ -84,4 +96,3 @@ EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
 	.string "You've got what it takes to go far.\n"
 	.string "Now, go on to the next room and enjoy\l"
 	.string "your next battle!$"
-

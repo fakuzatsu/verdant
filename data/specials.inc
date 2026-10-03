@@ -261,6 +261,15 @@ gSpecials::
 	def_special ValidateEReaderTrainer
 	def_special GetBattleTowerSinglesStreak
 	def_special ReducePlayerPartyToSelectedMons
+	def_special BestOfThree_BufferIntroText
+	def_special BestOfThree_BufferContinueText
+	def_special BestOfThree_SetDraftSize
+	def_special BestOfThree_PrepareParty
+	def_special BestOfThree_StartBattle
+	def_special BestOfThree_CompleteRound
+	def_special BestOfThree_Abort
+	def_special BestOfThree_Finish
+	def_special BestOfThree_GetCancelPolicy
 	def_special BedroomPC
 	def_special PlayerPC
 	def_special FieldShowRegionMap

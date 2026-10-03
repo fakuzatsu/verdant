@@ -5664,6 +5664,15 @@ BattleScript_LocalBattleWonLoseTexts::
 	waitstate
 	printstring STRINGID_TRAINER2LOSETEXT
 BattleScript_LocalBattleWonReward::
+	jumpifnotbattletype BATTLE_TYPE_BEST_OF_THREE, BattleScript_LocalBattleWonNormalReward
+	getmoneyreward
+	jumpifword CMP_EQUAL, gBattleMoveDamage, 0, BattleScript_BestOfThreePayDay
+	printstring STRINGID_PLAYERGOTMONEY
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_BestOfThreePayDay::
+	givepaydaymoney
+	end2
+BattleScript_LocalBattleWonNormalReward::
 	getmoneyreward
 	printstring STRINGID_PLAYERGOTMONEY
 	waitmessage B_WAIT_TIME_LONG
@@ -5673,6 +5682,7 @@ BattleScript_PayDayMoneyAndPickUpItems::
 	end2
 
 BattleScript_LocalBattleLost::
+	jumpifbattletype BATTLE_TYPE_BEST_OF_THREE, BattleScript_BestOfThreeBattleLost
 	jumpifbattletype BATTLE_TYPE_INGAME_PARTNER, BattleScript_LocalBattleLostPrintWhiteOut
 	jumpifbattletype BATTLE_TYPE_DOME, BattleScript_CheckDomeDrew
 	jumpifbattletype BATTLE_TYPE_FRONTIER, BattleScript_LocalBattleLostPrintTrainersWinText
@@ -5685,7 +5695,7 @@ BattleScript_LocalBattleLostPrintWhiteOut::
 	printstring STRINGID_PLAYERWHITEOUT
 	waitmessage B_WAIT_TIME_LONG
 	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT, BattleScript_LocalBattleLostPrintNoWhiteout
-	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT, BattleScript_LocalBattleLostPrintNoWhiteout
+	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_BEST_OF_THREE, BattleScript_LocalBattleLostPrintNoWhiteout
 	getmoneyreward
 	printstring STRINGID_PLAYERWHITEOUT2
 	waitmessage B_WAIT_TIME_LONG
@@ -5694,7 +5704,7 @@ BattleScript_LocalBattleLostEnd::
 	printstring STRINGID_PLAYERLOSTTOENEMYTRAINER
 	waitmessage B_WAIT_TIME_LONG
 	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT, BattleScript_LocalBattleLostPrintNoWhiteout
-	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT, BattleScript_LocalBattleLostPrintNoWhiteout
+	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_BEST_OF_THREE, BattleScript_LocalBattleLostPrintNoWhiteout
 	getmoneyreward
 	printstring STRINGID_PLAYERPAIDPRIZEMONEY
 	waitmessage B_WAIT_TIME_LONG
@@ -5703,7 +5713,7 @@ BattleScript_LocalBattleLostEnd::
 	printstring STRINGID_PLAYERWHITEOUT
 	waitmessage B_WAIT_TIME_LONG
 	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT, BattleScript_LocalBattleLostPrintNoWhiteout
-	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT, BattleScript_LocalBattleLostPrintNoWhiteout
+	jumpifhalfword CMP_EQUAL, gTrainerBattleMode, TRAINER_BATTLE_BEST_OF_THREE, BattleScript_LocalBattleLostPrintNoWhiteout
 	printstring STRINGID_PLAYERWHITEOUT2
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_LocalBattleLostEnd::
@@ -5711,6 +5721,20 @@ BattleScript_LocalBattleLostEnd::
 .endif
 BattleScript_LocalBattleLostPrintNoWhiteout::
 	printstring STRINGID_PLAYERWHITEOUT3
+	waitmessage B_WAIT_TIME_LONG
+	end2
+
+BattleScript_BestOfThreeBattleLost::
+	returnopponentmon1toball BS_ATTACKER
+	waitstate
+	returnopponentmon2toball BS_ATTACKER
+	waitstate
+	trainerslidein BS_OPPONENT1
+	waitstate
+	printstring STRINGID_TRAINER1WINTEXT
+	getmoneyreward
+	jumpifword CMP_EQUAL, gBattleMoveDamage, 0, BattleScript_LocalBattleLostEnd_
+	printstring STRINGID_PLAYERPAIDPRIZEMONEY
 	waitmessage B_WAIT_TIME_LONG
 	end2
 

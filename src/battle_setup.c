@@ -29,6 +29,7 @@
 #include "overworld.h"
 #include "field_weather.h"
 #include "battle_tower.h"
+#include "best_of_three_controller.h"
 #include "gym_leader_rematch.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
@@ -88,6 +89,8 @@ static bool8 BattleHasNoWhiteout(void);
 static void SaveChangesToPlayerParty(void);
 static void HandleBattleVariantEndParty(void);
 static void CB2_EndTrainerBattle(void);
+static void CB2_EndConfiguredDraftBattle(void);
+static void CB2_EndBestOfThreeBattle(void);
 static bool32 IsPlayerDefeated(u32 battleOutcome);
 #if FREE_MATCH_CALL == FALSE
 static u16 GetRematchTrainerId(u16 trainerId);
@@ -1179,7 +1182,7 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
     switch (gTrainerBattleMode)
     {
     case TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT:
-    case TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT:
+    case TRAINER_BATTLE_BEST_OF_THREE:
         TrainerBattleLoadArgs(sOrdinaryNoIntroBattleParams, data);
         return EventScript_DoNoIntroTrainerBattle;
     case TRAINER_BATTLE_DOUBLE:
@@ -1442,8 +1445,7 @@ static void HandleBattleVariantEndParty(void)
 
 static bool8 BattleHasNoWhiteout()
 {
-    if (gTrainerBattleMode == TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT || 
-        gTrainerBattleMode == TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT)
+    if (gTrainerBattleMode == TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT)
         return TRUE;
     else
         return FALSE;
@@ -1475,6 +1477,73 @@ static void CB2_EndTrainerBattle(void)
             SetBattledTrainersFlags();
         }
     }
+}
+
+static void CB2_EndConfiguredDraftBattle(void)
+{
+    bool32 partyReconciled = BestOfThree_ReconcileDraftParty();
+
+    if (!partyReconciled)
+        gSpecialVar_Result = 0;
+
+    if (IsPlayerDefeated(gBattleOutcome))
+    {
+        BestOfThree_Abort();
+        SetMainCallback2(CB2_WhiteOut);
+    }
+    else if (gBattleOutcome == B_OUTCOME_WON && partyReconciled)
+    {
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        DowngradeBadPoison();
+        BestOfThree_RegisterVictory();
+    }
+    else
+    {
+        BestOfThree_Abort();
+        gSpecialVar_Result = 0;
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    }
+}
+
+static void CB2_EndBestOfThreeBattle(void)
+{
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+void BattleSetup_StartConfiguredTrainerBattle(u16 trainerId, const u8 *loseText, const u8 *victoryScript, bool32 bestOfThree)
+{
+    InitTrainerBattleVariables();
+    gTrainerBattleOpponent_A = trainerId;
+    sTrainerADefeatSpeech = (u8 *)loseText;
+    sTrainerABattleScriptRetAddr = (u8 *)victoryScript;
+    gTrainerBattleMode = bestOfThree ? TRAINER_BATTLE_BEST_OF_THREE : TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT;
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    if (IsTrainerDoubleBattle(trainerId))
+        gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
+    if (bestOfThree)
+        gBattleTypeFlags |= BATTLE_TYPE_BEST_OF_THREE;
+
+    sNoOfPossibleTrainerRetScripts = 0;
+    gNoOfApproachingTrainers = 0;
+    sShouldCheckTrainerBScript = FALSE;
+    gWhichTrainerToFaceAfterBattle = 0;
+    gMain.savedCallback = bestOfThree
+                        ? CB2_EndBestOfThreeBattle
+                        : CB2_EndConfiguredDraftBattle;
+
+    PlayTrainerEncounterMusic();
+    DoTrainerBattle();
+    ScriptContext_Stop();
+}
+
+void BattleSetup_RegisterBestOfThreeVictory(u16 trainerId, bool32 isRematch)
+{
+    gTrainerBattleOpponent_A = trainerId;
+    RegisterTrainerInMatchCall();
+    if (isRematch)
+        HandleRematchVarsOnBattleEnd();
+    else
+        SetBattledTrainersFlags();
 }
 
 static void CB2_EndRematchBattle(void)
@@ -1649,7 +1718,9 @@ const u8 *GetTrainerALoseText(void)
 {
     const u8 *string;
 
-    if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
+    if (gBattleTypeFlags & BATTLE_TYPE_BEST_OF_THREE)
+        string = BestOfThree_GetBattleText(TRUE);
+    else if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
         string = GetSecretBaseTrainerLoseText();
     else
         string = sTrainerADefeatSpeech;
@@ -1838,6 +1909,19 @@ static bool8 IsTrainerReadyForRematch_(const struct RematchTrainer *table, u16 t
 #endif //FREE_MATCH_CALL
 
     return TRUE;
+}
+
+bool32 BattleSetup_GetReadyRematchTrainerId(u16 firstTrainerId, u16 *rematchTrainerId)
+{
+#if FREE_MATCH_CALL == FALSE
+    if (!IsTrainerReadyForRematch_(gRematchTable, firstTrainerId))
+        return FALSE;
+
+    *rematchTrainerId = GetRematchTrainerId(firstTrainerId);
+    return TRUE;
+#else
+    return FALSE;
+#endif // FREE_MATCH_CALL
 }
 
 u16 GetRematchTrainerIdFromTable(const struct RematchTrainer *table, u16 firstBattleTrainerId)
@@ -2059,68 +2143,67 @@ u16 CountBattledRematchTeams(u16 trainerId)
     return i;
 }
 
-bool8 IsValidBestOfThreeTrainer(u8 trainer)
-{
-    return TRUE;
-}
-
-#define DRAFT_OR_BEST_OF_THREE(trainer) draftOrFull == DRAFT ? EventScript_##trainer##DraftStart : EventScript_##trainer##BestOfThreeStart
-
 void TryBestOfThree(struct ScriptContext *ctx)
 {
     u16 trainer = ScriptReadHalfword(ctx);
-    const u8 *script;
-    enum DraftOrFull {
-        DRAFT,
-        FULL,
-    }; enum DraftOrFull draftOrFull;
-
-    if (!IsValidBestOfThreeTrainer(trainer)
-     || HasTrainerBeenFought(trainer))
-        return;
+    const u8 *introText = (const u8 *)ScriptReadWord(ctx);
+    const u8 *seriesWonText = (const u8 *)ScriptReadWord(ctx);
+    const u8 *victoryScript = (const u8 *)ScriptReadWord(ctx);
+    const u8 *script = NULL;
     
     switch (gSaveBlock2Ptr->optionsVGCDraft)
     {
     case OPTIONS_DRAFT_ONLY_DRAFT:
-        draftOrFull = DRAFT;
+        script = BestOfThree_TryInitialize(trainer, introText,
+                                           seriesWonText, victoryScript, FALSE);
         break;
     case OPTIONS_DRAFT_ON_PLUS_BO3:
-        draftOrFull = FULL;
+        script = BestOfThree_TryInitialize(trainer, introText,
+                                           seriesWonText, victoryScript, TRUE);
         break;
     case OPTIONS_DRAFT_ALL_OFF:
     default:
         return;
     }
 
-    switch (trainer)
+    if (script == NULL)
+        return;
+
+    StopScript(ctx);
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    ScriptContext_SetupScript(script);
+}
+
+void TryBestOfThreeRematch(struct ScriptContext *ctx)
+{
+    u16 firstTrainer = ScriptReadHalfword(ctx);
+    const u8 *introText = (const u8 *)ScriptReadWord(ctx);
+    const u8 *seriesWonText = (const u8 *)ScriptReadWord(ctx);
+    const u8 *victoryScript = (const u8 *)ScriptReadWord(ctx);
+    const u8 *script = NULL;
+    u16 rematchTrainer;
+
+    if (!BattleSetup_GetReadyRematchTrainerId(firstTrainer, &rematchTrainer))
+        return;
+
+    switch (gSaveBlock2Ptr->optionsVGCDraft)
     {
-    case TRAINER_ROXANNE_1:
-        script = DRAFT_OR_BEST_OF_THREE(Roxanne);
+    case OPTIONS_DRAFT_ONLY_DRAFT:
+        script = BestOfThree_TryInitializeRematch(rematchTrainer, introText,
+                                                  seriesWonText, victoryScript, FALSE);
         break;
-    case TRAINER_BRAWLY_1:
-        script = DRAFT_OR_BEST_OF_THREE(Brawly);
+    case OPTIONS_DRAFT_ON_PLUS_BO3:
+        script = BestOfThree_TryInitializeRematch(rematchTrainer, introText,
+                                                  seriesWonText, victoryScript, TRUE);
         break;
-    case TRAINER_WATTSON_1:
-        script = DRAFT_OR_BEST_OF_THREE(Wattson);
-        break;
-    case TRAINER_FLANNERY_1:
-        script = DRAFT_OR_BEST_OF_THREE(Flannery);
-        break;
-    case TRAINER_NORMAN_1:
-        script = DRAFT_OR_BEST_OF_THREE(Norman);
-        break;
-    case TRAINER_WINONA_1:
-        script = DRAFT_OR_BEST_OF_THREE(Winona);
-        break;
-    case TRAINER_TATE_AND_LIZA_1:
-        script = DRAFT_OR_BEST_OF_THREE(TateAndLiza);
-        break;
-    case TRAINER_WALLACE:
-        script = DRAFT_OR_BEST_OF_THREE(Wallace);
-        break;
+    case OPTIONS_DRAFT_ALL_OFF:
     default:
         return;
     }
+
+    if (script == NULL)
+        return;
 
     StopScript(ctx);
     LockPlayerFieldControls();

@@ -16,6 +16,6 @@
 #define TRAINER_BATTLE_HILL                             12
 #define TRAINER_BATTLE_TWO_TRAINERS_NO_INTRO            13
 #define TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT      14
-#define TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT             15
+#define TRAINER_BATTLE_BEST_OF_THREE                    15
 
 #endif // GUARD_CONSTANTS_BATTLE_SETUP_H

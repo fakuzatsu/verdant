@@ -5634,7 +5634,8 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
                                   | BATTLE_TYPE_SAFARI
                                   | BATTLE_TYPE_FRONTIER
                                   | BATTLE_TYPE_EREADER_TRAINER
-                                  | BATTLE_TYPE_WALLY_TUTORIAL))
+                                  | BATTLE_TYPE_WALLY_TUTORIAL
+                                  | BATTLE_TYPE_BEST_OF_THREE))
             && (B_EVOLUTION_AFTER_WHITEOUT >= GEN_6
                 || gBattleOutcome == B_OUTCOME_WON
                 || gBattleOutcome == B_OUTCOME_CAUGHT))

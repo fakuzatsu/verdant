@@ -10,7 +10,6 @@ LavaridgeTown_Gym_1F_MapScripts::
 LavaridgeTown_Gym_1F_OnTransition:
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
 	call LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers
-    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 @ Unclear where/if these temp vars are getting checked
@@ -50,7 +49,7 @@ LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers::
 	return
 
 LavaridgeTown_Gym_1F_EventScript_Flannery::
-    trybestofthree TRAINER_FLANNERY_1
+    trybestofthree TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated
 	trainerbattle_single TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
@@ -103,7 +102,9 @@ LavaridgeTown_Gym_1F_EventScript_GiveOverheat::
 	return
 
 LavaridgeTown_Gym_1F_EventScript_FlanneryRematch::
+	trybestofthreerematch TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryPreRematch, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchDefeated
 	trainerbattle_rematch_double TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryPreRematch, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat, LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons
+LavaridgeTown_Gym_1F_EventScript_FlanneryRematchDefeated::
 	setmemoryall MEMORY_FLANNERY_GYM
 	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -308,7 +309,7 @@ LavaridgeTown_Gym_B1F_Text_EliPostBattle:
 	.string "of Flannery's power.\p"
 	.string "Hehehehe.$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryIntro:
+LavaridgeTown_Gym_1F_Text_FlanneryIntro::
 	.string "Welcome… No, wait.\p"
 	.string "Puny Trainer, how good to see you've\n"
 	.string "made it here!\p"
@@ -323,15 +324,18 @@ LavaridgeTown_Gym_1F_Text_FlanneryIntro:
 	.string "father, I shall, uh…demonstrate the\l"
 	.string "hot moves we have honed on this land!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryMatchDefeat::
-    .string "How… uh…\n"
-    .string "I got burnt out…$"
-
 LavaridgeTown_Gym_1F_Text_FlanneryContinue::
     .string "You did well challenger…\n"
     .string "Think you can handle the heat again?$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
+LavaridgeTown_Gym_1F_Text_FlanneryBo3RoundWon::
+    .string "How… uh…\n"
+    .string "I got burnt out…$"
+
+LavaridgeTown_Gym_1F_Text_FlanneryBo3RoundLost::
+	.string "Nice… I did it!$"
+
+LavaridgeTown_Gym_1F_Text_FlanneryDefeat::
 	.string "Oh…\n"
 	.string "I guess I was trying too hard…\p"
 	.string "I… I've only recently become\n"
@@ -382,7 +386,7 @@ LavaridgeTown_Gym_1F_Text_GymStatueCertified:
 	.string "Flannery'S Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
+LavaridgeTown_Gym_1F_Text_FlanneryPreRematch::
 	.string "Flannery: Losing a battle isn't going\n"
 	.string "to deflate me.\p"
 	.string "I love Pokémon.\n"
@@ -391,7 +395,7 @@ LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
 	.string "Let's exchange superhot moves\n"
 	.string "in another battle!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat:
+LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat::
 	.string "Whew!\n"
 	.string "On the verge of eruption!$"
 

@@ -6,7 +6,6 @@ FortreeCity_Gym_MapScripts::
 FortreeCity_Gym_OnTransition:
 	special RotatingGate_InitPuzzle
 	setflag FLAG_TEMP_HIDE_FOLLOWER @ Hide follower bc of rotating gates
-    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 FortreeCity_Gym_OnWarp:
@@ -19,7 +18,7 @@ FortreeCity_Gym_EventScript_InitRotatingGates::
 	end
 
 FortreeCity_Gym_EventScript_Winona::
-    trybestofthree TRAINER_WINONA_1
+    trybestofthree TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaIntro, FortreeCity_Gym_Text_WinonaDefeat, FortreeCity_Gym_EventScript_WinonaDefeated
 	trainerbattle_single TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaIntro, FortreeCity_Gym_Text_WinonaDefeat, FortreeCity_Gym_EventScript_WinonaDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, FortreeCity_Gym_EventScript_WinonaRematch
@@ -69,7 +68,9 @@ FortreeCity_Gym_EventScript_GiveAerialAce::
 	return
 
 FortreeCity_Gym_EventScript_WinonaRematch::
+	trybestofthreerematch TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaPreRematch, FortreeCity_Gym_Text_WinonaRematchDefeat, FortreeCity_Gym_EventScript_WinonaRematchDefeated
 	trainerbattle_rematch_double TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaPreRematch, FortreeCity_Gym_Text_WinonaRematchDefeat, FortreeCity_Gym_Text_WinonaRematchNeedTwoMons
+FortreeCity_Gym_EventScript_WinonaRematchDefeated::
 	setmemoryall MEMORY_WINONA_GYM
 	msgbox FortreeCity_Gym_Text_WinonaPostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -237,7 +238,7 @@ FortreeCity_Gym_Text_DariusPostBattle:
 	.string "But you'd better watch it! Our Leader\l"
 	.string "Winona's Pokémon are all business.$"
 
-FortreeCity_Gym_Text_WinonaIntro:
+FortreeCity_Gym_Text_WinonaIntro::
 	.string "I am Winona. I am the Leader of\n"
 	.string "the Fortree Pokémon Gym.\p"
 	.string "I have become one with Bird Pokémon\n"
@@ -247,13 +248,16 @@ FortreeCity_Gym_Text_WinonaIntro:
 	.string "Witness the elegant choreography\n"
 	.string "of Bird Pokémon and I!$"
 
-FortreeCity_Gym_Text_WinonaMatchDefeat::
-    .string "An unexpected wind, to be sure!$"
-
 FortreeCity_Gym_Text_WinonaContinue::
     .string "Fly even higher with me!$"
 
-FortreeCity_Gym_Text_WinonaDefeat:
+FortreeCity_Gym_Text_WinonaBo3RoundWon::
+    .string "You blew us off our course!$"
+
+FortreeCity_Gym_Text_WinonaBo3RoundLost::
+	.string "We're sky high right now!$"
+
+FortreeCity_Gym_Text_WinonaDefeat::
 	.string "Never before have I seen a Trainer\n"
 	.string "command Pokémon with more grace\l"
 	.string "than I…\p"
@@ -295,7 +299,7 @@ FortreeCity_Gym_Text_GymStatueCertified:
 	.string "Winona'S Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-FortreeCity_Gym_Text_WinonaPreRematch:
+FortreeCity_Gym_Text_WinonaPreRematch::
 	.string "Winona: We humans can never escape\n"
 	.string "gravity's pull on the ground.\p"
 	.string "But by striving for excellence,\n"
@@ -305,7 +309,7 @@ FortreeCity_Gym_Text_WinonaPreRematch:
 	.string "Please, allow me to see your power\n"
 	.string "at full flight!$"
 
-FortreeCity_Gym_Text_WinonaRematchDefeat:
+FortreeCity_Gym_Text_WinonaRematchDefeat::
 	.string "I failed to reach your height again…$"
 
 FortreeCity_Gym_Text_WinonaPostRematch:

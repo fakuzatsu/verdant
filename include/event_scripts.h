@@ -666,24 +666,68 @@ extern const u8 EventScript_LostSignal[];
 extern const u8 EventScript_TooDark[];
 extern const u8 EventScript_MovedTooFast[];
 
-// Draft
-extern const u8 EventScript_RoxanneDraftStart[];
-extern const u8 EventScript_BrawlyDraftStart[];
-extern const u8 EventScript_WattsonDraftStart[];
-extern const u8 EventScript_FlanneryDraftStart[];
-extern const u8 EventScript_NormanDraftStart[];
-extern const u8 EventScript_WinonaDraftStart[];
-extern const u8 EventScript_TateAndLizaDraftStart[];
-extern const u8 EventScript_WallaceDraftStart[];
-
 // Best of Three
-extern const u8 EventScript_RoxanneBestOfThreeStart[];
-extern const u8 EventScript_BrawlyBestOfThreeStart[];
-extern const u8 EventScript_WattsonBestOfThreeStart[];
-extern const u8 EventScript_FlanneryBestOfThreeStart[];
-extern const u8 EventScript_NormanBestOfThreeStart[];
-extern const u8 EventScript_WinonaBestOfThreeStart[];
-extern const u8 EventScript_TateAndLizaBestOfThreeStart[];
-extern const u8 EventScript_WallaceBestOfThreeStart[];
+extern const u8 EventScript_BestOfThreeStart[];
+extern const u8 EventScript_DraftBattleStart[];
+
+extern const u8 RustboroCity_Gym_Text_RoxanneContinue[];
+extern const u8 RustboroCity_Gym_Text_RoxanneBo3RoundWon[];
+extern const u8 RustboroCity_Gym_Text_RoxanneBo3RoundLost[];
+
+extern const u8 DewfordTown_Gym_Text_BrawlyContinue[];
+extern const u8 DewfordTown_Gym_Text_BrawlyBo3RoundWon[];
+extern const u8 DewfordTown_Gym_Text_BrawlyBo3RoundLost[];
+
+extern const u8 MauvilleCity_Gym_Text_WattsonContinue[];
+extern const u8 MauvilleCity_Gym_Text_WattsonBo3RoundWon[];
+extern const u8 MauvilleCity_Gym_Text_WattsonBo3RoundLost[];
+
+extern const u8 LavaridgeTown_Gym_1F_Text_FlanneryContinue[];
+extern const u8 LavaridgeTown_Gym_1F_Text_FlanneryBo3RoundWon[];
+extern const u8 LavaridgeTown_Gym_1F_Text_FlanneryBo3RoundLost[];
+
+extern const u8 PetalburgCity_Gym_Text_NormanContinue[];
+extern const u8 PetalburgCity_Gym_Text_NormanBo3RoundWon[];
+extern const u8 PetalburgCity_Gym_Text_NormanBo3RoundLost[];
+
+extern const u8 FortreeCity_Gym_Text_WinonaContinue[];
+extern const u8 FortreeCity_Gym_Text_WinonaBo3RoundWon[];
+extern const u8 FortreeCity_Gym_Text_WinonaBo3RoundLost[];
+
+extern const u8 MossdeepCity_Gym_Text_TateAndLizaContinue[];
+extern const u8 MossdeepCity_Gym_Text_TateAndLizaBo3RoundWon[];
+extern const u8 MossdeepCity_Gym_Text_TateAndLizaBo3RoundLost[];
+
+extern const u8 SootopolisCity_Gym_1F_Text_WallaceContinue[];
+extern const u8 SootopolisCity_Gym_1F_Text_WallaceBo3RoundWon[];
+extern const u8 SootopolisCity_Gym_1F_Text_WallaceBo3RoundLost[];
+
+extern const u8 SootopolisCity_Gym_1F_Text_JuanContinue[];
+extern const u8 SootopolisCity_Gym_1F_Text_JuanBo3RoundWon[];
+extern const u8 SootopolisCity_Gym_1F_Text_JuanBo3RoundLost[];
+
+extern const u8 EverGrandeCity_SidneysRoom_Text_Bo3Continue[];
+extern const u8 EverGrandeCity_SidneysRoom_Text_Bo3RoundWon[];
+extern const u8 EverGrandeCity_SidneysRoom_Text_Bo3RoundLost[];
+
+extern const u8 EverGrandeCity_PhoebesRoom_Text_Bo3Continue[];
+extern const u8 EverGrandeCity_PhoebesRoom_Text_Bo3RoundWon[];
+extern const u8 EverGrandeCity_PhoebesRoom_Text_Bo3RoundLost[];
+
+extern const u8 EverGrandeCity_GlaciasRoom_Text_Bo3Continue[];
+extern const u8 EverGrandeCity_GlaciasRoom_Text_Bo3RoundWon[];
+extern const u8 EverGrandeCity_GlaciasRoom_Text_Bo3RoundLost[];
+
+extern const u8 EverGrandeCity_DrakesRoom_Text_Bo3Continue[];
+extern const u8 EverGrandeCity_DrakesRoom_Text_Bo3RoundWon[];
+extern const u8 EverGrandeCity_DrakesRoom_Text_Bo3RoundLost[];
+
+extern const u8 EverGrandeCity_ChampionsRoom_Text_StevenBo3Continue[];
+extern const u8 EverGrandeCity_ChampionsRoom_Text_StevenBo3RoundWon[];
+extern const u8 EverGrandeCity_ChampionsRoom_Text_StevenBo3RoundLost[];
+
+extern const u8 EverGrandeCity_ChampionsRoom_Text_WallaceBo3Continue[];
+extern const u8 EverGrandeCity_ChampionsRoom_Text_WallaceBo3RoundWon[];
+extern const u8 EverGrandeCity_ChampionsRoom_Text_WallaceBo3RoundLost[];
 
 #endif // GUARD_EVENT_SCRIPTS_H

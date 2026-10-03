@@ -736,7 +736,7 @@
 		.4byte \pointer1 @ text
 		.4byte \pointer2 @ text
 		.4byte \pointer3 @ event script
-	.elseif \type == TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT
+	.elseif \type == TRAINER_BATTLE_BEST_OF_THREE
 		.4byte \pointer1 @ text
 	.endif
 	.endm
@@ -799,9 +799,9 @@
     trainerbattle TRAINER_BATTLE_NO_WHITEOUT_CONTINUE_SCRIPT, \trainer, 0, \intro_text, \lose_text, \event_script
 	.endm
 
-	@ Starts a trainer battle, skipping intro text. Takes a trainer and loss text. Does not warp the player to last heal location if they lose. 
-	.macro trainerbattle_no_intro_no_whiteout trainer:req, lose_text:req
-	trainerbattle TRAINER_BATTLE_NO_INTRO_NO_WHITEOUT, \trainer, 0, \lose_text
+	@ Starts an internal best-of-three round, skipping intro text and returning to its controller after a loss.
+	.macro trainerbattle_best_of_three trainer:req, lose_text:req
+	trainerbattle TRAINER_BATTLE_BEST_OF_THREE, \trainer, 0, \lose_text
 	.endm
 
 	@ Starts a trainer battle using the battle information stored in RAM (usually by the scripts in trainer_battle.inc, which
@@ -2381,10 +2381,24 @@
 	.2byte \species
 	.endm
 
-	@ Tries to setup a best of three battle with the specified trainer if bo3 is enabled
-	.macro trybestofthree trainer:req
+	@ Tries to set up a drafted or best-of-three battle with the specified trainer.
+	@ Arguments mirror trainerbattle_single: trainer, intro text, series-win text, and victory script.
+	.macro trybestofthree trainer:req, intro_text:req, series_won_text:req, event_script:req
 	callnative TryBestOfThree
 	.2byte \trainer
+	.4byte \intro_text
+	.4byte \series_won_text
+	.4byte \event_script
+	.endm
+
+	@ Tries to set up the currently available rematch as a drafted or best-of-three battle.
+	@ Arguments mirror trainerbattle_single: trainer, intro text, series-win text, and victory script.
+	.macro trybestofthreerematch trainer:req, intro_text:req, series_won_text:req, event_script:req
+	callnative TryBestOfThreeRematch
+	.2byte \trainer
+	.4byte \intro_text
+	.4byte \series_won_text
+	.4byte \event_script
 	.endm
 
 	@ Writes the choosen day of the week string to the specified buffer (index 0 = Sunday).
@@ -2515,4 +2529,3 @@
 	callnative Scrcmd_StartPinball
 	.2byte \species
 	.endm
-

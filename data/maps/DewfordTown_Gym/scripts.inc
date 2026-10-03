@@ -4,7 +4,6 @@ DewfordTown_Gym_MapScripts::
 
 DewfordTown_Gym_OnTransition:
 	call DewfordTown_Gym_EventScript_SetFlashLevel
-    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 DewfordTown_Gym_EventScript_SetFlashLevel::
@@ -134,7 +133,7 @@ DewfordTown_Gym_EventScript_StopCountingTrainers::
 	return
 
 DewfordTown_Gym_EventScript_Brawly::
-    trybestofthree TRAINER_BRAWLY_1
+    trybestofthree TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated
 	trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
@@ -187,7 +186,9 @@ DewfordTown_Gym_EventScript_GiveBulkUp2:
 	end
 
 DewfordTown_Gym_EventScript_BrawlyRematch::
+	trybestofthreerematch TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyPreRematch, DewfordTown_Gym_Text_BrawlyRematchDefeat, DewfordTown_Gym_EventScript_BrawlyRematchDefeated
 	trainerbattle_rematch_double TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyPreRematch, DewfordTown_Gym_Text_BrawlyRematchDefeat, DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons
+DewfordTown_Gym_EventScript_BrawlyRematchDefeated::
 	setmemoryall MEMORY_BRAWLY_GYM
 	msgbox DewfordTown_Gym_Text_BrawlyPostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -384,7 +385,7 @@ DewfordTown_Gym_Text_CristianPostBattle:
 	.string "You win!\n"
 	.string "Go after that Badge!$"
 
-DewfordTown_Gym_Text_BrawlyIntro:
+DewfordTown_Gym_Text_BrawlyIntro::
 	.string "I'm Brawly!\n"
 	.string "Dewford's Gym Leader!\p"
 	.string "I've been churned in the rough waves\n"
@@ -393,13 +394,17 @@ DewfordTown_Gym_Text_BrawlyIntro:
 	.string "So you wanted to challenge me?\n"
 	.string "Let me see what you're made of!$"
 
-DewfordTown_Gym_Text_BrawlyMatchDefeat::
-	.string "Whoah! What a wave!$"
-
 DewfordTown_Gym_Text_BrawlyContinue::
     .string "Ready for another round?$"
 
-DewfordTown_Gym_Text_BrawlyDefeat:
+DewfordTown_Gym_Text_BrawlyBo3RoundWon::
+	.string "Whoah! What a wave!$"
+
+DewfordTown_Gym_Text_BrawlyBo3RoundLost::
+	.string "Too bad!\n"
+	.string "Few make it past this storm!$"
+
+DewfordTown_Gym_Text_BrawlyDefeat::
 	.string "Whoah, wow! You made a much bigger\n"
 	.string "splash than I expected!\p"
 	.string "You swamped me!\p"
@@ -442,7 +447,7 @@ DewfordTown_Gym_Text_GymStatueCertified:
 	.string "Brawly'S Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-DewfordTown_Gym_Text_BrawlyPreRematch:
+DewfordTown_Gym_Text_BrawlyPreRematch::
 	.string "Brawly: A wave may draw back, but it\n"
 	.string "always returns to the shore.\p"
 	.string "A giant wave of a talent like you…\n"
@@ -450,7 +455,7 @@ DewfordTown_Gym_Text_BrawlyPreRematch:
 	.string "Show me how much higher\n"
 	.string "you've gone!$"
 
-DewfordTown_Gym_Text_BrawlyRematchDefeat:
+DewfordTown_Gym_Text_BrawlyRematchDefeat::
 	.string "Wow!\n"
 	.string "Swamped again!$"
 

@@ -42,6 +42,7 @@ EverGrandeCity_DrakesRoom_EventScript_Drake::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_DRAKE, EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
+	trybestofthree TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_IntroSpeech, EverGrandeCity_DrakesRoom_Text_Defeat, EverGrandeCity_DrakesRoom_EventScript_Defeated
 	msgbox EverGrandeCity_DrakesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_Defeat
 	goto EverGrandeCity_DrakesRoom_EventScript_Defeated
@@ -61,7 +62,7 @@ EverGrandeCity_DrakesRoom_EventScript_Defeated::
 	release
 	end
 
-EverGrandeCity_DrakesRoom_Text_IntroSpeech:
+EverGrandeCity_DrakesRoom_Text_IntroSpeech::
 	.string "I am the last of the Pokémon League\n"
 	.string "Elite Four, Drake the DRAGON master!\p"
 	.string "In their natural state, Pokémon are\n"
@@ -74,7 +75,16 @@ EverGrandeCity_DrakesRoom_Text_IntroSpeech:
 	.string "If you don't, then you will never\n"
 	.string "prevail over me!$"
 
-EverGrandeCity_DrakesRoom_Text_Defeat:
+EverGrandeCity_DrakesRoom_Text_Bo3Continue::
+	.string "Prepare yourself for our next bout.$"
+
+EverGrandeCity_DrakesRoom_Text_Bo3RoundWon::
+	.string "There's that wild ferocity!$"
+
+EverGrandeCity_DrakesRoom_Text_Bo3RoundLost::
+	.string "It'll take much more than that.$"
+
+EverGrandeCity_DrakesRoom_Text_Defeat::
 	.string "Superb, it should be said.$"
 
 EverGrandeCity_DrakesRoom_Text_PostBattleSpeech:
@@ -89,4 +99,3 @@ EverGrandeCity_DrakesRoom_Text_PostBattleSpeech:
 	.string "Trainers and grow strong.\p"
 	.string "Go! Go onwards!\n"
 	.string "The Champion is waiting!$"
-

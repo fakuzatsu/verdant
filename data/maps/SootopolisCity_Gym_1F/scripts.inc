@@ -7,7 +7,6 @@ SootopolisCity_Gym_1F_MapScripts::
 
 SootopolisCity_Gym_1F_OnTransition:
 	setvar VAR_ICE_STEP_COUNT, 1
-    call EventScript_OnTransition_ClearBestOfThreeVars
 	goto SootopolisCity_Gym_1F_EventScript_ShowWallaceOrJuan
 	end
 
@@ -90,7 +89,7 @@ SootopolisCity_Gym_1F_Movement_FallThroughIce:
 	step_end
 
 SootopolisCity_Gym_1F_EventScript_WallaceOrJuan::
-    trybestofthree TRAINER_WALLACE
+    trybestofthree TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_WallaceIntro, SootopolisCity_Gym_1F_Text_WallaceDefeat, SootopolisCity_Gym_1F_EventScript_WallaceOrJuanDefeated
 	trainerbattle_single TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_WallaceIntro, SootopolisCity_Gym_1F_Text_WallaceDefeat, SootopolisCity_Gym_1F_EventScript_WallaceOrJuanDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, SootopolisCity_Gym_1F_EventScript_JuanRematch
@@ -121,7 +120,7 @@ SootopolisCity_Gym_1F_EventScript_WallaceOrJuanDefeated::
 	closemessage
 	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox SootopolisCity_Gym_1F_Text_RegisteredJuan, MSGBOX_DEFAULT
+	msgbox SootopolisCity_Gym_1F_Text_RegisteredWallace, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
 	delay 30
@@ -156,16 +155,17 @@ SootopolisCity_Gym_1F_EventScript_JuanPostBattle::
 
 SootopolisCity_Gym_1F_EventScript_JuanRematch::
 	goto_if_unset FLAG_MET_JUAN, SootopolisCity_Gym_1F_EventScript_JuanRematchIntro
+	trybestofthreerematch TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanPreRematch, SootopolisCity_Gym_1F_Text_JuanRematchDefeat, SootopolisCity_Gym_1F_EventScript_JuanRematchDefeated
 	trainerbattle_rematch_double TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanPreRematch, SootopolisCity_Gym_1F_Text_JuanRematchDefeat, SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons
+SootopolisCity_Gym_1F_EventScript_JuanRematchDefeated::
 	setmemoryall MEMORY_JUAN_GYM
 	msgbox SootopolisCity_Gym_1F_Text_JuanPostRematch, MSGBOX_AUTOCLOSE
 	end
 
 SootopolisCity_Gym_1F_EventScript_JuanRematchIntro::
+	trybestofthreerematch TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanRematchDefeat, SootopolisCity_Gym_1F_EventScript_JuanRematchDefeated
 	trainerbattle_rematch_double TRAINER_WALLACE, SootopolisCity_Gym_1F_Text_JuanIntro, SootopolisCity_Gym_1F_Text_JuanRematchDefeat, SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons
-	setmemoryall MEMORY_JUAN_GYM
-	msgbox SootopolisCity_Gym_1F_Text_JuanPostRematch, MSGBOX_AUTOCLOSE
-	end
+	goto SootopolisCity_Gym_1F_EventScript_JuanRematchDefeated
 
 SootopolisCity_Gym_1F_EventScript_GymGuide::
 	lock
@@ -221,7 +221,7 @@ SootopolisCity_Gym_1F_Text_GymGuidePostVictory:
 	.string "If you've gotten all the Badges, you're\n"
 	.string "set for the Pokémon League challenge!$"
 
-SootopolisCity_Gym_1F_Text_WallaceIntro:
+SootopolisCity_Gym_1F_Text_WallaceIntro::
 	.string "Allow me to formally introduce\n"
 	.string "myself.\p"
 	.string "I am Wallace.\n"
@@ -238,32 +238,18 @@ SootopolisCity_Gym_1F_Text_WallaceIntro:
 	.string "a performance of illusions in water\l"
 	.string "by me and my Pokémon!$"
 
-SootopolisCity_Gym_1F_Text_JuanIntro:
-	.string "Let me ask you.\n"
-	.string "Did you know?\l"
-	.string "Ah, I should not be so coy.\p"
-	.string "It was I who taught Wallace everything\n"
-	.string "there is to know about Pokémon.\p"
-	.string "Once, I had given up my position as\n"
-	.string "the Gym Leader.\p"
-	.string "In my place, I had entrusted Wallace\n"
-	.string "with the Gym.\p"
-	.string "However, a compelling reason arose for\n"
-	.string "me to make a comeback.\p"
-	.string "Ah, but enough chatter.\n"
-	.string "Let us begin our match, shall we?\p"
-	.string "Please, you shall bear witness to\n"
-	.string "our artistry.\p"
-	.string "A grand illusion of water sculpted\n"
-	.string "by Pokémon and myself!$"
+SootopolisCity_Gym_1F_Text_WallaceContinue::
+    .string "Let us continue our elegant duel!$"
 
-SootopolisCity_Gym_1F_Text_JuanMatchDefeat::
+SootopolisCity_Gym_1F_Text_WallaceBo3RoundWon::
     .string "What a fierce display of talent!$"
 
-SootopolisCity_Gym_1F_Text_WallaceContinue::
-    .string "Let us continue our elegant duel.$"
+SootopolisCity_Gym_1F_Text_WallaceBo3RoundLost::
+	.string "Our skill is the best of the best!\p"
+	.string "You'll have to draw out your full\n"
+	.string "potential to stand a chance!$"
 
-SootopolisCity_Gym_1F_Text_WallaceDefeat:
+SootopolisCity_Gym_1F_Text_WallaceDefeat::
 	.string "Bravo.\p"
 	.string "I realize now your authenticity and\n"
 	.string "magnificence as a Pokémon Trainer.\p"
@@ -293,7 +279,7 @@ SootopolisCity_Gym_1F_Text_ExplainWaterPulse:
 	.string "the target with ultrasonic waves.\p"
 	.string "… … … … … …$"
 
-SootopolisCity_Gym_1F_Text_RegisteredJuan:
+SootopolisCity_Gym_1F_Text_RegisteredWallace:
 	.string "Registered Gym Leader Wallace\n"
 	.string "in the Pokénav.$"
 
@@ -306,12 +292,6 @@ SootopolisCity_Gym_1F_Text_WallacePostBattle:
 	.string "of Hoenn, to the island Ever Grande.\p"
 	.string "There, you shall find the Pokémon\n"
 	.string "League.$"
-
-SootopolisCity_Gym_1F_Text_JuanPostBattle:
-	.string "Once again I prepare my gym for\n"
-	.string "an elegant battle.\p"
-	.string "Please return to me once those\n"
-	.string "preparations are complete.$"
 
 SootopolisCity_Gym_1F_Text_GoGetFortreeBadge:
 	.string "There remains but one Badge to\n"
@@ -328,7 +308,26 @@ SootopolisCity_Gym_1F_Text_GymStatueCertified:
 	.string "Wallace's Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-SootopolisCity_Gym_1F_Text_JuanPreRematch:
+SootopolisCity_Gym_1F_Text_JuanIntro:
+	.string "Let me ask you.\n"
+	.string "Did you know?\l"
+	.string "Ah, I should not be so coy.\p"
+	.string "It was I who taught Wallace everything\n"
+	.string "there is to know about Pokémon.\p"
+	.string "Once, I had given up my position as\n"
+	.string "the Gym Leader.\p"
+	.string "In my place, I had entrusted Wallace\n"
+	.string "with the Gym.\p"
+	.string "However, a compelling reason arose for\n"
+	.string "me to make a comeback.\p"
+	.string "Ah, but enough chatter.\n"
+	.string "Let us begin our match, shall we?\p"
+	.string "Please, you shall bear witness to\n"
+	.string "our artistry.\p"
+	.string "A grand illusion of water sculpted\n"
+	.string "by Pokémon and myself!$"
+
+SootopolisCity_Gym_1F_Text_JuanPreRematch::
 	.string "Juan: Ah, this Gym had returned to its\n"
 	.string "usual state of serenity…\p"
 	.string "But our young typhoon has returned\n"
@@ -337,9 +336,28 @@ SootopolisCity_Gym_1F_Text_JuanPreRematch:
 	.string "I shall be delighted to dance with you\n"
 	.string "as often as you wish!$"
 
-SootopolisCity_Gym_1F_Text_JuanRematchDefeat:
+SootopolisCity_Gym_1F_Text_JuanContinue::
+	.string "Spectacular!\n"
+	.string "Let us resume this dance of power!$"
+
+SootopolisCity_Gym_1F_Text_JuanBo3RoundWon::
+    .string "Such Talent!\n"
+	.string "Truly an elegant display!$"
+
+SootopolisCity_Gym_1F_Text_JuanBo3RoundLost::
+	.string "That just won't do.\p"
+	.string "Show me your full talent!\n"
+	.string "Don't hold back!$"
+
+SootopolisCity_Gym_1F_Text_JuanPostBattle:
+	.string "Once again I prepare my gym for\n"
+	.string "an elegant battle.\p"
+	.string "Please return to me once those\n"
+	.string "preparations are complete.$"
+
+SootopolisCity_Gym_1F_Text_JuanRematchDefeat::
 	.string "Ahahaha, you are the winner!\n"
-	.string "You have defeated me again!$"
+	.string "You have bested me thoroughly!$"
 
 SootopolisCity_Gym_1F_Text_JuanPostRematch:
 	.string "Juan: If I told you to become my\n"
@@ -362,4 +380,3 @@ SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons:
 	.string "You have with you but one Pokémon.\p"
 	.string "I wish that you would return with\n"
 	.string "two, perhaps more, Pokémon, please.$"
-

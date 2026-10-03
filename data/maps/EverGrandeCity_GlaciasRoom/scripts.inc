@@ -41,6 +41,7 @@ EverGrandeCity_GlaciasRoom_EventScript_Glacia::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_GLACIA, EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
+	trybestofthree TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_IntroSpeech, EverGrandeCity_GlaciasRoom_Text_Defeat, EverGrandeCity_GlaciasRoom_EventScript_Defeated
 	msgbox EverGrandeCity_GlaciasRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_Defeat
 	goto EverGrandeCity_GlaciasRoom_EventScript_Defeated
@@ -58,7 +59,7 @@ EverGrandeCity_GlaciasRoom_EventScript_Defeated::
 	release
 	end
 
-EverGrandeCity_GlaciasRoom_Text_IntroSpeech:
+EverGrandeCity_GlaciasRoom_Text_IntroSpeech::
 	.string "Welcome, my name is Glacia\n"
 	.string "of the Elite Four.\p"
 	.string "I've traveled from afar to Hoenn\n"
@@ -69,7 +70,16 @@ EverGrandeCity_GlaciasRoom_Text_IntroSpeech:
 	.string "It would please me to no end if I could\n"
 	.string "go all out against you!$"
 
-EverGrandeCity_GlaciasRoom_Text_Defeat:
+EverGrandeCity_GlaciasRoom_Text_Bo3Continue::
+	.string "You're quite the trainer.$"
+
+EverGrandeCity_GlaciasRoom_Text_Bo3RoundWon::
+	.string "This is what I've been seeking.$"
+
+EverGrandeCity_GlaciasRoom_Text_Bo3RoundLost::
+	.string "Another disappointment…$"
+
+EverGrandeCity_GlaciasRoom_Text_Defeat::
 	.string "You and your Pokémon…\n"
 	.string "How hot your spirits burn!\p"
 	.string "The all-consuming heat overwhelms.\p"
@@ -80,4 +90,3 @@ EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech:
 	.string "Advance to the next room.\p"
 	.string "And there, confirm the truly fearsome\n"
 	.string "side of the Pokémon League.$"
-

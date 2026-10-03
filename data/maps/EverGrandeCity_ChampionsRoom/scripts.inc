@@ -60,12 +60,14 @@ EverGrandeCity_ChampionsRoom_EventScript_StevenOrWallace::
 	end
 
 EverGrandeCity_ChampionsRoom_EventScript_StevenIntro::
+	trybestofthree TRAINER_STEVEN_CHAMPION, EverGrandeCity_ChampionsRoom_Text_StevenIntroSpeech, EverGrandeCity_ChampionsRoom_Text_StevenDefeat, EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	msgbox EverGrandeCity_ChampionsRoom_Text_StevenIntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_STEVEN_CHAMPION, EverGrandeCity_ChampionsRoom_Text_StevenDefeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	end
 
 EverGrandeCity_ChampionsRoom_EventScript_WallaceIntro::
+	trybestofthree TRAINER_WALLACE_CHAMPION, EverGrandeCity_ChampionsRoom_Text_WallaceIntroSpeech, EverGrandeCity_ChampionsRoom_Text_WallaceDefeat, EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceIntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLACE_CHAMPION, EverGrandeCity_ChampionsRoom_Text_WallaceDefeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
@@ -266,40 +268,20 @@ EverGrandeCity_ChampionsRoom_Text_StevenIntroSpeech::
 	.string "I want you to hit me with it all!\p"
 	.string "Now, bring it!$"
 
-EverGrandeCity_ChampionsRoom_Text_WallaceIntroSpeech:
-	.string "Wallace: Welcome, {PLAYER}{KUN}.\p"
-	.string "That incident in Sootopolis City…\n"
-	.string "That was superb work, putting an end\l"
-	.string "to that crisis all by yourself.\p"
-	.string "Oops!\p"
-	.string "It wouldn't be fair to say that you\n"
-	.string "alone ended the crisis.\p"
-	.string "You overcame that difficult situation\n"
-	.string "by working as one with your Pokémon.\p"
-	.string "We Trainers raise Pokémon by giving\n"
-	.string "them items and by teaching them new\l"
-	.string "techniques for battle.\p"
-	.string "But we ourselves also learn many\n"
-	.string "things from Pokémon.\p"
-	.string "And this is where your achievements\n"
-	.string "are put to the test against what\l"
-	.string "others like you have achieved.\p"
-	.string "Now!\p"
-	.string "Who can most elegantly dance with\n"
-	.string "their Pokémon in Hoenn?\p"
-	.string "Show me right here and now!$"
+EverGrandeCity_ChampionsRoom_Text_StevenBo3Continue::
+	.string "The league dictates we battle again…\p"
+	.string "but more than that…\p"
+	.string "I want to experience this battle\n"
+	.string "once more.$"
 
-EverGrandeCity_ChampionsRoom_Text_StevenDefeat:
-	.string "I, the Champion, fall in defeat...\p"
-	.string "Kudos to you, {PLAYER}{KUN}!\p"
-	.string "You are a truly noble Pokémon\n"
-	.string "Trainer!$"
+EverGrandeCity_ChampionsRoom_Text_StevenBo3RoundWon::
+	.string "Truly remarkable…$"
 
-EverGrandeCity_ChampionsRoom_Text_WallaceDefeat:
+EverGrandeCity_ChampionsRoom_Text_StevenBo3RoundLost::
+	.string "I know you have more fight in you…$"
+
+EverGrandeCity_ChampionsRoom_Text_StevenDefeat::
 	.string "I, the Champion, fall in defeat…\p"
-	.string "That was wonderful work.\n"
-	.string "You were elegant, infuriatingly so.\l"
-	.string "And yet it was utterly glorious!\p"
 	.string "Kudos to you, {PLAYER}{KUN}!\p"
 	.string "You are a truly noble Pokémon\n"
 	.string "Trainer!$"
@@ -316,22 +298,6 @@ EverGrandeCity_ChampionsRoom_Text_StevenPostBattleSpeech:: @ 81910FE
 	.string "victory today!\p"
 	.string "You are rightfully the Hoenn region's\n"
 	.string "new...$"
-
-EverGrandeCity_ChampionsRoom_Text_WallacePostBattleSpeech:
-	.string "Wallace: The Pokémon you sent into\n"
-	.string "battle…\p"
-	.string "At times they danced like a spring\n"
-	.string "breeze, and at times they struck\l"
-	.string "like lightning.\p"
-	.string "It was with light, yet surefooted,\n"
-	.string "elegance that you led your Pokémon.\p"
-	.string "Even I felt bedazzled by your\n"
-	.string "masterful performance!\p"
-	.string "You now stand at the glorious peak\n"
-	.string "of the Pokémon League.\p"
-	.string "I now proclaim you to be the new\n"
-	.string "Hoenn region champion.\p"
-	.string "Please, follow me.$"
 
 EverGrandeCity_ChampionsRoom_Text_MayAdvice:
 	.string "May: {PLAYER}{KUN}!\p"
@@ -404,3 +370,61 @@ EverGrandeCity_ChampionsRoom_Text_BrendanCongratulations:
 	.string "{PLAYER}, way to go!\n"
 	.string "Congratulations!$"
 
+EverGrandeCity_ChampionsRoom_Text_WallaceIntroSpeech::
+	.string "Wallace: Welcome, {PLAYER}{KUN}.\p"
+	.string "That incident in Sootopolis City…\n"
+	.string "That was superb work, putting an end\l"
+	.string "to that crisis all by yourself.\p"
+	.string "Oops!\p"
+	.string "It wouldn't be fair to say that you\n"
+	.string "alone ended the crisis.\p"
+	.string "You overcame that difficult situation\n"
+	.string "by working as one with your Pokémon.\p"
+	.string "We Trainers raise Pokémon by giving\n"
+	.string "them items and by teaching them new\l"
+	.string "techniques for battle.\p"
+	.string "But we ourselves also learn many\n"
+	.string "things from Pokémon.\p"
+	.string "And this is where your achievements\n"
+	.string "are put to the test against what\l"
+	.string "others like you have achieved.\p"
+	.string "Now!\p"
+	.string "Who can most elegantly dance with\n"
+	.string "their Pokémon in Hoenn?\p"
+	.string "Show me right here and now!$"
+
+EverGrandeCity_ChampionsRoom_Text_WallaceBo3Continue::
+    .string "Let us continue our elegant duel!$"
+
+EverGrandeCity_ChampionsRoom_Text_WallaceBo3RoundWon::
+    .string "What a fierce display of talent!$"
+
+EverGrandeCity_ChampionsRoom_Text_WallaceBo3RoundLost::
+	.string "Our skill is the best of the best!\p"
+	.string "You'll have to draw out your full\n"
+	.string "potential to stand a chance!$"
+
+EverGrandeCity_ChampionsRoom_Text_WallaceDefeat::
+	.string "I, the Champion, fall in defeat…\p"
+	.string "That was wonderful work.\n"
+	.string "You were elegant, infuriatingly so.\l"
+	.string "And yet it was utterly glorious!\p"
+	.string "Kudos to you, {PLAYER}{KUN}!\p"
+	.string "You are a truly noble Pokémon\n"
+	.string "Trainer!$"
+
+EverGrandeCity_ChampionsRoom_Text_WallacePostBattleSpeech:
+	.string "Wallace: The Pokémon you sent into\n"
+	.string "battle…\p"
+	.string "At times they danced like a spring\n"
+	.string "breeze, and at times they struck\l"
+	.string "like lightning.\p"
+	.string "It was with light, yet surefooted,\n"
+	.string "elegance that you led your Pokémon.\p"
+	.string "Even I felt bedazzled by your\n"
+	.string "masterful performance!\p"
+	.string "You now stand at the glorious peak\n"
+	.string "of the Pokémon League.\p"
+	.string "I now proclaim you to be the new\n"
+	.string "Hoenn region champion.\p"
+	.string "Please, follow me.$"

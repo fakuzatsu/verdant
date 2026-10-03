@@ -4,11 +4,10 @@ MossdeepCity_Gym_MapScripts::
 
 MossdeepCity_Gym_OnTransition:
 	setflag FLAG_TEMP_HIDE_FOLLOWER @ Hide follower since it can collide with moving statues
-    call EventScript_OnTransition_ClearBestOfThreeVars
 	end
 
 MossdeepCity_Gym_EventScript_TateAndLiza::
-    trybestofthree TRAINER_TATE_AND_LIZA_1
+    trybestofthree TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_EventScript_TateAndLizaDefeated
 	trainerbattle_double TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaIntro, MossdeepCity_Gym_Text_TateAndLizaDefeat, MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons, MossdeepCity_Gym_EventScript_TateAndLizaDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, MossdeepCity_Gym_EventScript_TateAndLizaRematch
@@ -67,7 +66,9 @@ MossdeepCity_Gym_EventScript_GiveCalmMind::
 	return
 
 MossdeepCity_Gym_EventScript_TateAndLizaRematch::
+	trybestofthreerematch TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaPreRematch, MossdeepCity_Gym_Text_TateAndLizaRematchDefeat, MossdeepCity_Gym_EventScript_TateAndLizaRematchDefeated
 	trainerbattle_rematch_double TRAINER_TATE_AND_LIZA_1, MossdeepCity_Gym_Text_TateAndLizaPreRematch, MossdeepCity_Gym_Text_TateAndLizaRematchDefeat, MossdeepCity_Gym_Text_TateAndLizaRematchNeedTwoMons
+MossdeepCity_Gym_EventScript_TateAndLizaRematchDefeated::
 	setmemoryall MEMORY_TATE_LIZA_GYM
 	msgbox MossdeepCity_Gym_Text_TateAndLizaPostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -421,7 +422,7 @@ MossdeepCity_Gym_Text_NicholasPostBattle:
 	.string "All right! I think I'll develop a special\n"
 	.string "invincible Pokémon power next.$"
 
-MossdeepCity_Gym_Text_TateAndLizaIntro:
+MossdeepCity_Gym_Text_TateAndLizaIntro::
 	.string "Tate: Hehehe… Were you surprised?\p"
 	.string "Liza: Fufufu… Were you surprised?\p"
 	.string "Tate: That there are two Gym Leaders?\n"
@@ -435,15 +436,19 @@ MossdeepCity_Gym_Text_TateAndLizaIntro:
 	.string "Tate: This combination of ours…\n"
 	.string "Liza: Can you beat it?$"
 
-MossdeepCity_Gym_Text_TateAndLizaMatchDefeat::
-    .string "Tate: But…\p"
-    .string "Liza: How?$"
-
 MossdeepCity_Gym_Text_TateAndLizaContinue::
     .string "Tate: Ready to go again?\n"
     .string "Liza: Ready to go again?$"
 
-MossdeepCity_Gym_Text_TateAndLizaDefeat:
+MossdeepCity_Gym_Text_TateAndLizaBo3RoundWon::
+    .string "Tate: But…\p"
+    .string "Liza: How?$"
+
+MossdeepCity_Gym_Text_TateAndLizaBo3RoundLost::
+	.string "Tate: Caught you…\n"
+	.string "Liza: off guard?$"
+
+MossdeepCity_Gym_Text_TateAndLizaDefeat::
 	.string "Tate: What?! Our combination…\n"
 	.string "Liza: Was shattered!\p"
 	.string "Tate: It can't be helped. You've won…\n"
@@ -497,7 +502,7 @@ MossdeepCity_Gym_Text_GymStatueCertified:
 	.string "Liza AND Tate'S Certified Trainers:\n"
 	.string "{PLAYER}$"
 
-MossdeepCity_Gym_Text_TateAndLizaPreRematch:
+MossdeepCity_Gym_Text_TateAndLizaPreRematch::
 	.string "Tate: Pokémon…\n"
 	.string "Liza: Pokémon…\p"
 	.string "Tate: By changing the party's mix…\n"
@@ -509,7 +514,7 @@ MossdeepCity_Gym_Text_TateAndLizaPreRematch:
 	.string "Tate: Our combination…\n"
 	.string "Liza: We'll show you again and again!$"
 
-MossdeepCity_Gym_Text_TateAndLizaRematchDefeat:
+MossdeepCity_Gym_Text_TateAndLizaRematchDefeat::
 	.string "Tate: You and your Pokémon…\n"
 	.string "Liza: It's as if you were siblings!$"
 

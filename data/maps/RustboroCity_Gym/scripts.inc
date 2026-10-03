@@ -1,9 +1,8 @@
 RustboroCity_Gym_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, EventScript_OnTransition_ClearBestOfThreeVars
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
-	trybestofthree TRAINER_ROXANNE_1
+	trybestofthree TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
@@ -38,7 +37,9 @@ RustboroCity_Gym_EventScript_GiveRockTomb::
 	end
 
 RustboroCity_Gym_EventScript_RoxanneRematch::
+	trybestofthreerematch TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_EventScript_RoxanneRematchDefeated
 	trainerbattle_rematch_double TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons
+RustboroCity_Gym_EventScript_RoxanneRematchDefeated::
 	setmemoryall MEMORY_ROXANNE_GYM
 	msgbox RustboroCity_Gym_Text_RoxannePostRematch, MSGBOX_AUTOCLOSE
 	end
@@ -189,14 +190,17 @@ RustboroCity_Gym_Text_RoxanneIntro::
 	.string "Would you kindly demonstrate how you\n"
 	.string "battle, and with which Pokémon?$"
 
-RustboroCity_Gym_Text_RoxanneMatchDefeat::
-	.string "Great battling!\p"
+RustboroCity_Gym_Text_RoxanneContinue::
+	.string "Are you ready for our next round?\n"
+	.string "I'll win this one for sure.$"
+
+RustboroCity_Gym_Text_RoxanneBo3RoundWon::
+	.string "An excellent battle!\p"
 	.string "I may have lost, but I got the chance\n"
 	.string "to analyse your team futher.$"
 
-RustboroCity_Gym_Text_RoxanneContinue::
-	.string "Are you ready for our next round?\n"
-	.string "I'll win this one for sure!$"
+RustboroCity_Gym_Text_RoxanneBo3RoundLost::
+	.string "As expected…$"
 
 RustboroCity_Gym_Text_RoxanneDefeat::
 	.string "So…\n"
@@ -266,7 +270,7 @@ RustboroCity_Gym_Text_RegisteredRoxanne:
 	.string "Registered Gym Leader Roxanne\n"
 	.string "in the Pokénav.$"
 
-RustboroCity_Gym_Text_RoxannePreRematch:
+RustboroCity_Gym_Text_RoxannePreRematch::
 	.string "Roxanne: I'm so glad to see you again.\n"
 	.string "I'm Roxanne, the Gym Leader here.\p"
 	.string "I'm sure we've both experienced many\n"
@@ -274,7 +278,7 @@ RustboroCity_Gym_Text_RoxannePreRematch:
 	.string "I would like to see how much better\n"
 	.string "we've become. Let us battle!$"
 
-RustboroCity_Gym_Text_RoxanneRematchDefeat:
+RustboroCity_Gym_Text_RoxanneRematchDefeat::
 	.string "Grr…\n"
 	.string "Again, I have lost…$"
 

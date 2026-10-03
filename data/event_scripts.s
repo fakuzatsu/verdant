@@ -4,6 +4,7 @@
 #include "constants/global.h"
 #include "constants/apprentice.h"
 #include "constants/battle.h"
+#include "constants/best_of_three.h"
 #include "constants/battle_arena.h"
 #include "constants/battle_dome.h"
 #include "constants/battle_factory.h"
@@ -586,7 +587,6 @@ gStdScripts_End::
 	.include "data/scripts/hall_of_fame.inc"
 
 	.include "data/scripts/best_of_three.inc"
-	.include "data/scripts/draft.inc"
 	.include "data/scripts/config.inc"
 	.include "data/scripts/debug.inc"
 
