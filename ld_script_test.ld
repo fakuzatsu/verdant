@@ -49,6 +49,7 @@ SECTIONS {
         test/*.o(.bss);
         *libc.a:*.o(.bss*);
         *libgcc.a:*.o(.bss*);
+        *libma.a:*.o(.bss*);
         *libnosys.a:*.o(.bss*);
 
         src/m4a.o(.bss.code);
@@ -82,6 +83,7 @@ SECTIONS {
         src/rom_header_rhh.o(.text.*);
         src/*.o(.text);
         gflib/*.o(.text);
+        *libma.a:*.o(.text*);
     } > ROM =0
 
     script_data :
@@ -105,6 +107,7 @@ SECTIONS {
         src/*.o(.rodata*);
         gflib/*.o(.rodata*);
         data/*.o(.rodata*);
+        *libma.a:*.o(.rodata*);
     } > ROM =0
 
     song_data :

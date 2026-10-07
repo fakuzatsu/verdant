@@ -5169,6 +5169,18 @@ static bool8 IsEasyChatWordInvalid(u16 easyChatWord)
         return FALSE;
 }
 
+bool32 AreEasyChatWordsValid(const u16 *words, u32 count)
+{
+    u32 i;
+
+    for (i = 0; i < count; i++)
+    {
+        if (IsEasyChatWordInvalid(words[i]))
+            return FALSE;
+    }
+    return TRUE;
+}
+
 bool8 IsBardWordInvalid(u16 easyChatWord)
 {
     int numWordsInGroup;

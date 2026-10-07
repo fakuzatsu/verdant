@@ -8,10 +8,9 @@
 #include "new_game.h"
 #include "overworld.h"
 #include "malloc.h"
+#include "title_screen.h"
 
-// Reloads the game, continuing from the point of the last save
-// Used to gracefully exit after a link connection error
-void ReloadSave(void)
+static void ReloadSaveWithCallback(MainCallback callback)
 {
     u16 imeBackup = REG_IME;
     REG_IME = 0;
@@ -28,5 +27,17 @@ void ReloadSave(void)
         Sav2_ClearSetDefault();
     SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
     InitHeap(gHeap, HEAP_SIZE);
-    SetMainCallback2(CB2_ContinueSavedGame);
+    SetMainCallback2(callback);
+}
+
+// Reloads the game, continuing from the point of the last save
+// Used to gracefully exit after a link connection error
+void ReloadSave(void)
+{
+    ReloadSaveWithCallback(CB2_ContinueSavedGame);
+}
+
+void ReloadSaveToTitle(void)
+{
+    ReloadSaveWithCallback(CB2_InitTitleScreen);
 }

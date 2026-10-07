@@ -123,6 +123,18 @@ u16 StringLength(const u8 *str)
     return length;
 }
 
+bool32 IsStringTerminated(const u8 *str, u32 capacity)
+{
+    u32 i;
+
+    for (i = 0; i < capacity; i++)
+    {
+        if (str[i] == EOS)
+            return TRUE;
+    }
+    return FALSE;
+}
+
 s32 StringCompare(const u8 *str1, const u8 *str2)
 {
     while (*str1 == *str2)

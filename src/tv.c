@@ -45,6 +45,7 @@
 #include "constants/metatile_labels.h"
 #include "constants/moves.h"
 #include "constants/region_map_sections.h"
+#include "constants/species.h"
 
 #define LAST_TVSHOW_IDX (TV_SHOWS_COUNT - 1)
 
@@ -112,7 +113,7 @@ static void DeleteExcessMixedShows(void);
 static void DeactivateShowsWithUnseenSpecies(void);
 static void DeactivateGameCompleteShowsIfNotUnlocked(void);
 static s8 FindInactiveShowInArray(TVShow *);
-static bool8 TryMixTVShow(TVShow *[TV_SHOWS_COUNT], TVShow *[TV_SHOWS_COUNT], u8);
+static bool8 TryMixTVShow(TVShow **, TVShow **, u8);
 static bool8 TryMixNormalTVShow(TVShow *, TVShow *, u8);
 static bool8 TryMixRecordMixTVShow(TVShow *, TVShow *, u8);
 static bool8 TryMixOutbreakTVShow(TVShow *, TVShow *, u8);
@@ -3458,6 +3459,341 @@ void ReceiveTvShowsData(void *src, u32 size, u8 playersLinkId)
     }
 }
 
+#define TV_VALID_SPECIES(species) ((species) < NUM_SPECIES)
+#define TV_VALID_MOVE(move) ((move) < MOVES_COUNT)
+#define TV_VALID_ITEM(item) ((item) < ITEMS_COUNT)
+#define TV_VALID_STRING(string) IsStringTerminated((string), ARRAY_COUNT(string))
+#define TV_VALID_LANGUAGE(language) IsValidGameLanguage(language)
+
+bool32 ValidateInternetTvShows(const TVShow *shows)
+{
+    u32 i;
+
+    for (i = 0; i < TV_SHOWS_COUNT; i++)
+    {
+        const TVShow *show = &shows[i];
+
+        if (show->common.kind == TVSHOW_OFF_AIR)
+            continue;
+        if (show->common.active > TRUE)
+            return FALSE;
+
+        switch (show->common.kind)
+        {
+        case TVSHOW_FAN_CLUB_LETTER:
+            if (!TV_VALID_SPECIES(show->fanclubLetter.species)
+             || !AreEasyChatWordsValid(show->fanclubLetter.words, ARRAY_COUNT(show->fanclubLetter.words))
+             || !TV_VALID_STRING(show->fanclubLetter.playerName)
+             || !TV_VALID_LANGUAGE(show->fanclubLetter.language))
+                return FALSE;
+            break;
+        case TVSHOW_RECENT_HAPPENINGS:
+            if (!TV_VALID_SPECIES(show->recentHappenings.species)
+             || !AreEasyChatWordsValid(show->recentHappenings.words, ARRAY_COUNT(show->recentHappenings.words))
+             || !TV_VALID_STRING(show->recentHappenings.playerName)
+             || !TV_VALID_LANGUAGE(show->recentHappenings.language))
+                return FALSE;
+            break;
+        case TVSHOW_PKMN_FAN_CLUB_OPINIONS:
+            if (!TV_VALID_SPECIES(show->fanclubOpinions.species)
+             || !AreEasyChatWordsValid(show->fanclubOpinions.words, ARRAY_COUNT(show->fanclubOpinions.words))
+             || !AreEasyChatWordsValid(show->fanclubOpinions.words18, ARRAY_COUNT(show->fanclubOpinions.words18))
+             || !TV_VALID_STRING(show->fanclubOpinions.playerName)
+             || !TV_VALID_STRING(show->fanclubOpinions.nickname)
+             || !TV_VALID_LANGUAGE(show->fanclubOpinions.language)
+             || !TV_VALID_LANGUAGE(show->fanclubOpinions.pokemonNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_DUMMY:
+            if (!TV_VALID_SPECIES(show->dummy.species)
+             || !AreEasyChatWordsValid(show->dummy.words, ARRAY_COUNT(show->dummy.words))
+             || !TV_VALID_STRING(show->dummy.name)
+             || !TV_VALID_LANGUAGE(show->dummy.language))
+                return FALSE;
+            break;
+        case TVSHOW_NAME_RATER_SHOW:
+            if (!TV_VALID_SPECIES(show->nameRaterShow.species)
+             || !TV_VALID_SPECIES(show->nameRaterShow.randomSpecies)
+             || !TV_VALID_STRING(show->nameRaterShow.pokemonName)
+             || !TV_VALID_STRING(show->nameRaterShow.trainerName)
+             || !TV_VALID_LANGUAGE(show->nameRaterShow.language)
+             || !TV_VALID_LANGUAGE(show->nameRaterShow.pokemonNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE:
+            if (!TV_VALID_SPECIES(show->bravoTrainer.species)
+             || !TV_VALID_MOVE(show->bravoTrainer.move)
+             || show->bravoTrainer.contestCategory >= CONTEST_CATEGORIES_COUNT
+             || !AreEasyChatWordsValid(show->bravoTrainer.words, ARRAY_COUNT(show->bravoTrainer.words))
+             || !TV_VALID_STRING(show->bravoTrainer.pokemonNickname)
+             || !TV_VALID_STRING(show->bravoTrainer.playerName)
+             || !TV_VALID_LANGUAGE(show->bravoTrainer.language)
+             || !TV_VALID_LANGUAGE(show->bravoTrainer.pokemonNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE:
+            if (!TV_VALID_SPECIES(show->bravoTrainerTower.species)
+             || !TV_VALID_SPECIES(show->bravoTrainerTower.defeatedSpecies)
+             || !AreEasyChatWordsValid(show->bravoTrainerTower.words, ARRAY_COUNT(show->bravoTrainerTower.words))
+             || !TV_VALID_STRING(show->bravoTrainerTower.playerName)
+             || !TV_VALID_STRING(show->bravoTrainerTower.opponentName)
+             || !TV_VALID_LANGUAGE(show->bravoTrainerTower.playerLanguage)
+             || !TV_VALID_LANGUAGE(show->bravoTrainerTower.opponentLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_CONTEST_LIVE_UPDATES:
+            if (!TV_VALID_SPECIES(show->contestLiveUpdates.losingSpecies)
+             || !TV_VALID_SPECIES(show->contestLiveUpdates.winningSpecies)
+             || !TV_VALID_MOVE(show->contestLiveUpdates.move)
+             || show->contestLiveUpdates.category >= CONTEST_CATEGORIES_COUNT
+             || !TV_VALID_STRING(show->contestLiveUpdates.losingTrainerName)
+             || !TV_VALID_STRING(show->contestLiveUpdates.winningTrainerName)
+             || !TV_VALID_LANGUAGE(show->contestLiveUpdates.losingTrainerLanguage)
+             || !TV_VALID_LANGUAGE(show->contestLiveUpdates.winningTrainerLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_3_CHEERS_FOR_POKEBLOCKS:
+            if (!TV_VALID_STRING(show->threeCheers.worstBlenderName)
+             || !TV_VALID_STRING(show->threeCheers.playerName)
+             || !TV_VALID_LANGUAGE(show->threeCheers.language)
+             || !TV_VALID_LANGUAGE(show->threeCheers.worstBlenderLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_BATTLE_UPDATE:
+            if (!TV_VALID_SPECIES(show->battleUpdate.speciesOpponent)
+             || !TV_VALID_SPECIES(show->battleUpdate.speciesPlayer)
+             || !TV_VALID_MOVE(show->battleUpdate.move)
+             || show->battleUpdate.battleType > 2
+             || !TV_VALID_STRING(show->battleUpdate.playerName)
+             || !TV_VALID_STRING(show->battleUpdate.linkOpponentName)
+             || !TV_VALID_LANGUAGE(show->battleUpdate.language)
+             || !TV_VALID_LANGUAGE(show->battleUpdate.linkOpponentLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_FAN_CLUB_SPECIAL:
+            if (!AreEasyChatWordsValid(show->fanClubSpecial.words, ARRAY_COUNT(show->fanClubSpecial.words))
+             || !TV_VALID_STRING(show->fanClubSpecial.playerName)
+             || !TV_VALID_STRING(show->fanClubSpecial.idolName)
+             || !TV_VALID_LANGUAGE(show->fanClubSpecial.language)
+             || !TV_VALID_LANGUAGE(show->fanClubSpecial.idolNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_LILYCOVE_CONTEST_LADY:
+            if (show->contestLady.contestCategory >= CONTEST_CATEGORIES_COUNT
+             || !TV_VALID_STRING(show->contestLady.playerName)
+             || !TV_VALID_STRING(show->contestLady.nickname)
+             || !TV_VALID_LANGUAGE(show->contestLady.language)
+             || !TV_VALID_LANGUAGE(show->contestLady.pokemonNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_POKEMON_TODAY_CAUGHT:
+            if (!TV_VALID_SPECIES(show->pokemonToday.species)
+             || !TV_VALID_ITEM(show->pokemonToday.ball)
+             || !TV_VALID_STRING(show->pokemonToday.nickname)
+             || !TV_VALID_STRING(show->pokemonToday.playerName)
+             || !TV_VALID_LANGUAGE(show->pokemonToday.language)
+             || !TV_VALID_LANGUAGE(show->pokemonToday.language2))
+                return FALSE;
+            break;
+        case TVSHOW_SMART_SHOPPER:
+        {
+            u32 item;
+            for (item = 0; item < ARRAY_COUNT(show->smartshopperShow.itemIds); item++)
+            {
+                if (!TV_VALID_ITEM(show->smartshopperShow.itemIds[item]))
+                    return FALSE;
+            }
+            if (!TV_VALID_STRING(show->smartshopperShow.playerName)
+             || !TV_VALID_LANGUAGE(show->smartshopperShow.language))
+                return FALSE;
+            break;
+        }
+        case TVSHOW_POKEMON_TODAY_FAILED:
+            if (!TV_VALID_SPECIES(show->pokemonTodayFailed.species)
+             || !TV_VALID_SPECIES(show->pokemonTodayFailed.species2)
+             || !TV_VALID_STRING(show->pokemonTodayFailed.playerName)
+             || !TV_VALID_LANGUAGE(show->pokemonTodayFailed.language))
+                return FALSE;
+            break;
+        case TVSHOW_FISHING_ADVICE:
+            if (!TV_VALID_SPECIES(show->pokemonAngler.species)
+             || !TV_VALID_STRING(show->pokemonAngler.playerName)
+             || !TV_VALID_LANGUAGE(show->pokemonAngler.language))
+                return FALSE;
+            break;
+        case TVSHOW_WORLD_OF_MASTERS:
+            if (!TV_VALID_SPECIES(show->worldOfMasters.species)
+             || !TV_VALID_SPECIES(show->worldOfMasters.caughtPoke)
+             || !TV_VALID_STRING(show->worldOfMasters.playerName)
+             || !TV_VALID_LANGUAGE(show->worldOfMasters.language))
+                return FALSE;
+            break;
+        case TVSHOW_TODAYS_RIVAL_TRAINER:
+            if (!TV_VALID_STRING(show->rivalTrainer.playerName)
+             || !TV_VALID_LANGUAGE(show->rivalTrainer.language))
+                return FALSE;
+            break;
+        case TVSHOW_TREND_WATCHER:
+            if (!AreEasyChatWordsValid(show->trendWatcher.words, ARRAY_COUNT(show->trendWatcher.words))
+             || !TV_VALID_STRING(show->trendWatcher.playerName)
+             || !TV_VALID_LANGUAGE(show->trendWatcher.language))
+                return FALSE;
+            break;
+        case TVSHOW_TREASURE_INVESTIGATORS:
+            if (!TV_VALID_ITEM(show->treasureInvestigators.item)
+             || !TV_VALID_STRING(show->treasureInvestigators.playerName)
+             || !TV_VALID_LANGUAGE(show->treasureInvestigators.language))
+                return FALSE;
+            break;
+        case TVSHOW_FIND_THAT_GAMER:
+            if (!TV_VALID_STRING(show->findThatGamer.playerName)
+             || !TV_VALID_LANGUAGE(show->findThatGamer.language))
+                return FALSE;
+            break;
+        case TVSHOW_BREAKING_NEWS:
+            if (!TV_VALID_SPECIES(show->breakingNews.lastOpponentSpecies)
+             || !TV_VALID_SPECIES(show->breakingNews.poke1Species)
+             || !TV_VALID_MOVE(show->breakingNews.lastUsedMove)
+             || !TV_VALID_ITEM(show->breakingNews.caughtMonBall)
+             || !TV_VALID_STRING(show->breakingNews.playerName)
+             || !TV_VALID_LANGUAGE(show->breakingNews.language))
+                return FALSE;
+            break;
+        case TVSHOW_SECRET_BASE_VISIT:
+        {
+            u32 decoration;
+            for (decoration = 0; decoration < ARRAY_COUNT(show->secretBaseVisit.decorations); decoration++)
+            {
+                if (show->secretBaseVisit.decorations[decoration] > NUM_DECORATIONS)
+                    return FALSE;
+            }
+            if (!TV_VALID_SPECIES(show->secretBaseVisit.species)
+             || !TV_VALID_MOVE(show->secretBaseVisit.move)
+             || !TV_VALID_STRING(show->secretBaseVisit.playerName)
+             || !TV_VALID_LANGUAGE(show->secretBaseVisit.language))
+                return FALSE;
+            break;
+        }
+        case TVSHOW_LOTTO_WINNER:
+            if (!TV_VALID_ITEM(show->lottoWinner.item)
+             || !TV_VALID_STRING(show->lottoWinner.playerName)
+             || !TV_VALID_LANGUAGE(show->lottoWinner.language))
+                return FALSE;
+            break;
+        case TVSHOW_BATTLE_SEMINAR:
+        {
+            u32 move;
+            if (show->battleSeminar.nOtherMoves > ARRAY_COUNT(show->battleSeminar.otherMoves))
+                return FALSE;
+            for (move = 0; move < ARRAY_COUNT(show->battleSeminar.otherMoves); move++)
+            {
+                if (!TV_VALID_MOVE(show->battleSeminar.otherMoves[move]))
+                    return FALSE;
+            }
+            if (!TV_VALID_MOVE(show->battleSeminar.move)
+             || !TV_VALID_MOVE(show->battleSeminar.betterMove)
+             || !TV_VALID_SPECIES(show->battleSeminar.foeSpecies)
+             || !TV_VALID_SPECIES(show->battleSeminar.species)
+             || !TV_VALID_STRING(show->battleSeminar.playerName)
+             || !TV_VALID_LANGUAGE(show->battleSeminar.language))
+                return FALSE;
+            break;
+        }
+        case TVSHOW_TRAINER_FAN_CLUB:
+            if (!AreEasyChatWordsValid(show->trainerFanClub.words, ARRAY_COUNT(show->trainerFanClub.words))
+             || !TV_VALID_STRING(show->trainerFanClub.playerName)
+             || !TV_VALID_LANGUAGE(show->trainerFanClub.language))
+                return FALSE;
+            break;
+        case TVSHOW_CUTIES:
+            if (!TV_VALID_STRING(show->cuties.nickname)
+             || !TV_VALID_STRING(show->cuties.playerName)
+             || !TV_VALID_LANGUAGE(show->cuties.language)
+             || !TV_VALID_LANGUAGE(show->cuties.pokemonNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_FRONTIER:
+            if (!TV_VALID_SPECIES(show->frontier.species1)
+             || !TV_VALID_SPECIES(show->frontier.species2)
+             || !TV_VALID_SPECIES(show->frontier.species3)
+             || !TV_VALID_SPECIES(show->frontier.species4)
+             || show->frontier.facilityAndMode < 1
+             || show->frontier.facilityAndMode > 13
+             || !TV_VALID_STRING(show->frontier.playerName)
+             || !TV_VALID_LANGUAGE(show->frontier.language))
+                return FALSE;
+            break;
+        case TVSHOW_NUMBER_ONE:
+            if (show->numberOne.actionIdx >= 7
+             || !TV_VALID_STRING(show->numberOne.playerName)
+             || !TV_VALID_LANGUAGE(show->numberOne.language))
+                return FALSE;
+            break;
+        case TVSHOW_SECRET_BASE_SECRETS:
+            if (!TV_VALID_ITEM(show->secretBaseSecrets.item)
+             || !TV_VALID_STRING(show->secretBaseSecrets.baseOwnersName)
+             || !TV_VALID_STRING(show->secretBaseSecrets.playerName)
+             || !TV_VALID_LANGUAGE(show->secretBaseSecrets.language)
+             || !TV_VALID_LANGUAGE(show->secretBaseSecrets.baseOwnersNameLanguage))
+                return FALSE;
+            break;
+        case TVSHOW_SAFARI_FAN_CLUB:
+            if (!TV_VALID_STRING(show->safariFanClub.playerName)
+             || !TV_VALID_LANGUAGE(show->safariFanClub.language))
+                return FALSE;
+            break;
+        case TVSHOW_MASS_OUTBREAK:
+        {
+            u32 move;
+            for (move = 0; move < ARRAY_COUNT(show->massOutbreak.moves); move++)
+            {
+                if (!TV_VALID_MOVE(show->massOutbreak.moves[move]))
+                    return FALSE;
+            }
+            if (!TV_VALID_SPECIES(show->massOutbreak.species)
+             || show->massOutbreak.level > MAX_LEVEL
+             || !TV_VALID_LANGUAGE(show->massOutbreak.language))
+                return FALSE;
+            break;
+        }
+        default:
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+#undef TV_VALID_SPECIES
+#undef TV_VALID_MOVE
+#undef TV_VALID_ITEM
+#undef TV_VALID_STRING
+#undef TV_VALID_LANGUAGE
+
+void ReceiveTvShowsDataFromInternet(TVShow *shows)
+{
+    TVShow *dest = gSaveBlock1Ptr->tvShows;
+    TVShow *source = shows;
+
+    if (gLinkPlayers[0].language == LANGUAGE_JAPANESE)
+        TranslateJapaneseEmeraldShows(shows);
+
+    while ((sTVShowMixingCurSlot = FindInactiveShowInArray(shows)) != -1)
+    {
+        sCurTVShowSlot = FindFirstEmptyRecordMixTVShowSlot(gSaveBlock1Ptr->tvShows);
+        if (sCurTVShowSlot == -1)
+            break;
+
+        if (!TryMixTVShow(&dest, &source, 1))
+            DeleteTVShowInArrayByIdx(shows, sTVShowMixingCurSlot);
+    }
+
+    CompactTVShowArray(gSaveBlock1Ptr->tvShows);
+    DeleteExcessMixedShows();
+    CompactTVShowArray(gSaveBlock1Ptr->tvShows);
+    DeactivateShowsWithUnseenSpecies();
+    DeactivateGameCompleteShowsIfNotUnlocked();
+}
+
 static void SetMixedTVShows(TVShow player1[TV_SHOWS_COUNT], TVShow player2[TV_SHOWS_COUNT], TVShow player3[TV_SHOWS_COUNT], TVShow player4[TV_SHOWS_COUNT])
 {
     u8 i;
@@ -3499,7 +3835,7 @@ static void SetMixedTVShows(TVShow player1[TV_SHOWS_COUNT], TVShow player2[TV_SH
     }
 }
 
-static bool8 TryMixTVShow(TVShow *dest[TV_SHOWS_COUNT], TVShow *src[TV_SHOWS_COUNT], u8 idx)
+static bool8 TryMixTVShow(TVShow **dest, TVShow **src, u8 idx)
 {
     bool8 success;
     u8 type;
@@ -3770,15 +4106,20 @@ static void DeactivateGameCompleteShowsIfNotUnlocked(void)
     }
 }
 
-void DeactivateAllNormalTVShows(void)
+void DeactivateNormalTVShows(TVShow *shows)
 {
     u8 i;
 
     for (i = 0; i < NUM_NORMAL_TVSHOW_SLOTS; i++)
     {
-        if (GetTVGroupByShowId(gSaveBlock1Ptr->tvShows[i].common.kind) == TVGROUP_NORMAL)
-            gSaveBlock1Ptr->tvShows[i].common.active = FALSE;
+        if (GetTVGroupByShowId(shows[i].common.kind) == TVGROUP_NORMAL)
+            shows[i].common.active = FALSE;
     }
+}
+
+void DeactivateAllNormalTVShows(void)
+{
+    DeactivateNormalTVShows(gSaveBlock1Ptr->tvShows);
 }
 
 // Ensures a minimum of 5 empty record mixed show slots
@@ -3829,6 +4170,22 @@ void ReceivePokeNewsData(void *src, u32 size, u8 playersLinkId)
         ClearPokeNewsIfGameNotComplete();
         Free(rmBuffer2);
     }
+}
+
+void ReceivePokeNewsDataFromInternet(const PokeNews *src)
+{
+    u8 i;
+
+    for (i = 0; i < POKE_NEWS_COUNT; i++)
+    {
+        sCurTVShowSlot = GetFirstEmptyPokeNewsSlot(gSaveBlock1Ptr->pokeNews);
+        if (sCurTVShowSlot == -1)
+            break;
+        TryMixPokeNewsShow(gSaveBlock1Ptr->pokeNews, (PokeNews *)&src[i], sCurTVShowSlot);
+    }
+
+    ClearInvalidPokeNews();
+    ClearPokeNewsIfGameNotComplete();
 }
 
 static void SetMixedPokeNews(PokeNews player1[POKE_NEWS_COUNT], PokeNews player2[POKE_NEWS_COUNT], PokeNews player3[POKE_NEWS_COUNT], PokeNews player4[POKE_NEWS_COUNT])

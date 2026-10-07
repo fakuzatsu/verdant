@@ -72,7 +72,6 @@ struct SpeciesItem
     u16 item;
 };
 
-static u16 UNUSED CalculateBoxMonChecksum(struct BoxPokemon *boxMon);
 static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u8 substructType);
 static void UNUSED EncryptBoxMon(struct BoxPokemon *boxMon);
 static void UNUSED DecryptBoxMon(struct BoxPokemon *boxMon);
@@ -1694,7 +1693,7 @@ void CreateEnemyEventMon(void)
     }
 }
 
-static u16 UNUSED CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
+u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
 {
     u16 checksum = 0;
     union PokemonSubstruct *substruct0 = GetSubstruct(boxMon, 0);

@@ -781,7 +781,7 @@ u8 HandleSavingData(u8 saveType)
     return 0;
 }
 
-u8 TrySavingData(u8 saveType)
+static u8 TrySavingDataInternal(u8 saveType, bool32 showErrorScreen)
 {
     if (gFlashMemoryPresent != TRUE)
     {
@@ -797,10 +797,21 @@ u8 TrySavingData(u8 saveType)
     }
     else
     {
-        DoSaveFailedScreen(saveType);
+        if (showErrorScreen)
+            DoSaveFailedScreen(saveType);
         gSaveAttemptStatus = SAVE_STATUS_ERROR;
         return SAVE_STATUS_ERROR;
     }
+}
+
+u8 TrySavingData(u8 saveType)
+{
+    return TrySavingDataInternal(saveType, TRUE);
+}
+
+u8 TrySavingDataNoErrorScreen(u8 saveType)
+{
+    return TrySavingDataInternal(saveType, FALSE);
 }
 
 bool8 LinkFullSave_Init(void)

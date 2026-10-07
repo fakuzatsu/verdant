@@ -8,6 +8,10 @@
 #include "text.h"
 #include "window.h"
 
+bool32 IsValidGameLanguage(u8 language)
+{
+    return language >= LANGUAGE_JAPANESE && language <= LANGUAGE_SPANISH;
+}
 
 int GetStringCenterAlignXOffset(int fontId, const u8 *str, int totalWidth)
 {

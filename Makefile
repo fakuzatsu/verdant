@@ -39,6 +39,8 @@ GAME_CODE    := BPEE
 MAKER_CODE   := 01
 REVISION     := 0
 TEST         ?= 0
+MOBILE_TEST  ?= 0
+MOBILE_API_PORT ?= 18080
 ANALYZE      ?= 0
 UNUSED_ERROR ?= 0
 DEBUG        ?= 0
@@ -65,10 +67,15 @@ MAP = $(ROM:.gba=.map)
 SYM = $(ROM:.gba=.sym)
 
 TEST_OBJ_DIR_NAME := build/modern-test
+MOBILE_TEST_OBJ_DIR_NAME := build/modern-mobile-test
 DEBUG_OBJ_DIR_NAME := build/modern-debug
 
 TESTELF = $(ROM:.gba=-test.elf)
 HEADLESSELF = $(ROM:.gba=-test-headless.elf)
+MOBILE_TESTELF = $(ROM:.gba=-mobile-test.elf)
+MOBILE_HEADLESSELF = $(ROM:.gba=-mobile-test-headless.elf)
+MOBILE_TEST_RUNNER = test/run_mobile_adapter_integration.sh
+MOBILE_API_NODE_MODULES = pokemobile/node_modules/.package-lock.json
 
 C_SUBDIR = src
 GFLIB_SUBDIR = gflib
@@ -118,8 +125,17 @@ ifeq ($(TESTELF),$(MAKECMDGOALS))
   TEST := 1
 endif
 
+ifneq (,$(filter check-mobile $(MOBILE_TESTELF),$(MAKECMDGOALS)))
+  TEST := 1
+  MOBILE_TEST := 1
+endif
+
 ifeq ($(TEST),1)
 OBJ_DIR := $(TEST_OBJ_DIR_NAME)
+ifeq ($(MOBILE_TEST),1)
+OBJ_DIR := $(MOBILE_TEST_OBJ_DIR_NAME)
+LIB += -L../../libma -lma
+endif
 else
 LIB += -L../../libma -lma
 endif
@@ -128,7 +144,7 @@ OBJ_DIR := $(DEBUG_OBJ_DIR_NAME)
 endif
 
 
-CPPFLAGS := -iquote include -iquote $(GFLIB_SUBDIR) -Wno-trigraphs -DMODERN=1 -DTESTING=$(TEST)
+CPPFLAGS := -iquote include -iquote $(GFLIB_SUBDIR) -Wno-trigraphs -DMODERN=1 -DTESTING=$(TEST) -DMOBILE_TESTING=$(MOBILE_TEST)
 
 SHA1 := $(shell { command -v sha1sum || command -v shasum; } 2>/dev/null) -c
 SMOL := tools/compresSmol/compresSmol$(EXE)
@@ -144,12 +160,15 @@ JSONPROC := tools/jsonproc/jsonproc$(EXE)
 PATCHELF := tools/patchelf/patchelf$(EXE)
 ifeq ($(shell uname),Darwin)
 ROMTEST ?= $(shell command -v mgba-rom-test-mac 2>/dev/null || echo tools/mgba/mgba-rom-test-mac)
+MOBILE_ROMTEST ?= $(shell command -v mgba-mobile-rom-test-mac 2>/dev/null || echo tools/mgba/mgba-mobile-rom-test-mac)
 ROMTESTHYDRA := $(shell command -v mgba-rom-test-hydra 2>/dev/null || echo tools/mgba-rom-test-hydra/mgba-rom-test-hydra)
 else ifeq ($(shell uname),Linux)
 ROMTEST ?= $(shell command -v mgba-rom-test 2>/dev/null || echo tools/mgba/mgba-rom-test)
+MOBILE_ROMTEST ?= $(shell command -v mgba-mobile-rom-test 2>/dev/null || echo tools/mgba/mgba-mobile-rom-test)
 ROMTESTHYDRA := $(shell command -v mgba-rom-test-hydra 2>/dev/null || echo tools/mgba-rom-test-hydra/mgba-rom-test-hydra)
 else
 ROMTEST ?= tools/mgba/mgba-rom-test$(EXE)
+MOBILE_ROMTEST ?= tools/mgba/mgba-mobile-rom-test$(EXE)
 ROMTESTHYDRA := tools/mgba-rom-test-hydra/mgba-rom-test-hydra$(EXE)
 endif
 TRAINERPROC := tools/trainerproc/trainerproc$(EXE)
@@ -174,7 +193,7 @@ MAKEFLAGS += --no-print-directory
 # Secondary expansion is required for dependency variables in object rules.
 .SECONDEXPANSION:
 
-.PHONY: all rom clean compare tidy tools check-tools mostlyclean clean-tools clean-check-tools $(TOOLDIRS) $(CHECKTOOLDIRS) libagbsyscall agbcc libma modern tidymodern tidynonmodern check history debug
+.PHONY: all rom clean compare tidy tools check-tools mostlyclean clean-tools clean-check-tools $(TOOLDIRS) $(CHECKTOOLDIRS) libagbsyscall agbcc libma modern tidymodern tidynonmodern tidycheck tidymobilecheck check check-mobile history debug
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 
@@ -182,7 +201,7 @@ infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst 
 # Disable dependency scanning for clean/tidy/tools
 # Use a separate minimal makefile for speed
 # Since we don't need to reload most of this makefile
-ifeq (,$(filter-out all rom compare agbcc modern check libagbsyscall libma syms $(TESTELF) debug,$(MAKECMDGOALS)))
+ifeq (,$(filter-out all rom compare agbcc modern check check-mobile libagbsyscall libma syms $(TESTELF) $(MOBILE_TESTELF) debug,$(MAKECMDGOALS)))
 $(call infoshell, $(MAKE) -f make_tools.mk)
 else
 NODEP ?= 1
@@ -194,7 +213,7 @@ ifeq (,$(MAKECMDGOALS))
 else
   # clean, tidy, tools, check-tools, mostlyclean, clean-tools, clean-check-tools, $(TOOLDIRS), $(CHECKTOOLDIRS), tidymodern, tidynonmodern, tidycheck don't even build the ROM
   # libagbsyscall does its own thing
-  ifeq (,$(filter-out clean tidy tools mostlyclean clean-tools $(TOOLDIRS) clean-check-tools $(CHECKTOOLDIRS) tidymodern tidynonmodern tidycheck libagbsyscall libma,$(MAKECMDGOALS)))
+  ifeq (,$(filter-out clean tidy tools mostlyclean clean-tools $(TOOLDIRS) clean-check-tools $(CHECKTOOLDIRS) tidymodern tidynonmodern tidycheck tidymobilecheck libagbsyscall libma,$(MAKECMDGOALS)))
     SCAN_DEPS ?= 0
   else
     SCAN_DEPS ?= 1
@@ -206,7 +225,11 @@ C_SRCS_IN := $(wildcard $(C_SUBDIR)/*.c $(C_SUBDIR)/*/*.c $(C_SUBDIR)/*/*/*.c)
 C_SRCS := $(foreach src,$(C_SRCS_IN),$(if $(findstring .inc.c,$(src)),,$(src)))
 C_OBJS := $(patsubst $(C_SUBDIR)/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 
-TEST_SRCS_IN := $(wildcard $(TEST_SUBDIR)/*.c $(TEST_SUBDIR)/*/*.c $(TEST_SUBDIR)/*/*/*.c)
+ifeq ($(MOBILE_TEST),1)
+TEST_SRCS_IN := $(TEST_SUBDIR)/test_runner.c $(TEST_SUBDIR)/test_runner_args.c $(TEST_SUBDIR)/test_runner_battle.c $(TEST_SUBDIR)/mobile_adapter.c
+else
+TEST_SRCS_IN := $(filter-out $(TEST_SUBDIR)/mobile_adapter.c,$(wildcard $(TEST_SUBDIR)/*.c $(TEST_SUBDIR)/*/*.c $(TEST_SUBDIR)/*/*/*.c))
+endif
 TEST_SRCS := $(foreach src,$(TEST_SRCS_IN),$(if $(findstring .inc.c,$(src)),,$(src)))
 TEST_OBJS := $(patsubst $(TEST_SUBDIR)/%.c,$(TEST_BUILDDIR)/%.o,$(TEST_SRCS))
 TEST_OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(TEST_OBJS))
@@ -274,7 +297,7 @@ clean-tools:
 clean-check-tools:
 	@$(foreach tooldir,$(CHECKTOOLDIRS),$(MAKE) clean -C $(tooldir);)
 
-mostlyclean: tidynonmodern tidymodern tidycheck tidydebug
+mostlyclean: tidynonmodern tidymodern tidycheck tidymobilecheck tidydebug
 	find sound -iname '*.bin' -exec rm {} +
 	rm -f $(MID_SUBDIR)/*.s
 	find . \( -iname '*.1bpp' -o -iname '*.4bpp' -o -iname '*.8bpp' -o -iname '*.gbapal' -o -iname '*.lz' -o -iname '*.smol' -o -iname '*.fastSmol' -o -iname '*.rl' -o -iname '*.latfont' -o -iname '*.hwjpnfont' -o -iname '*.fwjpnfont' \) -exec rm {} +
@@ -285,7 +308,7 @@ mostlyclean: tidynonmodern tidymodern tidycheck tidydebug
 	@$(MAKE) clean -C libagbsyscall
 	@$(MAKE) clean -C libma
 
-tidy: tidymodern tidycheck tidydebug
+tidy: tidymodern tidycheck tidymobilecheck tidydebug
 
 tidymodern:
 	rm -f $(ROM_NAME) $(ELF_NAME) $(MAP_NAME)
@@ -294,6 +317,10 @@ tidymodern:
 tidycheck:
 	rm -f $(TESTELF) $(HEADLESSELF)
 	rm -rf $(TEST_OBJ_DIR_NAME)
+
+tidymobilecheck:
+	rm -f $(MOBILE_TESTELF) $(MOBILE_HEADLESSELF)
+	rm -rf $(MOBILE_TEST_OBJ_DIR_NAME)
 
 tidydebug:
 	rm -rf $(DEBUG_OBJ_DIR_NAME)
@@ -494,6 +521,13 @@ $(TESTELF): $(OBJ_DIR)/ld_script_test.ld $(OBJS) $(TEST_OBJS) libagbsyscall tool
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) -d0 --silent
 	$(PATCHELF) $(TESTELF) gTestRunnerArgv "$(TESTS)\0"
 
+$(MOBILE_TESTELF): MODERN := 1
+$(MOBILE_TESTELF): $(OBJ_DIR)/ld_script_test.ld $(OBJS) $(TEST_OBJS) libagbsyscall libma tools check-tools
+	@echo "cd $(OBJ_DIR) && $(LD) -T ld_script_test.ld -o ../../$@ <objects> <mobile-test-objects> <lib>"
+	@cd $(OBJ_DIR) && $(LD) $(TESTLDFLAGS) -T ld_script_test.ld -o ../../$@ $(OBJS_REL) $(TEST_OBJS_REL) $(LIB)
+	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) -d0 --silent
+	$(PATCHELF) $(MOBILE_TESTELF) gTestRunnerArgv "$(TESTS)\0"
+
 ifeq ($(GITHUB_REPOSITORY_OWNER),rh-hideout)
 TEST_SKIP_IS_FAIL := \x01
 else
@@ -504,6 +538,14 @@ check: $(TESTELF)
 	@cp $< $(HEADLESSELF)
 	$(PATCHELF) $(HEADLESSELF) gTestRunnerHeadless '\x01' gTestRunnerSkipIsFail "$(TEST_SKIP_IS_FAIL)"
 	$(ROMTESTHYDRA) $(ROMTEST) $(OBJCOPY) $(HEADLESSELF)
+
+$(MOBILE_API_NODE_MODULES): pokemobile/package.json
+	cd pokemobile && npm install --no-audit --no-fund
+
+check-mobile: $(MOBILE_TESTELF) $(MOBILE_TEST_RUNNER) $(MOBILE_API_NODE_MODULES)
+	@cp $< $(MOBILE_HEADLESSELF)
+	$(PATCHELF) $(MOBILE_HEADLESSELF) gTestRunnerHeadless '\x01' gTestRunnerSkipIsFail "$(TEST_SKIP_IS_FAIL)"
+	MOBILE_API_PORT="$(MOBILE_API_PORT)" $(MOBILE_TEST_RUNNER) $(ROMTESTHYDRA) $(MOBILE_ROMTEST) $(OBJCOPY) $(MOBILE_HEADLESSELF)
 
 libagbsyscall:
 	@$(MAKE) -C libagbsyscall TOOLCHAIN=$(TOOLCHAIN) MODERN=1

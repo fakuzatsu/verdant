@@ -25,6 +25,7 @@
 #include "menu.h"
 #include "text_window.h"
 #include "option_plus_menu.h"
+#include "record_mixing.h"
 #include "overworld.h"
 #include "walda_phrase.h"
 #include "main.h"
@@ -1741,6 +1742,7 @@ static void (*const sDrawTextEntryBoxFuncs[])(void) =
     [NAMING_SCREEN_NICKNAME]   = DrawMonTextEntryBox,
     [NAMING_SCREEN_WALDA]      = DrawNormalTextEntryBox,
     [NAMING_SCREEN_RNG_SEED]   = DrawNormalTextEntryBox,
+    [NAMING_SCREEN_RECORD_CODE] = DrawNormalTextEntryBox,
 };
 
 static void DrawTextEntryBox(void)
@@ -2154,6 +2156,17 @@ static const struct NamingScreenTemplate sRngSeedScreenTemplate =
     .title = gText_InputTheSeed,
 };
 
+static const struct NamingScreenTemplate sRecordCodeScreenTemplate =
+{
+    .copyExistingString = TRUE,
+    .maxChars = INTERNET_RECORD_CODE_LENGTH,
+    .iconFunction = 4,
+    .addGenderIcon = FALSE,
+    .initialPage = KBPAGE_LETTERS_UPPER,
+    .unused = 11,
+    .title = gText_RecordMixCode,
+};
+
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
 {
     [NAMING_SCREEN_PLAYER]     = &sPlayerNamingScreenTemplate,
@@ -2162,6 +2175,7 @@ static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
     [NAMING_SCREEN_NICKNAME]   = &sMonNamingScreenTemplate,
     [NAMING_SCREEN_WALDA]      = &sWaldaWordsScreenTemplate,
     [NAMING_SCREEN_RNG_SEED]   = &sRngSeedScreenTemplate,
+    [NAMING_SCREEN_RECORD_CODE] = &sRecordCodeScreenTemplate,
 };
 
 static const struct OamData sOam_8x8 =

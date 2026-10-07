@@ -21,6 +21,12 @@
 #define MA_CONDITION_LOST				(0x07)			// Terminal not Connected or Terminal Power Off
 #define MA_CONDITION_MASK				((u16)0xff00)
 
+enum MobileAdapterResult
+{
+	MA_RESULT_BUFFER_FULL = -1,
+	MA_RESULT_OK = 0,
+};
+
 //-----------------------------
 //	Adapter No.
 //-----------------------------

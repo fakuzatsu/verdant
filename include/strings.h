@@ -2785,6 +2785,21 @@ extern const u8 gText_MobileAdapterNotConnected[];
 extern const u8 gText_UnableToInitialiseMALib[];
 extern const u8 gText_UnableToConnectToServer[];
 extern const u8 gText_DisconnectedWhileDownloading[];
+extern const u8 gText_InternetGiftInvalid[];
+extern const u8 gText_InternetGiftNoSpace[];
+extern const u8 gText_InternetGiftItemReceived[];
+extern const u8 gText_InternetGiftPokemonReceived[];
+extern const u8 gText_InternetGiftPokemonSentToPC[];
+extern const u8 gText_RecordMix[];
+extern const u8 gText_RecordMixCode[];
+extern const u8 gText_DisconnectedWhileUploading[];
+extern const u8 gText_InternetRecordUploadInvalid[];
+extern const u8 gText_InternetRecordUploaded[];
+extern const u8 gText_InternetRecordInvalid[];
+extern const u8 gText_InternetRecordOutOfMemory[];
+extern const u8 gText_InternetRecordReceived[];
+extern const u8 gText_InternetOutOfMemory[];
+extern const u8 gText_InternetSaveFailedRollback[];
 
 // Switch into Party
 extern const u8 gText_CannotSendMonToBoxHM[];

@@ -2,7 +2,45 @@
 #define GUARD_MYSTERY_GIFT_H
 
 #include "main.h"
+#include "pokemon.h"
 #include "constants/mystery_gift.h"
+
+// Wire header: "PMGF", protocol version, gift type, little-endian payload size,
+// payload CRC16, and a reserved zero word.
+#define INTERNET_MYSTERY_GIFT_HEADER_SIZE 12
+#define INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE (INTERNET_MYSTERY_GIFT_HEADER_SIZE + sizeof(struct BoxPokemon))
+
+enum InternetMysteryGiftType
+{
+    INTERNET_MYSTERY_GIFT_NONE,
+    INTERNET_MYSTERY_GIFT_POKEMON,
+    INTERNET_MYSTERY_GIFT_ITEM,
+};
+
+enum InternetMysteryGiftResult
+{
+    INTERNET_MYSTERY_GIFT_INVALID_PACKET,
+    INTERNET_MYSTERY_GIFT_RECEIVED_ITEM,
+    INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY,
+    INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PC,
+    INTERNET_MYSTERY_GIFT_NO_SPACE,
+};
+
+struct InternetMysteryGiftItem
+{
+    u16 itemId;
+    u16 quantity;
+};
+
+struct InternetMysteryGift
+{
+    u8 type;
+    union
+    {
+        struct Pokemon pokemon;
+        struct InternetMysteryGiftItem item;
+    } data;
+};
 
 struct MysteryGiftLinkGameData
 {
@@ -53,5 +91,6 @@ u16 MysteryGift_GetCardStat(u32 stat);
 void MysteryGift_DisableStats(void);
 bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
 void MysteryGift_TryIncrementStat(u32 stat, u32 trainerId);
+enum InternetMysteryGiftResult ReceiveInternetMysteryGift(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift);
 
 #endif //GUARD_MYSTERY_GIFT_H

@@ -5,9 +5,9 @@
 #include "pokemon.h"
 #include "pokedex.h"
 
-// The MA Library has to be excluded from the test ROM which necessitates excluding any references to its functions
-// Unfortunately this means that we will also have to exclude references to the functions defined here...
-#if (!TESTING)
+// The MA Library is excluded from the standard test ROM, but included in the
+// dedicated Mobile Adapter test ROM.
+#if (!TESTING || MOBILE_TESTING)
 
 extern void MA_IntrSerialIO(void);
 extern void MA_IntrTimer(void);
@@ -70,19 +70,19 @@ int maGetEEPROMData(MA_TELDATA *maTel, char *maUserID, char *maMailID)
     int isError = 0;
 
     MA_GetTel(maTel);
-    if((isError = maWait() > 0)) 
+    if ((isError = maWait()) > 0)
     {
         return isError;
     }
 
     MA_GetUserID(maUserID);
-    if((isError = maWait() > 0)) 
+    if ((isError = maWait()) > 0)
     {
         return isError;
     }
 
     MA_GetMailID(maMailID);
-    if((isError = maWait() > 0)) 
+    if ((isError = maWait()) > 0)
     {
         return isError;
     }
@@ -108,7 +108,7 @@ int maDownload(const char *pURL, char *pHeadBuf, u16 headBufSize, u8 *pRecvData,
 //Upload data (and then also download data)
 int maUpload(const char *pURL, char *pHeadBuf, u16 headBufSize, const u8 *pSendData, u16 sendSize, u8 *pRecvData, u16 recvBufSize, u16 *pRecvSize, const char *pUserID, const char *pPassword)
 {
-    MA_HTTP_Post(pURL, pHeadBuf, headBufSize, pSendData, sendSize, pRecvData, 4, pRecvSize, pUserID, pPassword);
+    MA_HTTP_Post(pURL, pHeadBuf, headBufSize, pSendData, sendSize, pRecvData, recvBufSize, pRecvSize, pUserID, pPassword);
 
     return maWait();
 }
@@ -144,25 +144,28 @@ int maReceiveData(u8 *pRecvData, u8 *pRecvSize)
 //Waits until action has been completed, check if there's an error and supplies the error code if there is (Nearly all MA functions should use this as their return value, except for maKill and maEnd)
 int maWait(void)
 {
-    u8 maError= 0;
-    u16 maErrorProtocol= 0;
-    u16 maCondition= 0;
+    u8 maError = 0;
+    u16 maErrorProtocol = 0;
+    u16 maCondition;
 
-    do {
+    for (;;) {
         maCondition = MAAPI_GetConditionFlag();
 
-        if (maCondition & MA_CONDITION_BUFFER_FULL)
-	        return 0;
-
-        if(maCondition & MA_CONDITION_ERROR)
+        if (maCondition & MA_CONDITION_ERROR)
         {
-            maError=MAAPI_ErrorCheck(&maErrorProtocol);
-            break;
+            maError = MAAPI_ErrorCheck(&maErrorProtocol);
+            return (maError << 16) | maErrorProtocol;
         }
 
-    } while(maCondition & MA_CONDITION_APIWAIT);
+        // The HTTP operation is still pending. Callers handling fixed-size
+        // protocols must abort it rather than treating the partial buffer as a
+        // complete response.
+        if (maCondition & MA_CONDITION_BUFFER_FULL)
+            return MA_RESULT_BUFFER_FULL;
 
-    return (maError << 16) | maErrorProtocol;
+        if (!(maCondition & MA_CONDITION_APIWAIT))
+            return MA_RESULT_OK;
+    }
 }
 
 #endif

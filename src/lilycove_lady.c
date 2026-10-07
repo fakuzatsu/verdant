@@ -13,6 +13,7 @@
 #include "item_menu.h"
 #include "text.h"
 #include "easy_chat.h"
+#include "international_string_util.h"
 #include "lilycove_lady.h"
 #include "contest.h"
 #include "strings.h"
@@ -39,6 +40,41 @@ extern EWRAM_DATA u16 gSpecialVar_ItemId;
 u8 GetLilycoveLadyId(void)
 {
     return gSaveBlock1Ptr->lilycoveLady.id;
+}
+
+bool32 ValidateInternetLilycoveLady(const LilycoveLady *lilycoveLady)
+{
+    switch (lilycoveLady->id)
+    {
+    case LILYCOVE_LADY_QUIZ:
+        if (lilycoveLady->quiz.state > LILYCOVE_LADY_STATE_PRIZE
+         || lilycoveLady->quiz.waitingForChallenger > TRUE
+         || lilycoveLady->quiz.questionId >= ARRAY_COUNT(sQuizLadyQuizQuestions)
+         || lilycoveLady->quiz.prevQuestionId > ARRAY_COUNT(sQuizLadyQuizQuestions)
+         || lilycoveLady->quiz.prize >= ITEMS_COUNT
+         || !AreEasyChatWordsValid(&lilycoveLady->quiz.correctAnswer, 1)
+         || !AreEasyChatWordsValid(&lilycoveLady->quiz.playerAnswer, 1)
+         || !AreEasyChatWordsValid(lilycoveLady->quiz.question, ARRAY_COUNT(lilycoveLady->quiz.question))
+         || !IsStringTerminated(lilycoveLady->quiz.playerName, ARRAY_COUNT(lilycoveLady->quiz.playerName))
+         || !IsValidGameLanguage(lilycoveLady->quiz.language))
+            return FALSE;
+        return TRUE;
+    case LILYCOVE_LADY_FAVOR:
+        return lilycoveLady->favor.state <= LILYCOVE_LADY_STATE_PRIZE
+            && lilycoveLady->favor.likedItem <= TRUE
+            && lilycoveLady->favor.favorId < ARRAY_COUNT(sFavorLadyRequests)
+            && lilycoveLady->favor.itemId < ITEMS_COUNT
+            && lilycoveLady->favor.bestItem < ITEMS_COUNT
+            && IsStringTerminated(lilycoveLady->favor.playerName, ARRAY_COUNT(lilycoveLady->favor.playerName))
+            && IsValidGameLanguage(lilycoveLady->favor.language);
+    case LILYCOVE_LADY_CONTEST:
+        return lilycoveLady->contest.givenPokeblock <= TRUE
+            && lilycoveLady->contest.category < ARRAY_COUNT(sContestLadyValues)
+            && IsStringTerminated(lilycoveLady->contest.playerName, ARRAY_COUNT(lilycoveLady->contest.playerName))
+            && IsValidGameLanguage(lilycoveLady->contest.language);
+    default:
+        return FALSE;
+    }
 }
 
 void SetLilycoveLadyGfx(void)

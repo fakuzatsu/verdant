@@ -3,13 +3,28 @@
 #include "main.h"
 #include "event_data.h"
 #include "easy_chat.h"
+#include "item.h"
+#include "pokedex.h"
+#include "pokemon.h"
 #include "script.h"
 #include "battle_tower.h"
 #include "wonder_news.h"
 #include "string_util.h"
 #include "new_game.h"
 #include "mystery_gift.h"
+#include "constants/items.h"
+#include "constants/moves.h"
 #include "constants/mystery_gift.h"
+#include "constants/pokedex.h"
+#include "constants/pokemon.h"
+#include "constants/species.h"
+
+#define INTERNET_MYSTERY_GIFT_VERSION 1
+#define INTERNET_MYSTERY_GIFT_ITEM_PAYLOAD_SIZE 4
+
+static const u8 sInternetMysteryGiftMagic[] = {'P', 'M', 'G', 'F'};
+
+STATIC_ASSERT(sizeof(struct BoxPokemon) == 80, InternetMysteryGift_BoxPokemonSchemaMustBeUpdated);
 
 static EWRAM_DATA bool32 sStatsEnabled = FALSE;
 
@@ -25,6 +40,168 @@ static void ClearSavedWonderCardMetadata(void);
 static void ClearSavedTrainerIds(void);
 static void IncrementCardStatForNewTrainer(u32, u32, u32 *, int);
 #endif //FREE_MYSTERY_GIFT
+
+static u16 ReadInternetMysteryGiftU16(const u8 *data)
+{
+    return data[0] | (data[1] << 8);
+}
+
+static bool32 IsInternetGiftPokemonValid(struct BoxPokemon *boxMon)
+{
+    u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES);
+    u16 heldItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
+    u32 experience = GetBoxMonData(boxMon, MON_DATA_EXP);
+    u32 totalEvs = 0;
+    u32 i;
+
+    if (boxMon->isBadEgg || !boxMon->hasSpecies)
+        return FALSE;
+    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+        return FALSE;
+    if (heldItem >= ITEMS_COUNT
+     || (heldItem != ITEM_NONE && ItemId_GetPocket(heldItem) == POCKET_NONE))
+        return FALSE;
+    if (experience > gExperienceTables[gSpeciesInfo[species].growthRate][MAX_LEVEL])
+        return FALSE;
+    if (boxMon->checksum != CalculateBoxMonChecksum(boxMon))
+        return FALSE;
+    if (GetBoxMonData(boxMon, MON_DATA_TERA_TYPE) >= NUMBER_OF_MON_TYPES)
+        return FALSE;
+    if (GetBoxMonData(boxMon, MON_DATA_POKEBALL) < FIRST_BALL
+     || GetBoxMonData(boxMon, MON_DATA_POKEBALL) > LAST_BALL)
+        return FALSE;
+    if (GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM) >= NUM_ABILITY_SLOTS)
+        return FALSE;
+    if (GetBoxMonData(boxMon, MON_DATA_DYNAMAX_LEVEL) > MAX_DYNAMAX_LEVEL)
+        return FALSE;
+    if (GetBoxMonData(boxMon, MON_DATA_HIDDEN_NATURE) >= NUM_NATURES)
+        return FALSE;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetBoxMonData(boxMon, MON_DATA_MOVE1 + i) >= MOVES_COUNT)
+            return FALSE;
+    }
+
+    for (i = 0; i < NUM_STATS; i++)
+        totalEvs += GetBoxMonData(boxMon, MON_DATA_HP_EV + i);
+    if (totalEvs > MAX_TOTAL_EVS)
+        return FALSE;
+
+    return TRUE;
+}
+
+static bool32 DecodeInternetMysteryGiftPacket(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift)
+{
+    const u8 *payload;
+    u16 payloadSize;
+    u16 payloadCrc;
+
+    if (gift == NULL)
+        return FALSE;
+    memset(gift, 0, sizeof(*gift));
+
+    if (packet == NULL || packetSize < INTERNET_MYSTERY_GIFT_HEADER_SIZE)
+        return FALSE;
+    if (memcmp(packet, sInternetMysteryGiftMagic, sizeof(sInternetMysteryGiftMagic)) != 0)
+        return FALSE;
+    if (packet[4] != INTERNET_MYSTERY_GIFT_VERSION)
+        return FALSE;
+
+    payloadSize = ReadInternetMysteryGiftU16(&packet[6]);
+    payloadCrc = ReadInternetMysteryGiftU16(&packet[8]);
+    if (ReadInternetMysteryGiftU16(&packet[10]) != 0
+     || payloadSize != packetSize - INTERNET_MYSTERY_GIFT_HEADER_SIZE)
+        return FALSE;
+
+    payload = &packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE];
+    if (payloadCrc != CalcCRC16WithTable(payload, payloadSize))
+        return FALSE;
+    gift->type = packet[5];
+
+    switch (gift->type)
+    {
+    case INTERNET_MYSTERY_GIFT_POKEMON:
+        if (payloadSize != sizeof(struct BoxPokemon))
+            return FALSE;
+        memcpy(&gift->data.pokemon.box, payload, sizeof(struct BoxPokemon));
+        if (!IsInternetGiftPokemonValid(&gift->data.pokemon.box))
+            return FALSE;
+        if (gift->data.pokemon.box.isEgg != GetBoxMonData(&gift->data.pokemon.box, MON_DATA_IS_EGG))
+            return FALSE;
+        BoxMonToMon(&gift->data.pokemon.box, &gift->data.pokemon);
+        break;
+    case INTERNET_MYSTERY_GIFT_ITEM:
+        if (payloadSize != INTERNET_MYSTERY_GIFT_ITEM_PAYLOAD_SIZE)
+            return FALSE;
+        gift->data.item.itemId = ReadInternetMysteryGiftU16(payload);
+        gift->data.item.quantity = ReadInternetMysteryGiftU16(&payload[2]);
+        if (gift->data.item.itemId == ITEM_NONE
+         || gift->data.item.itemId >= ITEMS_COUNT
+         || ItemId_GetPocket(gift->data.item.itemId) == POCKET_NONE
+         || gift->data.item.quantity == 0
+         || gift->data.item.quantity > MAX_BAG_ITEM_CAPACITY)
+            return FALSE;
+        break;
+    default:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+static enum InternetMysteryGiftResult ApplyInternetMysteryGift(const struct InternetMysteryGift *gift)
+{
+    struct Pokemon pokemon;
+    u16 species;
+    u32 i;
+
+    switch (gift->type)
+    {
+    case INTERNET_MYSTERY_GIFT_ITEM:
+        if (!AddBagItem(gift->data.item.itemId, gift->data.item.quantity))
+            return INTERNET_MYSTERY_GIFT_NO_SPACE;
+        return INTERNET_MYSTERY_GIFT_RECEIVED_ITEM;
+    case INTERNET_MYSTERY_GIFT_POKEMON:
+        pokemon = gift->data.pokemon;
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+                break;
+        }
+
+        if (i < PARTY_SIZE)
+        {
+            CopyMon(&gPlayerParty[i], &pokemon, sizeof(struct Pokemon));
+            CalculatePlayerPartyCount();
+        }
+        else if (CopyMonToPC(&pokemon) == MON_CANT_GIVE)
+        {
+            return INTERNET_MYSTERY_GIFT_NO_SPACE;
+        }
+
+        species = GetMonData(&pokemon, MON_DATA_SPECIES_OR_EGG);
+        if (species != SPECIES_EGG)
+        {
+            species = GetMonData(&pokemon, MON_DATA_SPECIES);
+            GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_SEEN);
+            GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_CAUGHT);
+        }
+        return i < PARTY_SIZE
+             ? INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY
+             : INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PC;
+    default:
+        return INTERNET_MYSTERY_GIFT_INVALID_PACKET;
+    }
+}
+
+enum InternetMysteryGiftResult ReceiveInternetMysteryGift(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift)
+{
+    if (!DecodeInternetMysteryGiftPacket(packet, packetSize, gift))
+        return INTERNET_MYSTERY_GIFT_INVALID_PACKET;
+
+    return ApplyInternetMysteryGift(gift);
+}
 
 #define CALC_CRC(data) CalcCRC16WithTable((void *)&(data), sizeof(data))
 

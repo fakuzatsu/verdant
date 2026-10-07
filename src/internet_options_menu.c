@@ -5,6 +5,7 @@
 #include "data.h"
 #include "malloc.h"
 #include "gpu_regs.h"
+#include "graphics.h"
 #include "scanline_effect.h"
 #include "text_window.h"
 #include "bg.h"
@@ -44,6 +45,10 @@
 #include "trainer_pokemon_sprites.h"
 #include "trig.h"
 #include "mobile_adapter.h"
+#include "item.h"
+#include "naming_screen.h"
+#include "record_mixing.h"
+#include "reload_save.h"
 
 #define LIST_MENU_TILE_NUM 10
 #define LIST_MENU_PAL_NUM 224
@@ -59,12 +64,21 @@
 #define PING_RECIEVED       0x0001
 #define PING_NOT_RECIEVED   0x0000
 
+#define INTERNET_MYSTERY_GIFT_URL "http://127.0.0.1/Gift?gameidentifier=1VERDANT"
+#define INTERNET_RECORD_MIX_URL "http://127.0.0.1/Record?gameidentifier=1VERDANT"
+#define INTERNET_RECORD_MIX_DOWNLOAD_URL INTERNET_RECORD_MIX_URL "&code="
+#define INTERNET_RECORD_MIX_URL_LENGTH 96
+
 // States for Task_InternetOptions
 enum {
     INTERNET_STATE_TO_MAIN_MENU,
     INTERNET_STATE_MAIN_MENU,
     INTERNET_STATE_MA_CONNECTED,
     INTERNET_STATE_CONNECT_TO_SERVER,
+    INTERNET_STATE_DOWNLOAD_GIFT,
+    INTERNET_STATE_RECORD_MENU,
+    INTERNET_STATE_DOWNLOAD_RECORD,
+    INTERNET_STATE_UPLOAD_RECORD,
     INTERNET_STATE_PRINT_MESSAGE,
     INTERNET_STATE_GET_TOKEN,
     INTERNET_STATE_SHOW_FRIENDCODE,
@@ -77,34 +91,63 @@ enum {
     INTERNET_STATE_INITIAL_SETUP,
     INTERNET_STATE_WAIT,
     INTERNET_STATE_SAVE_GAME,
+    INTERNET_STATE_CONFIG_ERROR,
     INTERNET_STATE_EXIT,
+    INTERNET_STATE_ROLLBACK_EXIT,
     INTERNET_STATE_SOURCE_PROMPT,
     INTERNET_STATE_SOURCE_PROMPT_INPUT,
 };
 
+struct InternetOptionsTaskData;
+
 static void CB2_InternetOptions(void);
-static void CreateInternetOptionsTask(void);
+static bool32 CreateInternetOptionsTask(void);
 static void Task_InternetOptions(u8 taskId);
 static bool32 HandleInternetOptionsSetup(void);
-static bool32 SaveOnInternetOptionMenu(u8 *state);
-static u32 InternetOptions_HandleThreeOptionMenu(u8 whichMenu);
+static bool32 SaveOnInternetOptionMenu(u8 *state, s32 *saveResult);
+static u32 InternetOptions_HandleMenu(u8 whichMenu);
 static s8 DoInternetYesNo(u8 *textState, u16 *windowId, bool8 yesNoBoxPlacement, const u8 *str);
 static bool32 PrintInternetOptionsMenuMessage(u8 *textState, const u8 *str);
+#if (!TESTING || MOBILE_TESTING)
+static void MainCB_FreeAllBuffersAndShowMobileAdapterConfigError(void);
+static void CB2_MobileAdapterConfigErrorScreen(void);
+static void VBlankCB_MobileAdapterConfigError(void);
+static void PrintMobileAdapterConfigError(void);
+#endif
 
 static void PrintTopMenu(bool32 connecting);
 static void LoadTextboxBorder(u8 bgId);
 static void DrawCheckerboardBackground(u32 bg);
 static void AddTextPrinterToWindow1(const u8 *str);
 static void ClearTextWindow(void);
+#if (!TESTING || MOBILE_TESTING)
+static void CB2_ReturnFromInternetRecordCode(void);
+static void BeginInternetRecordCodeEntry(u8 taskId, struct InternetOptionsTaskData *data);
+static bool32 BuildInternetRecordMixUrl(char *url, const u8 *code);
+static void AbortInternetConnection(struct InternetOptionsTaskData *data);
+static void CloseInternetConnection(struct InternetOptionsTaskData *data);
+static void FreeInternetOptionsScreen(void);
+static void FreeInternetOptionsTask(u8 taskId, struct InternetOptionsTaskData *data);
+static void FreeInternetOperationBuffers(struct InternetOptionsTaskData *data);
+static bool32 AllocInternetResponseBuffer(struct InternetOptionsTaskData *data, u16 capacity);
+static bool32 AllocInternetGift(struct InternetOptionsTaskData *data);
+static void SetInternetMessageResult(struct InternetOptionsTaskData *data, const u8 *message);
+static void SetInternetSaveResult(struct InternetOptionsTaskData *data, const u8 *successMessage);
+static bool32 StartInternetDownload(struct InternetOptionsTaskData *data, const char *url, u16 capacity, const u8 *invalidMessage);
+static bool32 StartInternetRecordUpload(struct InternetOptionsTaskData *data);
+#endif
 
-static void StringConcat(char *dest, const char *src);
 static UNUSED char EncodeBase64(u32 checksum, char *data, size_t input_length);
 static UNUSED int EncryptData(u32 pid, char *data, int datasize);
 static UNUSED int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data, size_t databytes);
-static void GenerateFriendcodeFromPID(u32 pid, u8 *hexdigest);
+static UNUSED void GenerateFriendcodeFromPID(u32 pid, u8 *hexdigest);
 
 EWRAM_DATA static u8 sDownArrowCounterAndYCoordIdx[8] = {};
 EWRAM_DATA struct InternetOptionsPokedexView *sInternetOptionsPokedexView = NULL;
+EWRAM_DATA static u8 sInternetRecordCode[INTERNET_RECORD_CODE_LENGTH + 1] = {};
+EWRAM_DATA static char sInternetRecordUrl[INTERNET_RECORD_MIX_URL_LENGTH] = {};
+EWRAM_DATA static bool8 sInternetRecordCodePending = FALSE;
+EWRAM_DATA static bool8 sInternetRecordCodeInvalid = FALSE;
 
 static const u16 sTextboxBorder_Pal[] = INCBIN_U16("graphics/interface/mystery_gift_textbox_border.gbapal");
 static const u32 sTextboxBorder_Gfx[] = INCBIN_U32("graphics/interface/mystery_gift_textbox_border.4bpp.smol");
@@ -121,10 +164,16 @@ struct InternetOptionsTaskData
     u8 subState;
     u8 nextState;
     u8 textState;
-    u16 errorNum;
+    bool8 maInitialized;
+    bool8 pppConnected;
+    s32 errorNum;
     u8 *clientMsg;
     const u8 *message;
+    struct InternetMysteryGift *gift;
+    u16 recvSize;
 };
+
+STATIC_ASSERT(sizeof(struct InternetOptionsTaskData) <= sizeof(gTasks[0].data), InternetOptionsTaskDataTooLarge);
 
 struct MAClientDetails
 {
@@ -230,6 +279,48 @@ static const struct WindowTemplate sMainWindows[] = {
     DUMMY_WIN_TEMPLATE
 };
 
+#if (!TESTING || MOBILE_TESTING)
+static const struct BgTemplate sMobileAdapterConfigErrorBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sMobileAdapterConfigErrorWindowTemplates[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 2,
+        .width = 24,
+        .height = 16,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const u8 sText_MobileAdapterConfigError[] = _(
+    "{COLOR RED}ERROR! {COLOR DARK_GRAY}Adapter config missing!\n"
+    "\n"
+    "To use online features, load the\n"
+    "Mobile Adapter config file bundled\n"
+    "with this patch into your emulator.\n"
+    "\n"
+    "Keep the adapter window open, then\n"
+    "try connecting again.\n"
+    "Press A or B to return.");
+
+static const u16 sMobileAdapterConfigErrorBackgroundColor = RGB(17, 18, 31);
+#endif
+
 static const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide = 
 {
     .bg = 0,
@@ -263,17 +354,6 @@ static const struct WindowTemplate sWindowTemplate_ThreeOptions =
     .baseBlock = 0x0155
 };
 
-static const struct WindowTemplate sWindowTemplate_FiveOptions = 
-{
-    .bg = 0,
-    .tilemapLeft = 8,
-    .tilemapTop = 6,
-    .width = 14,
-    .height = 10,
-    .paletteNum = 12,
-    .baseBlock = 0x0155
-};
-
 static const struct WindowTemplate sWindowTemplate_YesNoBox = 
 {
     .bg = 0,
@@ -285,27 +365,18 @@ static const struct WindowTemplate sWindowTemplate_YesNoBox =
     .baseBlock = 0x0155
 };
 
-static const struct ListMenuItem sListMenuItems_SearchDeposit[] = 
+static const struct ListMenuItem sListMenuItems_InternetOptions[] =
 {
-    { gText_SearchPokemon,      0 },
-    { gText_DepositPokemon,     1 },
+    { gText_MysteryGift,        0 },
+    { gText_RecordMix,          1 },
     { gText_Exit3,    LIST_CANCEL },
 };
 
-static const struct ListMenuItem sListMenuItems_SearchWithdraw[] = 
+static const struct ListMenuItem sListMenuItems_RecordMix[] =
 {
-    { gText_SearchPokemon,      0 },
-    { gText_WithdrawPokemon,    1 },
-    { gText_Exit3,    LIST_CANCEL },
-};
-
-static const struct ListMenuItem sListMenuItems_InternetOptions[] = 
-{
-    { gText_GiftDownload,       0 },
-    { gText_Bank,               1 },
-    { gText_Friends,            2 },
-    { gText_Sync,               3 },
-    { gText_Exit3,    LIST_CANCEL },
+    { gText_Send,               0 },
+    { gText_Receive,            1 },
+    { gText_Cancel,   LIST_CANCEL },
 };
 
 static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions = 
@@ -315,28 +386,6 @@ static const struct ListMenuTemplate sListMenuTemplate_ThreeOptions =
     .itemPrintFunc = NULL,
     .totalItems = 3,
     .maxShowed = 3,
-    .windowId = 0,
-    .header_X = 0,
-    .item_X = 8,
-    .cursor_X = 0,
-    .upText_Y = 1,
-    .cursorPal = 2,
-    .fillValue = 1,
-    .cursorShadowPal = 3,
-    .lettersSpacing = 0,
-    .itemVerticalPadding = 0,
-    .scrollMultiple = 0,
-    .fontId = FONT_NORMAL,
-    .cursorKind = 0
-};
-
-static const struct ListMenuTemplate sListMenuTemplate_FiveOptions = 
-{
-    .items = NULL,
-    .moveCursorFunc = ListMenuDefaultCursorMoveFunc,
-    .itemPrintFunc = NULL,
-    .totalItems = 5,
-    .maxShowed = 5,
     .windowId = 0,
     .header_X = 0,
     .item_X = 8,
@@ -363,7 +412,8 @@ void CB2_InitInternetOptions(void)
     {
         FadeInNewBGM(MUS_RG_MYSTERY_GIFT,4);
         SetMainCallback2(CB2_InternetOptions);
-        CreateInternetOptionsTask();
+        if (!CreateInternetOptionsTask())
+            SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
     }
     RunTasks();
 }
@@ -389,6 +439,10 @@ static bool32 HandleInternetOptionsSetup(void)
     switch (gMain.state)
     {
     case 0:
+    {
+        void *tilemapBuffers[4];
+        u32 i;
+
         SetVBlankCallback(NULL);
         ResetSpriteData();
         FreeAllSpritePalettes();
@@ -406,13 +460,34 @@ static bool32 HandleInternetOptionsSetup(void)
         ChangeBgX(3, 0, BG_COORD_SET);
         ChangeBgY(3, 0, BG_COORD_SET);
 
-        SetBgTilemapBuffer(3, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(2, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(1, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(0, Alloc(BG_SCREEN_SIZE));
+        for (i = 0; i < ARRAY_COUNT(tilemapBuffers); i++)
+        {
+            tilemapBuffers[i] = Alloc(BG_SCREEN_SIZE);
+            if (tilemapBuffers[i] == NULL)
+            {
+                while (i != 0)
+                    Free(tilemapBuffers[--i]);
+                gMain.state = 0;
+                SetMainCallback2(CB2_InitTitleScreen);
+                return FALSE;
+            }
+        }
+        for (i = 0; i < ARRAY_COUNT(tilemapBuffers); i++)
+            SetBgTilemapBuffer(i, tilemapBuffers[i]);
 
         LoadTextboxBorder(3);
-        InitWindows(sMainWindows);
+        if (!InitWindows(sMainWindows))
+        {
+            FreeAllWindowBuffers();
+            for (i = 0; i < ARRAY_COUNT(tilemapBuffers); i++)
+            {
+                Free(tilemapBuffers[i]);
+                SetBgTilemapBuffer(i, NULL);
+            }
+            gMain.state = 0;
+            SetMainCallback2(CB2_InitTitleScreen);
+            return FALSE;
+        }
         DeactivateAllTextPrinters();
         ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON);
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
@@ -420,6 +495,7 @@ static bool32 HandleInternetOptionsSetup(void)
         SetGpuReg(REG_OFFSET_BLDY, 0);
         gMain.state++;
         break;
+    }
     case 1:
         LoadPalette(sTextboxBorder_Pal, 0, 0x20);
         LoadPalette(GetTextWindowPalette(2), 0xd0, 0x20);
@@ -452,10 +528,16 @@ static bool32 HandleInternetOptionsSetup(void)
     return FALSE;
 }
 
-static void CreateInternetOptionsTask(void)
+static bool32 CreateInternetOptionsTask(void)
 {
-    u8 taskId = CreateTask(Task_InternetOptions, 0);
-    struct InternetOptionsTaskData * data = (void *)gTasks[taskId].data;
+    u8 taskId;
+    struct InternetOptionsTaskData *data;
+
+    if (GetTaskCount() >= NUM_TASKS)
+        return FALSE;
+
+    taskId = CreateTask(Task_InternetOptions, 0);
+    data = (void *)gTasks[taskId].data;
 
     data->clientDetails = AllocZeroed(sizeof(struct MAClientDetails));
     // data->userProfile   = AllocZeroed(sizeof(struct InternetProfile));
@@ -463,27 +545,349 @@ static void CreateInternetOptionsTask(void)
     data->subState      = 0;
     data->nextState     = 0;
     data->errorNum      = 0;
-    data->clientMsg     = AllocZeroed(CLIENT_MAX_MSG_SIZE);
+    data->maInitialized = FALSE;
+    data->pppConnected  = FALSE;
+    data->clientMsg     = NULL;
     data->message       = gText_UnableToInitialiseMALib;
+    data->gift          = NULL;
+    data->recvSize      = 0;
+
+    if (data->clientDetails == NULL)
+    {
+        data->message = gText_InternetOutOfMemory;
+        data->nextState = INTERNET_STATE_EXIT;
+        data->state = INTERNET_STATE_PRINT_MESSAGE;
+    }
+
+    return TRUE;
 }
 
-#if (!TESTING)
+#if (!TESTING || MOBILE_TESTING)
+static void FreeInternetOperationBuffers(struct InternetOptionsTaskData *data)
+{
+    TRY_FREE_AND_SET_NULL(data->clientMsg);
+    TRY_FREE_AND_SET_NULL(data->gift);
+}
+
+static bool32 AllocInternetResponseBuffer(struct InternetOptionsTaskData *data, u16 capacity)
+{
+    TRY_FREE_AND_SET_NULL(data->clientMsg);
+    data->clientMsg = AllocZeroed(capacity);
+    return data->clientMsg != NULL;
+}
+
+static bool32 AllocInternetGift(struct InternetOptionsTaskData *data)
+{
+    TRY_FREE_AND_SET_NULL(data->gift);
+    data->gift = AllocZeroed(sizeof(*data->gift));
+    return data->gift != NULL;
+}
+
 static inline void TerminateIfError(struct InternetOptionsTaskData *data, const u8 *errorMessage)
 {
     if (data->errorNum != 0)
     {
+        DebugPrintf("Mobile Adapter error: %d", data->errorNum);
         maKill();
+        data->maInitialized = FALSE;
+        data->pppConnected = FALSE;
+        FreeInternetOperationBuffers(data);
         data->message = errorMessage;
         data->nextState = INTERNET_STATE_EXIT;
         data->state = INTERNET_STATE_PRINT_MESSAGE;
     }
+}
+
+static void AbortInternetConnection(struct InternetOptionsTaskData *data)
+{
+    maKill();
+    data->maInitialized = FALSE;
+    data->pppConnected = FALSE;
+}
+
+static void CloseInternetConnection(struct InternetOptionsTaskData *data)
+{
+    if (data->pppConnected)
+    {
+        if (maDisconnect() != MA_RESULT_OK)
+        {
+            maKill();
+            data->pppConnected = FALSE;
+            data->maInitialized = FALSE;
+            return;
+        }
+        data->pppConnected = FALSE;
+    }
+
+    if (data->maInitialized)
+    {
+        maEnd();
+        data->maInitialized = FALSE;
+    }
+}
+
+static void FreeInternetOptionsScreen(void)
+{
+    u32 i;
+
+    SetVBlankCallback(NULL);
+    FreeAllWindowBuffers();
+    for (i = 0; i < 4; i++)
+        Free(GetBgTilemapBuffer(i));
+}
+
+static void FreeInternetOptionsTask(u8 taskId, struct InternetOptionsTaskData *data)
+{
+    CloseLink();
+    Free(data->clientDetails);
+    FreeInternetOperationBuffers(data);
+    DestroyTask(taskId);
+}
+
+static void SetInternetMessageResult(struct InternetOptionsTaskData *data, const u8 *message)
+{
+    CloseInternetConnection(data);
+    FreeInternetOperationBuffers(data);
+    data->message = message;
+    data->subState = 0;
+    data->nextState = INTERNET_STATE_TO_MAIN_MENU;
+    data->state = INTERNET_STATE_PRINT_MESSAGE;
+}
+
+static void SetInternetSaveResult(struct InternetOptionsTaskData *data, const u8 *successMessage)
+{
+    CloseInternetConnection(data);
+    FreeInternetOperationBuffers(data);
+    if (TrySavingDataNoErrorScreen(SAVE_NORMAL) == SAVE_STATUS_OK)
+    {
+        data->message = successMessage;
+        data->nextState = INTERNET_STATE_TO_MAIN_MENU;
+    }
+    else
+    {
+        data->message = gText_InternetSaveFailedRollback;
+        data->nextState = INTERNET_STATE_ROLLBACK_EXIT;
+    }
+    data->subState = 0;
+    data->state = INTERNET_STATE_PRINT_MESSAGE;
+}
+
+static bool32 StartInternetDownload(struct InternetOptionsTaskData *data, const char *url, u16 capacity, const u8 *invalidMessage)
+{
+    if (!AllocInternetResponseBuffer(data, capacity))
+    {
+        SetInternetMessageResult(data, gText_InternetOutOfMemory);
+        return FALSE;
+    }
+
+    ClearTextWindow();
+    AddTextPrinterToWindow1(gText_Communicating);
+    data->recvSize = 0;
+    data->errorNum = maDownload(url, NULL, 0, data->clientMsg, capacity, &data->recvSize, "", "");
+    if (data->errorNum == MA_RESULT_BUFFER_FULL)
+    {
+        AbortInternetConnection(data);
+        SetInternetMessageResult(data, invalidMessage);
+        return FALSE;
+    }
+    if (data->errorNum != MA_RESULT_OK)
+    {
+        TerminateIfError(data, gText_DisconnectedWhileDownloading);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 StartInternetRecordUpload(struct InternetOptionsTaskData *data)
+{
+    u8 *packet;
+    u16 packetSize;
+
+    if (!AllocInternetResponseBuffer(data, INTERNET_RECORD_CODE_LENGTH + 1))
+    {
+        SetInternetMessageResult(data, gText_InternetOutOfMemory);
+        return FALSE;
+    }
+
+    packet = Alloc(INTERNET_RECORD_MIX_MAX_PACKET_SIZE);
+    if (packet == NULL)
+    {
+        SetInternetMessageResult(data, gText_InternetOutOfMemory);
+        return FALSE;
+    }
+
+    packetSize = BuildInternetRecordMixPacket(packet, INTERNET_RECORD_MIX_MAX_PACKET_SIZE);
+    ClearTextWindow();
+    AddTextPrinterToWindow1(gText_Communicating);
+    data->recvSize = 0;
+    data->errorNum = maUpload(INTERNET_RECORD_MIX_URL, NULL, 0, packet, packetSize,
+                              data->clientMsg, INTERNET_RECORD_CODE_LENGTH + 1,
+                              &data->recvSize, "", "");
+    Free(packet);
+
+    if (data->errorNum == MA_RESULT_BUFFER_FULL)
+    {
+        AbortInternetConnection(data);
+        SetInternetMessageResult(data, gText_InternetRecordUploadInvalid);
+        return FALSE;
+    }
+    if (data->errorNum != MA_RESULT_OK)
+    {
+        TerminateIfError(data, gText_DisconnectedWhileUploading);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 IsMobileAdapterConfigError(u32 error)
+{
+    u8 apiError = error >> 16;
+
+    return apiError == MAAPIE_REGISTRATION || apiError == MAAPIE_EEPROM_SUM;
+}
+
+static void MainCB_FreeAllBuffersAndShowMobileAdapterConfigError(void)
+{
+    FreeInternetOptionsScreen();
+    gMain.state = 0;
+    SetMainCallback2(CB2_MobileAdapterConfigErrorScreen);
+}
+
+static void VBlankCB_MobileAdapterConfigError(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+}
+
+static void PrintMobileAdapterConfigError(void)
+{
+    static const u8 colors[] =
+    {
+        TEXT_COLOR_TRANSPARENT,
+        TEXT_DYNAMIC_COLOR_6,
+        TEXT_COLOR_LIGHT_GRAY,
+    };
+
+    AddTextPrinterParameterized4(0, FONT_NORMAL, 8, 1, 0, 0, colors, 0, sText_MobileAdapterConfigError);
+}
+
+static void CB2_MobileAdapterConfigErrorScreen(void)
+{
+    switch (gMain.state)
+    {
+    case 0:
+        SetVBlankCallback(NULL);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BG0CNT, 0);
+        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        DmaFill16(3, 0, VRAM, VRAM_SIZE);
+        DmaFill32(3, 0, OAM, OAM_SIZE);
+        DmaFill16(3, 0, PLTT, PLTT_SIZE);
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sMobileAdapterConfigErrorBgTemplates, ARRAY_COUNT(sMobileAdapterConfigErrorBgTemplates));
+        LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
+        DeactivateAllTextPrinters();
+        ResetSpriteData();
+        ResetTasks();
+        ResetPaletteFade();
+        LoadPalette(&sMobileAdapterConfigErrorBackgroundColor, BG_PLTT_ID(0), PLTT_SIZEOF(1));
+        LoadPalette(gTextWindowFrame1_Pal, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+        LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        if (!InitWindows(sMobileAdapterConfigErrorWindowTemplates))
+        {
+            FreeAllWindowBuffers();
+            gMain.state = 0;
+            SetMainCallback2(CB2_InitTitleScreen);
+            return;
+        }
+        DrawStdFrameWithCustomTileAndPalette(0, TRUE, 0x214, 0xE);
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        PrintMobileAdapterConfigError();
+        CopyWindowToVram(0, COPYWIN_FULL);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        SetVBlankCallback(VBlankCB_MobileAdapterConfigError);
+        ShowBg(0);
+        gMain.state++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade() && JOY_NEW(A_BUTTON | B_BUTTON))
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gMain.state++;
+        }
+        break;
+    case 2:
+        if (!UpdatePaletteFade())
+        {
+            SetVBlankCallback(NULL);
+            FreeAllWindowBuffers();
+            gMain.state = 0;
+            SetMainCallback2(CB2_InitTitleScreen);
+        }
+        break;
+    }
+}
+#endif
+
+#if (!TESTING || MOBILE_TESTING)
+static void BeginInternetRecordCodeEntry(u8 taskId, struct InternetOptionsTaskData *data)
+{
+    CloseInternetConnection(data);
+    FreeInternetOptionsTask(taskId, data);
+
+    FreeInternetOptionsScreen();
+
+    sInternetRecordCode[0] = EOS;
+    sInternetRecordCodePending = FALSE;
+    sInternetRecordCodeInvalid = FALSE;
+    gMain.state = 0;
+    DoNamingScreen(NAMING_SCREEN_RECORD_CODE, sInternetRecordCode, 0, 0, 0, CB2_ReturnFromInternetRecordCode);
+}
+
+static void CB2_ReturnFromInternetRecordCode(void)
+{
+    sInternetRecordCodePending = BuildInternetRecordMixUrl(sInternetRecordUrl, sInternetRecordCode);
+    sInternetRecordCodeInvalid = !sInternetRecordCodePending && sInternetRecordCode[0] != EOS;
+    gMain.state = 0;
+    SetMainCallback2(CB2_InitInternetOptions);
+}
+
+static bool32 BuildInternetRecordMixUrl(char *url, const u8 *code)
+{
+    const char *prefix = INTERNET_RECORD_MIX_DOWNLOAD_URL;
+    char *dest = url;
+    u32 length = 0;
+
+    while (*prefix != '\0')
+        *dest++ = *prefix++;
+
+    while (*code != EOS && length < INTERNET_RECORD_CODE_LENGTH)
+    {
+        if (*code >= CHAR_A && *code <= CHAR_Z)
+            *dest++ = 'A' + (*code - CHAR_A);
+        else if (*code >= CHAR_a && *code <= CHAR_z)
+            *dest++ = 'A' + (*code - CHAR_a);
+        else if (*code >= CHAR_0 && *code <= CHAR_9)
+            *dest++ = '0' + (*code - CHAR_0);
+        else
+            return FALSE;
+
+        code++;
+        length++;
+    }
+
+    *dest = '\0';
+    return length != 0 && *code == EOS;
 }
 #endif
 
 // Main Task Machine for Internet Options
 static void Task_InternetOptions(u8 taskId)
 {
-#if (!TESTING)
+#if (!TESTING || MOBILE_TESTING)
     struct InternetOptionsTaskData *data  = (void *)gTasks[taskId].data;
     struct MAClientDetails *clientDetails = data->clientDetails;
     // struct InternetProfile *userProfile   = data->userProfile;
@@ -495,18 +899,36 @@ static void Task_InternetOptions(u8 taskId)
     switch (data->state)
     {
     case INTERNET_STATE_TO_MAIN_MENU:
+        ClearTextWindow();
+        PrintTopMenu(TRUE);
         data->state = INTERNET_STATE_MAIN_MENU;
         break;
     case INTERNET_STATE_MA_CONNECTED:
         if (!gPaletteFade.active)
         {
-            if (maConnected())
-                data->state = INTERNET_STATE_CONNECT_TO_SERVER;
-            else
+            if (!maConnected())
             {
-                data->message =  gText_MobileAdapterNotConnected;
+                data->message = gText_MobileAdapterNotConnected;
                 data->nextState = INTERNET_STATE_EXIT;
                 data->state = INTERNET_STATE_PRINT_MESSAGE;
+            }
+            else if (sInternetRecordCodeInvalid)
+            {
+                sInternetRecordCodeInvalid = FALSE;
+                data->message = gText_InternetRecordInvalid;
+                data->nextState = INTERNET_STATE_TO_MAIN_MENU;
+                data->state = INTERNET_STATE_PRINT_MESSAGE;
+            }
+            else if (sInternetRecordCodePending)
+            {
+                sInternetRecordCodePending = FALSE;
+                data->nextState = INTERNET_STATE_DOWNLOAD_RECORD;
+                data->state = INTERNET_STATE_CONNECT_TO_SERVER;
+            }
+            else
+            {
+                PrintTopMenu(TRUE);
+                data->state = INTERNET_STATE_MAIN_MENU;
             }
         }
         break;
@@ -517,6 +939,8 @@ static void Task_InternetOptions(u8 taskId)
             // Initialise MA Library
             DebugPrintf("Initialising MA Library");
             data->errorNum = maInitLibrary();
+            if (data->errorNum == 0)
+                data->maInitialized = TRUE;
             TerminateIfError(data, gText_UnableToInitialiseMALib);
             data->subState++;
             break;
@@ -524,8 +948,18 @@ static void Task_InternetOptions(u8 taskId)
             //Get EEPROM Data
             DebugPrintf("Getting EEPROM Data");
             data->errorNum = maGetEEPROMData(&clientDetails->maTel, clientDetails->pUserID, clientDetails->maMailID);
-            TerminateIfError(data, gText_UnableToInitialiseMALib);
-            data->subState++;
+            if (IsMobileAdapterConfigError(data->errorNum))
+            {
+                DebugPrintf("Mobile Adapter configuration error: %d", data->errorNum);
+                maKill();
+                data->maInitialized = FALSE;
+                data->state = INTERNET_STATE_CONFIG_ERROR;
+            }
+            else
+            {
+                TerminateIfError(data, gText_UnableToInitialiseMALib);
+                data->subState++;
+            }
             break;
         case 2:
             // Set your password, must end in Null byte
@@ -537,12 +971,96 @@ static void Task_InternetOptions(u8 taskId)
             // Makes a call and establishes a PPP connection
             DebugPrintf("Making a call and establishing PPP connection");
             data->errorNum = maConnectServer(&clientDetails->maTel, clientDetails->pUserID, clientDetails->pPassword);
+            if (data->errorNum == 0)
+                data->pppConnected = TRUE;
             TerminateIfError(data, gText_UnableToConnectToServer);
             data->subState++;
             break;
         case 4:
-            data->state = INTERNET_STATE_PING_SERVER;
+            PrintTopMenu(TRUE);
+            data->state = data->nextState;
+            data->nextState = 0;
             data->subState = 0;
+            break;
+        }
+        break;
+    case INTERNET_STATE_DOWNLOAD_RECORD:
+        switch (data->subState)
+        {
+        case 0:
+            if (StartInternetDownload(data, sInternetRecordUrl, INTERNET_RECORD_MIX_MAX_PACKET_SIZE + 1,
+                                      gText_InternetRecordInvalid))
+                data->subState++;
+            break;
+        case 1:
+            switch (ReceiveInternetRecordMix(data->clientMsg, data->recvSize, gStringVar1))
+            {
+            case INTERNET_RECORD_MIX_RECEIVED:
+                SetInternetSaveResult(data, gText_InternetRecordReceived);
+                break;
+            case INTERNET_RECORD_MIX_OUT_OF_MEMORY:
+                SetInternetMessageResult(data, gText_InternetRecordOutOfMemory);
+                break;
+            case INTERNET_RECORD_MIX_INVALID_PACKET:
+            default:
+                SetInternetMessageResult(data, gText_InternetRecordInvalid);
+                break;
+            }
+            break;
+        }
+        break;
+    case INTERNET_STATE_UPLOAD_RECORD:
+        switch (data->subState)
+        {
+        case 0:
+            if (StartInternetRecordUpload(data))
+                data->subState++;
+            break;
+        case 1:
+            if (DecodeInternetRecordMixCode(data->clientMsg, data->recvSize, gStringVar1))
+                SetInternetMessageResult(data, gText_InternetRecordUploaded);
+            else
+                SetInternetMessageResult(data, gText_InternetRecordUploadInvalid);
+            break;
+        }
+        break;
+    case INTERNET_STATE_DOWNLOAD_GIFT:
+        switch (data->subState)
+        {
+        case 0:
+            if (StartInternetDownload(data, INTERNET_MYSTERY_GIFT_URL, INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE + 1,
+                                      gText_InternetGiftInvalid))
+                data->subState++;
+            break;
+        case 1:
+            if (!AllocInternetGift(data))
+            {
+                SetInternetMessageResult(data, gText_InternetOutOfMemory);
+                break;
+            }
+            switch (ReceiveInternetMysteryGift(data->clientMsg, data->recvSize, data->gift))
+            {
+            case INTERNET_MYSTERY_GIFT_RECEIVED_ITEM:
+                CopyItemNameHandlePlural(data->gift->data.item.itemId, gStringVar1, data->gift->data.item.quantity);
+                ConvertIntToDecimalStringN(gStringVar2, data->gift->data.item.quantity, STR_CONV_MODE_LEFT_ALIGN, 3);
+                SetInternetSaveResult(data, gText_InternetGiftItemReceived);
+                break;
+            case INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY:
+                GetMonData(&data->gift->data.pokemon, MON_DATA_NICKNAME, gStringVar1);
+                SetInternetSaveResult(data, gText_InternetGiftPokemonReceived);
+                break;
+            case INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PC:
+                GetMonData(&data->gift->data.pokemon, MON_DATA_NICKNAME, gStringVar1);
+                SetInternetSaveResult(data, gText_InternetGiftPokemonSentToPC);
+                break;
+            case INTERNET_MYSTERY_GIFT_NO_SPACE:
+                SetInternetMessageResult(data, gText_InternetGiftNoSpace);
+                break;
+            case INTERNET_MYSTERY_GIFT_INVALID_PACKET:
+            default:
+                SetInternetMessageResult(data, gText_InternetGiftInvalid);
+                break;
+            }
             break;
         }
         break;
@@ -589,27 +1107,38 @@ static void Task_InternetOptions(u8 taskId)
         data->state = INTERNET_STATE_MAIN_MENU;
         break;
     case INTERNET_STATE_MAIN_MENU:
-        // Main Mystery Gift menu, player can select Wonder Cards or News (or exit)
-        switch (InternetOptions_HandleThreeOptionMenu(0))
+        switch (InternetOptions_HandleMenu(0))
         {
-        case 0: // "Mystergy Gift Download"
-            data->state = INTERNET_STATE_EXIT;
+        case 0: // Mystery Gift
+            data->nextState = INTERNET_STATE_DOWNLOAD_GIFT;
+            data->state = INTERNET_STATE_CONNECT_TO_SERVER;
+            data->subState = 0;
             PlaySE(SE_SELECT);
             break;
-        case 1: // "Bank"
-            data->state = INTERNET_STATE_EXIT;
-            PlaySE(SE_SELECT);
-            break;
-        case 2: // "Friends"
-            data->state = INTERNET_STATE_EXIT;
-            PlaySE(SE_SELECT);
-            break;
-        case 3: // "Sync"
-            data->state = INTERNET_STATE_EXIT;
+        case 1: // Record Mix
+            data->state = INTERNET_STATE_RECORD_MENU;
             PlaySE(SE_SELECT);
             break;
         case LIST_CANCEL:
             data->state = INTERNET_STATE_EXIT;
+            break;
+        }
+        break;
+    case INTERNET_STATE_RECORD_MENU:
+        switch (InternetOptions_HandleMenu(1))
+        {
+        case 0: // Send
+            data->nextState = INTERNET_STATE_UPLOAD_RECORD;
+            data->state = INTERNET_STATE_CONNECT_TO_SERVER;
+            data->subState = 0;
+            PlaySE(SE_SELECT);
+            break;
+        case 1: // Receive
+            PlaySE(SE_SELECT);
+            BeginInternetRecordCodeEntry(taskId, data);
+            break;
+        case LIST_CANCEL:
+            data->state = INTERNET_STATE_TO_MAIN_MENU;
             break;
         }
         break;
@@ -618,16 +1147,23 @@ static void Task_InternetOptions(u8 taskId)
             data->state = data->nextState;
         break;
     case INTERNET_STATE_SAVE_GAME:
-        if (SaveOnInternetOptionMenu(&data->textState))
-            data->state = data->nextState;
+        if (SaveOnInternetOptionMenu(&data->textState, &data->errorNum))
+            data->state = data->errorNum == SAVE_STATUS_OK ? data->nextState : INTERNET_STATE_ROLLBACK_EXIT;
+        break;
+    case INTERNET_STATE_CONFIG_ERROR:
+        FreeInternetOptionsTask(taskId, data);
+        SetMainCallback2(MainCB_FreeAllBuffersAndShowMobileAdapterConfigError);
         break;
     case INTERNET_STATE_EXIT:
-        CloseLink();
-        Free(data->clientDetails);
-        // Free(data->userProfile);
-        Free(data->clientMsg);
-        DestroyTask(taskId);
+        CloseInternetConnection(data);
+        FreeInternetOptionsTask(taskId, data);
         SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
+        break;
+    case INTERNET_STATE_ROLLBACK_EXIT:
+        CloseInternetConnection(data);
+        FreeInternetOptionsTask(taskId, data);
+        FreeInternetOptionsScreen();
+        ReloadSaveToTitle();
         break;
     }
 #else
@@ -665,17 +1201,17 @@ static bool32 PrintInternetOptionsMenuMessage(u8 *textState, const u8 *str)
     return FALSE;
 }
 
-static u32 InternetOptions_HandleThreeOptionMenu(u8 whichMenu)
+static u32 InternetOptions_HandleMenu(u8 whichMenu)
 {
-    struct ListMenuTemplate listMenuTemplate = sListMenuTemplate_FiveOptions;
-    struct WindowTemplate windowTemplate = sWindowTemplate_FiveOptions;
+    struct ListMenuTemplate listMenuTemplate = sListMenuTemplate_ThreeOptions;
+    struct WindowTemplate windowTemplate = sWindowTemplate_ThreeOptions;
     s32 width;
     s32 response;
 
     if (whichMenu == 0)
         listMenuTemplate.items = sListMenuItems_InternetOptions;
     else
-        listMenuTemplate.items = sListMenuItems_SearchWithdraw;
+        listMenuTemplate.items = sListMenuItems_RecordMix;
 
     width = Intl_GetListMenuWidth(&listMenuTemplate);
     if (width & 1)
@@ -752,7 +1288,7 @@ static UNUSED s8 DoInternetOptionsYesNo(u8 *textState, u16 *windowId, bool8 yesN
     return MENU_NOTHING_CHOSEN;
 }
 
-static bool32 SaveOnInternetOptionMenu(u8 *state)
+static bool32 SaveOnInternetOptionMenu(u8 *state, s32 *saveResult)
 {
     switch (*state)
     {
@@ -761,11 +1297,13 @@ static bool32 SaveOnInternetOptionMenu(u8 *state)
         (*state)++;
         break;
     case 1:
-        TrySavingData(SAVE_NORMAL);
+        *saveResult = TrySavingDataNoErrorScreen(SAVE_NORMAL);
         (*state)++;
         break;
     case 2:
-        AddTextPrinterToWindow1(gText_SaveCompletedPressA);
+        AddTextPrinterToWindow1(*saveResult == SAVE_STATUS_OK
+                              ? gText_SaveCompletedPressA
+                              : gText_InternetSaveFailedRollback);
         (*state)++;
         break;
     case 3:
@@ -839,25 +1377,10 @@ static s8 DoInternetYesNo(u8 *textState, u16 *windowId, bool8 yesNoBoxPlacement,
 
 static void PrintTopMenu(bool32 connecting)
 {
-    const u8 * header;
-    const u8 * options;
-    options = !connecting ? gText_Communicating : gText_PickOKCancel;
+    const u8 *options = connecting ? gText_PickOKCancel : gText_Communicating;
     
     FillWindowPixelBuffer(0, 0);
-    if (gSaveBlock3Ptr->PID == NO_PID)
-    {
-        header = gText_InternetOptions;
-    }
-    else
-    {
-        GenerateFriendcodeFromPID(gSaveBlock3Ptr->PID,(u8 *)options);
-        header = gText_FC;
-        StringConcat((char *)header,(char *)options);
-    }
-
-    options = !connecting ? gText_Communicating : gText_PickOKCancel;
-
-    AddTextPrinterParameterized4(0, FONT_NORMAL, 4, 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, header);
+    AddTextPrinterParameterized4(0, FONT_NORMAL, 4, 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, gText_InternetOptions);
     AddTextPrinterParameterized4(0, FONT_SMALL, GetStringRightAlignXOffset(FONT_SMALL, options, 0xDE), 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, options);
     CopyWindowToVram(0, COPYWIN_GFX);
     PutWindowTilemap(0);
@@ -906,16 +1429,6 @@ static void ClearTextWindow(void)
 /*******************************************************************************
                              Encoding/Encryption
  ******************************************************************************/
-static void StringConcat(char *dest, const char *src)
-{
-    while (*dest != '\0') dest++;
-    for (;;) 
-    {
-        *dest++ = *src;
-        if (*src == '\0') break;
-        src++;
-    }
-}
 
 static UNUSED char EncodeBase64(u32 checksum, char *data, size_t input_length)
 {
@@ -1216,7 +1729,7 @@ static UNUSED int DigestSHA1(uint8_t *digest, u8 *hexdigest, const uint8_t *data
     return 0;
 }
 
-static void GenerateFriendcodeFromPID(u32 pid, u8 *hexdigest) 
+static UNUSED void GenerateFriendcodeFromPID(u32 pid, u8 *hexdigest)
 {
     if (pid == 0)
     {

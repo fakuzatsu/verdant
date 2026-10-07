@@ -33,7 +33,19 @@
 #include "daycare.h"
 #include "international_string_util.h"
 #include "constants/battle_frontier.h"
+#include "constants/lilycove_lady.h"
+#include "constants/mauville_old_man.h"
 #include "dewford_trend.h"
+#include "easy_chat.h"
+#include "util.h"
+#include "constants/apprentice.h"
+#include "constants/decorations.h"
+#include "constants/game_stat.h"
+#include "constants/moves.h"
+#include "constants/pokemon.h"
+#include "constants/secret_bases.h"
+#include "constants/species.h"
+#include "constants/trainers.h"
 
 // Number of bytes of the record transferred at a time
 #define BUFFER_CHUNK_SIZE 200
@@ -61,22 +73,6 @@ struct PlayerRecordRS
     u16 giftItem;
     u16 filler[50];
 };
-
-struct PlayerRecordEmerald
-{
-    /* 0x0000 */ struct SecretBase secretBases[SECRET_BASES_COUNT];
-    /* 0x0C80 */ TVShow tvShows[TV_SHOWS_COUNT];
-    /* 0x1004 */ PokeNews pokeNews[POKE_NEWS_COUNT];
-    /* 0x1044 */ OldMan oldMan;
-    /* 0x1084 */ struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
-    /* 0x10AC */ struct RecordMixingDaycareMail daycareMail;
-    /* 0x1124 */ struct EmeraldBattleTowerRecord battleTowerRecord;
-    /* 0x1210 */ u16 giftItem;
-    /* 0x1214 */ LilycoveLady lilycoveLady;
-    /* 0x1254 */ struct Apprentice apprentices[2];
-    /* 0x12DC */ struct PlayerHallRecords hallRecords;
-    /* 0x1434 */ u8 filler_1434[16];
-}; // 0x1444
 
 union PlayerRecord
 {
@@ -118,7 +114,7 @@ static void ReceiveOldManData(OldMan *, size_t, u8);
 static void ReceiveBattleTowerData(void *, size_t, u8);
 static void ReceiveLilycoveLadyData(LilycoveLady *, size_t, u8);
 static void CalculateDaycareMailRandSum(const u8 *);
-static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *, size_t, u8, TVShow *);
+static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *, size_t, u8);
 static void ReceiveGiftItem(u16 *, u8 );
 static void Task_DoRecordMixing(u8);
 static void GetSavedApprentices(struct Apprentice *, struct Apprentice *);
@@ -128,6 +124,23 @@ static void GetRecordMixingDaycareMail(struct RecordMixingDaycareMail *);
 static void SanitizeDaycareMailForRuby(struct RecordMixingDaycareMail *);
 static void SanitizeEmeraldBattleTowerRecord(struct EmeraldBattleTowerRecord *);
 static void SanitizeRubyBattleTowerRecord(struct RSBattleTowerRecord *);
+
+#define INTERNET_RECORD_MIX_VERSION 1
+
+enum
+{
+    INTERNET_RECORD_MIX_OFFSET_VERSION = 4,
+    INTERNET_RECORD_MIX_OFFSET_GAME_VERSION,
+    INTERNET_RECORD_MIX_OFFSET_LANGUAGE,
+    INTERNET_RECORD_MIX_OFFSET_RESERVED,
+    INTERNET_RECORD_MIX_OFFSET_TRAINER_ID,
+    INTERNET_RECORD_MIX_OFFSET_PLAYER_NAME = 12,
+    INTERNET_RECORD_MIX_OFFSET_PAYLOAD_SIZE = 22,
+    INTERNET_RECORD_MIX_OFFSET_PAYLOAD_CRC = 24,
+    INTERNET_RECORD_MIX_OFFSET_RESERVED_2 = 26,
+};
+
+static const u8 sInternetRecordMixMagic[] = {'P', 'M', 'R', 'M'};
 
 static const u8 sPlayerIdxOrders_2Player[] = {1, 0};
 
@@ -219,6 +232,25 @@ static void PrepareExchangePacketForRubySapphire(struct PlayerRecordRS *dest)
         dest->giftItem = GetRecordMixingGift();
 }
 
+static void PrepareEmeraldExchangePacket(struct PlayerRecordEmerald *dest, bool32 includeGift)
+{
+    memcpy(dest->secretBases, sSecretBasesSave, sizeof(dest->secretBases));
+    memcpy(dest->tvShows, sTvShowsSave, sizeof(dest->tvShows));
+    memcpy(dest->pokeNews, sPokeNewsSave, sizeof(dest->pokeNews));
+    memcpy(&dest->oldMan, sOldManSave, sizeof(dest->oldMan));
+    memcpy(&dest->lilycoveLady, sLilycoveLadySave, sizeof(dest->lilycoveLady));
+    memcpy(dest->dewfordTrends, sDewfordTrendsSave, sizeof(dest->dewfordTrends));
+    GetRecordMixingDaycareMail(&dest->daycareMail);
+    memcpy(&dest->battleTowerRecord, sBattleTowerSave, sizeof(dest->battleTowerRecord));
+    SanitizeEmeraldBattleTowerRecord(&dest->battleTowerRecord);
+
+    if (includeGift)
+        dest->giftItem = GetRecordMixingGift();
+
+    GetSavedApprentices(dest->apprentices, sApprenticesSave);
+    GetPlayerHallRecords(&dest->hallRecords);
+}
+
 static void PrepareExchangePacket(void)
 {
     SetPlayerSecretBaseParty();
@@ -234,21 +266,7 @@ static void PrepareExchangePacket(void)
     }
     else
     {
-        memcpy(sSentRecord->emerald.secretBases, sSecretBasesSave, sizeof(sSentRecord->emerald.secretBases));
-        memcpy(sSentRecord->emerald.tvShows, sTvShowsSave, sizeof(sSentRecord->emerald.tvShows));
-        memcpy(sSentRecord->emerald.pokeNews, sPokeNewsSave, sizeof(sSentRecord->emerald.pokeNews));
-        memcpy(&sSentRecord->emerald.oldMan, sOldManSave, sizeof(sSentRecord->emerald.oldMan));
-        memcpy(&sSentRecord->emerald.lilycoveLady, sLilycoveLadySave, sizeof(sSentRecord->emerald.lilycoveLady));
-        memcpy(sSentRecord->emerald.dewfordTrends, sDewfordTrendsSave, sizeof(sSentRecord->emerald.dewfordTrends));
-        GetRecordMixingDaycareMail(&sSentRecord->emerald.daycareMail);
-        memcpy(&sSentRecord->emerald.battleTowerRecord, sBattleTowerSave, sizeof(sSentRecord->emerald.battleTowerRecord));
-        SanitizeEmeraldBattleTowerRecord(&sSentRecord->emerald.battleTowerRecord);
-
-        if (GetMultiplayerId() == 0)
-            sSentRecord->emerald.giftItem = GetRecordMixingGift();
-
-        GetSavedApprentices(sSentRecord->emerald.apprentices, sApprenticesSave);
-        GetPlayerHallRecords(&sSentRecord->emerald.hallRecords);
+        PrepareEmeraldExchangePacket(&sSentRecord->emerald, GetMultiplayerId() == 0);
     }
 }
 
@@ -259,7 +277,7 @@ static void ReceiveExchangePacket(u32 multiplayerId)
         // Ruby/Sapphire
         CalculateDaycareMailRandSum((void *)sReceivedRecords->ruby.tvShows);
         ReceiveSecretBasesData(sReceivedRecords->ruby.secretBases, sizeof(sReceivedRecords->ruby), multiplayerId);
-        ReceiveDaycareMailData(&sReceivedRecords->ruby.daycareMail, sizeof(sReceivedRecords->ruby), multiplayerId, sReceivedRecords->ruby.tvShows);
+        ReceiveDaycareMailData(&sReceivedRecords->ruby.daycareMail, sizeof(sReceivedRecords->ruby), multiplayerId);
         ReceiveBattleTowerData(&sReceivedRecords->ruby.battleTowerRecord, sizeof(sReceivedRecords->ruby), multiplayerId);
         ReceiveTvShowsData(sReceivedRecords->ruby.tvShows, sizeof(sReceivedRecords->ruby), multiplayerId);
         ReceivePokeNewsData(sReceivedRecords->ruby.pokeNews, sizeof(sReceivedRecords->ruby), multiplayerId);
@@ -276,13 +294,520 @@ static void ReceiveExchangePacket(u32 multiplayerId)
         ReceivePokeNewsData(sReceivedRecords->emerald.pokeNews, sizeof(sReceivedRecords->emerald), multiplayerId);
         ReceiveOldManData(&sReceivedRecords->emerald.oldMan, sizeof(sReceivedRecords->emerald), multiplayerId);
         ReceiveDewfordTrendData(sReceivedRecords->emerald.dewfordTrends, sizeof(sReceivedRecords->emerald), multiplayerId);
-        ReceiveDaycareMailData(&sReceivedRecords->emerald.daycareMail, sizeof(sReceivedRecords->emerald), multiplayerId, sReceivedRecords->emerald.tvShows);
+        ReceiveDaycareMailData(&sReceivedRecords->emerald.daycareMail, sizeof(sReceivedRecords->emerald), multiplayerId);
         ReceiveBattleTowerData(&sReceivedRecords->emerald.battleTowerRecord, sizeof(sReceivedRecords->emerald), multiplayerId);
         ReceiveGiftItem(&sReceivedRecords->emerald.giftItem, multiplayerId);
         ReceiveLilycoveLadyData(&sReceivedRecords->emerald.lilycoveLady, sizeof(sReceivedRecords->emerald), multiplayerId);
         ReceiveApprenticeData(sReceivedRecords->emerald.apprentices, sizeof(sReceivedRecords->emerald), (u8)multiplayerId);
         ReceiveRankingHallRecords(&sReceivedRecords->emerald.hallRecords, sizeof(sReceivedRecords->emerald), (u8)multiplayerId);
     }
+}
+
+static u16 ReadInternetRecordU16(const u8 *data)
+{
+    return data[0] | (data[1] << 8);
+}
+
+static u32 ReadInternetRecordU32(const u8 *data)
+{
+    return (u32)data[0]
+         | (u32)data[1] << 8
+         | (u32)data[2] << 16
+         | (u32)data[3] << 24;
+}
+
+static void WriteInternetRecordU16(u8 *data, u16 value)
+{
+    data[0] = value;
+    data[1] = value >> 8;
+}
+
+static void WriteInternetRecordU32(u8 *data, u32 value)
+{
+    data[0] = value;
+    data[1] = value >> 8;
+    data[2] = value >> 16;
+    data[3] = value >> 24;
+}
+
+u16 BuildInternetRecordMixPacket(u8 *packet, u16 capacity)
+{
+    struct PlayerRecordEmerald *record;
+
+    if (packet == NULL || capacity < INTERNET_RECORD_MIX_MAX_PACKET_SIZE)
+        return 0;
+
+    memset(packet, 0, INTERNET_RECORD_MIX_MAX_PACKET_SIZE);
+    record = (struct PlayerRecordEmerald *)&packet[INTERNET_RECORD_MIX_HEADER_SIZE];
+
+    memcpy(packet, sInternetRecordMixMagic, sizeof(sInternetRecordMixMagic));
+    packet[INTERNET_RECORD_MIX_OFFSET_VERSION] = INTERNET_RECORD_MIX_VERSION;
+    packet[INTERNET_RECORD_MIX_OFFSET_GAME_VERSION] = VERSION_EMERALD;
+    packet[INTERNET_RECORD_MIX_OFFSET_LANGUAGE] = GAME_LANGUAGE;
+    WriteInternetRecordU32(&packet[INTERNET_RECORD_MIX_OFFSET_TRAINER_ID], GetTrainerId(gSaveBlock2Ptr->playerTrainerId));
+    memcpy(&packet[INTERNET_RECORD_MIX_OFFSET_PLAYER_NAME], gSaveBlock2Ptr->playerName, PLAYER_NAME_LENGTH + 1);
+
+    SetPlayerSecretBaseParty();
+    SetSrcLookupPointers();
+    PrepareEmeraldExchangePacket(record, TRUE);
+    DeactivateNormalTVShows(record->tvShows);
+
+    WriteInternetRecordU16(&packet[INTERNET_RECORD_MIX_BLOCK_MASK_OFFSET], INTERNET_RECORD_MIX_ALL_BLOCKS);
+    WriteInternetRecordU16(&packet[INTERNET_RECORD_MIX_OFFSET_PAYLOAD_SIZE], sizeof(*record));
+    WriteInternetRecordU16(&packet[INTERNET_RECORD_MIX_OFFSET_PAYLOAD_CRC], CalcCRC16WithTable((u8 *)record, sizeof(*record)));
+    return INTERNET_RECORD_MIX_MAX_PACKET_SIZE;
+}
+
+bool32 DecodeInternetRecordMixCode(const u8 *response, u16 responseSize, u8 *code)
+{
+    u32 i;
+
+    if (response == NULL || code == NULL || responseSize == 0 || responseSize > INTERNET_RECORD_CODE_LENGTH)
+        return FALSE;
+
+    for (i = 0; i < responseSize; i++)
+    {
+        if (!((response[i] >= 'A' && response[i] <= 'Z')
+           || (response[i] >= 'a' && response[i] <= 'z')
+           || (response[i] >= '0' && response[i] <= '9')))
+            return FALSE;
+    }
+
+    memcpy(code, response, responseSize);
+    code[responseSize] = 0;
+    ASCIIToPkmnStr(code, code);
+    return TRUE;
+}
+
+static bool32 IsValidInternetSecretBaseId(u8 secretBaseId)
+{
+    u8 group;
+    u8 position;
+
+    if (secretBaseId == 0)
+        return TRUE;
+
+    group = secretBaseId / 10;
+    position = secretBaseId % 10;
+    if (group >= NUM_SECRET_BASE_GROUPS || position == 0 || position > 4)
+        return FALSE;
+
+    return position <= 3 || group == 16 || group == 17 || group == 20;
+}
+
+static bool32 ValidateInternetSecretBases(const struct SecretBase *secretBases)
+{
+    u32 baseId;
+    u32 decorationId;
+    u32 partyId;
+    u32 moveId;
+
+    for (baseId = 0; baseId < SECRET_BASES_COUNT; baseId++)
+    {
+        const struct SecretBase *base = &secretBases[baseId];
+
+        if (!IsValidInternetSecretBaseId(base->secretBaseId))
+            return FALSE;
+        if (base->secretBaseId == 0)
+            continue;
+        if (!IsValidGameLanguage(base->language) || base->toRegister > TRUE)
+            return FALSE;
+
+        for (decorationId = 0; decorationId < DECOR_MAX_SECRET_BASE; decorationId++)
+        {
+            if (base->decorations[decorationId] > NUM_DECORATIONS)
+                return FALSE;
+        }
+
+        for (partyId = 0; partyId < PARTY_SIZE; partyId++)
+        {
+            if (base->party.species[partyId] >= NUM_SPECIES
+             || base->party.heldItems[partyId] >= ITEMS_COUNT
+             || base->party.levels[partyId] > MAX_LEVEL)
+                return FALSE;
+            if ((base->party.species[partyId] == SPECIES_NONE) != (base->party.levels[partyId] == 0))
+                return FALSE;
+
+            for (moveId = 0; moveId < MAX_MON_MOVES; moveId++)
+            {
+                if (base->party.moves[partyId * MAX_MON_MOVES + moveId] >= MOVES_COUNT)
+                    return FALSE;
+            }
+        }
+    }
+
+    return TRUE;
+}
+
+static bool32 ValidateInternetPokeNews(const PokeNews *pokeNews)
+{
+    u32 i;
+
+    for (i = 0; i < POKE_NEWS_COUNT; i++)
+    {
+        if (pokeNews[i].kind > POKENEWS_BLENDMASTER
+         || pokeNews[i].state > POKENEWS_STATE_ACTIVE)
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 ValidateInternetOldMan(const OldMan *oldMan)
+{
+    u32 i;
+
+    switch (oldMan->common.id)
+    {
+    case MAUVILLE_MAN_BARD:
+        return AreEasyChatWordsValid(oldMan->bard.songLyrics, ARRAY_COUNT(oldMan->bard.songLyrics))
+            && AreEasyChatWordsValid(oldMan->bard.temporaryLyrics, ARRAY_COUNT(oldMan->bard.temporaryLyrics))
+            && IsStringTerminated(oldMan->bard.playerName, ARRAY_COUNT(oldMan->bard.playerName))
+            && IsValidGameLanguage(oldMan->bard.language);
+    case MAUVILLE_MAN_HIPSTER:
+        return oldMan->hipster.taughtWord <= TRUE
+            && IsValidGameLanguage(oldMan->hipster.language);
+    case MAUVILLE_MAN_TRADER:
+        if (oldMan->trader.alreadyTraded > TRUE)
+            return FALSE;
+        for (i = 0; i < NUM_TRADER_ITEMS; i++)
+        {
+            if (oldMan->trader.decorations[i] > NUM_DECORATIONS
+             || !IsStringTerminated(oldMan->trader.playerNames[i], ARRAY_COUNT(oldMan->trader.playerNames[i]))
+             || !IsValidGameLanguage(oldMan->trader.language[i]))
+                return FALSE;
+        }
+        return TRUE;
+    case MAUVILLE_MAN_STORYTELLER:
+        if (oldMan->storyteller.alreadyRecorded > TRUE)
+            return FALSE;
+        for (i = 0; i < NUM_STORYTELLER_TALES; i++)
+        {
+            if (oldMan->storyteller.gameStatIDs[i] >= NUM_GAME_STATS
+             || !IsValidGameLanguage(oldMan->storyteller.language[i]))
+                return FALSE;
+        }
+        return TRUE;
+    case MAUVILLE_MAN_GIDDY:
+        if (oldMan->giddy.taleCounter > GIDDY_MAX_TALES
+         || oldMan->giddy.questionNum > GIDDY_MAX_QUESTIONS
+         || !AreEasyChatWordsValid(oldMan->giddy.randomWords, ARRAY_COUNT(oldMan->giddy.randomWords))
+         || !IsValidGameLanguage(oldMan->giddy.language))
+            return FALSE;
+        for (i = 0; i < ARRAY_COUNT(oldMan->giddy.questionList); i++)
+        {
+            if (oldMan->giddy.questionList[i] >= GIDDY_MAX_QUESTIONS)
+                return FALSE;
+        }
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static bool32 ValidateInternetDewfordTrends(const struct DewfordTrend *trends)
+{
+    u32 i;
+
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
+    {
+        if (!AreEasyChatWordsValid(trends[i].words, ARRAY_COUNT(trends[i].words)))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 ValidateInternetDaycareMail(const struct RecordMixingDaycareMail *daycareMail)
+{
+    u32 i;
+    if (daycareMail->numDaycareMons > DAYCARE_MON_COUNT)
+        return FALSE;
+    for (i = 0; i < daycareMail->numDaycareMons; i++)
+    {
+        const struct DaycareMail *mail = &daycareMail->mail[i];
+
+        if (daycareMail->cantHoldItem[i] > TRUE
+         || mail->message.itemId >= ITEMS_COUNT
+         || mail->message.species >= NUM_SPECIES
+         || !IsStringTerminated(mail->message.playerName, ARRAY_COUNT(mail->message.playerName))
+         || !IsStringTerminated(mail->otName, ARRAY_COUNT(mail->otName))
+         || !IsStringTerminated(mail->monName, ARRAY_COUNT(mail->monName))
+         || !IsValidGameLanguage(mail->gameLanguage)
+         || !IsValidGameLanguage(mail->monLanguage)
+         || !AreEasyChatWordsValid(mail->message.words, ARRAY_COUNT(mail->message.words)))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 ValidateInternetBattleTowerRecord(const struct EmeraldBattleTowerRecord *towerRecord)
+{
+    u32 i;
+    u32 move;
+
+    if (towerRecord->winStreak == 0)
+        return TRUE;
+    if (towerRecord->lvlMode >= FRONTIER_LVL_MODE_COUNT
+     || towerRecord->facilityClass >= FACILITY_CLASSES_COUNT
+     || !IsStringTerminated(towerRecord->name, ARRAY_COUNT(towerRecord->name))
+     || !IsValidGameLanguage(towerRecord->language)
+     || !AreEasyChatWordsValid(towerRecord->greeting, ARRAY_COUNT(towerRecord->greeting))
+     || !AreEasyChatWordsValid(towerRecord->speechWon, ARRAY_COUNT(towerRecord->speechWon))
+     || !AreEasyChatWordsValid(towerRecord->speechLost, ARRAY_COUNT(towerRecord->speechLost)))
+        return FALSE;
+
+    for (i = 0; i < ARRAY_COUNT(towerRecord->party); i++)
+    {
+        const struct BattleTowerPokemon *mon = &towerRecord->party[i];
+
+        if (mon->species == SPECIES_NONE)
+            continue;
+        if (mon->species >= NUM_SPECIES || mon->heldItem >= ITEMS_COUNT
+         || mon->level == 0 || mon->level > MAX_LEVEL
+         || !IsStringTerminated(mon->nickname, ARRAY_COUNT(mon->nickname)))
+            return FALSE;
+        for (move = 0; move < ARRAY_COUNT(mon->moves); move++)
+        {
+            if (mon->moves[move] >= MOVES_COUNT)
+                return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static u32 CalculateInternetApprenticeChecksum(const struct Apprentice *apprentice)
+{
+    const u32 *data = (const u32 *)apprentice;
+    u32 checksum = 0;
+    u32 i;
+
+    for (i = 0; i < offsetof(struct Apprentice, checksum) / sizeof(u32); i++)
+        checksum += data[i];
+    return checksum;
+}
+
+static bool32 ValidateInternetApprentices(const struct Apprentice *apprentices)
+{
+    u32 i;
+    u32 mon;
+    u32 move;
+
+    for (i = 0; i < 2; i++)
+    {
+        const struct Apprentice *apprentice = &apprentices[i];
+
+        if (apprentice->playerName[0] == EOS)
+            continue;
+        if (apprentice->id >= NUM_APPRENTICES
+         || apprentice->lvlMode == 0 || apprentice->lvlMode > FRONTIER_LVL_MODE_COUNT
+         || apprentice->numQuestions > APPRENTICE_MAX_QUESTIONS
+         || !IsValidGameLanguage(apprentice->language)
+         || !AreEasyChatWordsValid(apprentice->speechWon, ARRAY_COUNT(apprentice->speechWon))
+         || apprentice->checksum != CalculateInternetApprenticeChecksum(apprentice))
+            return FALSE;
+        for (mon = 0; mon < ARRAY_COUNT(apprentice->party); mon++)
+        {
+            if (apprentice->party[mon].species == SPECIES_NONE
+             || apprentice->party[mon].species >= NUM_SPECIES
+             || apprentice->party[mon].item >= ITEMS_COUNT)
+                return FALSE;
+            for (move = 0; move < ARRAY_COUNT(apprentice->party[mon].moves); move++)
+            {
+                if (apprentice->party[mon].moves[move] >= MOVES_COUNT)
+                    return FALSE;
+            }
+        }
+    }
+    return TRUE;
+}
+
+static bool32 ValidateInternetHallRecords(const struct PlayerHallRecords *hallRecords)
+{
+    u32 facility;
+    u32 mode;
+
+    for (facility = 0; facility < HALL_FACILITIES_COUNT; facility++)
+    {
+        for (mode = 0; mode < FRONTIER_LVL_MODE_COUNT; mode++)
+        {
+            const struct RankingHall1P *record = &hallRecords->onePlayer[facility][mode];
+
+            if (record->winStreak != 0
+             && (!IsStringTerminated(record->name, ARRAY_COUNT(record->name))
+              || !IsValidGameLanguage(record->language)))
+                return FALSE;
+        }
+    }
+    for (mode = 0; mode < FRONTIER_LVL_MODE_COUNT; mode++)
+    {
+        const struct RankingHall2P *record = &hallRecords->twoPlayers[mode];
+
+        if (record->winStreak != 0
+         && (!IsStringTerminated(record->name1, ARRAY_COUNT(record->name1))
+          || !IsStringTerminated(record->name2, ARRAY_COUNT(record->name2))
+          || !IsValidGameLanguage(record->language)))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static bool32 ValidateInternetRecordMixPayload(const struct PlayerRecordEmerald *record, u16 blockMask)
+{
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_SECRET_BASES)
+     && !ValidateInternetSecretBases(record->secretBases))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_TV_SHOWS)
+     && !ValidateInternetTvShows(record->tvShows))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_POKE_NEWS)
+     && !ValidateInternetPokeNews(record->pokeNews))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_OLD_MAN)
+     && !ValidateInternetOldMan(&record->oldMan))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_DEWFORD)
+     && !ValidateInternetDewfordTrends(record->dewfordTrends))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_DAYCARE_MAIL)
+     && !ValidateInternetDaycareMail(&record->daycareMail))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_BATTLE_TOWER)
+     && !ValidateInternetBattleTowerRecord(&record->battleTowerRecord))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_GIFT_ITEM)
+     && record->giftItem != ITEM_NONE
+     && (record->giftItem >= ITEMS_COUNT || GetPocketByItemId(record->giftItem) != POCKET_KEY_ITEMS))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_LILYCOVE_LADY)
+     && !ValidateInternetLilycoveLady(&record->lilycoveLady))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_APPRENTICES)
+     && !ValidateInternetApprentices(record->apprentices))
+        return FALSE;
+    if ((blockMask & INTERNET_RECORD_MIX_BLOCK_HALL_RECORDS)
+     && !ValidateInternetHallRecords(&record->hallRecords))
+        return FALSE;
+
+    return TRUE;
+}
+
+static void PrepareLocalInternetRecord(struct PlayerRecordEmerald *record, u16 blockMask)
+{
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_DEWFORD)
+        memcpy(record->dewfordTrends, gSaveBlock1Ptr->dewfordTrends, sizeof(record->dewfordTrends));
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_DAYCARE_MAIL)
+        GetRecordMixingDaycareMail(&record->daycareMail);
+}
+
+static void SetInternetRecordLinkContext(const u8 *packet)
+{
+    memset(gLinkPlayers, 0, sizeof(gLinkPlayers));
+
+    gWirelessCommType = FALSE;
+    gLinkStatus = 2 << LINK_STAT_PLAYER_COUNT_SHIFT;
+
+    gLinkPlayers[0].version = packet[INTERNET_RECORD_MIX_OFFSET_GAME_VERSION];
+    gLinkPlayers[0].trainerId = ReadInternetRecordU32(&packet[INTERNET_RECORD_MIX_OFFSET_TRAINER_ID]);
+    memcpy(gLinkPlayers[0].name, &packet[INTERNET_RECORD_MIX_OFFSET_PLAYER_NAME], sizeof(gLinkPlayers[0].name));
+    gLinkPlayers[0].language = packet[INTERNET_RECORD_MIX_OFFSET_LANGUAGE];
+
+    gLinkPlayers[1].version = VERSION_EMERALD;
+    gLinkPlayers[1].trainerId = GetTrainerId(gSaveBlock2Ptr->playerTrainerId);
+    memcpy(gLinkPlayers[1].name, gSaveBlock2Ptr->playerName, sizeof(gLinkPlayers[1].name));
+    gLinkPlayers[1].language = GAME_LANGUAGE;
+}
+
+enum InternetRecordMixResult ReceiveInternetRecordMix(const u8 *packet, u16 packetSize, u8 *sourceName)
+{
+    struct PlayerRecordEmerald *records;
+    struct LinkPlayer savedLinkPlayers[MAX_RFU_PLAYERS];
+    const u8 *payload;
+    u32 savedLinkStatus;
+    u16 blockMask;
+    u16 payloadSize;
+    u16 payloadCrc;
+    u8 savedWirelessCommType;
+
+    if (packet == NULL || packetSize != INTERNET_RECORD_MIX_MAX_PACKET_SIZE)
+        return INTERNET_RECORD_MIX_INVALID_PACKET;
+    if (memcmp(packet, sInternetRecordMixMagic, sizeof(sInternetRecordMixMagic)) != 0)
+        return INTERNET_RECORD_MIX_INVALID_PACKET;
+    if (packet[INTERNET_RECORD_MIX_OFFSET_VERSION] != INTERNET_RECORD_MIX_VERSION
+     || packet[INTERNET_RECORD_MIX_OFFSET_GAME_VERSION] != VERSION_EMERALD
+     || !IsValidGameLanguage(packet[INTERNET_RECORD_MIX_OFFSET_LANGUAGE])
+     || packet[INTERNET_RECORD_MIX_OFFSET_RESERVED] != 0
+     || ReadInternetRecordU16(&packet[INTERNET_RECORD_MIX_OFFSET_RESERVED_2]) != 0
+     || !IsStringTerminated(&packet[INTERNET_RECORD_MIX_OFFSET_PLAYER_NAME], PLAYER_NAME_LENGTH + 1))
+        return INTERNET_RECORD_MIX_INVALID_PACKET;
+
+    blockMask = ReadInternetRecordU16(&packet[INTERNET_RECORD_MIX_BLOCK_MASK_OFFSET]);
+    payloadSize = ReadInternetRecordU16(&packet[INTERNET_RECORD_MIX_OFFSET_PAYLOAD_SIZE]);
+    payloadCrc = ReadInternetRecordU16(&packet[INTERNET_RECORD_MIX_OFFSET_PAYLOAD_CRC]);
+    payload = &packet[INTERNET_RECORD_MIX_HEADER_SIZE];
+    if (blockMask == 0 || (blockMask & ~INTERNET_RECORD_MIX_ALL_BLOCKS) != 0
+     || payloadSize != sizeof(struct PlayerRecordEmerald)
+     || payloadCrc != CalcCRC16WithTable(payload, payloadSize))
+        return INTERNET_RECORD_MIX_INVALID_PACKET;
+
+    records = AllocZeroed(sizeof(*records) * MAX_LINK_PLAYERS);
+    if (records == NULL)
+        return INTERNET_RECORD_MIX_OUT_OF_MEMORY;
+    memcpy(&records[0], payload, sizeof(records[0]));
+    if (!ValidateInternetRecordMixPayload(&records[0], blockMask))
+    {
+        Free(records);
+        return INTERNET_RECORD_MIX_INVALID_PACKET;
+    }
+
+    savedWirelessCommType = gWirelessCommType;
+    savedLinkStatus = gLinkStatus;
+    memcpy(savedLinkPlayers, gLinkPlayers, sizeof(savedLinkPlayers));
+    SetInternetRecordLinkContext(packet);
+    SetSrcLookupPointers();
+    PrepareLocalInternetRecord(&records[1], blockMask);
+
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_DAYCARE_MAIL)
+    {
+        if (blockMask & INTERNET_RECORD_MIX_BLOCK_TV_SHOWS)
+            CalculateDaycareMailRandSum((void *)records[0].tvShows);
+        else
+            sDaycareMailRandSum = 0;
+    }
+
+    // TV mixing is deliberately one-way here. The original live-link processor
+    // moves both players' pending shows; an Internet receive must not discard
+    // local shows merely because there is no server-side player to receive them.
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_TV_SHOWS)
+        ReceiveTvShowsDataFromInternet(records[0].tvShows);
+
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_SECRET_BASES)
+        ReceiveSecretBasesData(records[0].secretBases, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_POKE_NEWS)
+        ReceivePokeNewsDataFromInternet(records[0].pokeNews);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_OLD_MAN)
+        ReceiveOldManData(&records[0].oldMan, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_DEWFORD)
+        ReceiveDewfordTrendData(records[0].dewfordTrends, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_DAYCARE_MAIL)
+        ReceiveDaycareMailData(&records[0].daycareMail, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_BATTLE_TOWER)
+        ReceiveBattleTowerData(&records[0].battleTowerRecord, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_GIFT_ITEM)
+        ReceiveGiftItem(&records[0].giftItem, 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_LILYCOVE_LADY)
+        ReceiveLilycoveLadyData(&records[0].lilycoveLady, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_APPRENTICES)
+        ReceiveApprenticeData(records[0].apprentices, sizeof(records[0]), 1);
+    if (blockMask & INTERNET_RECORD_MIX_BLOCK_HALL_RECORDS)
+        ReceiveRankingHallRecords(&records[0].hallRecords, sizeof(records[0]), 1);
+
+    if (sourceName != NULL)
+        memcpy(sourceName, &packet[INTERNET_RECORD_MIX_OFFSET_PLAYER_NAME], PLAYER_NAME_LENGTH + 1);
+
+    gWirelessCommType = savedWirelessCommType;
+    gLinkStatus = savedLinkStatus;
+    memcpy(gLinkPlayers, savedLinkPlayers, sizeof(savedLinkPlayers));
+    Free(records);
+    return INTERNET_RECORD_MIX_RECEIVED;
 }
 
 static void PrintTextOnRecordMixing(const u8 *src)
@@ -754,12 +1279,16 @@ static void CalculateDaycareMailRandSum(const u8 *src)
     sDaycareMailRandSum = sum;
 }
 
+#if TESTING
+u8 GetDaycareMailRandSum(void)
+#else
 static u8 GetDaycareMailRandSum(void)
+#endif
 {
     return sDaycareMailRandSum;
 }
 
-static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows)
+static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId)
 {
     u16 i, j;
     u8 linkPlayerCount;
@@ -1119,7 +1648,7 @@ void GetPlayerHallRecords(struct PlayerHallRecords *dst)
         {
             CopyTrainerId(dst->onePlayer[i][j].id, gSaveBlock2Ptr->playerTrainerId);
             dst->onePlayer[i][j].language = GAME_LANGUAGE;
-            StringCopy(dst->onePlayer[i][j].name, gSaveBlock2Ptr->playerName);
+            StringCopy_PlayerName(dst->onePlayer[i][j].name, gSaveBlock2Ptr->playerName);
         }
     }
 
@@ -1128,8 +1657,8 @@ void GetPlayerHallRecords(struct PlayerHallRecords *dst)
         dst->twoPlayers[j].language = GAME_LANGUAGE;
         CopyTrainerId(dst->twoPlayers[j].id1, gSaveBlock2Ptr->playerTrainerId);
         CopyTrainerId(dst->twoPlayers[j].id2, gSaveBlock2Ptr->frontier.opponentTrainerIds[j]);
-        StringCopy(dst->twoPlayers[j].name1, gSaveBlock2Ptr->playerName);
-        StringCopy(dst->twoPlayers[j].name2, gSaveBlock2Ptr->frontier.opponentNames[j]);
+        StringCopy_PlayerName(dst->twoPlayers[j].name1, gSaveBlock2Ptr->playerName);
+        StringCopy_PlayerName(dst->twoPlayers[j].name2, gSaveBlock2Ptr->frontier.opponentNames[j]);
     }
 
     for (i = 0; i < FRONTIER_LVL_MODE_COUNT; i++)
@@ -1356,6 +1885,9 @@ static void ReceiveRankingHallRecords(struct PlayerHallRecords *records, size_t 
 #if FREE_RECORD_MIXING_HALL_RECORDS == FALSE
     u8 linkPlayerCount = GetLinkPlayerCount();
     struct RecordMixingHallRecords *mixHallRecords = AllocZeroed(sizeof(*mixHallRecords));
+
+    if (mixHallRecords == NULL)
+        return;
 
     GetNewHallRecords(mixHallRecords, records, recordSize, multiplayerId, linkPlayerCount);
     SaveHighestWinStreakRecords(mixHallRecords);
