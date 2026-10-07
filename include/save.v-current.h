@@ -2,10 +2,11 @@
 #define GUARD_SAVE_V_CURRENT_H
 
 /*
- * For the purpose of save versioning, the saveblocks have been moved to this header.
- * When a new release is made, this file should be copied to a new file in src/data/old_saves.
- * In addition, the preproc flags should be expanded out as well as the defines.
-**/
+ * This is the in-development version 1 save layout. It may change until the
+ * version 1 release. When a new version is started, snapshot this file in
+ * src/data/old_saves and replace all configuration flags and array bounds in
+ * that snapshot with the released literal values.
+ */
 
 struct SaveBlock3
 {

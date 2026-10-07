@@ -32,10 +32,10 @@
 #define NUM_VERSIONS 15
 
 // Tracks the current save iteration for connectivity and save migration.
-#define SAVE_VERSION_0 0 // Current
-#define SAVE_VERSION_1 1
+#define SAVE_VERSION_0 0 // Vanilla Pokemon Emerald
+#define SAVE_VERSION_1 1 // Current
 
-#define SAVE_VERSION (SAVE_VERSION_0)
+#define SAVE_VERSION (SAVE_VERSION_1)
 
 #define LANGUAGE_JAPANESE 1
 #define LANGUAGE_ENGLISH  2

@@ -1130,7 +1130,10 @@ void BufferUpdateFailReason(void)
 u8 UpdateSaveFile(void)
 {
     u16 version = gSaveBlock3Ptr->saveVersion;
-    u8* sOldSaveBlock;
+    u8 *sOldSaveBlock;
+    u8 *oldSaveBlock1;
+    u8 *oldPokemonStorage;
+    u32 blockOffset;
     bool8 result = SAVE_UFR_SUCCESS;
 
     /** When we enter this function, we're at the end of the copyright screen and the game has just loaded
@@ -1139,33 +1142,35 @@ u8 UpdateSaveFile(void)
      * old data so we can read it how we want. */
 
     // Load the old save file into the heap
-    sOldSaveBlock = AllocZeroed(SECTOR_DATA_SIZE * NUM_SECTORS_PER_SLOT);
+    sOldSaveBlock = AllocZeroed(sizeof(struct SaveBlock2_v0)
+                              + sizeof(struct SaveBlock1_v0)
+                              + sizeof(struct PokemonStorage_v0));
     {
         /** The following assigns pointers to gRamSaveSectorLocations to locations of the old save
          * block located on the heap. We will be passing gRamSaveSectorLocations to the update function
          * later so it can use these pointer locations to set up the old save structs to the data.
          */
         // Assign locations to load the old save block into the heap
-        u8* ptr1 = sOldSaveBlock;
-        u8* ptr2 = sOldSaveBlock;
-        u8* ptr3 = sOldSaveBlock;
         int i = SECTOR_ID_SAVEBLOCK2;
 
-        gRamSaveSectorLocations[i].data = (void *)(ptr1) + sSaveSlotLayout[i].offset;
-        gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
-        ptr3 = ptr2 = ptr1 + sSaveSlotLayout[i].size;
+        oldSaveBlock1 = sOldSaveBlock + sizeof(struct SaveBlock2_v0);
+        oldPokemonStorage = oldSaveBlock1 + sizeof(struct SaveBlock1_v0);
+
+        gRamSaveSectorLocations[i].data = sOldSaveBlock;
+        gRamSaveSectorLocations[i].size = sizeof(struct SaveBlock2_v0);
 
         for (i = SECTOR_ID_SAVEBLOCK1_START; i <= SECTOR_ID_SAVEBLOCK1_END; i++)
         {
-            gRamSaveSectorLocations[i].data = (void *)(ptr2) + sSaveSlotLayout[i].offset;
-            gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
-            ptr3 += sSaveSlotLayout[i].size;
+            blockOffset = (i - SECTOR_ID_SAVEBLOCK1_START) * SECTOR_DATA_SIZE;
+            gRamSaveSectorLocations[i].data = oldSaveBlock1 + blockOffset;
+            gRamSaveSectorLocations[i].size = min(sizeof(struct SaveBlock1_v0) - blockOffset, SECTOR_DATA_SIZE);
         }
 
-        for (; i <= SECTOR_ID_PKMN_STORAGE_END; i++) //setting i to SECTOR_ID_PKMN_STORAGE_START does not match
+        for (; i <= SECTOR_ID_PKMN_STORAGE_END; i++)
         {
-            gRamSaveSectorLocations[i].data = (void *)(ptr3) + sSaveSlotLayout[i].offset;
-            gRamSaveSectorLocations[i].size = sSaveSlotLayout[i].size;
+            blockOffset = (i - SECTOR_ID_PKMN_STORAGE_START) * SECTOR_DATA_SIZE;
+            gRamSaveSectorLocations[i].data = oldPokemonStorage + blockOffset;
+            gRamSaveSectorLocations[i].size = min(sizeof(struct PokemonStorage_v0) - blockOffset, SECTOR_DATA_SIZE);
         }
         // Load the save from FLASH and onto the heap
         CopySaveSlotData(FULL_SAVE_SLOT, gRamSaveSectorLocations);
@@ -1177,8 +1182,9 @@ u8 UpdateSaveFile(void)
     CpuFill16(0, &gPokemonStorage, sizeof(struct PokemonStorageASLR));
 
     // Attempt to update the save
-    switch (version) {
-        case 0: 
+    switch (version)
+    {
+        case SAVE_VERSION_0:
             result = UpdateSave_v0_v1(gRamSaveSectorLocations);
             break;
         default:
