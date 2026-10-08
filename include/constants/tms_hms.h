@@ -46,7 +46,7 @@
     F(FACADE) \
     F(VOLT_SWITCH) \
     F(REST) \
-    F(ATTRACT) \
+    F(SECRET_POWER) \
     F(THIEF) \
     F(MYSTICAL_FIRE) \
     F(SKILL_SWAP) \

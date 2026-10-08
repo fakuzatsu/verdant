@@ -14,7 +14,7 @@ VerdanturfTown_BattleTentLobby_EventScript_AttractGiver::
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_ATTRACT, VerdanturfTown_BattleTentLobby_EventScript_ReceivedAttract
 	msgbox VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep, MSGBOX_DEFAULT
-	giveitem ITEM_TM_ATTRACT
+	giveitem ITEM_TM_ALLURING_VOICE
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ATTRACT
 	msgbox VerdanturfTown_BattleTentLobby_Text_AttractionMutual, MSGBOX_DEFAULT
@@ -63,8 +63,8 @@ VerdanturfTown_BattleTentLobby_Text_QuickAttackIsCool:
 	.string "Now that's a cool move!$"
 
 VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep:
-	.string "My feelings toward my Pokémon…\n"
-	.string "The attraction runs deep…\p"
+	.string "The appeal of my Pokémon…\n"
+	.string "They're so alluring…\p"
 	.string "Oh, hi, you didn't see that, did you?\n"
 	.string "Well, it doesn't matter.\p"
 	.string "If you're entering a Contest, try this\n"
@@ -72,7 +72,7 @@ VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep:
 
 VerdanturfTown_BattleTentLobby_Text_AttractionMutual:
 	.string "My feelings toward my Pokémon…\n"
-	.string "I'm sure the attraction is mutual!\p"
+	.string "I'm sure the feeling is mutual!\p"
 	.string "They perform exactly the way I want\n"
 	.string "them to!$"
 
