@@ -73,8 +73,7 @@ u16 WonderNews_GetRewardInfo(void)
     struct WonderNewsMetadata *data = GetSavedWonderNewsMetadata();
     u16 rewardType;
 
-    // Checks if Mystery Event is enabled, not Mystery Gift?
-    if (!IsMysteryEventEnabled() || !ValidateSavedWonderNews())
+    if (!ValidateSavedWonderNews())
         return NEWS_REWARD_NONE;
 
     rewardType = GetRewardType(data);

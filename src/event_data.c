@@ -79,34 +79,19 @@ bool32 IsNationalPokedexEnabled(void)
         return FALSE;
 }
 
-void DisableMysteryEvent(void)
+void DisableInternetOptions(void)
 {
-    FlagClear(FLAG_SYS_MYSTERY_EVENT_ENABLE);
+    FlagClear(FLAG_SYS_INTERNET_OPTIONS_ENABLE);
 }
 
-void EnableMysteryEvent(void)
+void EnableInternetOptions(void)
 {
-    FlagSet(FLAG_SYS_MYSTERY_EVENT_ENABLE);
+    FlagSet(FLAG_SYS_INTERNET_OPTIONS_ENABLE);
 }
 
-bool32 IsMysteryEventEnabled(void)
+bool32 AreInternetOptionsEnabled(void)
 {
-    return FlagGet(FLAG_SYS_MYSTERY_EVENT_ENABLE);
-}
-
-void DisableMysteryGift(void)
-{
-    FlagClear(FLAG_SYS_MYSTERY_GIFT_ENABLE);
-}
-
-void EnableMysteryGift(void)
-{
-    FlagSet(FLAG_SYS_MYSTERY_GIFT_ENABLE);
-}
-
-bool32 IsMysteryGiftEnabled(void)
-{
-    return FlagGet(FLAG_SYS_MYSTERY_GIFT_ENABLE);
+    return FlagGet(FLAG_SYS_INTERNET_OPTIONS_ENABLE);
 }
 
 void ClearMysteryGiftFlags(void)

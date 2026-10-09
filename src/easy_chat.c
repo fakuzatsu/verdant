@@ -2971,7 +2971,7 @@ static void SetSpecialEasyChatResult(void)
         break;
     case EASY_CHAT_TYPE_QUESTIONNAIRE:
         if (DidPlayerInputMysteryGiftPhrase())
-            gSpecialVar_0x8004 = 2;
+            gSpecialVar_0x8004 = 1;
         else
             gSpecialVar_0x8004 = 0;
         break;
