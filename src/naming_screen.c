@@ -1370,6 +1370,8 @@ static void NamingScreen_CreatePlayerIcon(void);
 static void NamingScreen_CreatePCIcon(void);
 static void NamingScreen_CreateMonIcon(void);
 static void NamingScreen_CreateWaldaDadIcon(void);
+static void NamingScreen_CreateUnownIcon(void);
+static void NamingScreen_CreatePorygonIcon(void);
 
 static void (*const sIconFunctions[])(void) =
 {
@@ -1378,6 +1380,8 @@ static void (*const sIconFunctions[])(void) =
     NamingScreen_CreatePCIcon,
     NamingScreen_CreateMonIcon,
     NamingScreen_CreateWaldaDadIcon,
+    NamingScreen_CreateUnownIcon,
+    NamingScreen_CreatePorygonIcon,
 };
 
 static void CreateInputTargetIcon(void)
@@ -1426,6 +1430,24 @@ static void NamingScreen_CreateWaldaDadIcon(void)
     spriteId = CreateObjectGraphicsSprite(OBJ_EVENT_GFX_MAN_1, SpriteCallbackDummy, 56, 37, 0);
     gSprites[spriteId].oam.priority = 3;
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
+}
+
+static void NamingScreen_CreateUnownIcon(void)
+{
+    u8 spriteId;
+
+    LoadMonIconPalettes();
+    spriteId = CreateMonIconNoPersonality(SPECIES_UNOWN_QUESTION, SpriteCallbackDummy, 56, 40, 0);
+    gSprites[spriteId].oam.priority = 3;
+}
+
+static void NamingScreen_CreatePorygonIcon(void)
+{
+    u8 spriteId;
+
+    LoadMonIconPalettes();
+    spriteId = CreateMonIconNoPersonality(SPECIES_PORYGON, SpriteCallbackDummy, 56, 40, 0);
+    gSprites[spriteId].oam.priority = 3;
 }
 
 //--------------------------------------------------
@@ -2149,7 +2171,7 @@ static const struct NamingScreenTemplate sRngSeedScreenTemplate =
 {
     .copyExistingString = TRUE,
     .maxChars = RNG_SEED_LENGTH,
-    .iconFunction = 4,
+    .iconFunction = 5,
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_SYMBOLS,
     .unused = 11,
@@ -2160,7 +2182,7 @@ static const struct NamingScreenTemplate sRecordCodeScreenTemplate =
 {
     .copyExistingString = TRUE,
     .maxChars = INTERNET_RECORD_CODE_LENGTH,
-    .iconFunction = 4,
+    .iconFunction = 6,
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_LETTERS_UPPER,
     .unused = 11,

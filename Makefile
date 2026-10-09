@@ -75,7 +75,8 @@ HEADLESSELF = $(ROM:.gba=-test-headless.elf)
 MOBILE_TESTELF = $(ROM:.gba=-mobile-test.elf)
 MOBILE_HEADLESSELF = $(ROM:.gba=-mobile-test-headless.elf)
 MOBILE_TEST_RUNNER = test/run_mobile_adapter_integration.sh
-MOBILE_API_NODE_MODULES = pokemobile/node_modules/.package-lock.json
+POKEMOBILE_ROOT ?= ../pokemobile
+MOBILE_API_NODE_MODULES = $(POKEMOBILE_ROOT)/node_modules/.package-lock.json
 
 C_SUBDIR = src
 GFLIB_SUBDIR = gflib
@@ -539,13 +540,13 @@ check: $(TESTELF)
 	$(PATCHELF) $(HEADLESSELF) gTestRunnerHeadless '\x01' gTestRunnerSkipIsFail "$(TEST_SKIP_IS_FAIL)"
 	$(ROMTESTHYDRA) $(ROMTEST) $(OBJCOPY) $(HEADLESSELF)
 
-$(MOBILE_API_NODE_MODULES): pokemobile/package.json
-	cd pokemobile && npm install --no-audit --no-fund
+$(MOBILE_API_NODE_MODULES): $(POKEMOBILE_ROOT)/package.json
+	cd "$(POKEMOBILE_ROOT)" && npm install --no-audit --no-fund
 
 check-mobile: $(MOBILE_TESTELF) $(MOBILE_TEST_RUNNER) $(MOBILE_API_NODE_MODULES)
 	@cp $< $(MOBILE_HEADLESSELF)
 	$(PATCHELF) $(MOBILE_HEADLESSELF) gTestRunnerHeadless '\x01' gTestRunnerSkipIsFail "$(TEST_SKIP_IS_FAIL)"
-	MOBILE_API_PORT="$(MOBILE_API_PORT)" $(MOBILE_TEST_RUNNER) $(ROMTESTHYDRA) $(MOBILE_ROMTEST) $(OBJCOPY) $(MOBILE_HEADLESSELF)
+	MOBILE_API_PORT="$(MOBILE_API_PORT)" POKEMOBILE_ROOT="$(POKEMOBILE_ROOT)" $(MOBILE_TEST_RUNNER) $(ROMTESTHYDRA) $(MOBILE_ROMTEST) $(OBJCOPY) $(MOBILE_HEADLESSELF)
 
 libagbsyscall:
 	@$(MAKE) -C libagbsyscall TOOLCHAIN=$(TOOLCHAIN) MODERN=1

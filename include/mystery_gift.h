@@ -6,7 +6,7 @@
 #include "constants/mystery_gift.h"
 
 // Wire header: "PMGF", protocol version, gift type, little-endian payload size,
-// payload CRC16, and a reserved zero word.
+// payload CRC16, and a status word.
 #define INTERNET_MYSTERY_GIFT_HEADER_SIZE 12
 #define INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE (INTERNET_MYSTERY_GIFT_HEADER_SIZE + sizeof(struct BoxPokemon))
 
@@ -20,10 +20,19 @@ enum InternetMysteryGiftType
 enum InternetMysteryGiftResult
 {
     INTERNET_MYSTERY_GIFT_INVALID_PACKET,
+    INTERNET_MYSTERY_GIFT_ALREADY_RECEIVED,
+    INTERNET_MYSTERY_GIFT_UNKNOWN_IDENTITY,
     INTERNET_MYSTERY_GIFT_RECEIVED_ITEM,
     INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY,
     INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PC,
     INTERNET_MYSTERY_GIFT_NO_SPACE,
+};
+
+enum InternetMysteryGiftStatus
+{
+    INTERNET_MYSTERY_GIFT_STATUS_OK,
+    INTERNET_MYSTERY_GIFT_STATUS_ALREADY_RECEIVED,
+    INTERNET_MYSTERY_GIFT_STATUS_UNKNOWN_IDENTITY,
 };
 
 struct InternetMysteryGiftItem

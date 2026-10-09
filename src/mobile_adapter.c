@@ -64,8 +64,8 @@ void maEnd(void)
     RestoreSerialTimer3IntrHandlers();
 }
 
-//Get data stored in the MA EEPROM
-int maGetEEPROMData(MA_TELDATA *maTel, char *maUserID, char *maMailID)
+// Get the EEPROM data required to establish a PPP connection.
+int maGetConnectionData(MA_TELDATA *maTel, char *maUserID)
 {
     int isError = 0;
 
@@ -76,12 +76,6 @@ int maGetEEPROMData(MA_TELDATA *maTel, char *maUserID, char *maMailID)
     }
 
     MA_GetUserID(maUserID);
-    if ((isError = maWait()) > 0)
-    {
-        return isError;
-    }
-
-    MA_GetMailID(maMailID);
     if ((isError = maWait()) > 0)
     {
         return isError;

@@ -2,6 +2,8 @@
 #include "characters.h"
 #include "event_data.h"
 #include "item.h"
+#include "internet_protocol.h"
+#include "internet_options_menu.h"
 #include "load_save.h"
 #include "main.h"
 #include "mobile_adapter.h"
@@ -23,9 +25,7 @@
 EWRAM_DATA static u8 sRecordPacket[INTERNET_RECORD_MIX_MAX_PACKET_SIZE + 1] = {0};
 EWRAM_DATA static u8 sUploadedRecordPacket[INTERNET_RECORD_MIX_MAX_PACKET_SIZE] = {0};
 
-static void SaveFailureCallbackSentinel(void)
-{
-}
+#define TEST_INTERNET_API_URL(path) "http://127.0.0.1/" path "?gameidentifier=" INTERNET_GAME_IDENTIFIER
 
 static void WriteU16(u8 *dest, u16 value)
 {
@@ -125,9 +125,33 @@ static bool32 GameStringsEqual(const u8 *left, const u8 *right)
     return FALSE;
 }
 
-static bool32 BuildUploadedRecordUrl(char *url, const u8 *code, u16 codeSize)
+static bool32 AppendSessionToUrl(char *url, u32 capacity, const u8 *sessionToken)
 {
-    static const char prefix[] = "http://127.0.0.1/Record?gameidentifier=1VERDANT&code=";
+    static const char parameter[] = "&session=";
+    char tokenText[INTERNET_SESSION_TOKEN_TEXT_SIZE];
+    u32 length = strlen(url);
+
+    if (length + sizeof(parameter) - 1 + sizeof(tokenText) > capacity)
+        return FALSE;
+    FormatInternetSessionToken(sessionToken, tokenText);
+    memcpy(&url[length], parameter, sizeof(parameter) - 1);
+    memcpy(&url[length + sizeof(parameter) - 1], tokenText, sizeof(tokenText));
+    return TRUE;
+}
+
+static bool32 BuildSessionUrl(char *url, u32 capacity, const char *baseUrl, const u8 *sessionToken)
+{
+    u32 length = strlen(baseUrl);
+
+    if (length + 1 > capacity)
+        return FALSE;
+    memcpy(url, baseUrl, length + 1);
+    return AppendSessionToUrl(url, capacity, sessionToken);
+}
+
+static bool32 BuildUploadedRecordUrl(char *url, u32 capacity, const u8 *code, u16 codeSize, const u8 *sessionToken)
+{
+    static const char prefix[] = TEST_INTERNET_API_URL("Record") "&code=";
     u32 i;
 
     if (codeSize == 0 || codeSize > INTERNET_RECORD_CODE_LENGTH)
@@ -143,7 +167,7 @@ static bool32 BuildUploadedRecordUrl(char *url, const u8 *code, u16 codeSize)
         url[sizeof(prefix) - 1 + i] = code[i];
     }
     url[sizeof(prefix) - 1 + codeSize] = '\0';
-    return TRUE;
+    return AppendSessionToUrl(url, capacity, sessionToken);
 }
 
 static bool32 HasPokeNews(u8 kind)
@@ -247,63 +271,202 @@ TEST("Record Mix upload builder emits an exact native packet")
     EXPECT_EQ(BuildInternetRecordMixPacket(NULL, INTERNET_RECORD_MIX_MAX_PACKET_SIZE), 0);
 }
 
+TEST("Internet session authentication matches the shared HMAC vector")
+{
+    static const u8 expected[INTERNET_SESSION_AUTH_PACKET_SIZE] = {
+        0x50, 0x4D, 0x53, 0x41, 0x01, 0x00, 0x00, 0x01,
+        0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
+        0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x97, 0x21,
+        0x6C, 0x88, 0x12, 0x49, 0xDA, 0x86, 0xDF, 0x81,
+    };
+    u8 nonce[INTERNET_SESSION_NONCE_SIZE];
+    u8 packet[INTERNET_SESSION_AUTH_PACKET_SIZE];
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(nonce); i++)
+        nonce[i] = i;
+
+    EXPECT(BuildInternetSessionAuthPacket(nonce, packet));
+    EXPECT(BytesEqual(packet, expected, sizeof(expected)));
+}
+
+TEST("Internet control packet decoders require exact shape and CRC")
+{
+    u8 challenge[INTERNET_SESSION_CHALLENGE_PACKET_SIZE] = {0};
+    u8 response[INTERNET_SESSION_RESPONSE_PACKET_SIZE] = {0};
+    u8 identity[INTERNET_IDENTITY_RESPONSE_PACKET_SIZE] = {0};
+    u8 nonce[INTERNET_SESSION_NONCE_SIZE] = {0};
+    u8 sessionToken[INTERNET_SESSION_TOKEN_SIZE] = {0};
+    u8 identityToken[INTERNET_IDENTITY_TOKEN_SIZE] = {0};
+    u32 pid = 0;
+
+    memcpy(challenge, "PMSC", 4);
+    challenge[4] = INTERNET_PROTOCOL_VERSION;
+    WriteU16(&challenge[sizeof(challenge) - 2], CalcCRC16WithTable(challenge, sizeof(challenge) - 2));
+    EXPECT(DecodeInternetSessionChallenge(challenge, sizeof(challenge), nonce));
+    EXPECT(!DecodeInternetSessionChallenge(challenge, sizeof(challenge) - 1, nonce));
+    challenge[5] = 1;
+    EXPECT(!DecodeInternetSessionChallenge(challenge, sizeof(challenge), nonce));
+
+    memcpy(response, "PMSS", 4);
+    response[4] = INTERNET_PROTOCOL_VERSION;
+    WriteU16(&response[sizeof(response) - 2], CalcCRC16WithTable(response, sizeof(response) - 2));
+    EXPECT(DecodeInternetSessionResponse(response, sizeof(response), sessionToken));
+    response[15] ^= 1;
+    EXPECT(!DecodeInternetSessionResponse(response, sizeof(response), sessionToken));
+
+    memcpy(identity, "PMID", 4);
+    identity[4] = INTERNET_PROTOCOL_VERSION;
+    identity[5] = 1;
+    WriteU32(&identity[8], 0x12345678);
+    WriteU16(&identity[sizeof(identity) - 2], CalcCRC16WithTable(identity, sizeof(identity) - 2));
+    EXPECT(DecodeInternetIdentityResponse(identity, sizeof(identity), &pid, identityToken));
+    EXPECT_EQ(pid, 0x12345678);
+    EXPECT_EQ(identityToken[0], 1);
+}
+
 TEST("Mobile Adapter exchanges data with the PokeMobile API")
 {
     static const u8 request[] = {'P', 'I', 'N', 'G'};
     static const u8 expectedResponse[] = {'P', 'O', 'N', 'G'};
     MA_TELDATA telephone = {0};
     char userId[33] = {0};
-    char mailId[31] = {0};
     char responseHeaders[256] = {0};
     u8 response[sizeof(expectedResponse) + 1] = {0};
+    u8 challengePacket[INTERNET_SESSION_CHALLENGE_PACKET_SIZE + 1] = {0};
+    u8 authPacket[INTERNET_SESSION_AUTH_PACKET_SIZE] = {0};
+    u8 sessionPacket[INTERNET_SESSION_RESPONSE_PACKET_SIZE + 1] = {0};
+    u8 identityRequest[INTERNET_IDENTITY_REQUEST_PACKET_SIZE] = {0};
+    u8 identityPacket[INTERNET_IDENTITY_RESPONSE_PACKET_SIZE + 1] = {0};
+    u8 credentialPacket[INTERNET_CREDENTIAL_PACKET_SIZE] = {0};
+    u8 ackPacket[INTERNET_ACK_PACKET_SIZE + 1] = {0};
+    u8 nonce[INTERNET_SESSION_NONCE_SIZE] = {0};
+    u8 sessionToken[INTERNET_SESSION_TOKEN_SIZE] = {0};
+    u8 identityToken[INTERNET_IDENTITY_TOKEN_SIZE] = {0};
     u8 giftPacket[INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE + 1] = {0};
     static const u8 expectedRecordSource[] = _("Zatsu");
     static const u8 expectedBaseOwner[] = _("Zatsu");
     u8 recordSource[PLAYER_NAME_LENGTH + 1] = {0};
     u8 uploadedCode[INTERNET_RECORD_CODE_LENGTH + 1] = {0};
     u8 displayedCode[INTERNET_RECORD_CODE_LENGTH + 1] = {0};
-    char uploadedRecordUrl[96] = {0};
+    char operationUrl[128] = {0};
+    char uploadedRecordUrl[128] = {0};
     struct InternetMysteryGift gift = {0};
+    struct InternetMysteryGift claimedGift = {0};
     u16 responseSize = 0;
+    u16 challengePacketSize = 0;
+    u16 sessionPacketSize = 0;
+    u16 identityPacketSize = 0;
+    u16 ackPacketSize = 0;
     u16 giftPacketSize = 0;
+    u16 firstGiftPacketSize = 0;
     u16 recordPacketSize = 0;
     u16 uploadedCodeSize = 0;
     u16 uploadedPacketSize = 0;
     u16 roundTripPacketSize = 0;
     int initResult;
-    int eepromResult = -1;
+    int connectionDataResult = -1;
     int connectResult = -1;
     int uploadResult = -1;
+    int challengeResult = -1;
+    int sessionResult = -1;
+    int identityResult = -1;
     int downloadResult = -1;
+    int ackResult = -1;
+    int secondGiftResult = -1;
     int recordDownloadResult = -1;
     int recordUploadResult = -1;
     int roundTripDownloadResult = -1;
     int disconnectResult = -1;
     u16 originalTrendWord = 0x1234;
     enum InternetMysteryGiftResult giftResult = INTERNET_MYSTERY_GIFT_INVALID_PACKET;
+    enum InternetMysteryGiftResult claimedGiftResult = INTERNET_MYSTERY_GIFT_INVALID_PACKET;
     enum InternetRecordMixResult maskedRecordResult = INTERNET_RECORD_MIX_INVALID_PACKET;
     enum InternetRecordMixResult recordResult = INTERNET_RECORD_MIX_INVALID_PACKET;
     bool32 uploadedCodeValid = FALSE;
+    bool32 sessionValid = FALSE;
+    bool32 identityValid = FALSE;
+    bool32 ackValid = FALSE;
     struct SecretBase *receivedBase;
+    u32 pid = NO_PID;
     u32 i;
 
     initResult = maInitLibrary();
     if (initResult == 0)
-        eepromResult = maGetEEPROMData(&telephone, userId, mailId);
-    if (eepromResult == 0)
+        connectionDataResult = maGetConnectionData(&telephone, userId);
+    if (connectionDataResult == 0)
         connectResult = maConnectServer(&telephone, userId, "password1");
     if (connectResult == 0)
         uploadResult = maUpload("http://127.0.0.1/Debug", responseHeaders, sizeof(responseHeaders),
                                 request, sizeof(request), response, sizeof(response), &responseSize, "", "");
     if (uploadResult == 0)
-        downloadResult = maDownload("http://127.0.0.1/Gift?gameidentifier=1VERDANT", responseHeaders, sizeof(responseHeaders),
-                                    giftPacket, sizeof(giftPacket), &giftPacketSize, "", "");
+        challengeResult = maDownload(TEST_INTERNET_API_URL("Session/Challenge"),
+                                     responseHeaders, sizeof(responseHeaders), challengePacket, sizeof(challengePacket),
+                                     &challengePacketSize, "", "");
+    if (challengeResult == 0
+     && DecodeInternetSessionChallenge(challengePacket, challengePacketSize, nonce)
+     && BuildInternetSessionAuthPacket(nonce, authPacket))
+    {
+        sessionResult = maUpload(TEST_INTERNET_API_URL("Session"),
+                                 responseHeaders, sizeof(responseHeaders), authPacket, sizeof(authPacket),
+                                 sessionPacket, sizeof(sessionPacket), &sessionPacketSize, "", "");
+    }
+    if (sessionResult == 0)
+        sessionValid = DecodeInternetSessionResponse(sessionPacket, sessionPacketSize, sessionToken);
+    if (sessionValid
+     && BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                        TEST_INTERNET_API_URL("Identity"), sessionToken))
+    {
+        BuildInternetIdentityRequest(identityRequest);
+        identityResult = maUpload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                                  identityRequest, sizeof(identityRequest), identityPacket, sizeof(identityPacket),
+                                  &identityPacketSize, "", "");
+    }
+    if (identityResult == 0)
+        identityValid = DecodeInternetIdentityResponse(identityPacket, identityPacketSize, &pid, identityToken);
+    if (identityValid
+     && BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                        TEST_INTERNET_API_URL("Gift"), sessionToken))
+    {
+        BuildInternetCredentialPacket("PMGR", pid, identityToken, credentialPacket);
+        downloadResult = maUpload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                                  credentialPacket, sizeof(credentialPacket), giftPacket, sizeof(giftPacket),
+                                  &giftPacketSize, "", "");
+    }
     if (downloadResult == 0)
+    {
+        firstGiftPacketSize = giftPacketSize;
         giftResult = ReceiveInternetMysteryGift(giftPacket, giftPacketSize, &gift);
-    if (giftResult == INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY)
-        recordDownloadResult = maDownload("http://127.0.0.1/Record?gameidentifier=1VERDANT&code=Zatsu",
-                                          responseHeaders, sizeof(responseHeaders), sRecordPacket, sizeof(sRecordPacket),
-                                          &recordPacketSize, "", "");
+    }
+    if (giftResult == INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY
+     && BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                        TEST_INTERNET_API_URL("Gift/Acknowledge"), sessionToken))
+    {
+        BuildInternetCredentialPacket("PMGA", pid, identityToken, credentialPacket);
+        ackResult = maUpload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                             credentialPacket, sizeof(credentialPacket), ackPacket, sizeof(ackPacket),
+                             &ackPacketSize, "", "");
+    }
+    if (ackResult == 0)
+        ackValid = DecodeInternetAcknowledgement(ackPacket, ackPacketSize);
+    if (ackValid
+     && BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                        TEST_INTERNET_API_URL("Gift"), sessionToken))
+    {
+        BuildInternetCredentialPacket("PMGR", pid, identityToken, credentialPacket);
+        secondGiftResult = maUpload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                                    credentialPacket, sizeof(credentialPacket), giftPacket, sizeof(giftPacket),
+                                    &giftPacketSize, "", "");
+    }
+    if (secondGiftResult == 0)
+        claimedGiftResult = ReceiveInternetMysteryGift(giftPacket, giftPacketSize, &claimedGift);
+    if (claimedGiftResult == INTERNET_MYSTERY_GIFT_ALREADY_RECEIVED
+     && BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                        TEST_INTERNET_API_URL("Record") "&code=Zatsu", sessionToken))
+    {
+        recordDownloadResult = maDownload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                                          sRecordPacket, sizeof(sRecordPacket), &recordPacketSize, "", "");
+    }
     if (recordDownloadResult == 0)
     {
         gSaveBlock1Ptr->dewfordTrends[0].words[0] = originalTrendWord;
@@ -325,37 +488,48 @@ TEST("Mobile Adapter exchanges data with the PokeMobile API")
     {
         StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("LOCAL"));
         uploadedPacketSize = BuildInternetRecordMixPacket(sUploadedRecordPacket, sizeof(sUploadedRecordPacket));
-        recordUploadResult = maUpload("http://127.0.0.1/Record?gameidentifier=1VERDANT",
-                                      responseHeaders, sizeof(responseHeaders),
-                                      sUploadedRecordPacket, uploadedPacketSize,
-                                      uploadedCode, sizeof(uploadedCode), &uploadedCodeSize, "", "");
+        if (BuildSessionUrl(operationUrl, sizeof(operationUrl),
+                            TEST_INTERNET_API_URL("Record"), sessionToken))
+        {
+            recordUploadResult = maUpload(operationUrl, responseHeaders, sizeof(responseHeaders),
+                                          sUploadedRecordPacket, uploadedPacketSize,
+                                          uploadedCode, sizeof(uploadedCode), &uploadedCodeSize, "", "");
+        }
     }
     if (recordUploadResult == 0)
     {
         uploadedCodeValid = DecodeInternetRecordMixCode(uploadedCode, uploadedCodeSize, displayedCode)
-                         && BuildUploadedRecordUrl(uploadedRecordUrl, uploadedCode, uploadedCodeSize);
+                         && BuildUploadedRecordUrl(uploadedRecordUrl, sizeof(uploadedRecordUrl), uploadedCode,
+                                                   uploadedCodeSize, sessionToken);
     }
     if (uploadedCodeValid)
     {
         roundTripDownloadResult = maDownload(uploadedRecordUrl, responseHeaders, sizeof(responseHeaders),
                                              sRecordPacket, sizeof(sRecordPacket), &roundTripPacketSize, "", "");
     }
-    if (recordDownloadResult == 0)
+    if (connectResult == 0)
         disconnectResult = maDisconnect();
     maEnd();
 
     EXPECT_EQ(initResult, 0);
-    EXPECT_EQ(eepromResult, 0);
+    EXPECT_EQ(connectionDataResult, 0);
     EXPECT(StringsEqual(telephone.telNo, "#9677"));
     EXPECT(StringsEqual(telephone.comment, "mGBA test"));
     EXPECT(StringsEqual(userId, "test-user"));
-    EXPECT(StringsEqual(mailId, "test@example.com"));
     EXPECT_EQ(connectResult, 0);
     EXPECT_EQ(uploadResult, 0);
     EXPECT_EQ(responseSize, sizeof(expectedResponse));
     EXPECT(BytesEqual(response, expectedResponse, sizeof(expectedResponse)));
+    EXPECT_EQ(challengeResult, 0);
+    EXPECT_EQ(challengePacketSize, INTERNET_SESSION_CHALLENGE_PACKET_SIZE);
+    EXPECT_EQ(sessionResult, 0);
+    EXPECT(sessionValid);
+    EXPECT_EQ(sessionPacketSize, INTERNET_SESSION_RESPONSE_PACKET_SIZE);
+    EXPECT_EQ(identityResult, 0);
+    EXPECT(identityValid);
+    EXPECT(pid != 0 && pid != NO_PID);
     EXPECT_EQ(downloadResult, 0);
-    EXPECT_EQ(giftPacketSize, INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE);
+    EXPECT_EQ(firstGiftPacketSize, INTERNET_MYSTERY_GIFT_MAX_PACKET_SIZE);
     EXPECT_EQ(giftResult, INTERNET_MYSTERY_GIFT_RECEIVED_POKEMON_PARTY);
     EXPECT_EQ(gift.type, INTERNET_MYSTERY_GIFT_POKEMON);
     EXPECT_EQ(GetMonData(&gift.data.pokemon, MON_DATA_PERSONALITY), 0x12345678);
@@ -378,6 +552,12 @@ TEST("Mobile Adapter exchanges data with the PokeMobile API")
     EXPECT_EQ(GetMonData(&gift.data.pokemon, MON_DATA_HP_IV), 28);
     EXPECT_EQ(GetMonData(&gift.data.pokemon, MON_DATA_ABILITY_NUM), 2);
     EXPECT_EQ(GetMonData(&gift.data.pokemon, MON_DATA_MODERN_FATEFUL_ENCOUNTER), 1);
+    EXPECT_EQ(ackResult, 0);
+    EXPECT(ackValid);
+    EXPECT_EQ(ackPacketSize, INTERNET_ACK_PACKET_SIZE);
+    EXPECT_EQ(secondGiftResult, 0);
+    EXPECT_EQ(giftPacketSize, INTERNET_MYSTERY_GIFT_HEADER_SIZE);
+    EXPECT_EQ(claimedGiftResult, INTERNET_MYSTERY_GIFT_ALREADY_RECEIVED);
     EXPECT_EQ(GetMonData(&gPlayerParty[0], MON_DATA_SPECIES), SPECIES_PIKACHU);
     EXPECT_EQ(recordDownloadResult, 0);
     EXPECT_EQ(recordPacketSize, INTERNET_RECORD_MIX_MAX_PACKET_SIZE);
@@ -584,13 +764,12 @@ TEST("Mobile Adapter reports an oversized HTTP response")
 {
     MA_TELDATA telephone = {0};
     char userId[33] = {0};
-    char mailId[31] = {0};
     u8 response[5] = {0};
     u16 responseSize = 0;
     int result = maInitLibrary();
 
     if (result == MA_RESULT_OK)
-        result = maGetEEPROMData(&telephone, userId, mailId);
+        result = maGetConnectionData(&telephone, userId);
     if (result == MA_RESULT_OK)
         result = maConnectServer(&telephone, userId, "password1");
     if (result == MA_RESULT_OK)

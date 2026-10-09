@@ -174,8 +174,6 @@ void NewGameInitData(void)
         RtcReset();
 
     gDifferentSaveFile = TRUE;
-    gSaveBlock3Ptr->saveVersion = SAVE_VERSION;
-    gSaveBlock3Ptr->PID = NO_PID;
     gSaveBlock2Ptr->encryptionKey = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
@@ -183,6 +181,9 @@ void NewGameInitData(void)
     ClearFrontierRecord();
     ClearSav1();
     ClearSav3();
+    gSaveBlock3Ptr->saveVersion = SAVE_VERSION;
+    memset(gSaveBlock3Ptr->internetToken, 0, sizeof(gSaveBlock3Ptr->internetToken));
+    gSaveBlock3Ptr->PID = NO_PID;
     ClearAllMail();
     gSaveBlock2Ptr->specialSaveWarpFlags = 0;
     gSaveBlock2Ptr->gcnLinkFlags = 0;

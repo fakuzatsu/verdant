@@ -1614,7 +1614,10 @@ static bool8 ClearDuplicateOwnedSecretBase(struct SecretBase *secretBase, struct
                     return FALSE;
                 }
 
+                // Preserve local-only state when the newly received copy wins.
+                // Received battle markers are cleared before duplicates are compared.
                 secretBases[i].toRegister = secretBase->toRegister;
+                secretBases[i].battledOwnerToday = secretBase->battledOwnerToday;
                 ClearSecretBase(secretBase);
                 return TRUE;
             }
@@ -1627,6 +1630,16 @@ static bool8 ClearDuplicateOwnedSecretBase(struct SecretBase *secretBase, struct
 static void ClearDuplicateOwnedSecretBases(struct SecretBase *playersBases, struct SecretBase *friendsBasesA, struct SecretBase *friendsBasesB, struct SecretBase *friendsBasesC)
 {
     u8 i;
+
+    // Battle status belongs to this save, not to the player who sent the base.
+    // Clear received markers first so an existing duplicate can pass its status
+    // to whichever copy wins the normal owner/version comparison below.
+    for (i = 0; i < SECRET_BASES_COUNT; i++)
+    {
+        friendsBasesA[i].battledOwnerToday = FALSE;
+        friendsBasesB[i].battledOwnerToday = FALSE;
+        friendsBasesC[i].battledOwnerToday = FALSE;
+    }
 
     for (i = 1; i < SECRET_BASES_COUNT; i++)
     {
@@ -1651,7 +1664,6 @@ static void ClearDuplicateOwnedSecretBases(struct SecretBase *playersBases, stru
     {
         if (friendsBasesA[i].secretBaseId)
         {
-            friendsBasesA[i].battledOwnerToday = 0;
             if (!ClearDuplicateOwnedSecretBase(&friendsBasesA[i], friendsBasesB, i))
             {
                 ClearDuplicateOwnedSecretBase(&friendsBasesA[i], friendsBasesC, i);
@@ -1662,12 +1674,7 @@ static void ClearDuplicateOwnedSecretBases(struct SecretBase *playersBases, stru
     {
         if (friendsBasesB[i].secretBaseId)
         {
-            friendsBasesB[i].battledOwnerToday = 0;
             ClearDuplicateOwnedSecretBase(&friendsBasesB[i], friendsBasesC, i);
-        }
-        if (friendsBasesC[i].secretBaseId)
-        {
-            friendsBasesC[i].battledOwnerToday = 0;
         }
     }
 }

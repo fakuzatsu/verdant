@@ -8,6 +8,7 @@ if [[ $# -ne 4 ]]; then
 fi
 
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+pokemobile_root="${POKEMOBILE_ROOT:-$repo_root/../pokemobile}"
 api_port="${MOBILE_API_PORT:-18080}"
 api_log="$(mktemp -t verdant-mobile-api.XXXXXX)"
 api_pid=""
@@ -24,7 +25,7 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 cd "$repo_root"
-BIND_ADDRESS="127.0.0.1" PORT="$api_port" node pokemobile/app.js >"$api_log" 2>&1 &
+BIND_ADDRESS="127.0.0.1" PORT="$api_port" node "$pokemobile_root/app.js" >"$api_log" 2>&1 &
 api_pid=$!
 
 api_ready=false

@@ -11,7 +11,7 @@
 struct SaveBlock3
 {
     u8 saveVersion;
-    // u8 padding[3];
+    u8 internetToken[3];
     u32 PID;
     u32 grottoSeed;
 #if OW_USE_FAKE_RTC
@@ -25,6 +25,9 @@ struct SaveBlock3
     u8 itemFlags[ITEM_FLAGS_COUNT];
 #endif
 }; /* max size 1624 bytes */
+
+STATIC_ASSERT(offsetof(struct SaveBlock3, internetToken) == 1, SaveBlock3InternetTokenOffset);
+STATIC_ASSERT(offsetof(struct SaveBlock3, PID) == 4, SaveBlock3PIDOffset);
 
 struct SaveBlock2
 {

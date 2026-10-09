@@ -235,7 +235,7 @@ int maInitLibrary(void);
 int maDisconnect(void);
 void maKill(void);
 void maEnd(void);
-int maGetEEPROMData(MA_TELDATA *maTel, char *maUserID, char *maMailID);
+int maGetConnectionData(MA_TELDATA *maTel, char *maUserID);
 int maConnectServer(const MA_TELDATA *pTelNo, const char *pUserID, const char *pPassword);
 int maDownload(const char *pURL, char *pHeadBuf, u16 headBufSize, u8 *pRecvData, u16 recvBufSize, u16 *pRecvSize, const char *pUserID, const char *pPassword);
 int maUpload(const char *pURL, char *pHeadBuf, u16 headBufSize, const u8 *pSendData, u16 sendSize, u8 *pRecvData, u16 recvBufSize, u16 *pRecvSize, const char *pUserID, const char *pPassword);

@@ -91,13 +91,13 @@ static bool32 IsInternetGiftPokemonValid(struct BoxPokemon *boxMon)
     return TRUE;
 }
 
-static bool32 DecodeInternetMysteryGiftPacket(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift)
+static bool32 DecodeInternetMysteryGiftPacket(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift, u16 *status)
 {
     const u8 *payload;
     u16 payloadSize;
     u16 payloadCrc;
 
-    if (gift == NULL)
+    if (gift == NULL || status == NULL)
         return FALSE;
     memset(gift, 0, sizeof(*gift));
 
@@ -110,14 +110,22 @@ static bool32 DecodeInternetMysteryGiftPacket(const u8 *packet, u16 packetSize, 
 
     payloadSize = ReadInternetMysteryGiftU16(&packet[6]);
     payloadCrc = ReadInternetMysteryGiftU16(&packet[8]);
-    if (ReadInternetMysteryGiftU16(&packet[10]) != 0
-     || payloadSize != packetSize - INTERNET_MYSTERY_GIFT_HEADER_SIZE)
+    *status = ReadInternetMysteryGiftU16(&packet[10]);
+    if (payloadSize != packetSize - INTERNET_MYSTERY_GIFT_HEADER_SIZE)
         return FALSE;
 
     payload = &packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE];
     if (payloadCrc != CalcCRC16WithTable(payload, payloadSize))
         return FALSE;
     gift->type = packet[5];
+
+    if (*status != INTERNET_MYSTERY_GIFT_STATUS_OK)
+    {
+        return (*status == INTERNET_MYSTERY_GIFT_STATUS_ALREADY_RECEIVED
+             || *status == INTERNET_MYSTERY_GIFT_STATUS_UNKNOWN_IDENTITY)
+            && gift->type == INTERNET_MYSTERY_GIFT_NONE
+            && payloadSize == 0;
+    }
 
     switch (gift->type)
     {
@@ -197,8 +205,15 @@ static enum InternetMysteryGiftResult ApplyInternetMysteryGift(const struct Inte
 
 enum InternetMysteryGiftResult ReceiveInternetMysteryGift(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift)
 {
-    if (!DecodeInternetMysteryGiftPacket(packet, packetSize, gift))
+    u16 status;
+
+    if (!DecodeInternetMysteryGiftPacket(packet, packetSize, gift, &status))
         return INTERNET_MYSTERY_GIFT_INVALID_PACKET;
+
+    if (status == INTERNET_MYSTERY_GIFT_STATUS_ALREADY_RECEIVED)
+        return INTERNET_MYSTERY_GIFT_ALREADY_RECEIVED;
+    if (status == INTERNET_MYSTERY_GIFT_STATUS_UNKNOWN_IDENTITY)
+        return INTERNET_MYSTERY_GIFT_UNKNOWN_IDENTITY;
 
     return ApplyInternetMysteryGift(gift);
 }
