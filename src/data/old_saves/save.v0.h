@@ -166,10 +166,10 @@ struct SaveBlock1_v0
     struct ExternalEventFlags externalEventFlags;
     struct Roamer roamer;
     struct EnigmaBerry enigmaBerry;
-    struct MysteryGiftSave mysteryGift;
+    u8 mysteryGift[0x36C];
     u8 unused_3598[0x180];
     u32 trainerHillTimes[4];
-    struct RamScript ramScript;
+    u8 ramScript[0x3EC];
     struct RecordMixingGift recordMixingGift;
     u8 seen2[52];
     LilycoveLady lilycoveLady;
@@ -383,10 +383,6 @@ static bool8 UpdateSave_v0_v1(const struct SaveSectorLocation *locations)
 #if FREE_ENIGMA_BERRY == FALSE
     COPY_FIELD(enigmaBerry);
 #endif
-#if FREE_MYSTERY_GIFT == FALSE
-    COPY_FIELD(mysteryGift);
-#endif
-
     for (i = 0; i < 52 && i < ARRAY_COUNT(gSaveBlock1Ptr->dexSeen); i++)
     {
         gSaveBlock1Ptr->dexCaught[i] = oldSaveBlock2->pokedex.owned[i];
@@ -397,9 +393,6 @@ static bool8 UpdateSave_v0_v1(const struct SaveSectorLocation *locations)
 
 #if FREE_TRAINER_HILL == FALSE
     COPY_BLOCK(trainerHillTimes);
-#endif
-#if FREE_MYSTERY_EVENT_BUFFERS == FALSE
-    COPY_FIELD(ramScript);
 #endif
     COPY_FIELD(recordMixingGift);
     COPY_FIELD(lilycoveLady);

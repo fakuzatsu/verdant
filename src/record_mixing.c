@@ -14,7 +14,6 @@
 #include "tv.h"
 #include "battle_tower.h"
 #include "window.h"
-#include "mystery_event_script.h"
 #include "secret_base.h"
 #include "mauville_old_man.h"
 #include "sound.h"
@@ -100,6 +99,53 @@ static struct PlayerHallRecords *sPartnerHallRecords[HALL_RECORDS_COUNT];
 static EWRAM_DATA struct RecordMixingDaycareMail sRecordMixMail = {0};
 static EWRAM_DATA union PlayerRecord *sReceivedRecords = NULL;
 static EWRAM_DATA union PlayerRecord *sSentRecord = NULL;
+
+static int CalcRecordMixingGiftChecksum(void)
+{
+    u32 i;
+    int sum = 0;
+    const u8 *data = (const u8 *)&gSaveBlock1Ptr->recordMixingGift.data;
+
+    for (i = 0; i < sizeof(gSaveBlock1Ptr->recordMixingGift.data); i++)
+        sum += data[i];
+    return sum;
+}
+
+static void ClearRecordMixingGift(void)
+{
+    CpuFill16(0, &gSaveBlock1Ptr->recordMixingGift, sizeof(gSaveBlock1Ptr->recordMixingGift));
+}
+
+static bool32 IsRecordMixingGiftValid(void)
+{
+    const struct RecordMixingGiftData *data = &gSaveBlock1Ptr->recordMixingGift.data;
+    int checksum = CalcRecordMixingGiftChecksum();
+
+    return data->unk0 != 0
+        && data->quantity != 0
+        && data->itemId != ITEM_NONE
+        && checksum != 0
+        && checksum == gSaveBlock1Ptr->recordMixingGift.checksum;
+}
+
+u16 GetRecordMixingGift(void)
+{
+    struct RecordMixingGiftData *data = &gSaveBlock1Ptr->recordMixingGift.data;
+    u16 itemId;
+
+    if (!IsRecordMixingGiftValid())
+    {
+        ClearRecordMixingGift();
+        return ITEM_NONE;
+    }
+
+    itemId = data->itemId;
+    if (--data->quantity == 0)
+        ClearRecordMixingGift();
+    else
+        gSaveBlock1Ptr->recordMixingGift.checksum = CalcRecordMixingGiftChecksum();
+    return itemId;
+}
 
 static void Task_RecordMixing_Main(u8);
 static void Task_MixingRecordsRecv(u8);

@@ -13,6 +13,7 @@
 #include "international_string_util.h"
 #include "main.h"
 #include "main_menu.h"
+#include "malloc.h"
 #include "menu.h"
 #include "naming_screen.h"
 #include "option_menu.h"
@@ -35,6 +36,16 @@
 #include "title_screen.h"
 #include "window.h"
 #include "internet_options_menu.h"
+
+void MainCB_FreeAllBuffersAndReturnToInitTitleScreen(void)
+{
+    FreeAllWindowBuffers();
+    Free(GetBgTilemapBuffer(0));
+    Free(GetBgTilemapBuffer(1));
+    Free(GetBgTilemapBuffer(2));
+    Free(GetBgTilemapBuffer(3));
+    SetMainCallback2(CB2_InitTitleScreen);
+}
 
 /*
  * Main menu state machine

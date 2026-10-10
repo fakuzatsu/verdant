@@ -120,7 +120,6 @@ static const struct GFRomHeader sGFRomHeader = {
     .seen2Offset = offsetof(struct SaveBlock1, dexSeen), // dex flags are combined, just provide the same pointer
     .pokedexVar = VAR_NATIONAL_DEX - VARS_START,
     .pokedexFlag = FLAG_RECEIVED_POKEDEX_FROM_BIRCH,
-    //.mysteryEventFlag = FLAG_SYS_MYSTERY_EVENT_ENABLE, // Flag replaced
     .pokedexCount = NATIONAL_DEX_COUNT,
     .playerNameLength = PLAYER_NAME_LENGTH,
     .trainerNameLength = TRAINER_NAME_LENGTH,

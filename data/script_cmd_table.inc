@@ -12,9 +12,9 @@ gScriptCmdTable::
 	.4byte ScrCmd_callstd                           @ 0x09
 	.4byte ScrCmd_gotostd_if                        @ 0x0a
 	.4byte ScrCmd_callstd_if                        @ 0x0b
-	.4byte ScrCmd_returnram                         @ 0x0c
-	.4byte ScrCmd_endram                            @ 0x0d
-	.4byte ScrCmd_setmysteryeventstatus             @ 0x0e
+	.4byte ScrCmd_retired	                        @ 0x0c
+	.4byte ScrCmd_retired	                        @ 0x0d
+	.4byte ScrCmd_retired			                @ 0x0e
 	.4byte ScrCmd_loadword                          @ 0x0f
 	.4byte ScrCmd_loadbyte                          @ 0x10
 	.4byte ScrCmd_setptr                            @ 0x11
@@ -184,14 +184,14 @@ gScriptCmdTable::
 	.4byte ScrCmd_removecoins                       @ 0xb5
 	.4byte ScrCmd_setwildbattle                     @ 0xb6
 	.4byte ScrCmd_dowildbattle                      @ 0xb7
-	.4byte ScrCmd_setvaddress                       @ 0xb8
-	.4byte ScrCmd_vgoto                             @ 0xb9
-	.4byte ScrCmd_vcall                             @ 0xba
-	.4byte ScrCmd_vgoto_if                          @ 0xbb
-	.4byte ScrCmd_vcall_if                          @ 0xbc
-	.4byte ScrCmd_vmessage                          @ 0xbd
-	.4byte ScrCmd_vbuffermessage                    @ 0xbe
-	.4byte ScrCmd_vbufferstring                     @ 0xbf
+	.4byte ScrCmd_retired                   		@ 0xb8
+	.4byte ScrCmd_retired                   		@ 0xb9
+	.4byte ScrCmd_retired                  		 	@ 0xba
+	.4byte ScrCmd_retired            				@ 0xbb
+	.4byte ScrCmd_retired           	 			@ 0xbc
+	.4byte ScrCmd_retired       	            	@ 0xbd
+	.4byte ScrCmd_retired   	                	@ 0xbe
+	.4byte ScrCmd_retired	            			@ 0xbf
 	.4byte ScrCmd_showcoinsbox                      @ 0xc0
 	.4byte ScrCmd_hidecoinsbox                      @ 0xc1
 	.4byte ScrCmd_updatecoinsbox                    @ 0xc2
@@ -207,7 +207,7 @@ gScriptCmdTable::
 	.4byte ScrCmd_nop1                              @ 0xcc
 	.4byte ScrCmd_setmodernfatefulencounter         @ 0xcd
 	.4byte ScrCmd_checkmodernfatefulencounter       @ 0xce
-	.4byte ScrCmd_trywondercardscript               @ 0xcf
+	.4byte ScrCmd_retired	                        @ 0xcf
 	.4byte ScrCmd_nop1                              @ 0xd0
 	.4byte ScrCmd_warpspinenter                     @ 0xd1
 	.4byte ScrCmd_setmonmetlocation                 @ 0xd2

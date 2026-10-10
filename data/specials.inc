@@ -410,7 +410,6 @@ gSpecials::
 	def_special ClearQuizLadyQuestionAndAnswer
 	def_special QuizLadySetCustomQuestion
 	def_special QuizLadyTakePrizeForCustomQuiz
-	def_special GetMysteryGiftCardStat
 	def_special QuizLadyRecordCustomQuizData
 	def_special QuizLadySetWaitingForChallenger
 	def_special BufferQuizCorrectAnswer
@@ -440,11 +439,9 @@ gSpecials::
 	def_special ShowWirelessCommunicationScreen
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
-	def_special WonderNews_GetRewardInfo
 	def_special ChooseMonForWirelessMinigame
 	def_special Script_ResetUnionRoomTrade
 	def_special IsBadEggInParty
-	def_special ValidateSavedWonderCard
 	def_special HasAtLeastOneBerry
 	def_special IsPokemonJumpSpeciesInParty
 	def_special ShowPokemonJumpRecords
@@ -522,7 +519,6 @@ gSpecials::
 	def_special GetLilycoveSSTidalSelection
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
-	def_special ShouldDistributeEonTicket
 	def_special LinkRetireStatusWithBattleTowerPartner
 	def_special BattleTowerReconnectLink
 	def_special CallTrainerHillFunction

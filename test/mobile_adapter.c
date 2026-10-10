@@ -11,6 +11,7 @@
 #include "pokemon.h"
 #include "record_mixing.h"
 #include "save.h"
+#include "strings.h"
 #include "string_util.h"
 #include "test/test.h"
 #include "util.h"
@@ -21,6 +22,8 @@
 #include "constants/pokemon.h"
 #include "constants/species.h"
 #include "constants/tv.h"
+#include "constants/vars.h"
+#include "constants/wild_encounter.h"
 
 EWRAM_DATA static u8 sRecordPacket[INTERNET_RECORD_MIX_MAX_PACKET_SIZE + 1] = {0};
 EWRAM_DATA static u8 sUploadedRecordPacket[INTERNET_RECORD_MIX_MAX_PACKET_SIZE] = {0};
@@ -613,9 +616,113 @@ TEST("Mystery Gift packet distinguishes and receives an item")
     EXPECT(CheckBagHasItem(ITEM_POTION, 3));
 }
 
-TEST("Mystery Gift receiver rejects malformed sizes and CRC")
+TEST("Mystery Gift events dispatch and execute static scripts")
+{
+    u8 packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 4] = {0};
+    struct InternetMysteryGift gift = {0};
+
+    ClearBag();
+    SetBagItemsPointers();
+    FlagClear(FLAG_ENABLE_SHIP_BIRTH_ISLAND);
+    FlagClear(FLAG_ENABLE_SHIP_FARAWAY_ISLAND);
+    FlagClear(FLAG_RECEIVED_AURORA_TICKET);
+    FlagClear(FLAG_RECEIVED_OLD_SEA_MAP);
+    FlagClear(FLAG_SHOWN_AURORA_TICKET);
+    FlagClear(FLAG_SHOWN_OLD_SEA_MAP);
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_AURORA_TICKET);
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 0x1234);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_RECEIVED_EVENT);
+    EXPECT_EQ(gift.data.event.eventId, INTERNET_MYSTERY_GIFT_EVENT_AURORA_TICKET);
+    EXPECT_EQ(gift.data.event.value, 0x1234);
+    EXPECT(CheckBagHasItem(ITEM_AURORA_TICKET, 1));
+    EXPECT(FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND));
+    EXPECT(!FlagGet(FLAG_RECEIVED_AURORA_TICKET));
+    EXPECT(!FlagGet(FLAG_SHOWN_AURORA_TICKET));
+    EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftAuroraTicket);
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_OLD_SEA_MAP);
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 0xFFFF);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_RECEIVED_EVENT);
+    EXPECT(CheckBagHasItem(ITEM_OLD_SEA_MAP, 1));
+    EXPECT(FlagGet(FLAG_ENABLE_SHIP_FARAWAY_ISLAND));
+    EXPECT(!FlagGet(FLAG_RECEIVED_OLD_SEA_MAP));
+    EXPECT(!FlagGet(FLAG_SHOWN_OLD_SEA_MAP));
+    EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftOldSeaMap);
+}
+
+TEST("Mystery Gift ticket events do not unlock islands when the bag is full")
+{
+    u8 packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 4] = {0};
+    struct InternetMysteryGift gift = {0};
+    u32 i;
+
+    ClearBag();
+    SetBagItemsPointers();
+    for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
+    {
+        gSaveBlock1Ptr->bagPocket_KeyItems[i].itemId = ITEM_MACH_BIKE;
+        gSaveBlock1Ptr->bagPocket_KeyItems[i].quantity = 1;
+    }
+    FlagClear(FLAG_ENABLE_SHIP_BIRTH_ISLAND);
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_AURORA_TICKET);
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 0);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_NO_SPACE);
+    EXPECT(!FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND));
+    EXPECT(!CheckBagHasItem(ITEM_AURORA_TICKET, 1));
+    ClearBag();
+}
+
+TEST("Mystery Gift Altering Cave event validates the server value before mutation")
+{
+    u8 packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 4] = {0};
+    struct InternetMysteryGift gift = {0};
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_ALTERING_CAVE);
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 0);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    VarSet(VAR_ALTERING_CAVE_WILD_SET, 5);
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_RECEIVED_EVENT);
+    EXPECT_EQ(VarGet(VAR_ALTERING_CAVE_WILD_SET), 0);
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], NUM_ALTERING_CAVE_TABLES - 1);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_RECEIVED_EVENT);
+    EXPECT_EQ(VarGet(VAR_ALTERING_CAVE_WILD_SET), NUM_ALTERING_CAVE_TABLES - 1);
+    EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftAlteringCave);
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], NUM_ALTERING_CAVE_TABLES);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    VarSet(VAR_ALTERING_CAVE_WILD_SET, 4);
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
+    EXPECT_EQ(VarGet(VAR_ALTERING_CAVE_WILD_SET), 4);
+}
+
+TEST("Mystery Gift receiver rejects reserved and unknown event ids")
+{
+    u8 packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 4] = {0};
+    struct InternetMysteryGift gift = {0};
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_NONE);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
+
+    WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], 0xFFFF);
+    InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
+    EXPECT(GetInternetMysteryGiftEventMessage(0xFFFF) == NULL);
+}
+
+TEST("Mystery Gift receiver rejects malformed item and event sizes and CRC")
 {
     u8 itemPacket[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 5] = {0};
+    u8 eventPacket[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 5] = {0};
     struct InternetMysteryGift gift = {0};
     u16 potionCount;
 
@@ -630,6 +737,16 @@ TEST("Mystery Gift receiver rejects malformed sizes and CRC")
     itemPacket[8] ^= 1;
     EXPECT_EQ(ReceiveInternetMysteryGift(itemPacket, sizeof(itemPacket) - 1, &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
     EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_POTION), potionCount);
+
+    WriteU16(&eventPacket[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_ALTERING_CAVE);
+    WriteU16(&eventPacket[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 6);
+    InitGiftHeader(eventPacket, INTERNET_MYSTERY_GIFT_EVENT, 4);
+    VarSet(VAR_ALTERING_CAVE_WILD_SET, 4);
+
+    EXPECT_EQ(ReceiveInternetMysteryGift(eventPacket, sizeof(eventPacket), &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
+    eventPacket[8] ^= 1;
+    EXPECT_EQ(ReceiveInternetMysteryGift(eventPacket, sizeof(eventPacket) - 1, &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
+    EXPECT_EQ(VarGet(VAR_ALTERING_CAVE_WILD_SET), 4);
 }
 
 TEST("Mystery Gift receiver rejects an out-of-range hidden nature")

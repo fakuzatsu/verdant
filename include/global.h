@@ -594,22 +594,6 @@ struct Roamer
     /*0x14*/ u8 filler[0x7];
 };
 
-struct RamScriptData
-{
-    u8 magic;
-    u8 mapGroup;
-    u8 mapNum;
-    u8 objectId;
-    u8 script[995];
-    //u8 padding;
-};
-
-struct RamScript
-{
-    u32 checksum;
-    struct RamScriptData data;
-};
-
 // See dewford_trend.c
 struct DewfordTrend
 {
@@ -850,63 +834,6 @@ struct TrainerHillSave
                u16 mode:2; // HILL_MODE_*
                //u16 padding:8;
 };
-
-struct WonderNewsMetadata
-{
-    u8 newsType:2;
-    u8 sentRewardCounter:3;
-    u8 rewardCounter:3;
-    u8 berry;
-    //u8 padding[2];
-};
-
-struct WonderNews
-{
-    u16 id;
-    u8 sendType; // SEND_TYPE_*
-    u8 bgType;
-    u8 titleText[WONDER_NEWS_TEXT_LENGTH];
-    u8 bodyText[WONDER_NEWS_BODY_TEXT_LINES][WONDER_NEWS_TEXT_LENGTH];
-};
-
-struct WonderCard
-{
-    u16 flagId; // Event flag (sReceivedGiftFlags) + WONDER_CARD_FLAG_OFFSET
-    u16 iconSpecies;
-    u32 idNumber;
-    u8 type:2; // CARD_TYPE_*
-    u8 bgType:4;
-    u8 sendType:2; // SEND_TYPE_*
-    u8 maxStamps;
-    u8 titleText[WONDER_CARD_TEXT_LENGTH];
-    u8 subtitleText[WONDER_CARD_TEXT_LENGTH];
-    u8 bodyText[WONDER_CARD_BODY_TEXT_LINES][WONDER_CARD_TEXT_LENGTH];
-    u8 footerLine1Text[WONDER_CARD_TEXT_LENGTH];
-    u8 footerLine2Text[WONDER_CARD_TEXT_LENGTH];
-    //u8 padding[2];
-};
-
-struct WonderCardMetadata
-{
-    u16 battlesWon;
-    u16 battlesLost;
-    u16 numTrades;
-    u16 iconSpecies;
-    u16 stampData[2][MAX_STAMP_CARD_STAMPS]; // First element is STAMP_SPECIES, second is STAMP_ID
-};
-
-struct MysteryGiftSave
-{
-    u32 newsCrc;
-    struct WonderNews news;
-    u32 cardCrc;
-    struct WonderCard card;
-    u32 cardMetadataCrc;
-    struct WonderCardMetadata cardMetadata;
-    u16 questionnaireWords[NUM_QUESTIONNAIRE_WORDS];
-    struct WonderNewsMetadata newsMetadata;
-    u32 trainerIds[2][5]; // Saved ids for 10 trainers, 5 each for battles and trades
-}; // 0x36C 0x3598
 
 // For external event data storage. The majority of these may have never been used.
 // In Emerald, the only known used fields are the PokeCoupon and BoxRS ones, but hacking the distribution discs allows Emerald to receive events and set the others

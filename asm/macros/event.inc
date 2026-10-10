@@ -76,21 +76,9 @@
 	.byte \function
 	.endm
 
-	@ Equivalent to the 'return' command for a RAM script.
-	.macro returnram
-	.byte 0x0c
-	.endm
-
-	@ Equivalent to the 'end' command for a RAM script.
-	.macro endram
-	.byte 0x0d
-	.endm
-
-	@ Sets the Mystery Event script status (MEVENT_STATUS_*).
-	.macro setmysteryeventstatus value:req
-	.byte 0x0e
-	.byte \value
-	.endm
+	@ .byte 0x0c is reusable
+	@ .byte 0x0d is reusable
+	@ .byte 0x0e is reusable
 
 	@ Sets the value at the specified script data index to a fixed 4-byte value.
 	.macro loadword destIndex:req, value:req
@@ -1586,56 +1574,14 @@
 	.byte 0xb7
 	.endm
 
-	@ Sets a relative address to be used by the other vcommands as part of a Mystery Gift script.
-	.macro setvaddress pointer:req
-	.byte 0xb8
-	.4byte \pointer
-	.endm
-
-	@ Equivalent to goto using the relative address set by setvaddress.
-	.macro vgoto destination:req
-	.byte 0xb9
-	.4byte \destination
-	.endm
-
-	@ Equivalent to call using the relative address set by setvaddress.
-	.macro vcall destination:req
-	.byte 0xba
-	.4byte \destination
-	.endm
-
-	@ Equivalent to goto_if using the relative address set by setvaddress.
-	.macro vgoto_if condition:req, destination:req
-	.byte 0xbb
-	.byte \condition
-	.4byte \destination
-	.endm
-
-	@ Equivalent to call_if using the relative address set by setvaddress.
-	.macro vcall_if condition:req, destination:req
-	.byte 0xbc
-	.byte \condition
-	.4byte \destination
-	.endm
-
-	@ Equivalent to message using the relative address set by setvaddress.
-	.macro vmessage text:req
-	.byte 0xbd
-	.4byte \text
-	.endm
-
-	@ Expands the given text at the pointer (- the relative address set by setvaddress) into gStringVar4
-	.macro vbuffermessage text:req
-	.byte 0xbe
-	.4byte \text
-	.endm
-
-	@ Equivalent to bufferstring using the relative address set by setvaddress.
-	.macro vbufferstring stringVarIndex:req, text:req
-	.byte 0xbf
-	stringvar \stringVarIndex
-	.4byte \text
-	.endm
+	@ .byte 0xb8 is reusable
+	@ .byte 0xb9 is reusable
+	@ .byte 0xba is reusable
+	@ .byte 0xbb is reusable
+	@ .byte 0xbc is reusable
+	@ .byte 0xbd is reusable
+	@ .byte 0xbe is reusable
+	@ .byte 0xbf is reusable
 
 	@ Create a window showing how many Coins the player has.
 	.macro showcoinsbox x:req, y:req
@@ -1731,11 +1677,7 @@
 	.2byte \slot
 	.endm
 
-	@ Jumps to the ram script saved from a Wonder Card. If there is no valid saved Wonder Card or if the
-	@ ram script is invalid then this does nothing.
-	.macro trywondercardscript
-	.byte 0xcf
-	.endm
+	@ .byte 0xcf is reusable
 
 	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro setworldmapflag worldmapflag:req
@@ -1999,24 +1941,6 @@
 
 	.macro call_if_ne a:req, b, c @ NOT EQUAL
 	trycompare call_if, 5, \a, \b, \c
-	.endm
-
-	.macro vgoto_if_eq a:req, b, c
-	trycompare vgoto_if, TRUE, \a, \b, \c
-	.endm
-
-	.macro vgoto_if_ne a:req, b, c
-	trycompare vgoto_if, FALSE, \a, \b, \c
-	.endm
-
-	.macro vgoto_if_unset flag:req, dest:req
-	checkflag \flag
-	vgoto_if FALSE, \dest
-	.endm
-
-	.macro vgoto_if_set flag:req, dest:req
-	checkflag \flag
-	vgoto_if TRUE, \dest
 	.endm
 
 	.macro goto_if_defeated trainer:req, dest:req

@@ -238,7 +238,7 @@
 #define VAR_REGISTER_BIRCH_STATE                         0x40DA
 #define VAR_DEXNAV_SPECIES                               0x40DB // Registered dexnav species
 #define VAR_DEXNAV_STEP_COUNTER                          0x40DC // Custom Flag
-#define VAR_GIFT_PICHU_SLOT                              0x40DD
+#define VAR_GIFT_PICHU_SLOT                              0x40DD // Unused Flag
 #define VAR_DAILY_SLOTS                                  0x40DE
 #define VAR_DAILY_WILDS                                  0x40DF
 #define VAR_DAILY_BLENDER                                0x40E0

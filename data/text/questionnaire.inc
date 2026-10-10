@@ -19,25 +19,3 @@ Questionnaire_Text_YouKnowThoseWordsGift::
 Questionnaire_Text_YouCanAccessMysteryGift::
 	.string "Once you save your game, you can\n"
 	.string "access the Mystery Gift.$"
-
-Questionnaire_Text_YouKnowThoseWordsEvent::
-	.string "Oh, hello!\n"
-	.string "You know those words?\p"
-	.string "That means you must know about\n"
-	.string "the MYSTERY EVENT.$"
-
-Questionnaire_Text_YouCanAccessMysteryEvent::
-	.string "Once you save your game, you can\n"
-	.string "access the MYSTERY EVENT.$"
-
-MysteryGift_Text_TheresATicketForYou::
-	.string "Thank you for using the MYSTERY\n"
-	.string "EVENT System.\p"
-	.string "You must be {PLAYER}.\n"
-	.string "There is a ticket here for you.$"
-
-MysteryGift_Text_TryUsingItAtLilycovePort::
-	.string "It appears to be for use at\n"
-	.string "the Lilycove City port.\p"
-	.string "Why not give it a try and see what\n"
-	.string "it is about?$"

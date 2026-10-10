@@ -173,17 +173,11 @@ struct SaveBlock1
 #if FREE_ENIGMA_BERRY == FALSE
     struct EnigmaBerry enigmaBerry;
 #endif //FREE_ENIGMA_BERRY
-#if FREE_MYSTERY_GIFT == FALSE
-    struct MysteryGiftSave mysteryGift;
-#endif //FREE_MYSTERY_GIFT
     u8 dexSeen[NUM_DEX_FLAG_BYTES];
     u8 dexCaught[NUM_DEX_FLAG_BYTES];
 #if FREE_TRAINER_HILL == FALSE
     u32 trainerHillTimes[NUM_TRAINER_HILL_MODES];
 #endif //FREE_TRAINER_HILL
-#if FREE_MYSTERY_EVENT_BUFFERS == FALSE
-    struct RamScript ramScript;
-#endif //FREE_MYSTERY_EVENT_BUFFERS
     struct RecordMixingGift recordMixingGift;
     LilycoveLady lilycoveLady;
     struct TrainerNameRecord trainerNameRecords[20];

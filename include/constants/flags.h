@@ -519,22 +519,22 @@
 #define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
 
 // Mystery Gift Flags (Unknown)
-#define FLAG_MYSTERY_GIFT_DONE               0x1E4
-#define FLAG_MYSTERY_GIFT_1                  0x1E5
-#define FLAG_MYSTERY_GIFT_2                  0x1E6
-#define FLAG_MYSTERY_GIFT_3                  0x1E7
-#define FLAG_MYSTERY_GIFT_4                  0x1E8
-#define FLAG_MYSTERY_GIFT_5                  0x1E9
-#define FLAG_MYSTERY_GIFT_6                  0x1EA
-#define FLAG_MYSTERY_GIFT_7                  0x1EB
-#define FLAG_MYSTERY_GIFT_8                  0x1EC
-#define FLAG_MYSTERY_GIFT_9                  0x1ED
-#define FLAG_MYSTERY_GIFT_10                 0x1EE
-#define FLAG_MYSTERY_GIFT_11                 0x1EF
-#define FLAG_MYSTERY_GIFT_12                 0x1F0
-#define FLAG_MYSTERY_GIFT_13                 0x1F1
-#define FLAG_MYSTERY_GIFT_14                 0x1F2
-#define FLAG_MYSTERY_GIFT_15                 0x1F3
+#define FLAG_MYSTERY_GIFT_DONE               0x1E4 // Unused Flag
+#define FLAG_MYSTERY_GIFT_1                  0x1E5 // Unused Flag
+#define FLAG_MYSTERY_GIFT_2                  0x1E6 // Unused Flag
+#define FLAG_MYSTERY_GIFT_3                  0x1E7 // Unused Flag
+#define FLAG_MYSTERY_GIFT_4                  0x1E8 // Unused Flag
+#define FLAG_MYSTERY_GIFT_5                  0x1E9 // Unused Flag
+#define FLAG_MYSTERY_GIFT_6                  0x1EA // Unused Flag
+#define FLAG_MYSTERY_GIFT_7                  0x1EB // Unused Flag
+#define FLAG_MYSTERY_GIFT_8                  0x1EC // Unused Flag
+#define FLAG_MYSTERY_GIFT_9                  0x1ED // Unused Flag
+#define FLAG_MYSTERY_GIFT_10                 0x1EE // Unused Flag
+#define FLAG_MYSTERY_GIFT_11                 0x1EF // Unused Flag
+#define FLAG_MYSTERY_GIFT_12                 0x1F0 // Unused Flag
+#define FLAG_MYSTERY_GIFT_13                 0x1F1 // Unused Flag
+#define FLAG_MYSTERY_GIFT_14                 0x1F2 // Unused Flag
+#define FLAG_MYSTERY_GIFT_15                 0x1F3 // Unused Flag
 
 // Hidden Items
 #define FLAG_HIDDEN_ITEMS_START                                                         0x1F4
@@ -1430,7 +1430,7 @@
 #define FLAG_LANDMARK_FIERY_PATH                    (SYSTEM_FLAGS + 0x4A) // FLAG_0x8AA
 
 #define FLAG_SYS_PC_LANETTE                         (SYSTEM_FLAGS + 0x4B) // FLAG_0x8AB
-#define FLAG_SYS_MYSTERY_EVENT_ENABLE               (SYSTEM_FLAGS + 0x4C) // FLAG_0x8AC
+#define FLAG_SYS_MYSTERY_EVENT_ENABLE               (SYSTEM_FLAGS + 0x4C) // Unused Flag
 #define FLAG_SYS_ENC_UP_ITEM                        (SYSTEM_FLAGS + 0x4D) // FLAG_0x8AD
 #define FLAG_SYS_ENC_DOWN_ITEM                      (SYSTEM_FLAGS + 0x4E) // FLAG_0x8AE
 #define FLAG_SYS_BRAILLE_DIG                        (SYSTEM_FLAGS + 0x4F) // FLAG_0x8AF

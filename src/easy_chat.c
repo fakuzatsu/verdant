@@ -15,7 +15,6 @@
 #include "graphics.h"
 #include "international_string_util.h"
 #include "main.h"
-#include "mystery_gift.h"
 #include "menu.h"
 #include "overworld.h"
 #include "palette.h"
@@ -36,6 +35,7 @@
 static EWRAM_DATA struct EasyChatScreen *sEasyChatScreen = NULL;
 static EWRAM_DATA struct EasyChatScreenControl *sScreenControl = NULL;
 static EWRAM_DATA struct EasyChatScreenWordData *sWordData = NULL;
+static EWRAM_DATA u16 sQuestionnaireWords[NUM_QUESTIONNAIRE_WORDS] = {0};
 
 static void Task_InitEasyChatScreen(u8);
 static void CB2_EasyChatScreen(void);
@@ -1537,7 +1537,8 @@ void ShowEasyChatScreen(void)
         words = gSaveBlock2Ptr->apprentices[0].speechWon;
         break;
     case EASY_CHAT_TYPE_QUESTIONNAIRE:
-        words = GetQuestionnaireWordsPtr();
+        InitQuestionnaireWords();
+        words = sQuestionnaireWords;
         break;
     default:
         return;
@@ -5868,10 +5869,7 @@ void InitializeEasyChatWordArray(u16 *words, u16 length)
 
 void InitQuestionnaireWords(void)
 {
-    int i;
-    u16 *words = GetQuestionnaireWordsPtr();
-    for (i = 0; i < NUM_QUESTIONNAIRE_WORDS; i++)
-        words[i] = EC_EMPTY_WORD;
+    InitializeEasyChatWordArray(sQuestionnaireWords, ARRAY_COUNT(sQuestionnaireWords));
 }
 
 bool32 IsEasyChatAnswerUnlocked(int easyChatWord)

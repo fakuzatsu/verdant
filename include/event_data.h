@@ -10,8 +10,6 @@ bool32 IsNationalPokedexEnabled(void);
 void DisableInternetOptions(void);
 void EnableInternetOptions(void);
 bool32 AreInternetOptionsEnabled(void);
-void ClearMysteryGiftFlags(void);
-void ClearMysteryGiftVars(void);
 void DisableResetRTC(void);
 void EnableResetRTC(void);
 bool32 CanResetRTC(void);

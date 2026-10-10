@@ -1,5 +1,6 @@
 #include "global.h"
 #include "main.h"
+#include "main_menu.h"
 #include "text.h"
 #include "task.h"
 #include "malloc.h"
@@ -21,7 +22,6 @@
 #include "list_menu.h"
 #include "string_util.h"
 #include "mystery_gift.h"
-#include "mystery_gift_menu.h"
 #include "save.h"
 #include "link.h"
 #include "field_screen_effect.h"
@@ -114,6 +114,12 @@ EWRAM_DATA static bool8 sInternetRecordCodeInvalid = FALSE;
 
 static const u16 sTextboxBorder_Pal[] = INCBIN_U16("graphics/interface/mystery_gift_textbox_border.gbapal");
 static const u32 sTextboxBorder_Gfx[] = INCBIN_U32("graphics/interface/mystery_gift_textbox_border.4bpp.smol");
+static const u8 sText_MysteryGift[] = _("Mystery Gift");
+static const u8 sText_Exit[] = _("Exit");
+static const u8 sText_Send[] = _("Send");
+static const u8 sText_Receive[] = _("Receive");
+static const u8 sText_Communicating[] = _("Communicating…");
+static const u8 sText_PickOKCancel[] = _("{DPAD_UPDOWN}Pick {A_BUTTON}Ok {B_BUTTON}Cancel");
 
 struct InternetOptionsTaskData
 {
@@ -249,7 +255,7 @@ static const u8 sText_MobileAdapterNotConnectedError[] = _(
     "not connected!\n"
     "\n"
     "To use internet features, open the\n"
-    "game in the mGBA Mobile Adapter fork:\n"
+    "game in mGBA-Mobile Adapter:\n"
     "github.com/fakuzatsu/mgba-ma\n"
     "\n"
     "Turn on the adapter, then try again.");
@@ -268,15 +274,15 @@ static const struct WindowTemplate sWindowTemplate_ThreeOptions =
 
 static const struct ListMenuItem sListMenuItems_InternetOptions[] =
 {
-    { gText_MysteryGift,        0 },
+    { sText_MysteryGift,        0 },
     { gText_RecordMix,          1 },
-    { gText_Exit3,    LIST_CANCEL },
+    { sText_Exit,     LIST_CANCEL },
 };
 
 static const struct ListMenuItem sListMenuItems_RecordMix[] =
 {
-    { gText_Send,               0 },
-    { gText_Receive,            1 },
+    { sText_Send,               0 },
+    { sText_Receive,            1 },
     { gText_Cancel,   LIST_CANCEL },
 };
 
@@ -593,7 +599,7 @@ static bool32 StartInternetDownload(struct InternetOptionsTaskData *data, const 
         return FALSE;
     }
 
-    AddTextPrinterToWindow1(gText_Communicating);
+    AddTextPrinterToWindow1(sText_Communicating);
     data->recvSize = 0;
     data->errorNum = maDownload(url, NULL, 0, data->clientMsg, capacity, &data->recvSize, "", "");
     if (data->errorNum == MA_RESULT_BUFFER_FULL)
@@ -619,7 +625,7 @@ static bool32 StartInternetUpload(struct InternetOptionsTaskData *data, const ch
         return FALSE;
     }
 
-    AddTextPrinterToWindow1(gText_Communicating);
+    AddTextPrinterToWindow1(sText_Communicating);
     data->recvSize = 0;
     data->errorNum = maUpload(url, NULL, 0, packet, packetSize, data->clientMsg, responseCapacity,
                               &data->recvSize, "", "");
@@ -689,7 +695,7 @@ static bool32 HandleMobileAdapterError(u8 *state, const u8 *message)
         LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
         DrawStdFrameWithCustomTileAndPalette(windowId, TRUE, 0xA, 0xE);
         FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-        AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8, 1, 0, 0, colors, 0, message);
+        AddTextPrinterParameterized4(windowId, FONT_NORMAL, 3, 1, 0, 0, colors, 0, message);
         PutWindowTilemap(windowId);
         CopyWindowToVram(windowId, COPYWIN_FULL);
         (*state)++;
@@ -809,7 +815,7 @@ static void Task_InternetOptions(u8 taskId)
                 sInternetRecordCodePending = FALSE;
                 data->nextState = INTERNET_STATE_DOWNLOAD_RECORD;
                 data->state = INTERNET_STATE_CONNECT_TO_SERVER;
-                AddTextPrinterToWindow1(gText_Communicating);
+                AddTextPrinterToWindow1(sText_Communicating);
             }
             else if (gSaveBlock3Ptr->PID == NO_PID)
             {
@@ -1068,6 +1074,14 @@ static void Task_InternetOptions(u8 taskId)
                 GetMonData(&data->gift->data.pokemon, MON_DATA_NICKNAME, gStringVar1);
                 data->message = gText_InternetGiftPokemonSentToPC;
                 break;
+            case INTERNET_MYSTERY_GIFT_RECEIVED_EVENT:
+                data->message = GetInternetMysteryGiftEventMessage(data->gift->data.event.eventId);
+                if (data->message == NULL)
+                {
+                    SetInternetMessageResult(data, gText_InternetGiftInvalid);
+                    return;
+                }
+                break;
             case INTERNET_MYSTERY_GIFT_NO_SPACE:
                 SetInternetMessageResult(data, gText_InternetGiftNoSpace);
                 return;
@@ -1124,7 +1138,7 @@ static void Task_InternetOptions(u8 taskId)
                             : INTERNET_STATE_DOWNLOAD_GIFT;
             data->state = INTERNET_STATE_CONNECT_TO_SERVER;
             data->subState = 0;
-            AddTextPrinterToWindow1(gText_Communicating);
+            AddTextPrinterToWindow1(sText_Communicating);
             PlaySE(SE_SELECT);
             break;
         case 1: // Record Mix
@@ -1143,7 +1157,7 @@ static void Task_InternetOptions(u8 taskId)
             data->nextState = INTERNET_STATE_UPLOAD_RECORD;
             data->state = INTERNET_STATE_CONNECT_TO_SERVER;
             data->subState = 0;
-            AddTextPrinterToWindow1(gText_Communicating);
+            AddTextPrinterToWindow1(sText_Communicating);
             PlaySE(SE_SELECT);
             break;
         case 1: // Receive
@@ -1250,7 +1264,7 @@ static u32 InternetOptions_HandleMenu(u8 whichMenu)
 
 static void PrintTopMenu(bool32 connecting)
 {
-    const u8 *options = connecting ? gText_PickOKCancel : gText_Communicating;
+    const u8 *options = connecting ? sText_PickOKCancel : sText_Communicating;
     
     FillWindowPixelBuffer(0, 0);
     AddTextPrinterParameterized4(0, FONT_NORMAL, 4, 1, 0, 0, sTextColors_TopMenu, TEXT_SKIP_DRAW, gText_InternetOptions);

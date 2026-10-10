@@ -57,6 +57,7 @@ enum InternetRecordMixResult
 };
 
 void RecordMixingPlayerSpotTriggered(void);
+u16 GetRecordMixingGift(void);
 void GetPlayerHallRecords(struct PlayerHallRecords *dst);
 u16 BuildInternetRecordMixPacket(u8 *packet, u16 capacity);
 bool32 DecodeInternetRecordMixCode(const u8 *response, u16 responseSize, u8 *code);
