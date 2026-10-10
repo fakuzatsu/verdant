@@ -24,9 +24,10 @@ STATIC_ASSERT(sizeof(struct BoxPokemon) == 80, InternetMysteryGift_BoxPokemonSch
 
 struct InternetMysteryGiftEventHandler
 {
-    u16 eventId;
     enum InternetMysteryGiftResult (*apply)(u16 value);
     const u8 *message;
+    u16 eventId;
+    u16 previewItemId;
 };
 
 static enum InternetMysteryGiftResult ApplyAuroraTicketEvent(u16 value);
@@ -35,9 +36,24 @@ static enum InternetMysteryGiftResult ApplyAlteringCaveEvent(u16 value);
 
 static const struct InternetMysteryGiftEventHandler sInternetMysteryGiftEventHandlers[] =
 {
-    {INTERNET_MYSTERY_GIFT_EVENT_AURORA_TICKET, ApplyAuroraTicketEvent, gText_InternetGiftAuroraTicket},
-    {INTERNET_MYSTERY_GIFT_EVENT_OLD_SEA_MAP, ApplyOldSeaMapEvent, gText_InternetGiftOldSeaMap},
-    {INTERNET_MYSTERY_GIFT_EVENT_ALTERING_CAVE, ApplyAlteringCaveEvent, gText_InternetGiftAlteringCave},
+    {
+        .apply = ApplyAuroraTicketEvent,
+        .message = gText_InternetGiftAuroraTicket,
+        .eventId = INTERNET_MYSTERY_GIFT_EVENT_AURORA_TICKET,
+        .previewItemId = ITEM_AURORA_TICKET,
+    },
+    {
+        .apply = ApplyOldSeaMapEvent,
+        .message = gText_InternetGiftOldSeaMap,
+        .eventId = INTERNET_MYSTERY_GIFT_EVENT_OLD_SEA_MAP,
+        .previewItemId = ITEM_OLD_SEA_MAP,
+    },
+    {
+        .apply = ApplyAlteringCaveEvent,
+        .message = gText_InternetGiftAlteringCave,
+        .eventId = INTERNET_MYSTERY_GIFT_EVENT_ALTERING_CAVE,
+        .previewItemId = ITEM_NONE,
+    },
 };
 
 static u16 ReadInternetMysteryGiftU16(const u8 *data)
@@ -88,6 +104,13 @@ const u8 *GetInternetMysteryGiftEventMessage(u16 eventId)
     const struct InternetMysteryGiftEventHandler *handler = FindInternetMysteryGiftEventHandler(eventId);
 
     return handler == NULL ? NULL : handler->message;
+}
+
+u16 GetInternetMysteryGiftEventPreviewItemId(u16 eventId)
+{
+    const struct InternetMysteryGiftEventHandler *handler = FindInternetMysteryGiftEventHandler(eventId);
+
+    return handler == NULL ? ITEM_NONE : handler->previewItemId;
 }
 
 static bool32 IsInternetGiftPokemonValid(struct BoxPokemon *boxMon)

@@ -68,5 +68,6 @@ struct InternetMysteryGift
 
 enum InternetMysteryGiftResult ReceiveInternetMysteryGift(const u8 *packet, u16 packetSize, struct InternetMysteryGift *gift);
 const u8 *GetInternetMysteryGiftEventMessage(u16 eventId);
+u16 GetInternetMysteryGiftEventPreviewItemId(u16 eventId);
 
 #endif // GUARD_MYSTERY_GIFT_H

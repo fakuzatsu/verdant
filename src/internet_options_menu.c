@@ -27,10 +27,13 @@
 #include "field_screen_effect.h"
 #include "mobile_adapter.h"
 #include "item.h"
+#include "item_icon.h"
 #include "naming_screen.h"
 #include "pokemon.h"
 #include "record_mixing.h"
 #include "reload_save.h"
+#include "sprite.h"
+#include "trainer_pokemon_sprites.h"
 
 #define LIST_MENU_TILE_NUM 10
 #define LIST_MENU_PAL_NUM 224
@@ -45,6 +48,20 @@
 #define INTERNET_RECORD_MIX_DOWNLOAD_URL INTERNET_RECORD_MIX_URL "&code="
 #define INTERNET_RECORD_MIX_URL_LENGTH 96
 #define INTERNET_REQUEST_URL_LENGTH 128
+
+#define INTERNET_GIFT_PREVIEW_WINDOW_ID 3
+#define INTERNET_GIFT_PREVIEW_X 120
+#define INTERNET_GIFT_PREVIEW_Y 64
+#define INTERNET_GIFT_ITEM_ICON_CENTER_OFFSET 4
+#define TAG_INTERNET_GIFT_ITEM_ICON 5500
+#define INTERNET_GIFT_PREVIEW_VISIBLE (1 << 7)
+
+enum
+{
+    INTERNET_GIFT_PREVIEW_NONE,
+    INTERNET_GIFT_PREVIEW_POKEMON,
+    INTERNET_GIFT_PREVIEW_ITEM,
+};
 
 // States for Task_InternetOptions
 enum {
@@ -103,6 +120,9 @@ static bool32 StartInternetDownload(struct InternetOptionsTaskData *data, const 
 static bool32 StartInternetUpload(struct InternetOptionsTaskData *data, const char *url, const u8 *packet, u16 packetSize,
                                   u16 responseCapacity, const u8 *errorMessage);
 static bool32 StartInternetRecordUpload(struct InternetOptionsTaskData *data);
+static void PrepareInternetMysteryGiftPreview(struct InternetMysteryGift *gift);
+static void ShowInternetMysteryGiftPreview(void);
+static void DestroyInternetMysteryGiftPreview(void);
 #endif
 
 EWRAM_DATA static u8 sDownArrowCounterAndYCoordIdx[8] = {};
@@ -111,6 +131,10 @@ EWRAM_DATA static char sInternetRecordUrl[INTERNET_RECORD_MIX_URL_LENGTH] = {};
 EWRAM_DATA static char sInternetRequestUrl[INTERNET_REQUEST_URL_LENGTH] = {};
 EWRAM_DATA static bool8 sInternetRecordCodePending = FALSE;
 EWRAM_DATA static bool8 sInternetRecordCodeInvalid = FALSE;
+#if (!TESTING || MOBILE_TESTING)
+EWRAM_DATA static u8 sInternetGiftPreviewState = INTERNET_GIFT_PREVIEW_NONE;
+EWRAM_DATA static u8 sInternetGiftPreviewSpriteId = 0;
+#endif
 
 static const u16 sTextboxBorder_Pal[] = INCBIN_U16("graphics/interface/mystery_gift_textbox_border.gbapal");
 static const u32 sTextboxBorder_Gfx[] = INCBIN_U32("graphics/interface/mystery_gift_textbox_border.4bpp.smol");
@@ -216,10 +240,10 @@ static const struct WindowTemplate sMainWindows[] = {
     }, 
     {
         .bg = 0,
-        .tilemapLeft = 18,
-        .tilemapTop = 2,
-        .width = 12,
-        .height = 12,
+        .tilemapLeft = 10,
+        .tilemapTop = 3,
+        .width = 10,
+        .height = 10,
         .paletteNum = 12,
         .baseBlock = 0x00e5
     },
@@ -351,6 +375,10 @@ static bool32 HandleInternetOptionsSetup(void)
         SetVBlankCallback(NULL);
         ResetSpriteData();
         FreeAllSpritePalettes();
+#if (!TESTING || MOBILE_TESTING)
+        sInternetGiftPreviewState = INTERNET_GIFT_PREVIEW_NONE;
+        sInternetGiftPreviewSpriteId = MAX_SPRITES;
+#endif
         ResetTasks();
         ScanlineEffect_Stop();
         ResetBgsAndClearDma3BusyFlags(0);
@@ -487,6 +515,95 @@ static bool32 AllocInternetGift(struct InternetOptionsTaskData *data)
     return data->gift != NULL;
 }
 
+static void PrepareInternetMysteryGiftPreview(struct InternetMysteryGift *gift)
+{
+    u16 itemId = ITEM_NONE;
+    u16 species;
+    u16 spriteId = MAX_SPRITES;
+
+    DestroyInternetMysteryGiftPreview();
+
+    switch (gift->type)
+    {
+    case INTERNET_MYSTERY_GIFT_POKEMON:
+        species = GetMonData(&gift->data.pokemon, MON_DATA_SPECIES_OR_EGG);
+        spriteId = CreateMonPicSprite(
+            species,
+            GetMonData(&gift->data.pokemon, MON_DATA_IS_SHINY),
+            GetMonData(&gift->data.pokemon, MON_DATA_PERSONALITY),
+            TRUE,
+            INTERNET_GIFT_PREVIEW_X,
+            INTERNET_GIFT_PREVIEW_Y,
+            0,
+            species);
+        if (spriteId >= MAX_SPRITES)
+            return;
+        sInternetGiftPreviewState = INTERNET_GIFT_PREVIEW_POKEMON;
+        break;
+    case INTERNET_MYSTERY_GIFT_ITEM:
+        itemId = gift->data.item.itemId;
+        break;
+    case INTERNET_MYSTERY_GIFT_EVENT:
+        itemId = GetInternetMysteryGiftEventPreviewItemId(gift->data.event.eventId);
+        break;
+    }
+
+    if (itemId != ITEM_NONE)
+    {
+        spriteId = AddItemIconSprite(TAG_INTERNET_GIFT_ITEM_ICON, TAG_INTERNET_GIFT_ITEM_ICON, itemId);
+        if (spriteId >= MAX_SPRITES)
+        {
+            FreeSpriteTilesByTag(TAG_INTERNET_GIFT_ITEM_ICON);
+            FreeSpritePaletteByTag(TAG_INTERNET_GIFT_ITEM_ICON);
+            return;
+        }
+        // Item art is 24x24 at the top-left of its padded 32x32 OBJ canvas.
+        gSprites[spriteId].x = INTERNET_GIFT_PREVIEW_X + INTERNET_GIFT_ITEM_ICON_CENTER_OFFSET;
+        gSprites[spriteId].y = INTERNET_GIFT_PREVIEW_Y + INTERNET_GIFT_ITEM_ICON_CENTER_OFFSET;
+        sInternetGiftPreviewState = INTERNET_GIFT_PREVIEW_ITEM;
+    }
+
+    if (sInternetGiftPreviewState != INTERNET_GIFT_PREVIEW_NONE)
+    {
+        sInternetGiftPreviewSpriteId = spriteId;
+        gSprites[spriteId].oam.priority = 0;
+        gSprites[spriteId].invisible = TRUE;
+    }
+}
+
+static void ShowInternetMysteryGiftPreview(void)
+{
+    if (sInternetGiftPreviewState == INTERNET_GIFT_PREVIEW_NONE
+     || (sInternetGiftPreviewState & INTERNET_GIFT_PREVIEW_VISIBLE))
+        return;
+
+    DrawStdFrameWithCustomTileAndPalette(INTERNET_GIFT_PREVIEW_WINDOW_ID, FALSE, 0xA, 0xE);
+    CopyWindowToVram(INTERNET_GIFT_PREVIEW_WINDOW_ID, COPYWIN_FULL);
+    gSprites[sInternetGiftPreviewSpriteId].invisible = FALSE;
+    sInternetGiftPreviewState |= INTERNET_GIFT_PREVIEW_VISIBLE;
+}
+
+static void DestroyInternetMysteryGiftPreview(void)
+{
+    switch (sInternetGiftPreviewState & ~INTERNET_GIFT_PREVIEW_VISIBLE)
+    {
+    case INTERNET_GIFT_PREVIEW_POKEMON:
+        FreeAndDestroyMonPicSprite(sInternetGiftPreviewSpriteId);
+        break;
+    case INTERNET_GIFT_PREVIEW_ITEM:
+        DestroySprite(&gSprites[sInternetGiftPreviewSpriteId]);
+        FreeSpriteTilesByTag(TAG_INTERNET_GIFT_ITEM_ICON);
+        FreeSpritePaletteByTag(TAG_INTERNET_GIFT_ITEM_ICON);
+        break;
+    }
+
+    if (sInternetGiftPreviewState & INTERNET_GIFT_PREVIEW_VISIBLE)
+        ClearStdWindowAndFrameToTransparent(INTERNET_GIFT_PREVIEW_WINDOW_ID, TRUE);
+
+    sInternetGiftPreviewState = INTERNET_GIFT_PREVIEW_NONE;
+    sInternetGiftPreviewSpriteId = MAX_SPRITES;
+}
+
 static void ClearInternetSession(struct InternetOptionsTaskData *data)
 {
     if (data->clientDetails != NULL)
@@ -550,6 +667,7 @@ static void FreeInternetOptionsScreen(void)
     u32 i;
 
     SetVBlankCallback(NULL);
+    DestroyInternetMysteryGiftPreview();
     FreeAllWindowBuffers();
     for (i = 0; i < 4; i++)
         Free(GetBgTilemapBuffer(i));
@@ -1091,7 +1209,7 @@ static void Task_InternetOptions(u8 taskId)
                 return;
             }
 
-            FreeInternetOperationBuffers(data);
+            TRY_FREE_AND_SET_NULL(data->clientMsg);
             if (TrySavingDataNoErrorScreen(SAVE_NORMAL) != SAVE_STATUS_OK)
             {
                 CloseInternetConnection(data);
@@ -1123,7 +1241,10 @@ static void Task_InternetOptions(u8 taskId)
         }
         case 3:
             if (DecodeInternetAcknowledgement(data->clientMsg, data->recvSize))
+            {
+                PrepareInternetMysteryGiftPreview(data->gift);
                 SetInternetMessageResult(data, data->message);
+            }
             else
                 SetInternetMessageResult(data, gText_InternetGiftAckFailed);
             break;
@@ -1170,8 +1291,13 @@ static void Task_InternetOptions(u8 taskId)
         }
         break;
     case INTERNET_STATE_PRINT_MESSAGE:
+        if (data->textState == 0)
+            ShowInternetMysteryGiftPreview();
         if (PrintInternetOptionsMenuMessage(&data->textState, data->message))
+        {
+            DestroyInternetMysteryGiftPreview();
             data->state = data->nextState;
+        }
         break;
     case INTERNET_STATE_CONFIG_ERROR:
         if (HandleMobileAdapterError(&data->subState, sText_MobileAdapterConfigError))

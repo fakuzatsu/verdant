@@ -642,6 +642,7 @@ TEST("Mystery Gift events dispatch and execute static scripts")
     EXPECT(!FlagGet(FLAG_RECEIVED_AURORA_TICKET));
     EXPECT(!FlagGet(FLAG_SHOWN_AURORA_TICKET));
     EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftAuroraTicket);
+    EXPECT_EQ(GetInternetMysteryGiftEventPreviewItemId(gift.data.event.eventId), ITEM_AURORA_TICKET);
 
     WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE], INTERNET_MYSTERY_GIFT_EVENT_OLD_SEA_MAP);
     WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], 0xFFFF);
@@ -653,6 +654,7 @@ TEST("Mystery Gift events dispatch and execute static scripts")
     EXPECT(!FlagGet(FLAG_RECEIVED_OLD_SEA_MAP));
     EXPECT(!FlagGet(FLAG_SHOWN_OLD_SEA_MAP));
     EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftOldSeaMap);
+    EXPECT_EQ(GetInternetMysteryGiftEventPreviewItemId(gift.data.event.eventId), ITEM_OLD_SEA_MAP);
 }
 
 TEST("Mystery Gift ticket events do not unlock islands when the bag is full")
@@ -696,6 +698,7 @@ TEST("Mystery Gift Altering Cave event validates the server value before mutatio
     EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_RECEIVED_EVENT);
     EXPECT_EQ(VarGet(VAR_ALTERING_CAVE_WILD_SET), NUM_ALTERING_CAVE_TABLES - 1);
     EXPECT(GetInternetMysteryGiftEventMessage(gift.data.event.eventId) == gText_InternetGiftAlteringCave);
+    EXPECT_EQ(GetInternetMysteryGiftEventPreviewItemId(gift.data.event.eventId), ITEM_NONE);
 
     WriteU16(&packet[INTERNET_MYSTERY_GIFT_HEADER_SIZE + 2], NUM_ALTERING_CAVE_TABLES);
     InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
@@ -717,6 +720,7 @@ TEST("Mystery Gift receiver rejects reserved and unknown event ids")
     InitGiftHeader(packet, INTERNET_MYSTERY_GIFT_EVENT, 4);
     EXPECT_EQ(ReceiveInternetMysteryGift(packet, sizeof(packet), &gift), INTERNET_MYSTERY_GIFT_INVALID_PACKET);
     EXPECT(GetInternetMysteryGiftEventMessage(0xFFFF) == NULL);
+    EXPECT_EQ(GetInternetMysteryGiftEventPreviewItemId(0xFFFF), ITEM_NONE);
 }
 
 TEST("Mystery Gift receiver rejects malformed item and event sizes and CRC")
