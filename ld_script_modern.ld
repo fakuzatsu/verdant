@@ -28,6 +28,10 @@ SECTIONS {
     {
         src/*.o(.sbss);
         gflib/*.o(.sbss);
+        *libma.a:ma_ango.o(.bss*);
+        *libma.a:md5c.o(.bss*);
+        *libma.a:ma_api.o(.bss*);
+        *libma.a:ma_sub.o(.bss*);
     } > EWRAM
 
     .iwram ORIGIN(IWRAM) : AT (__iwram_lma)
