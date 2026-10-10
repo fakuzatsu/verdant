@@ -1,4 +1,5 @@
 .set LOCALID_NURSE, 1
+.set LOCALID_BUILDER, 5
 
 OldaleTown_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_PokemonCenter_1F_OnTransition
@@ -39,6 +40,14 @@ OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable::
 	release
 	end
 
+OldaleTown_PokemonCenter_1F_EventScript_Escalator::
+	faceplayer
+	msgbox OldaleTown_PokemonCenter_1F_Text_EscalatorBroken, MSGBOX_DEFAULT
+	applymovement LOCALID_BUILDER, Common_Movement_FaceLeft
+	waitmovement 0
+	release
+	end
+
 OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC:
 	.string "That PC in the corner there is\n"
 	.string "for any Pokémon Trainer to use.\p"
@@ -52,13 +61,19 @@ OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
 	.string "You never have to worry!$"
 
 OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable:
-	.string "The Pokémon Wireless Club on\n"
-	.string "the second floor was built recently.\p"
+	.string "The Pokémon Wireless and Internet\n"
+	.string "clubs were built recently.\p"
 	.string "But they say they're still making\n"
 	.string "adjustments.$"
 
 OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub:
-	.string "The Pokémon Wireless Club on\n"
-	.string "the second floor was built recently.\p"
+	.string "The Pokémon Wireless and Internet\n"
+	.string "clubs were built recently.\p"
 	.string "I traded Pokémon right away.$"
 
+OldaleTown_PokemonCenter_1F_Text_EscalatorBroken:
+	.string "We recently built the Internet\n"
+	.string "Club downstairs, but…\p"
+	.string "This blasted escalator still\n"
+	.string "isn't working.\p"
+	.string "I hate modern technology.$"

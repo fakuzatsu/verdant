@@ -1081,6 +1081,10 @@ Common_EventScript_DirectCornerAttendant::
 	call CableClub_EventScript_DirectCornerAttendant
 	end
 
+Common_EventScript_InternetClubAttendant::
+	call InternetClub_EventScript_InternetClubAttendant
+	end
+
 Common_EventScript_RemoveStaticPokemon::
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject VAR_LAST_TALKED
@@ -1118,6 +1122,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/text/contest_painting.inc"
 	.include "data/scripts/tv.inc"
 	.include "data/text/tv.inc"
+	.include "data/scripts/internet_club.inc"
 	.include "data/scripts/interview.inc"
 	.include "data/scripts/gabby_and_ty.inc"
 	.include "data/text/pokemon_news.inc"
